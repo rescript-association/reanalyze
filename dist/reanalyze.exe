@@ -1,0 +1,2 @@
+echo "reanalyze was not installed correctly"
+exit 1

@@ -1,0 +1,18 @@
+{
+  "name": "deadcode",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node ../run_bsb.js -make-world -w",
+    "build": "node ../run_bsb.js -make-world",
+    "clean": "node ../clean_bsb.js",
+    "analyze": "Debug=1 Whitelist=src Blacklist=src/DeadTestWhitelist.re ../reanalyze.exe -dce >src/deadcode.txt"
+  },
+  "devDependencies": {
+    "bs-platform": "7.3.0",
+    "gentype": "^3.20.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "reason-react": "^0.7.0"
+  }
+}

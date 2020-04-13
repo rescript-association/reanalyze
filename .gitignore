@@ -1,0 +1,19 @@
+*.DS_Store*
+*.merlin*
+*.bsb.lock*
+*.coverage
+bundledOutputs/
+_coverage/
+_esy/
+
+lib/
+node_modules/
+/_esy
+/_build
+/_release
+/reanalyze.install
+/yarn-error.log
+
+# npm publish related stuff
+reanalyze-*.tgz
+
