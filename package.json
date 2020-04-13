@@ -1,6 +1,6 @@
 {
   "name": "reanalyze",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Analyzers for Dead Code/Types and termination",
   "license": "MIT",
