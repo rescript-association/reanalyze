@@ -27,18 +27,20 @@ module Color = {
     | Bold => "1"
     | Dim => "2";
 
-  type Format.stag +=
-    | String_tag(Format.tag);
-
-  let style_of_stag = (s: Format.stag) =>
+  let style_of_stag = s =>
     switch (s) {
-    | String_tag("error") => [Bold, FG(Red)]
-    | String_tag("warning") => [Bold, FG(Magenta)]
-    | String_tag("info") => [Bold, FG(Yellow)]
-    | String_tag("dim") => [Dim]
-    | String_tag("filename") => [FG(Cyan)]
+    | Format.String_tag("error") => [Bold, FG(Red)]
+    | Format.String_tag("warning") => [Bold, FG(Magenta)]
+    | Format.String_tag("info") => [Bold, FG(Yellow)]
+    | Format.String_tag("dim") => [Dim]
+    | Format.String_tag("filename") => [FG(Cyan)]
     | _ => []
     };
+
+  let item = x => {
+    Format.fprintf(Format.std_formatter, "  ");
+    Format.fprintf(Format.std_formatter, x);
+  };
 
   let ansi_of_stag = s => {
     let l = style_of_stag(s);
