@@ -60,27 +60,49 @@ let processSignature = (signature: Types.signature) => {
      );
 };
 
+module FindSourceFile = {
+  let rec interface = items =>
+    switch (items) {
+    | [{Typedtree.sig_loc}, ...rest] =>
+      !Sys.file_exists(sig_loc.loc_start.pos_fname)
+        ? interface(rest) : Some(sig_loc.loc_start.pos_fname)
+    | [] => None
+    };
+  let rec implementation = items =>
+    switch (items) {
+    | [{Typedtree.str_loc}, ...rest] =>
+      !Sys.file_exists(str_loc.loc_start.pos_fname)
+        ? implementation(rest) : Some(str_loc.loc_start.pos_fname)
+    | [] => None
+    };
+  let cmt = cmt_annots =>
+    switch (cmt_annots) {
+    | Cmt_format.Interface(signature) =>
+      if (signature.sig_items == []) {
+        Log_.item("Interface %d@.", signature.sig_items |> List.length);
+      };
+      interface(signature.sig_items);
+    | Implementation(structure) =>
+      if (structure.str_items == []) {
+        Log_.item("Implementation %d@.", structure.str_items |> List.length);
+      };
+      implementation(structure.str_items);
+    | _ => None
+    };
+};
+
 let loadCmtFile = cmtFilePath => {
   if (verbose) {
     Log_.item("Scanning %s@.", cmtFilePath);
   };
 
-  let {Cmt_format.cmt_annots, cmt_sourcefile, cmt_value_dependencies} =
+  let {Cmt_format.cmt_annots, cmt_value_dependencies} =
     Cmt_format.read_cmt(cmtFilePath);
 
-  switch (cmt_sourcefile) {
+  switch (cmt_annots |> FindSourceFile.cmt) {
   | None => ()
 
-  | Some(sourceFile_) =>
-    let sourceFile =
-      if (Filename.check_suffix(sourceFile_, ".re.ml")) {
-        Filename.chop_suffix(sourceFile_, ".ml");
-      } else if (Filename.check_suffix(sourceFile_, ".re.mli")) {
-        Filename.chop_suffix(sourceFile_, ".re.mli") ++ ".rei";
-      } else {
-        sourceFile_;
-      };
-
+  | Some(sourceFile) =>
     FileHash.addFile(fileReferences, sourceFile);
     currentSrc := sourceFile;
     currentModuleName := Paths.getModuleName(sourceFile);

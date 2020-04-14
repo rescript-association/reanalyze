@@ -1123,6 +1123,7 @@
   addValueDeclaration make ImportHooks.re:15:0
   addValueDeclaration foo ImportHooks.re:21:0
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTestWithInterface.cmti
+  Interface 0
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/RequireCond.cmt
   addValueDeclaration make RequireCond.re:1:0
   addValueDeclaration either RequireCond.re:14:0
@@ -1643,7 +1644,6 @@ File References
   Records.re -->> 
   ImportIndex.re -->> 
   ImportHookDefault.re -->> 
-  DeadTestWithInterface.rei -->> 
   ModuleAliases2.re -->> 
   Dead Type AutoAnnotate.annotatedVariant.+R4: 0 references () [0]
   Dead Type AutoAnnotate.annotatedVariant.+R2: 0 references () [0]
