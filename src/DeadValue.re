@@ -56,13 +56,11 @@ let rec exprNoSideEffects = (expr: Typedtree.expression) =>
     && extended_expression
     |> exprOptNoSideEffects
   | Texp_assert(_) => false
-  | Texp_match(e, casesOK, casesExn, partial) =>
+  | Texp_match(e, cases, partial) =>
     partial == Total
     && e
     |> exprNoSideEffects
-    && casesOK
-    |> List.for_all(caseNoSideEffects)
-    && casesExn
+    && cases
     |> List.for_all(caseNoSideEffects)
   | Texp_letmodule(_) => false
   | Texp_lazy(e) => e |> exprNoSideEffects
@@ -98,6 +96,8 @@ let rec exprNoSideEffects = (expr: Typedtree.expression) =>
   | Texp_pack(_) => false
   | Texp_unreachable => false
   | Texp_extension_constructor(_) => true
+  | Texp_letop(_) => true
+  | Texp_open(_) => true
   }
 and exprOptNoSideEffects = eo =>
   switch (eo) {

@@ -909,7 +909,7 @@ module Compile = {
                      ...expr,
                      exp_desc:
                        Texp_ident(
-                         Path.Pident(Ident.create(entry.label)),
+                         Path.Pident(Ident.create_local(entry.label)),
                          l,
                          vd,
                        ),
@@ -917,7 +917,7 @@ module Compile = {
                  )
                );
           (
-            Path.Pident(Ident.create(innerFunctionName)),
+            Path.Pident(Ident.create_local(innerFunctionName)),
             argsFromKind @ argsToExtend,
           );
         | None => (calleeToRename, argsToExtend)
@@ -1079,7 +1079,15 @@ module Compile = {
     | Texp_function({cases}) =>
       cases |> List.map(case(~ctx)) |> Command.nondet
 
-    | Texp_match(e, cases, [], _) =>
+    | Texp_match(e, cases, _)
+        when
+          cases
+          |> List.for_all(({c_lhs: pat}: Typedtree.case) =>
+               switch (pat.pat_desc) {
+               | Tpat_exception(_) => false
+               | _ => true
+               }
+             ) =>
       let cE = e |> expression(~ctx);
       let cCases = cases |> List.map(case(~ctx));
       switch (cE, cases) {
@@ -1111,7 +1119,7 @@ module Compile = {
       | _ => Command.(cE +++ nondet(cCases))
       };
 
-    | Texp_match(_, _, [_, ..._] as _casesExn, _) => assert(false)
+    | Texp_match(_, _, _) => /* exceptions in cases */ assert(false)
 
     | Texp_field(e, _lid, _desc) => e |> expression(~ctx)
 
@@ -1161,6 +1169,8 @@ module Compile = {
     | Texp_pack(_) => assert(false)
     | Texp_unreachable => assert(false)
     | Texp_extension_constructor(_) => assert(false)
+    | Texp_letop(_) => assert(false)
+    | Texp_open(_) => assert(false)
     };
   }
   and expressionOpt = (~ctx, eOpt) =>

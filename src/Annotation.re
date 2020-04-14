@@ -48,8 +48,8 @@ let rec getAttributePayload = (checkText, attributes: Typedtree.attributes) => {
     };
   switch (attributes) {
   | [] => None
-  | [({Asttypes.txt}, payload), ..._tl] when checkText(txt) =>
-    switch (payload) {
+  | [{attr_name, attr_payload}, ..._tl] when checkText(attr_name.txt) =>
+    switch (attr_payload) {
     | PStr([]) => Some(UnrecognizedPayload)
     | PStr([{pstr_desc: Pstr_eval(expr, _)}, ..._]) => expr |> fromExpr
     | PStr([{pstr_desc: Pstr_extension(_)}, ..._]) =>

@@ -27,46 +27,47 @@ module Color = {
     | Bold => "1"
     | Dim => "2";
 
-  let style_of_tag = s =>
+  type Format.stag +=
+    | String_tag(Format.tag);
+
+  let style_of_stag = (s: Format.stag) =>
     switch (s) {
-    | "error" => [Bold, FG(Red)]
-    | "warning" => [Bold, FG(Magenta)]
-    | "info" => [Bold, FG(Yellow)]
-    | "dim" => [Dim]
-    | "filename" => [FG(Cyan)]
+    | String_tag("error") => [Bold, FG(Red)]
+    | String_tag("warning") => [Bold, FG(Magenta)]
+    | String_tag("info") => [Bold, FG(Yellow)]
+    | String_tag("dim") => [Dim]
+    | String_tag("filename") => [FG(Cyan)]
     | _ => []
     };
 
-  let ansi_of_tag = s => {
-    let l = style_of_tag(s);
+  let ansi_of_stag = s => {
+    let l = style_of_stag(s);
     let s = String.concat(";", List.map(code_of_style, l));
     "\027[" ++ s ++ "m";
   };
 
   let reset_lit = "\027[0m";
 
-  let color_functions: Format.formatter_tag_functions = (
-    {
-      mark_open_tag: s =>
-        if (get_color_enabled()) {
-          ansi_of_tag(s);
-        } else {
-          "";
-        },
-      mark_close_tag: _ =>
-        if (get_color_enabled()) {
-          reset_lit;
-        } else {
-          "";
-        },
-      print_open_tag: _ => (),
-      print_close_tag: _ => (),
-    }: Format.formatter_tag_functions
-  );
+  let color_functions: Format.formatter_stag_functions = {
+    mark_open_stag: s =>
+      if (get_color_enabled()) {
+        ansi_of_stag(s);
+      } else {
+        "";
+      },
+    mark_close_stag: _ =>
+      if (get_color_enabled()) {
+        reset_lit;
+      } else {
+        "";
+      },
+    print_open_stag: _ => (),
+    print_close_stag: _ => (),
+  };
 
   let setup = () => {
     Format.pp_set_mark_tags(Format.std_formatter, true);
-    Format.pp_set_formatter_tag_functions(
+    Format.pp_set_formatter_stag_functions(
       Format.std_formatter,
       color_functions,
     );
@@ -89,16 +90,12 @@ module Loc = {
   let print_loc = (~normalizedRange, ppf, loc: Location.t) => {
     let (file, _, _) = Location.get_pos_info(loc.loc_start);
     if (file == "//toplevel//") {
-      if (Location.highlight_locations(ppf, [loc])) {
-        ();
-      } else {
-        Format.fprintf(
-          ppf,
-          "Characters %i-%i",
-          loc.loc_start.pos_cnum,
-          loc.loc_end.pos_cnum,
-        );
-      };
+      Format.fprintf(
+        ppf,
+        "Characters %i-%i",
+        loc.loc_start.pos_cnum,
+        loc.loc_end.pos_cnum,
+      );
     } else {
       let dim_loc = ppf =>
         fun
