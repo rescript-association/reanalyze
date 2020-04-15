@@ -7,7 +7,7 @@ Supports bucklescript projects, as well as native projects (e.g. dune).
 Status](https://dev.azure.com/ccrisccris/reanalyze/_apis/build/status/cristianoc.reanalyze?branchName=master)](https://dev.azure.com/ccrisccris/reanalyze/_build/latest?definitionId=1&branchName=master)
 
 
-## Build for OCaml 4.06.1
+## Build for OCaml 4.06.1 (bucklescript and native projects)
 ```sh
 npm install
 npx esy
@@ -15,7 +15,7 @@ npx esy x which reanalyze.exe
   /Users/cristianoc/reasonml/reanalyze/_esy/default/store/i/reanalyze-5574f798/bin/reanalyze.exe
 ```
 
-## Build for OCaml 4.08.1
+## Build for OCaml 4.08.1 (native projects)
 ```sh
 npm install
 npx esy @408
@@ -23,7 +23,14 @@ npx esy @408 x which reanalyze.exe
   /Users/cristianoc/reasonml/reanalyze/_esy/408/store/i/reanalyze-b543bfd4/bin/reanalyze.exe
 ```
 
-## Single File Test
+## Bucklescript Projects
+```sh
+npm run build # or whatever command to build the project
+npm add reanalyze
+npx reanalyze -dce 
+```
+
+## Single File Test (native project)
 ```sh
 echo "let unused = 34" > test.ml
 ocamlc -c -bin-annot test.ml
@@ -35,7 +42,7 @@ reanalyze.exe -dce-cmt ./test.cmt
   let unused = 34 [@@dead "unused"] 
 ```
 
-## Single Directory Test
+## Single Directory Test (native project)
 ```sh
 mkdir test
 echo "let unused = 34 let used = 42" > test/test.ml
@@ -55,7 +62,7 @@ reanalyze.exe -dce-cmt .
   let _ = Test.used [@@dead "_"] 
 ```
 
-## Full Project Test: Infer
+## Full Project Test: Infer (native project)
 How to test on [Infer](https://github.com/facebook/infer) :
 
 - Make sure that `dune` builds both `.cmt` and `.cmti` files (see https://github.com/ocaml/dune/issues/3182 as to why):
