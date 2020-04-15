@@ -16,7 +16,12 @@ let rec getSignature = (~isfunc=false, moduleType: Types.module_type) =>
 
 let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
   switch (si) {
-  | Sig_value(id, {Types.val_loc, val_kind}) when !val_loc.Location.loc_ghost =>
+#if OCAML_MINOR >= 8
+  | Sig_value(id, {Types.val_loc, val_kind}, _)
+#else
+  | Sig_value(id, {Types.val_loc, val_kind})
+#endif
+  when !val_loc.Location.loc_ghost =>
     let isPrimitive =
       switch (val_kind) {
       | Val_prim(_) => true
@@ -30,13 +35,22 @@ let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
         Ident.name(id),
       );
     };
+#if OCAML_MINOR >= 8
+  | Sig_type(id, t, _, _`) =>
+#else
   | Sig_type(id, t, _) =>
+#endif
     if (analyzeTypes^) {
       DeadType.addDeclaration(~path=[id |> Ident.name, ...path], t);
     }
   | (
+#if OCAML_MINOR >= 8
+      Sig_module(id, _, {Types.md_type: moduleType}, _, _) |
+s      Sig_modtype(id, _, {Types.mtd_type: Some(moduleType)}, _)
+#else
       Sig_module(id, {Types.md_type: moduleType}, _) |
       Sig_modtype(id, {Types.mtd_type: Some(moduleType)})
+#endif
     ) as s =>
     let collect =
       switch (s) {
