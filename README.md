@@ -54,3 +54,32 @@ reanalyze.exe -dce-cmt .
   <-- line 1
   let _ = Test.used [@@dead "_"] 
 ```
+
+## Full Project Test: Infer
+How to test on [Infer](https://github.com/facebook/infer) :
+
+- Make sure that `dune` builds both `.cmt` and `.cmti` files (see https://github.com/ocaml/dune/issues/3182 as to why):
+```
+--- a/infer/src/Makefile
++++ b/infer/src/Makefile
+-DUNE_BUILD = dune build --profile=$(BUILD_MODE)
++DUNE_BUILD = dune build @check @all --profile=$(BUILD_MODE)
+```
+
+- Build normally
+```
+make -j BUILD_MODE=dev
+```
+
+- Go to the right directory from which file paths start:
+```
+% cd infer/infer
+```
+
+- Run the analysis
+```
+% path/to/reanalyze.exe -dce-cmt _build/default/src/.InferModules.objs/byte/
+```
+
+<img width="1362" alt="Screen Shot 2020-04-14 at 9 28 24 AM" src="https://user-images.githubusercontent.com/7965335/79213744-fb2d8c00-7e49-11ea-9417-3c42bd6a3a79.png">
+
