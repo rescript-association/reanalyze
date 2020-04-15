@@ -73,8 +73,8 @@ jobs:
           rm examples/reanalyze.exe
           cp `npx esy x which reanalyze.exe` examples/reanalyze.exe	
         displayName: "Copy reanalyze.exe to examples/"
-      - bash: npm test
-        displayName: "Test command"
+      # - bash: npm test
+      #   displayName: "Test command"
       - bash: mkdir _release
         displayName: "Create _release directory"
       - bash: cp `npx esy x which reanalyze.exe` _release/reanalyze.exe
