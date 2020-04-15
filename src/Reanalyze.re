@@ -1,9 +1,3 @@
-#if OCAML_MINOR >= 8
-let () = assert false
-#else
-let () = ()
-#endif
-
 let version = Version.version;
 
 type cliCommand =
