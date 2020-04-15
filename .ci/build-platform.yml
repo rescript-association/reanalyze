@@ -72,11 +72,7 @@ jobs:
       - bash: |
           rm examples/reanalyze.exe
           cp `npx esy x which reanalyze.exe` examples/reanalyze.exe	
-          rm examples/deadcodeppx.exe
-          cp `npx esy x which deadcodeppx.exe` examples/deadcodeppx.exe
-          rm examples/lazyLoad.exe
-          cp `npx esy x which lazyLoad.exe` examples/lazyLoad.exe
-        displayName: "Copy reanalyze.exe, deadcodeppx.exe, lazyLoad.exe to examples/"
+        displayName: "Copy reanalyze.exe to examples/"
       - bash: npm test
         displayName: "Test command"
       - bash: mkdir _release
