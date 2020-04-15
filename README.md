@@ -7,12 +7,20 @@ Experimental analyses: for dead values/types, and for termination.
 Status](https://dev.azure.com/ccrisccris/reanalyze/_apis/build/status/cristianoc.reanalyze?branchName=master)](https://dev.azure.com/ccrisccris/reanalyze/_build/latest?definitionId=1&branchName=master)
 
 
-## Build
+## Build for OCaml 4.06.1
 ```sh
 npm install
-npm run build
+npx esy
 npx esy x which reanalyze.exe
-  /Users/cristianoc/reasonml/reanalyze/_esy/default/store/i/reanalyze-1a0dcc57/bin/reanalyze.exe
+  /Users/cristianoc/reasonml/reanalyze/_esy/default/store/i/reanalyze-5574f798/bin/reanalyze.exe
+```
+
+## Build for OCaml 4.08.1
+```sh
+npm install
+npx esy @408
+npx esy @408 x which reanalyze.exe
+  /Users/cristianoc/reasonml/reanalyze/_esy/408/store/i/reanalyze-b543bfd4/bin/reanalyze.exe
 ```
 
 ## Single File Test
