@@ -1,7 +1,7 @@
 # reanalyze
 
-Experimental analyses: for dead values/types, and for termination.
-
+Experimental analyses for OCaml/Reason: for dead values/types, and for termination.
+Supports bucklescript projects, as well as native projects (e.g. dune).
 
 **Status `master (v3.*)`:** [![Build
 Status](https://dev.azure.com/ccrisccris/reanalyze/_apis/build/status/cristianoc.reanalyze?branchName=master)](https://dev.azure.com/ccrisccris/reanalyze/_build/latest?definitionId=1&branchName=master)
