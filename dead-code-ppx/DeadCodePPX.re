@@ -1,8 +1,7 @@
 // Remove code annotated with @dead
 
 let hasDeadAnnotation = attributes => {
-  attributes
-  |> List.exists((({txt}, payload): Parsetree.attribute) => txt == "dead");
+  attributes |> List.exists(attr => Compat.attributeTxt(attr) == "dead");
 };
 
 let rec filter_map = (l, ~f) =>

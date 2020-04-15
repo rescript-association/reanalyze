@@ -2,6 +2,7 @@
 (
   executable
     (public_name reanalyze.exe)
+    (preprocess (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
 
     ; The main module that will become the binary.
     (name Reanalyze)
