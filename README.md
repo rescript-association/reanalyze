@@ -35,13 +35,11 @@ echo "let _ = Test.used" > test/use.ml
 cd test
 ocamlc -c -bin-annot *.ml
 reanalyze.exe -dce-cmt .
-
   Warning Dead Value
   test.ml 1:1-15
   unused is never used
   <-- line 1
   let unused = 34 [@@dead "unused"]  let used = 42
-
   Warning Dead Value
   use.ml 1:1-17
   _ has no side effects and can be removed

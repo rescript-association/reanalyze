@@ -877,6 +877,13 @@ module Compile = {
     isProgressFunction: Path.t => bool,
   };
 
+#if OCAML_MINOR >= 8
+  module Ident = {
+    include Ident;
+    let create = Ident.create_local
+  }
+#endif
+
   let rec expression = (~ctx, expr: Typedtree.expression) => {
     let {currentFunctionName, functionTable, isProgressFunction} = ctx;
     let loc = expr.exp_loc;
@@ -909,7 +916,7 @@ module Compile = {
                      ...expr,
                      exp_desc:
                        Texp_ident(
-                         Path.Pident(Ident.create_local(entry.label)),
+                         Path.Pident(Ident.create(entry.label)),
                          l,
                          vd,
                        ),
@@ -917,7 +924,7 @@ module Compile = {
                  )
                );
           (
-            Path.Pident(Ident.create_local(innerFunctionName)),
+            Path.Pident(Ident.create(innerFunctionName)),
             argsFromKind @ argsToExtend,
           );
         | None => (calleeToRename, argsToExtend)
@@ -1079,15 +1086,20 @@ module Compile = {
     | Texp_function({cases}) =>
       cases |> List.map(case(~ctx)) |> Command.nondet
 
+#if OCAML_MINOR >= 8
     | Texp_match(e, cases, _)
-        when
-          cases
-          |> List.for_all(({c_lhs: pat}: Typedtree.case) =>
-               switch (pat.pat_desc) {
-               | Tpat_exception(_) => false
-               | _ => true
-               }
-             ) =>
+          when
+            cases
+            |> List.for_all(({c_lhs: pat}: Typedtree.case) =>
+                  switch (pat.pat_desc) {
+                  | Tpat_exception(_) => false
+                  | _ => true
+                  }
+                ) =>
+#else
+    | Texp_match(e, cases, [], _) =>
+#endif
+      /* No exceptions */
       let cE = e |> expression(~ctx);
       let cCases = cases |> List.map(case(~ctx));
       switch (cE, cases) {
@@ -1119,7 +1131,7 @@ module Compile = {
       | _ => Command.(cE +++ nondet(cCases))
       };
 
-    | Texp_match(_, _, _) => /* exceptions in cases */ assert(false)
+    | Texp_match(_) => assert(false) /* exceptions */
 
     | Texp_field(e, _lid, _desc) => e |> expression(~ctx)
 
@@ -1169,8 +1181,6 @@ module Compile = {
     | Texp_pack(_) => assert(false)
     | Texp_unreachable => assert(false)
     | Texp_extension_constructor(_) => assert(false)
-    | Texp_letop(_) => assert(false)
-    | Texp_open(_) => assert(false)
     };
   }
   and expressionOpt = (~ctx, eOpt) =>

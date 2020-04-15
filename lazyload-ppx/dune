@@ -1,0 +1,7 @@
+(executable
+ (name LazyLoad)
+ (public_name lazyLoad.exe)
+ (preprocess (action (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
+ (libraries compiler-libs.common)
+ (flags
+  (:standard -w -9)))
