@@ -48,10 +48,10 @@ let rec getAttributePayload = (checkText, attributes: Typedtree.attributes) => {
     };
   switch (attributes) {
   | [] => None
-  #if OCAML_MINOR <= 6
-  | [({Asttypes.txt}, payload), ..._tl]
-  #else
+  #if OCAML_MINOR >= 8
   | [{attr_name: {txt}, attr_payload: payload}, ..._tl]
+  #else
+  | [({Asttypes.txt}, payload), ..._tl]
   #endif
   when checkText(txt) =>
     switch (payload) {
