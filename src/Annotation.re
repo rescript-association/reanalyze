@@ -51,7 +51,7 @@ let rec getAttributePayload = (checkText, attributes: Typedtree.attributes) => {
   #if OCAML_MINOR <= 6
   | [({Asttypes.txt}, payload), ..._tl] when checkText(txt) =>
   #else
-  | [{attr_name: txt, attr_payload: payload}, ..._tl] =>
+  | [{attr_name: txt, attr_payload: payload}, ..._tl] when checkText(txt) =>
   #endif
     switch (payload) {
     | PStr([]) => Some(UnrecognizedPayload)
