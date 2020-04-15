@@ -46,7 +46,7 @@ let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
   | (
 #if OCAML_MINOR >= 8
       Sig_module(id, _, {Types.md_type: moduleType}, _, _) |
-      Sig_modtype(id, _, {Types.mtd_type: Some(moduleType)}, _)
+      Sig_modtype(id, {Types.mtd_type: Some(moduleType)}, _)
 #else
       Sig_module(id, {Types.md_type: moduleType}, _) |
       Sig_modtype(id, {Types.mtd_type: Some(moduleType)})

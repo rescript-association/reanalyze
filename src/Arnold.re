@@ -877,6 +877,13 @@ module Compile = {
     isProgressFunction: Path.t => bool,
   };
 
+#if OCAML_MINOR >= 8
+  module Ident = {
+    include Ident;
+    let create = Ident.create_local
+  }
+#endif
+
   let rec expression = (~ctx, expr: Typedtree.expression) => {
     let {currentFunctionName, functionTable, isProgressFunction} = ctx;
     let loc = expr.exp_loc;

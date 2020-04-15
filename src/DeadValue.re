@@ -61,7 +61,7 @@ let rec exprNoSideEffects = (expr: Typedtree.expression) =>
     partial == Total
     && e
     |> exprNoSideEffects
-    && casess
+    && cases
     |> List.for_all(caseNoSideEffects)
 #else
   | Texp_match(e, casesOK, casesExn, partial) =>

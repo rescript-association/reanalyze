@@ -33,13 +33,13 @@ module Color = {
   | Format.String_tag(s) =>
     switch (s) {
 #else
+#endif
     | "error" => [Bold, FG(Red)]
     | "warning" => [Bold, FG(Magenta)]
     | "info" => [Bold, FG(Yellow)]
     | "dim" => [Dim]
     | "filename" => [FG(Cyan)]
     | _ => []
-#endif
 #if OCAML_MINOR >= 8
     }
   | _ => []
@@ -88,7 +88,7 @@ module Color = {
   let setup = () => {
     Format.pp_set_mark_tags(Format.std_formatter, true);
 #if OCAML_MINOR >= 8
-    Format.pp_set_formatter_tag_functions
+    Format.pp_set_formatter_stag_functions
 #else
     Format.pp_set_formatter_tag_functions
 #endif
