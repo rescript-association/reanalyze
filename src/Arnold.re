@@ -1181,6 +1181,10 @@ module Compile = {
     | Texp_pack(_) => assert(false)
     | Texp_unreachable => assert(false)
     | Texp_extension_constructor(_) => assert(false)
+#if OCAML_MINOR >= 8
+    | Texp_letop(_) => assert(false)
+    | Texp_open(_) => assert(false)
+#endif
     };
   }
   and expressionOpt = (~ctx, eOpt) =>
