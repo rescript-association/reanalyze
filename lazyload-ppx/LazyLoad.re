@@ -32,12 +32,7 @@ let addTopLevelExpr = (bindingName, expr) => {
   bindingName;
 };
 
-let depIgnore = [
-  (
-    {loc: default_loc^, txt: "warning"},
-    PStr([Str.eval(Exp.constant(Pconst_string("-3", None)))]),
-  ),
-];
+let depIgnore = [Compat.mkAttribute(~loc=default_loc^, ~txt="warning")];
 
 let localModulePrefix = "$Local$";
 
@@ -64,7 +59,8 @@ let structure = (mapper, structure) =>
       List.partition(
         str =>
           switch (str) {
-          | {pstr_desc: Pstr_attribute(({txt: "bs.config"}, _))} => true
+          | {pstr_desc: Pstr_attribute(attr)} =>
+            Compat.attributeTxt(attr) == "bs.config"
           | {pstr_desc: Pstr_extension(({txt: "bs.config"}, _), _)} => true
           | _ => false
           },
