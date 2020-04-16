@@ -87,6 +87,7 @@ npx esy @408 x which reanalyze.exe
 ### Build using opam/dune
 ```sh
 opam switch 4.08.1 # or 4.06.1
+opam install reason # for dune
 dune build
 ./_build/install/default/bin/reanalyze.exe -version
   reanalyze version 1.1.0
