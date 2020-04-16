@@ -1,0 +1,6 @@
+{
+  "source": "./esy.json",
+  "override": {
+    "ocaml": "~4.09.0"
+  }
+}

@@ -84,6 +84,14 @@ npx esy @408 x which reanalyze.exe
   /Users/cristianoc/reasonml/reanalyze/_esy/408/store/i/reanalyze-b543bfd4/bin/reanalyze.exe
 ```
 
+### Build for OCaml 4.09.0 using esy (for native projects)
+```sh
+npm install
+npx esy @409
+npx esy @409 x which reanalyze.exe
+  /Users/cristianoc/reasonml/reanalyze/_esy/409/store/i/reanalyze-b543bfd4/bin/reanalyze.exe
+```
+
 ### Build using opam/dune
 ```sh
 opam switch 4.08.1 # or 4.06.1
