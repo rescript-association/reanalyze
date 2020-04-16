@@ -866,8 +866,6 @@
   addValueReference VariantsWithPayload.re:70:4 --> VariantsWithPayload.re:70:31
   addValueReference VariantsWithPayload.re:103:4 --> VariantsWithPayload.re:103:23
   addValueReference VariantsWithPayload.re:110:4 --> VariantsWithPayload.re:110:26
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTestWhitelist.cmt
-  addValueDeclaration x DeadTestWhitelist.re:1:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/FirstClassModulesInterface.cmt
   addTypeDeclaration +x FirstClassModulesInterface.re:2:2
   addTypeDeclaration +y FirstClassModulesInterface.re:3:2
@@ -963,6 +961,8 @@
   addValueReference DeadTestWithInterface.re:1:20 --> DeadTestWithInterface.re:2:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/JSResource.cmt
   addValueDeclaration jSResource JSResource.re:3:0
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTestBlacklist.cmt
+  addValueDeclaration x DeadTestBlacklist.re:1:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/NestedModulesInSignature.cmti
   addValueDeclaration theAnswer NestedModulesInSignature.rei:2:2
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/CreateErrorHandler2.cmt
@@ -1578,13 +1578,13 @@ File References
 
   TestFirstClassModules.re -->> 
   TestEmitInnerModules.re -->> 
+  DeadTestBlacklist.re -->> 
   Opaque.re -->> 
   TypeParams2.re -->> 
   TypeParams3.re -->> 
   TransitiveType1.re -->> 
   BootloaderResource.re -->> 
   ComponentAsProp.re -->> ReactDOMRe.re, ReasonReact.rei
-  DeadTestWhitelist.re -->> 
   ManyComponents.re -->> ReactDOMRe.re, ReasonReact.rei
   TransitiveType2.re -->> 
   ExportWithRename.re -->> React.re
@@ -1736,7 +1736,7 @@ File References
   Live Value DeadTest.thisIsUsedOnce: 1 references (DeadTest.re:8:7) [0]
   Live Value DeadTest.fortyTwoButExported: 0 references () [0]
   Dead Value DeadTest.fortytwo: 0 references () [0]
-  Dead Value DeadTestWhitelist.x: 0 references () [0]
+  Dead Value DeadTestBlacklist.x: 0 references () [0]
   Dead Value DeadTestWithInterface.Ext_buffer.x: 0 references () [0]
   Dead Value DeadTestWithInterface.Ext_buffer.+x: 0 references () [0]
   Dead Type DeadTypeTest.deadType.InNeither: 0 references () [0]

@@ -6,6 +6,65 @@ Supports bucklescript projects, as well as native projects (e.g. dune).
 **Status `master (v3.*)`:** [![Build
 Status](https://dev.azure.com/ccrisccris/reanalyze/_apis/build/status/cristianoc.reanalyze?branchName=master)](https://dev.azure.com/ccrisccris/reanalyze/_build/latest?definitionId=1&branchName=master)
 
+## Expectations
+
+Early release. While the core functionality is reasomably stable, the CLI and annotations are subject to change. However, this is a tiny surface at the moment.
+
+## Use
+Build and run on existing projects using the Build and Try instructions below. The analysis uses `.cmt[i]` files which are generated during compilation, so should be run *after* building your project. Remember to rebuild the project before running again.
+
+### CLI for bucklescript projects
+```
+reanalyze.exe -dce
+```
+The requirement is that `bsconfig.json` can be found by walking up the current directory.
+
+### CLI for native projects
+```
+reanalyze.exe -dce-cmt root/containing/cmt/files
+```
+Subdirectories are scanned recursively looking for `.cmt[i]` files.
+
+The requirement is that the *current* directory is where file paths start from. So if the file path seen by the compiler is relative `src/core/version.ml` then the current directory should contain `src` as a subdirectory. The analysis only reports on existing files, so getting this wrong means no reporting.
+
+### Controlling reports with Annotations
+The dead code analysis supports 2 annotations:
+
+* `@dead` suppresses reporting on the value/type, but can also be used to force the analysis to consider a value as dead. Typically used to acknowledge cases of dead code you are not planning to address right now, but can be searched easily later.
+
+* `@live` tells the analysis that the value should be considered live, even though it might appear to be dead. This is typically used in case of FFI where there are indirect ways to access values. In case of bucklescript projects using `genType`, export annotations immediately qualify values as live, because they are potentially reachable from JS.
+
+The main difference between `@dead` and `@live` is the transitive behaviour: `@dead` values don't keep alive values they use, while `@live` values do.
+
+Several examples can be found in
+[`examples/deadcode/src/DeadTest.re`](examples/deadcode/src/DeadTest.re)
+
+## Undocumented features
+Here are several undocumented features, which could change substantially over time. Ask to for more information.
+
+### Debug
+```sh
+Debug=1 reanalyze.exe ...
+```
+
+### Whitelist and Blacklist
+```sh
+Whitelist=src Blacklist=src/DeadTestBlacklist.re reanalyze.exe ... 
+``` 
+This currently only affects final reporting, not the analysis itself.
+
+
+### Add annotations automatically
+This overwrites your source files automatically with dead code annotations:
+
+```sh
+Write=1 reanalyze.exe ...
+```
+
+### Remove code automatically (not interactively)
+There's a dead code ppx (values only, not types) in this repository. It can be used to automatically remove code annotated `@dead`, as if it had been commented out.
+Can be used after adding annotations automatically. The combination of automatic annotation and automatic elimination is a form of automatic dead code elimination. For projects that use a library, or that in general have code which is dead only temporarily.
+There's obviously a level of risk in doing this automatic elimination. The safety net you can rely on is that the code must still compile.
 
 ## Build
 
