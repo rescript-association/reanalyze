@@ -102,6 +102,8 @@ module Color = {
   let info = (ppf, s) => Format.fprintf(ppf, "@{<info>%s@}", s);
 };
 
+let ocaml_locs = ref (false);
+
 module Loc = {
   let print_filename = (ppf, file) =>
     switch (file) {
@@ -113,50 +115,54 @@ module Loc = {
     };
 
   let print_loc = (~normalizedRange, ppf, loc: Location.t) => {
-    let (file, _, _) = Location.get_pos_info(loc.loc_start);
-    let dim_loc = ppf =>
-      fun
-      | None => ()
-      | Some((
-          (start_line, start_line_start_char),
-          (end_line, end_line_end_char),
-        )) =>
-        if (start_line == end_line) {
-          if (start_line_start_char == end_line_end_char) {
-            Format.fprintf(
-              ppf,
-              " @{<dim>%i:%i@}",
-              start_line,
-              start_line_start_char,
-            );
+    if (ocaml_locs^) {
+      Location.print_loc (ppf, loc);
+    } else {
+      let (file, _, _) = Location.get_pos_info(loc.loc_start);
+      let dim_loc = ppf =>
+        fun
+        | None => ()
+        | Some((
+            (start_line, start_line_start_char),
+            (end_line, end_line_end_char),
+          )) =>
+          if (start_line == end_line) {
+            if (start_line_start_char == end_line_end_char) {
+              Format.fprintf(
+                ppf,
+                " @{<dim>%i:%i@}",
+                start_line,
+                start_line_start_char,
+              );
+            } else {
+              Format.fprintf(
+                ppf,
+                " @{<dim>%i:%i-%i@}",
+                start_line,
+                start_line_start_char,
+                end_line_end_char,
+              );
+            };
           } else {
             Format.fprintf(
               ppf,
-              " @{<dim>%i:%i-%i@}",
+              " @{<dim>%i:%i-%i:%i@}",
               start_line,
               start_line_start_char,
+              end_line,
               end_line_end_char,
             );
           };
-        } else {
-          Format.fprintf(
-            ppf,
-            " @{<dim>%i:%i-%i:%i@}",
-            start_line,
-            start_line_start_char,
-            end_line,
-            end_line_end_char,
-          );
-        };
 
-    Format.fprintf(
-      ppf,
-      "@{<filename>%a@}%a",
-      print_filename,
-      file,
-      dim_loc,
-      normalizedRange,
-    );
+      Format.fprintf(
+        ppf,
+        "@{<filename>%a@}%a",
+        print_filename,
+        file,
+        dim_loc,
+        normalizedRange,
+      );
+    }
   };
 
   let print = (ppf, loc: Location.t) => {
