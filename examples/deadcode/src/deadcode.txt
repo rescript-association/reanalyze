@@ -2299,115 +2299,117 @@ File References
   bar is never used
   <-- line 21
   [@dead "bar"] let bar = (x: someMethods) => {
-File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 3, characters 4-93[0m
-QQ.thisSpansSeveralLines is never used
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 3, characters 4-93
+  QQ.thisSpansSeveralLines is never used
   <-- line 3
             x + y : int -> int -> int) [@@dead "QQ.thisSpansSeveralLines"] 
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 9, characters 2-40[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 9, characters 2-40
   AA.thisIsInInterface is never used
   <-- line 9
       int -> int [@@dead "AA.thisIsInInterface"] 
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 12, characters 2-29[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 12, characters 2-29
   AA.+thisIsInInterface is never used
   <-- line 12
     let thisIsInInterface x = x [@@dead "AA.+thisIsInInterface"] 
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 15, characters 0-25[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 15, characters 0-25
   thisHasSemicolons is never used
   <-- line 15
   let thisHasSemicolons = 3 [@@dead "thisHasSemicolons"] ;;
 
   Warning Dead Type
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 17, characters 18-25[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 17, characters 18-25
   thisIsDead.+DeadA is a variant case which is never constructed
   <-- line 17
   type thisIsDead = | DeadA [@dead "thisIsDead.+DeadA"]  | DeadB
 
   Warning Dead Type
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 17, characters 26-33[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 17, characters 26-33
   thisIsDead.+DeadB is a variant case which is never constructed
   <-- line 17
   type thisIsDead = | DeadA [@dead "thisIsDead.+DeadA"]  | DeadB [@dead "thisIsDead.+DeadB"] 
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 21, characters 2-11[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 21, characters 2-11
   _ has no side effects and can be removed
   <-- line 21
     let _ = 3 [@@dead "_"]  in
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 22, characters 2-17[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 22, characters 2-17
   _ has no side effects and can be removed
   <-- line 22
     let _ = [1,2,3] [@@dead "_"]  in 
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 26, characters 6-26[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 26, characters 6-26
   Bs_version.version is never used
   <-- line 26
     sig val version : string [@@dead "Bs_version.version"]  val header : string val package_name : string end 
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 26, characters 27-46[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 26, characters 27-46
   Bs_version.header is never used
   <-- line 26
     sig val version : string [@@dead "Bs_version.version"]  val header : string [@@dead "Bs_version.header"]  val package_name : string end 
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 26, characters 47-72[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 26, characters 47-72
   Bs_version.package_name is never used
   <-- line 26
     sig val version : string [@@dead "Bs_version.version"]  val header : string [@@dead "Bs_version.header"]  val package_name : string [@@dead "Bs_version.package_name"]  end 
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 29, characters 4-31[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 29, characters 4-31
   Bs_version.+version is never used
   <-- line 29
       let version = "7.2.0-dev.4" [@@dead "Bs_version.+version"] 
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 30, characters 4-70[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 30, characters 4-70
   Bs_version.+header is never used
   <-- line 30
       let header = "// Generated by BUCKLESCRIPT, PLEASE EDIT WITH CARE" [@@dead "Bs_version.+header"] 
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 31, characters 4-36[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 31, characters 4-36
   Bs_version.+package_name is never used
   <-- line 31
       let package_name = "bs-platform" [@@dead "Bs_version.+package_name"] 
 
   Warning Dead Type
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 35, characters 2-137[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 35, characters 2-137
   l.+Lfunction is a variant case which is never constructed
   <-- line 35
                          } [@dead "l.+Lfunction"] 
 
   Warning Dead Type
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 41, characters 2-22[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 41, characters 2-22
   module_info.+module_name is a record label never used to read a value
   <-- line 41
     module_name: string; [@dead "module_info.+module_name"] 
 
   Warning Dead Type
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 42, characters 2-12[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 42, characters 2-12
   module_info.+case is a record label never used to read a value
   <-- line 42
     case: bool [@dead "module_info.+case"] 
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 45, characters 0-305[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 45, characters 0-305
   map_split_opt is never used
   <-- line 45
       (match d with Some d -> d::ds | None -> ds) [@@dead "map_split_opt"] 
 
   Warning Dead Value
-  File "[1m/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 56, characters 0-40[0m
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 56, characters 0-40
   inline_threshold is never used
   <-- line 56
   let inline_threshold = Some (10. /. 8.); [@@dead "inline_threshold"] 

@@ -70,6 +70,9 @@ module Color = {
       Format.std_formatter,
       color_functions,
     );
+    if (!get_color_enabled()) {
+      Misc.Color.setup(Some(Never));
+    };
   };
 
   let error = (ppf, s) => Format.fprintf(ppf, "@{<error>%s@}", s);
