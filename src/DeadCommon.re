@@ -14,6 +14,8 @@ let verbose = Sys.getenv_opt("Debug") != None;
 
 let removeDeadValuesWithSideEffects = false;
 
+let reportUnderscore = false;
+
 let recursiveDebug = false;
 
 let checkPrefix = prefix_ => {
@@ -895,7 +897,14 @@ module Decl = {
 
     let insideReportedValue = decl |> isInsideReportedValue;
 
-    let shouldEmitWarning = !insideReportedValue;
+    let shouldEmitWarning =
+      !insideReportedValue
+      && (
+        switch (decl.path) {
+        | ["_", ..._] => reportUnderscore
+        | _ => true
+        }
+      );
     let shouldWriteAnnotation = shouldEmitWarning && decl |> checkSideEffects;
     if (shouldEmitWarning) {
       emitWarning(~message, ~loc=decl |> declGetLoc, ~name, ~path=decl.path);

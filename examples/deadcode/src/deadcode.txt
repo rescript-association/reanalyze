@@ -2337,18 +2337,6 @@ File References
   type thisIsDead = | DeadA [@dead "thisIsDead.+DeadA"]  | DeadB [@dead "thisIsDead.+DeadB"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 21, characters 2-11
-  _ has no side effects and can be removed
-  <-- line 21
-    let _ = 3 [@@dead "_"]  in
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 22, characters 2-17
-  _ has no side effects and can be removed
-  <-- line 22
-    let _ = [1,2,3] [@@dead "_"]  in 
-
-  Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 26, characters 6-26
   Bs_version.version is never used
   <-- line 26
@@ -2443,36 +2431,6 @@ File References
   VariantUsedOnlyInImplementation.t.+A is a variant case which is never constructed
   <-- line 36
       | [@dead "VariantUsedOnlyInImplementation.t.+A"] A; // TODO: discovered this automatically
-
-  Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re 46:1-36
-  _ has no side effects and can be removed
-  <-- line 46
-  [@dead "_"] let _ = DeadTypeTest.OnlyInInterface;
-
-  Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re 47:1-27
-  _ has no side effects and can be removed
-  <-- line 47
-  [@dead "_"] let _ = DeadTypeTest.InBoth;
-
-  Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re 54:1-18
-  _ has no side effects and can be removed
-  <-- line 54
-  [@dead "_"] let _ = r => r.xxx;
-
-  Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re 55:1-22
-  _ has no side effects and can be removed
-  <-- line 55
-  [@dead "_"] let _ = ({yyy}) => yyy;
-
-  Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re 58:3-12
-  UnderscoreInside._ has no side effects and can be removed
-  <-- line 58
-    [@dead "UnderscoreInside._"] let _ = 13;
 
   Warning Dead Value
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re 63:3-12
@@ -2643,18 +2601,6 @@ File References
   deadType.+InNeither is a variant case which is never constructed
   <-- line 10
     | [@dead "deadType.+InNeither"] InNeither;
-
-  Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.re 12:1-28
-  _ has no side effects and can be removed
-  <-- line 12
-  [@dead "_"] let _ = OnlyInImplementation;
-
-  Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.re 13:1-14
-  _ has no side effects and can be removed
-  <-- line 13
-  [@dead "_"] let _ = InBoth;
 
   Warning Dead Type
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.rei 2:5
