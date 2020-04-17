@@ -16,7 +16,7 @@ let removeDeadValuesWithSideEffects = false;
 
 let reportUnderscore = false;
 
-let reportVariantDeadOnlyInInterface = false;
+let reportTypesDeadOnlyInInterface = false;
 
 let recursiveDebug = false;
 

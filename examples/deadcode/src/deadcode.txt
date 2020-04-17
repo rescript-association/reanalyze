@@ -871,11 +871,15 @@
   addTypeDeclaration +y FirstClassModulesInterface.re:3:2
   addValueDeclaration r FirstClassModulesInterface.re:6:4
   extendTypeDependencies FirstClassModulesInterface.re:2:2 --> FirstClassModulesInterface.rei:3:2
+  extendTypeDependencies FirstClassModulesInterface.rei:3:2 --> FirstClassModulesInterface.re:2:2
   extendTypeDependencies FirstClassModulesInterface.re:3:2 --> FirstClassModulesInterface.rei:4:2
+  extendTypeDependencies FirstClassModulesInterface.rei:4:2 --> FirstClassModulesInterface.re:3:2
   addValueReference FirstClassModulesInterface.rei:7:0 --> FirstClassModulesInterface.re:6:4
   addValueReference FirstClassModulesInterface.rei:10:18 --> FirstClassModulesInterface.re:8:18
   addValueReference FirstClassModulesInterface.re:8:18 --> FirstClassModulesInterface.rei:10:18
+  addTypeReference FirstClassModulesInterface.re:3:2 --> FirstClassModulesInterface.rei:4:2
   addTypeReference FirstClassModulesInterface.rei:4:2 --> FirstClassModulesInterface.re:3:2
+  addTypeReference FirstClassModulesInterface.re:2:2 --> FirstClassModulesInterface.rei:3:2
   addTypeReference FirstClassModulesInterface.rei:3:2 --> FirstClassModulesInterface.re:2:2
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Unboxed.cmt
   addTypeDeclaration +A Unboxed.re:4:4
