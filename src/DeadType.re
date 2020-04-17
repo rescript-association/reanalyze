@@ -57,7 +57,7 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
 
       typeDependencies := [(loc1, loc2), ...typeDependencies^];
     };
-  let updateDependencies = (name, loc) => {
+  let updateDependencies = (~isVariant, name, loc) => {
     let path2 =
       [
         currentModuleName^,
@@ -86,7 +86,11 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
     | _ => ()
     };
     switch (Hashtbl.find_opt(fields, path2)) {
-    | Some(loc2) => extendTypeDependencies(loc, loc2)
+    | Some(loc2) =>
+      extendTypeDependencies(loc, loc2);
+      if (isVariant && !reportVariantDeadOnlyInInterface) {
+        extendTypeDependencies(loc2, loc);
+      };
     | None => Hashtbl.add(fields, path2, loc)
     };
   };
@@ -95,13 +99,13 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
   | Ttype_record(l) =>
     l
     |> List.iter(({Typedtree.ld_name, ld_loc}) =>
-         updateDependencies(ld_name, ld_loc)
+         updateDependencies(~isVariant=false, ld_name, ld_loc)
        )
 
   | Ttype_variant(l) =>
     l
     |> List.iter(({Typedtree.cd_name, cd_loc}) =>
-         updateDependencies(cd_name, cd_loc)
+         updateDependencies(~isVariant=true, cd_name, cd_loc)
        )
 
   | _ => ()

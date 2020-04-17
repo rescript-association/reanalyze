@@ -16,6 +16,8 @@ let removeDeadValuesWithSideEffects = false;
 
 let reportUnderscore = false;
 
+let reportVariantDeadOnlyInInterface = false;
+
 let recursiveDebug = false;
 
 let checkPrefix = prefix_ => {
