@@ -28,25 +28,14 @@ module Color = {
     | Dim => "2";
 
   let style_of_tag = s =>
-    switch (s) {
-#if OCAML_MINOR >= 8
-  | Format.String_tag(s) =>
-    switch (s) {
-#else
-#endif
+    switch (s |> Compat.getStringTag) {
     | "error" => [Bold, FG(Red)]
     | "warning" => [Bold, FG(Magenta)]
     | "info" => [Bold, FG(Yellow)]
     | "dim" => [Dim]
     | "filename" => [FG(Cyan)]
     | _ => []
-#if OCAML_MINOR >= 8
-    }
-  | _ => []
-  };
-#else
     };
-#endif
   let ansi_of_tag = s => {
     let l = style_of_tag(s);
     let s = String.concat(";", List.map(code_of_style, l));
@@ -55,44 +44,25 @@ module Color = {
 
   let reset_lit = "\027[0m";
 
-  let color_functions = {
-#if OCAML_MINOR >= 8
-    Format.mark_open_stag: s =>
-#else
-    Format.mark_open_tag: s =>
-#endif
-      if (get_color_enabled()) {
-        ansi_of_tag(s);
-      } else {
-        "";
-      },
-#if OCAML_MINOR >= 8
-    mark_close_stag: _ =>
-#else
-    mark_close_tag: _ =>
-#endif
-      if (get_color_enabled()) {
-        reset_lit;
-      } else {
-        "";
-      },
-#if OCAML_MINOR >= 8
-    print_open_stag: _ => (),
-    print_close_stag: _ => (),
-#else
-    print_open_tag: _ => (),
-    print_close_tag: _ => (),
-#endif
-  };
+  let color_functions =
+    Compat.setOpenCloseTag(
+      s =>
+        if (get_color_enabled()) {
+          ansi_of_tag(s);
+        } else {
+          "";
+        },
+      _ =>
+        if (get_color_enabled()) {
+          reset_lit;
+        } else {
+          "";
+        },
+    );
 
   let setup = () => {
     Format.pp_set_mark_tags(Format.std_formatter, true);
-#if OCAML_MINOR >= 8
-    Format.pp_set_formatter_stag_functions
-#else
-    Format.pp_set_formatter_tag_functions
-#endif
-    (
+    Compat.pp_set_formatter_tag_functions(
       Format.std_formatter,
       color_functions,
     );
@@ -114,8 +84,9 @@ module Loc = {
 
   let print_loc = (~normalizedRange, ppf, loc: Location.t) => {
     let (file, _, _) = Location.get_pos_info(loc.loc_start);
-    if (Filename.check_suffix(file, ".ml") || Filename.check_suffix(file, ".mli")) {
-      Location.print_loc (ppf, loc);
+    if (Filename.check_suffix(file, ".ml")
+        || Filename.check_suffix(file, ".mli")) {
+      Location.print_loc(ppf, loc);
     } else {
       let dim_loc = ppf =>
         fun
@@ -160,7 +131,7 @@ module Loc = {
         dim_loc,
         normalizedRange,
       );
-    }
+    };
   };
 
   let print = (ppf, loc: Location.t) => {
