@@ -1,3 +1,7 @@
+let posIsReason = (pos: Lexing.position) =>
+  Filename.check_suffix(pos.pos_fname, ".re")
+  || Filename.check_suffix(pos.pos_fname, ".rei");
+
 module Color = {
   let color_enabled = lazy(Unix.isatty(Unix.stdout));
   let forceColor = ref(false);
@@ -84,8 +88,7 @@ module Loc = {
 
   let print_loc = (~normalizedRange, ppf, loc: Location.t) => {
     let (file, _, _) = Location.get_pos_info(loc.loc_start);
-    if (Filename.check_suffix(file, ".ml")
-        || Filename.check_suffix(file, ".mli")) {
+    if (!posIsReason(loc.loc_start)) {
       Location.print_loc(ppf, loc);
     } else {
       let dim_loc = ppf =>

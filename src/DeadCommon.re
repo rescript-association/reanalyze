@@ -80,9 +80,7 @@ let posToString = (~printCol=true, ~shortFile=true, pos: Lexing.position) => {
   ++ (printCol ? ":" ++ string_of_int(col) : ": ");
 };
 
-let posIsReason = (pos: Lexing.position) =>
-  Filename.check_suffix(pos.pos_fname, ".re")
-  || Filename.check_suffix(pos.pos_fname, ".rei");
+let posIsReason = Log_.posIsReason;
 
 /********   ATTRIBUTES   ********/
 module PosSet =
