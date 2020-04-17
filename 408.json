@@ -1,6 +1,6 @@
 {
   "source": "./esy.json",
   "override": {
-    "ocaml": "~4.06.1"
+    "ocaml": "~4.08.1"
   }
 }
