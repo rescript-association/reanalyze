@@ -102,8 +102,6 @@ module Color = {
   let info = (ppf, s) => Format.fprintf(ppf, "@{<info>%s@}", s);
 };
 
-let ocaml_locs = ref (false);
-
 module Loc = {
   let print_filename = (ppf, file) =>
     switch (file) {
@@ -115,10 +113,10 @@ module Loc = {
     };
 
   let print_loc = (~normalizedRange, ppf, loc: Location.t) => {
-    if (ocaml_locs^) {
+    let (file, _, _) = Location.get_pos_info(loc.loc_start);
+    if (Filename.check_suffix(file, ".ml") || Filename.check_suffix(file, ".mli")) {
       Location.print_loc (ppf, loc);
     } else {
-      let (file, _, _) = Location.get_pos_info(loc.loc_start);
       let dim_loc = ppf =>
         fun
         | None => ()

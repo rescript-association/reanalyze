@@ -36,11 +36,6 @@ let cli = () => {
       "root_path experimental DCE for all the .cmt files under the root path",
     ),
     (
-      "-ocaml-locs",
-      Arg.Unit(() => Log_.ocaml_locs := true),
-      "print warnings using locations in the OCaml compiler's format",
-    ),
-    (
       "-termination",
       Arg.Unit(() => setTermination(None)),
       "experimental termination",
