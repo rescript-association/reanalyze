@@ -120,8 +120,8 @@ let checkAnyBindingWithNoSideEffects =
     ) =>
   switch (pat_desc) {
   | Tpat_any when exprNoSideEffects(expr) && !loc.loc_ghost =>
-    let name = "_";
-    let path = currentModulePath^ @ [currentModuleName^];
+    let name = "_" |> Name.create;
+    let path = currentModulePath^ @ [currentModuleName^ |> Name.create];
     addValueDeclaration(~path, ~loc, ~sideEffects=false, name);
   | _ => ()
   };
@@ -134,13 +134,13 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
     switch (vb.vb_pat.pat_desc) {
     | Tpat_var(id, {loc: {loc_start, loc_ghost} as loc})
         when !loc_ghost && !vb.vb_loc.loc_ghost =>
-      let name = "+" ++ Ident.name(id);
+      let name = Ident.name(id) |> Name.create(~isInterface=false);
       let exists =
         switch (PosHash.find_opt(decls, loc_start)) {
         | Some({declKind: Value}) => true
         | _ => false
         };
-      let path = currentModulePath^ @ [currentModuleName^];
+      let path = currentModulePath^ @ [currentModuleName^ |> Name.create];
       if (!exists) {
         let sideEffects = !exprNoSideEffects(vb.vb_expr);
         addValueDeclaration(~path, ~loc, ~sideEffects, name);
@@ -180,11 +180,14 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
   | Texp_ident(path, _, {Types.val_loc: {loc_ghost: true}}) =>
     // When the ppx uses a dummy location, find the original location.
     let moduleName =
-      switch (path) {
-      | Pident(_) => currentModuleName^
-      | _ => path |> Path.head |> Ident.name
-      };
-    let valueName = path |> Path.last;
+      (
+        switch (path) {
+        | Pident(_) => currentModuleName^
+        | _ => path |> Path.head |> Ident.name
+        }
+      )
+      |> Name.create;
+    let valueName = path |> Path.last |> Name.create;
     switch (getPosOfValue(~moduleName, ~valueName)) {
     | Some(posName) =>
       addValueReference(
@@ -206,15 +209,15 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
         path
         |> Path.name == "JSResource.jSResource"
         && Filename.check_suffix(s, ".bs") =>
-    let moduleName = Filename.chop_extension(s);
-    switch (getPosOfValue(~moduleName, ~valueName="make")) {
+    let moduleName = Filename.chop_extension(s) |> Name.create;
+    switch (getPosOfValue(~moduleName, ~valueName="make" |> Name.create)) {
     | None => ()
     | Some(posMake) =>
       if (verbose) {
         Log_.item(
           "lazyLoad %s(%s) %s defined in %s@.",
           path |> Path.name,
-          moduleName,
+          moduleName |> Name.toString,
           locTo.loc_start |> posToString,
           posMake |> posToString,
         );
@@ -239,8 +242,8 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
         |> Path.name == "J.unsafe_expr"
         && Filename.check_suffix(sTrue, ".bs")
         && Filename.check_suffix(sFalse, ".bs") =>
-    let moduleTrue = Filename.chop_extension(sTrue);
-    let moduleFalse = Filename.chop_extension(sFalse);
+    let moduleTrue = Filename.chop_extension(sTrue) |> Name.create;
+    let moduleFalse = Filename.chop_extension(sFalse) |> Name.create;
 
     let positionsTrue = getDeclPositions(~moduleName=moduleTrue);
     let positionsFalse = getDeclPositions(~moduleName=moduleFalse);
@@ -249,8 +252,8 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     if (verbose) {
       Log_.item(
         "requireCond  true:%s false:%s allPositions:[%s]@.",
-        moduleTrue,
-        moduleFalse,
+        moduleTrue |> Name.toString,
+        moduleFalse |> Name.toString,
         allPositions
         |> PosSet.elements
         |> List.map(posToString)
@@ -323,9 +326,9 @@ let collectValueReferences = {
     let oldModulePath = currentModulePath^;
     switch (structureItem.str_desc) {
     | Tstr_module({mb_name}) =>
-      currentModulePath := [mb_name.txt, ...currentModulePath^]
+      currentModulePath := [mb_name.txt |> Name.create, ...currentModulePath^]
     | Tstr_primitive(vd) when analyzeExternals =>
-      let path = currentModulePath^ @ [currentModuleName^];
+      let path = currentModulePath^ @ [currentModuleName^ |> Name.create];
       let exists =
         switch (PosHash.find_opt(decls, vd.val_loc.loc_start)) {
         | Some({declKind: Value}) => true
@@ -336,7 +339,7 @@ let collectValueReferences = {
           ~path,
           ~loc=vd.val_loc,
           ~sideEffects=false,
-          "+" ++ (vd.val_id |> Ident.name),
+          vd.val_id |> Ident.name |> Name.create(~isInterface=false),
         );
       };
 

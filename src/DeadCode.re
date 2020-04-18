@@ -25,13 +25,21 @@ let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
         | _ => false
         };
       if (!isPrimitive || analyzeExternals) {
-        addValueDeclaration(~sideEffects=false, ~path, ~loc, Ident.name(id));
+        addValueDeclaration(
+          ~sideEffects=false,
+          ~path,
+          ~loc,
+          Ident.name(id) |> Name.create,
+        );
       };
     };
   | Sig_type(_) =>
     let (id, t) = si |> Compat.getSigType;
     if (analyzeTypes^) {
-      DeadType.addDeclaration(~path=[id |> Ident.name, ...path], t);
+      DeadType.addDeclaration(
+        ~path=[id |> Ident.name |> Name.create, ...path],
+        t,
+      );
     };
   | Sig_module(_)
   | Sig_modtype(_) =>
@@ -46,7 +54,7 @@ let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
         getSignature(moduleType)
         |> List.iter(
              collectExportFromSignatureItem(
-               ~path=[id |> Ident.name, ...path],
+               ~path=[id |> Ident.name |> Name.create, ...path],
              ),
            );
       };
@@ -59,7 +67,10 @@ let processSignature = (signature: Types.signature) => {
   let module_id = currentModuleName^;
   signature
   |> List.iter(sig_item =>
-       collectExportFromSignatureItem(~path=[module_id], sig_item)
+       collectExportFromSignatureItem(
+         ~path=[module_id |> Name.create],
+         sig_item,
+       )
      );
 };
 
