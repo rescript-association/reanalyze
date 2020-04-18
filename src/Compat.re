@@ -31,3 +31,37 @@ let pp_set_formatter_tag_functions =
     Format.pp_set_formatter_tag_functions;
 #endif
 
+let getSigValue = si => switch si {
+#if OCAML_MINOR >= 8
+  | Types.Sig_value(id, {Types.val_loc, val_kind}, _) =>
+    (id, val_loc, val_kind)
+#else
+  | Types.Sig_value(id, {Types.val_loc, val_kind}) =>
+    (id, val_loc, val_kind)
+#endif
+  | _ => assert false
+}
+
+let getSigType = si => switch si {
+#if OCAML_MINOR >= 8
+  | Types.Sig_type(id, t, _, _) =>
+    (id, t)
+#else
+  | Types.Sig_type(id, t, _) =>
+    (id, t)
+#endif
+  | _ => assert false
+}
+
+let getSigModuleModtype = si => switch si {
+#if OCAML_MINOR >= 8
+  | Types.Sig_module(id, _, {Types.md_type: moduleType}, _, _)
+  | Types.Sig_modtype(id, {Types.mtd_type: Some(moduleType)}, _) =>
+    Some((id, moduleType))
+#else
+  | Types.Sig_module(id, {Types.md_type: moduleType}, _)
+  | Types.Sig_modtype(id, {Types.mtd_type: Some(moduleType)}) =>
+    Some((id, moduleType))
+#endif
+  | _ => None
+}

@@ -16,53 +16,42 @@ let rec getSignature = (~isfunc=false, moduleType: Types.module_type) =>
 
 let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
   switch (si) {
-#if OCAML_MINOR >= 8
-  | Sig_value(id, {Types.val_loc, val_kind}, _)
-#else
-  | Sig_value(id, {Types.val_loc, val_kind})
-#endif
-  when !val_loc.Location.loc_ghost =>
-    let isPrimitive =
-      switch (val_kind) {
-      | Val_prim(_) => true
-      | _ => false
+  | Sig_value(_) =>
+    let (id, loc, kind) = si |> Compat.getSigValue;
+    if (!loc.Location.loc_ghost) {
+      let isPrimitive =
+        switch (kind) {
+        | Val_prim(_) => true
+        | _ => false
+        };
+      if (!isPrimitive || analyzeExternals) {
+        addValueDeclaration(~sideEffects=false, ~path, ~loc, Ident.name(id));
       };
-    if (!isPrimitive || analyzeExternals) {
-      addValueDeclaration(
-        ~sideEffects=false,
-        ~path,
-        ~loc=val_loc,
-        Ident.name(id),
-      );
     };
-#if OCAML_MINOR >= 8
-  | Sig_type(id, t, _, _) =>
-#else
-  | Sig_type(id, t, _) =>
-#endif
+  | Sig_type(_) =>
+    let (id, t) = si |> Compat.getSigType;
     if (analyzeTypes^) {
       DeadType.addDeclaration(~path=[id |> Ident.name, ...path], t);
-    }
-  | (
-#if OCAML_MINOR >= 8
-      Sig_module(id, _, {Types.md_type: moduleType}, _, _) |
-      Sig_modtype(id, {Types.mtd_type: Some(moduleType)}, _)
-#else
-      Sig_module(id, {Types.md_type: moduleType}, _) |
-      Sig_modtype(id, {Types.mtd_type: Some(moduleType)})
-#endif
-    ) as s =>
-    let collect =
-      switch (s) {
-      | Sig_modtype(_) => false
-      | _ => true
-      };
-    if (collect) {
-      getSignature(moduleType)
-      |> List.iter(
-           collectExportFromSignatureItem(~path=[id |> Ident.name, ...path]),
-         );
     };
+  | Sig_module(_)
+  | Sig_modtype(_) =>
+    switch (si |> Compat.getSigModuleModtype) {
+    | Some((id, moduleType)) =>
+      let collect =
+        switch (si) {
+        | Sig_modtype(_) => false
+        | _ => true
+        };
+      if (collect) {
+        getSignature(moduleType)
+        |> List.iter(
+             collectExportFromSignatureItem(
+               ~path=[id |> Ident.name, ...path],
+             ),
+           );
+      };
+    | None => ()
+    }
   | _ => ()
   };
 
