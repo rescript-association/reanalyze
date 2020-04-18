@@ -65,3 +65,14 @@ let getSigModuleModtype = si => switch si {
 #endif
   | _ => None
 }
+
+let getTexpMatch = desc => switch desc {
+#if OCAML_MINOR >= 8
+  | Typedtree.Texp_match(e, cases, partial) =>
+    (e, casesOK @ casesExn, partial)
+#else
+  | Typedtree.Texp_match(e, casesOK, casesExn, partial) =>
+    (e, casesOK @ casesExn, partial)
+#endif
+  | _ => assert false
+}
