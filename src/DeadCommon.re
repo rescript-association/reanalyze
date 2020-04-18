@@ -16,7 +16,26 @@ let removeDeadValuesWithSideEffects = false;
 
 let reportUnderscore = false;
 
+let reportTypesDeadOnlyInInterface = false;
+
 let recursiveDebug = false;
+
+module Name: {
+  type t;
+  let create: (~isInterface: bool=?, string) => t;
+  let isInterface: t => bool;
+  let isUnderscore: t => bool;
+  let startsWithUnderscore: t => bool;
+  let toString: t => string;
+} = {
+  type t = string;
+  let create = (~isInterface=true, s) => isInterface ? s : "+" ++ s;
+  let isInterface = s => s.[0] != '+';
+  let isUnderscore = s => s == "_" || s == "+_";
+  let startsWithUnderscore = s =>
+    s |> String.length >= 2 && (s.[0] == '_' || s.[0] == '+' && s.[1] == '_');
+  let toString = s => s;
+};
 
 let checkPrefix = prefix_ => {
   let prefix =
@@ -141,7 +160,7 @@ module FileHash = {
   };
 };
 
-type path = list(string);
+type path = list(Name.t);
 
 type declKind =
   | RecordLabel
@@ -161,7 +180,7 @@ type decl = {
 type decls = PosHash.t(decl);
 
 let decls: decls = PosHash.create(256); /* all exported declarations */
-let moduleDecls: Hashtbl.t(string, PosSet.t) = Hashtbl.create(1); /* from module name to its decls */
+let moduleDecls: Hashtbl.t(Name.t, PosSet.t) = Hashtbl.create(1); /* from module name to its decls */
 
 let valueReferences: PosHash.t(PosSet.t) = PosHash.create(256); /* all value references */
 let typeReferences: PosHash.t(PosSet.t) = PosHash.create(256); /* all type references */
@@ -338,10 +357,11 @@ let iterFilesFromRootsToLeaves = iterFun => {
 
 /********   PROCESSING  ********/
 
-let pathToString = path => path |> List.rev |> String.concat(".");
+let pathToString = path =>
+  path |> List.rev_map(Name.toString) |> String.concat(".");
 
 let pathWithoutHead = path => {
-  path |> List.rev |> List.tl |> String.concat(".");
+  path |> List.rev_map(Name.toString) |> List.tl |> String.concat(".");
 };
 
 let annotateAtEnd = (~pos) => !posIsReason(pos);
@@ -350,7 +370,7 @@ let getPosAnnotation = decl =>
   annotateAtEnd(~pos=decl.pos) ? decl.posEnd : decl.posStart;
 
 let addDeclaration_ =
-    (~sideEffects=false, ~declKind, ~path, ~loc: Location.t, name) => {
+    (~sideEffects=false, ~declKind, ~path, ~loc: Location.t, name: Name.t) => {
   let pos = loc.loc_start;
   let posStart = pos;
   let posEnd = loc.loc_end;
@@ -366,7 +386,7 @@ let addDeclaration_ =
       Log_.item(
         "add%sDeclaration %s %s@.",
         declKind == Value ? "Value" : "Type",
-        name,
+        name |> Name.toString,
         pos |> posToString,
       );
     };
@@ -786,8 +806,8 @@ module Decl = {
     let pathIsImplementationOf = (path1, path2) =>
       switch (path1, path2) {
       | ([name1, ...restPath1], [name2, ...restPath2]) =>
-        name1.[0] == '+'
-        && name2.[0] != '+'
+        !Name.isInterface(name1)
+        && Name.isInterface(name2)
         && List.length(restPath1) > 1
         && restPath1 == restPath2
       | ([], _)
@@ -863,13 +883,7 @@ module Decl = {
 
   let report = (~ppf, decl) => {
     let noSideEffectsOrUnderscore =
-      !decl.sideEffects
-      || {
-        let name = decl.path |> List.hd;
-        name
-        |> String.length >= 2
-        && (name.[0] == '_' || name.[0] == '+' && name.[1] == '_');
-      };
+      !decl.sideEffects || decl.path |> List.hd |> Name.startsWithUnderscore;
 
     let (name, message) =
       switch (decl.declKind) {
@@ -877,7 +891,7 @@ module Decl = {
           "Warning Dead Value"
           ++ (!noSideEffectsOrUnderscore ? " With Side Effects" : ""),
           switch (decl.path) {
-          | ["_", ..._] => "has no side effects and can be removed"
+          | [name, ..._] when name |> Name.isUnderscore => "has no side effects and can be removed"
           | _ =>
             "is never used"
             ++ (
@@ -901,7 +915,7 @@ module Decl = {
       !insideReportedValue
       && (
         switch (decl.path) {
-        | ["_", ..._] => reportUnderscore
+        | [name, ..._] when name |> Name.isUnderscore => reportUnderscore
         | _ => true
         }
       );

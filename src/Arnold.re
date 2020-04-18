@@ -877,12 +877,7 @@ module Compile = {
     isProgressFunction: Path.t => bool,
   };
 
-#if OCAML_MINOR >= 8
-  module Ident = {
-    include Ident;
-    let create = Ident.create_local
-  }
-#endif
+  module Ident = Compat.Ident;
 
   let rec expression = (~ctx, expr: Typedtree.expression) => {
     let {currentFunctionName, functionTable, isProgressFunction} = ctx;
@@ -1086,20 +1081,9 @@ module Compile = {
     | Texp_function({cases}) =>
       cases |> List.map(case(~ctx)) |> Command.nondet
 
-#if OCAML_MINOR >= 8
-    | Texp_match(e, cases, _)
-          when
-            cases
-            |> List.for_all(({c_lhs: pat}: Typedtree.case) =>
-                  switch (pat.pat_desc) {
-                  | Tpat_exception(_) => false
-                  | _ => true
-                  }
-                ) =>
-#else
-    | Texp_match(e, cases, [], _) =>
-#endif
+    | Texp_match(_) when !(expr.exp_desc |> Compat.texpMatchHasExceptions) =>
       /* No exceptions */
+      let (e, cases, _) = expr.exp_desc |> Compat.getTexpMatch;
       let cE = e |> expression(~ctx);
       let cCases = cases |> List.map(case(~ctx));
       switch (cE, cases) {
@@ -1180,11 +1164,10 @@ module Compile = {
     | Texp_object(_) => assert(false)
     | Texp_pack(_) => assert(false)
     | Texp_unreachable => assert(false)
-    | Texp_extension_constructor(_) => assert(false)
-#if OCAML_MINOR >= 8
-    | Texp_letop(_) => assert(false)
-    | Texp_open(_) => assert(false)
-#endif
+    | Texp_extension_constructor(_) when true => assert(false)
+    | _ =>
+      /* ocaml 4.08: Texp_letop(_) | Texp_open(_) */
+      assert(false)
     };
   }
   and expressionOpt = (~ctx, eOpt) =>

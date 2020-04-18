@@ -18,8 +18,8 @@ let addTypeReference = (~posFrom, ~posTo) => {
 let addDeclaration =
     (~path as path_, {type_kind, type_manifest}: Types.type_declaration) => {
   let save = (~declKind, ~loc: Location.t, ~name) => {
-    let isInterfaceFile = Filename.check_suffix(loc.loc_start.pos_fname, "i");
-    let name = isInterfaceFile ? name : "+" ++ name;
+    let isInterface = Filename.check_suffix(loc.loc_start.pos_fname, "i");
+    let name = name |> Name.create(~isInterface);
     let path = [name, ...path_] |> pathToString;
     if (type_manifest == None) {
       addTypeDeclaration(~declKind, ~path=path_, ~loc, name);
@@ -60,13 +60,14 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
   let updateDependencies = (name, loc) => {
     let path2 =
       [
-        currentModuleName^,
+        currentModuleName^ |> Name.create,
         ...List.rev([
-             name.Asttypes.txt,
-             typeDeclaration.typ_name.txt,
+             name.Asttypes.txt |> Name.create,
+             typeDeclaration.typ_name.txt |> Name.create,
              ...currentModulePath^,
            ]),
       ]
+      |> List.map(Name.toString)
       |> String.concat(".");
 
     try(
@@ -86,7 +87,11 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
     | _ => ()
     };
     switch (Hashtbl.find_opt(fields, path2)) {
-    | Some(loc2) => extendTypeDependencies(loc, loc2)
+    | Some(loc2) =>
+      extendTypeDependencies(loc, loc2);
+      if (!reportTypesDeadOnlyInInterface) {
+        extendTypeDependencies(loc2, loc);
+      };
     | None => Hashtbl.add(fields, path2, loc)
     };
   };
