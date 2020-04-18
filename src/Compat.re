@@ -76,3 +76,12 @@ let getTexpMatch = desc => switch desc {
 #endif
   | _ => assert false
 }
+
+let getPayload = x => {
+#if OCAML_MINOR >= 8
+ let {attr_name: {txt}, attr_payload: payload} = x;
+#else
+ let ({Asttypes.txt}, payload) = x;
+#endif
+ (txt, payload)
+}

@@ -48,42 +48,45 @@ let rec getAttributePayload = (checkText, attributes: Typedtree.attributes) => {
     };
   switch (attributes) {
   | [] => None
-  #if OCAML_MINOR >= 8
-  | [{attr_name: {txt}, attr_payload: payload}, ..._tl]
-  #else
-  | [({Asttypes.txt}, payload), ..._tl]
-  #endif
-  when checkText(txt) =>
-    switch (payload) {
-    | PStr([]) => Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_eval(expr, _)}, ..._]) => expr |> fromExpr
-    | PStr([{pstr_desc: Pstr_extension(_)}, ..._]) =>
-      Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_value(_)}, ..._]) => Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_primitive(_)}, ..._]) =>
-      Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_type(_)}, ..._]) => Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_typext(_)}, ..._]) => Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_exception(_)}, ..._]) =>
-      Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_module(_)}, ..._]) => Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_recmodule(_)}, ..._]) =>
-      Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_modtype(_)}, ..._]) =>
-      Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_open(_)}, ..._]) => Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_class(_)}, ..._]) => Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_class_type(_)}, ..._]) =>
-      Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_include(_)}, ..._]) =>
-      Some(UnrecognizedPayload)
-    | PStr([{pstr_desc: Pstr_attribute(_)}, ..._]) =>
-      Some(UnrecognizedPayload)
-    | PPat(_) => Some(UnrecognizedPayload)
-    | PSig(_) => Some(UnrecognizedPayload)
-    | PTyp(_) => Some(UnrecognizedPayload)
-    }
-  | [_hd, ...tl] => getAttributePayload(checkText, tl)
+  | [a, ...tl] =>
+    let (txt, payload) = a |> Compat.getPayload;
+    if (checkText(txt)) {
+      switch (payload) {
+      | PStr([]) => Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_eval(expr, _)}, ..._]) => expr |> fromExpr
+      | PStr([{pstr_desc: Pstr_extension(_)}, ..._]) =>
+        Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_value(_)}, ..._]) =>
+        Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_primitive(_)}, ..._]) =>
+        Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_type(_)}, ..._]) => Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_typext(_)}, ..._]) =>
+        Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_exception(_)}, ..._]) =>
+        Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_module(_)}, ..._]) =>
+        Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_recmodule(_)}, ..._]) =>
+        Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_modtype(_)}, ..._]) =>
+        Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_open(_)}, ..._]) => Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_class(_)}, ..._]) =>
+        Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_class_type(_)}, ..._]) =>
+        Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_include(_)}, ..._]) =>
+        Some(UnrecognizedPayload)
+      | PStr([{pstr_desc: Pstr_attribute(_)}, ..._]) =>
+        Some(UnrecognizedPayload)
+      | PPat(_) => Some(UnrecognizedPayload)
+      | PSig(_) => Some(UnrecognizedPayload)
+      | PTyp(_) => Some(UnrecognizedPayload)
+      };
+    } else {
+      getAttributePayload(checkText, tl)
+    };
   };
 };
 
