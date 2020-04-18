@@ -77,6 +77,24 @@ let getTexpMatch = desc => switch desc {
   | _ => assert false
 }
 
+let texpMatchHasExceptions = desc => switch desc {
+#if OCAML_MINOR >= 8
+  | Typedtree.Texp_match(_, cases, _) =>
+    cases
+    |> List.for_all(({c_lhs: pat}: Typedtree.case) =>
+          switch (pat.pat_desc) {
+          | Tpat_exception(_) => true
+          | _ => false
+          })
+#else
+  | Typedtree.Texp_match(_, _, casesExn, _) =>
+    casesExn != []
+#endif
+  | _ => assert false
+}
+
+
+
 let getPayload = x => {
 #if OCAML_MINOR >= 8
  let {attr_name: {txt}, attr_payload: payload} = x;
@@ -84,4 +102,11 @@ let getPayload = x => {
  let ({Asttypes.txt}, payload) = x;
 #endif
  (txt, payload)
+}
+
+module Ident = {
+  include Ident;
+#if OCAML_MINOR >= 8
+  let create = Ident.create_local
+#endif
 }
