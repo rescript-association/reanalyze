@@ -85,7 +85,7 @@ let rec getAttributePayload = (checkText, attributes: Typedtree.attributes) => {
       | PTyp(_) => Some(UnrecognizedPayload)
       };
     } else {
-      getAttributePayload(checkText, tl)
+      getAttributePayload(checkText, tl);
     };
   };
 };
