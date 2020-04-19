@@ -4,7 +4,7 @@
 
   
   type key = string 
-  let compare_key = Ext_string.compare
+  let compare_key = String.compare
 
 type 'a t = (key,'a) Map_gen.t
 exception Duplicate_key of key 

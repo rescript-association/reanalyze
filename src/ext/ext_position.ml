@@ -30,19 +30,6 @@ type t = Lexing.position = {
     pos_cnum : int
 }
 
-let offset (x : t) (y:t) =
-  {
-    x with 
-    pos_lnum =
-       x.pos_lnum + y.pos_lnum - 1;
-    pos_cnum = 
-      x.pos_cnum + y.pos_cnum;
-    pos_bol = 
-      if y.pos_lnum = 1 then 
-        x.pos_bol
-      else x.pos_cnum + y.pos_bol
-  }
-
 let print fmt (pos : t) =
   Format.fprintf fmt "(line %d, column %d)" pos.pos_lnum (pos.pos_cnum - pos.pos_bol)
 
@@ -59,4 +46,3 @@ let lexbuf_from_channel_with_fname ic fname =
   x.lex_start_p <- pos;
   x.lex_curr_p <- pos ; 
   x
-

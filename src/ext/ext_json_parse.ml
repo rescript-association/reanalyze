@@ -581,15 +581,6 @@ let parse_json lexbuf =
   | Eof -> v 
   | _ -> error lexbuf Expect_eof
 
-let parse_json_from_string s = 
-  parse_json (Lexing.from_string s )
-
-let parse_json_from_chan fname in_chan = 
-  let lexbuf = 
-    Ext_position.lexbuf_from_channel_with_fname
-    in_chan fname in 
-  parse_json lexbuf 
-
 let parse_json_from_file s = 
   let in_chan = open_in s in 
   let lexbuf = 
@@ -598,4 +589,3 @@ let parse_json_from_file s =
   match parse_json lexbuf with 
   | exception e -> close_in in_chan ; raise e
   | v  -> close_in in_chan;  v
-

@@ -24,18 +24,18 @@
 
 type loc = Lexing.position
 type json_str = 
-  { str : string ; loc : loc}
+  { str : string ; loc : loc }
 
 type json_flo  =
-  { flo : string ; loc : loc}
+  { flo : string ; loc : loc }
 type json_array =
   { content : t array ; 
-    loc_start : loc ; 
-    loc_end : loc ; 
+    loc_start : loc ;
+    loc_end : loc ;  
   }
 
 and json_map = 
-  { map : t String_map.t ; loc :  loc }
+  { map : t String_map.t ; loc :  loc  }
 and t = 
   | True of loc 
   | False of loc 
