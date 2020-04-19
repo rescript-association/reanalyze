@@ -516,8 +516,8 @@ let parse_json lexbuf =
     | True -> True lexbuf.lex_start_p
     | False -> False lexbuf.lex_start_p
     | Null -> Null lexbuf.lex_start_p
-    | Number s ->  Flo {flo = s; loc = lexbuf.lex_start_p}  
-    | String s -> Str { str = s; loc =    lexbuf.lex_start_p}
+    | Number s ->  Flo s  
+    | String s -> Str s
     | Lbracket -> parse_array  lexbuf.lex_start_p lexbuf.lex_curr_p [] lexbuf
     | Lbrace -> parse_map lexbuf.lex_start_p String_map.empty lexbuf
     |  _ -> error lexbuf Unexpected_token
@@ -543,8 +543,7 @@ let parse_json lexbuf =
     : Ext_json_types.t =
     match token () with 
     | Rbracket ->
-        Arr {loc_start ; content = Ext_array.reverse_of_list acc ; 
-              loc_end = lexbuf.lex_curr_p }
+        Arr (Ext_array.reverse_of_list acc)
     | x -> 
       push x ;
       let new_one = json lexbuf in 
@@ -552,22 +551,20 @@ let parse_json lexbuf =
       | Comma -> 
           parse_array  loc_start loc_finish (new_one :: acc) lexbuf 
       | Rbracket 
-        -> Arr {content = (Ext_array.reverse_of_list (new_one::acc));
-                     loc_start ; 
-                     loc_end = lexbuf.lex_curr_p }
+        -> Arr (Ext_array.reverse_of_list (new_one::acc))
       | _ -> 
         error lexbuf Expect_comma_or_rbracket
       end
   and parse_map loc_start  acc lexbuf : Ext_json_types.t = 
     match token () with 
     | Rbrace -> 
-        Obj { map = acc ; loc = loc_start}
+        Obj acc
     | String key -> 
       begin match token () with 
       | Colon ->
         let value = json lexbuf in
         begin match token () with 
-        | Rbrace -> Obj {map = String_map.add key value acc ; loc = loc_start}
+        | Rbrace -> Obj (String_map.add key value acc)
         | Comma -> 
           parse_map loc_start  (String_map.add key value acc) lexbuf 
         | _ -> error lexbuf Expect_comma_or_rbrace
