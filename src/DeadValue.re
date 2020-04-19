@@ -406,17 +406,20 @@ let traverseStructure = {
         );
       };
     | Tstr_type(_recFlag, typeDeclarations) =>
-      typeDeclarations
-      |> List.iter((typeDeclaration: Typedtree.type_declaration) => {
-           let isInterface = false;
-           let path = [
-             typeDeclaration.typ_id |> Ident.name |> Name.create(~isInterface),
-             ...currentModulePath^ @ [currentModuleName^],
-           ];
-           typeDeclaration.typ_type
-           |> DeadType.addDeclaration(~isInterface, ~path);
-         })
-
+      if (analyzeTypes^) {
+        typeDeclarations
+        |> List.iter((typeDeclaration: Typedtree.type_declaration) => {
+             let isInterface = false;
+             let path = [
+               typeDeclaration.typ_id
+               |> Ident.name
+               |> Name.create(~isInterface),
+               ...currentModulePath^ @ [currentModuleName^],
+             ];
+             typeDeclaration.typ_type
+             |> DeadType.addDeclaration(~isInterface, ~path);
+           });
+      }
     | _ => ()
     };
     let result = super.structure_item(self, structureItem);
