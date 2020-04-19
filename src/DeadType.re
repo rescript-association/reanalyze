@@ -16,9 +16,12 @@ let addTypeReference = (~posFrom, ~posTo) => {
 };
 
 let addDeclaration =
-    (~path as path_, {type_kind, type_manifest}: Types.type_declaration) => {
+    (
+      ~isInterface,
+      ~path as path_,
+      {type_kind, type_manifest}: Types.type_declaration,
+    ) => {
   let save = (~declKind, ~loc: Location.t, ~name) => {
-    let isInterface = Filename.check_suffix(loc.loc_start.pos_fname, "i");
     let name = name |> Name.create(~isInterface);
     let path = [name, ...path_] |> pathToString;
     if (type_manifest == None) {
@@ -60,7 +63,7 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
   let updateDependencies = (name, loc) => {
     let path2 =
       [
-        currentModuleName^ |> Name.create,
+        currentModuleName^,
         ...List.rev([
              name.Asttypes.txt |> Name.create,
              typeDeclaration.typ_name.txt |> Name.create,
@@ -74,7 +77,7 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
       switch (typeDeclaration.typ_manifest) {
       | Some({ctyp_desc: Ttyp_constr(_, {txt}, _)}) =>
         let path1 =
-          [currentModuleName^, ...Longident.flatten(txt)]
+          [currentModule^, ...Longident.flatten(txt)]
           @ [name.Asttypes.txt]
           |> String.concat(".");
         let loc1 = Hashtbl.find(fields, path1);

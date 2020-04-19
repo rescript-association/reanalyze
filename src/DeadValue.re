@@ -121,7 +121,7 @@ let checkAnyBindingWithNoSideEffects =
   switch (pat_desc) {
   | Tpat_any when exprNoSideEffects(expr) && !loc.loc_ghost =>
     let name = "_" |> Name.create;
-    let path = currentModulePath^ @ [currentModuleName^ |> Name.create];
+    let path = currentModulePath^ @ [currentModuleName^];
     addValueDeclaration(~path, ~loc, ~sideEffects=false, name);
   | _ => ()
   };
@@ -140,7 +140,7 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
         | Some({declKind: Value}) => true
         | _ => false
         };
-      let path = currentModulePath^ @ [currentModuleName^ |> Name.create];
+      let path = currentModulePath^ @ [currentModuleName^];
       if (!exists) {
         let sideEffects = !exprNoSideEffects(vb.vb_expr);
         addValueDeclaration(~path, ~loc, ~sideEffects, name);
@@ -180,13 +180,11 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
   | Texp_ident(path, _, {Types.val_loc: {loc_ghost: true}}) =>
     // When the ppx uses a dummy location, find the original location.
     let moduleName =
-      (
-        switch (path) {
-        | Pident(_) => currentModuleName^
-        | _ => path |> Path.head |> Ident.name
-        }
-      )
-      |> Name.create;
+      switch (path) {
+      | Pident(_) => currentModuleName^
+      | _ => path |> Path.head |> Ident.name |> Name.create
+      };
+
     let valueName = path |> Path.last |> Name.create;
     switch (getPosOfValue(~moduleName, ~valueName)) {
     | Some(posName) =>
@@ -209,7 +207,8 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
         path
         |> Path.name == "JSResource.jSResource"
         && Filename.check_suffix(s, ".bs") =>
-    let moduleName = Filename.chop_extension(s) |> Name.create;
+    let moduleName =
+      Filename.chop_extension(s) |> Name.create(~isInterface=false);
     switch (getPosOfValue(~moduleName, ~valueName="make" |> Name.create)) {
     | None => ()
     | Some(posMake) =>
@@ -242,8 +241,10 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
         |> Path.name == "J.unsafe_expr"
         && Filename.check_suffix(sTrue, ".bs")
         && Filename.check_suffix(sFalse, ".bs") =>
-    let moduleTrue = Filename.chop_extension(sTrue) |> Name.create;
-    let moduleFalse = Filename.chop_extension(sFalse) |> Name.create;
+    let moduleTrue =
+      Filename.chop_extension(sTrue) |> Name.create(~isInterface=false);
+    let moduleFalse =
+      Filename.chop_extension(sFalse) |> Name.create(~isInterface=false);
 
     let positionsTrue = getDeclPositions(~moduleName=moduleTrue);
     let positionsFalse = getDeclPositions(~moduleName=moduleFalse);
@@ -263,7 +264,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
 
     allPositions
     |> PosSet.iter(pos => {
-         let posFrom = {...Lexing.dummy_pos, pos_fname: currentModuleName^};
+         let posFrom = {...Lexing.dummy_pos, pos_fname: currentModule^};
          let locFrom = {
            Location.loc_start: posFrom,
            loc_end: posFrom,
@@ -310,8 +311,53 @@ let collectPattern = (super, self, pat: Typedtree.pattern) => {
   super.Tast_mapper.pat(self, pat);
 };
 
+let rec getSignature = (~isfunc=false, moduleType: Types.module_type) =>
+  switch (moduleType) {
+  | Mty_signature(signature) => signature
+  | Mty_functor(_, tOpt, _) when isfunc =>
+    switch (tOpt) {
+    | None => []
+    | Some(moduleType) => getSignature(moduleType)
+    }
+  | Mty_functor(_, _, moduleType) => getSignature(moduleType)
+  | _ => []
+  };
+
+let rec processSignatureItem = (~path, si: Types.signature_item) =>
+  switch (si) {
+  | Sig_type(_) =>
+    let (id, t) = si |> Compat.getSigType;
+    if (analyzeTypes^) {
+      DeadType.addDeclaration(
+        ~isInterface=true,
+        ~path=[id |> Ident.name |> Name.create, ...path],
+        t,
+      );
+    };
+  | Sig_module(_)
+  | Sig_modtype(_) =>
+    switch (si |> Compat.getSigModuleModtype) {
+    | Some((id, moduleType)) =>
+      let collect =
+        switch (si) {
+        | Sig_modtype(_) => false
+        | _ => true
+        };
+      if (collect) {
+        getSignature(moduleType)
+        |> List.iter(
+             processSignatureItem(
+               ~path=[id |> Ident.name |> Name.create, ...path],
+             ),
+           );
+      };
+    | None => ()
+    }
+  | _ => ()
+  };
+
 /* Traverse the AST */
-let collectValueReferences = {
+let traverseStructure = {
   /* Tast_mapper */
   let super = Tast_mapper.default;
 
@@ -325,10 +371,27 @@ let collectValueReferences = {
   let structure_item = (self, structureItem: Typedtree.structure_item) => {
     let oldModulePath = currentModulePath^;
     switch (structureItem.str_desc) {
-    | Tstr_module({mb_name}) =>
-      currentModulePath := [mb_name.txt |> Name.create, ...currentModulePath^]
+    | Tstr_module({mb_expr, mb_name}) =>
+      let hasInterface =
+        switch (mb_expr.mod_desc) {
+        | Tmod_constraint(_) => true
+        | _ => false
+        };
+      currentModulePath := [mb_name.txt |> Name.create, ...currentModulePath^];
+      if (hasInterface) {
+        switch (mb_expr.mod_type) {
+        | Mty_signature(signature) =>
+          signature
+          |> List.iter(
+               processSignatureItem(
+                 ~path=currentModulePath^ @ [currentModuleName^],
+               ),
+             )
+        | _ => ()
+        };
+      };
     | Tstr_primitive(vd) when analyzeExternals =>
-      let path = currentModulePath^ @ [currentModuleName^ |> Name.create];
+      let path = currentModulePath^ @ [currentModuleName^];
       let exists =
         switch (PosHash.find_opt(decls, vd.val_loc.loc_start)) {
         | Some({declKind: Value}) => true
@@ -342,7 +405,24 @@ let collectValueReferences = {
           vd.val_id |> Ident.name |> Name.create(~isInterface=false),
         );
       };
-
+    | Tstr_type(_recFlag, typeDeclarations) =>
+      if (analyzeTypes^) {
+        typeDeclarations
+        |> List.iter((typeDeclaration: Typedtree.type_declaration) => {
+             let isInterface = false;
+             let path = [
+               typeDeclaration.typ_id
+               |> Ident.name
+               |> Name.create(~isInterface),
+               ...currentModulePath^ @ [currentModuleName^],
+             ];
+             typeDeclaration.typ_type
+             |> DeadType.addDeclaration(~isInterface, ~path);
+           });
+      }
+    | Tstr_include(_) =>
+      // TODO: anything special?
+      ()
     | _ => ()
     };
     let result = super.structure_item(self, structureItem);
@@ -391,9 +471,7 @@ let processTypeDependency =
 
 let processStructure =
     (~cmt_value_dependencies, structure: Typedtree.structure) => {
-  structure
-  |> collectValueReferences.structure(collectValueReferences)
-  |> ignore;
+  structure |> traverseStructure.structure(traverseStructure) |> ignore;
 
   let valueDependencies = cmt_value_dependencies |> List.rev;
 

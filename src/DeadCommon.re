@@ -26,6 +26,8 @@ module Name: {
   let isInterface: t => bool;
   let isUnderscore: t => bool;
   let startsWithUnderscore: t => bool;
+  let toImplementation: t => t;
+  let toInterface: t => t;
   let toString: t => string;
 } = {
   type t = string;
@@ -34,6 +36,9 @@ module Name: {
   let isUnderscore = s => s == "_" || s == "+_";
   let startsWithUnderscore = s =>
     s |> String.length >= 2 && (s.[0] == '_' || s.[0] == '+' && s.[1] == '_');
+  let toInterface = s =>
+    isInterface(s) ? s : String.sub(s, 1, String.length(s) - 1);
+  let toImplementation = s => isInterface(s) ? "+" ++ s : s;
   let toString = s => s;
 };
 
@@ -190,7 +195,8 @@ let fileReferences: FileHash.t(FileSet.t) = FileHash.create(256); /* references 
 let fields: Hashtbl.t(string, Location.t) = Hashtbl.create(256); /* link from fields (record/variant) paths and locations */
 
 let currentSrc = ref("");
-let currentModuleName = ref("");
+let currentModule = ref("");
+let currentModuleName = ref("" |> Name.create);
 let currentBindings = ref(PosSet.empty);
 let lastBinding = ref(Location.none);
 let getLastBinding = () => lastBinding^;
@@ -203,17 +209,24 @@ let declGetLoc = decl => {
 };
 
 let getPosOfValue = (~moduleName, ~valueName) => {
-  switch (Hashtbl.find_opt(moduleDecls, moduleName)) {
-  | Some(posSet) =>
-    posSet
-    |> PosSet.find_first_opt(pos =>
-         switch (PosHash.find_opt(decls, pos)) {
-         | Some({declKind: Value, path: [name, ..._]}) when name == valueName =>
-           true
-         | _ => false
-         }
-       )
-  | None => None
+  let lookup = name =>
+    switch (Hashtbl.find_opt(moduleDecls, name)) {
+    | Some(posSet) =>
+      posSet
+      |> PosSet.find_first_opt(pos =>
+           switch (PosHash.find_opt(decls, pos)) {
+           | Some({declKind: Value, path: [name, ..._]})
+               when name == valueName =>
+             true
+           | _ => false
+           }
+         )
+    | None => None
+    };
+
+  switch (lookup(moduleName |> Name.toInterface)) {
+  | None => lookup(moduleName |> Name.toImplementation)
+  | Some(x) => Some(x)
   };
 };
 
@@ -381,13 +394,14 @@ let addDeclaration_ =
        will create value definitions whose location is in set.mli
      */
   if (!loc.loc_ghost
-      && (currentSrc^ == pos.pos_fname || currentModuleName^ === "*include*")) {
+      && (currentSrc^ == pos.pos_fname || currentModule^ === "*include*")) {
     if (verbose) {
       Log_.item(
-        "add%sDeclaration %s %s@.",
+        "add%sDeclaration %s %s path:%s@.",
         declKind == Value ? "Value" : "Type",
         name |> Name.toString,
         pos |> posToString,
+        path |> pathToString
       );
     };
 

@@ -69,10 +69,10 @@ let readDirsFromConfig = (~configSources) => {
 
   let rec processSourceItem = (sourceItem: Ext_json_types.t) =>
     switch (sourceItem) {
-    | Str({str}) => str |> processDir(~subdirs=false)
-    | Obj({map}) =>
+    | Str(str) => str |> processDir(~subdirs=false)
+    | Obj(map) =>
       switch (map |> String_map.find_opt("dir")) {
-      | Some(Str({str})) =>
+      | Some(Str(str)) =>
         let subdirs =
           switch (map |> String_map.find_opt("subdirs")) {
           | Some(True(_)) => true
@@ -82,7 +82,7 @@ let readDirsFromConfig = (~configSources) => {
         str |> processDir(~subdirs);
       | _ => ()
       }
-    | Arr({content}) => Array.iter(processSourceItem, content)
+    | Arr(arr) => arr |> Array.iter(processSourceItem)
     | _ => ()
     };
 
@@ -101,13 +101,13 @@ let readSourceDirs = (~configSources) => {
 
   let readDirs = json => {
     switch (json) {
-    | Ext_json_types.Obj({map}) =>
+    | Ext_json_types.Obj(map) =>
       switch (map |> String_map.find_opt("dirs")) {
-      | Some(Arr({content})) =>
-        content
+      | Some(Arr(arr)) =>
+        arr
         |> Array.iter(x =>
              switch (x) {
-             | Ext_json_types.Str({str}) => dirs := [str, ...dirs^]
+             | Ext_json_types.Str(str) => dirs := [str, ...dirs^]
              | _ => ()
              }
            );

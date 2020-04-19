@@ -2,19 +2,7 @@ open DeadCommon;
 
 let (+++) = Filename.concat;
 
-let rec getSignature = (~isfunc=false, moduleType: Types.module_type) =>
-  switch (moduleType) {
-  | Mty_signature(signature) => signature
-  | Mty_functor(_, tOpt, _) when isfunc =>
-    switch (tOpt) {
-    | None => []
-    | Some(moduleType) => getSignature(moduleType)
-    }
-  | Mty_functor(_, _, moduleType) => getSignature(moduleType)
-  | _ => []
-  };
-
-let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
+let rec processSignatureItem = (~path, si: Types.signature_item) =>
   switch (si) {
   | Sig_value(_) =>
     let (id, loc, kind) = si |> Compat.getSigValue;
@@ -33,14 +21,6 @@ let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
         );
       };
     };
-  | Sig_type(_) =>
-    let (id, t) = si |> Compat.getSigType;
-    if (analyzeTypes^) {
-      DeadType.addDeclaration(
-        ~path=[id |> Ident.name |> Name.create, ...path],
-        t,
-      );
-    };
   | Sig_module(_)
   | Sig_modtype(_) =>
     switch (si |> Compat.getSigModuleModtype) {
@@ -51,9 +31,9 @@ let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
         | _ => true
         };
       if (collect) {
-        getSignature(moduleType)
+        DeadValue.getSignature(moduleType)
         |> List.iter(
-             collectExportFromSignatureItem(
+             processSignatureItem(
                ~path=[id |> Ident.name |> Name.create, ...path],
              ),
            );
@@ -64,13 +44,9 @@ let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
   };
 
 let processSignature = (signature: Types.signature) => {
-  let module_id = currentModuleName^;
   signature
   |> List.iter(sig_item =>
-       collectExportFromSignatureItem(
-         ~path=[module_id |> Name.create],
-         sig_item,
-       )
+       processSignatureItem(~path=[currentModuleName^], sig_item)
      );
 };
 
@@ -119,7 +95,10 @@ let loadCmtFile = cmtFilePath => {
   | Some(sourceFile) =>
     FileHash.addFile(fileReferences, sourceFile);
     currentSrc := sourceFile;
-    currentModuleName := Paths.getModuleName(sourceFile);
+    currentModule := Paths.getModuleName(sourceFile);
+    currentModuleName :=
+      currentModule^
+      |> Name.create(~isInterface=Filename.check_suffix(currentSrc^, "i"));
 
     if (dce^) {
       switch (cmt_annots) {
