@@ -2,18 +2,6 @@ open DeadCommon;
 
 let (+++) = Filename.concat;
 
-let rec getSignature = (~isfunc=false, moduleType: Types.module_type) =>
-  switch (moduleType) {
-  | Mty_signature(signature) => signature
-  | Mty_functor(_, tOpt, _) when isfunc =>
-    switch (tOpt) {
-    | None => []
-    | Some(moduleType) => getSignature(moduleType)
-    }
-  | Mty_functor(_, _, moduleType) => getSignature(moduleType)
-  | _ => []
-  };
-
 let rec processSignatureItem = (~path, si: Types.signature_item) =>
   switch (si) {
   | Sig_value(_) =>
@@ -43,7 +31,7 @@ let rec processSignatureItem = (~path, si: Types.signature_item) =>
         | _ => true
         };
       if (collect) {
-        getSignature(moduleType)
+        DeadValue.getSignature(moduleType)
         |> List.iter(
              processSignatureItem(
                ~path=[id |> Ident.name |> Name.create, ...path],

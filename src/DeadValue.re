@@ -311,6 +311,51 @@ let collectPattern = (super, self, pat: Typedtree.pattern) => {
   super.Tast_mapper.pat(self, pat);
 };
 
+let rec getSignature = (~isfunc=false, moduleType: Types.module_type) =>
+  switch (moduleType) {
+  | Mty_signature(signature) => signature
+  | Mty_functor(_, tOpt, _) when isfunc =>
+    switch (tOpt) {
+    | None => []
+    | Some(moduleType) => getSignature(moduleType)
+    }
+  | Mty_functor(_, _, moduleType) => getSignature(moduleType)
+  | _ => []
+  };
+
+let rec processSignatureItem = (~path, si: Types.signature_item) =>
+  switch (si) {
+  | Sig_type(_) =>
+    let (id, t) = si |> Compat.getSigType;
+    if (analyzeTypes^) {
+      DeadType.addDeclaration(
+        ~isInterface=true,
+        ~path=[id |> Ident.name |> Name.create, ...path],
+        t,
+      );
+    };
+  | Sig_module(_)
+  | Sig_modtype(_) =>
+    switch (si |> Compat.getSigModuleModtype) {
+    | Some((id, moduleType)) =>
+      let collect =
+        switch (si) {
+        | Sig_modtype(_) => false
+        | _ => true
+        };
+      if (collect) {
+        getSignature(moduleType)
+        |> List.iter(
+             processSignatureItem(
+               ~path=[id |> Ident.name |> Name.create, ...path],
+             ),
+           );
+      };
+    | None => ()
+    }
+  | _ => ()
+  };
+
 /* Traverse the AST */
 let traverseStructure = {
   /* Tast_mapper */
@@ -326,8 +371,25 @@ let traverseStructure = {
   let structure_item = (self, structureItem: Typedtree.structure_item) => {
     let oldModulePath = currentModulePath^;
     switch (structureItem.str_desc) {
-    | Tstr_module({mb_name}) =>
-      currentModulePath := [mb_name.txt |> Name.create, ...currentModulePath^]
+    | Tstr_module({mb_expr, mb_name}) =>
+      let hasInterface =
+        switch (mb_expr.mod_desc) {
+        | Tmod_constraint(_) => true
+        | _ => false
+        };
+      currentModulePath := [mb_name.txt |> Name.create, ...currentModulePath^];
+      if (hasInterface) {
+        switch (mb_expr.mod_type) {
+        | Mty_signature(signature) =>
+          signature
+          |> List.iter(
+               processSignatureItem(
+                 ~path=currentModulePath^ @ [currentModuleName^],
+               ),
+             )
+        | _ => ()
+        };
+      };
     | Tstr_primitive(vd) when analyzeExternals =>
       let path = currentModulePath^ @ [currentModuleName^];
       let exists =

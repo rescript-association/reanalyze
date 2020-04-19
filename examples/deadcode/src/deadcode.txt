@@ -42,7 +42,6 @@
   addTypeReference ReasonComponent.re:63:23 --> Records.re:6:2
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/FirstClassModulesInterface.cmti
   addValueDeclaration r FirstClassModulesInterface.rei:7:0
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Q.cmt
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Types.cmt
   addValueDeclaration someIntList Types.re:5:4
   addValueDeclaration map Types.re:8:4
@@ -1467,6 +1466,7 @@
   addValueReference DeadTest.re:12:7 --> DeadTest.re:10:4
   addValueReference DeadTest.re:20:4 --> DeadTest.re:17:4
   addValueDeclaration +thisSignatureItemIsDead DeadTest.re:31:6
+  addTypeDeclaration A DeadTest.re:36:6
   addTypeDeclaration +A DeadTest.re:40:6
   extendTypeDependencies DeadTest.re:40:6 --> DeadTest.re:36:6
   extendTypeDependencies DeadTest.re:36:6 --> DeadTest.re:40:6
@@ -1699,7 +1699,8 @@ File References
   Dead Value +DeadTest._: 0 references () [0]
   Live Value +DeadTest.VariantUsedOnlyInImplementation.a: 1 references (DeadTest.re:44:17) [0]
   Live Value +DeadTest.VariantUsedOnlyInImplementation.+a: 1 references (DeadTest.re:37:2) [0]
-  Live Type +DeadTest.VariantUsedOnlyInImplementation.+t.+A: 2 references (DeadTest.re:36:6, DeadTest.re:41:10) [0]
+  Live Type +DeadTest.VariantUsedOnlyInImplementation.+t.+A: 1 references (DeadTest.re:41:10) [0]
+  Live Type +DeadTest.VariantUsedOnlyInImplementation.t.A: 1 references (DeadTest.re:40:6) [0]
   Dead Value +DeadTest.M.+thisSignatureItemIsDead: 0 references () [0]
   Live Value +DeadTest.thisIsMarkedLive: 0 references () [0]
   Live Value +DeadTest.thisIsKeptAlive: 1 references (DeadTest.re:20:4) [0]
