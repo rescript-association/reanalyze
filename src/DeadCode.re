@@ -14,7 +14,7 @@ let rec getSignature = (~isfunc=false, moduleType: Types.module_type) =>
   | _ => []
   };
 
-let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
+let rec processSignatureItem = (~path, si: Types.signature_item) =>
   switch (si) {
   | Sig_value(_) =>
     let (id, loc, kind) = si |> Compat.getSigValue;
@@ -54,7 +54,7 @@ let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
       if (collect) {
         getSignature(moduleType)
         |> List.iter(
-             collectExportFromSignatureItem(
+             processSignatureItem(
                ~path=[id |> Ident.name |> Name.create, ...path],
              ),
            );
@@ -67,7 +67,7 @@ let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
 let processSignature = (signature: Types.signature) => {
   signature
   |> List.iter(sig_item =>
-       collectExportFromSignatureItem(~path=[currentModuleName^], sig_item)
+       processSignatureItem(~path=[currentModuleName^], sig_item)
      );
 };
 
