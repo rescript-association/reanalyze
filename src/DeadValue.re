@@ -343,6 +343,17 @@ let traverseStructure = {
           vd.val_id |> Ident.name |> Name.create(~isInterface=false),
         );
       };
+    | Tstr_type(_recFlag, typeDeclarations) =>
+      typeDeclarations
+      |> List.iter((typeDeclaration: Typedtree.type_declaration) => {
+           let isInterface = false;
+           let path = [
+             typeDeclaration.typ_id |> Ident.name |> Name.create(~isInterface),
+             ...currentModulePath^ @ [currentModuleName^],
+           ];
+           typeDeclaration.typ_type
+           |> DeadType.addDeclaration(~isInterface, ~path);
+         })
 
     | _ => ()
     };

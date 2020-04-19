@@ -33,15 +33,6 @@ let rec processSignatureItem = (~path, si: Types.signature_item) =>
         );
       };
     };
-  | Sig_type(_) =>
-    let (id, t) = si |> Compat.getSigType;
-    if (analyzeTypes^) {
-      DeadType.addDeclaration(
-        ~isInterface=true,
-        ~path=[id |> Ident.name |> Name.create, ...path],
-        t,
-      );
-    };
   | Sig_module(_)
   | Sig_modtype(_) =>
     switch (si |> Compat.getSigModuleModtype) {
