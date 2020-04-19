@@ -312,7 +312,7 @@ let collectPattern = (super, self, pat: Typedtree.pattern) => {
 };
 
 /* Traverse the AST */
-let collectValueReferences = {
+let traverseStructure = {
   /* Tast_mapper */
   let super = Tast_mapper.default;
 
@@ -392,9 +392,7 @@ let processTypeDependency =
 
 let processStructure =
     (~cmt_value_dependencies, structure: Typedtree.structure) => {
-  structure
-  |> collectValueReferences.structure(collectValueReferences)
-  |> ignore;
+  structure |> traverseStructure.structure(traverseStructure) |> ignore;
 
   let valueDependencies = cmt_value_dependencies |> List.rev;
 
