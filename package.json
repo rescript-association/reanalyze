@@ -10,7 +10,7 @@
     "test": "node ./scripts/run_integration_tests.js",
     "install:examples": "(cd examples/deadcode && npm install) & (cd examples/termination && npm install)",
     "build:examples": "(cd examples/deadcode && npm run clean && npm run build && npm run analyze) & (cd examples/termination && npm run clean && npm run build && npm run analyze)",
-    "dce": "Whitelist=src Blacklist=src/nothing ./examples/reanalyze.exe -dce-cmt `find  _esy/default/store/b/reanalyze-*/default/src/.Reanalyze.eobjs -name byte`",
+    "dce": "esy x dune build @check -p reanalyze && Whitelist=src Blacklist=src/nothing ./examples/reanalyze.exe -dce-cmt `find  _esy/default/store/b/reanalyze-*/default/src/.Reanalyze.eobjs -name byte`",
     "preversion": "npm test",
     "version": "node scripts/bump_version_module.js && git add -A src/",
     "postversion": "git push && git push --tags"

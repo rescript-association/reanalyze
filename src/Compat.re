@@ -69,7 +69,7 @@ let getSigModuleModtype = si => switch si {
 let getTexpMatch = desc => switch desc {
 #if OCAML_MINOR >= 8
   | Typedtree.Texp_match(e, cases, partial) =>
-    (e, casesOK @ casesExn, partial)
+    (e, cases, partial)
 #else
   | Typedtree.Texp_match(e, casesOK, casesExn, partial) =>
     (e, casesOK @ casesExn, partial)
@@ -97,7 +97,7 @@ let texpMatchHasExceptions = desc => switch desc {
 
 let getPayload = x => {
 #if OCAML_MINOR >= 8
- let {attr_name: {txt}, attr_payload: payload} = x;
+ let {Parsetree.attr_name: {txt}, attr_payload: payload} = x;
 #else
  let ({Asttypes.txt}, payload) = x;
 #endif
