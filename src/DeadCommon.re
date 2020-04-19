@@ -26,6 +26,8 @@ module Name: {
   let isInterface: t => bool;
   let isUnderscore: t => bool;
   let startsWithUnderscore: t => bool;
+  let toImplementation: t => t;
+  let toInterface: t => t;
   let toString: t => string;
 } = {
   type t = string;
@@ -34,6 +36,9 @@ module Name: {
   let isUnderscore = s => s == "_" || s == "+_";
   let startsWithUnderscore = s =>
     s |> String.length >= 2 && (s.[0] == '_' || s.[0] == '+' && s.[1] == '_');
+  let toInterface = s =>
+    isInterface(s) ? s : String.sub(s, 1, String.length(s) - 1);
+  let toImplementation = s => isInterface(s) ? "+" ++ s : s;
   let toString = s => s;
 };
 
@@ -203,17 +208,24 @@ let declGetLoc = decl => {
 };
 
 let getPosOfValue = (~moduleName, ~valueName) => {
-  switch (Hashtbl.find_opt(moduleDecls, moduleName)) {
-  | Some(posSet) =>
-    posSet
-    |> PosSet.find_first_opt(pos =>
-         switch (PosHash.find_opt(decls, pos)) {
-         | Some({declKind: Value, path: [name, ..._]}) when name == valueName =>
-           true
-         | _ => false
-         }
-       )
-  | None => None
+  let lookup = name =>
+    switch (Hashtbl.find_opt(moduleDecls, name)) {
+    | Some(posSet) =>
+      posSet
+      |> PosSet.find_first_opt(pos =>
+           switch (PosHash.find_opt(decls, pos)) {
+           | Some({declKind: Value, path: [name, ..._]})
+               when name == valueName =>
+             true
+           | _ => false
+           }
+         )
+    | None => None
+    };
+
+  switch (lookup(moduleName |> Name.toInterface)) {
+  | None => lookup(moduleName |> Name.toImplementation)
+  | Some(x) => Some(x)
   };
 };
 

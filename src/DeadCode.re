@@ -64,13 +64,11 @@ let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
   };
 
 let processSignature = (signature: Types.signature) => {
-  let module_id = currentModuleName^;
+  let isInterface = Filename.check_suffix(currentSrc^, "i");
+  let moduleNAME = currentModuleName^ |> Name.create(~isInterface);
   signature
   |> List.iter(sig_item =>
-       collectExportFromSignatureItem(
-         ~path=[module_id |> Name.create],
-         sig_item,
-       )
+       collectExportFromSignatureItem(~path=[moduleNAME], sig_item)
      );
 };
 

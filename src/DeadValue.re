@@ -180,13 +180,13 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
   | Texp_ident(path, _, {Types.val_loc: {loc_ghost: true}}) =>
     // When the ppx uses a dummy location, find the original location.
     let moduleName =
-      (
-        switch (path) {
-        | Pident(_) => currentModuleName^
-        | _ => path |> Path.head |> Ident.name
-        }
-      )
-      |> Name.create;
+      switch (path) {
+      | Pident(_) =>
+        currentModuleName^
+        |> Name.create(~isInterface=Filename.check_suffix(currentSrc^, "i"))
+      | _ => path |> Path.head |> Ident.name |> Name.create
+      };
+
     let valueName = path |> Path.last |> Name.create;
     switch (getPosOfValue(~moduleName, ~valueName)) {
     | Some(posName) =>
@@ -209,7 +209,8 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
         path
         |> Path.name == "JSResource.jSResource"
         && Filename.check_suffix(s, ".bs") =>
-    let moduleName = Filename.chop_extension(s) |> Name.create;
+    let moduleName =
+      Filename.chop_extension(s) |> Name.create(~isInterface=false);
     switch (getPosOfValue(~moduleName, ~valueName="make" |> Name.create)) {
     | None => ()
     | Some(posMake) =>
@@ -242,8 +243,10 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
         |> Path.name == "J.unsafe_expr"
         && Filename.check_suffix(sTrue, ".bs")
         && Filename.check_suffix(sFalse, ".bs") =>
-    let moduleTrue = Filename.chop_extension(sTrue) |> Name.create;
-    let moduleFalse = Filename.chop_extension(sFalse) |> Name.create;
+    let moduleTrue =
+      Filename.chop_extension(sTrue) |> Name.create(~isInterface=false);
+    let moduleFalse =
+      Filename.chop_extension(sFalse) |> Name.create(~isInterface=false);
 
     let positionsTrue = getDeclPositions(~moduleName=moduleTrue);
     let positionsFalse = getDeclPositions(~moduleName=moduleFalse);
