@@ -60,7 +60,7 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
   let updateDependencies = (name, loc) => {
     let path2 =
       [
-        currentModuleName^ |> Name.create,
+        currentModuleName^ |> Name.toInterface,
         ...List.rev([
              name.Asttypes.txt |> Name.create,
              typeDeclaration.typ_name.txt |> Name.create,
@@ -74,7 +74,7 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
       switch (typeDeclaration.typ_manifest) {
       | Some({ctyp_desc: Ttyp_constr(_, {txt}, _)}) =>
         let path1 =
-          [currentModuleName^, ...Longident.flatten(txt)]
+          [currentModule^, ...Longident.flatten(txt)]
           @ [name.Asttypes.txt]
           |> String.concat(".");
         let loc1 = Hashtbl.find(fields, path1);

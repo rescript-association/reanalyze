@@ -195,7 +195,8 @@ let fileReferences: FileHash.t(FileSet.t) = FileHash.create(256); /* references 
 let fields: Hashtbl.t(string, Location.t) = Hashtbl.create(256); /* link from fields (record/variant) paths and locations */
 
 let currentSrc = ref("");
-let currentModuleName = ref("");
+let currentModule = ref("");
+let currentModuleName = ref("" |> Name.create);
 let currentBindings = ref(PosSet.empty);
 let lastBinding = ref(Location.none);
 let getLastBinding = () => lastBinding^;
@@ -393,7 +394,7 @@ let addDeclaration_ =
        will create value definitions whose location is in set.mli
      */
   if (!loc.loc_ghost
-      && (currentSrc^ == pos.pos_fname || currentModuleName^ === "*include*")) {
+      && (currentSrc^ == pos.pos_fname || currentModule^ === "*include*")) {
     if (verbose) {
       Log_.item(
         "add%sDeclaration %s %s@.",

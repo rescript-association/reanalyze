@@ -121,7 +121,7 @@ let checkAnyBindingWithNoSideEffects =
   switch (pat_desc) {
   | Tpat_any when exprNoSideEffects(expr) && !loc.loc_ghost =>
     let name = "_" |> Name.create;
-    let path = currentModulePath^ @ [currentModuleName^ |> Name.create];
+    let path = currentModulePath^ @ [currentModuleName^];
     addValueDeclaration(~path, ~loc, ~sideEffects=false, name);
   | _ => ()
   };
@@ -140,7 +140,7 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
         | Some({declKind: Value}) => true
         | _ => false
         };
-      let path = currentModulePath^ @ [currentModuleName^ |> Name.create];
+      let path = currentModulePath^ @ [currentModuleName^];
       if (!exists) {
         let sideEffects = !exprNoSideEffects(vb.vb_expr);
         addValueDeclaration(~path, ~loc, ~sideEffects, name);
@@ -181,9 +181,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     // When the ppx uses a dummy location, find the original location.
     let moduleName =
       switch (path) {
-      | Pident(_) =>
-        currentModuleName^
-        |> Name.create(~isInterface=Filename.check_suffix(currentSrc^, "i"))
+      | Pident(_) => currentModuleName^
       | _ => path |> Path.head |> Ident.name |> Name.create
       };
 
@@ -266,7 +264,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
 
     allPositions
     |> PosSet.iter(pos => {
-         let posFrom = {...Lexing.dummy_pos, pos_fname: currentModuleName^};
+         let posFrom = {...Lexing.dummy_pos, pos_fname: currentModule^};
          let locFrom = {
            Location.loc_start: posFrom,
            loc_end: posFrom,
@@ -331,7 +329,7 @@ let collectValueReferences = {
     | Tstr_module({mb_name}) =>
       currentModulePath := [mb_name.txt |> Name.create, ...currentModulePath^]
     | Tstr_primitive(vd) when analyzeExternals =>
-      let path = currentModulePath^ @ [currentModuleName^ |> Name.create];
+      let path = currentModulePath^ @ [currentModuleName^];
       let exists =
         switch (PosHash.find_opt(decls, vd.val_loc.loc_start)) {
         | Some({declKind: Value}) => true

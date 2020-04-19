@@ -64,11 +64,9 @@ let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
   };
 
 let processSignature = (signature: Types.signature) => {
-  let isInterface = Filename.check_suffix(currentSrc^, "i");
-  let moduleNAME = currentModuleName^ |> Name.create(~isInterface);
   signature
   |> List.iter(sig_item =>
-       collectExportFromSignatureItem(~path=[moduleNAME], sig_item)
+       collectExportFromSignatureItem(~path=[currentModuleName^], sig_item)
      );
 };
 
@@ -117,7 +115,10 @@ let loadCmtFile = cmtFilePath => {
   | Some(sourceFile) =>
     FileHash.addFile(fileReferences, sourceFile);
     currentSrc := sourceFile;
-    currentModuleName := Paths.getModuleName(sourceFile);
+    currentModule := Paths.getModuleName(sourceFile);
+    currentModuleName :=
+      currentModule^
+      |> Name.create(~isInterface=Filename.check_suffix(currentSrc^, "i"));
 
     if (dce^) {
       switch (cmt_annots) {
