@@ -397,10 +397,11 @@ let addDeclaration_ =
       && (currentSrc^ == pos.pos_fname || currentModule^ === "*include*")) {
     if (verbose) {
       Log_.item(
-        "add%sDeclaration %s %s@.",
+        "add%sDeclaration %s %s path:%s@.",
         declKind == Value ? "Value" : "Type",
         name |> Name.toString,
         pos |> posToString,
+        path |> pathToString
       );
     };
 

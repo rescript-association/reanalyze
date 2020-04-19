@@ -1,16 +1,16 @@
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ReasonComponent.cmt
-  addValueDeclaration component ReasonComponent.re:3:4
-  addValueDeclaration onClick ReasonComponent.re:15:4
-  addValueDeclaration make ReasonComponent.re:18:4
-  addValueDeclaration minus ReasonComponent.re:43:4
-  addValueDeclaration useTypeDefinedInAnotherModule ReasonComponent.re:46:4
-  addValueDeclaration tToString ReasonComponent.re:55:4
-  addValueDeclaration useRecordsCoord ReasonComponent.re:63:4
+  addValueDeclaration component ReasonComponent.re:3:4 path:+ReasonComponent
+  addValueDeclaration onClick ReasonComponent.re:15:4 path:+ReasonComponent
+  addValueDeclaration make ReasonComponent.re:18:4 path:+ReasonComponent
+  addValueDeclaration minus ReasonComponent.re:43:4 path:+ReasonComponent
+  addValueDeclaration useTypeDefinedInAnotherModule ReasonComponent.re:46:4 path:+ReasonComponent
+  addValueDeclaration tToString ReasonComponent.re:55:4 path:+ReasonComponent
+  addValueDeclaration useRecordsCoord ReasonComponent.re:63:4 path:+ReasonComponent
   addValueReference ReasonComponent.re:3:4 --> ReasonReact.rei:153:0
-  addTypeDeclaration +name ReasonComponent.re:7:2
-  addTypeDeclaration +surname ReasonComponent.re:8:2
-  addTypeDeclaration +type_ ReasonComponent.re:9:2
-  addTypeDeclaration +polymorphicPayload ReasonComponent.re:11:2
+  addTypeDeclaration +name ReasonComponent.re:7:2 path:+ReasonComponent.+person
+  addTypeDeclaration +surname ReasonComponent.re:8:2 path:+ReasonComponent.+person
+  addTypeDeclaration +type_ ReasonComponent.re:9:2 path:+ReasonComponent.+person
+  addTypeDeclaration +polymorphicPayload ReasonComponent.re:11:2 path:+ReasonComponent.+person
   addValueReference ReasonComponent.re:18:4 --> ReasonComponent.re:19:14
   addValueReference ReasonComponent.re:18:4 --> ReasonComponent.re:19:51
   addValueReference ReasonComponent.re:18:4 --> ReasonComponent.re:15:4
@@ -20,7 +20,7 @@
   addTypeReference ReasonComponent.re:32:12 --> ReasonComponent.re:7:2
   addValueReference ReasonComponent.re:18:4 --> ReasonComponent.re:19:34
   addValueReference ReasonComponent.re:18:4 --> ReasonReact.rei:17:0
-  addValueDeclaration +emptyArray ReasonComponent.re:35:7
+  addValueDeclaration +emptyArray ReasonComponent.re:35:7 path:+ReasonComponent
   addValueReference ReasonComponent.re:18:4 --> ReasonComponent.re:35:7
   addValueReference ReasonComponent.re:18:4 --> ImportMyBanner.re:19:4
   addValueReference ReasonComponent.re:18:4 --> ReasonReact.rei:181:0
@@ -30,9 +30,9 @@
   addValueReference ReasonComponent.re:43:4 --> ReasonComponent.re:43:14
   addValueReference ReasonComponent.re:43:4 --> ReasonComponent.re:43:24
   addValueReference ReasonComponent.re:46:4 --> ReasonComponent.re:46:37
-  addTypeDeclaration +A ReasonComponent.re:50:4
-  addTypeDeclaration +B ReasonComponent.re:51:4
-  addTypeDeclaration +C ReasonComponent.re:52:4
+  addTypeDeclaration +A ReasonComponent.re:50:4 path:+ReasonComponent.+t
+  addTypeDeclaration +B ReasonComponent.re:51:4 path:+ReasonComponent.+t
+  addTypeDeclaration +C ReasonComponent.re:52:4 path:+ReasonComponent.+t
   addValueReference ReasonComponent.re:55:4 --> ReasonComponent.re:58:6
   addValueReference ReasonComponent.re:55:4 --> ReasonComponent.re:59:6
   addValueReference ReasonComponent.re:55:4 --> ReasonComponent.re:55:16
@@ -41,57 +41,57 @@
   addTypeReference ReasonComponent.re:63:23 --> Records.re:5:2
   addTypeReference ReasonComponent.re:63:23 --> Records.re:6:2
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/FirstClassModulesInterface.cmti
-  addValueDeclaration r FirstClassModulesInterface.rei:7:0
+  addValueDeclaration r FirstClassModulesInterface.rei:7:0 path:FirstClassModulesInterface
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Types.cmt
-  addValueDeclaration someIntList Types.re:5:4
-  addValueDeclaration map Types.re:8:4
-  addValueDeclaration swap Types.re:28:8
-  addValueDeclaration selfRecursiveConverter Types.re:46:4
-  addValueDeclaration mutuallyRecursiveConverter Types.re:53:4
-  addValueDeclaration testFunctionOnOptionsAsArgument Types.re:56:4
-  addValueDeclaration stringT Types.re:64:4
-  addValueDeclaration jsStringT Types.re:67:4
-  addValueDeclaration jsString2T Types.re:70:4
-  addValueDeclaration jsonStringify Types.re:82:4
-  addValueDeclaration testConvertNull Types.re:96:4
-  addValueDeclaration testMarshalFields Types.re:118:4
-  addValueDeclaration setMatch Types.re:134:4
-  addValueDeclaration testInstantiateTypeParameter Types.re:144:4
-  addValueDeclaration currentTime Types.re:154:4
-  addValueDeclaration i64Const Types.re:163:4
-  addValueDeclaration optFunction Types.re:166:4
-  addTypeDeclaration +A Types.re:12:4
-  addTypeDeclaration +B Types.re:13:4
+  addValueDeclaration someIntList Types.re:5:4 path:+Types
+  addValueDeclaration map Types.re:8:4 path:+Types
+  addValueDeclaration swap Types.re:28:8 path:+Types
+  addValueDeclaration selfRecursiveConverter Types.re:46:4 path:+Types
+  addValueDeclaration mutuallyRecursiveConverter Types.re:53:4 path:+Types
+  addValueDeclaration testFunctionOnOptionsAsArgument Types.re:56:4 path:+Types
+  addValueDeclaration stringT Types.re:64:4 path:+Types
+  addValueDeclaration jsStringT Types.re:67:4 path:+Types
+  addValueDeclaration jsString2T Types.re:70:4 path:+Types
+  addValueDeclaration jsonStringify Types.re:82:4 path:+Types
+  addValueDeclaration testConvertNull Types.re:96:4 path:+Types
+  addValueDeclaration testMarshalFields Types.re:118:4 path:+Types
+  addValueDeclaration setMatch Types.re:134:4 path:+Types
+  addValueDeclaration testInstantiateTypeParameter Types.re:144:4 path:+Types
+  addValueDeclaration currentTime Types.re:154:4 path:+Types
+  addValueDeclaration i64Const Types.re:163:4 path:+Types
+  addValueDeclaration optFunction Types.re:166:4 path:+Types
+  addTypeDeclaration +A Types.re:12:4 path:+Types.+typeWithVars
+  addTypeDeclaration +B Types.re:13:4 path:+Types.+typeWithVars
   addValueReference Types.re:28:8 --> Types.re:28:16
   addValueReference Types.re:28:8 --> Types.re:28:16
   addValueReference Types.re:28:8 --> Types.re:28:8
   addValueReference Types.re:28:8 --> Types.re:28:16
   addValueReference Types.re:28:8 --> Types.re:28:8
   addValueReference Types.re:28:8 --> Types.re:28:37
-  addValueDeclaration +unsafe_expr Types.re:28:37
-  addTypeDeclaration +self Types.re:35:22
-  addTypeDeclaration +b Types.re:38:27
-  addTypeDeclaration +a Types.re:39:26
+  addValueDeclaration +unsafe_expr Types.re:28:37 path:+Types
+  addTypeDeclaration +self Types.re:35:22 path:+Types.+selfRecursive
+  addTypeDeclaration +b Types.re:38:27 path:+Types.+mutuallyRecursiveA
+  addTypeDeclaration +a Types.re:39:26 path:+Types.+mutuallyRecursiveB
   addValueReference Types.re:46:4 --> Types.re:46:31
   addTypeReference Types.re:46:30 --> Types.re:35:22
   addValueReference Types.re:53:4 --> Types.re:53:35
   addTypeReference Types.re:53:34 --> Types.re:38:27
   addValueReference Types.re:56:4 --> Types.re:56:39
   addValueReference Types.re:56:4 --> Types.re:56:54
-  addTypeDeclaration +A Types.re:60:4
-  addTypeDeclaration +B Types.re:61:4
-  addTypeDeclaration +i Types.re:91:2
-  addTypeDeclaration +s Types.re:92:2
+  addTypeDeclaration +A Types.re:60:4 path:+Types.+opaqueVariant
+  addTypeDeclaration +B Types.re:61:4 path:+Types.+opaqueVariant
+  addTypeDeclaration +i Types.re:91:2 path:+Types.+record
+  addTypeDeclaration +s Types.re:92:2 path:+Types.+record
   addValueReference Types.re:96:4 --> Types.re:96:23
   addValueReference Types.re:118:4 --> Types.re:118:39
-  addValueDeclaration +unsafe_expr Types.re:118:39
+  addValueDeclaration +unsafe_expr Types.re:118:39 path:+Types
   addValueReference Types.re:134:4 --> Types.re:134:16
-  addTypeDeclaration +id Types.re:139:19
+  addTypeDeclaration +id Types.re:139:19 path:+Types.+someRecord
   addValueReference Types.re:144:4 --> Types.re:144:36
-  addValueDeclaration +x Types.re:173:6
+  addValueDeclaration +x Types.re:173:6 path:+Types.ObjectId
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ErrorHandler.cmt
-  addValueDeclaration notify ErrorHandler.re:7:6
-  addValueDeclaration x ErrorHandler.re:12:4
+  addValueDeclaration notify ErrorHandler.re:7:6 path:+ErrorHandler.Make
+  addValueDeclaration x ErrorHandler.re:12:4 path:+ErrorHandler
   addValueReference ErrorHandler.re:7:6 --> ErrorHandler.re:7:15
   addValueReference ErrorHandler.re:7:6 --> ErrorHandler.re:3:2
   addValueReference ErrorHandler.rei:3:2 --> ErrorHandler.re:3:2
@@ -99,138 +99,138 @@
   addValueReference ErrorHandler.rei:5:32 --> ErrorHandler.re:7:6
   addValueReference ErrorHandler.rei:7:0 --> ErrorHandler.re:12:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmt
-  addValueDeclaration fromT ImmutableArray.re:5:2
-  addValueDeclaration fromTp ImmutableArray.re:6:2
-  addValueDeclaration fromTT ImmutableArray.re:7:2
-  addValueDeclaration toT ImmutableArray.re:8:2
-  addValueDeclaration toTp ImmutableArray.re:9:2
-  addValueDeclaration toT2 ImmutableArray.re:10:2
-  addValueDeclaration fromArray ImmutableArray.re:14:6
-  addValueDeclaration toArray ImmutableArray.re:16:6
-  addValueDeclaration length ImmutableArray.re:20:6
-  addValueDeclaration size ImmutableArray.re:22:6
-  addValueDeclaration get ImmutableArray.re:24:6
-  addValueDeclaration getExn ImmutableArray.re:26:6
-  addValueDeclaration getUnsafe ImmutableArray.re:28:6
-  addValueDeclaration getUndefined ImmutableArray.re:30:6
-  addValueDeclaration shuffle ImmutableArray.re:32:6
-  addValueDeclaration reverse ImmutableArray.re:34:6
-  addValueDeclaration makeUninitialized ImmutableArray.re:36:6
-  addValueDeclaration makeUninitializedUnsafe ImmutableArray.re:38:6
-  addValueDeclaration make ImmutableArray.re:40:6
-  addValueDeclaration range ImmutableArray.re:42:6
-  addValueDeclaration rangeBy ImmutableArray.re:44:6
-  addValueDeclaration makeByU ImmutableArray.re:46:6
-  addValueDeclaration makeBy ImmutableArray.re:47:6
-  addValueDeclaration makeByAndShuffleU ImmutableArray.re:49:6
-  addValueDeclaration makeByAndShuffle ImmutableArray.re:50:6
-  addValueDeclaration zip ImmutableArray.re:52:6
-  addValueDeclaration zipByU ImmutableArray.re:54:6
-  addValueDeclaration zipBy ImmutableArray.re:55:6
-  addValueDeclaration unzip ImmutableArray.re:57:6
-  addValueDeclaration concat ImmutableArray.re:59:6
-  addValueDeclaration concatMany ImmutableArray.re:61:6
-  addValueDeclaration slice ImmutableArray.re:63:6
-  addValueDeclaration sliceToEnd ImmutableArray.re:66:6
-  addValueDeclaration copy ImmutableArray.re:68:6
-  addValueDeclaration forEachU ImmutableArray.re:70:6
-  addValueDeclaration forEach ImmutableArray.re:71:6
-  addValueDeclaration mapU ImmutableArray.re:73:6
-  addValueDeclaration map ImmutableArray.re:74:6
-  addValueDeclaration keepWithIndexU ImmutableArray.re:76:6
-  addValueDeclaration keepWithIndex ImmutableArray.re:77:6
-  addValueDeclaration keepMapU ImmutableArray.re:79:6
-  addValueDeclaration keepMap ImmutableArray.re:80:6
-  addValueDeclaration forEachWithIndexU ImmutableArray.re:82:6
-  addValueDeclaration forEachWithIndex ImmutableArray.re:83:6
-  addValueDeclaration mapWithIndexU ImmutableArray.re:85:6
-  addValueDeclaration mapWithIndex ImmutableArray.re:86:6
-  addValueDeclaration partitionU ImmutableArray.re:88:6
-  addValueDeclaration partition ImmutableArray.re:89:6
-  addValueDeclaration reduceU ImmutableArray.re:91:6
-  addValueDeclaration reduce ImmutableArray.re:92:6
-  addValueDeclaration reduceReverseU ImmutableArray.re:94:6
-  addValueDeclaration reduceReverse ImmutableArray.re:95:6
-  addValueDeclaration reduceReverse2U ImmutableArray.re:97:6
-  addValueDeclaration reduceReverse2 ImmutableArray.re:99:6
-  addValueDeclaration someU ImmutableArray.re:102:6
-  addValueDeclaration some ImmutableArray.re:103:6
-  addValueDeclaration everyU ImmutableArray.re:105:6
-  addValueDeclaration every ImmutableArray.re:106:6
-  addValueDeclaration every2U ImmutableArray.re:108:6
-  addValueDeclaration every2 ImmutableArray.re:109:6
-  addValueDeclaration some2U ImmutableArray.re:111:6
-  addValueDeclaration some2 ImmutableArray.re:112:6
-  addValueDeclaration cmpU ImmutableArray.re:114:6
-  addValueDeclaration cmp ImmutableArray.re:115:6
-  addValueDeclaration eqU ImmutableArray.re:117:6
-  addValueDeclaration eq ImmutableArray.re:118:6
-  addValueDeclaration fromT ImmutableArray.re:5:2
-  addValueDeclaration fromTp ImmutableArray.re:6:2
-  addValueDeclaration fromTT ImmutableArray.re:7:2
-  addValueDeclaration toT ImmutableArray.re:8:2
-  addValueDeclaration toTp ImmutableArray.re:9:2
-  addValueDeclaration toT2 ImmutableArray.re:10:2
-  addValueDeclaration fromArray ImmutableArray.re:14:6
-  addValueDeclaration toArray ImmutableArray.re:16:6
-  addValueDeclaration length ImmutableArray.re:20:6
-  addValueDeclaration size ImmutableArray.re:22:6
-  addValueDeclaration get ImmutableArray.re:24:6
-  addValueDeclaration getExn ImmutableArray.re:26:6
-  addValueDeclaration getUnsafe ImmutableArray.re:28:6
-  addValueDeclaration getUndefined ImmutableArray.re:30:6
-  addValueDeclaration shuffle ImmutableArray.re:32:6
-  addValueDeclaration reverse ImmutableArray.re:34:6
-  addValueDeclaration makeUninitialized ImmutableArray.re:36:6
-  addValueDeclaration makeUninitializedUnsafe ImmutableArray.re:38:6
-  addValueDeclaration make ImmutableArray.re:40:6
-  addValueDeclaration range ImmutableArray.re:42:6
-  addValueDeclaration rangeBy ImmutableArray.re:44:6
-  addValueDeclaration makeByU ImmutableArray.re:46:6
-  addValueDeclaration makeBy ImmutableArray.re:47:6
-  addValueDeclaration makeByAndShuffleU ImmutableArray.re:49:6
-  addValueDeclaration makeByAndShuffle ImmutableArray.re:50:6
-  addValueDeclaration zip ImmutableArray.re:52:6
-  addValueDeclaration zipByU ImmutableArray.re:54:6
-  addValueDeclaration zipBy ImmutableArray.re:55:6
-  addValueDeclaration unzip ImmutableArray.re:57:6
-  addValueDeclaration concat ImmutableArray.re:59:6
-  addValueDeclaration concatMany ImmutableArray.re:61:6
-  addValueDeclaration slice ImmutableArray.re:63:6
-  addValueDeclaration sliceToEnd ImmutableArray.re:66:6
-  addValueDeclaration copy ImmutableArray.re:68:6
-  addValueDeclaration forEachU ImmutableArray.re:70:6
-  addValueDeclaration forEach ImmutableArray.re:71:6
-  addValueDeclaration mapU ImmutableArray.re:73:6
-  addValueDeclaration map ImmutableArray.re:74:6
-  addValueDeclaration keepWithIndexU ImmutableArray.re:76:6
-  addValueDeclaration keepWithIndex ImmutableArray.re:77:6
-  addValueDeclaration keepMapU ImmutableArray.re:79:6
-  addValueDeclaration keepMap ImmutableArray.re:80:6
-  addValueDeclaration forEachWithIndexU ImmutableArray.re:82:6
-  addValueDeclaration forEachWithIndex ImmutableArray.re:83:6
-  addValueDeclaration mapWithIndexU ImmutableArray.re:85:6
-  addValueDeclaration mapWithIndex ImmutableArray.re:86:6
-  addValueDeclaration partitionU ImmutableArray.re:88:6
-  addValueDeclaration partition ImmutableArray.re:89:6
-  addValueDeclaration reduceU ImmutableArray.re:91:6
-  addValueDeclaration reduce ImmutableArray.re:92:6
-  addValueDeclaration reduceReverseU ImmutableArray.re:94:6
-  addValueDeclaration reduceReverse ImmutableArray.re:95:6
-  addValueDeclaration reduceReverse2U ImmutableArray.re:97:6
-  addValueDeclaration reduceReverse2 ImmutableArray.re:99:6
-  addValueDeclaration someU ImmutableArray.re:102:6
-  addValueDeclaration some ImmutableArray.re:103:6
-  addValueDeclaration everyU ImmutableArray.re:105:6
-  addValueDeclaration every ImmutableArray.re:106:6
-  addValueDeclaration every2U ImmutableArray.re:108:6
-  addValueDeclaration every2 ImmutableArray.re:109:6
-  addValueDeclaration some2U ImmutableArray.re:111:6
-  addValueDeclaration some2 ImmutableArray.re:112:6
-  addValueDeclaration cmpU ImmutableArray.re:114:6
-  addValueDeclaration cmp ImmutableArray.re:115:6
-  addValueDeclaration eqU ImmutableArray.re:117:6
-  addValueDeclaration eq ImmutableArray.re:118:6
+  addValueDeclaration fromT ImmutableArray.re:5:2 path:+ImmutableArray.Array
+  addValueDeclaration fromTp ImmutableArray.re:6:2 path:+ImmutableArray.Array
+  addValueDeclaration fromTT ImmutableArray.re:7:2 path:+ImmutableArray.Array
+  addValueDeclaration toT ImmutableArray.re:8:2 path:+ImmutableArray.Array
+  addValueDeclaration toTp ImmutableArray.re:9:2 path:+ImmutableArray.Array
+  addValueDeclaration toT2 ImmutableArray.re:10:2 path:+ImmutableArray.Array
+  addValueDeclaration fromArray ImmutableArray.re:14:6 path:+ImmutableArray.Array
+  addValueDeclaration toArray ImmutableArray.re:16:6 path:+ImmutableArray.Array
+  addValueDeclaration length ImmutableArray.re:20:6 path:+ImmutableArray.Array
+  addValueDeclaration size ImmutableArray.re:22:6 path:+ImmutableArray.Array
+  addValueDeclaration get ImmutableArray.re:24:6 path:+ImmutableArray.Array
+  addValueDeclaration getExn ImmutableArray.re:26:6 path:+ImmutableArray.Array
+  addValueDeclaration getUnsafe ImmutableArray.re:28:6 path:+ImmutableArray.Array
+  addValueDeclaration getUndefined ImmutableArray.re:30:6 path:+ImmutableArray.Array
+  addValueDeclaration shuffle ImmutableArray.re:32:6 path:+ImmutableArray.Array
+  addValueDeclaration reverse ImmutableArray.re:34:6 path:+ImmutableArray.Array
+  addValueDeclaration makeUninitialized ImmutableArray.re:36:6 path:+ImmutableArray.Array
+  addValueDeclaration makeUninitializedUnsafe ImmutableArray.re:38:6 path:+ImmutableArray.Array
+  addValueDeclaration make ImmutableArray.re:40:6 path:+ImmutableArray.Array
+  addValueDeclaration range ImmutableArray.re:42:6 path:+ImmutableArray.Array
+  addValueDeclaration rangeBy ImmutableArray.re:44:6 path:+ImmutableArray.Array
+  addValueDeclaration makeByU ImmutableArray.re:46:6 path:+ImmutableArray.Array
+  addValueDeclaration makeBy ImmutableArray.re:47:6 path:+ImmutableArray.Array
+  addValueDeclaration makeByAndShuffleU ImmutableArray.re:49:6 path:+ImmutableArray.Array
+  addValueDeclaration makeByAndShuffle ImmutableArray.re:50:6 path:+ImmutableArray.Array
+  addValueDeclaration zip ImmutableArray.re:52:6 path:+ImmutableArray.Array
+  addValueDeclaration zipByU ImmutableArray.re:54:6 path:+ImmutableArray.Array
+  addValueDeclaration zipBy ImmutableArray.re:55:6 path:+ImmutableArray.Array
+  addValueDeclaration unzip ImmutableArray.re:57:6 path:+ImmutableArray.Array
+  addValueDeclaration concat ImmutableArray.re:59:6 path:+ImmutableArray.Array
+  addValueDeclaration concatMany ImmutableArray.re:61:6 path:+ImmutableArray.Array
+  addValueDeclaration slice ImmutableArray.re:63:6 path:+ImmutableArray.Array
+  addValueDeclaration sliceToEnd ImmutableArray.re:66:6 path:+ImmutableArray.Array
+  addValueDeclaration copy ImmutableArray.re:68:6 path:+ImmutableArray.Array
+  addValueDeclaration forEachU ImmutableArray.re:70:6 path:+ImmutableArray.Array
+  addValueDeclaration forEach ImmutableArray.re:71:6 path:+ImmutableArray.Array
+  addValueDeclaration mapU ImmutableArray.re:73:6 path:+ImmutableArray.Array
+  addValueDeclaration map ImmutableArray.re:74:6 path:+ImmutableArray.Array
+  addValueDeclaration keepWithIndexU ImmutableArray.re:76:6 path:+ImmutableArray.Array
+  addValueDeclaration keepWithIndex ImmutableArray.re:77:6 path:+ImmutableArray.Array
+  addValueDeclaration keepMapU ImmutableArray.re:79:6 path:+ImmutableArray.Array
+  addValueDeclaration keepMap ImmutableArray.re:80:6 path:+ImmutableArray.Array
+  addValueDeclaration forEachWithIndexU ImmutableArray.re:82:6 path:+ImmutableArray.Array
+  addValueDeclaration forEachWithIndex ImmutableArray.re:83:6 path:+ImmutableArray.Array
+  addValueDeclaration mapWithIndexU ImmutableArray.re:85:6 path:+ImmutableArray.Array
+  addValueDeclaration mapWithIndex ImmutableArray.re:86:6 path:+ImmutableArray.Array
+  addValueDeclaration partitionU ImmutableArray.re:88:6 path:+ImmutableArray.Array
+  addValueDeclaration partition ImmutableArray.re:89:6 path:+ImmutableArray.Array
+  addValueDeclaration reduceU ImmutableArray.re:91:6 path:+ImmutableArray.Array
+  addValueDeclaration reduce ImmutableArray.re:92:6 path:+ImmutableArray.Array
+  addValueDeclaration reduceReverseU ImmutableArray.re:94:6 path:+ImmutableArray.Array
+  addValueDeclaration reduceReverse ImmutableArray.re:95:6 path:+ImmutableArray.Array
+  addValueDeclaration reduceReverse2U ImmutableArray.re:97:6 path:+ImmutableArray.Array
+  addValueDeclaration reduceReverse2 ImmutableArray.re:99:6 path:+ImmutableArray.Array
+  addValueDeclaration someU ImmutableArray.re:102:6 path:+ImmutableArray.Array
+  addValueDeclaration some ImmutableArray.re:103:6 path:+ImmutableArray.Array
+  addValueDeclaration everyU ImmutableArray.re:105:6 path:+ImmutableArray.Array
+  addValueDeclaration every ImmutableArray.re:106:6 path:+ImmutableArray.Array
+  addValueDeclaration every2U ImmutableArray.re:108:6 path:+ImmutableArray.Array
+  addValueDeclaration every2 ImmutableArray.re:109:6 path:+ImmutableArray.Array
+  addValueDeclaration some2U ImmutableArray.re:111:6 path:+ImmutableArray.Array
+  addValueDeclaration some2 ImmutableArray.re:112:6 path:+ImmutableArray.Array
+  addValueDeclaration cmpU ImmutableArray.re:114:6 path:+ImmutableArray.Array
+  addValueDeclaration cmp ImmutableArray.re:115:6 path:+ImmutableArray.Array
+  addValueDeclaration eqU ImmutableArray.re:117:6 path:+ImmutableArray.Array
+  addValueDeclaration eq ImmutableArray.re:118:6 path:+ImmutableArray.Array
+  addValueDeclaration fromT ImmutableArray.re:5:2 path:+ImmutableArray
+  addValueDeclaration fromTp ImmutableArray.re:6:2 path:+ImmutableArray
+  addValueDeclaration fromTT ImmutableArray.re:7:2 path:+ImmutableArray
+  addValueDeclaration toT ImmutableArray.re:8:2 path:+ImmutableArray
+  addValueDeclaration toTp ImmutableArray.re:9:2 path:+ImmutableArray
+  addValueDeclaration toT2 ImmutableArray.re:10:2 path:+ImmutableArray
+  addValueDeclaration fromArray ImmutableArray.re:14:6 path:+ImmutableArray
+  addValueDeclaration toArray ImmutableArray.re:16:6 path:+ImmutableArray
+  addValueDeclaration length ImmutableArray.re:20:6 path:+ImmutableArray
+  addValueDeclaration size ImmutableArray.re:22:6 path:+ImmutableArray
+  addValueDeclaration get ImmutableArray.re:24:6 path:+ImmutableArray
+  addValueDeclaration getExn ImmutableArray.re:26:6 path:+ImmutableArray
+  addValueDeclaration getUnsafe ImmutableArray.re:28:6 path:+ImmutableArray
+  addValueDeclaration getUndefined ImmutableArray.re:30:6 path:+ImmutableArray
+  addValueDeclaration shuffle ImmutableArray.re:32:6 path:+ImmutableArray
+  addValueDeclaration reverse ImmutableArray.re:34:6 path:+ImmutableArray
+  addValueDeclaration makeUninitialized ImmutableArray.re:36:6 path:+ImmutableArray
+  addValueDeclaration makeUninitializedUnsafe ImmutableArray.re:38:6 path:+ImmutableArray
+  addValueDeclaration make ImmutableArray.re:40:6 path:+ImmutableArray
+  addValueDeclaration range ImmutableArray.re:42:6 path:+ImmutableArray
+  addValueDeclaration rangeBy ImmutableArray.re:44:6 path:+ImmutableArray
+  addValueDeclaration makeByU ImmutableArray.re:46:6 path:+ImmutableArray
+  addValueDeclaration makeBy ImmutableArray.re:47:6 path:+ImmutableArray
+  addValueDeclaration makeByAndShuffleU ImmutableArray.re:49:6 path:+ImmutableArray
+  addValueDeclaration makeByAndShuffle ImmutableArray.re:50:6 path:+ImmutableArray
+  addValueDeclaration zip ImmutableArray.re:52:6 path:+ImmutableArray
+  addValueDeclaration zipByU ImmutableArray.re:54:6 path:+ImmutableArray
+  addValueDeclaration zipBy ImmutableArray.re:55:6 path:+ImmutableArray
+  addValueDeclaration unzip ImmutableArray.re:57:6 path:+ImmutableArray
+  addValueDeclaration concat ImmutableArray.re:59:6 path:+ImmutableArray
+  addValueDeclaration concatMany ImmutableArray.re:61:6 path:+ImmutableArray
+  addValueDeclaration slice ImmutableArray.re:63:6 path:+ImmutableArray
+  addValueDeclaration sliceToEnd ImmutableArray.re:66:6 path:+ImmutableArray
+  addValueDeclaration copy ImmutableArray.re:68:6 path:+ImmutableArray
+  addValueDeclaration forEachU ImmutableArray.re:70:6 path:+ImmutableArray
+  addValueDeclaration forEach ImmutableArray.re:71:6 path:+ImmutableArray
+  addValueDeclaration mapU ImmutableArray.re:73:6 path:+ImmutableArray
+  addValueDeclaration map ImmutableArray.re:74:6 path:+ImmutableArray
+  addValueDeclaration keepWithIndexU ImmutableArray.re:76:6 path:+ImmutableArray
+  addValueDeclaration keepWithIndex ImmutableArray.re:77:6 path:+ImmutableArray
+  addValueDeclaration keepMapU ImmutableArray.re:79:6 path:+ImmutableArray
+  addValueDeclaration keepMap ImmutableArray.re:80:6 path:+ImmutableArray
+  addValueDeclaration forEachWithIndexU ImmutableArray.re:82:6 path:+ImmutableArray
+  addValueDeclaration forEachWithIndex ImmutableArray.re:83:6 path:+ImmutableArray
+  addValueDeclaration mapWithIndexU ImmutableArray.re:85:6 path:+ImmutableArray
+  addValueDeclaration mapWithIndex ImmutableArray.re:86:6 path:+ImmutableArray
+  addValueDeclaration partitionU ImmutableArray.re:88:6 path:+ImmutableArray
+  addValueDeclaration partition ImmutableArray.re:89:6 path:+ImmutableArray
+  addValueDeclaration reduceU ImmutableArray.re:91:6 path:+ImmutableArray
+  addValueDeclaration reduce ImmutableArray.re:92:6 path:+ImmutableArray
+  addValueDeclaration reduceReverseU ImmutableArray.re:94:6 path:+ImmutableArray
+  addValueDeclaration reduceReverse ImmutableArray.re:95:6 path:+ImmutableArray
+  addValueDeclaration reduceReverse2U ImmutableArray.re:97:6 path:+ImmutableArray
+  addValueDeclaration reduceReverse2 ImmutableArray.re:99:6 path:+ImmutableArray
+  addValueDeclaration someU ImmutableArray.re:102:6 path:+ImmutableArray
+  addValueDeclaration some ImmutableArray.re:103:6 path:+ImmutableArray
+  addValueDeclaration everyU ImmutableArray.re:105:6 path:+ImmutableArray
+  addValueDeclaration every ImmutableArray.re:106:6 path:+ImmutableArray
+  addValueDeclaration every2U ImmutableArray.re:108:6 path:+ImmutableArray
+  addValueDeclaration every2 ImmutableArray.re:109:6 path:+ImmutableArray
+  addValueDeclaration some2U ImmutableArray.re:111:6 path:+ImmutableArray
+  addValueDeclaration some2 ImmutableArray.re:112:6 path:+ImmutableArray
+  addValueDeclaration cmpU ImmutableArray.re:114:6 path:+ImmutableArray
+  addValueDeclaration cmp ImmutableArray.re:115:6 path:+ImmutableArray
+  addValueDeclaration eqU ImmutableArray.re:117:6 path:+ImmutableArray
+  addValueDeclaration eq ImmutableArray.re:118:6 path:+ImmutableArray
   addValueReference ImmutableArray.re:14:6 --> ImmutableArray.re:14:18
   addValueReference ImmutableArray.re:14:6 --> ImmutableArray.re:8:2
   addValueReference ImmutableArray.re:16:6 --> ImmutableArray.re:16:16
@@ -517,36 +517,36 @@
   addValueReference ImmutableArray.rei:108:0 --> ImmutableArray.re:117:6
   addValueReference ImmutableArray.rei:109:0 --> ImmutableArray.re:118:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType3.cmt
-  addValueDeclaration convertT3 TransitiveType3.re:8:4
-  addTypeDeclaration +i TransitiveType3.re:3:2
-  addTypeDeclaration +s TransitiveType3.re:4:2
+  addValueDeclaration convertT3 TransitiveType3.re:8:4 path:+TransitiveType3
+  addTypeDeclaration +i TransitiveType3.re:3:2 path:+TransitiveType3.+t3
+  addTypeDeclaration +s TransitiveType3.re:4:2 path:+TransitiveType3.+t3
   addValueReference TransitiveType3.re:8:4 --> TransitiveType3.re:8:17
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DynamicallyLoadedComponent.cmt
-  addValueDeclaration make DynamicallyLoadedComponent.re:2:4
+  addValueDeclaration make DynamicallyLoadedComponent.re:2:4 path:+DynamicallyLoadedComponent
   addValueReference DynamicallyLoadedComponent.re:2:4 --> DynamicallyLoadedComponent.re:2:13
   addValueReference DynamicallyLoadedComponent.re:2:4 --> React.re:5:0
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType2.cmt
-  addValueDeclaration convertT2 TransitiveType2.re:7:4
+  addValueDeclaration convertT2 TransitiveType2.re:7:4 path:+TransitiveType2
   addValueReference TransitiveType2.re:7:4 --> TransitiveType2.re:7:17
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Variants.cmt
-  addValueDeclaration isWeekend Variants.re:13:4
-  addValueDeclaration monday Variants.re:21:4
-  addValueDeclaration saturday Variants.re:23:4
-  addValueDeclaration sunday Variants.re:25:4
-  addValueDeclaration onlySunday Variants.re:28:4
-  addValueDeclaration swap Variants.re:31:4
-  addValueDeclaration testConvert Variants.re:45:4
-  addValueDeclaration fortytwoOK Variants.re:48:4
-  addValueDeclaration fortytwoBAD Variants.re:52:4
-  addValueDeclaration testConvert2 Variants.re:64:4
-  addValueDeclaration testConvert3 Variants.re:76:4
-  addValueDeclaration testConvert2to3 Variants.re:80:4
-  addValueDeclaration id1 Variants.re:89:4
-  addValueDeclaration id2 Variants.re:92:4
-  addValueDeclaration polyWithOpt Variants.re:100:4
-  addValueDeclaration restResult1 Variants.re:115:4
-  addValueDeclaration restResult2 Variants.re:118:4
-  addValueDeclaration restResult3 Variants.re:121:4
+  addValueDeclaration isWeekend Variants.re:13:4 path:+Variants
+  addValueDeclaration monday Variants.re:21:4 path:+Variants
+  addValueDeclaration saturday Variants.re:23:4 path:+Variants
+  addValueDeclaration sunday Variants.re:25:4 path:+Variants
+  addValueDeclaration onlySunday Variants.re:28:4 path:+Variants
+  addValueDeclaration swap Variants.re:31:4 path:+Variants
+  addValueDeclaration testConvert Variants.re:45:4 path:+Variants
+  addValueDeclaration fortytwoOK Variants.re:48:4 path:+Variants
+  addValueDeclaration fortytwoBAD Variants.re:52:4 path:+Variants
+  addValueDeclaration testConvert2 Variants.re:64:4 path:+Variants
+  addValueDeclaration testConvert3 Variants.re:76:4 path:+Variants
+  addValueDeclaration testConvert2to3 Variants.re:80:4 path:+Variants
+  addValueDeclaration id1 Variants.re:89:4 path:+Variants
+  addValueDeclaration id2 Variants.re:92:4 path:+Variants
+  addValueDeclaration polyWithOpt Variants.re:100:4 path:+Variants
+  addValueDeclaration restResult1 Variants.re:115:4 path:+Variants
+  addValueDeclaration restResult2 Variants.re:118:4 path:+Variants
+  addValueDeclaration restResult3 Variants.re:121:4 path:+Variants
   addValueReference Variants.re:13:4 --> Variants.re:13:17
   addValueReference Variants.re:31:4 --> Variants.re:31:11
   addValueReference Variants.re:45:4 --> Variants.re:45:19
@@ -555,28 +555,28 @@
   addValueReference Variants.re:80:4 --> Variants.re:80:23
   addValueReference Variants.re:89:4 --> Variants.re:89:11
   addValueReference Variants.re:92:4 --> Variants.re:92:11
-  addTypeDeclaration +Type Variants.re:97:4
+  addTypeDeclaration +Type Variants.re:97:4 path:+Variants.+type_
   addValueReference Variants.re:100:4 --> Variants.re:100:18
   addValueReference Variants.re:100:4 --> Variants.re:100:18
   addValueReference Variants.re:100:4 --> Variants.re:100:18
-  addTypeDeclaration +Ok Variants.re:105:4
-  addTypeDeclaration +Error Variants.re:106:4
+  addTypeDeclaration +Ok Variants.re:105:4 path:+Variants.+result1
+  addTypeDeclaration +Error Variants.re:106:4 path:+Variants.+result1
   addValueReference Variants.re:115:4 --> Variants.re:115:19
   addValueReference Variants.re:118:4 --> Variants.re:118:19
   addValueReference Variants.re:121:4 --> Variants.re:121:19
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Uncurried.cmt
-  addValueDeclaration uncurried0 Uncurried.re:14:4
-  addValueDeclaration uncurried1 Uncurried.re:17:4
-  addValueDeclaration uncurried2 Uncurried.re:20:4
-  addValueDeclaration uncurried3 Uncurried.re:23:4
-  addValueDeclaration curried3 Uncurried.re:27:4
-  addValueDeclaration callback Uncurried.re:30:4
-  addValueDeclaration callback2 Uncurried.re:36:4
-  addValueDeclaration callback2U Uncurried.re:39:4
-  addValueDeclaration sumU Uncurried.re:42:4
-  addValueDeclaration sumU2 Uncurried.re:48:4
-  addValueDeclaration sumCurried Uncurried.re:55:4
-  addValueDeclaration sumLblCurried Uncurried.re:63:4
+  addValueDeclaration uncurried0 Uncurried.re:14:4 path:+Uncurried
+  addValueDeclaration uncurried1 Uncurried.re:17:4 path:+Uncurried
+  addValueDeclaration uncurried2 Uncurried.re:20:4 path:+Uncurried
+  addValueDeclaration uncurried3 Uncurried.re:23:4 path:+Uncurried
+  addValueDeclaration curried3 Uncurried.re:27:4 path:+Uncurried
+  addValueDeclaration callback Uncurried.re:30:4 path:+Uncurried
+  addValueDeclaration callback2 Uncurried.re:36:4 path:+Uncurried
+  addValueDeclaration callback2U Uncurried.re:39:4 path:+Uncurried
+  addValueDeclaration sumU Uncurried.re:42:4 path:+Uncurried
+  addValueDeclaration sumU2 Uncurried.re:48:4 path:+Uncurried
+  addValueDeclaration sumCurried Uncurried.re:55:4 path:+Uncurried
+  addValueDeclaration sumLblCurried Uncurried.re:63:4 path:+Uncurried
   addValueReference Uncurried.re:17:4 --> Uncurried.re:17:20
   addValueReference Uncurried.re:20:4 --> Uncurried.re:20:20
   addValueReference Uncurried.re:20:4 --> Uncurried.re:20:23
@@ -587,8 +587,8 @@
   addValueReference Uncurried.re:27:4 --> Uncurried.re:27:19
   addValueReference Uncurried.re:27:4 --> Uncurried.re:27:22
   addValueReference Uncurried.re:30:4 --> Uncurried.re:30:15
-  addTypeDeclaration +login Uncurried.re:32:13
-  addTypeDeclaration +loginU Uncurried.re:33:14
+  addTypeDeclaration +login Uncurried.re:32:13 path:+Uncurried.+auth
+  addTypeDeclaration +loginU Uncurried.re:33:14 path:+Uncurried.+authU
   addTypeReference Uncurried.re:36:24 --> Uncurried.re:32:13
   addValueReference Uncurried.re:36:4 --> Uncurried.re:36:16
   addTypeReference Uncurried.re:39:25 --> Uncurried.re:33:14
@@ -609,55 +609,55 @@
   addValueReference Uncurried.re:63:4 --> Uncurried.re:63:21
   addValueReference Uncurried.re:63:4 --> Uncurried.re:63:33
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestEmitInnerModules.cmt
-  addValueDeclaration x TestEmitInnerModules.re:3:6
-  addValueDeclaration y TestEmitInnerModules.re:5:6
-  addValueDeclaration y TestEmitInnerModules.re:12:10
+  addValueDeclaration x TestEmitInnerModules.re:3:6 path:+TestEmitInnerModules.Inner
+  addValueDeclaration y TestEmitInnerModules.re:5:6 path:+TestEmitInnerModules.Inner
+  addValueDeclaration y TestEmitInnerModules.re:12:10 path:+TestEmitInnerModules.Outer.Medium.Inner
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/NestedModules.cmt
-  addValueDeclaration notNested NestedModules.re:2:4
-  addValueDeclaration theAnswer NestedModules.re:6:6
-  addValueDeclaration notExported NestedModules.re:8:6
-  addValueDeclaration x NestedModules.re:14:8
-  addValueDeclaration nested2Value NestedModules.re:17:8
-  addValueDeclaration y NestedModules.re:19:8
-  addValueDeclaration x NestedModules.re:25:10
-  addValueDeclaration y NestedModules.re:26:10
-  addValueDeclaration z NestedModules.re:27:10
-  addValueDeclaration w NestedModules.re:28:10
-  addValueDeclaration nested3Value NestedModules.re:34:10
-  addValueDeclaration nested3Function NestedModules.re:37:10
-  addValueDeclaration nested2Function NestedModules.re:41:8
-  addValueDeclaration someString NestedModules.re:50:6
+  addValueDeclaration notNested NestedModules.re:2:4 path:+NestedModules
+  addValueDeclaration theAnswer NestedModules.re:6:6 path:+NestedModules.Universe
+  addValueDeclaration notExported NestedModules.re:8:6 path:+NestedModules.Universe
+  addValueDeclaration x NestedModules.re:14:8 path:+NestedModules.Universe.Nested2
+  addValueDeclaration nested2Value NestedModules.re:17:8 path:+NestedModules.Universe.Nested2
+  addValueDeclaration y NestedModules.re:19:8 path:+NestedModules.Universe.Nested2
+  addValueDeclaration x NestedModules.re:25:10 path:+NestedModules.Universe.Nested2.Nested3
+  addValueDeclaration y NestedModules.re:26:10 path:+NestedModules.Universe.Nested2.Nested3
+  addValueDeclaration z NestedModules.re:27:10 path:+NestedModules.Universe.Nested2.Nested3
+  addValueDeclaration w NestedModules.re:28:10 path:+NestedModules.Universe.Nested2.Nested3
+  addValueDeclaration nested3Value NestedModules.re:34:10 path:+NestedModules.Universe.Nested2.Nested3
+  addValueDeclaration nested3Function NestedModules.re:37:10 path:+NestedModules.Universe.Nested2.Nested3
+  addValueDeclaration nested2Function NestedModules.re:41:8 path:+NestedModules.Universe.Nested2
+  addValueDeclaration someString NestedModules.re:50:6 path:+NestedModules.Universe
   addValueReference NestedModules.re:37:10 --> NestedModules.re:37:29
   addValueReference NestedModules.re:41:8 --> NestedModules.re:41:27
-  addTypeDeclaration +A NestedModules.re:46:6
-  addTypeDeclaration +B NestedModules.re:47:6
+  addTypeDeclaration +A NestedModules.re:46:6 path:+NestedModules.Universe.+variant
+  addTypeDeclaration +B NestedModules.re:47:6 path:+NestedModules.Universe.+variant
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Shadow.cmt
-  addValueDeclaration test Shadow.re:2:4
-  addValueDeclaration test Shadow.re:5:4
-  addValueDeclaration test Shadow.re:11:6
-  addValueDeclaration +test Shadow.re:9:6
+  addValueDeclaration test Shadow.re:2:4 path:+Shadow
+  addValueDeclaration test Shadow.re:5:4 path:+Shadow
+  addValueDeclaration test Shadow.re:11:6 path:+Shadow.M
+  addValueDeclaration +test Shadow.re:9:6 path:+Shadow.M
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ModuleAliases2.cmt
-  addValueDeclaration q ModuleAliases2.re:21:4
-  addTypeDeclaration +x ModuleAliases2.re:3:2
-  addTypeDeclaration +y ModuleAliases2.re:4:2
-  addTypeDeclaration +outer ModuleAliases2.re:9:16
-  addTypeDeclaration +inner ModuleAliases2.re:13:18
+  addValueDeclaration q ModuleAliases2.re:21:4 path:+ModuleAliases2
+  addTypeDeclaration +x ModuleAliases2.re:3:2 path:+ModuleAliases2.+record
+  addTypeDeclaration +y ModuleAliases2.re:4:2 path:+ModuleAliases2.+record
+  addTypeDeclaration +outer ModuleAliases2.re:9:16 path:+ModuleAliases2.Outer.+outer
+  addTypeDeclaration +inner ModuleAliases2.re:13:18 path:+ModuleAliases2.Outer.Inner.+inner
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadValueTest.cmt
-  addValueDeclaration valueAlive DeadValueTest.re:1:4
-  addValueDeclaration valueDead DeadValueTest.re:2:4
-  addValueDeclaration valueOnlyInImplementation DeadValueTest.re:4:4
+  addValueDeclaration valueAlive DeadValueTest.re:1:4 path:+DeadValueTest
+  addValueDeclaration valueDead DeadValueTest.re:2:4 path:+DeadValueTest
+  addValueDeclaration valueOnlyInImplementation DeadValueTest.re:4:4 path:+DeadValueTest
   addValueReference DeadValueTest.rei:1:0 --> DeadValueTest.re:1:4
   addValueReference DeadValueTest.rei:2:0 --> DeadValueTest.re:2:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Tuples.cmt
-  addValueDeclaration testTuple Tuples.re:4:4
-  addValueDeclaration origin Tuples.re:10:4
-  addValueDeclaration computeArea Tuples.re:13:4
-  addValueDeclaration computeAreaWithIdent Tuples.re:17:4
-  addValueDeclaration computeAreaNoConverters Tuples.re:21:4
-  addValueDeclaration coord2d Tuples.re:24:4
-  addValueDeclaration getFirstName Tuples.re:39:4
-  addValueDeclaration marry Tuples.re:42:4
-  addValueDeclaration changeSecondAge Tuples.re:45:4
+  addValueDeclaration testTuple Tuples.re:4:4 path:+Tuples
+  addValueDeclaration origin Tuples.re:10:4 path:+Tuples
+  addValueDeclaration computeArea Tuples.re:13:4 path:+Tuples
+  addValueDeclaration computeAreaWithIdent Tuples.re:17:4 path:+Tuples
+  addValueDeclaration computeAreaNoConverters Tuples.re:21:4 path:+Tuples
+  addValueDeclaration coord2d Tuples.re:24:4 path:+Tuples
+  addValueDeclaration getFirstName Tuples.re:39:4 path:+Tuples
+  addValueDeclaration marry Tuples.re:42:4 path:+Tuples
+  addValueDeclaration changeSecondAge Tuples.re:45:4 path:+Tuples
   addValueReference Tuples.re:4:4 --> Tuples.re:4:18
   addValueReference Tuples.re:4:4 --> Tuples.re:4:21
   addValueReference Tuples.re:13:4 --> Tuples.re:13:20
@@ -672,8 +672,8 @@
   addValueReference Tuples.re:21:4 --> Tuples.re:21:40
   addValueReference Tuples.re:24:4 --> Tuples.re:24:15
   addValueReference Tuples.re:24:4 --> Tuples.re:24:18
-  addTypeDeclaration +name Tuples.re:31:2
-  addTypeDeclaration +age Tuples.re:32:2
+  addTypeDeclaration +name Tuples.re:31:2 path:+Tuples.+person
+  addTypeDeclaration +age Tuples.re:32:2 path:+Tuples.+person
   addTypeReference Tuples.re:39:49 --> Tuples.re:31:2
   addValueReference Tuples.re:39:4 --> Tuples.re:39:21
   addValueReference Tuples.re:42:4 --> Tuples.re:42:13
@@ -682,27 +682,32 @@
   addTypeReference Tuples.re:47:19 --> Tuples.re:32:2
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/A.cmt
+  addTypeDeclaration A A.ml:3:11 path:+A.M.t
+  addTypeDeclaration B A.ml:3:20 path:+A.M.t
+  addTypeDeclaration +A A.ml:8:29 path:+A.M.T.+t
+  addTypeDeclaration +B A.ml:8:38 path:+A.M.T.+t
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType1.cmt
-  addValueDeclaration convert TransitiveType1.re:2:4
-  addValueDeclaration convertAlias TransitiveType1.re:5:4
+  addValueDeclaration convert TransitiveType1.re:2:4 path:+TransitiveType1
+  addValueDeclaration convertAlias TransitiveType1.re:5:4 path:+TransitiveType1
   addValueReference TransitiveType1.re:2:4 --> TransitiveType1.re:2:15
   addValueReference TransitiveType1.re:5:4 --> TransitiveType1.re:5:20
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TypeParams2.cmt
-  addValueDeclaration exportSomething TypeParams2.re:10:4
-  addTypeDeclaration +id TypeParams2.re:2:13
+  addValueDeclaration exportSomething TypeParams2.re:10:4 path:+TypeParams2
+  addTypeDeclaration +id TypeParams2.re:2:13 path:+TypeParams2.+item
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/FirstClassModules.cmt
-  addValueDeclaration y FirstClassModules.re:17:6
-  addValueDeclaration k FirstClassModules.re:21:8
-  addValueDeclaration k3 FirstClassModules.re:25:8
-  addValueDeclaration u FirstClassModules.re:30:8
-  addValueDeclaration f FirstClassModules.re:33:2
-  addValueDeclaration x FirstClassModules.re:34:6
-  addValueDeclaration firstClassModule FirstClassModules.re:41:4
-  addValueDeclaration testConvert FirstClassModules.re:44:4
-  addValueDeclaration someFunctorAsFunction FirstClassModules.re:53:4
+  addValueDeclaration y FirstClassModules.re:17:6 path:+FirstClassModules.M
+  addValueDeclaration k FirstClassModules.re:21:8 path:+FirstClassModules.M.InnerModule2
+  addValueDeclaration k3 FirstClassModules.re:25:8 path:+FirstClassModules.M.InnerModule3
+  addValueDeclaration u FirstClassModules.re:30:8 path:+FirstClassModules.M.Z
+  addValueDeclaration f FirstClassModules.re:33:2 path:+FirstClassModules.M
+  addValueDeclaration x FirstClassModules.re:34:6 path:+FirstClassModules.M
+  addValueDeclaration firstClassModule FirstClassModules.re:41:4 path:+FirstClassModules
+  addValueDeclaration testConvert FirstClassModules.re:44:4 path:+FirstClassModules
+  addValueDeclaration someFunctorAsFunction FirstClassModules.re:53:4 path:+FirstClassModules
   addValueReference FirstClassModules.re:25:8 --> FirstClassModules.re:25:13
   addValueReference FirstClassModules.re:44:4 --> FirstClassModules.re:44:19
-  addValueDeclaration +ww FirstClassModules.re:49:6
+  addValueDeclaration +ww FirstClassModules.re:49:6 path:+FirstClassModules.SomeFunctor
   addValueReference FirstClassModules.re:49:6 --> FirstClassModules.re:14:2
   addValueReference FirstClassModules.re:53:4 --> FirstClassModules.re:53:29
   addValueReference FirstClassModules.re:2:2 --> FirstClassModules.re:34:6
@@ -715,28 +720,28 @@
   addValueReference FirstClassModules.re:14:2 --> FirstClassModules.re:17:6
   addValueReference FirstClassModules.re:46:20 --> FirstClassModules.re:49:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadMl.cmt
-  addValueDeclaration thisSpansSeveralLines DeadMl.ml:3:8
-  addValueDeclaration thisIsInInterface DeadMl.ml:9:2
-  addValueDeclaration thisHasSemicolons DeadMl.ml:15:4
-  addValueDeclaration version DeadMl.ml:26:6
-  addValueDeclaration header DeadMl.ml:26:27
-  addValueDeclaration package_name DeadMl.ml:26:47
-  addValueDeclaration map_split_opt DeadMl.ml:45:8
-  addValueDeclaration inline_threshold DeadMl.ml:56:4
+  addValueDeclaration thisSpansSeveralLines DeadMl.ml:3:8 path:+DeadMl.QQ
+  addValueDeclaration thisIsInInterface DeadMl.ml:9:2 path:+DeadMl.AA
+  addValueDeclaration thisHasSemicolons DeadMl.ml:15:4 path:+DeadMl
+  addValueDeclaration version DeadMl.ml:26:6 path:+DeadMl.Bs_version
+  addValueDeclaration header DeadMl.ml:26:27 path:+DeadMl.Bs_version
+  addValueDeclaration package_name DeadMl.ml:26:47 path:+DeadMl.Bs_version
+  addValueDeclaration map_split_opt DeadMl.ml:45:8 path:+DeadMl
+  addValueDeclaration inline_threshold DeadMl.ml:56:4 path:+DeadMl
   addValueReference DeadMl.ml:3:8 --> DeadMl.ml:4:11
   addValueReference DeadMl.ml:3:8 --> DeadMl.ml:4:20
-  addValueDeclaration +thisIsInInterface DeadMl.ml:12:6
+  addValueDeclaration +thisIsInInterface DeadMl.ml:12:6 path:+DeadMl.AA
   addValueReference DeadMl.ml:12:6 --> DeadMl.ml:12:24
-  addTypeDeclaration +DeadA DeadMl.ml:17:18
-  addTypeDeclaration +DeadB DeadMl.ml:17:26
-  addValueDeclaration _ DeadMl.ml:21:2
-  addValueDeclaration _ DeadMl.ml:22:2
-  addValueDeclaration +version DeadMl.ml:29:8
-  addValueDeclaration +header DeadMl.ml:30:8
-  addValueDeclaration +package_name DeadMl.ml:31:8
-  addTypeDeclaration +Lfunction DeadMl.ml:35:2
-  addTypeDeclaration +module_name DeadMl.ml:41:2
-  addTypeDeclaration +case DeadMl.ml:42:2
+  addTypeDeclaration +DeadA DeadMl.ml:17:18 path:+DeadMl.+thisIsDead
+  addTypeDeclaration +DeadB DeadMl.ml:17:26 path:+DeadMl.+thisIsDead
+  addValueDeclaration _ DeadMl.ml:21:2 path:+DeadMl
+  addValueDeclaration _ DeadMl.ml:22:2 path:+DeadMl
+  addValueDeclaration +version DeadMl.ml:29:8 path:+DeadMl.Bs_version
+  addValueDeclaration +header DeadMl.ml:30:8 path:+DeadMl.Bs_version
+  addValueDeclaration +package_name DeadMl.ml:31:8 path:+DeadMl.Bs_version
+  addTypeDeclaration +Lfunction DeadMl.ml:35:2 path:+DeadMl.+l
+  addTypeDeclaration +module_name DeadMl.ml:41:2 path:+DeadMl.+module_info
+  addTypeDeclaration +case DeadMl.ml:42:2 path:+DeadMl.+module_info
   addValueReference DeadMl.ml:45:8 --> DeadMl.ml:50:4
   addValueReference DeadMl.ml:45:8 --> DeadMl.ml:46:19
   addValueReference DeadMl.ml:45:8 --> DeadMl.ml:50:7
@@ -756,45 +761,45 @@
   addValueReference DeadMl.ml:26:27 --> DeadMl.ml:30:8
   addValueReference DeadMl.ml:26:47 --> DeadMl.ml:31:8
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImportMyBanner.cmt
-  addValueDeclaration make ImportMyBanner.re:8:0
-  addValueDeclaration make ImportMyBanner.re:19:4
-  addTypeDeclaration +text ImportMyBanner.re:6:16
+  addValueDeclaration make ImportMyBanner.re:8:0 path:+ImportMyBanner
+  addValueDeclaration make ImportMyBanner.re:19:4 path:+ImportMyBanner
+  addTypeDeclaration +text ImportMyBanner.re:6:16 path:+ImportMyBanner.+message
   addValueReference ImportMyBanner.re:19:4 --> ImportMyBanner.re:8:0
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TypeParams3.cmt
-  addValueDeclaration test TypeParams3.re:2:4
-  addValueDeclaration test2 TypeParams3.re:5:4
+  addValueDeclaration test TypeParams3.re:2:4 path:+TypeParams3
+  addValueDeclaration test2 TypeParams3.re:5:4 path:+TypeParams3
   addValueReference TypeParams3.re:2:4 --> TypeParams3.re:2:12
   addValueReference TypeParams3.re:5:4 --> TypeParams3.re:5:13
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/IgnoreInterface.cmt
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadValueTest.cmti
-  addValueDeclaration valueAlive DeadValueTest.rei:1:0
-  addValueDeclaration valueDead DeadValueTest.rei:2:0
+  addValueDeclaration valueAlive DeadValueTest.rei:1:0 path:DeadValueTest
+  addValueDeclaration valueDead DeadValueTest.rei:2:0 path:DeadValueTest
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/IgnoreInterface.cmti
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TypeParams1.cmt
-  addValueDeclaration exportSomething TypeParams1.re:4:4
+  addValueDeclaration exportSomething TypeParams1.re:4:4 path:+TypeParams1
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestModuleAliases.cmt
-  addValueDeclaration testInner1 TestModuleAliases.re:32:4
-  addValueDeclaration testInner1Expanded TestModuleAliases.re:35:4
-  addValueDeclaration testInner2 TestModuleAliases.re:38:4
-  addValueDeclaration testInner2Expanded TestModuleAliases.re:41:4
+  addValueDeclaration testInner1 TestModuleAliases.re:32:4 path:+TestModuleAliases
+  addValueDeclaration testInner1Expanded TestModuleAliases.re:35:4 path:+TestModuleAliases
+  addValueDeclaration testInner2 TestModuleAliases.re:38:4 path:+TestModuleAliases
+  addValueDeclaration testInner2Expanded TestModuleAliases.re:41:4 path:+TestModuleAliases
   addValueReference TestModuleAliases.re:32:4 --> TestModuleAliases.re:32:18
   addValueReference TestModuleAliases.re:35:4 --> TestModuleAliases.re:35:26
   addValueReference TestModuleAliases.re:38:4 --> TestModuleAliases.re:38:18
   addValueReference TestModuleAliases.re:41:4 --> TestModuleAliases.re:41:26
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Opaque.cmt
-  addValueDeclaration noConversion Opaque.re:6:4
-  addValueDeclaration testConvertNestedRecordFromOtherFile Opaque.re:12:4
-  addTypeDeclaration +A Opaque.re:3:4
+  addValueDeclaration noConversion Opaque.re:6:4 path:+Opaque
+  addValueDeclaration testConvertNestedRecordFromOtherFile Opaque.re:12:4 path:+Opaque
+  addTypeDeclaration +A Opaque.re:3:4 path:+Opaque.+opaqueFromRecords
   addValueReference Opaque.re:6:4 --> Opaque.re:6:20
   addValueReference Opaque.re:12:4 --> Opaque.re:12:44
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ManyComponents.cmt
-  addValueDeclaration someValueSoModuleOffsetsAreShifted ManyComponents.re:4:6
-  addValueDeclaration component ManyComponents.re:6:6
-  addValueDeclaration make ManyComponents.re:9:6
-  addValueDeclaration component ManyComponents.re:16:6
-  addValueDeclaration make ManyComponents.re:19:6
-  addValueDeclaration component ManyComponents.re:36:4
-  addValueDeclaration make ManyComponents.re:39:4
+  addValueDeclaration someValueSoModuleOffsetsAreShifted ManyComponents.re:4:6 path:+ManyComponents.InnerComponent
+  addValueDeclaration component ManyComponents.re:6:6 path:+ManyComponents.InnerComponent
+  addValueDeclaration make ManyComponents.re:9:6 path:+ManyComponents.InnerComponent
+  addValueDeclaration component ManyComponents.re:16:6 path:+ManyComponents.ManyProps
+  addValueDeclaration make ManyComponents.re:19:6 path:+ManyComponents.ManyProps
+  addValueDeclaration component ManyComponents.re:36:4 path:+ManyComponents
+  addValueDeclaration make ManyComponents.re:39:4 path:+ManyComponents
   addValueReference ManyComponents.re:6:6 --> ReasonReact.rei:153:0
   addValueReference ManyComponents.re:9:6 --> ReasonReact.rei:17:0
   addValueReference ManyComponents.re:9:6 --> ReactDOMRe.re:2105:0
@@ -805,27 +810,27 @@
   addValueReference ManyComponents.re:19:6 --> ManyComponents.re:16:6
   addValueReference ManyComponents.re:36:4 --> ReasonReact.rei:153:0
   addValueReference ManyComponents.re:39:4 --> ReasonReact.rei:17:0
-  addValueDeclaration +emptyArray ManyComponents.re:42:49
+  addValueDeclaration +emptyArray ManyComponents.re:42:49 path:+ManyComponents
   addValueReference ManyComponents.re:39:4 --> ManyComponents.re:42:49
   addValueReference ManyComponents.re:39:4 --> ManyComponents.re:9:6
   addValueReference ManyComponents.re:39:4 --> ReasonReact.rei:181:0
   addValueReference ManyComponents.re:39:4 --> ReactDOMRe.re:2105:0
   addValueReference ManyComponents.re:39:4 --> ManyComponents.re:36:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ErrorHandler.cmti
-  addValueDeclaration notify ErrorHandler.rei:5:32
-  addValueDeclaration x ErrorHandler.rei:7:0
+  addValueDeclaration notify ErrorHandler.rei:5:32 path:ErrorHandler.Make
+  addValueDeclaration x ErrorHandler.rei:7:0 path:ErrorHandler
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/VariantsWithPayload.cmt
-  addValueDeclaration testWithPayload VariantsWithPayload.re:16:4
-  addValueDeclaration printVariantWithPayload VariantsWithPayload.re:19:4
-  addValueDeclaration testManyPayloads VariantsWithPayload.re:38:4
-  addValueDeclaration printManyPayloads VariantsWithPayload.re:41:4
-  addValueDeclaration testSimpleVariant VariantsWithPayload.re:56:4
-  addValueDeclaration testVariantWithPayloads VariantsWithPayload.re:67:4
-  addValueDeclaration printVariantWithPayloads VariantsWithPayload.re:70:4
-  addValueDeclaration testVariant1Int VariantsWithPayload.re:103:4
-  addValueDeclaration testVariant1Object VariantsWithPayload.re:110:4
-  addTypeDeclaration +x VariantsWithPayload.re:2:2
-  addTypeDeclaration +y VariantsWithPayload.re:3:2
+  addValueDeclaration testWithPayload VariantsWithPayload.re:16:4 path:+VariantsWithPayload
+  addValueDeclaration printVariantWithPayload VariantsWithPayload.re:19:4 path:+VariantsWithPayload
+  addValueDeclaration testManyPayloads VariantsWithPayload.re:38:4 path:+VariantsWithPayload
+  addValueDeclaration printManyPayloads VariantsWithPayload.re:41:4 path:+VariantsWithPayload
+  addValueDeclaration testSimpleVariant VariantsWithPayload.re:56:4 path:+VariantsWithPayload
+  addValueDeclaration testVariantWithPayloads VariantsWithPayload.re:67:4 path:+VariantsWithPayload
+  addValueDeclaration printVariantWithPayloads VariantsWithPayload.re:70:4 path:+VariantsWithPayload
+  addValueDeclaration testVariant1Int VariantsWithPayload.re:103:4 path:+VariantsWithPayload
+  addValueDeclaration testVariant1Object VariantsWithPayload.re:110:4 path:+VariantsWithPayload
+  addTypeDeclaration +x VariantsWithPayload.re:2:2 path:+VariantsWithPayload.+payload
+  addTypeDeclaration +y VariantsWithPayload.re:3:2 path:+VariantsWithPayload.+payload
   addValueReference VariantsWithPayload.re:16:4 --> VariantsWithPayload.re:16:23
   addTypeReference VariantsWithPayload.re:27:42 --> VariantsWithPayload.re:2:2
   addValueReference VariantsWithPayload.re:19:4 --> VariantsWithPayload.re:26:6
@@ -841,15 +846,15 @@
   addTypeReference VariantsWithPayload.re:46:53 --> VariantsWithPayload.re:3:2
   addValueReference VariantsWithPayload.re:41:4 --> VariantsWithPayload.re:45:10
   addValueReference VariantsWithPayload.re:41:4 --> VariantsWithPayload.re:41:25
-  addTypeDeclaration +A VariantsWithPayload.re:51:4
-  addTypeDeclaration +B VariantsWithPayload.re:52:4
-  addTypeDeclaration +C VariantsWithPayload.re:53:4
+  addTypeDeclaration +A VariantsWithPayload.re:51:4 path:+VariantsWithPayload.+simpleVariant
+  addTypeDeclaration +B VariantsWithPayload.re:52:4 path:+VariantsWithPayload.+simpleVariant
+  addTypeDeclaration +C VariantsWithPayload.re:53:4 path:+VariantsWithPayload.+simpleVariant
   addValueReference VariantsWithPayload.re:56:4 --> VariantsWithPayload.re:56:25
-  addTypeDeclaration +A VariantsWithPayload.re:60:4
-  addTypeDeclaration +B VariantsWithPayload.re:61:4
-  addTypeDeclaration +C VariantsWithPayload.re:62:4
-  addTypeDeclaration +D VariantsWithPayload.re:63:4
-  addTypeDeclaration +E VariantsWithPayload.re:64:4
+  addTypeDeclaration +A VariantsWithPayload.re:60:4 path:+VariantsWithPayload.+variantWithPayloads
+  addTypeDeclaration +B VariantsWithPayload.re:61:4 path:+VariantsWithPayload.+variantWithPayloads
+  addTypeDeclaration +C VariantsWithPayload.re:62:4 path:+VariantsWithPayload.+variantWithPayloads
+  addTypeDeclaration +D VariantsWithPayload.re:63:4 path:+VariantsWithPayload.+variantWithPayloads
+  addTypeDeclaration +E VariantsWithPayload.re:64:4 path:+VariantsWithPayload.+variantWithPayloads
   addValueReference VariantsWithPayload.re:67:4 --> VariantsWithPayload.re:67:31
   addValueReference VariantsWithPayload.re:70:4 --> VariantsWithPayload.re:73:6
   addValueReference VariantsWithPayload.re:70:4 --> VariantsWithPayload.re:75:6
@@ -860,49 +865,49 @@
   addValueReference VariantsWithPayload.re:70:4 --> VariantsWithPayload.re:85:9
   addValueReference VariantsWithPayload.re:70:4 --> VariantsWithPayload.re:85:12
   addValueReference VariantsWithPayload.re:70:4 --> VariantsWithPayload.re:70:31
-  addTypeDeclaration +R VariantsWithPayload.re:100:4
+  addTypeDeclaration +R VariantsWithPayload.re:100:4 path:+VariantsWithPayload.+variant1Int
   addValueReference VariantsWithPayload.re:103:4 --> VariantsWithPayload.re:103:23
-  addTypeDeclaration +R VariantsWithPayload.re:107:4
+  addTypeDeclaration +R VariantsWithPayload.re:107:4 path:+VariantsWithPayload.+variant1Object
   addValueReference VariantsWithPayload.re:110:4 --> VariantsWithPayload.re:110:26
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/FirstClassModulesInterface.cmt
-  addValueDeclaration r FirstClassModulesInterface.re:6:4
-  addTypeDeclaration +x FirstClassModulesInterface.re:2:2
-  addTypeDeclaration +y FirstClassModulesInterface.re:3:2
+  addValueDeclaration r FirstClassModulesInterface.re:6:4 path:+FirstClassModulesInterface
+  addTypeDeclaration +x FirstClassModulesInterface.re:2:2 path:+FirstClassModulesInterface.+record
+  addTypeDeclaration +y FirstClassModulesInterface.re:3:2 path:+FirstClassModulesInterface.+record
   addValueReference FirstClassModulesInterface.rei:7:0 --> FirstClassModulesInterface.re:6:4
   addValueReference FirstClassModulesInterface.rei:10:18 --> FirstClassModulesInterface.re:8:18
   addValueReference FirstClassModulesInterface.re:8:18 --> FirstClassModulesInterface.rei:10:18
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Unboxed.cmt
-  addValueDeclaration testV1 Unboxed.re:12:4
-  addValueDeclaration r2Test Unboxed.re:24:4
-  addTypeDeclaration +A Unboxed.re:4:4
-  addTypeDeclaration +A Unboxed.re:9:4
+  addValueDeclaration testV1 Unboxed.re:12:4 path:+Unboxed
+  addValueDeclaration r2Test Unboxed.re:24:4 path:+Unboxed
+  addTypeDeclaration +A Unboxed.re:4:4 path:+Unboxed.+v1
+  addTypeDeclaration +A Unboxed.re:9:4 path:+Unboxed.+v2
   addValueReference Unboxed.re:12:4 --> Unboxed.re:12:14
-  addTypeDeclaration +x Unboxed.re:16:11
-  addTypeDeclaration +B Unboxed.re:21:4
+  addTypeDeclaration +x Unboxed.re:16:11 path:+Unboxed.+r1
+  addTypeDeclaration +B Unboxed.re:21:4 path:+Unboxed.+r2
   addValueReference Unboxed.re:24:4 --> Unboxed.re:24:14
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTypeTest.cmti
-  addValueDeclaration a DeadTypeTest.rei:4:0
+  addValueDeclaration a DeadTypeTest.rei:4:0 path:DeadTypeTest
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImportJsValue.cmt
-  addValueDeclaration round ImportJsValue.re:1:0
-  addValueDeclaration area ImportJsValue.re:14:0
-  addValueDeclaration returnMixedArray ImportJsValue.re:21:0
-  addValueDeclaration roundedNumber ImportJsValue.re:25:4
-  addValueDeclaration areaValue ImportJsValue.re:28:4
-  addValueDeclaration getProp ImportJsValue.re:35:2
-  addValueDeclaration getAbs ImportJsValue.re:38:6
-  addValueDeclaration useGetProp ImportJsValue.re:45:4
-  addValueDeclaration useGetAbs ImportJsValue.re:48:4
-  addValueDeclaration useColor ImportJsValue.re:56:0
-  addValueDeclaration higherOrder ImportJsValue.re:58:0
-  addValueDeclaration returnedFromHigherOrder ImportJsValue.re:62:4
-  addValueDeclaration convertVariant ImportJsValue.re:68:0
-  addValueDeclaration polymorphic ImportJsValue.re:71:0
-  addValueDeclaration default ImportJsValue.re:73:0
-  addTypeDeclaration +x ImportJsValue.re:10:2
-  addTypeDeclaration +y ImportJsValue.re:11:2
+  addValueDeclaration round ImportJsValue.re:1:0 path:+ImportJsValue
+  addValueDeclaration area ImportJsValue.re:14:0 path:+ImportJsValue
+  addValueDeclaration returnMixedArray ImportJsValue.re:21:0 path:+ImportJsValue
+  addValueDeclaration roundedNumber ImportJsValue.re:25:4 path:+ImportJsValue
+  addValueDeclaration areaValue ImportJsValue.re:28:4 path:+ImportJsValue
+  addValueDeclaration getProp ImportJsValue.re:35:2 path:+ImportJsValue.AbsoluteValue
+  addValueDeclaration getAbs ImportJsValue.re:38:6 path:+ImportJsValue.AbsoluteValue
+  addValueDeclaration useGetProp ImportJsValue.re:45:4 path:+ImportJsValue
+  addValueDeclaration useGetAbs ImportJsValue.re:48:4 path:+ImportJsValue
+  addValueDeclaration useColor ImportJsValue.re:56:0 path:+ImportJsValue
+  addValueDeclaration higherOrder ImportJsValue.re:58:0 path:+ImportJsValue
+  addValueDeclaration returnedFromHigherOrder ImportJsValue.re:62:4 path:+ImportJsValue
+  addValueDeclaration convertVariant ImportJsValue.re:68:0 path:+ImportJsValue
+  addValueDeclaration polymorphic ImportJsValue.re:71:0 path:+ImportJsValue
+  addValueDeclaration default ImportJsValue.re:73:0 path:+ImportJsValue
+  addTypeDeclaration +x ImportJsValue.re:10:2 path:+ImportJsValue.+point
+  addTypeDeclaration +y ImportJsValue.re:11:2 path:+ImportJsValue.+point
   addValueReference ImportJsValue.re:25:4 --> ImportJsValue.re:1:0
   addValueReference ImportJsValue.re:28:4 --> ImportJsValue.re:14:0
-  addValueDeclaration +getAbs ImportJsValue.re:39:8
+  addValueDeclaration +getAbs ImportJsValue.re:39:8 path:+ImportJsValue.AbsoluteValue
   addValueReference ImportJsValue.re:39:8 --> ImportJsValue.re:38:16
   addValueReference ImportJsValue.re:38:6 --> ImportJsValue.re:39:8
   addValueReference ImportJsValue.re:45:4 --> ImportJsValue.re:45:18
@@ -910,210 +915,210 @@
   addValueReference ImportJsValue.re:48:4 --> ImportJsValue.re:48:17
   addValueReference ImportJsValue.re:48:4 --> ImportJsValue.re:38:6
   addValueReference ImportJsValue.re:62:4 --> ImportJsValue.re:58:0
-  addTypeDeclaration +I ImportJsValue.re:65:4
-  addTypeDeclaration +S ImportJsValue.re:66:4
+  addTypeDeclaration +I ImportJsValue.re:65:4 path:+ImportJsValue.+variant
+  addTypeDeclaration +S ImportJsValue.re:66:4 path:+ImportJsValue.+variant
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/References.cmt
-  addValueDeclaration create References.re:4:4
-  addValueDeclaration access References.re:7:4
-  addValueDeclaration update References.re:10:4
-  addValueDeclaration get References.re:17:2
-  addValueDeclaration make References.re:18:2
-  addValueDeclaration set References.re:19:2
-  addValueDeclaration get References.re:31:4
-  addValueDeclaration make References.re:34:4
-  addValueDeclaration set References.re:37:4
-  addValueDeclaration destroysRefIdentity References.re:43:4
-  addValueDeclaration preserveRefIdentity References.re:47:4
+  addValueDeclaration create References.re:4:4 path:+References
+  addValueDeclaration access References.re:7:4 path:+References
+  addValueDeclaration update References.re:10:4 path:+References
+  addValueDeclaration get References.re:17:2 path:+References.R
+  addValueDeclaration make References.re:18:2 path:+References.R
+  addValueDeclaration set References.re:19:2 path:+References.R
+  addValueDeclaration get References.re:31:4 path:+References
+  addValueDeclaration make References.re:34:4 path:+References
+  addValueDeclaration set References.re:37:4 path:+References
+  addValueDeclaration destroysRefIdentity References.re:43:4 path:+References
+  addValueDeclaration preserveRefIdentity References.re:47:4 path:+References
   addValueReference References.re:4:4 --> References.re:4:14
   addValueReference References.re:7:4 --> References.re:7:13
   addValueReference References.re:10:4 --> References.re:10:13
   addValueReference References.re:10:4 --> References.re:10:13
-  addValueDeclaration +get References.re:22:6
+  addValueDeclaration +get References.re:22:6 path:+References.R
   addValueReference References.re:22:6 --> References.re:22:12
-  addValueDeclaration +make References.re:23:6
-  addValueDeclaration +set References.re:24:6
+  addValueDeclaration +make References.re:23:6 path:+References.R
+  addValueDeclaration +set References.re:24:6 path:+References.R
   addValueReference References.re:24:6 --> References.re:24:16
   addValueReference References.re:24:6 --> References.re:24:13
   addValueReference References.re:31:4 --> References.re:17:2
   addValueReference References.re:34:4 --> References.re:18:2
   addValueReference References.re:37:4 --> References.re:19:2
-  addTypeDeclaration +x References.re:39:27
+  addTypeDeclaration +x References.re:39:27 path:+References.+requiresConversion
   addValueReference References.re:43:4 --> References.re:43:27
   addValueReference References.re:47:4 --> References.re:47:27
   addValueReference References.re:17:2 --> References.re:22:6
   addValueReference References.re:18:2 --> References.re:23:6
   addValueReference References.re:19:2 --> References.re:24:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTestWithInterface.cmt
-  addValueDeclaration x DeadTestWithInterface.re:1:20
-  addValueDeclaration +x DeadTestWithInterface.re:2:6
+  addValueDeclaration x DeadTestWithInterface.re:1:20 path:+DeadTestWithInterface.Ext_buffer
+  addValueDeclaration +x DeadTestWithInterface.re:2:6 path:+DeadTestWithInterface.Ext_buffer
   addValueReference DeadTestWithInterface.re:1:20 --> DeadTestWithInterface.re:2:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/JSResource.cmt
-  addValueDeclaration jSResource JSResource.re:3:0
+  addValueDeclaration jSResource JSResource.re:3:0 path:+JSResource
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTestBlacklist.cmt
-  addValueDeclaration x DeadTestBlacklist.re:1:4
+  addValueDeclaration x DeadTestBlacklist.re:1:4 path:+DeadTestBlacklist
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/NestedModulesInSignature.cmti
-  addValueDeclaration theAnswer NestedModulesInSignature.rei:2:2
+  addValueDeclaration theAnswer NestedModulesInSignature.rei:2:2 path:NestedModulesInSignature.Universe
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/CreateErrorHandler2.cmt
-  addValueDeclaration notification CreateErrorHandler2.re:3:6
+  addValueDeclaration notification CreateErrorHandler2.re:3:6 path:+CreateErrorHandler2.Error2
   addValueReference CreateErrorHandler2.re:3:6 --> CreateErrorHandler2.re:3:21
   addValueReference ErrorHandler.rei:3:2 --> CreateErrorHandler2.re:3:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/BootloaderResource.cmt
-  addValueDeclaration read BootloaderResource.re:3:0
+  addValueDeclaration read BootloaderResource.re:3:0 path:+BootloaderResource
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTypeTest.cmt
-  addValueDeclaration a DeadTypeTest.re:4:4
-  addTypeDeclaration +A DeadTypeTest.re:2:4
-  addTypeDeclaration +B DeadTypeTest.re:3:4
+  addValueDeclaration a DeadTypeTest.re:4:4 path:+DeadTypeTest
+  addTypeDeclaration +A DeadTypeTest.re:2:4 path:+DeadTypeTest.+t
+  addTypeDeclaration +B DeadTypeTest.re:3:4 path:+DeadTypeTest.+t
   addTypeReference DeadTypeTest.re:4:8 --> DeadTypeTest.re:2:4
-  addTypeDeclaration +OnlyInImplementation DeadTypeTest.re:7:4
-  addTypeDeclaration +OnlyInInterface DeadTypeTest.re:8:4
-  addTypeDeclaration +InBoth DeadTypeTest.re:9:4
-  addTypeDeclaration +InNeither DeadTypeTest.re:10:4
-  addValueDeclaration _ DeadTypeTest.re:12:0
+  addTypeDeclaration +OnlyInImplementation DeadTypeTest.re:7:4 path:+DeadTypeTest.+deadType
+  addTypeDeclaration +OnlyInInterface DeadTypeTest.re:8:4 path:+DeadTypeTest.+deadType
+  addTypeDeclaration +InBoth DeadTypeTest.re:9:4 path:+DeadTypeTest.+deadType
+  addTypeDeclaration +InNeither DeadTypeTest.re:10:4 path:+DeadTypeTest.+deadType
+  addValueDeclaration _ DeadTypeTest.re:12:0 path:+DeadTypeTest
   addTypeReference DeadTypeTest.re:12:8 --> DeadTypeTest.re:7:4
-  addValueDeclaration _ DeadTypeTest.re:13:0
+  addValueDeclaration _ DeadTypeTest.re:13:0 path:+DeadTypeTest
   addTypeReference DeadTypeTest.re:13:8 --> DeadTypeTest.re:9:4
   addValueReference DeadTypeTest.rei:4:0 --> DeadTypeTest.re:4:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/CreateErrorHandler1.cmt
-  addValueDeclaration notification CreateErrorHandler1.re:3:6
+  addValueDeclaration notification CreateErrorHandler1.re:3:6 path:+CreateErrorHandler1.Error1
   addValueReference CreateErrorHandler1.re:3:6 --> CreateErrorHandler1.re:3:21
   addValueReference CreateErrorHandler1.re:3:6 --> CreateErrorHandler1.re:3:21
   addValueReference CreateErrorHandler1.re:8:0 --> ErrorHandler.rei:5:32
   addValueReference ErrorHandler.rei:3:2 --> CreateErrorHandler1.re:3:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/LetPrivate.cmt
-  addValueDeclaration y LetPrivate.re:5:4
-  addValueDeclaration +x LetPrivate.re:2:12
+  addValueDeclaration y LetPrivate.re:5:4 path:+LetPrivate
+  addValueDeclaration +x LetPrivate.re:2:12 path:+LetPrivate.local_1
   addValueReference LetPrivate.re:5:4 --> LetPrivate.re:2:12
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ModuleAliases.cmt
-  addValueDeclaration testNested ModuleAliases.re:22:4
-  addValueDeclaration testInner ModuleAliases.re:25:4
-  addValueDeclaration testInner2 ModuleAliases.re:28:4
-  addTypeDeclaration +inner ModuleAliases.re:3:19
-  addTypeDeclaration +nested ModuleAliases.re:11:16
+  addValueDeclaration testNested ModuleAliases.re:22:4 path:+ModuleAliases
+  addValueDeclaration testInner ModuleAliases.re:25:4 path:+ModuleAliases
+  addValueDeclaration testInner2 ModuleAliases.re:28:4 path:+ModuleAliases
+  addTypeDeclaration +inner ModuleAliases.re:3:19 path:+ModuleAliases.Outer.Inner.+innerT
+  addTypeDeclaration +nested ModuleAliases.re:11:16 path:+ModuleAliases.Outer2.Inner2.InnerNested.+t
   addValueReference ModuleAliases.re:22:4 --> ModuleAliases.re:22:18
   addValueReference ModuleAliases.re:25:4 --> ModuleAliases.re:25:17
   addValueReference ModuleAliases.re:28:4 --> ModuleAliases.re:28:18
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadCodeInterface.cmt
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ExportWithRename.cmt
-  addValueDeclaration make ExportWithRename.re:3:4
+  addValueDeclaration make ExportWithRename.re:3:4 path:+ExportWithRename
   addValueReference ExportWithRename.re:3:4 --> ExportWithRename.re:3:13
   addValueReference ExportWithRename.re:3:4 --> React.re:5:0
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmti
-  addValueDeclaration get ImmutableArray.rei:5:15
-  addValueDeclaration fromArray ImmutableArray.rei:7:0
-  addValueDeclaration toArray ImmutableArray.rei:10:0
-  addValueDeclaration length ImmutableArray.rei:12:0
-  addValueDeclaration size ImmutableArray.rei:16:0
-  addValueDeclaration get ImmutableArray.rei:18:0
-  addValueDeclaration getExn ImmutableArray.rei:20:0
-  addValueDeclaration getUnsafe ImmutableArray.rei:22:0
-  addValueDeclaration getUndefined ImmutableArray.rei:24:0
-  addValueDeclaration shuffle ImmutableArray.rei:26:0
-  addValueDeclaration reverse ImmutableArray.rei:28:0
-  addValueDeclaration makeUninitialized ImmutableArray.rei:30:0
-  addValueDeclaration makeUninitializedUnsafe ImmutableArray.rei:32:0
-  addValueDeclaration make ImmutableArray.rei:34:0
-  addValueDeclaration range ImmutableArray.rei:36:0
-  addValueDeclaration rangeBy ImmutableArray.rei:38:0
-  addValueDeclaration makeByU ImmutableArray.rei:40:0
-  addValueDeclaration makeBy ImmutableArray.rei:41:0
-  addValueDeclaration makeByAndShuffleU ImmutableArray.rei:43:0
-  addValueDeclaration makeByAndShuffle ImmutableArray.rei:44:0
-  addValueDeclaration zip ImmutableArray.rei:46:0
-  addValueDeclaration zipByU ImmutableArray.rei:48:0
-  addValueDeclaration zipBy ImmutableArray.rei:49:0
-  addValueDeclaration unzip ImmutableArray.rei:51:0
-  addValueDeclaration concat ImmutableArray.rei:53:0
-  addValueDeclaration concatMany ImmutableArray.rei:55:0
-  addValueDeclaration slice ImmutableArray.rei:57:0
-  addValueDeclaration sliceToEnd ImmutableArray.rei:59:0
-  addValueDeclaration copy ImmutableArray.rei:61:0
-  addValueDeclaration forEachU ImmutableArray.rei:63:0
-  addValueDeclaration forEach ImmutableArray.rei:64:0
-  addValueDeclaration mapU ImmutableArray.rei:66:0
-  addValueDeclaration map ImmutableArray.rei:67:0
-  addValueDeclaration keepWithIndexU ImmutableArray.rei:69:0
-  addValueDeclaration keepWithIndex ImmutableArray.rei:70:0
-  addValueDeclaration keepMapU ImmutableArray.rei:72:0
-  addValueDeclaration keepMap ImmutableArray.rei:73:0
-  addValueDeclaration forEachWithIndexU ImmutableArray.rei:75:0
-  addValueDeclaration forEachWithIndex ImmutableArray.rei:76:0
-  addValueDeclaration mapWithIndexU ImmutableArray.rei:78:0
-  addValueDeclaration mapWithIndex ImmutableArray.rei:79:0
-  addValueDeclaration partitionU ImmutableArray.rei:81:0
-  addValueDeclaration partition ImmutableArray.rei:82:0
-  addValueDeclaration reduceU ImmutableArray.rei:84:0
-  addValueDeclaration reduce ImmutableArray.rei:85:0
-  addValueDeclaration reduceReverseU ImmutableArray.rei:87:0
-  addValueDeclaration reduceReverse ImmutableArray.rei:88:0
-  addValueDeclaration reduceReverse2U ImmutableArray.rei:90:0
-  addValueDeclaration reduceReverse2 ImmutableArray.rei:91:0
-  addValueDeclaration someU ImmutableArray.rei:93:0
-  addValueDeclaration some ImmutableArray.rei:94:0
-  addValueDeclaration everyU ImmutableArray.rei:96:0
-  addValueDeclaration every ImmutableArray.rei:97:0
-  addValueDeclaration every2U ImmutableArray.rei:99:0
-  addValueDeclaration every2 ImmutableArray.rei:100:0
-  addValueDeclaration some2U ImmutableArray.rei:102:0
-  addValueDeclaration some2 ImmutableArray.rei:103:0
-  addValueDeclaration cmpU ImmutableArray.rei:105:0
-  addValueDeclaration cmp ImmutableArray.rei:106:0
-  addValueDeclaration eqU ImmutableArray.rei:108:0
-  addValueDeclaration eq ImmutableArray.rei:109:0
+  addValueDeclaration get ImmutableArray.rei:5:15 path:ImmutableArray.Array
+  addValueDeclaration fromArray ImmutableArray.rei:7:0 path:ImmutableArray
+  addValueDeclaration toArray ImmutableArray.rei:10:0 path:ImmutableArray
+  addValueDeclaration length ImmutableArray.rei:12:0 path:ImmutableArray
+  addValueDeclaration size ImmutableArray.rei:16:0 path:ImmutableArray
+  addValueDeclaration get ImmutableArray.rei:18:0 path:ImmutableArray
+  addValueDeclaration getExn ImmutableArray.rei:20:0 path:ImmutableArray
+  addValueDeclaration getUnsafe ImmutableArray.rei:22:0 path:ImmutableArray
+  addValueDeclaration getUndefined ImmutableArray.rei:24:0 path:ImmutableArray
+  addValueDeclaration shuffle ImmutableArray.rei:26:0 path:ImmutableArray
+  addValueDeclaration reverse ImmutableArray.rei:28:0 path:ImmutableArray
+  addValueDeclaration makeUninitialized ImmutableArray.rei:30:0 path:ImmutableArray
+  addValueDeclaration makeUninitializedUnsafe ImmutableArray.rei:32:0 path:ImmutableArray
+  addValueDeclaration make ImmutableArray.rei:34:0 path:ImmutableArray
+  addValueDeclaration range ImmutableArray.rei:36:0 path:ImmutableArray
+  addValueDeclaration rangeBy ImmutableArray.rei:38:0 path:ImmutableArray
+  addValueDeclaration makeByU ImmutableArray.rei:40:0 path:ImmutableArray
+  addValueDeclaration makeBy ImmutableArray.rei:41:0 path:ImmutableArray
+  addValueDeclaration makeByAndShuffleU ImmutableArray.rei:43:0 path:ImmutableArray
+  addValueDeclaration makeByAndShuffle ImmutableArray.rei:44:0 path:ImmutableArray
+  addValueDeclaration zip ImmutableArray.rei:46:0 path:ImmutableArray
+  addValueDeclaration zipByU ImmutableArray.rei:48:0 path:ImmutableArray
+  addValueDeclaration zipBy ImmutableArray.rei:49:0 path:ImmutableArray
+  addValueDeclaration unzip ImmutableArray.rei:51:0 path:ImmutableArray
+  addValueDeclaration concat ImmutableArray.rei:53:0 path:ImmutableArray
+  addValueDeclaration concatMany ImmutableArray.rei:55:0 path:ImmutableArray
+  addValueDeclaration slice ImmutableArray.rei:57:0 path:ImmutableArray
+  addValueDeclaration sliceToEnd ImmutableArray.rei:59:0 path:ImmutableArray
+  addValueDeclaration copy ImmutableArray.rei:61:0 path:ImmutableArray
+  addValueDeclaration forEachU ImmutableArray.rei:63:0 path:ImmutableArray
+  addValueDeclaration forEach ImmutableArray.rei:64:0 path:ImmutableArray
+  addValueDeclaration mapU ImmutableArray.rei:66:0 path:ImmutableArray
+  addValueDeclaration map ImmutableArray.rei:67:0 path:ImmutableArray
+  addValueDeclaration keepWithIndexU ImmutableArray.rei:69:0 path:ImmutableArray
+  addValueDeclaration keepWithIndex ImmutableArray.rei:70:0 path:ImmutableArray
+  addValueDeclaration keepMapU ImmutableArray.rei:72:0 path:ImmutableArray
+  addValueDeclaration keepMap ImmutableArray.rei:73:0 path:ImmutableArray
+  addValueDeclaration forEachWithIndexU ImmutableArray.rei:75:0 path:ImmutableArray
+  addValueDeclaration forEachWithIndex ImmutableArray.rei:76:0 path:ImmutableArray
+  addValueDeclaration mapWithIndexU ImmutableArray.rei:78:0 path:ImmutableArray
+  addValueDeclaration mapWithIndex ImmutableArray.rei:79:0 path:ImmutableArray
+  addValueDeclaration partitionU ImmutableArray.rei:81:0 path:ImmutableArray
+  addValueDeclaration partition ImmutableArray.rei:82:0 path:ImmutableArray
+  addValueDeclaration reduceU ImmutableArray.rei:84:0 path:ImmutableArray
+  addValueDeclaration reduce ImmutableArray.rei:85:0 path:ImmutableArray
+  addValueDeclaration reduceReverseU ImmutableArray.rei:87:0 path:ImmutableArray
+  addValueDeclaration reduceReverse ImmutableArray.rei:88:0 path:ImmutableArray
+  addValueDeclaration reduceReverse2U ImmutableArray.rei:90:0 path:ImmutableArray
+  addValueDeclaration reduceReverse2 ImmutableArray.rei:91:0 path:ImmutableArray
+  addValueDeclaration someU ImmutableArray.rei:93:0 path:ImmutableArray
+  addValueDeclaration some ImmutableArray.rei:94:0 path:ImmutableArray
+  addValueDeclaration everyU ImmutableArray.rei:96:0 path:ImmutableArray
+  addValueDeclaration every ImmutableArray.rei:97:0 path:ImmutableArray
+  addValueDeclaration every2U ImmutableArray.rei:99:0 path:ImmutableArray
+  addValueDeclaration every2 ImmutableArray.rei:100:0 path:ImmutableArray
+  addValueDeclaration some2U ImmutableArray.rei:102:0 path:ImmutableArray
+  addValueDeclaration some2 ImmutableArray.rei:103:0 path:ImmutableArray
+  addValueDeclaration cmpU ImmutableArray.rei:105:0 path:ImmutableArray
+  addValueDeclaration cmp ImmutableArray.rei:106:0 path:ImmutableArray
+  addValueDeclaration eqU ImmutableArray.rei:108:0 path:ImmutableArray
+  addValueDeclaration eq ImmutableArray.rei:109:0 path:ImmutableArray
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImportHookDefault.cmt
-  addValueDeclaration makeProps ImportHookDefault.re:6:0
-  addValueDeclaration make ImportHookDefault.re:6:0
-  addValueDeclaration make2Props ImportHookDefault.re:16:0
-  addValueDeclaration make2 ImportHookDefault.re:16:0
-  addTypeDeclaration +name ImportHookDefault.re:2:2
-  addTypeDeclaration +age ImportHookDefault.re:3:2
+  addValueDeclaration makeProps ImportHookDefault.re:6:0 path:+ImportHookDefault
+  addValueDeclaration make ImportHookDefault.re:6:0 path:+ImportHookDefault
+  addValueDeclaration make2Props ImportHookDefault.re:16:0 path:+ImportHookDefault
+  addValueDeclaration make2 ImportHookDefault.re:16:0 path:+ImportHookDefault
+  addTypeDeclaration +name ImportHookDefault.re:2:2 path:+ImportHookDefault.+person
+  addTypeDeclaration +age ImportHookDefault.re:3:2 path:+ImportHookDefault.+person
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/UseImportJsValue.cmt
-  addValueDeclaration useGetProp UseImportJsValue.re:2:4
-  addValueDeclaration useTypeImportedInOtherModule UseImportJsValue.re:6:4
+  addValueDeclaration useGetProp UseImportJsValue.re:2:4 path:+UseImportJsValue
+  addValueDeclaration useTypeImportedInOtherModule UseImportJsValue.re:6:4 path:+UseImportJsValue
   addValueReference UseImportJsValue.re:2:4 --> UseImportJsValue.re:2:18
   addValueReference UseImportJsValue.re:2:4 --> ImportJsValue.re:35:2
   addValueReference UseImportJsValue.re:6:4 --> UseImportJsValue.re:6:36
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestImport.cmt
-  addValueDeclaration innerStuffContents TestImport.re:1:0
-  addValueDeclaration innerStuffContentsAsEmptyObject TestImport.re:9:0
-  addValueDeclaration innerStuffContents TestImport.re:18:4
-  addValueDeclaration valueStartingWithUpperCaseLetter TestImport.re:20:0
-  addValueDeclaration defaultValue TestImport.re:24:0
-  addValueDeclaration make TestImport.re:30:0
-  addValueDeclaration make TestImport.re:42:4
-  addValueDeclaration defaultValue2 TestImport.re:44:0
+  addValueDeclaration innerStuffContents TestImport.re:1:0 path:+TestImport
+  addValueDeclaration innerStuffContentsAsEmptyObject TestImport.re:9:0 path:+TestImport
+  addValueDeclaration innerStuffContents TestImport.re:18:4 path:+TestImport
+  addValueDeclaration valueStartingWithUpperCaseLetter TestImport.re:20:0 path:+TestImport
+  addValueDeclaration defaultValue TestImport.re:24:0 path:+TestImport
+  addValueDeclaration make TestImport.re:30:0 path:+TestImport
+  addValueDeclaration make TestImport.re:42:4 path:+TestImport
+  addValueDeclaration defaultValue2 TestImport.re:44:0 path:+TestImport
   addValueReference TestImport.re:18:4 --> TestImport.re:1:0
-  addTypeDeclaration +text TestImport.re:28:16
+  addTypeDeclaration +text TestImport.re:28:16 path:+TestImport.+message
   addValueReference TestImport.re:42:4 --> TestImport.re:30:0
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestImmutableArray.cmt
-  addValueDeclaration testImmutableArrayGet TestImmutableArray.re:2:4
-  addValueDeclaration testBeltArrayGet TestImmutableArray.re:9:4
-  addValueDeclaration testBeltArraySet TestImmutableArray.re:11:4
+  addValueDeclaration testImmutableArrayGet TestImmutableArray.re:2:4 path:+TestImmutableArray
+  addValueDeclaration testBeltArrayGet TestImmutableArray.re:9:4 path:+TestImmutableArray
+  addValueDeclaration testBeltArraySet TestImmutableArray.re:11:4 path:+TestImmutableArray
   addValueReference TestImmutableArray.re:2:4 --> TestImmutableArray.re:2:28
   addValueReference TestImmutableArray.re:2:4 --> ImmutableArray.rei:5:15
   addValueReference TestImmutableArray.re:9:4 --> TestImmutableArray.re:9:23
   addValueReference TestImmutableArray.re:11:4 --> TestImmutableArray.re:11:23
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImportHooks.cmt
-  addValueDeclaration makeProps ImportHooks.re:15:0
-  addValueDeclaration make ImportHooks.re:15:0
-  addValueDeclaration foo ImportHooks.re:21:0
-  addTypeDeclaration +name ImportHooks.re:3:2
-  addTypeDeclaration +age ImportHooks.re:4:2
+  addValueDeclaration makeProps ImportHooks.re:15:0 path:+ImportHooks
+  addValueDeclaration make ImportHooks.re:15:0 path:+ImportHooks
+  addValueDeclaration foo ImportHooks.re:21:0 path:+ImportHooks
+  addTypeDeclaration +name ImportHooks.re:3:2 path:+ImportHooks.+person
+  addTypeDeclaration +age ImportHooks.re:4:2 path:+ImportHooks.+person
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTestWithInterface.cmti
   Interface 0
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/RequireCond.cmt
-  addValueDeclaration make RequireCond.re:1:0
-  addValueDeclaration either RequireCond.re:14:0
+  addValueDeclaration make RequireCond.re:1:0 path:+RequireCond
+  addValueDeclaration either RequireCond.re:14:0 path:+RequireCond
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/BucklescriptAnnotations.cmt
-  addValueDeclaration foo BucklescriptAnnotations.re:19:4
-  addValueDeclaration bar BucklescriptAnnotations.re:21:4
+  addValueDeclaration foo BucklescriptAnnotations.re:19:4 path:+BucklescriptAnnotations
+  addValueDeclaration bar BucklescriptAnnotations.re:21:4 path:+BucklescriptAnnotations
   addValueReference BucklescriptAnnotations.re:19:4 --> BucklescriptAnnotations.re:19:11
-  addValueDeclaration +f BucklescriptAnnotations.re:22:6
+  addValueDeclaration +f BucklescriptAnnotations.re:22:6 path:+BucklescriptAnnotations
   addValueReference BucklescriptAnnotations.re:22:6 --> BucklescriptAnnotations.re:21:11
   addValueReference BucklescriptAnnotations.re:21:4 --> BucklescriptAnnotations.re:22:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadRT.cmti
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ComponentAsProp.cmt
-  addValueDeclaration component ComponentAsProp.re:1:4
-  addValueDeclaration make ComponentAsProp.re:5:4
+  addValueDeclaration component ComponentAsProp.re:1:4 path:+ComponentAsProp
+  addValueDeclaration make ComponentAsProp.re:5:4 path:+ComponentAsProp
   addValueReference ComponentAsProp.re:1:4 --> ReasonReact.rei:153:0
   addValueReference ComponentAsProp.re:5:4 --> ComponentAsProp.re:5:13
   addValueReference ComponentAsProp.re:5:4 --> ComponentAsProp.re:5:21
@@ -1124,31 +1129,31 @@
   addValueReference ComponentAsProp.re:5:4 --> ReactDOMRe.re:1097:0
   addValueReference ComponentAsProp.re:5:4 --> ComponentAsProp.re:1:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Records.cmt
-  addValueDeclaration origin Records.re:11:4
-  addValueDeclaration computeArea Records.re:14:4
-  addValueDeclaration coord2d Records.re:18:4
-  addValueDeclaration getOpt Records.re:34:4
-  addValueDeclaration findAddress Records.re:37:4
-  addValueDeclaration someBusiness Records.re:41:4
-  addValueDeclaration findAllAddresses Records.re:44:4
-  addValueDeclaration getPayload Records.re:61:4
-  addValueDeclaration getPayloadRecord Records.re:70:4
-  addValueDeclaration recordValue Records.re:73:4
-  addValueDeclaration payloadValue Records.re:76:4
-  addValueDeclaration getPayloadRecordPlusOne Records.re:79:4
-  addValueDeclaration findAddress2 Records.re:92:4
-  addValueDeclaration someBusiness2 Records.re:96:4
-  addValueDeclaration computeArea3 Records.re:103:4
-  addValueDeclaration computeArea4 Records.re:115:4
-  addValueDeclaration testMyRec Records.re:149:4
-  addValueDeclaration testMyRec2 Records.re:152:4
-  addValueDeclaration testMyObj Records.re:155:4
-  addValueDeclaration testMyObj2 Records.re:158:4
-  addValueDeclaration testMyRecBsAs Records.re:167:4
-  addValueDeclaration testMyRecBsAs2 Records.re:170:4
-  addTypeDeclaration +x Records.re:5:2
-  addTypeDeclaration +y Records.re:6:2
-  addTypeDeclaration +z Records.re:7:2
+  addValueDeclaration origin Records.re:11:4 path:+Records
+  addValueDeclaration computeArea Records.re:14:4 path:+Records
+  addValueDeclaration coord2d Records.re:18:4 path:+Records
+  addValueDeclaration getOpt Records.re:34:4 path:+Records
+  addValueDeclaration findAddress Records.re:37:4 path:+Records
+  addValueDeclaration someBusiness Records.re:41:4 path:+Records
+  addValueDeclaration findAllAddresses Records.re:44:4 path:+Records
+  addValueDeclaration getPayload Records.re:61:4 path:+Records
+  addValueDeclaration getPayloadRecord Records.re:70:4 path:+Records
+  addValueDeclaration recordValue Records.re:73:4 path:+Records
+  addValueDeclaration payloadValue Records.re:76:4 path:+Records
+  addValueDeclaration getPayloadRecordPlusOne Records.re:79:4 path:+Records
+  addValueDeclaration findAddress2 Records.re:92:4 path:+Records
+  addValueDeclaration someBusiness2 Records.re:96:4 path:+Records
+  addValueDeclaration computeArea3 Records.re:103:4 path:+Records
+  addValueDeclaration computeArea4 Records.re:115:4 path:+Records
+  addValueDeclaration testMyRec Records.re:149:4 path:+Records
+  addValueDeclaration testMyRec2 Records.re:152:4 path:+Records
+  addValueDeclaration testMyObj Records.re:155:4 path:+Records
+  addValueDeclaration testMyObj2 Records.re:158:4 path:+Records
+  addValueDeclaration testMyRecBsAs Records.re:167:4 path:+Records
+  addValueDeclaration testMyRecBsAs2 Records.re:170:4 path:+Records
+  addTypeDeclaration +x Records.re:5:2 path:+Records.+coord
+  addTypeDeclaration +y Records.re:6:2 path:+Records.+coord
+  addTypeDeclaration +z Records.re:7:2 path:+Records.+coord
   addValueReference Records.re:14:4 --> Records.re:14:20
   addValueReference Records.re:14:4 --> Records.re:14:23
   addValueReference Records.re:14:4 --> Records.re:14:26
@@ -1158,12 +1163,12 @@
   addTypeReference Records.re:14:19 --> Records.re:7:2
   addValueReference Records.re:18:4 --> Records.re:18:15
   addValueReference Records.re:18:4 --> Records.re:18:18
-  addTypeDeclaration +name Records.re:22:2
-  addTypeDeclaration +age Records.re:23:2
-  addTypeDeclaration +address Records.re:24:2
-  addTypeDeclaration +name Records.re:29:2
-  addTypeDeclaration +owner Records.re:30:2
-  addTypeDeclaration +address Records.re:31:2
+  addTypeDeclaration +name Records.re:22:2 path:+Records.+person
+  addTypeDeclaration +age Records.re:23:2 path:+Records.+person
+  addTypeDeclaration +address Records.re:24:2 path:+Records.+person
+  addTypeDeclaration +name Records.re:29:2 path:+Records.+business
+  addTypeDeclaration +owner Records.re:30:2 path:+Records.+business
+  addTypeDeclaration +address Records.re:31:2 path:+Records.+business
   addValueReference Records.re:34:4 --> Records.re:34:19
   addValueReference Records.re:34:4 --> Records.re:34:28
   addValueReference Records.re:34:4 --> Records.re:34:14
@@ -1183,12 +1188,12 @@
   addValueReference Records.re:44:4 --> Records.re:46:14
   addValueReference Records.re:44:4 --> Records.re:34:4
   addValueReference Records.re:44:4 --> Records.re:44:24
-  addTypeDeclaration +num Records.re:56:2
-  addTypeDeclaration +payload Records.re:57:2
+  addTypeDeclaration +num Records.re:56:2 path:+Records.+payload
+  addTypeDeclaration +payload Records.re:57:2 path:+Records.+payload
   addValueReference Records.re:61:4 --> Records.re:61:19
   addTypeReference Records.re:61:18 --> Records.re:57:2
-  addTypeDeclaration +v Records.re:65:2
-  addTypeDeclaration +w Records.re:66:2
+  addTypeDeclaration +v Records.re:65:2 path:+Records.+record
+  addTypeDeclaration +w Records.re:66:2 path:+Records.+record
   addValueReference Records.re:70:4 --> Records.re:70:25
   addTypeReference Records.re:70:24 --> Records.re:57:2
   addValueReference Records.re:76:4 --> Records.re:73:4
@@ -1196,9 +1201,9 @@
   addValueReference Records.re:79:4 --> Records.re:79:32
   addValueReference Records.re:79:4 --> Records.re:79:32
   addTypeReference Records.re:79:31 --> Records.re:57:2
-  addTypeDeclaration +name Records.re:86:2
-  addTypeDeclaration +owner Records.re:87:2
-  addTypeDeclaration +address2 Records.re:88:2
+  addTypeDeclaration +name Records.re:86:2 path:+Records.+business2
+  addTypeDeclaration +owner Records.re:87:2 path:+Records.+business2
+  addTypeDeclaration +address2 Records.re:88:2 path:+Records.+business2
   addValueReference Records.re:92:4 --> Records.re:93:54
   addTypeReference Records.re:93:2 --> Records.re:88:2
   addValueReference Records.re:92:4 --> Records.re:92:20
@@ -1211,39 +1216,39 @@
   addValueReference Records.re:115:4 --> Records.re:117:6
   addValueReference Records.re:115:4 --> Records.re:124:47
   addValueReference Records.re:115:4 --> Records.re:117:6
-  addTypeDeclaration +type_ Records.re:141:2
+  addTypeDeclaration +type_ Records.re:141:2 path:+Records.+myRec
   addTypeReference Records.re:149:30 --> Records.re:141:2
   addValueReference Records.re:149:4 --> Records.re:149:17
   addValueReference Records.re:152:4 --> Records.re:152:18
   addValueReference Records.re:155:4 --> Records.re:155:17
   addValueReference Records.re:158:4 --> Records.re:158:18
-  addTypeDeclaration +type_ Records.re:162:2
+  addTypeDeclaration +type_ Records.re:162:2 path:+Records.+myRecBsAs
   addTypeReference Records.re:167:38 --> Records.re:162:2
   addValueReference Records.re:167:4 --> Records.re:167:21
   addValueReference Records.re:170:4 --> Records.re:170:22
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadRT.cmt
-  addValueDeclaration emitModuleAccessPath DeadRT.re:5:8
-  addTypeDeclaration +Root DeadRT.re:2:4
-  addTypeDeclaration +Kaboom DeadRT.re:3:4
+  addValueDeclaration emitModuleAccessPath DeadRT.re:5:8 path:+DeadRT
+  addTypeDeclaration +Root DeadRT.re:2:4 path:+DeadRT.+moduleAccessPath
+  addTypeDeclaration +Kaboom DeadRT.re:3:4 path:+DeadRT.+moduleAccessPath
   addValueReference DeadRT.re:5:8 --> DeadRT.re:7:9
   addValueReference DeadRT.re:5:8 --> DeadRT.re:5:31
   addTypeReference DeadRT.re:11:16 --> DeadRT.re:3:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImportIndex.cmt
-  addValueDeclaration makeProps ImportIndex.re:2:0
-  addValueDeclaration make ImportIndex.re:2:0
+  addValueDeclaration makeProps ImportIndex.re:2:0 path:+ImportIndex
+  addValueDeclaration make ImportIndex.re:2:0 path:+ImportIndex
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Hooks.cmt
-  addValueDeclaration make Hooks.re:4:4
-  addValueDeclaration default Hooks.re:36:4
-  addValueDeclaration anotherComponent Hooks.re:40:4
-  addValueDeclaration functionWithRenamedArgs Hooks.re:80:4
-  addValueDeclaration componentWithRenamedArgs Hooks.re:87:4
-  addValueDeclaration makeWithRef Hooks.re:94:4
-  addValueDeclaration testForwardRef Hooks.re:105:4
-  addValueDeclaration input Hooks.re:111:4
-  addValueDeclaration polymorphicComponent Hooks.re:130:4
-  addValueDeclaration functionReturningReactElement Hooks.re:134:4
-  addValueDeclaration aComponentWithChildren Hooks.re:156:4
-  addTypeDeclaration +name Hooks.re:1:16
+  addValueDeclaration make Hooks.re:4:4 path:+Hooks
+  addValueDeclaration default Hooks.re:36:4 path:+Hooks
+  addValueDeclaration anotherComponent Hooks.re:40:4 path:+Hooks
+  addValueDeclaration functionWithRenamedArgs Hooks.re:80:4 path:+Hooks
+  addValueDeclaration componentWithRenamedArgs Hooks.re:87:4 path:+Hooks
+  addValueDeclaration makeWithRef Hooks.re:94:4 path:+Hooks
+  addValueDeclaration testForwardRef Hooks.re:105:4 path:+Hooks
+  addValueDeclaration input Hooks.re:111:4 path:+Hooks
+  addValueDeclaration polymorphicComponent Hooks.re:130:4 path:+Hooks
+  addValueDeclaration functionReturningReactElement Hooks.re:134:4 path:+Hooks
+  addValueDeclaration aComponentWithChildren Hooks.re:156:4 path:+Hooks
+  addTypeDeclaration +name Hooks.re:1:16 path:+Hooks.+vehicle
   addValueReference Hooks.re:4:4 --> React.re:104:0
   addTypeReference Hooks.re:11:12 --> Hooks.re:1:16
   addValueReference Hooks.re:4:4 --> Hooks.re:4:13
@@ -1276,27 +1281,27 @@
   addValueReference Hooks.re:40:4 --> React.re:5:0
   addValueReference Hooks.re:40:4 --> ReactDOMRe.re:1097:0
   addValueReference Hooks.re:40:4 --> Hooks.re:40:35
-  addValueDeclaration +make Hooks.re:48:6
+  addValueDeclaration +make Hooks.re:48:6 path:+Hooks.Inner
   addTypeReference Hooks.re:49:43 --> Hooks.re:1:16
   addValueReference Hooks.re:48:6 --> Hooks.re:48:15
   addValueReference Hooks.re:48:6 --> React.re:5:0
   addValueReference Hooks.re:48:6 --> ReactDOMRe.re:1097:0
-  addValueDeclaration +anotherComponent Hooks.re:53:6
+  addValueDeclaration +anotherComponent Hooks.re:53:6 path:+Hooks.Inner
   addTypeReference Hooks.re:54:43 --> Hooks.re:1:16
   addValueReference Hooks.re:53:6 --> Hooks.re:53:27
   addValueReference Hooks.re:53:6 --> React.re:5:0
   addValueReference Hooks.re:53:6 --> ReactDOMRe.re:1097:0
-  addValueDeclaration +make Hooks.re:59:8
+  addValueDeclaration +make Hooks.re:59:8 path:+Hooks.Inner.Inner2
   addTypeReference Hooks.re:60:45 --> Hooks.re:1:16
   addValueReference Hooks.re:59:8 --> Hooks.re:59:17
   addValueReference Hooks.re:59:8 --> React.re:5:0
   addValueReference Hooks.re:59:8 --> ReactDOMRe.re:1097:0
-  addValueDeclaration +anotherComponent Hooks.re:64:8
+  addValueDeclaration +anotherComponent Hooks.re:64:8 path:+Hooks.Inner.Inner2
   addTypeReference Hooks.re:65:45 --> Hooks.re:1:16
   addValueReference Hooks.re:64:8 --> Hooks.re:64:29
   addValueReference Hooks.re:64:8 --> React.re:5:0
   addValueReference Hooks.re:64:8 --> ReactDOMRe.re:1097:0
-  addValueDeclaration +make Hooks.re:72:6
+  addValueDeclaration +make Hooks.re:72:6 path:+Hooks.NoProps
   addValueReference Hooks.re:72:6 --> ReasonReact.rei:15:0
   addValueReference Hooks.re:72:6 --> ReactDOMRe.re:1097:0
   addTypeReference Hooks.re:82:2 --> Hooks.re:1:16
@@ -1321,7 +1326,7 @@
   addValueReference Hooks.re:94:4 --> React.re:3:0
   addValueReference Hooks.re:94:4 --> Hooks.re:94:29
   addValueReference Hooks.re:105:4 --> React.re:44:0
-  addTypeDeclaration +x Hooks.re:107:10
+  addTypeDeclaration +x Hooks.re:107:10 path:+Hooks.+r
   addValueReference Hooks.re:111:4 --> Hooks.re:112:28
   addTypeReference Hooks.re:113:45 --> Hooks.re:107:10
   addValueReference Hooks.re:111:4 --> Hooks.re:112:21
@@ -1333,11 +1338,11 @@
   addValueReference Hooks.re:130:4 --> React.re:5:0
   addValueReference Hooks.re:134:4 --> Hooks.re:134:38
   addValueReference Hooks.re:134:4 --> React.re:5:0
-  addValueDeclaration +make Hooks.re:139:6
-  addValueDeclaration +car Hooks.re:149:8
+  addValueDeclaration +make Hooks.re:139:6 path:+Hooks.RenderPropRequiresConversion
+  addValueDeclaration +car Hooks.re:149:8 path:+Hooks.RenderPropRequiresConversion
   addValueReference Hooks.re:139:6 --> Hooks.re:149:8
   addValueReference Hooks.re:139:6 --> Hooks.re:150:18
-  addValueDeclaration +unsafe_expr Hooks.re:150:18
+  addValueDeclaration +unsafe_expr Hooks.re:150:18 path:+Hooks.RenderPropRequiresConversion
   addValueReference Hooks.re:139:6 --> Hooks.re:141:9
   addTypeReference Hooks.re:158:37 --> Hooks.re:1:16
   addValueReference Hooks.re:156:4 --> Hooks.re:156:31
@@ -1346,35 +1351,35 @@
   addValueReference Hooks.re:156:4 --> ReactDOMRe.re:1097:0
   addValueReference Hooks.re:156:4 --> ReactDOMRe.re:1097:0
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestPromise.cmt
-  addValueDeclaration convert TestPromise.re:14:4
-  addTypeDeclaration +x TestPromise.re:6:2
-  addTypeDeclaration +s TestPromise.re:7:2
-  addTypeDeclaration +result TestPromise.re:11:18
+  addValueDeclaration convert TestPromise.re:14:4 path:+TestPromise
+  addTypeDeclaration +x TestPromise.re:6:2 path:+TestPromise.+fromPayload
+  addTypeDeclaration +s TestPromise.re:7:2 path:+TestPromise.+fromPayload
+  addTypeDeclaration +result TestPromise.re:11:18 path:+TestPromise.+toPayload
   addValueReference TestPromise.re:14:4 --> TestPromise.re:14:33
   addTypeReference TestPromise.re:14:32 --> TestPromise.re:7:2
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/NestedModulesInSignature.cmt
-  addValueDeclaration theAnswer NestedModulesInSignature.re:2:6
+  addValueDeclaration theAnswer NestedModulesInSignature.re:2:6 path:+NestedModulesInSignature.Universe
   addValueReference NestedModulesInSignature.rei:2:2 --> NestedModulesInSignature.re:2:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Docstrings.cmt
-  addValueDeclaration flat Docstrings.re:3:4
-  addValueDeclaration signMessage Docstrings.re:13:4
-  addValueDeclaration one Docstrings.re:16:4
-  addValueDeclaration two Docstrings.re:19:4
-  addValueDeclaration tree Docstrings.re:22:4
-  addValueDeclaration oneU Docstrings.re:25:4
-  addValueDeclaration twoU Docstrings.re:28:4
-  addValueDeclaration treeU Docstrings.re:31:4
-  addValueDeclaration useParam Docstrings.re:34:4
-  addValueDeclaration useParamU Docstrings.re:37:4
-  addValueDeclaration unnamed1 Docstrings.re:40:4
-  addValueDeclaration unnamed1U Docstrings.re:43:4
-  addValueDeclaration unnamed2 Docstrings.re:46:4
-  addValueDeclaration unnamed2U Docstrings.re:49:4
-  addValueDeclaration grouped Docstrings.re:52:4
-  addValueDeclaration unitArgWithoutConversion Docstrings.re:55:4
-  addValueDeclaration unitArgWithoutConversionU Docstrings.re:58:4
-  addValueDeclaration unitArgWithConversion Docstrings.re:65:4
-  addValueDeclaration unitArgWithConversionU Docstrings.re:68:4
+  addValueDeclaration flat Docstrings.re:3:4 path:+Docstrings
+  addValueDeclaration signMessage Docstrings.re:13:4 path:+Docstrings
+  addValueDeclaration one Docstrings.re:16:4 path:+Docstrings
+  addValueDeclaration two Docstrings.re:19:4 path:+Docstrings
+  addValueDeclaration tree Docstrings.re:22:4 path:+Docstrings
+  addValueDeclaration oneU Docstrings.re:25:4 path:+Docstrings
+  addValueDeclaration twoU Docstrings.re:28:4 path:+Docstrings
+  addValueDeclaration treeU Docstrings.re:31:4 path:+Docstrings
+  addValueDeclaration useParam Docstrings.re:34:4 path:+Docstrings
+  addValueDeclaration useParamU Docstrings.re:37:4 path:+Docstrings
+  addValueDeclaration unnamed1 Docstrings.re:40:4 path:+Docstrings
+  addValueDeclaration unnamed1U Docstrings.re:43:4 path:+Docstrings
+  addValueDeclaration unnamed2 Docstrings.re:46:4 path:+Docstrings
+  addValueDeclaration unnamed2U Docstrings.re:49:4 path:+Docstrings
+  addValueDeclaration grouped Docstrings.re:52:4 path:+Docstrings
+  addValueDeclaration unitArgWithoutConversion Docstrings.re:55:4 path:+Docstrings
+  addValueDeclaration unitArgWithoutConversionU Docstrings.re:58:4 path:+Docstrings
+  addValueDeclaration unitArgWithConversion Docstrings.re:65:4 path:+Docstrings
+  addValueDeclaration unitArgWithConversionU Docstrings.re:68:4 path:+Docstrings
   addValueReference Docstrings.re:13:4 --> Docstrings.re:13:21
   addValueReference Docstrings.re:13:4 --> Docstrings.re:13:30
   addValueReference Docstrings.re:16:4 --> Docstrings.re:16:10
@@ -1397,66 +1402,66 @@
   addValueReference Docstrings.re:52:4 --> Docstrings.re:52:26
   addValueReference Docstrings.re:52:4 --> Docstrings.re:52:29
   addValueReference Docstrings.re:52:4 --> Docstrings.re:52:33
-  addTypeDeclaration +A Docstrings.re:61:4
-  addTypeDeclaration +B Docstrings.re:62:4
+  addTypeDeclaration +A Docstrings.re:61:4 path:+Docstrings.+t
+  addTypeDeclaration +B Docstrings.re:62:4 path:+Docstrings.+t
   addTypeReference Docstrings.re:65:34 --> Docstrings.re:61:4
   addTypeReference Docstrings.re:68:36 --> Docstrings.re:61:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestFirstClassModules.cmt
-  addValueDeclaration convert TestFirstClassModules.re:2:4
-  addValueDeclaration convertInterface TestFirstClassModules.re:5:4
-  addValueDeclaration convertRecord TestFirstClassModules.re:8:4
-  addValueDeclaration convertFirstClassModuleWithTypeEquations TestFirstClassModules.re:26:4
+  addValueDeclaration convert TestFirstClassModules.re:2:4 path:+TestFirstClassModules
+  addValueDeclaration convertInterface TestFirstClassModules.re:5:4 path:+TestFirstClassModules
+  addValueDeclaration convertRecord TestFirstClassModules.re:8:4 path:+TestFirstClassModules
+  addValueDeclaration convertFirstClassModuleWithTypeEquations TestFirstClassModules.re:26:4 path:+TestFirstClassModules
   addValueReference TestFirstClassModules.re:2:4 --> TestFirstClassModules.re:2:15
   addValueReference TestFirstClassModules.re:5:4 --> TestFirstClassModules.re:5:24
   addValueReference TestFirstClassModules.re:8:4 --> TestFirstClassModules.re:8:21
   addValueReference TestFirstClassModules.re:26:4 --> TestFirstClassModules.re:30:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/AutoAnnotate.cmt
-  addTypeDeclaration +R AutoAnnotate.re:2:4
-  addTypeDeclaration +variant AutoAnnotate.re:5:15
-  addTypeDeclaration +r2 AutoAnnotate.re:7:11
-  addTypeDeclaration +r3 AutoAnnotate.re:9:11
-  addTypeDeclaration +r4 AutoAnnotate.re:11:11
-  addTypeDeclaration +R2 AutoAnnotate.re:15:4
-  addTypeDeclaration +R4 AutoAnnotate.re:16:4
+  addTypeDeclaration +R AutoAnnotate.re:2:4 path:+AutoAnnotate.+variant
+  addTypeDeclaration +variant AutoAnnotate.re:5:15 path:+AutoAnnotate.+record
+  addTypeDeclaration +r2 AutoAnnotate.re:7:11 path:+AutoAnnotate.+r2
+  addTypeDeclaration +r3 AutoAnnotate.re:9:11 path:+AutoAnnotate.+r3
+  addTypeDeclaration +r4 AutoAnnotate.re:11:11 path:+AutoAnnotate.+r4
+  addTypeDeclaration +R2 AutoAnnotate.re:15:4 path:+AutoAnnotate.+annotatedVariant
+  addTypeDeclaration +R4 AutoAnnotate.re:16:4 path:+AutoAnnotate.+annotatedVariant
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadCodeImplementation.cmt
-  addValueDeclaration +x DeadCodeImplementation.re:2:6
+  addValueDeclaration +x DeadCodeImplementation.re:2:6 path:+DeadCodeImplementation.M
   addValueReference DeadCodeInterface.re:1:17 --> DeadCodeImplementation.re:2:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTest.cmt
-  addValueDeclaration fortytwo DeadTest.re:2:4
-  addValueDeclaration fortyTwoButExported DeadTest.re:5:4
-  addValueDeclaration thisIsUsedOnce DeadTest.re:7:4
-  addValueDeclaration thisIsUsedTwice DeadTest.re:10:4
-  addValueDeclaration thisIsKeptAlive DeadTest.re:17:4
-  addValueDeclaration thisIsMarkedLive DeadTest.re:20:4
-  addValueDeclaration a DeadTest.re:37:2
-  addValueDeclaration x DeadTest.re:62:2
-  addValueDeclaration y DeadTest.re:63:2
-  addValueDeclaration unusedRec DeadTest.re:79:8
-  addValueDeclaration split_map DeadTest.re:81:8
-  addValueDeclaration rec1 DeadTest.re:86:8
-  addValueDeclaration rec2 DeadTest.re:87:4
-  addValueDeclaration recWithCallback DeadTest.re:89:8
-  addValueDeclaration foo DeadTest.re:94:8
-  addValueDeclaration bar DeadTest.re:98:4
-  addValueDeclaration withDefaultValue DeadTest.re:100:4
-  addValueDeclaration unsafe_string1 DeadTest.re:102:0
-  addValueDeclaration unsafe_string2 DeadTest.re:105:2
-  addValueDeclaration reasonResource DeadTest.re:112:40
-  addValueDeclaration makeProps DeadTest.re:112:40
-  addValueDeclaration make DeadTest.re:112:40
-  addValueDeclaration reasonResource DeadTest.re:119:6
-  addValueDeclaration makeProps DeadTest.re:121:6
-  addValueDeclaration make DeadTest.re:122:6
-  addValueDeclaration cmp DeadTest.re:132:4
-  addValueDeclaration cmp2 DeadTest.re:134:4
-  addValueDeclaration zzz DeadTest.re:150:4
-  addValueDeclaration second DeadTest.re:159:4
-  addValueDeclaration minute DeadTest.re:160:4
-  addValueDeclaration deadRef DeadTest.re:162:4
-  addValueDeclaration makeSwitch DeadTest.re:164:4
-  addValueDeclaration make DeadTest.re:167:4
-  addValueDeclaration theSideEffectIsLogging DeadTest.re:171:4
-  addValueDeclaration stringLengthNoSideEffects DeadTest.re:173:4
+  addValueDeclaration fortytwo DeadTest.re:2:4 path:+DeadTest
+  addValueDeclaration fortyTwoButExported DeadTest.re:5:4 path:+DeadTest
+  addValueDeclaration thisIsUsedOnce DeadTest.re:7:4 path:+DeadTest
+  addValueDeclaration thisIsUsedTwice DeadTest.re:10:4 path:+DeadTest
+  addValueDeclaration thisIsKeptAlive DeadTest.re:17:4 path:+DeadTest
+  addValueDeclaration thisIsMarkedLive DeadTest.re:20:4 path:+DeadTest
+  addValueDeclaration a DeadTest.re:37:2 path:+DeadTest.VariantUsedOnlyInImplementation
+  addValueDeclaration x DeadTest.re:62:2 path:+DeadTest.MM
+  addValueDeclaration y DeadTest.re:63:2 path:+DeadTest.MM
+  addValueDeclaration unusedRec DeadTest.re:79:8 path:+DeadTest
+  addValueDeclaration split_map DeadTest.re:81:8 path:+DeadTest
+  addValueDeclaration rec1 DeadTest.re:86:8 path:+DeadTest
+  addValueDeclaration rec2 DeadTest.re:87:4 path:+DeadTest
+  addValueDeclaration recWithCallback DeadTest.re:89:8 path:+DeadTest
+  addValueDeclaration foo DeadTest.re:94:8 path:+DeadTest
+  addValueDeclaration bar DeadTest.re:98:4 path:+DeadTest
+  addValueDeclaration withDefaultValue DeadTest.re:100:4 path:+DeadTest
+  addValueDeclaration unsafe_string1 DeadTest.re:102:0 path:+DeadTest
+  addValueDeclaration unsafe_string2 DeadTest.re:105:2 path:+DeadTest.Ext_buffer
+  addValueDeclaration reasonResource DeadTest.re:112:40 path:+DeadTest.LazyDynamicallyLoadedComponent
+  addValueDeclaration makeProps DeadTest.re:112:40 path:+DeadTest.LazyDynamicallyLoadedComponent
+  addValueDeclaration make DeadTest.re:112:40 path:+DeadTest.LazyDynamicallyLoadedComponent
+  addValueDeclaration reasonResource DeadTest.re:119:6 path:+DeadTest.LazyDynamicallyLoadedComponent2
+  addValueDeclaration makeProps DeadTest.re:121:6 path:+DeadTest.LazyDynamicallyLoadedComponent2
+  addValueDeclaration make DeadTest.re:122:6 path:+DeadTest.LazyDynamicallyLoadedComponent2
+  addValueDeclaration cmp DeadTest.re:132:4 path:+DeadTest
+  addValueDeclaration cmp2 DeadTest.re:134:4 path:+DeadTest
+  addValueDeclaration zzz DeadTest.re:150:4 path:+DeadTest
+  addValueDeclaration second DeadTest.re:159:4 path:+DeadTest
+  addValueDeclaration minute DeadTest.re:160:4 path:+DeadTest
+  addValueDeclaration deadRef DeadTest.re:162:4 path:+DeadTest
+  addValueDeclaration makeSwitch DeadTest.re:164:4 path:+DeadTest
+  addValueDeclaration make DeadTest.re:167:4 path:+DeadTest
+  addValueDeclaration theSideEffectIsLogging DeadTest.re:171:4 path:+DeadTest
+  addValueDeclaration stringLengthNoSideEffects DeadTest.re:173:4 path:+DeadTest
   requireCond  true:+ExportWithRename false:+DynamicallyLoadedComponent allPositions:[DynamicallyLoadedComponent.re:2:4, ExportWithRename.re:3:4]
   addValueReference DeadTest:0:-1 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest:0:-1 --> ExportWithRename.re:3:4
@@ -1465,32 +1470,32 @@
   addValueReference DeadTest.re:11:7 --> DeadTest.re:10:4
   addValueReference DeadTest.re:12:7 --> DeadTest.re:10:4
   addValueReference DeadTest.re:20:4 --> DeadTest.re:17:4
-  addValueDeclaration +thisSignatureItemIsDead DeadTest.re:31:6
-  addTypeDeclaration A DeadTest.re:36:6
-  addTypeDeclaration +A DeadTest.re:40:6
+  addValueDeclaration +thisSignatureItemIsDead DeadTest.re:31:6 path:+DeadTest.M
+  addTypeDeclaration A DeadTest.re:36:6 path:+DeadTest.VariantUsedOnlyInImplementation.t
+  addTypeDeclaration +A DeadTest.re:40:6 path:+DeadTest.VariantUsedOnlyInImplementation.+t
   extendTypeDependencies DeadTest.re:40:6 --> DeadTest.re:36:6
   extendTypeDependencies DeadTest.re:36:6 --> DeadTest.re:40:6
-  addValueDeclaration +a DeadTest.re:41:6
+  addValueDeclaration +a DeadTest.re:41:6 path:+DeadTest.VariantUsedOnlyInImplementation
   addTypeReference DeadTest.re:41:10 --> DeadTest.re:40:6
   addValueReference DeadTest.re:44:17 --> DeadTest.re:37:2
   addValueReference DeadTest.re:44:14 --> DeadTest.re:44:9
-  addValueDeclaration _ DeadTest.re:46:0
+  addValueDeclaration _ DeadTest.re:46:0 path:+DeadTest
   addTypeReference DeadTest.re:46:8 --> DeadTypeTest.rei:8:4
-  addValueDeclaration _ DeadTest.re:47:0
+  addValueDeclaration _ DeadTest.re:47:0 path:+DeadTest
   addTypeReference DeadTest.re:47:8 --> DeadTypeTest.rei:9:4
-  addTypeDeclaration +xxx DeadTest.re:50:2
-  addTypeDeclaration +yyy DeadTest.re:51:2
-  addValueDeclaration _ DeadTest.re:54:0
+  addTypeDeclaration +xxx DeadTest.re:50:2 path:+DeadTest.+record
+  addTypeDeclaration +yyy DeadTest.re:51:2 path:+DeadTest.+record
+  addValueDeclaration _ DeadTest.re:54:0 path:+DeadTest
   addTypeReference DeadTest.re:54:13 --> DeadTest.re:50:2
   addValueReference DeadTest.re:54:13 --> DeadTest.re:54:8
-  addValueDeclaration _ DeadTest.re:55:0
+  addValueDeclaration _ DeadTest.re:55:0 path:+DeadTest
   addValueReference DeadTest.re:55:19 --> DeadTest.re:55:10
   addTypeReference DeadTest.re:55:9 --> DeadTest.re:51:2
-  addValueDeclaration _ DeadTest.re:58:2
-  addValueDeclaration +y DeadTest.re:65:6
-  addValueDeclaration +x DeadTest.re:66:6
+  addValueDeclaration _ DeadTest.re:58:2 path:+DeadTest.UnderscoreInside
+  addValueDeclaration +y DeadTest.re:65:6 path:+DeadTest.MM
+  addValueDeclaration +x DeadTest.re:66:6 path:+DeadTest.MM
   addValueReference DeadTest.re:66:6 --> DeadTest.re:65:6
-  addValueDeclaration +valueOnlyInImplementation DeadTest.re:69:6
+  addValueDeclaration +valueOnlyInImplementation DeadTest.re:69:6 path:+DeadTest.MM
   addValueReference DeadTest.re:73:9 --> DeadTest.re:62:2
   addValueReference DeadTest.re:77:16 --> DeadValueTest.rei:1:0
   addValueReference DeadTest.re:79:8 --> DeadTest.re:79:8
@@ -1498,17 +1503,17 @@
   addValueReference DeadTest.re:81:8 --> DeadTest.re:81:8
   addValueReference DeadTest.re:86:8 --> DeadTest.re:87:4
   addValueReference DeadTest.re:87:4 --> DeadTest.re:86:8
-  addValueDeclaration +cb DeadTest.re:90:6
+  addValueDeclaration +cb DeadTest.re:90:6 path:+DeadTest
   addValueReference DeadTest.re:90:6 --> DeadTest.re:89:8
   addValueReference DeadTest.re:89:8 --> DeadTest.re:90:6
-  addValueDeclaration +cb DeadTest.re:95:6
+  addValueDeclaration +cb DeadTest.re:95:6 path:+DeadTest
   addValueReference DeadTest.re:95:6 --> DeadTest.re:98:4
   addValueReference DeadTest.re:94:8 --> DeadTest.re:95:6
   addValueReference DeadTest.re:98:4 --> DeadTest.re:94:8
   addValueReference DeadTest.re:100:4 --> DeadTest.re:100:42
   addValueReference DeadTest.re:100:4 --> DeadTest.re:100:25
   addValueReference DeadTest.re:100:4 --> DeadTest.re:100:45
-  addValueDeclaration +unsafe_string2 DeadTest.re:107:2
+  addValueDeclaration +unsafe_string2 DeadTest.re:107:2 path:+DeadTest.Ext_buffer
   addTypeReference DeadTest.re:110:16 --> DeadRT.rei:2:4
   lazyLoad JSResource.jSResource(+DynamicallyLoadedComponent) JSResource.re:3:0 defined in DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:112:40 --> DynamicallyLoadedComponent.re:2:4
@@ -1531,9 +1536,9 @@
   addValueReference DeadTest.re:134:4 --> DeadTest.re:121:6
   addValueReference DeadTest.re:134:4 --> React.re:13:0
   addValueReference DeadTest.re:136:16 --> DeadTest.re:132:4
-  addValueDeclaration +a1 DeadTest.re:151:6
-  addValueDeclaration +a2 DeadTest.re:152:6
-  addValueDeclaration +a3 DeadTest.re:153:6
+  addValueDeclaration +a1 DeadTest.re:151:6 path:+DeadTest
+  addValueDeclaration +a2 DeadTest.re:152:6 path:+DeadTest
+  addValueDeclaration +a3 DeadTest.re:153:6 path:+DeadTest
   addValueReference DeadTest.re:157:17 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:157:17 --> React.re:13:0
   addValueReference DeadTest.re:160:4 --> DeadTest.re:159:4
@@ -1601,6 +1606,7 @@ File References
   DeadTypeTest.rei -->> DeadTypeTest.re
   DeadValueTest.rei -->> DeadValueTest.re
   DeadRT.rei -->> 
+  A.ml -->> 
   DeadRT.re -->> 
   DeadTypeTest.re -->> 
   TypeParams1.re -->> 
@@ -1618,6 +1624,10 @@ File References
   ImportIndex.re -->> 
   ImportHookDefault.re -->> 
   ModuleAliases2.re -->> 
+  Dead Type +A.M.T.+t.+B: 0 references () [0]
+  Dead Type +A.M.T.+t.+A: 0 references () [0]
+  Dead Type +A.M.t.B: 0 references () [0]
+  Dead Type +A.M.t.A: 0 references () [0]
   Dead Type +AutoAnnotate.+annotatedVariant.+R4: 0 references () [0]
   Dead Type +AutoAnnotate.+annotatedVariant.+R2: 0 references () [0]
   Dead Type +AutoAnnotate.+r4.+r4: 0 references () [0]
@@ -2209,6 +2219,30 @@ File References
   Dead Value +ImmutableArray.fromTT: 0 references () [0]
   Dead Value +ImmutableArray.fromTp: 0 references () [0]
   Live Value +ImmutableArray.fromT: 1 references (ImmutableArray.re:24:6) [0]
+
+  Warning Dead Type
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.ml", line 3, characters 11-19
+  M.t.A is a variant case which is never constructed
+  <-- line 3
+    type t = A of int [@dead "M.t.A"]  | B of int
+
+  Warning Dead Type
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.ml", line 3, characters 20-30
+  M.t.B is a variant case which is never constructed
+  <-- line 3
+    type t = A of int [@dead "M.t.A"]  | B of int [@dead "M.t.B"] 
+
+  Warning Dead Type
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.ml", line 8, characters 29-37
+  M.T.+t.+A is a variant case which is never constructed
+  <-- line 8
+    module T = struct type t = A of int [@dead "M.T.+t.+A"]  | B of int end
+
+  Warning Dead Type
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.ml", line 8, characters 38-48
+  M.T.+t.+B is a variant case which is never constructed
+  <-- line 8
+    module T = struct type t = A of int [@dead "M.T.+t.+A"]  | B of int [@dead "M.T.+t.+B"]  end
 
   Warning Dead Type
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re 2:5-10
