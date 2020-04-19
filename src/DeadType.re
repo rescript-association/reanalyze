@@ -16,9 +16,12 @@ let addTypeReference = (~posFrom, ~posTo) => {
 };
 
 let addDeclaration =
-    (~path as path_, {type_kind, type_manifest}: Types.type_declaration) => {
+    (
+      ~isInterface,
+      ~path as path_,
+      {type_kind, type_manifest}: Types.type_declaration,
+    ) => {
   let save = (~declKind, ~loc: Location.t, ~name) => {
-    let isInterface = Filename.check_suffix(loc.loc_start.pos_fname, "i");
     let name = name |> Name.create(~isInterface);
     let path = [name, ...path_] |> pathToString;
     if (type_manifest == None) {

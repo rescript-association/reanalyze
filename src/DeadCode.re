@@ -37,6 +37,7 @@ let rec collectExportFromSignatureItem = (~path, si: Types.signature_item) =>
     let (id, t) = si |> Compat.getSigType;
     if (analyzeTypes^) {
       DeadType.addDeclaration(
+        ~isInterface=true,
         ~path=[id |> Ident.name |> Name.create, ...path],
         t,
       );
