@@ -52,7 +52,18 @@ function map_split_opt(xs, f) {
 
 var inline_threshold = 10 / 8;
 
+var Scope = {
+  dead1: 1,
+  dead2: 2
+};
+
 var thisHasSemicolons = 3;
+
+var dead3 = 3;
+
+var dead4 = 4;
+
+var dead5 = 5;
 
 export {
   QQ ,
@@ -61,6 +72,10 @@ export {
   Bs_version ,
   map_split_opt ,
   inline_threshold ,
+  Scope ,
+  dead3 ,
+  dead4 ,
+  dead5 ,
   
 }
 /* No side effect */

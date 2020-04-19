@@ -94,6 +94,7 @@ let write = Sys.getenv_opt("Write") != None;
 
 let deadAnnotation = "dead";
 let liveAnnotation = "live";
+let ocamlWarningAnnotaion = "ocaml.warning";
 
 /* Location printer: `filename:line: ' */
 let posToString = (~printCol=true, ~shortFile=true, pos: Lexing.position) => {
@@ -401,7 +402,7 @@ let addDeclaration_ =
         declKind == Value ? "Value" : "Type",
         name |> Name.toString,
         pos |> posToString,
-        path |> pathToString
+        path |> pathToString,
       );
     };
 
@@ -470,20 +471,25 @@ module ProcessDeadAnnotations = {
   };
 
   let processAttributes = (~pos, attributes) => {
-    if (attributes
-        |> Annotation.getAttributePayload(
-             Annotation.tagIsOneOfTheGenTypeAnnotations,
-           )
-        != None) {
+    let getPayloadFun = f => attributes |> Annotation.getAttributePayload(f);
+    let getPayload = (x: string) =>
+      attributes |> Annotation.getAttributePayload((==)(x));
+
+    if (getPayloadFun(Annotation.tagIsOneOfTheGenTypeAnnotations) != None) {
       pos |> annotateGenType;
     };
-    if (attributes
-        |> Annotation.getAttributePayload((==)(deadAnnotation)) != None) {
+
+    if (getPayload(deadAnnotation) != None) {
       pos |> annotateDead;
-    } else if (attributes
-               |> Annotation.getAttributePayload((==)(liveAnnotation))
-               != None) {
+    };
+
+    if (getPayload(liveAnnotation) != None) {
       pos |> annotateLive;
+    };
+
+    switch (getPayload(ocamlWarningAnnotaion)) {
+    | Some(StringPayload(s)) when s == "-32" => pos |> annotateLive
+    | _ => ()
     };
   };
 

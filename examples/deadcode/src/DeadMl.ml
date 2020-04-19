@@ -54,3 +54,18 @@ let rec map_split_opt
     (match d with Some d -> d::ds | None -> ds)
 
 let inline_threshold = Some (10. /. 8.);
+
+module Scope = struct
+  let dead1 = 1
+
+  [@@@ocaml.warning "-32"]
+
+  let dead2 = 2
+end
+
+let dead3 = 3
+
+let dead4 = 4
+[@@ocaml.warning "-32"]
+
+let dead5 = 5

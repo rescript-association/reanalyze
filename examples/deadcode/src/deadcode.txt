@@ -723,6 +723,11 @@
   addValueDeclaration package_name DeadMl.ml:26:47 path:+DeadMl.Bs_version
   addValueDeclaration map_split_opt DeadMl.ml:45:8 path:+DeadMl
   addValueDeclaration inline_threshold DeadMl.ml:56:4 path:+DeadMl
+  addValueDeclaration dead1 DeadMl.ml:59:6 path:+DeadMl.Scope
+  addValueDeclaration dead2 DeadMl.ml:63:6 path:+DeadMl.Scope
+  addValueDeclaration dead3 DeadMl.ml:66:4 path:+DeadMl
+  addValueDeclaration dead4 DeadMl.ml:68:4 path:+DeadMl
+  addValueDeclaration dead5 DeadMl.ml:71:4 path:+DeadMl
   addValueReference DeadMl.ml:3:8 --> DeadMl.ml:4:11
   addValueReference DeadMl.ml:3:8 --> DeadMl.ml:4:20
   addValueDeclaration +thisIsInInterface DeadMl.ml:12:6 path:+DeadMl.AA
@@ -1633,6 +1638,11 @@ File References
   Live Value +CreateErrorHandler1.Error1.notification: 1 references (ErrorHandler.rei:3:2) [0]
   Live Value +CreateErrorHandler2.Error2.notification: 1 references (ErrorHandler.rei:3:2) [0]
   Live Value +DeadCodeImplementation.M.+x: 1 references (DeadCodeInterface.re:1:17) [0]
+  Dead Value +DeadMl.dead5: 0 references () [0]
+  Live Value +DeadMl.dead4: 0 references () [0]
+  Dead Value +DeadMl.dead3: 0 references () [0]
+  Dead Value +DeadMl.Scope.dead2: 0 references () [0]
+  Dead Value +DeadMl.Scope.dead1: 0 references () [0]
   Dead Value +DeadMl.inline_threshold: 0 references () [0]
   Dead Value +DeadMl.map_split_opt: 0 references () [0]
   Dead Type +DeadMl.+module_info.+case: 0 references () [0]
@@ -2365,6 +2375,30 @@ File References
   inline_threshold is never used
   <-- line 56
   let inline_threshold = Some (10. /. 8.); [@@dead "inline_threshold"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 59, characters 2-15
+  Scope.dead1 is never used
+  <-- line 59
+    let dead1 = 1 [@@dead "Scope.dead1"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 63, characters 2-15
+  Scope.dead2 is never used
+  <-- line 63
+    let dead2 = 2 [@@dead "Scope.dead2"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 66, characters 0-13
+  dead3 is never used
+  <-- line 66
+  let dead3 = 3 [@@dead "dead3"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 71, characters 0-13
+  dead5 is never used
+  <-- line 71
+  let dead5 = 5 [@@dead "dead5"] 
 
   Warning Dead Type
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadRT.re 2:5-16
