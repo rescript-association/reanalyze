@@ -682,11 +682,6 @@
   addTypeReference Tuples.re:47:19 --> Tuples.re:32:2
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/A.cmt
-  addTypeDeclaration A A.ml:3:11 path:+A.M.t
-  addTypeDeclaration B A.ml:3:20 path:+A.M.t
-  addTypeDeclaration +A A.ml:8:29 path:+A.M.T.+t
-  addTypeDeclaration +B A.ml:8:38 path:+A.M.T.+t
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType1.cmt
   addValueDeclaration convert TransitiveType1.re:2:4 path:+TransitiveType1
   addValueDeclaration convertAlias TransitiveType1.re:5:4 path:+TransitiveType1
@@ -1606,7 +1601,6 @@ File References
   DeadTypeTest.rei -->> DeadTypeTest.re
   DeadValueTest.rei -->> DeadValueTest.re
   DeadRT.rei -->> 
-  A.ml -->> 
   DeadRT.re -->> 
   DeadTypeTest.re -->> 
   TypeParams1.re -->> 
@@ -1624,10 +1618,6 @@ File References
   ImportIndex.re -->> 
   ImportHookDefault.re -->> 
   ModuleAliases2.re -->> 
-  Dead Type +A.M.T.+t.+B: 0 references () [0]
-  Dead Type +A.M.T.+t.+A: 0 references () [0]
-  Dead Type +A.M.t.B: 0 references () [0]
-  Dead Type +A.M.t.A: 0 references () [0]
   Dead Type +AutoAnnotate.+annotatedVariant.+R4: 0 references () [0]
   Dead Type +AutoAnnotate.+annotatedVariant.+R2: 0 references () [0]
   Dead Type +AutoAnnotate.+r4.+r4: 0 references () [0]
@@ -2219,30 +2209,6 @@ File References
   Dead Value +ImmutableArray.fromTT: 0 references () [0]
   Dead Value +ImmutableArray.fromTp: 0 references () [0]
   Live Value +ImmutableArray.fromT: 1 references (ImmutableArray.re:24:6) [0]
-
-  Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.ml", line 3, characters 11-19
-  M.t.A is a variant case which is never constructed
-  <-- line 3
-    type t = A of int [@dead "M.t.A"]  | B of int
-
-  Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.ml", line 3, characters 20-30
-  M.t.B is a variant case which is never constructed
-  <-- line 3
-    type t = A of int [@dead "M.t.A"]  | B of int [@dead "M.t.B"] 
-
-  Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.ml", line 8, characters 29-37
-  M.T.+t.+A is a variant case which is never constructed
-  <-- line 8
-    module T = struct type t = A of int [@dead "M.T.+t.+A"]  | B of int end
-
-  Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.ml", line 8, characters 38-48
-  M.T.+t.+B is a variant case which is never constructed
-  <-- line 8
-    module T = struct type t = A of int [@dead "M.T.+t.+A"]  | B of int [@dead "M.T.+t.+B"]  end
 
   Warning Dead Type
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re 2:5-10

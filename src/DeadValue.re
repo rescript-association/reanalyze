@@ -420,6 +420,9 @@ let traverseStructure = {
              |> DeadType.addDeclaration(~isInterface, ~path);
            });
       }
+    | Tstr_include(_) =>
+      // TODO: anything special?
+      ()
     | _ => ()
     };
     let result = super.structure_item(self, structureItem);

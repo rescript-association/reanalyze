@@ -63,7 +63,7 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
   let updateDependencies = (name, loc) => {
     let path2 =
       [
-        currentModuleName^ |> Name.toInterface,
+        currentModuleName^,
         ...List.rev([
              name.Asttypes.txt |> Name.create,
              typeDeclaration.typ_name.txt |> Name.create,
