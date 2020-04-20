@@ -2,6 +2,7 @@
 - Turn off reporting on `_` as it interferes with the `@deriving` ppx.
 - Add option to report types dead only in the interface, now off by default.
 - Support `@ocaml.warning "-32"` to mean `@live`.
+- Capture dependencies between types in interface and implementation files.
 
 # 1.1.0
 - More robust detection of file names (don't rely on the name from the .cmt file).
