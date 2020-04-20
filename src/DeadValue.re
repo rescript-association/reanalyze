@@ -185,15 +185,14 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
       | _ => path |> Path.head |> Ident.name |> Name.create
       };
 
-    let valueName = path |> Path.last |> Name.create;
+    let valueName = path |> Path.last |> Name.create(~isInterface=false);
     switch (getPosOfValue(~moduleName, ~valueName)) {
     | Some(posName) =>
-      assert(false); // XXX
       addValueReference(
         ~addFileReference=true,
         ~locFrom,
         ~locTo={loc_start: posName, loc_end: posName, loc_ghost: false},
-      );
+      )
     | None => ()
     };
 
@@ -210,11 +209,15 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
         && Filename.check_suffix(s, ".bs") =>
     let moduleName =
       Filename.chop_extension(s) |> Name.create(~isInterface=false);
-    switch (getPosOfValue(~moduleName, ~valueName="make" |> Name.create)) {
+    switch (
+      getPosOfValue(
+        ~moduleName,
+        ~valueName="make" |> Name.create(~isInterface=false),
+      )
+    ) {
     | None => ()
     | Some(posMake) =>
       if (verbose) {
-        assert(false); // XXX
         Log_.item(
           "lazyLoad %s(%s) %s defined in %s@.",
           path |> Path.name,
