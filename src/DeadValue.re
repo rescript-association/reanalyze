@@ -114,13 +114,13 @@ and caseNoSideEffects = ({c_guard, c_rhs}: Typedtree.case) => {
   c_guard |> exprOptNoSideEffects && c_rhs |> exprNoSideEffects;
 };
 
-let checkAnyBindingWithNoSideEffects =
+let checkAnyValueBindingWithNoSideEffects =
     (
       {vb_pat: {pat_desc}, vb_expr: expr, vb_loc: loc}: Typedtree.value_binding,
     ) =>
   switch (pat_desc) {
   | Tpat_any when exprNoSideEffects(expr) && !loc.loc_ghost =>
-    let name = "_" |> Name.create;
+    let name = "_" |> Name.create(~isInterface=false);
     let path = currentModulePath^ @ [currentModuleName^];
     addValueDeclaration(~path, ~loc, ~sideEffects=false, name);
   | _ => ()
@@ -129,7 +129,7 @@ let checkAnyBindingWithNoSideEffects =
 let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
   let oldCurrentBindings = currentBindings^;
   let oldLastBinding = lastBinding^;
-  checkAnyBindingWithNoSideEffects(vb);
+  checkAnyValueBindingWithNoSideEffects(vb);
   let loc =
     switch (vb.vb_pat.pat_desc) {
     | Tpat_var(id, {loc: {loc_start, loc_ghost} as loc})
@@ -188,11 +188,12 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     let valueName = path |> Path.last |> Name.create;
     switch (getPosOfValue(~moduleName, ~valueName)) {
     | Some(posName) =>
+      assert(false); // XXX
       addValueReference(
         ~addFileReference=true,
         ~locFrom,
         ~locTo={loc_start: posName, loc_end: posName, loc_ghost: false},
-      )
+      );
     | None => ()
     };
 
@@ -213,6 +214,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     | None => ()
     | Some(posMake) =>
       if (verbose) {
+        assert(false); // XXX
         Log_.item(
           "lazyLoad %s(%s) %s defined in %s@.",
           path |> Path.name,
@@ -348,7 +350,7 @@ let rec processSignatureItem =
           ~sideEffects=false,
           ~path,
           ~loc,
-          Ident.name(id) |> Name.create,
+          Ident.name(id) |> Name.create(~isInterface=false),
         );
       };
     };
