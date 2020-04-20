@@ -1641,7 +1641,7 @@ File References
   Dead Value +DeadMl.dead5: 0 references () [0]
   Live Value +DeadMl.dead4: 0 references () [0]
   Dead Value +DeadMl.dead3: 0 references () [0]
-  Dead Value +DeadMl.Scope.dead2: 0 references () [0]
+  Live Value +DeadMl.Scope.dead2: 0 references () [0]
   Dead Value +DeadMl.Scope.dead1: 0 references () [0]
   Dead Value +DeadMl.inline_threshold: 0 references () [0]
   Dead Value +DeadMl.map_split_opt: 0 references () [0]
@@ -2381,12 +2381,6 @@ File References
   Scope.dead1 is never used
   <-- line 59
     let dead1 = 1 [@@dead "Scope.dead1"] 
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 63, characters 2-15
-  Scope.dead2 is never used
-  <-- line 63
-    let dead2 = 2 [@@dead "Scope.dead2"] 
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 66, characters 0-13

@@ -198,7 +198,6 @@ let currentSrc = ref("");
 let currentModule = ref("");
 let currentModuleName = ref("" |> Name.create);
 let currentBindings = ref(PosSet.empty);
-let currentlyDisableWarnings = ref(false);
 let lastBinding = ref(Location.none);
 let getLastBinding = () => lastBinding^;
 let maxValuePosEnd = ref(Lexing.dummy_pos); // max end position of a value reported dead
@@ -432,15 +431,18 @@ module ProcessDeadAnnotations = {
 
   let collectExportLocations = (~doGenType) => {
     let super = Tast_mapper.default;
+    let currentlyDisableWarnings = ref(false);
     let value_binding =
         (
           self,
           {vb_attributes, vb_pat} as value_binding: Typedtree.value_binding,
         ) => {
       switch (vb_pat.pat_desc) {
-      | Tpat_var(_id, pLoc) =>
-        vb_attributes
-        |> processAttributes(~doGenType, ~pos=pLoc.loc.loc_start)
+      | Tpat_var(_id, {loc: {loc_start: pos}}) =>
+        if (currentlyDisableWarnings^) {
+          pos |> annotateLive;
+        };
+        vb_attributes |> processAttributes(~doGenType, ~pos);
 
       | _ => ()
       };
@@ -474,7 +476,30 @@ module ProcessDeadAnnotations = {
       |> processAttributes(~doGenType, ~pos=val_val.val_loc.loc_start);
       super.value_description(self, value_description);
     };
-    {...super, type_kind, value_binding, value_description};
+    let structure_item = (self, structureItem: Typedtree.structure_item) => {
+      switch (structureItem.str_desc) {
+      | Tstr_attribute(attribute)
+          when [attribute] |> Annotation.isOcamlSuppressDeadWarning =>
+        currentlyDisableWarnings := true
+      | _ => ()
+      };
+      super.structure_item(self, structureItem);
+    };
+    let structure = (self, structure: Typedtree.structure) => {
+      let oldDisableWarnings = currentlyDisableWarnings^;
+      super.structure(self, structure) |> ignore;
+      currentlyDisableWarnings := oldDisableWarnings;
+      structure;
+    };
+
+    {
+      ...super,
+      structure,
+      structure_item,
+      type_kind,
+      value_binding,
+      value_description,
+    };
   };
 
   let structure = (~doGenType, structure) => {
@@ -510,11 +535,6 @@ let addDeclaration_ =
   let pos = loc.loc_start;
   let posStart = pos;
   let posEnd = loc.loc_end;
-
-  if (currentlyDisableWarnings^) {
-    assert(false);
-    pos |> ProcessDeadAnnotations.annotateLive;
-  };
 
   /* a .cmi file can contain locations from other files.
        For instance:
