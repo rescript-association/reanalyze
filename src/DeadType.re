@@ -20,9 +20,7 @@ let addDeclaration =
   let save = (~declKind, ~loc: Location.t, ~name) => {
     let name = name |> Name.create;
     let path = [name, ...path_] |> pathToString;
-    if (type_manifest == None) {
-      addTypeDeclaration(~declKind, ~path=path_, ~loc, name);
-    };
+    addTypeDeclaration(~declKind, ~path=path_, ~loc, name);
     Hashtbl.replace(fields, path, loc);
   };
 
