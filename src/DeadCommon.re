@@ -470,20 +470,22 @@ module ProcessDeadAnnotations = {
     let value_description =
         (
           self,
-          {val_attributes, val_val} as value_description: Typedtree.value_description,
+          {val_attributes, val_val: {val_loc: {loc_start: pos}}} as value_description: Typedtree.value_description,
         ) => {
-      val_attributes
-      |> processAttributes(~doGenType, ~pos=val_val.val_loc.loc_start);
+      if (currentlyDisableWarnings^) {
+        pos |> annotateLive;
+      };
+      val_attributes |> processAttributes(~doGenType, ~pos);
       super.value_description(self, value_description);
     };
-    let structure_item = (self, structureItem: Typedtree.structure_item) => {
-      switch (structureItem.str_desc) {
+    let structure_item = (self, item: Typedtree.structure_item) => {
+      switch (item.str_desc) {
       | Tstr_attribute(attribute)
           when [attribute] |> Annotation.isOcamlSuppressDeadWarning =>
         currentlyDisableWarnings := true
       | _ => ()
       };
-      super.structure_item(self, structureItem);
+      super.structure_item(self, item);
     };
     let structure = (self, structure: Typedtree.structure) => {
       let oldDisableWarnings = currentlyDisableWarnings^;
@@ -491,9 +493,26 @@ module ProcessDeadAnnotations = {
       currentlyDisableWarnings := oldDisableWarnings;
       structure;
     };
+    let signature_item = (self, item: Typedtree.signature_item) => {
+      switch (item.sig_desc) {
+      | Tsig_attribute(attribute)
+          when [attribute] |> Annotation.isOcamlSuppressDeadWarning =>
+        currentlyDisableWarnings := true
+      | _ => ()
+      };
+      super.signature_item(self, item);
+    };
+    let signature = (self, signature: Typedtree.signature) => {
+      let oldDisableWarnings = currentlyDisableWarnings^;
+      super.signature(self, signature) |> ignore;
+      currentlyDisableWarnings := oldDisableWarnings;
+      signature;
+    };
 
     {
       ...super,
+      signature,
+      signature_item,
       structure,
       structure_item,
       type_kind,

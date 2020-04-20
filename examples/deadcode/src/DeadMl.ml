@@ -89,3 +89,22 @@ let live6 = 6
 
 let dead7 = 7
 [@@ocaml.warning "-30"]
+
+module WithSignature : sig
+  val dead8: int
+
+  val live9: int
+  [@@ocaml.warning "-32"]
+
+  val dead10: int
+
+  [@@@ocaml.warning "-32"]
+
+  val live11: int
+end =
+struct
+  let dead8 = 8
+  let live9 = 9
+  let dead10 = 10
+  let live11 = 11
+end

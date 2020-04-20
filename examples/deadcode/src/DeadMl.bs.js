@@ -69,6 +69,13 @@ var Scope = {
   live3: 3
 };
 
+var WithSignature = {
+  dead8: 8,
+  live9: 9,
+  dead10: 10,
+  live11: 11
+};
+
 var thisHasSemicolons = 3;
 
 var dead4 = 4;
@@ -94,6 +101,7 @@ export {
   dead5 ,
   live6 ,
   dead7 ,
+  WithSignature ,
   
 }
 /* No side effect */
