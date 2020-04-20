@@ -892,10 +892,18 @@
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/FirstClassModulesInterface.cmt
   addValueDeclaration +r FirstClassModulesInterface.re:6:4 path:+FirstClassModulesInterface
   addTypeDeclaration x FirstClassModulesInterface.re:2:2 path:+FirstClassModulesInterface.+record
+  extendTypeDependencies FirstClassModulesInterface.re:2:2 --> FirstClassModulesInterface.rei:3:2
+  extendTypeDependencies FirstClassModulesInterface.rei:3:2 --> FirstClassModulesInterface.re:2:2
   addTypeDeclaration y FirstClassModulesInterface.re:3:2 path:+FirstClassModulesInterface.+record
+  extendTypeDependencies FirstClassModulesInterface.re:3:2 --> FirstClassModulesInterface.rei:4:2
+  extendTypeDependencies FirstClassModulesInterface.rei:4:2 --> FirstClassModulesInterface.re:3:2
   addValueReference FirstClassModulesInterface.rei:7:0 --> FirstClassModulesInterface.re:6:4
   addValueReference FirstClassModulesInterface.rei:10:18 --> FirstClassModulesInterface.re:8:18
   addValueReference FirstClassModulesInterface.re:8:18 --> FirstClassModulesInterface.rei:10:18
+  addTypeReference FirstClassModulesInterface.re:3:2 --> FirstClassModulesInterface.rei:4:2
+  addTypeReference FirstClassModulesInterface.rei:4:2 --> FirstClassModulesInterface.re:3:2
+  addTypeReference FirstClassModulesInterface.re:2:2 --> FirstClassModulesInterface.rei:3:2
+  addTypeReference FirstClassModulesInterface.rei:3:2 --> FirstClassModulesInterface.re:2:2
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Unboxed.cmt
   addValueDeclaration +testV1 Unboxed.re:12:4 path:+Unboxed
   addValueDeclaration +r2Test Unboxed.re:24:4 path:+Unboxed
@@ -993,17 +1001,41 @@
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTypeTest.cmt
   addValueDeclaration +a DeadTypeTest.re:4:4 path:+DeadTypeTest
   addTypeDeclaration A DeadTypeTest.re:2:4 path:+DeadTypeTest.+t
+  extendTypeDependencies DeadTypeTest.re:2:4 --> DeadTypeTest.rei:2:4
+  extendTypeDependencies DeadTypeTest.rei:2:4 --> DeadTypeTest.re:2:4
   addTypeDeclaration B DeadTypeTest.re:3:4 path:+DeadTypeTest.+t
+  extendTypeDependencies DeadTypeTest.re:3:4 --> DeadTypeTest.rei:3:4
+  extendTypeDependencies DeadTypeTest.rei:3:4 --> DeadTypeTest.re:3:4
   addTypeReference DeadTypeTest.re:4:8 --> DeadTypeTest.re:2:4
   addTypeDeclaration OnlyInImplementation DeadTypeTest.re:7:4 path:+DeadTypeTest.+deadType
+  extendTypeDependencies DeadTypeTest.re:7:4 --> DeadTypeTest.rei:7:4
+  extendTypeDependencies DeadTypeTest.rei:7:4 --> DeadTypeTest.re:7:4
   addTypeDeclaration OnlyInInterface DeadTypeTest.re:8:4 path:+DeadTypeTest.+deadType
+  extendTypeDependencies DeadTypeTest.re:8:4 --> DeadTypeTest.rei:8:4
+  extendTypeDependencies DeadTypeTest.rei:8:4 --> DeadTypeTest.re:8:4
   addTypeDeclaration InBoth DeadTypeTest.re:9:4 path:+DeadTypeTest.+deadType
+  extendTypeDependencies DeadTypeTest.re:9:4 --> DeadTypeTest.rei:9:4
+  extendTypeDependencies DeadTypeTest.rei:9:4 --> DeadTypeTest.re:9:4
   addTypeDeclaration InNeither DeadTypeTest.re:10:4 path:+DeadTypeTest.+deadType
+  extendTypeDependencies DeadTypeTest.re:10:4 --> DeadTypeTest.rei:10:4
+  extendTypeDependencies DeadTypeTest.rei:10:4 --> DeadTypeTest.re:10:4
   addValueDeclaration +_ DeadTypeTest.re:12:0 path:+DeadTypeTest
   addTypeReference DeadTypeTest.re:12:8 --> DeadTypeTest.re:7:4
   addValueDeclaration +_ DeadTypeTest.re:13:0 path:+DeadTypeTest
   addTypeReference DeadTypeTest.re:13:8 --> DeadTypeTest.re:9:4
   addValueReference DeadTypeTest.rei:4:0 --> DeadTypeTest.re:4:4
+  addTypeReference DeadTypeTest.re:10:4 --> DeadTypeTest.rei:10:4
+  addTypeReference DeadTypeTest.rei:10:4 --> DeadTypeTest.re:10:4
+  addTypeReference DeadTypeTest.re:9:4 --> DeadTypeTest.rei:9:4
+  addTypeReference DeadTypeTest.rei:9:4 --> DeadTypeTest.re:9:4
+  addTypeReference DeadTypeTest.re:8:4 --> DeadTypeTest.rei:8:4
+  addTypeReference DeadTypeTest.rei:8:4 --> DeadTypeTest.re:8:4
+  addTypeReference DeadTypeTest.re:7:4 --> DeadTypeTest.rei:7:4
+  addTypeReference DeadTypeTest.rei:7:4 --> DeadTypeTest.re:7:4
+  addTypeReference DeadTypeTest.re:3:4 --> DeadTypeTest.rei:3:4
+  addTypeReference DeadTypeTest.rei:3:4 --> DeadTypeTest.re:3:4
+  addTypeReference DeadTypeTest.re:2:4 --> DeadTypeTest.rei:2:4
+  addTypeReference DeadTypeTest.rei:2:4 --> DeadTypeTest.re:2:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/CreateErrorHandler1.cmt
   addValueDeclaration +notification CreateErrorHandler1.re:3:6 path:+CreateErrorHandler1.Error1
   addValueReference CreateErrorHandler1.re:3:6 --> CreateErrorHandler1.re:3:21
@@ -1257,10 +1289,18 @@
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadRT.cmt
   addValueDeclaration +emitModuleAccessPath DeadRT.re:5:8 path:+DeadRT
   addTypeDeclaration Root DeadRT.re:2:4 path:+DeadRT.+moduleAccessPath
+  extendTypeDependencies DeadRT.re:2:4 --> DeadRT.rei:2:4
+  extendTypeDependencies DeadRT.rei:2:4 --> DeadRT.re:2:4
   addTypeDeclaration Kaboom DeadRT.re:3:4 path:+DeadRT.+moduleAccessPath
+  extendTypeDependencies DeadRT.re:3:4 --> DeadRT.rei:3:4
+  extendTypeDependencies DeadRT.rei:3:4 --> DeadRT.re:3:4
   addValueReference DeadRT.re:5:8 --> DeadRT.re:7:9
   addValueReference DeadRT.re:5:8 --> DeadRT.re:5:31
   addTypeReference DeadRT.re:11:16 --> DeadRT.re:3:4
+  addTypeReference DeadRT.re:3:4 --> DeadRT.rei:3:4
+  addTypeReference DeadRT.rei:3:4 --> DeadRT.re:3:4
+  addTypeReference DeadRT.re:2:4 --> DeadRT.rei:2:4
+  addTypeReference DeadRT.rei:2:4 --> DeadRT.re:2:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImportIndex.cmt
   addValueDeclaration +makeProps ImportIndex.re:2:0 path:+ImportIndex
   addValueDeclaration +make ImportIndex.re:2:0 path:+ImportIndex
@@ -1706,9 +1746,9 @@ File References
   Dead Value +DeadMl.QQ.+thisSpansSeveralLines: 0 references () [0]
   Dead Value +DeadRT.+emitModuleAccessPath: 0 references () [0]
   Live Type +DeadRT.+moduleAccessPath.Kaboom: 1 references (DeadRT.re:11:16) [0]
-  Dead Type +DeadRT.+moduleAccessPath.Root: 0 references () [0]
-  Dead Type DeadRT.moduleAccessPath.Kaboom: 0 references () [0]
-  Live Type DeadRT.moduleAccessPath.Root: 1 references (DeadTest.re:110:16) [0]
+  Live Type DeadRT.moduleAccessPath.Root: 1 references (DeadTest.re:110:16) [1]
+  Live Type +DeadRT.+moduleAccessPath.Root: 1 references (DeadRT.rei:2:4) [0]
+  Live Type DeadRT.moduleAccessPath.Kaboom: 1 references (DeadRT.re:3:4) [0]
   Dead Value +DeadTest.+stringLengthNoSideEffects: 0 references () [0]
   Dead Value +DeadTest.+theSideEffectIsLogging: 0 references () [0]
   Live Value +DeadTest.+make: 1 references (DeadTest.re:169:16) [0]
@@ -1766,12 +1806,15 @@ File References
   Dead Value +DeadTestWithInterface.Ext_buffer.+x: 0 references () [1]
   Dead Value +DeadTestWithInterface.Ext_buffer.+x: 0 references () [0]
   Dead Type DeadTypeTest.deadType.InNeither: 0 references () [0]
-  Live Type DeadTypeTest.deadType.InBoth: 1 references (DeadTest.re:47:8) [0]
+  Live Type +DeadTypeTest.+deadType.InBoth: 1 references (DeadTypeTest.re:13:8) [1]
+  Live Type DeadTypeTest.deadType.InBoth: 2 references (DeadTest.re:47:8, DeadTypeTest.re:9:4) [0]
   Live Type DeadTypeTest.deadType.OnlyInInterface: 1 references (DeadTest.re:46:8) [0]
-  Dead Type DeadTypeTest.deadType.OnlyInImplementation: 0 references () [0]
+  Live Type +DeadTypeTest.+deadType.OnlyInImplementation: 1 references (DeadTypeTest.re:12:8) [1]
+  Live Type DeadTypeTest.deadType.OnlyInImplementation: 1 references (DeadTypeTest.re:7:4) [0]
   Dead Value DeadTypeTest.+a: 0 references () [0]
   Dead Type DeadTypeTest.t.B: 0 references () [0]
-  Dead Type DeadTypeTest.t.A: 0 references () [0]
+  Live Type +DeadTypeTest.+t.A: 1 references (DeadTypeTest.re:4:8) [1]
+  Live Type DeadTypeTest.t.A: 1 references (DeadTypeTest.re:2:4) [0]
   Live Value +Docstrings.+unitArgWithConversionU: 0 references () [0]
   Live Value +Docstrings.+unitArgWithConversion: 0 references () [0]
   Dead Type +Docstrings.+t.B: 0 references () [0]
@@ -2092,12 +2135,9 @@ File References
   Dead Value +DeadTypeTest.+_: 0 references () [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
   Dead Type +DeadTypeTest.+deadType.InNeither: 0 references () [0]
-  Live Type +DeadTypeTest.+deadType.InBoth: 1 references (DeadTypeTest.re:13:8) [0]
-  Dead Type +DeadTypeTest.+deadType.OnlyInInterface: 0 references () [0]
-  Live Type +DeadTypeTest.+deadType.OnlyInImplementation: 1 references (DeadTypeTest.re:12:8) [0]
+  Live Type +DeadTypeTest.+deadType.OnlyInInterface: 1 references (DeadTypeTest.rei:8:4) [0]
   Dead Value +DeadTypeTest.+a: 0 references () [0]
   Dead Type +DeadTypeTest.+t.B: 0 references () [0]
-  Live Type +DeadTypeTest.+t.A: 1 references (DeadTypeTest.re:4:8) [0]
   Dead Value DeadValueTest.+valueDead: 0 references () [0]
   Live Value DeadValueTest.+valueAlive: 1 references (DeadTest.re:77:16) [0]
   Live Value +DynamicallyLoadedComponent.+make: 4 references (DeadTest.re:112:40, DeadTest.re:119:6, DeadTest.re:157:17, DeadTest:0:-1) [0]
@@ -2488,23 +2528,11 @@ File References
   <-- line 108
     let dead10 = 10 [@@dead "WithSignature.+dead10"] 
 
-  Warning Dead Type
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadRT.re 2:5-16
-  +moduleAccessPath.Root is a variant case which is never constructed
-  <-- line 2
-    | [@dead "+moduleAccessPath.Root"] Root(string)
-
   Warning Dead Value
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadRT.re 5:1-9:3
   +emitModuleAccessPath is never used
   <-- line 5
   [@dead "+emitModuleAccessPath"] let rec emitModuleAccessPath = moduleAccessPath =>
-
-  Warning Dead Type
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadRT.rei 3:5-10
-  moduleAccessPath.Kaboom is a variant case which is never constructed
-  <-- line 3
-    | [@dead "moduleAccessPath.Kaboom"] Kaboom
 
   Warning Dead Value
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re 2:1-17
@@ -2683,22 +2711,10 @@ File References
   [@dead "+a"] let a = A;
 
   Warning Dead Type
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.re 8:5-19
-  +deadType.OnlyInInterface is a variant case which is never constructed
-  <-- line 8
-    | [@dead "+deadType.OnlyInInterface"] OnlyInInterface
-
-  Warning Dead Type
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.re 10:5-13
   +deadType.InNeither is a variant case which is never constructed
   <-- line 10
     | [@dead "+deadType.InNeither"] InNeither;
-
-  Warning Dead Type
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.rei 2:5
-  t.A is a variant case which is never constructed
-  <-- line 2
-    | [@dead "t.A"] A
 
   Warning Dead Type
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.rei 3:5
@@ -2711,12 +2727,6 @@ File References
   +a is never used
   <-- line 4
   [@dead "+a"] let a: t;
-
-  Warning Dead Type
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.rei 7:5-24
-  deadType.OnlyInImplementation is a variant case which is never constructed
-  <-- line 7
-    | [@dead "deadType.OnlyInImplementation"] OnlyInImplementation
 
   Warning Dead Type
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.rei 10:5-13

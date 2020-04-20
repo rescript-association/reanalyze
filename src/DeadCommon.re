@@ -850,7 +850,7 @@ module Decl = {
         ~orderedFiles,
         {
           declKind: kind1,
-          path: path1,
+          path: _path1,
           pos: {
             pos_fname: fname1,
             pos_lnum: lnum1,
@@ -860,7 +860,7 @@ module Decl = {
         },
         {
           declKind: kind2,
-          path: path2,
+          path: _path2,
           pos: {
             pos_fname: fname2,
             pos_lnum: lnum2,
