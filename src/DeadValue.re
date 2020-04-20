@@ -323,7 +323,8 @@ let rec getSignature = (~isfunc=false, moduleType: Types.module_type) =>
   | _ => []
   };
 
-let rec processSignatureItem = (~doTypes, ~path, si: Types.signature_item) =>
+let rec processSignatureItem =
+        (~doTypes, ~doValues, ~path, si: Types.signature_item) =>
   switch (si) {
   | Sig_type(_) when doTypes =>
     let (id, t) = si |> Compat.getSigType;
@@ -333,6 +334,23 @@ let rec processSignatureItem = (~doTypes, ~path, si: Types.signature_item) =>
         ~path=[id |> Ident.name |> Name.create, ...path],
         t,
       );
+    };
+  | Sig_value(_) when doValues =>
+    let (id, loc, kind) = si |> Compat.getSigValue;
+    if (!loc.Location.loc_ghost) {
+      let isPrimitive =
+        switch (kind) {
+        | Val_prim(_) => true
+        | _ => false
+        };
+      if (!isPrimitive || analyzeExternals) {
+        addValueDeclaration(
+          ~sideEffects=false,
+          ~path,
+          ~loc,
+          Ident.name(id) |> Name.create,
+        );
+      };
     };
   | Sig_module(_)
   | Sig_modtype(_) =>
@@ -348,6 +366,7 @@ let rec processSignatureItem = (~doTypes, ~path, si: Types.signature_item) =>
         |> List.iter(
              processSignatureItem(
                ~doTypes,
+               ~doValues,
                ~path=[id |> Ident.name |> Name.create, ...path],
              ),
            );
@@ -386,6 +405,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
           |> List.iter(
                processSignatureItem(
                  ~doTypes,
+                 ~doValues=false,
                  ~path=currentModulePath^ @ [currentModuleName^],
                ),
              )
