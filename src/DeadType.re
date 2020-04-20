@@ -16,13 +16,9 @@ let addTypeReference = (~posFrom, ~posTo) => {
 };
 
 let addDeclaration =
-    (
-      ~isInterface,
-      ~path as path_,
-      {type_kind, type_manifest}: Types.type_declaration,
-    ) => {
+    (~path as path_, {type_kind, type_manifest}: Types.type_declaration) => {
   let save = (~declKind, ~loc: Location.t, ~name) => {
-    let name = name |> Name.create(~isInterface);
+    let name = name |> Name.create;
     let path = [name, ...path_] |> pathToString;
     if (type_manifest == None) {
       addTypeDeclaration(~declKind, ~path=path_, ~loc, name);
