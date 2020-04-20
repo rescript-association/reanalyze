@@ -111,9 +111,7 @@ let loadCmtFile = cmtFilePath => {
           Sys.file_exists(
             (cmtFilePath |> Filename.chop_extension) ++ ".cmti",
           );
-        if (!cmtiExists) {
-          ProcessDeadAnnotations.structure(structure);
-        };
+        ProcessDeadAnnotations.structure(~doGenType=!cmtiExists, structure);
         processSignature(~doValues=true, structure.str_type);
         DeadValue.processStructure(
           ~doTypes=true,

@@ -407,12 +407,13 @@ module ProcessDeadAnnotations = {
     PosHash.replace(positionsAnnotated, pos, Live);
   };
 
-  let processAttributes = (~pos, attributes) => {
+  let processAttributes = (~doGenType, ~pos, attributes) => {
     let getPayloadFun = f => attributes |> Annotation.getAttributePayload(f);
     let getPayload = (x: string) =>
       attributes |> Annotation.getAttributePayload((==)(x));
 
-    if (getPayloadFun(Annotation.tagIsOneOfTheGenTypeAnnotations) != None) {
+    if (doGenType
+        && getPayloadFun(Annotation.tagIsOneOfTheGenTypeAnnotations) != None) {
       pos |> annotateGenType;
     };
 
@@ -429,7 +430,7 @@ module ProcessDeadAnnotations = {
     };
   };
 
-  let collectExportLocations = () => {
+  let collectExportLocations = (~doGenType) => {
     let super = Tast_mapper.default;
     let value_binding =
         (
@@ -438,7 +439,8 @@ module ProcessDeadAnnotations = {
         ) => {
       switch (vb_pat.pat_desc) {
       | Tpat_var(_id, pLoc) =>
-        vb_attributes |> processAttributes(~pos=pLoc.loc.loc_start)
+        vb_attributes
+        |> processAttributes(~doGenType, ~pos=pLoc.loc.loc_start)
 
       | _ => ()
       };
@@ -449,13 +451,15 @@ module ProcessDeadAnnotations = {
       | Ttype_record(labelDeclarations) =>
         labelDeclarations
         |> List.iter(({ld_attributes, ld_loc}: Typedtree.label_declaration) =>
-             ld_attributes |> processAttributes(~pos=ld_loc.loc_start)
+             ld_attributes
+             |> processAttributes(~doGenType, ~pos=ld_loc.loc_start)
            )
       | Ttype_variant(constructorDeclarations) =>
         constructorDeclarations
         |> List.iter(
              ({cd_attributes, cd_loc}: Typedtree.constructor_declaration) =>
-             cd_attributes |> processAttributes(~pos=cd_loc.loc_start)
+             cd_attributes
+             |> processAttributes(~doGenType, ~pos=cd_loc.loc_start)
            )
       | _ => ()
       };
@@ -466,20 +470,21 @@ module ProcessDeadAnnotations = {
           self,
           {val_attributes, val_val} as value_description: Typedtree.value_description,
         ) => {
-      val_attributes |> processAttributes(~pos=val_val.val_loc.loc_start);
+      val_attributes
+      |> processAttributes(~doGenType, ~pos=val_val.val_loc.loc_start);
       super.value_description(self, value_description);
     };
     {...super, type_kind, value_binding, value_description};
   };
 
-  let structure = structure => {
-    let collectExportLocations = collectExportLocations();
+  let structure = (~doGenType, structure) => {
+    let collectExportLocations = collectExportLocations(~doGenType);
     structure
     |> collectExportLocations.structure(collectExportLocations)
     |> ignore;
   };
   let signature = signature => {
-    let collectExportLocations = collectExportLocations();
+    let collectExportLocations = collectExportLocations(~doGenType=true);
     signature
     |> collectExportLocations.signature(collectExportLocations)
     |> ignore;
