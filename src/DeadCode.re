@@ -2,9 +2,9 @@ open DeadCommon;
 
 let (+++) = Filename.concat;
 
-let rec processSignatureItem = (~path, si: Types.signature_item) =>
+let rec processSignatureItem = (~doValues, ~path, si: Types.signature_item) =>
   switch (si) {
-  | Sig_value(_) =>
+  | Sig_value(_) when doValues =>
     let (id, loc, kind) = si |> Compat.getSigValue;
     if (!loc.Location.loc_ghost) {
       let isPrimitive =
@@ -34,6 +34,7 @@ let rec processSignatureItem = (~path, si: Types.signature_item) =>
         DeadValue.getSignature(moduleType)
         |> List.iter(
              processSignatureItem(
+               ~doValues,
                ~path=[id |> Ident.name |> Name.create, ...path],
              ),
            );
@@ -43,10 +44,10 @@ let rec processSignatureItem = (~path, si: Types.signature_item) =>
   | _ => ()
   };
 
-let processSignature = (signature: Types.signature) => {
+let processSignature = (~doValues, signature: Types.signature) => {
   signature
   |> List.iter(sig_item =>
-       processSignatureItem(~path=[currentModuleName^], sig_item)
+       processSignatureItem(~doValues, ~path=[currentModuleName^], sig_item)
      );
 };
 
@@ -104,7 +105,7 @@ let loadCmtFile = cmtFilePath => {
       switch (cmt_annots) {
       | Interface(signature) =>
         ProcessDeadAnnotations.signature(signature);
-        processSignature(signature.sig_type);
+        processSignature(~doValues=true, signature.sig_type);
       | Implementation(structure) =>
         let cmtiExists =
           Sys.file_exists(
@@ -113,8 +114,13 @@ let loadCmtFile = cmtFilePath => {
         if (!cmtiExists) {
           ProcessDeadAnnotations.structure(structure);
         };
-        processSignature(structure.str_type);
-        DeadValue.processStructure(~cmt_value_dependencies, structure);
+        processSignature(~doValues=true, structure.str_type);
+        DeadValue.processStructure(
+          ~doTypes=true,
+          ~doValues=true,
+          ~cmt_value_dependencies,
+          structure,
+        );
       | _ => ()
       };
     };

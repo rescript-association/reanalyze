@@ -323,9 +323,9 @@ let rec getSignature = (~isfunc=false, moduleType: Types.module_type) =>
   | _ => []
   };
 
-let rec processSignatureItem = (~path, si: Types.signature_item) =>
+let rec processSignatureItem = (~doTypes, ~path, si: Types.signature_item) =>
   switch (si) {
-  | Sig_type(_) =>
+  | Sig_type(_) when doTypes =>
     let (id, t) = si |> Compat.getSigType;
     if (analyzeTypes^) {
       DeadType.addDeclaration(
@@ -347,6 +347,7 @@ let rec processSignatureItem = (~path, si: Types.signature_item) =>
         getSignature(moduleType)
         |> List.iter(
              processSignatureItem(
+               ~doTypes,
                ~path=[id |> Ident.name |> Name.create, ...path],
              ),
            );
@@ -357,7 +358,7 @@ let rec processSignatureItem = (~path, si: Types.signature_item) =>
   };
 
 /* Traverse the AST */
-let traverseStructure = {
+let traverseStructure = (~doTypes, ~doValues) => {
   /* Tast_mapper */
   let super = Tast_mapper.default;
 
@@ -385,13 +386,14 @@ let traverseStructure = {
           signature
           |> List.iter(
                processSignatureItem(
+                 ~doTypes,
                  ~path=currentModulePath^ @ [currentModuleName^],
                ),
              )
         | _ => ()
         };
       };
-    | Tstr_primitive(vd) when analyzeExternals =>
+    | Tstr_primitive(vd) when doValues && analyzeExternals =>
       let path = currentModulePath^ @ [currentModuleName^];
       let exists =
         switch (PosHash.find_opt(decls, vd.val_loc.loc_start)) {
@@ -406,7 +408,7 @@ let traverseStructure = {
           vd.val_id |> Ident.name |> Name.create(~isInterface=false),
         );
       };
-    | Tstr_type(_recFlag, typeDeclarations) =>
+    | Tstr_type(_recFlag, typeDeclarations) when doTypes =>
       if (analyzeTypes^) {
         typeDeclarations
         |> List.iter((typeDeclaration: Typedtree.type_declaration) => {
@@ -475,7 +477,13 @@ let processTypeDependency =
   };
 
 let processStructure =
-    (~cmt_value_dependencies, structure: Typedtree.structure) => {
+    (
+      ~cmt_value_dependencies,
+      ~doTypes,
+      ~doValues,
+      structure: Typedtree.structure,
+    ) => {
+  let traverseStructure = traverseStructure(~doTypes, ~doValues);
   structure |> traverseStructure.structure(traverseStructure) |> ignore;
 
   let valueDependencies = cmt_value_dependencies |> List.rev;
