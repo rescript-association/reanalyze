@@ -4,6 +4,15 @@ let (+++) = Filename.concat;
 
 let rec processSignatureItem = (~doValues, ~path, si: Types.signature_item) =>
   switch (si) {
+  | Sig_type(_) =>
+    let (id, t) = si |> Compat.getSigType;
+    if (analyzeTypes^) {
+      DeadType.addDeclaration(
+        ~isInterface=true,
+        ~path=[id |> Ident.name |> Name.create, ...path],
+        t,
+      );
+    };
   | Sig_value(_) when doValues =>
     let (id, loc, kind) = si |> Compat.getSigValue;
     if (!loc.Location.loc_ghost) {
