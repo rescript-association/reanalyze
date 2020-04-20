@@ -335,7 +335,6 @@ let rec processSignatureItem =
     let (id, t) = si |> Compat.getSigType;
     if (analyzeTypes^) {
       DeadType.addDeclaration(
-        ~isInterface=true,
         ~path=[id |> Ident.name |> Name.create, ...path],
         t,
       );
@@ -443,8 +442,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
                |> Name.create(~isInterface),
                ...currentModulePath^ @ [currentModuleName^],
              ];
-             typeDeclaration.typ_type
-             |> DeadType.addDeclaration(~isInterface, ~path);
+             typeDeclaration.typ_type |> DeadType.addDeclaration(~path);
            });
       }
     | Tstr_include(_) =>

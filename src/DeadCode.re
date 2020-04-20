@@ -75,7 +75,7 @@ let loadCmtFile = cmtFilePath => {
             (cmtFilePath |> Filename.chop_extension) ++ ".cmti",
           );
         ProcessDeadAnnotations.structure(~doGenType=!cmtiExists, structure);
-        processSignature(~doValues=true, ~doTypes=true, structure.str_type);
+        processSignature(~doValues=true, ~doTypes=false, structure.str_type);
         DeadValue.processStructure(
           ~doTypes=true,
           ~doValues=true,
