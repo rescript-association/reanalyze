@@ -723,6 +723,21 @@
   addValueDeclaration package_name DeadMl.ml:26:47 path:+DeadMl.Bs_version
   addValueDeclaration map_split_opt DeadMl.ml:45:8 path:+DeadMl
   addValueDeclaration inline_threshold DeadMl.ml:56:4 path:+DeadMl
+  addValueDeclaration dead1 DeadMl.ml:59:6 path:+DeadMl.Scope
+  addValueDeclaration deadInner1 DeadMl.ml:62:8 path:+DeadMl.Scope.Inner1
+  addValueDeclaration liveInner2 DeadMl.ml:66:8 path:+DeadMl.Scope.Inner1
+  addValueDeclaration dead2 DeadMl.ml:69:6 path:+DeadMl.Scope
+  addValueDeclaration liveInner3 DeadMl.ml:74:8 path:+DeadMl.Scope.Inner2
+  addValueDeclaration live3 DeadMl.ml:77:6 path:+DeadMl.Scope
+  addValueDeclaration dead4 DeadMl.ml:80:4 path:+DeadMl
+  addValueDeclaration live5 DeadMl.ml:82:4 path:+DeadMl
+  addValueDeclaration dead5 DeadMl.ml:85:4 path:+DeadMl
+  addValueDeclaration live6 DeadMl.ml:87:4 path:+DeadMl
+  addValueDeclaration dead7 DeadMl.ml:90:4 path:+DeadMl
+  addValueDeclaration dead8 DeadMl.ml:94:2 path:+DeadMl.WithSignature
+  addValueDeclaration live9 DeadMl.ml:96:2 path:+DeadMl.WithSignature
+  addValueDeclaration dead10 DeadMl.ml:99:2 path:+DeadMl.WithSignature
+  addValueDeclaration live11 DeadMl.ml:103:2 path:+DeadMl.WithSignature
   addValueReference DeadMl.ml:3:8 --> DeadMl.ml:4:11
   addValueReference DeadMl.ml:3:8 --> DeadMl.ml:4:20
   addValueDeclaration +thisIsInInterface DeadMl.ml:12:6 path:+DeadMl.AA
@@ -751,10 +766,18 @@
   addValueReference DeadMl.ml:45:8 --> DeadMl.ml:52:11
   addValueReference DeadMl.ml:45:8 --> DeadMl.ml:51:10
   addValueReference DeadMl.ml:45:8 --> DeadMl.ml:46:3
+  addValueDeclaration +dead8 DeadMl.ml:106:6 path:+DeadMl.WithSignature
+  addValueDeclaration +live9 DeadMl.ml:107:6 path:+DeadMl.WithSignature
+  addValueDeclaration +dead10 DeadMl.ml:108:6 path:+DeadMl.WithSignature
+  addValueDeclaration +live11 DeadMl.ml:109:6 path:+DeadMl.WithSignature
   addValueReference DeadMl.ml:9:2 --> DeadMl.ml:12:6
   addValueReference DeadMl.ml:26:6 --> DeadMl.ml:29:8
   addValueReference DeadMl.ml:26:27 --> DeadMl.ml:30:8
   addValueReference DeadMl.ml:26:47 --> DeadMl.ml:31:8
+  addValueReference DeadMl.ml:94:2 --> DeadMl.ml:106:6
+  addValueReference DeadMl.ml:96:2 --> DeadMl.ml:107:6
+  addValueReference DeadMl.ml:99:2 --> DeadMl.ml:108:6
+  addValueReference DeadMl.ml:103:2 --> DeadMl.ml:109:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImportMyBanner.cmt
   addValueDeclaration make ImportMyBanner.re:8:0 path:+ImportMyBanner
   addValueDeclaration make ImportMyBanner.re:19:4 path:+ImportMyBanner
@@ -1633,6 +1656,25 @@ File References
   Live Value +CreateErrorHandler1.Error1.notification: 1 references (ErrorHandler.rei:3:2) [0]
   Live Value +CreateErrorHandler2.Error2.notification: 1 references (ErrorHandler.rei:3:2) [0]
   Live Value +DeadCodeImplementation.M.+x: 1 references (DeadCodeInterface.re:1:17) [0]
+  Live Value +DeadMl.WithSignature.live11: 0 references () [0]
+  Dead Value +DeadMl.WithSignature.dead10: 0 references () [0]
+  Live Value +DeadMl.WithSignature.live9: 0 references () [0]
+  Dead Value +DeadMl.WithSignature.dead8: 0 references () [0]
+  Live Value +DeadMl.WithSignature.+live11: 1 references (DeadMl.ml:103:2) [0]
+  Dead Value +DeadMl.WithSignature.+dead10: 0 references () [0]
+  Live Value +DeadMl.WithSignature.+live9: 1 references (DeadMl.ml:96:2) [0]
+  Dead Value +DeadMl.WithSignature.+dead8: 0 references () [0]
+  Dead Value +DeadMl.dead7: 0 references () [0]
+  Live Value +DeadMl.live6: 0 references () [0]
+  Dead Value +DeadMl.dead5: 0 references () [0]
+  Live Value +DeadMl.live5: 0 references () [0]
+  Dead Value +DeadMl.dead4: 0 references () [0]
+  Live Value +DeadMl.Scope.live3: 0 references () [0]
+  Live Value +DeadMl.Scope.Inner2.liveInner3: 0 references () [0]
+  Dead Value +DeadMl.Scope.dead2: 0 references () [0]
+  Live Value +DeadMl.Scope.Inner1.liveInner2: 0 references () [0]
+  Dead Value +DeadMl.Scope.Inner1.deadInner1: 0 references () [0]
+  Dead Value +DeadMl.Scope.dead1: 0 references () [0]
   Dead Value +DeadMl.inline_threshold: 0 references () [0]
   Dead Value +DeadMl.map_split_opt: 0 references () [0]
   Dead Type +DeadMl.+module_info.+case: 0 references () [0]
@@ -2365,6 +2407,66 @@ File References
   inline_threshold is never used
   <-- line 56
   let inline_threshold = Some (10. /. 8.); [@@dead "inline_threshold"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 59, characters 2-15
+  Scope.dead1 is never used
+  <-- line 59
+    let dead1 = 1 [@@dead "Scope.dead1"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 62, characters 4-22
+  Scope.Inner1.deadInner1 is never used
+  <-- line 62
+      let deadInner1 = 0 [@@dead "Scope.Inner1.deadInner1"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 69, characters 2-15
+  Scope.dead2 is never used
+  <-- line 69
+    let dead2 = 2 [@@dead "Scope.dead2"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 80, characters 0-13
+  dead4 is never used
+  <-- line 80
+  let dead4 = 4 [@@dead "dead4"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 85, characters 0-13
+  dead5 is never used
+  <-- line 85
+  let dead5 = 5 [@@dead "dead5"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 90, characters 0-37
+  dead7 is never used
+  <-- line 90
+  [@@ocaml.warning "-30"] [@@dead "dead7"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 94, characters 2-16
+  WithSignature.dead8 is never used
+  <-- line 94
+    val dead8: int [@@dead "WithSignature.dead8"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 99, characters 2-17
+  WithSignature.dead10 is never used
+  <-- line 99
+    val dead10: int [@@dead "WithSignature.dead10"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 106, characters 2-15
+  WithSignature.+dead8 is never used
+  <-- line 106
+    let dead8 = 8 [@@dead "WithSignature.+dead8"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 108, characters 2-17
+  WithSignature.+dead10 is never used
+  <-- line 108
+    let dead10 = 10 [@@dead "WithSignature.+dead10"] 
 
   Warning Dead Type
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadRT.re 2:5-16

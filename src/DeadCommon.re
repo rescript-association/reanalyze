@@ -368,69 +368,6 @@ let iterFilesFromRootsToLeaves = iterFun => {
      );
 };
 
-/********   PROCESSING  ********/
-
-let pathToString = path =>
-  path |> List.rev_map(Name.toString) |> String.concat(".");
-
-let pathWithoutHead = path => {
-  path |> List.rev_map(Name.toString) |> List.tl |> String.concat(".");
-};
-
-let annotateAtEnd = (~pos) => !posIsReason(pos);
-
-let getPosAnnotation = decl =>
-  annotateAtEnd(~pos=decl.pos) ? decl.posEnd : decl.posStart;
-
-let addDeclaration_ =
-    (~sideEffects=false, ~declKind, ~path, ~loc: Location.t, name: Name.t) => {
-  let pos = loc.loc_start;
-  let posStart = pos;
-  let posEnd = loc.loc_end;
-
-  /* a .cmi file can contain locations from other files.
-       For instance:
-           module M : Set.S with type elt = int
-       will create value definitions whose location is in set.mli
-     */
-  if (!loc.loc_ghost
-      && (currentSrc^ == pos.pos_fname || currentModule^ === "*include*")) {
-    if (verbose) {
-      Log_.item(
-        "add%sDeclaration %s %s path:%s@.",
-        declKind == Value ? "Value" : "Type",
-        name |> Name.toString,
-        pos |> posToString,
-        path |> pathToString
-      );
-    };
-
-    switch (path) {
-    | [moduleName] when declKind == Value =>
-      let oldSet = getDeclPositions(~moduleName);
-      Hashtbl.replace(moduleDecls, moduleName, PosSet.add(pos, oldSet));
-    | _ => ()
-    };
-    let decl = {
-      declKind,
-      path: [name, ...path],
-      pos,
-      posEnd,
-      posStart,
-      resolved: false,
-      sideEffects,
-    };
-    PosHash.replace(decls, pos, decl);
-  };
-};
-
-let addTypeDeclaration = addDeclaration_;
-
-let addValueDeclaration = (~sideEffects, ~path, ~loc: Location.t, name) =>
-  name |> addDeclaration_(~sideEffects, ~declKind=Value, ~path, ~loc);
-
-/**** REPORTING ****/
-
 /* Keep track of the location of values annotated @genType or @dead */
 module ProcessDeadAnnotations = {
   type annotatedAs =
@@ -469,34 +406,43 @@ module ProcessDeadAnnotations = {
     PosHash.replace(positionsAnnotated, pos, Live);
   };
 
-  let processAttributes = (~pos, attributes) => {
-    if (attributes
-        |> Annotation.getAttributePayload(
-             Annotation.tagIsOneOfTheGenTypeAnnotations,
-           )
-        != None) {
+  let processAttributes = (~doGenType, ~pos, attributes) => {
+    let getPayloadFun = f => attributes |> Annotation.getAttributePayload(f);
+    let getPayload = (x: string) =>
+      attributes |> Annotation.getAttributePayload((==)(x));
+
+    if (doGenType
+        && getPayloadFun(Annotation.tagIsOneOfTheGenTypeAnnotations) != None) {
       pos |> annotateGenType;
     };
-    if (attributes
-        |> Annotation.getAttributePayload((==)(deadAnnotation)) != None) {
+
+    if (getPayload(deadAnnotation) != None) {
       pos |> annotateDead;
-    } else if (attributes
-               |> Annotation.getAttributePayload((==)(liveAnnotation))
-               != None) {
+    };
+
+    if (getPayload(liveAnnotation) != None) {
+      pos |> annotateLive;
+    };
+
+    if (attributes |> Annotation.isOcamlSuppressDeadWarning) {
       pos |> annotateLive;
     };
   };
 
-  let collectExportLocations = () => {
+  let collectExportLocations = (~doGenType) => {
     let super = Tast_mapper.default;
+    let currentlyDisableWarnings = ref(false);
     let value_binding =
         (
           self,
           {vb_attributes, vb_pat} as value_binding: Typedtree.value_binding,
         ) => {
       switch (vb_pat.pat_desc) {
-      | Tpat_var(_id, pLoc) =>
-        vb_attributes |> processAttributes(~pos=pLoc.loc.loc_start)
+      | Tpat_var(_id, {loc: {loc_start: pos}}) =>
+        if (currentlyDisableWarnings^) {
+          pos |> annotateLive;
+        };
+        vb_attributes |> processAttributes(~doGenType, ~pos);
 
       | _ => ()
       };
@@ -507,13 +453,15 @@ module ProcessDeadAnnotations = {
       | Ttype_record(labelDeclarations) =>
         labelDeclarations
         |> List.iter(({ld_attributes, ld_loc}: Typedtree.label_declaration) =>
-             ld_attributes |> processAttributes(~pos=ld_loc.loc_start)
+             ld_attributes
+             |> processAttributes(~doGenType, ~pos=ld_loc.loc_start)
            )
       | Ttype_variant(constructorDeclarations) =>
         constructorDeclarations
         |> List.iter(
              ({cd_attributes, cd_loc}: Typedtree.constructor_declaration) =>
-             cd_attributes |> processAttributes(~pos=cd_loc.loc_start)
+             cd_attributes
+             |> processAttributes(~doGenType, ~pos=cd_loc.loc_start)
            )
       | _ => ()
       };
@@ -522,27 +470,133 @@ module ProcessDeadAnnotations = {
     let value_description =
         (
           self,
-          {val_attributes, val_val} as value_description: Typedtree.value_description,
+          {val_attributes, val_val: {val_loc: {loc_start: pos}}} as value_description: Typedtree.value_description,
         ) => {
-      val_attributes |> processAttributes(~pos=val_val.val_loc.loc_start);
+      if (currentlyDisableWarnings^) {
+        pos |> annotateLive;
+      };
+      val_attributes |> processAttributes(~doGenType, ~pos);
       super.value_description(self, value_description);
     };
-    {...super, type_kind, value_binding, value_description};
+    let structure_item = (self, item: Typedtree.structure_item) => {
+      switch (item.str_desc) {
+      | Tstr_attribute(attribute)
+          when [attribute] |> Annotation.isOcamlSuppressDeadWarning =>
+        currentlyDisableWarnings := true
+      | _ => ()
+      };
+      super.structure_item(self, item);
+    };
+    let structure = (self, structure: Typedtree.structure) => {
+      let oldDisableWarnings = currentlyDisableWarnings^;
+      super.structure(self, structure) |> ignore;
+      currentlyDisableWarnings := oldDisableWarnings;
+      structure;
+    };
+    let signature_item = (self, item: Typedtree.signature_item) => {
+      switch (item.sig_desc) {
+      | Tsig_attribute(attribute)
+          when [attribute] |> Annotation.isOcamlSuppressDeadWarning =>
+        currentlyDisableWarnings := true
+      | _ => ()
+      };
+      super.signature_item(self, item);
+    };
+    let signature = (self, signature: Typedtree.signature) => {
+      let oldDisableWarnings = currentlyDisableWarnings^;
+      super.signature(self, signature) |> ignore;
+      currentlyDisableWarnings := oldDisableWarnings;
+      signature;
+    };
+
+    {
+      ...super,
+      signature,
+      signature_item,
+      structure,
+      structure_item,
+      type_kind,
+      value_binding,
+      value_description,
+    };
   };
 
-  let structure = structure => {
-    let collectExportLocations = collectExportLocations();
+  let structure = (~doGenType, structure) => {
+    let collectExportLocations = collectExportLocations(~doGenType);
     structure
     |> collectExportLocations.structure(collectExportLocations)
     |> ignore;
   };
   let signature = signature => {
-    let collectExportLocations = collectExportLocations();
+    let collectExportLocations = collectExportLocations(~doGenType=true);
     signature
     |> collectExportLocations.signature(collectExportLocations)
     |> ignore;
   };
 };
+
+/********   PROCESSING  ********/
+
+let pathToString = path =>
+  path |> List.rev_map(Name.toString) |> String.concat(".");
+
+let pathWithoutHead = path => {
+  path |> List.rev_map(Name.toString) |> List.tl |> String.concat(".");
+};
+
+let annotateAtEnd = (~pos) => !posIsReason(pos);
+
+let getPosAnnotation = decl =>
+  annotateAtEnd(~pos=decl.pos) ? decl.posEnd : decl.posStart;
+
+let addDeclaration_ =
+    (~sideEffects=false, ~declKind, ~path, ~loc: Location.t, name: Name.t) => {
+  let pos = loc.loc_start;
+  let posStart = pos;
+  let posEnd = loc.loc_end;
+
+  /* a .cmi file can contain locations from other files.
+       For instance:
+           module M : Set.S with type elt = int
+       will create value definitions whose location is in set.mli
+     */
+  if (!loc.loc_ghost
+      && (currentSrc^ == pos.pos_fname || currentModule^ === "*include*")) {
+    if (verbose) {
+      Log_.item(
+        "add%sDeclaration %s %s path:%s@.",
+        declKind == Value ? "Value" : "Type",
+        name |> Name.toString,
+        pos |> posToString,
+        path |> pathToString,
+      );
+    };
+
+    switch (path) {
+    | [moduleName] when declKind == Value =>
+      let oldSet = getDeclPositions(~moduleName);
+      Hashtbl.replace(moduleDecls, moduleName, PosSet.add(pos, oldSet));
+    | _ => ()
+    };
+    let decl = {
+      declKind,
+      path: [name, ...path],
+      pos,
+      posEnd,
+      posStart,
+      resolved: false,
+      sideEffects,
+    };
+    PosHash.replace(decls, pos, decl);
+  };
+};
+
+let addTypeDeclaration = addDeclaration_;
+
+let addValueDeclaration = (~sideEffects, ~path, ~loc: Location.t, name) =>
+  name |> addDeclaration_(~sideEffects, ~declKind=Value, ~path, ~loc);
+
+/**** REPORTING ****/
 
 module WriteDeadAnnotations = {
   type line = {
