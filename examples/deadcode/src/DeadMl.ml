@@ -58,14 +58,28 @@ let inline_threshold = Some (10. /. 8.);
 module Scope = struct
   let dead1 = 1
 
-  [@@@ocaml.warning "-32"]
+  module Inner1 = struct
+    let deadInner1 = 0
+
+    [@@@ocaml.warning "-32"]
+
+    let liveInner2 = 0
+  end
 
   let dead2 = 2
+
+  [@@@ocaml.warning "-32"]
+
+  module Inner2 = struct
+    let liveInner3 = 0
+  end
+
+  let live3 = 3
 end
 
-let dead3 = 3
-
 let dead4 = 4
+
+let live5 = 5
 [@@ocaml.warning "-32"]
 
 let dead5 = 5

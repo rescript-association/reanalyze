@@ -724,10 +724,14 @@
   addValueDeclaration map_split_opt DeadMl.ml:45:8 path:+DeadMl
   addValueDeclaration inline_threshold DeadMl.ml:56:4 path:+DeadMl
   addValueDeclaration dead1 DeadMl.ml:59:6 path:+DeadMl.Scope
-  addValueDeclaration dead2 DeadMl.ml:63:6 path:+DeadMl.Scope
-  addValueDeclaration dead3 DeadMl.ml:66:4 path:+DeadMl
-  addValueDeclaration dead4 DeadMl.ml:68:4 path:+DeadMl
-  addValueDeclaration dead5 DeadMl.ml:71:4 path:+DeadMl
+  addValueDeclaration deadInner1 DeadMl.ml:62:8 path:+DeadMl.Scope.Inner1
+  addValueDeclaration liveInner2 DeadMl.ml:66:8 path:+DeadMl.Scope.Inner1
+  addValueDeclaration dead2 DeadMl.ml:69:6 path:+DeadMl.Scope
+  addValueDeclaration liveInner3 DeadMl.ml:74:8 path:+DeadMl.Scope.Inner2
+  addValueDeclaration live3 DeadMl.ml:77:6 path:+DeadMl.Scope
+  addValueDeclaration dead4 DeadMl.ml:80:4 path:+DeadMl
+  addValueDeclaration live5 DeadMl.ml:82:4 path:+DeadMl
+  addValueDeclaration dead5 DeadMl.ml:85:4 path:+DeadMl
   addValueReference DeadMl.ml:3:8 --> DeadMl.ml:4:11
   addValueReference DeadMl.ml:3:8 --> DeadMl.ml:4:20
   addValueDeclaration +thisIsInInterface DeadMl.ml:12:6 path:+DeadMl.AA
@@ -1639,9 +1643,13 @@ File References
   Live Value +CreateErrorHandler2.Error2.notification: 1 references (ErrorHandler.rei:3:2) [0]
   Live Value +DeadCodeImplementation.M.+x: 1 references (DeadCodeInterface.re:1:17) [0]
   Dead Value +DeadMl.dead5: 0 references () [0]
-  Live Value +DeadMl.dead4: 0 references () [0]
-  Dead Value +DeadMl.dead3: 0 references () [0]
-  Live Value +DeadMl.Scope.dead2: 0 references () [0]
+  Live Value +DeadMl.live5: 0 references () [0]
+  Dead Value +DeadMl.dead4: 0 references () [0]
+  Live Value +DeadMl.Scope.live3: 0 references () [0]
+  Live Value +DeadMl.Scope.Inner2.liveInner3: 0 references () [0]
+  Dead Value +DeadMl.Scope.dead2: 0 references () [0]
+  Live Value +DeadMl.Scope.Inner1.liveInner2: 0 references () [0]
+  Dead Value +DeadMl.Scope.Inner1.deadInner1: 0 references () [0]
   Dead Value +DeadMl.Scope.dead1: 0 references () [0]
   Dead Value +DeadMl.inline_threshold: 0 references () [0]
   Dead Value +DeadMl.map_split_opt: 0 references () [0]
@@ -2383,15 +2391,27 @@ File References
     let dead1 = 1 [@@dead "Scope.dead1"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 66, characters 0-13
-  dead3 is never used
-  <-- line 66
-  let dead3 = 3 [@@dead "dead3"] 
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 62, characters 4-22
+  Scope.Inner1.deadInner1 is never used
+  <-- line 62
+      let deadInner1 = 0 [@@dead "Scope.Inner1.deadInner1"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 71, characters 0-13
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 69, characters 2-15
+  Scope.dead2 is never used
+  <-- line 69
+    let dead2 = 2 [@@dead "Scope.dead2"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 80, characters 0-13
+  dead4 is never used
+  <-- line 80
+  let dead4 = 4 [@@dead "dead4"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 85, characters 0-13
   dead5 is never used
-  <-- line 71
+  <-- line 85
   let dead5 = 5 [@@dead "dead5"] 
 
   Warning Dead Type
