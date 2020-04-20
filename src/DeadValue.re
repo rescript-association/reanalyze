@@ -370,6 +370,7 @@ let traverseStructure = {
   };
   let structure_item = (self, structureItem: Typedtree.structure_item) => {
     let oldModulePath = currentModulePath^;
+    let oldDisableWarnings = currentlyDisableWarnings^;
     switch (structureItem.str_desc) {
     | Tstr_module({mb_expr, mb_name}) =>
       let hasInterface =
@@ -420,6 +421,9 @@ let traverseStructure = {
              |> DeadType.addDeclaration(~isInterface, ~path);
            });
       }
+    | Tstr_attribute(attribute)
+        when [attribute] |> Annotation.isOcamlSuppressDeadWarning =>
+      currentlyDisableWarnings := true
     | Tstr_include(_) =>
       // TODO: anything special?
       ()
@@ -427,6 +431,7 @@ let traverseStructure = {
     };
     let result = super.structure_item(self, structureItem);
     currentModulePath := oldModulePath;
+    currentlyDisableWarnings := oldDisableWarnings;
     result;
   };
   Tast_mapper.{

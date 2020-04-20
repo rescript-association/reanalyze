@@ -94,7 +94,6 @@ let write = Sys.getenv_opt("Write") != None;
 
 let deadAnnotation = "dead";
 let liveAnnotation = "live";
-let ocamlWarningAnnotaion = "ocaml.warning";
 
 /* Location printer: `filename:line: ' */
 let posToString = (~printCol=true, ~shortFile=true, pos: Lexing.position) => {
@@ -199,6 +198,7 @@ let currentSrc = ref("");
 let currentModule = ref("");
 let currentModuleName = ref("" |> Name.create);
 let currentBindings = ref(PosSet.empty);
+let currentlyDisableWarnings = ref(false);
 let lastBinding = ref(Location.none);
 let getLastBinding = () => lastBinding^;
 let maxValuePosEnd = ref(Lexing.dummy_pos); // max end position of a value reported dead
@@ -369,69 +369,6 @@ let iterFilesFromRootsToLeaves = iterFun => {
      );
 };
 
-/********   PROCESSING  ********/
-
-let pathToString = path =>
-  path |> List.rev_map(Name.toString) |> String.concat(".");
-
-let pathWithoutHead = path => {
-  path |> List.rev_map(Name.toString) |> List.tl |> String.concat(".");
-};
-
-let annotateAtEnd = (~pos) => !posIsReason(pos);
-
-let getPosAnnotation = decl =>
-  annotateAtEnd(~pos=decl.pos) ? decl.posEnd : decl.posStart;
-
-let addDeclaration_ =
-    (~sideEffects=false, ~declKind, ~path, ~loc: Location.t, name: Name.t) => {
-  let pos = loc.loc_start;
-  let posStart = pos;
-  let posEnd = loc.loc_end;
-
-  /* a .cmi file can contain locations from other files.
-       For instance:
-           module M : Set.S with type elt = int
-       will create value definitions whose location is in set.mli
-     */
-  if (!loc.loc_ghost
-      && (currentSrc^ == pos.pos_fname || currentModule^ === "*include*")) {
-    if (verbose) {
-      Log_.item(
-        "add%sDeclaration %s %s path:%s@.",
-        declKind == Value ? "Value" : "Type",
-        name |> Name.toString,
-        pos |> posToString,
-        path |> pathToString,
-      );
-    };
-
-    switch (path) {
-    | [moduleName] when declKind == Value =>
-      let oldSet = getDeclPositions(~moduleName);
-      Hashtbl.replace(moduleDecls, moduleName, PosSet.add(pos, oldSet));
-    | _ => ()
-    };
-    let decl = {
-      declKind,
-      path: [name, ...path],
-      pos,
-      posEnd,
-      posStart,
-      resolved: false,
-      sideEffects,
-    };
-    PosHash.replace(decls, pos, decl);
-  };
-};
-
-let addTypeDeclaration = addDeclaration_;
-
-let addValueDeclaration = (~sideEffects, ~path, ~loc: Location.t, name) =>
-  name |> addDeclaration_(~sideEffects, ~declKind=Value, ~path, ~loc);
-
-/**** REPORTING ****/
-
 /* Keep track of the location of values annotated @genType or @dead */
 module ProcessDeadAnnotations = {
   type annotatedAs =
@@ -487,9 +424,8 @@ module ProcessDeadAnnotations = {
       pos |> annotateLive;
     };
 
-    switch (getPayload(ocamlWarningAnnotaion)) {
-    | Some(StringPayload(s)) when s == "-32" => pos |> annotateLive
-    | _ => ()
+    if (attributes |> Annotation.isOcamlSuppressDeadWarning) {
+      pos |> annotateLive;
     };
   };
 
@@ -549,6 +485,74 @@ module ProcessDeadAnnotations = {
     |> ignore;
   };
 };
+
+/********   PROCESSING  ********/
+
+let pathToString = path =>
+  path |> List.rev_map(Name.toString) |> String.concat(".");
+
+let pathWithoutHead = path => {
+  path |> List.rev_map(Name.toString) |> List.tl |> String.concat(".");
+};
+
+let annotateAtEnd = (~pos) => !posIsReason(pos);
+
+let getPosAnnotation = decl =>
+  annotateAtEnd(~pos=decl.pos) ? decl.posEnd : decl.posStart;
+
+let addDeclaration_ =
+    (~sideEffects=false, ~declKind, ~path, ~loc: Location.t, name: Name.t) => {
+  let pos = loc.loc_start;
+  let posStart = pos;
+  let posEnd = loc.loc_end;
+
+  if (currentlyDisableWarnings^) {
+    assert(false);
+    pos |> ProcessDeadAnnotations.annotateLive;
+  };
+
+  /* a .cmi file can contain locations from other files.
+       For instance:
+           module M : Set.S with type elt = int
+       will create value definitions whose location is in set.mli
+     */
+  if (!loc.loc_ghost
+      && (currentSrc^ == pos.pos_fname || currentModule^ === "*include*")) {
+    if (verbose) {
+      Log_.item(
+        "add%sDeclaration %s %s path:%s@.",
+        declKind == Value ? "Value" : "Type",
+        name |> Name.toString,
+        pos |> posToString,
+        path |> pathToString,
+      );
+    };
+
+    switch (path) {
+    | [moduleName] when declKind == Value =>
+      let oldSet = getDeclPositions(~moduleName);
+      Hashtbl.replace(moduleDecls, moduleName, PosSet.add(pos, oldSet));
+    | _ => ()
+    };
+    let decl = {
+      declKind,
+      path: [name, ...path],
+      pos,
+      posEnd,
+      posStart,
+      resolved: false,
+      sideEffects,
+    };
+    PosHash.replace(decls, pos, decl);
+  };
+};
+
+let addTypeDeclaration = addDeclaration_;
+
+let addValueDeclaration = (~sideEffects, ~path, ~loc: Location.t, name) =>
+  name |> addDeclaration_(~sideEffects, ~declKind=Value, ~path, ~loc);
+
+/**** REPORTING ****/
 
 module WriteDeadAnnotations = {
   type line = {

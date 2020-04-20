@@ -92,3 +92,10 @@ let rec getAttributePayload = (checkText, attributes: Typedtree.attributes) => {
 
 let hasAttribute = (checkText, attributes: Typedtree.attributes) =>
   getAttributePayload(checkText, attributes) != None;
+
+let isOcamlSuppressDeadWarning = attributes => {
+  switch (attributes |> getAttributePayload((==)("ocaml.warning"))) {
+  | Some(StringPayload(s)) when s == "-32" => true
+  | _ => false
+  };
+};
