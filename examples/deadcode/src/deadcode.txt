@@ -732,6 +732,8 @@
   addValueDeclaration dead4 DeadMl.ml:80:4 path:+DeadMl
   addValueDeclaration live5 DeadMl.ml:82:4 path:+DeadMl
   addValueDeclaration dead5 DeadMl.ml:85:4 path:+DeadMl
+  addValueDeclaration live6 DeadMl.ml:87:4 path:+DeadMl
+  addValueDeclaration dead7 DeadMl.ml:90:4 path:+DeadMl
   addValueReference DeadMl.ml:3:8 --> DeadMl.ml:4:11
   addValueReference DeadMl.ml:3:8 --> DeadMl.ml:4:20
   addValueDeclaration +thisIsInInterface DeadMl.ml:12:6 path:+DeadMl.AA
@@ -1642,6 +1644,8 @@ File References
   Live Value +CreateErrorHandler1.Error1.notification: 1 references (ErrorHandler.rei:3:2) [0]
   Live Value +CreateErrorHandler2.Error2.notification: 1 references (ErrorHandler.rei:3:2) [0]
   Live Value +DeadCodeImplementation.M.+x: 1 references (DeadCodeInterface.re:1:17) [0]
+  Dead Value +DeadMl.dead7: 0 references () [0]
+  Live Value +DeadMl.live6: 0 references () [0]
   Dead Value +DeadMl.dead5: 0 references () [0]
   Live Value +DeadMl.live5: 0 references () [0]
   Dead Value +DeadMl.dead4: 0 references () [0]
@@ -2413,6 +2417,12 @@ File References
   dead5 is never used
   <-- line 85
   let dead5 = 5 [@@dead "dead5"] 
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 90, characters 0-37
+  dead7 is never used
+  <-- line 90
+  [@@ocaml.warning "-30"] [@@dead "dead7"] 
 
   Warning Dead Type
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadRT.re 2:5-16

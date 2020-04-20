@@ -83,3 +83,9 @@ let live5 = 5
 [@@ocaml.warning "-32"]
 
 let dead5 = 5
+
+let live6 = 6
+[@@ocaml.warning "xxx-32xxx"]
+
+let dead7 = 7
+[@@ocaml.warning "-30"]

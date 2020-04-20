@@ -95,7 +95,11 @@ let hasAttribute = (checkText, attributes: Typedtree.attributes) =>
 
 let isOcamlSuppressDeadWarning = attributes => {
   switch (attributes |> getAttributePayload((==)("ocaml.warning"))) {
-  | Some(StringPayload(s)) when s == "-32" => true
+  | Some(StringPayload(s)) =>
+    switch (Str.search_forward(Str.regexp(Str.quote("-32")), s, 0)) {
+    | _ => true
+    | exception Not_found => false
+    }
   | _ => false
   };
 };

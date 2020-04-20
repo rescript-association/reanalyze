@@ -77,6 +77,10 @@ var live5 = 5;
 
 var dead5 = 5;
 
+var live6 = 6;
+
+var dead7 = 7;
+
 export {
   QQ ,
   AA ,
@@ -88,6 +92,8 @@ export {
   dead4 ,
   live5 ,
   dead5 ,
+  live6 ,
+  dead7 ,
   
 }
 /* No side effect */
