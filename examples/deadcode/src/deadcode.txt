@@ -566,6 +566,9 @@
   addValueReference Variants.re:115:4 --> Variants.re:115:19
   addValueReference Variants.re:118:4 --> Variants.re:118:19
   addValueReference Variants.re:121:4 --> Variants.re:121:19
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/trace.cmti
+  addTypeDeclaration pf trace.mli:3:11 path:trace.pf
+  addValueDeclaration +infok trace.mli:5:0 path:trace
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Uncurried.cmt
   addValueDeclaration +uncurried0 Uncurried.re:14:4 path:+Uncurried
   addValueDeclaration +uncurried1 Uncurried.re:17:4 path:+Uncurried
@@ -836,6 +839,15 @@
   addValueReference ManyComponents.re:39:4 --> ReasonReact.rei:181:0
   addValueReference ManyComponents.re:39:4 --> ReactDOMRe.re:2105:0
   addValueReference ManyComponents.re:39:4 --> ManyComponents.re:36:4
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/trace.cmt
+  addValueDeclaration +infok trace.ml:5:4 path:+trace
+  addTypeDeclaration pf trace.ml:3:11 path:+trace.+pf
+  extendTypeDependencies trace.ml:3:11 --> trace.mli:3:11
+  extendTypeDependencies trace.mli:3:11 --> trace.ml:3:11
+  addValueReference trace.ml:5:4 --> trace.ml:5:30
+  addValueReference trace.mli:5:0 --> trace.ml:5:4
+  addTypeReference trace.ml:3:11 --> trace.mli:3:11
+  addTypeReference trace.mli:3:11 --> trace.ml:3:11
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ErrorHandler.cmti
   addValueDeclaration +notify ErrorHandler.rei:5:32 path:ErrorHandler.Make
   addValueDeclaration +x ErrorHandler.rei:7:0 path:ErrorHandler
@@ -1613,6 +1625,9 @@
   addValueReference DeadTest.re:167:4 --> DeadTest.re:167:11
   addValueReference DeadTest.re:167:4 --> React.re:5:0
   addValueReference DeadTest.re:169:16 --> DeadTest.re:167:4
+  addValueReference DeadTest.re:175:30 --> DeadTest.re:175:22
+  addTypeReference DeadTest.re:175:21 --> trace.mli:3:11
+  addValueReference DeadTest.re:175:0 --> trace.mli:5:0
   addValueReference DeadTest.re:37:2 --> DeadTest.re:41:6
   addValueReference DeadTest.re:62:2 --> DeadTest.re:66:6
   addValueReference DeadTest.re:63:2 --> DeadTest.re:65:6
@@ -1643,11 +1658,13 @@ File References
   Docstrings.re -->> 
   TestPromise.re -->> 
   ModuleAliases.re -->> 
-  DeadTest.re -->> React.re, BootloaderResource.re, DeadValueTest.rei, DynamicallyLoadedComponent.re, ImmutableArray.rei, JSResource.re
+  DeadTest.re -->> React.re, BootloaderResource.re, DeadValueTest.rei, DynamicallyLoadedComponent.re, ImmutableArray.rei, JSResource.re, trace.mli
   AutoAnnotate.re -->> 
   ImportHooks.re -->> 
   NestedModulesInSignature.rei -->> NestedModulesInSignature.re
+  trace.ml -->> 
   UseImportJsValue.re -->> ImportJsValue.re
+  trace.mli -->> trace.ml
   IgnoreInterface.re -->> 
   ImmutableArray.re -->> 
   TestImmutableArray.re -->> ImmutableArray.rei
@@ -2240,6 +2257,8 @@ File References
   Dead Type +ImportMyBanner.+message.text: 0 references () [0]
   Live Value +JSResource.+jSResource: 2 references (DeadTest.re:112:40, DeadTest.re:119:6) [0]
   Live Value +NestedModulesInSignature.Universe.+theAnswer: 1 references (NestedModulesInSignature.rei:2:2) [0]
+  Live Value trace.+infok: 1 references (DeadTest.re:175:0) [0]
+  Live Type trace.pf.pf: 1 references (DeadTest.re:175:21) [0]
   Dead Value +DeadValueTest.+valueOnlyInImplementation: 0 references () [0]
   Dead Value +DeadValueTest.+valueDead: 0 references () [0]
   Live Value +DeadValueTest.+valueAlive: 1 references (DeadValueTest.rei:1:0) [0]
@@ -2311,6 +2330,8 @@ File References
   Dead Value +ImmutableArray.+fromTT: 0 references () [0]
   Dead Value +ImmutableArray.+fromTp: 0 references () [0]
   Live Value +ImmutableArray.+fromT: 1 references (ImmutableArray.re:24:6) [0]
+  Live Value +trace.+infok: 1 references (trace.mli:5:0) [0]
+  Live Type +trace.+pf.pf: 1 references (trace.mli:3:11) [0]
 
   Warning Dead Type
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re 2:5-10

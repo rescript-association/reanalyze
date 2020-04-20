@@ -171,3 +171,5 @@ let () = Js.log(make);
 let theSideEffectIsLogging = Js.log(123);
 
 let stringLengthNoSideEffects = String.length("sdkdl");
+
+Trace.infok("", "", ({pf}) => pf("%s", ""));
