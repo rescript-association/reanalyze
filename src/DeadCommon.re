@@ -20,6 +20,8 @@ let reportTypesDeadOnlyInInterface = false;
 
 let recursiveDebug = false;
 
+let warnOnCircularDependencies = false;
+
 module Name: {
   type t;
   let create: (~isInterface: bool=?, string) => t;
@@ -356,13 +358,16 @@ let iterFilesFromRootsToLeaves = iterFun => {
          |> FileSet.iter(fileName => {
               let pos = {...Lexing.dummy_pos, pos_fname: fileName};
               let loc = {...Location.none, loc_start: pos, loc_end: pos};
-              Log_.info(~loc, ~name="Warning Dead Analysis Cycle", (ppf, ()) =>
-                Format.fprintf(
-                  ppf,
-                  "Results for %s could be inaccurate because of circular references",
-                  fileName,
-                )
-              );
+              if (warnOnCircularDependencies) {
+                Log_.info(
+                  ~loc, ~name="Warning Dead Analysis Cycle", (ppf, ()) =>
+                  Format.fprintf(
+                    ppf,
+                    "Results for %s could be inaccurate because of circular references",
+                    fileName,
+                  )
+                );
+              };
               iterFun(fileName);
             });
        }
