@@ -89,7 +89,7 @@ Some examples:
 - mutual recursion
 - non-terminating program which makes progress w.r.t. a single function (e.g. positive: a server, or maybe negative: a programming mistake)
 
-Cheecky example:
+Cheeky example: indirect recursion via the store
 
 ```reason
 let cheekyRef = ref(() => ());
