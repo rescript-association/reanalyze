@@ -1,4 +1,5 @@
 # master
+- Add command-line option `-live-names this,that` to treat values `this` and `that` as globally live.
 
 # 1.2.0
 - Turn off reporting on `_` as it interferes with the `@deriving` ppx.

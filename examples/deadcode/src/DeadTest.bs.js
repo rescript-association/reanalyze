@@ -180,6 +180,12 @@ Trace.infok("", "", (function (param) {
                   ], "");
       }));
 
+var GloobLive = {
+  globallyLive1: 1,
+  globallyLive2: 2,
+  globallyLive3: 3
+};
+
 var fortytwo = 42;
 
 var fortyTwoButExported = 42;
@@ -240,6 +246,7 @@ export {
   make$2 as make,
   theSideEffectIsLogging ,
   stringLengthNoSideEffects ,
+  GloobLive ,
   
 }
 /* $ExportWithRename$OR$DynamicallyLoadedComponent$RequireCond Not a pure module */

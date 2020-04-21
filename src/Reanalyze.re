@@ -28,6 +28,10 @@ let cli = () => {
   and setTermination = cmtRoot => {
     Termination(cmtRoot) |> setCliCommand;
   }
+  and setLiveNames = s => {
+    let names = s |> String.split_on_char(',');
+    DeadCommon.liveNames := names @ DeadCommon.liveNames.contents;
+  }
   and speclist = [
     ("-dce", Arg.Unit(() => setDCE(None)), "experimental DCE"),
     (
@@ -44,6 +48,11 @@ let cli = () => {
       "-termination-cmt",
       Arg.String(s => setTermination(Some(s))),
       "root_path experimental termination for all the .cmt files under the root path",
+    ),
+    (
+      "-live-names",
+      Arg.String(s => setLiveNames(s)),
+      "comma-separated-names consider all values with the give names as lives",
     ),
     (
       "-version",
