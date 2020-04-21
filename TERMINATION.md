@@ -82,6 +82,13 @@ And, it's not difficult to see that the `loop` function cannot be called infinit
 - Hygiene restrictions (so relevant functions cannot escape).
 - Higher-order cases.
 
+Some examples:
+
+- obviously non-terminating recursion OK if you don't opt into checking
+- check for a single function
+- mutual recursion
+- non-terminating program which makes progress w.r.t. a single function (e.g. positive: a server, or maybe negative: a programming mistake)
+
 Cheecky example:
 
 ```reason
