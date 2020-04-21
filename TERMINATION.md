@@ -75,7 +75,23 @@ let rec loop = n =>
 It's not difficult to see, in isolation, that the `progress` function makes progress.
 And, it's not difficult to see that the `loop` function cannot be called infinitely often without making progress infinitely often: because `progress` is called each time `loop` is.
 
-TODO: the `@progress` annotation. The real examples. Hygiene restrictions (so relevant functions cannot escape). Higher-order cases.
+**TODO**
+
+- The `@progress` annotation.
+- The real examples.
+- Hygiene restrictions (so relevant functions cannot escape).
+- Higher-order cases.
+
+Cheecky example:
+
+```reason
+let cheecyRef = ref(() => ());
+
+let rec cheecyLoop = () => {
+  cheekyRef := cheeskyLoop;
+  cheekyRef^();
+};
+```
 
 
 
