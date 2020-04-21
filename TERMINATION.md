@@ -1,4 +1,4 @@
-**Pragmatic Termination**
+## Pragmatic Termination
 
 If you never know when it's time to stop, don't worry. Computers don't either. The so called Halting Problem refers to the fact that a program cannot determine whether another arbitrary program terminates or not.
 
@@ -75,7 +75,7 @@ let rec loop = n =>
 It's not difficult to see, in isolation, that the `progress` function makes progress.
 And, it's not difficult to see that the `loop` function cannot be called infinitely often without making progress infinitely often: because `progress` is called each time `loop` is.
 
-**TODO**
+## TODO
 
 - The `@progress` annotation.
 - The real examples.
