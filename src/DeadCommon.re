@@ -201,6 +201,7 @@ let currentBindings = ref(PosSet.empty);
 let lastBinding = ref(Location.none);
 let getLastBinding = () => lastBinding^;
 let maxValuePosEnd = ref(Lexing.dummy_pos); // max end position of a value reported dead
+let liveNames = ref([]: list(string));
 
 let declGetLoc = decl => {
   Location.loc_start: decl.posStart,
@@ -708,12 +709,20 @@ module WriteDeadAnnotations = {
   let write = () => writeFile(currentFile^, currentFileLines^);
 };
 
+let declIsInLiveNames = decl =>
+  switch (decl.declKind, decl.path) {
+  | (Value, [name, ..._]) =>
+    liveNames^ |> List.mem(name |> Name.toInterface |> Name.toString)
+  | _ => false
+  };
+
 let declIsDead = (~refs, decl) => {
   let liveRefs =
     refs |> PosSet.filter(p => !ProcessDeadAnnotations.isAnnotatedDead(p));
   liveRefs
   |> PosSet.cardinal == 0
-  && !ProcessDeadAnnotations.isAnnotatedGenTypeOrLive(decl.pos);
+  && !ProcessDeadAnnotations.isAnnotatedGenTypeOrLive(decl.pos)
+  && !declIsInLiveNames(decl);
 };
 
 let doReportDead = pos =>

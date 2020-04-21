@@ -1542,6 +1542,9 @@
   addValueDeclaration +make DeadTest.re:167:4 path:+DeadTest
   addValueDeclaration +theSideEffectIsLogging DeadTest.re:171:4 path:+DeadTest
   addValueDeclaration +stringLengthNoSideEffects DeadTest.re:173:4 path:+DeadTest
+  addValueDeclaration +globallyLive1 DeadTest.re:178:6 path:+DeadTest.GloobLive
+  addValueDeclaration +globallyLive2 DeadTest.re:179:6 path:+DeadTest.GloobLive
+  addValueDeclaration +globallyLive3 DeadTest.re:180:6 path:+DeadTest.GloobLive
   requireCond  true:+ExportWithRename false:+DynamicallyLoadedComponent allPositions:[DynamicallyLoadedComponent.re:2:4, ExportWithRename.re:3:4]
   addValueReference DeadTest:0:-1 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest:0:-1 --> ExportWithRename.re:3:4
@@ -1766,6 +1769,9 @@ File References
   Live Type DeadRT.moduleAccessPath.Root: 1 references (DeadTest.re:110:16) [1]
   Live Type +DeadRT.+moduleAccessPath.Root: 1 references (DeadRT.rei:2:4) [0]
   Live Type DeadRT.moduleAccessPath.Kaboom: 1 references (DeadRT.re:3:4) [0]
+  Live Value +DeadTest.GloobLive.+globallyLive3: 0 references () [0]
+  Live Value +DeadTest.GloobLive.+globallyLive2: 0 references () [0]
+  Live Value +DeadTest.GloobLive.+globallyLive1: 0 references () [0]
   Dead Value +DeadTest.+stringLengthNoSideEffects: 0 references () [0]
   Dead Value +DeadTest.+theSideEffectIsLogging: 0 references () [0]
   Live Value +DeadTest.+make: 1 references (DeadTest.re:169:16) [0]

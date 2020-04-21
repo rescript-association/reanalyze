@@ -6,7 +6,7 @@
     "start": "node ../run_bsb.js -make-world -w",
     "build": "node ../run_bsb.js -make-world",
     "clean": "node ../clean_bsb.js",
-    "analyze": "Debug=1 Whitelist=src Blacklist=src/DeadTestBlacklist.re ../reanalyze.exe -dce >src/deadcode.txt"
+    "analyze": "Debug=1 Whitelist=src Blacklist=src/DeadTestBlacklist.re ../reanalyze.exe -dce -live-names globallyLive1 -live-names globallyLive2,globallyLive3 >src/deadcode.txt"
   },
   "devDependencies": {
     "bs-platform": "7.3.0",
