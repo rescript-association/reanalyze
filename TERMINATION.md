@@ -85,10 +85,10 @@ And, it's not difficult to see that the `loop` function cannot be called infinit
 Cheecky example:
 
 ```reason
-let cheecyRef = ref(() => ());
+let cheekyRef = ref(() => ());
 
-let rec cheecyLoop = () => {
-  cheekyRef := cheeskyLoop;
+let rec cheekyLoop = () => {
+  cheekyRef := cheekyLoop;
   cheekyRef^();
 };
 ```
