@@ -111,20 +111,20 @@ let addTypeDependenciesAcrossFiles =
 // Add type dependencies between implementation and interface in inner module
 let addTypeDependenciesInnerModule = (~loc, ~typeId, ~typeLabelName) => {
   let typeNameInterface = typeId |> Ident.name |> Name.create;
-  let labelPath = [
+  let typeLabelPath = [
     currentModuleName^,
     ...List.rev([typeLabelName, typeNameInterface, ...currentModulePath^]),
   ];
 
-  let labelPathStr = labelPath |> pathToString;
+  let typeLabelPathStr = typeLabelPath |> pathToString;
 
-  switch (Hashtbl.find_opt(typeLabels, labelPathStr)) {
+  switch (Hashtbl.find_opt(typeLabels, typeLabelPathStr)) {
   | Some(loc2) =>
     extendTypeDependencies(loc, loc2);
     if (!reportTypesDeadOnlyInInterface) {
       extendTypeDependencies(loc2, loc);
     };
-  | None => Hashtbl.add(typeLabels, labelPathStr, loc)
+  | None => Hashtbl.add(typeLabels, typeLabelPathStr, loc)
   };
 };
 
