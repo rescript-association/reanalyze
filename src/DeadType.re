@@ -101,40 +101,6 @@ let addTypeDependenciesImplementationInterface = (~loc, ~name, path_) => {
   };
 };
 
-let addDeclaration =
-    (~isInterface, ~typId: Ident.t, {type_kind}: Types.type_declaration) => {
-  let path_ = [
-    typId |> Ident.name |> Name.create(~isInterface),
-    ...currentModulePath^ @ [currentModuleName^],
-  ];
-
-  let save = (~declKind, ~loc: Location.t, ~name) => {
-    let name = name |> Name.create;
-    let path = [name, ...path_];
-    addTypeDeclaration(~declKind, ~path=path_, ~loc, name);
-
-    path_ |> addTypeDependenciesImplementationInterface(~loc, ~name);
-
-    Hashtbl.replace(fields, path |> pathToString, loc);
-  };
-
-  switch (type_kind) {
-  | Type_record(l, _) =>
-    List.iter(
-      ({Types.ld_id, ld_loc}) =>
-        save(~declKind=RecordLabel, ~loc=ld_loc, ~name=Ident.name(ld_id)),
-      l,
-    )
-  | Type_variant(l) =>
-    List.iter(
-      ({Types.cd_id, cd_loc}) =>
-        save(~declKind=VariantCase, ~loc=cd_loc, ~name=Ident.name(cd_id)),
-      l,
-    )
-  | _ => ()
-  };
-};
-
 let processTypeDeclaration = (typeId: Ident.t, typeKind: Types.type_kind) => {
   let typeName = typeId |> Ident.name |> Name.create;
   let updateDependencies = (~loc, name) => {
@@ -168,6 +134,49 @@ let processTypeDeclaration = (typeId: Ident.t, typeKind: Types.type_kind) => {
          cd_id |> Ident.name |> updateDependencies(~loc=cd_loc)
        )
 
+  | _ => ()
+  };
+};
+let addDeclaration =
+    (
+      ~isInterface,
+      ~typId: Ident.t,
+      {type_kind}: Types.type_declaration,
+      ~typKind,
+    ) => {
+  let path_ = [
+    typId |> Ident.name |> Name.create(~isInterface),
+    ...currentModulePath^ @ [currentModuleName^],
+  ];
+
+  switch (typKind) {
+  | None => ()
+  | Some(typKind) => processTypeDeclaration(typId, typKind)
+  };
+
+  let save = (~declKind, ~loc: Location.t, ~name) => {
+    let name = name |> Name.create;
+    let path = [name, ...path_];
+    addTypeDeclaration(~declKind, ~path=path_, ~loc, name);
+
+    path_ |> addTypeDependenciesImplementationInterface(~loc, ~name);
+
+    Hashtbl.replace(fields, path |> pathToString, loc);
+  };
+
+  switch (type_kind) {
+  | Type_record(l, _) =>
+    List.iter(
+      ({Types.ld_id, ld_loc}) =>
+        save(~declKind=RecordLabel, ~loc=ld_loc, ~name=Ident.name(ld_id)),
+      l,
+    )
+  | Type_variant(l) =>
+    List.iter(
+      ({Types.cd_id, cd_loc}) =>
+        save(~declKind=VariantCase, ~loc=cd_loc, ~name=Ident.name(cd_id)),
+      l,
+    )
   | _ => ()
   };
 };
