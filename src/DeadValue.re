@@ -334,10 +334,7 @@ let rec processSignatureItem =
   | Sig_type(_) when doTypes =>
     let (id, t) = si |> Compat.getSigType;
     if (analyzeTypes^) {
-      DeadType.addDeclaration(
-        ~path=[id |> Ident.name |> Name.create, ...path],
-        t,
-      );
+      DeadType.addDeclaration(~isInterface=true, ~typId=id, t);
     };
   | Sig_value(_) when doValues =>
     let (id, loc, kind) = si |> Compat.getSigValue;
@@ -431,13 +428,11 @@ let traverseStructure = (~doTypes, ~doValues) => {
       if (analyzeTypes^) {
         typeDeclarations
         |> List.iter((typeDeclaration: Typedtree.type_declaration) => {
-             let path = [
-               typeDeclaration.typ_id
-               |> Ident.name
-               |> Name.create(~isInterface=false),
-               ...currentModulePath^ @ [currentModuleName^],
-             ];
-             typeDeclaration.typ_type |> DeadType.addDeclaration(~path);
+             typeDeclaration.typ_type
+             |> DeadType.addDeclaration(
+                  ~isInterface=false,
+                  ~typId=typeDeclaration.typ_id,
+                );
              DeadType.processTypeDeclaration(
                typeDeclaration.typ_id,
                typeDeclaration.typ_type.type_kind,

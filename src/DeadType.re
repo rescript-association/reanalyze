@@ -101,7 +101,13 @@ let addTypeDependenciesImplementationInterface = (~loc, ~name, path_) => {
   };
 };
 
-let addDeclaration = (~path as path_, {type_kind}: Types.type_declaration) => {
+let addDeclaration =
+    (~isInterface, ~typId: Ident.t, {type_kind}: Types.type_declaration) => {
+  let path_ = [
+    typId |> Ident.name |> Name.create(~isInterface),
+    ...currentModulePath^ @ [currentModuleName^],
+  ];
+
   let save = (~declKind, ~loc: Location.t, ~name) => {
     let name = name |> Name.create;
     let path = [name, ...path_];
