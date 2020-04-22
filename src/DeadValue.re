@@ -431,17 +431,16 @@ let traverseStructure = (~doTypes, ~doValues) => {
       if (analyzeTypes^) {
         typeDeclarations
         |> List.iter((typeDeclaration: Typedtree.type_declaration) => {
-             let isInterface = false;
              let path = [
                typeDeclaration.typ_id
                |> Ident.name
-               |> Name.create(~isInterface),
+               |> Name.create(~isInterface=false),
                ...currentModulePath^ @ [currentModuleName^],
              ];
              typeDeclaration.typ_type |> DeadType.addDeclaration(~path);
              DeadType.processTypeDeclaration(
                typeDeclaration.typ_name,
-               typeDeclaration.typ_kind,
+               typeDeclaration.typ_type.type_kind,
              );
            });
       }

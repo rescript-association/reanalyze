@@ -130,17 +130,13 @@ let addDeclaration = (~path as path_, {type_kind}: Types.type_declaration) => {
 };
 
 let processTypeDeclaration =
-    (typName: Asttypes.loc(string), typKind: Typedtree.type_kind) => {
+    (typName: Asttypes.loc(string), typeKind: Types.type_kind) => {
   let typeName = typName.txt |> Name.create;
   let updateDependencies = (~loc, name) => {
     let pathOfName =
       [
         currentModuleName^,
-        ...List.rev([
-             name.Asttypes.txt |> Name.create,
-             typeName,
-             ...currentModulePath^,
-           ]),
+        ...List.rev([name |> Name.create, typeName, ...currentModulePath^]),
       ]
       |> List.map(Name.toString)
       |> String.concat(".");
@@ -154,17 +150,17 @@ let processTypeDeclaration =
     };
   };
 
-  switch (typKind) {
-  | Ttype_record(l) =>
+  switch (typeKind) {
+  | Type_record(l, _) =>
     l
-    |> List.iter(({Typedtree.ld_name, ld_loc}) =>
-         ld_name |> updateDependencies(~loc=ld_loc)
+    |> List.iter(({Types.ld_id, ld_loc}) =>
+         ld_id |> Ident.name |> updateDependencies(~loc=ld_loc)
        )
 
-  | Ttype_variant(l) =>
+  | Type_variant(l) =>
     l
-    |> List.iter(({Typedtree.cd_name, cd_loc}) =>
-         cd_name |> updateDependencies(~loc=cd_loc)
+    |> List.iter(({Types.cd_id, cd_loc}) =>
+         cd_id |> Ident.name |> updateDependencies(~loc=cd_loc)
        )
 
   | _ => ()
