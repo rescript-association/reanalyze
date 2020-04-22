@@ -135,7 +135,7 @@ let addDeclaration =
     ...currentModulePath^ @ [currentModuleName^],
   ];
 
-  let save = (~declKind, ~loc: Location.t, ~typeLabelName) => {
+  let processTypeLabel = (typeLabelName, ~declKind, ~loc: Location.t) => {
     addTypeDeclaration(~declKind, ~path=currentPath, ~loc, typeLabelName);
 
     addTypeDependenciesAcrossFiles(
@@ -157,16 +157,18 @@ let addDeclaration =
   | Type_record(l, _) =>
     List.iter(
       ({Types.ld_id, ld_loc}) => {
-        let typeLabelName = Ident.name(ld_id) |> Name.create;
-        save(~declKind=RecordLabel, ~loc=ld_loc, ~typeLabelName);
+        Ident.name(ld_id)
+        |> Name.create
+        |> processTypeLabel(~declKind=RecordLabel, ~loc=ld_loc)
       },
       l,
     )
   | Type_variant(l) =>
     List.iter(
       ({Types.cd_id, cd_loc}) => {
-        let typeLabelName = Ident.name(cd_id) |> Name.create;
-        save(~declKind=VariantCase, ~loc=cd_loc, ~typeLabelName);
+        Ident.name(cd_id)
+        |> Name.create
+        |> processTypeLabel(~declKind=VariantCase, ~loc=cd_loc)
       },
       l,
     )
