@@ -389,7 +389,10 @@ let traverseStructure = (~doTypes, ~doValues) => {
   let pat = (self, p) => p |> collectPattern(super, self);
   let value_binding = (self, vb) => vb |> collectValueBinding(super, self);
   let type_declaration = (self, typeDeclaration: Typedtree.type_declaration) => {
-    DeadType.processTypeDeclaration(typeDeclaration);
+    DeadType.processTypeDeclaration(
+      typeDeclaration.typ_name,
+      typeDeclaration.typ_kind,
+    );
     super.type_declaration(self, typeDeclaration);
   };
   let structure_item = (self, structureItem: Typedtree.structure_item) => {

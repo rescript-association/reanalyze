@@ -129,14 +129,16 @@ let addDeclaration = (~path as path_, {type_kind}: Types.type_declaration) => {
   };
 };
 
-let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
+let processTypeDeclaration =
+    (typName: Asttypes.loc(string), typKind: Typedtree.type_kind) => {
+  let typeName = typName.txt |> Name.create;
   let updateDependencies = (~loc, name) => {
     let pathOfName =
       [
         currentModuleName^,
         ...List.rev([
              name.Asttypes.txt |> Name.create,
-             typeDeclaration.typ_name.txt |> Name.create,
+             typeName,
              ...currentModulePath^,
            ]),
       ]
@@ -152,7 +154,7 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
     };
   };
 
-  switch (typeDeclaration.typ_kind) {
+  switch (typKind) {
   | Ttype_record(l) =>
     l
     |> List.iter(({Typedtree.ld_name, ld_loc}) =>
