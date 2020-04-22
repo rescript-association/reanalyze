@@ -1143,6 +1143,10 @@
   addValueDeclaration +make2 ImportHookDefault.re:16:0 path:+ImportHookDefault
   addTypeDeclaration name ImportHookDefault.re:2:2 path:+ImportHookDefault.person
   addTypeDeclaration age ImportHookDefault.re:3:2 path:+ImportHookDefault.person
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/EverythingLiveHere.cmt
+  addValueDeclaration +x EverythingLiveHere.re:1:4 path:+EverythingLiveHere
+  addValueDeclaration +y EverythingLiveHere.re:3:4 path:+EverythingLiveHere
+  addValueDeclaration +z EverythingLiveHere.re:5:4 path:+EverythingLiveHere
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/UseImportJsValue.cmt
   addValueDeclaration +useGetProp UseImportJsValue.re:2:4 path:+UseImportJsValue
   addValueDeclaration +useTypeImportedInOtherModule UseImportJsValue.re:6:4 path:+UseImportJsValue
@@ -1673,6 +1677,7 @@ File References
   IgnoreInterface.re -->> 
   ImmutableArray.re -->> 
   TestImmutableArray.re -->> ImmutableArray.rei
+  EverythingLiveHere.re -->> 
   Uncurried.re -->> 
   FirstClassModulesInterface.re -->> 
   DeadValueTest.re -->> 
@@ -1862,6 +1867,9 @@ File References
   Live Value +Docstrings.+one: 0 references () [0]
   Live Value +Docstrings.+signMessage: 0 references () [0]
   Live Value +Docstrings.+flat: 0 references () [0]
+  Live Value +EverythingLiveHere.+z: 0 references () [0]
+  Live Value +EverythingLiveHere.+y: 0 references () [0]
+  Live Value +EverythingLiveHere.+x: 0 references () [0]
   Live Value +ExportWithRename.+make: 1 references (DeadTest:0:-1) [0]
   Live Value +FirstClassModules.+someFunctorAsFunction: 0 references () [0]
   Live Value +FirstClassModules.SomeFunctor.+ww: 1 references (FirstClassModules.re:46:20) [0]
