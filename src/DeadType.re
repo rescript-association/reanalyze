@@ -54,10 +54,16 @@ let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
   };
 
 // Type dependencies between Foo.re and Foo.rei
-let addTypeDependenciesAcrossFiles = (~loc, ~typeLabelName, path_) => {
+let addTypeDependenciesAcrossFiles =
+    (~isInterface, ~loc, ~typeLabelName, ~typeId) => {
+  let currentPath = [
+    typeId |> Ident.name |> Name.create(~isInterface),
+    ...currentModulePath^ @ [currentModuleName^],
+  ];
+
   let isInterface = Filename.check_suffix(currentSrc^, "i");
   if (!isInterface) {
-    let path_1 = path_ |> pathModuleToInterface;
+    let path_1 = currentPath |> pathModuleToInterface;
     let path_2 = path_1 |> pathTypeToInterface;
     let path1 = [typeLabelName, ...path_1] |> pathToString;
     let path2 = [typeLabelName, ...path_2] |> pathToString;
@@ -79,7 +85,7 @@ let addTypeDependenciesAcrossFiles = (~loc, ~typeLabelName, path_) => {
       };
     };
   } else {
-    let path_1 = path_ |> pathModuleToImplementation;
+    let path_1 = currentPath |> pathModuleToImplementation;
     let path_2 = path_1 |> pathTypeToImplementation;
     let path1 = [typeLabelName, ...path_1] |> pathToString;
     let path2 = [typeLabelName, ...path_2] |> pathToString;
@@ -102,42 +108,47 @@ let addTypeDependenciesAcrossFiles = (~loc, ~typeLabelName, path_) => {
   };
 };
 
+// Add type dependencies between implementation and interface in inner module
+let addTypeDependenciesInnerModule = (~loc, ~typeId, ~typeLabelName) => {
+  let typeNameInterface = typeId |> Ident.name |> Name.create;
+  let labelPath = [
+    currentModuleName^,
+    ...List.rev([typeLabelName, typeNameInterface, ...currentModulePath^]),
+  ];
+
+  let labelPathStr = labelPath |> pathToString;
+
+  switch (Hashtbl.find_opt(typeLabels, labelPathStr)) {
+  | Some(loc2) =>
+    extendTypeDependencies(loc, loc2);
+    if (!reportTypesDeadOnlyInInterface) {
+      extendTypeDependencies(loc2, loc);
+    };
+  | None => Hashtbl.add(typeLabels, labelPathStr, loc)
+  };
+};
+
 let addDeclaration =
     (~isInterface, ~typeId: Ident.t, ~typeKind: Types.type_kind) => {
-  let path = [
+  let currentPath = [
     typeId |> Ident.name |> Name.create(~isInterface),
     ...currentModulePath^ @ [currentModuleName^],
   ];
 
-  // Add type dependencies between implementation and interface in inner module
-  let addTypeDependenciesInnerModule = (~loc, ~typeLabelName) => {
-    let typeNameInterface = typeId |> Ident.name |> Name.create;
-    let labelPath = [
-      currentModuleName^,
-      ...List.rev([typeLabelName, typeNameInterface, ...currentModulePath^]),
-    ];
-
-    let labelPathStr = labelPath |> pathToString;
-
-    switch (Hashtbl.find_opt(typeLabels, labelPathStr)) {
-    | Some(loc2) =>
-      extendTypeDependencies(loc, loc2);
-      if (!reportTypesDeadOnlyInInterface) {
-        extendTypeDependencies(loc2, loc);
-      };
-    | None => Hashtbl.add(typeLabels, labelPathStr, loc)
-    };
-  };
-
   let save = (~declKind, ~loc: Location.t, ~typeLabelName) => {
-    addTypeDeclaration(~declKind, ~path, ~loc, typeLabelName);
+    addTypeDeclaration(~declKind, ~path=currentPath, ~loc, typeLabelName);
 
-    path |> addTypeDependenciesAcrossFiles(~loc, ~typeLabelName);
-    addTypeDependenciesInnerModule(~loc, ~typeLabelName);
+    addTypeDependenciesAcrossFiles(
+      ~loc,
+      ~isInterface,
+      ~typeLabelName,
+      ~typeId,
+    );
+    addTypeDependenciesInnerModule(~loc, ~typeLabelName, ~typeId);
 
     Hashtbl.replace(
       typeLabels,
-      [typeLabelName, ...path] |> pathToString,
+      [typeLabelName, ...currentPath] |> pathToString,
       loc,
     );
   };
