@@ -54,17 +54,17 @@ let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
   };
 
 // Type dependencies between Foo.re and Foo.rei
-let addTypeDependenciesAcrossFiles = (~loc, ~typeItemName, path_) => {
+let addTypeDependenciesAcrossFiles = (~loc, ~typeLabelName, path_) => {
   let isInterface = Filename.check_suffix(currentSrc^, "i");
   if (!isInterface) {
     let path_1 = path_ |> pathModuleToInterface;
     let path_2 = path_1 |> pathTypeToInterface;
-    let path1 = [typeItemName, ...path_1] |> pathToString;
-    let path2 = [typeItemName, ...path_2] |> pathToString;
+    let path1 = [typeLabelName, ...path_1] |> pathToString;
+    let path2 = [typeLabelName, ...path_2] |> pathToString;
 
-    switch (Hashtbl.find_opt(fields, path1)) {
+    switch (Hashtbl.find_opt(typeLabels, path1)) {
     | None =>
-      switch (Hashtbl.find_opt(fields, path2)) {
+      switch (Hashtbl.find_opt(typeLabels, path2)) {
       | None => ()
       | Some(loc2) =>
         extendTypeDependencies(loc, loc2);
@@ -81,11 +81,11 @@ let addTypeDependenciesAcrossFiles = (~loc, ~typeItemName, path_) => {
   } else {
     let path_1 = path_ |> pathModuleToImplementation;
     let path_2 = path_1 |> pathTypeToImplementation;
-    let path1 = [typeItemName, ...path_1] |> pathToString;
-    let path2 = [typeItemName, ...path_2] |> pathToString;
-    switch (Hashtbl.find_opt(fields, path1)) {
+    let path1 = [typeLabelName, ...path_1] |> pathToString;
+    let path2 = [typeLabelName, ...path_2] |> pathToString;
+    switch (Hashtbl.find_opt(typeLabels, path1)) {
     | None =>
-      switch (Hashtbl.find_opt(fields, path2)) {
+      switch (Hashtbl.find_opt(typeLabels, path2)) {
       | None => ()
       | Some(loc2) =>
         extendTypeDependencies(loc2, loc);
@@ -110,48 +110,52 @@ let addDeclaration =
   ];
 
   // Add type dependencies between implementation and interface in inner module
-  let addTypeDependenciesInnerModule = (~loc, ~typeItemName) => {
+  let addTypeDependenciesInnerModule = (~loc, ~typeLabelName) => {
     let typeNameInterface = typeId |> Ident.name |> Name.create;
-    let pathOfName =
-      [
-        currentModuleName^,
-        ...List.rev([typeItemName, typeNameInterface, ...currentModulePath^]),
-      ]
-      |> List.map(Name.toString)
-      |> String.concat(".");
-    switch (Hashtbl.find_opt(fields, pathOfName)) {
+    let labelPath = [
+      currentModuleName^,
+      ...List.rev([typeLabelName, typeNameInterface, ...currentModulePath^]),
+    ];
+
+    let labelPathStr = labelPath |> pathToString;
+
+    switch (Hashtbl.find_opt(typeLabels, labelPathStr)) {
     | Some(loc2) =>
       extendTypeDependencies(loc, loc2);
       if (!reportTypesDeadOnlyInInterface) {
         extendTypeDependencies(loc2, loc);
       };
-    | None => Hashtbl.add(fields, pathOfName, loc)
+    | None => Hashtbl.add(typeLabels, labelPathStr, loc)
     };
   };
 
-  let save = (~declKind, ~loc: Location.t, ~typeItemName) => {
-    addTypeDeclaration(~declKind, ~path, ~loc, typeItemName);
+  let save = (~declKind, ~loc: Location.t, ~typeLabelName) => {
+    addTypeDeclaration(~declKind, ~path, ~loc, typeLabelName);
 
-    path |> addTypeDependenciesAcrossFiles(~loc, ~typeItemName);
-    addTypeDependenciesInnerModule(~loc, ~typeItemName);
+    path |> addTypeDependenciesAcrossFiles(~loc, ~typeLabelName);
+    addTypeDependenciesInnerModule(~loc, ~typeLabelName);
 
-    Hashtbl.replace(fields, [typeItemName, ...path] |> pathToString, loc);
+    Hashtbl.replace(
+      typeLabels,
+      [typeLabelName, ...path] |> pathToString,
+      loc,
+    );
   };
 
   switch (typeKind) {
   | Type_record(l, _) =>
     List.iter(
       ({Types.ld_id, ld_loc}) => {
-        let typeItemName = Ident.name(ld_id) |> Name.create;
-        save(~declKind=RecordLabel, ~loc=ld_loc, ~typeItemName);
+        let typeLabelName = Ident.name(ld_id) |> Name.create;
+        save(~declKind=RecordLabel, ~loc=ld_loc, ~typeLabelName);
       },
       l,
     )
   | Type_variant(l) =>
     List.iter(
       ({Types.cd_id, cd_loc}) => {
-        let typeItemName = Ident.name(cd_id) |> Name.create;
-        save(~declKind=VariantCase, ~loc=cd_loc, ~typeItemName);
+        let typeLabelName = Ident.name(cd_id) |> Name.create;
+        save(~declKind=VariantCase, ~loc=cd_loc, ~typeLabelName);
       },
       l,
     )
