@@ -454,7 +454,11 @@ let traverseStructure = (~doTypes, ~doValues) => {
         let currentPath = currentModulePath^ @ [currentModuleName^];
         incl_type
         |> List.iter(
-             processSignatureItem(~doTypes, ~doValues, ~path=currentPath),
+             processSignatureItem(
+               ~doTypes,
+               ~doValues=false,
+               ~path=currentPath,
+             ),
            );
 
       | _ => ()

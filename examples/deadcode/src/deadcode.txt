@@ -458,72 +458,6 @@
   addValueReference ImmutableArray.re:118:6 --> ImmutableArray.re:5:2
   addValueReference ImmutableArray.re:118:6 --> ImmutableArray.re:118:20
   XXX Array #incl_type:67
-  addValueDeclaration +fromT ImmutableArray.re:5:2 path:+ImmutableArray
-  addValueDeclaration +fromTp ImmutableArray.re:6:2 path:+ImmutableArray
-  addValueDeclaration +fromTT ImmutableArray.re:7:2 path:+ImmutableArray
-  addValueDeclaration +toT ImmutableArray.re:8:2 path:+ImmutableArray
-  addValueDeclaration +toTp ImmutableArray.re:9:2 path:+ImmutableArray
-  addValueDeclaration +toT2 ImmutableArray.re:10:2 path:+ImmutableArray
-  addValueDeclaration +fromArray ImmutableArray.re:14:6 path:+ImmutableArray
-  addValueDeclaration +toArray ImmutableArray.re:16:6 path:+ImmutableArray
-  addValueDeclaration +length ImmutableArray.re:20:6 path:+ImmutableArray
-  addValueDeclaration +size ImmutableArray.re:22:6 path:+ImmutableArray
-  addValueDeclaration +get ImmutableArray.re:24:6 path:+ImmutableArray
-  addValueDeclaration +getExn ImmutableArray.re:26:6 path:+ImmutableArray
-  addValueDeclaration +getUnsafe ImmutableArray.re:28:6 path:+ImmutableArray
-  addValueDeclaration +getUndefined ImmutableArray.re:30:6 path:+ImmutableArray
-  addValueDeclaration +shuffle ImmutableArray.re:32:6 path:+ImmutableArray
-  addValueDeclaration +reverse ImmutableArray.re:34:6 path:+ImmutableArray
-  addValueDeclaration +makeUninitialized ImmutableArray.re:36:6 path:+ImmutableArray
-  addValueDeclaration +makeUninitializedUnsafe ImmutableArray.re:38:6 path:+ImmutableArray
-  addValueDeclaration +make ImmutableArray.re:40:6 path:+ImmutableArray
-  addValueDeclaration +range ImmutableArray.re:42:6 path:+ImmutableArray
-  addValueDeclaration +rangeBy ImmutableArray.re:44:6 path:+ImmutableArray
-  addValueDeclaration +makeByU ImmutableArray.re:46:6 path:+ImmutableArray
-  addValueDeclaration +makeBy ImmutableArray.re:47:6 path:+ImmutableArray
-  addValueDeclaration +makeByAndShuffleU ImmutableArray.re:49:6 path:+ImmutableArray
-  addValueDeclaration +makeByAndShuffle ImmutableArray.re:50:6 path:+ImmutableArray
-  addValueDeclaration +zip ImmutableArray.re:52:6 path:+ImmutableArray
-  addValueDeclaration +zipByU ImmutableArray.re:54:6 path:+ImmutableArray
-  addValueDeclaration +zipBy ImmutableArray.re:55:6 path:+ImmutableArray
-  addValueDeclaration +unzip ImmutableArray.re:57:6 path:+ImmutableArray
-  addValueDeclaration +concat ImmutableArray.re:59:6 path:+ImmutableArray
-  addValueDeclaration +concatMany ImmutableArray.re:61:6 path:+ImmutableArray
-  addValueDeclaration +slice ImmutableArray.re:63:6 path:+ImmutableArray
-  addValueDeclaration +sliceToEnd ImmutableArray.re:66:6 path:+ImmutableArray
-  addValueDeclaration +copy ImmutableArray.re:68:6 path:+ImmutableArray
-  addValueDeclaration +forEachU ImmutableArray.re:70:6 path:+ImmutableArray
-  addValueDeclaration +forEach ImmutableArray.re:71:6 path:+ImmutableArray
-  addValueDeclaration +mapU ImmutableArray.re:73:6 path:+ImmutableArray
-  addValueDeclaration +map ImmutableArray.re:74:6 path:+ImmutableArray
-  addValueDeclaration +keepWithIndexU ImmutableArray.re:76:6 path:+ImmutableArray
-  addValueDeclaration +keepWithIndex ImmutableArray.re:77:6 path:+ImmutableArray
-  addValueDeclaration +keepMapU ImmutableArray.re:79:6 path:+ImmutableArray
-  addValueDeclaration +keepMap ImmutableArray.re:80:6 path:+ImmutableArray
-  addValueDeclaration +forEachWithIndexU ImmutableArray.re:82:6 path:+ImmutableArray
-  addValueDeclaration +forEachWithIndex ImmutableArray.re:83:6 path:+ImmutableArray
-  addValueDeclaration +mapWithIndexU ImmutableArray.re:85:6 path:+ImmutableArray
-  addValueDeclaration +mapWithIndex ImmutableArray.re:86:6 path:+ImmutableArray
-  addValueDeclaration +partitionU ImmutableArray.re:88:6 path:+ImmutableArray
-  addValueDeclaration +partition ImmutableArray.re:89:6 path:+ImmutableArray
-  addValueDeclaration +reduceU ImmutableArray.re:91:6 path:+ImmutableArray
-  addValueDeclaration +reduce ImmutableArray.re:92:6 path:+ImmutableArray
-  addValueDeclaration +reduceReverseU ImmutableArray.re:94:6 path:+ImmutableArray
-  addValueDeclaration +reduceReverse ImmutableArray.re:95:6 path:+ImmutableArray
-  addValueDeclaration +reduceReverse2U ImmutableArray.re:97:6 path:+ImmutableArray
-  addValueDeclaration +reduceReverse2 ImmutableArray.re:99:6 path:+ImmutableArray
-  addValueDeclaration +someU ImmutableArray.re:102:6 path:+ImmutableArray
-  addValueDeclaration +some ImmutableArray.re:103:6 path:+ImmutableArray
-  addValueDeclaration +everyU ImmutableArray.re:105:6 path:+ImmutableArray
-  addValueDeclaration +every ImmutableArray.re:106:6 path:+ImmutableArray
-  addValueDeclaration +every2U ImmutableArray.re:108:6 path:+ImmutableArray
-  addValueDeclaration +every2 ImmutableArray.re:109:6 path:+ImmutableArray
-  addValueDeclaration +some2U ImmutableArray.re:111:6 path:+ImmutableArray
-  addValueDeclaration +some2 ImmutableArray.re:112:6 path:+ImmutableArray
-  addValueDeclaration +cmpU ImmutableArray.re:114:6 path:+ImmutableArray
-  addValueDeclaration +cmp ImmutableArray.re:115:6 path:+ImmutableArray
-  addValueDeclaration +eqU ImmutableArray.re:117:6 path:+ImmutableArray
-  addValueDeclaration +eq ImmutableArray.re:118:6 path:+ImmutableArray
   addValueReference ImmutableArray.rei:5:15 --> ImmutableArray.re:24:6
   addValueReference ImmutableArray.rei:7:0 --> ImmutableArray.re:14:6
   addValueReference ImmutableArray.rei:10:0 --> ImmutableArray.re:16:6
@@ -3033,352 +2967,352 @@ File References
     [@dead "+toT2"] external toT2: array2('a) => (t('a), t('a)) = "%identity";
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 16:7-13
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 16:3-41
   +toArray is never used
   <-- line 16
-    let [@dead "+toArray"] toArray = a => Array.copy(a->fromT);
+    [@dead "+toArray"] let toArray = a => Array.copy(a->fromT);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 20:7-12
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 20:3-42
   +length is never used
   <-- line 20
-    let [@dead "+length"] length = a => Array.length(a->fromT);
+    [@dead "+length"] let length = a => Array.length(a->fromT);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 22:7-10
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 22:3-38
   +size is never used
   <-- line 22
-    let [@dead "+size"] size = a => Array.size(a->fromT);
+    [@dead "+size"] let size = a => Array.size(a->fromT);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 26:7-12
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 26:3-50
   +getExn is never used
   <-- line 26
-    let [@dead "+getExn"] getExn = (a, x) => Array.getExn(a->fromT, x);
+    [@dead "+getExn"] let getExn = (a, x) => Array.getExn(a->fromT, x);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 28:7-15
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 28:3-56
   +getUnsafe is never used
   <-- line 28
-    let [@dead "+getUnsafe"] getUnsafe = (a, x) => Array.getUnsafe(a->fromT, x);
+    [@dead "+getUnsafe"] let getUnsafe = (a, x) => Array.getUnsafe(a->fromT, x);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 30:7-18
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 30:3-62
   +getUndefined is never used
   <-- line 30
-    let [@dead "+getUndefined"] getUndefined = (a, x) => Array.getUndefined(a->fromT, x);
+    [@dead "+getUndefined"] let getUndefined = (a, x) => Array.getUndefined(a->fromT, x);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 32:7-13
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 32:3-49
   +shuffle is never used
   <-- line 32
-    let [@dead "+shuffle"] shuffle = x => Array.shuffle(x->fromT)->toT;
+    [@dead "+shuffle"] let shuffle = x => Array.shuffle(x->fromT)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 34:7-13
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 34:3-49
   +reverse is never used
   <-- line 34
-    let [@dead "+reverse"] reverse = x => Array.reverse(x->fromT)->toT;
+    [@dead "+reverse"] let reverse = x => Array.reverse(x->fromT)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 36:7-23
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 36:3-62
   +makeUninitialized is never used
   <-- line 36
-    let [@dead "+makeUninitialized"] makeUninitialized = x => Array.makeUninitialized(x)->toT;
+    [@dead "+makeUninitialized"] let makeUninitialized = x => Array.makeUninitialized(x)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 38:7-29
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 38:3-74
   +makeUninitializedUnsafe is never used
   <-- line 38
-    let [@dead "+makeUninitializedUnsafe"] makeUninitializedUnsafe = x => Array.makeUninitializedUnsafe(x)->toT;
+    [@dead "+makeUninitializedUnsafe"] let makeUninitializedUnsafe = x => Array.makeUninitializedUnsafe(x)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 40:7-10
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 40:3-44
   +make is never used
   <-- line 40
-    let [@dead "+make"] make = (x, y) => Array.make(x, y)->toT;
+    [@dead "+make"] let make = (x, y) => Array.make(x, y)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 42:7-11
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 42:3-46
   +range is never used
   <-- line 42
-    let [@dead "+range"] range = (x, y) => Array.range(x, y)->toT;
+    [@dead "+range"] let range = (x, y) => Array.range(x, y)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 44:7-13
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 44:3-64
   +rangeBy is never used
   <-- line 44
-    let [@dead "+rangeBy"] rangeBy = (x, y, ~step) => Array.rangeBy(x, y, ~step)->toT;
+    [@dead "+rangeBy"] let rangeBy = (x, y, ~step) => Array.rangeBy(x, y, ~step)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 46:7-13
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 46:3-50
   +makeByU is never used
   <-- line 46
-    let [@dead "+makeByU"] makeByU = (c, f) => Array.makeByU(c, f)->toT;
+    [@dead "+makeByU"] let makeByU = (c, f) => Array.makeByU(c, f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 47:7-12
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 47:3-48
   +makeBy is never used
   <-- line 47
-    let [@dead "+makeBy"] makeBy = (c, f) => Array.makeBy(c, f)->toT;
+    [@dead "+makeBy"] let makeBy = (c, f) => Array.makeBy(c, f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 49:7-23
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 49:3-70
   +makeByAndShuffleU is never used
   <-- line 49
-    let [@dead "+makeByAndShuffleU"] makeByAndShuffleU = (c, f) => Array.makeByAndShuffleU(c, f)->toT;
+    [@dead "+makeByAndShuffleU"] let makeByAndShuffleU = (c, f) => Array.makeByAndShuffleU(c, f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 50:7-22
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 50:3-68
   +makeByAndShuffle is never used
   <-- line 50
-    let [@dead "+makeByAndShuffle"] makeByAndShuffle = (c, f) => Array.makeByAndShuffle(c, f)->toT;
+    [@dead "+makeByAndShuffle"] let makeByAndShuffle = (c, f) => Array.makeByAndShuffle(c, f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 52:7-9
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 52:3-61
   +zip is never used
   <-- line 52
-    let [@dead "+zip"] zip = (a1, a2) => Array.zip(fromT(a1), fromT(a2))->toTp;
+    [@dead "+zip"] let zip = (a1, a2) => Array.zip(fromT(a1), fromT(a2))->toTp;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 54:7-12
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 54:3-72
   +zipByU is never used
   <-- line 54
-    let [@dead "+zipByU"] zipByU = (a1, a2, f) => Array.zipByU(fromT(a1), fromT(a2), f)->toT;
+    [@dead "+zipByU"] let zipByU = (a1, a2, f) => Array.zipByU(fromT(a1), fromT(a2), f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 55:7-11
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 55:3-70
   +zipBy is never used
   <-- line 55
-    let [@dead "+zipBy"] zipBy = (a1, a2, f) => Array.zipBy(fromT(a1), fromT(a2), f)->toT;
+    [@dead "+zipBy"] let zipBy = (a1, a2, f) => Array.zipBy(fromT(a1), fromT(a2), f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 57:7-11
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 57:3-47
   +unzip is never used
   <-- line 57
-    let [@dead "+unzip"] unzip = a => Array.unzip(a->fromTp)->toT2;
+    [@dead "+unzip"] let unzip = a => Array.unzip(a->fromTp)->toT2;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 59:7-12
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 59:3-66
   +concat is never used
   <-- line 59
-    let [@dead "+concat"] concat = (a1, a2) => Array.concat(a1->fromT, a2->fromT)->toT;
+    [@dead "+concat"] let concat = (a1, a2) => Array.concat(a1->fromT, a2->fromT)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 61:7-16
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 61:3-67
   +concatMany is never used
   <-- line 61
-    let [@dead "+concatMany"] concatMany = (a: t(t(_))) => Array.concatMany(a->fromTT)->toT;
+    [@dead "+concatMany"] let concatMany = (a: t(t(_))) => Array.concatMany(a->fromTT)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 63:7-11
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 63:3-64:45
   +slice is never used
   <-- line 63
-    let [@dead "+slice"] slice = (a, ~offset, ~len) =>
+    [@dead "+slice"] let slice = (a, ~offset, ~len) =>
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 66:7-16
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 66:3-63
   +sliceToEnd is never used
   <-- line 66
-    let [@dead "+sliceToEnd"] sliceToEnd = (a, b) => Array.sliceToEnd(a->fromT, b)->toT;
+    [@dead "+sliceToEnd"] let sliceToEnd = (a, b) => Array.sliceToEnd(a->fromT, b)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 68:7-10
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 68:3-43
   +copy is never used
   <-- line 68
-    let [@dead "+copy"] copy = a => Array.copy(a->fromT)->toT;
+    [@dead "+copy"] let copy = a => Array.copy(a->fromT)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 70:7-14
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 70:3-54
   +forEachU is never used
   <-- line 70
-    let [@dead "+forEachU"] forEachU = (a, f) => Array.forEachU(a->fromT, f);
+    [@dead "+forEachU"] let forEachU = (a, f) => Array.forEachU(a->fromT, f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 71:7-13
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 71:3-52
   +forEach is never used
   <-- line 71
-    let [@dead "+forEach"] forEach = (a, f) => Array.forEach(a->fromT, f);
+    [@dead "+forEach"] let forEach = (a, f) => Array.forEach(a->fromT, f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 73:7-10
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 73:3-51
   +mapU is never used
   <-- line 73
-    let [@dead "+mapU"] mapU = (a, f) => Array.mapU(a->fromT, f)->toT;
+    [@dead "+mapU"] let mapU = (a, f) => Array.mapU(a->fromT, f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 74:7-9
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 74:3-49
   +map is never used
   <-- line 74
-    let [@dead "+map"] map = (a, f) => Array.map(a->fromT, f)->toT;
+    [@dead "+map"] let map = (a, f) => Array.map(a->fromT, f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 76:7-20
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 76:3-71
   +keepWithIndexU is never used
   <-- line 76
-    let [@dead "+keepWithIndexU"] keepWithIndexU = (a, f) => Array.keepWithIndexU(a->fromT, f)->toT;
+    [@dead "+keepWithIndexU"] let keepWithIndexU = (a, f) => Array.keepWithIndexU(a->fromT, f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 77:7-19
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 77:3-69
   +keepWithIndex is never used
   <-- line 77
-    let [@dead "+keepWithIndex"] keepWithIndex = (a, f) => Array.keepWithIndex(a->fromT, f)->toT;
+    [@dead "+keepWithIndex"] let keepWithIndex = (a, f) => Array.keepWithIndex(a->fromT, f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 79:7-14
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 79:3-59
   +keepMapU is never used
   <-- line 79
-    let [@dead "+keepMapU"] keepMapU = (a, f) => Array.keepMapU(a->fromT, f)->toT;
+    [@dead "+keepMapU"] let keepMapU = (a, f) => Array.keepMapU(a->fromT, f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 80:7-13
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 80:3-57
   +keepMap is never used
   <-- line 80
-    let [@dead "+keepMap"] keepMap = (a, f) => Array.keepMap(a->fromT, f)->toT;
+    [@dead "+keepMap"] let keepMap = (a, f) => Array.keepMap(a->fromT, f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 82:7-23
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 82:3-72
   +forEachWithIndexU is never used
   <-- line 82
-    let [@dead "+forEachWithIndexU"] forEachWithIndexU = (a, f) => Array.forEachWithIndexU(a->fromT, f);
+    [@dead "+forEachWithIndexU"] let forEachWithIndexU = (a, f) => Array.forEachWithIndexU(a->fromT, f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 83:7-22
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 83:3-70
   +forEachWithIndex is never used
   <-- line 83
-    let [@dead "+forEachWithIndex"] forEachWithIndex = (a, f) => Array.forEachWithIndex(a->fromT, f);
+    [@dead "+forEachWithIndex"] let forEachWithIndex = (a, f) => Array.forEachWithIndex(a->fromT, f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 85:7-19
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 85:3-69
   +mapWithIndexU is never used
   <-- line 85
-    let [@dead "+mapWithIndexU"] mapWithIndexU = (a, f) => Array.mapWithIndexU(a->fromT, f)->toT;
+    [@dead "+mapWithIndexU"] let mapWithIndexU = (a, f) => Array.mapWithIndexU(a->fromT, f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 86:7-18
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 86:3-67
   +mapWithIndex is never used
   <-- line 86
-    let [@dead "+mapWithIndex"] mapWithIndex = (a, f) => Array.mapWithIndex(a->fromT, f)->toT;
+    [@dead "+mapWithIndex"] let mapWithIndex = (a, f) => Array.mapWithIndex(a->fromT, f)->toT;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 88:7-16
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 88:3-64
   +partitionU is never used
   <-- line 88
-    let [@dead "+partitionU"] partitionU = (a, f) => Array.partitionU(a->fromT, f)->toT2;
+    [@dead "+partitionU"] let partitionU = (a, f) => Array.partitionU(a->fromT, f)->toT2;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 89:7-15
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 89:3-62
   +partition is never used
   <-- line 89
-    let [@dead "+partition"] partition = (a, f) => Array.partition(a->fromT, f)->toT2;
+    [@dead "+partition"] let partition = (a, f) => Array.partition(a->fromT, f)->toT2;
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 91:7-13
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 91:3-58
   +reduceU is never used
   <-- line 91
-    let [@dead "+reduceU"] reduceU = (a, b, f) => Array.reduceU(a->fromT, b, f);
+    [@dead "+reduceU"] let reduceU = (a, b, f) => Array.reduceU(a->fromT, b, f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 92:7-12
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 92:3-56
   +reduce is never used
   <-- line 92
-    let [@dead "+reduce"] reduce = (a, b, f) => Array.reduce(a->fromT, b, f);
+    [@dead "+reduce"] let reduce = (a, b, f) => Array.reduce(a->fromT, b, f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 94:7-20
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 94:3-72
   +reduceReverseU is never used
   <-- line 94
-    let [@dead "+reduceReverseU"] reduceReverseU = (a, b, f) => Array.reduceReverseU(a->fromT, b, f);
+    [@dead "+reduceReverseU"] let reduceReverseU = (a, b, f) => Array.reduceReverseU(a->fromT, b, f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 95:7-19
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 95:3-70
   +reduceReverse is never used
   <-- line 95
-    let [@dead "+reduceReverse"] reduceReverse = (a, b, f) => Array.reduceReverse(a->fromT, b, f);
+    [@dead "+reduceReverse"] let reduceReverse = (a, b, f) => Array.reduceReverse(a->fromT, b, f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 97:7-21
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 97:3-98:53
   +reduceReverse2U is never used
   <-- line 97
-    let [@dead "+reduceReverse2U"] reduceReverse2U = (a1, a2, c, f) =>
+    [@dead "+reduceReverse2U"] let reduceReverse2U = (a1, a2, c, f) =>
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 99:7-20
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 99:3-100:52
   +reduceReverse2 is never used
   <-- line 99
-    let [@dead "+reduceReverse2"] reduceReverse2 = (a1, a2, c, f) =>
+    [@dead "+reduceReverse2"] let reduceReverse2 = (a1, a2, c, f) =>
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 102:7-11
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 102:3-48
   +someU is never used
   <-- line 102
-    let [@dead "+someU"] someU = (a, f) => Array.someU(a->fromT, f);
+    [@dead "+someU"] let someU = (a, f) => Array.someU(a->fromT, f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 103:7-10
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 103:3-46
   +some is never used
   <-- line 103
-    let [@dead "+some"] some = (a, f) => Array.some(a->fromT, f);
+    [@dead "+some"] let some = (a, f) => Array.some(a->fromT, f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 105:7-12
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 105:3-50
   +everyU is never used
   <-- line 105
-    let [@dead "+everyU"] everyU = (a, f) => Array.everyU(a->fromT, f);
+    [@dead "+everyU"] let everyU = (a, f) => Array.everyU(a->fromT, f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 106:7-11
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 106:3-48
   +every is never used
   <-- line 106
-    let [@dead "+every"] every = (a, f) => Array.every(a->fromT, f);
+    [@dead "+every"] let every = (a, f) => Array.every(a->fromT, f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 108:7-13
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 108:3-69
   +every2U is never used
   <-- line 108
-    let [@dead "+every2U"] every2U = (a1, a2, f) => Array.every2U(fromT(a1), fromT(a2), f);
+    [@dead "+every2U"] let every2U = (a1, a2, f) => Array.every2U(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 109:7-12
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 109:3-67
   +every2 is never used
   <-- line 109
-    let [@dead "+every2"] every2 = (a1, a2, f) => Array.every2(fromT(a1), fromT(a2), f);
+    [@dead "+every2"] let every2 = (a1, a2, f) => Array.every2(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 111:7-12
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 111:3-67
   +some2U is never used
   <-- line 111
-    let [@dead "+some2U"] some2U = (a1, a2, f) => Array.some2U(fromT(a1), fromT(a2), f);
+    [@dead "+some2U"] let some2U = (a1, a2, f) => Array.some2U(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 112:7-11
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 112:3-65
   +some2 is never used
   <-- line 112
-    let [@dead "+some2"] some2 = (a1, a2, f) => Array.some2(fromT(a1), fromT(a2), f);
+    [@dead "+some2"] let some2 = (a1, a2, f) => Array.some2(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 114:7-10
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 114:3-63
   +cmpU is never used
   <-- line 114
-    let [@dead "+cmpU"] cmpU = (a1, a2, f) => Array.cmpU(fromT(a1), fromT(a2), f);
+    [@dead "+cmpU"] let cmpU = (a1, a2, f) => Array.cmpU(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 115:7-9
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 115:3-61
   +cmp is never used
   <-- line 115
-    let [@dead "+cmp"] cmp = (a1, a2, f) => Array.cmp(fromT(a1), fromT(a2), f);
+    [@dead "+cmp"] let cmp = (a1, a2, f) => Array.cmp(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 117:7-9
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 117:3-61
   +eqU is never used
   <-- line 117
-    let [@dead "+eqU"] eqU = (a1, a2, f) => Array.eqU(fromT(a1), fromT(a2), f);
+    [@dead "+eqU"] let eqU = (a1, a2, f) => Array.eqU(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 118:7-8
+  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re 118:3-59
   +eq is never used
   <-- line 118
-    let [@dead "+eq"] eq = (a1, a2, f) => Array.eq(fromT(a1), fromT(a2), f);
+    [@dead "+eq"] let eq = (a1, a2, f) => Array.eq(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei 10:1-31
