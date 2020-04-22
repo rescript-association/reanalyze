@@ -761,7 +761,7 @@
   addTypeDeclaration A A.re:7:8 path:+A.M.t
   extendTypeDependencies A.re:7:8 --> A.re:3:6
   extendTypeDependencies A.re:3:6 --> A.re:7:8
-  addTypeReference A.re:11:9 --> A.re:7:8
+  addTypeReference A.re:12:7 --> A.re:3:6
   addTypeReference A.re:7:8 --> A.re:3:6
   addTypeReference A.re:3:6 --> A.re:7:8
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType1.cmt
@@ -1789,8 +1789,8 @@ File References
   ImportIndex.re -->> 
   ImportHookDefault.re -->> 
   ModuleAliases2.re -->> 
-  Live Type +A.M.t.A: 1 references (A.re:11:9) [0]
-  Live Type +A.M.t.A: 1 references (A.re:7:8) [0]
+  Live Type +A.M.t.A: 1 references (A.re:12:7) [1]
+  Live Type +A.M.t.A: 1 references (A.re:3:6) [0]
   Dead Type +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
   Dead Type +AutoAnnotate.annotatedVariant.R2: 0 references () [0]
   Dead Type +AutoAnnotate.r4.r4: 0 references () [0]

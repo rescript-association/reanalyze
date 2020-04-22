@@ -7,6 +7,6 @@ module M: {
       | A;
   };
   include T;
-
-  Js.log(A);
 };
+
+Js.log(M.A);
