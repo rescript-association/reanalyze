@@ -436,7 +436,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
       }
     | Tstr_include({incl_mod, incl_type}) =>
       switch (incl_mod.mod_desc) {
-      | Tmod_ident(path, _lid) when false =>
+      | Tmod_ident(path, _lid) =>
         // TODO: continue with this
         let pathName = {
           switch (path |> Path.flatten) {
