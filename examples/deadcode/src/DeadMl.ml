@@ -108,3 +108,5 @@ struct
   let dead10 = 10
   let live11 = 11
 end
+
+let [@ocaml.warning "-32"] foo x = print_int x
