@@ -457,7 +457,6 @@
   addValueReference ImmutableArray.re:118:6 --> ImmutableArray.re:118:16
   addValueReference ImmutableArray.re:118:6 --> ImmutableArray.re:5:2
   addValueReference ImmutableArray.re:118:6 --> ImmutableArray.re:118:20
-  XXX Array #incl_type:67
   addValueReference ImmutableArray.rei:5:15 --> ImmutableArray.re:24:6
   addValueReference ImmutableArray.rei:7:0 --> ImmutableArray.re:14:6
   addValueReference ImmutableArray.rei:10:0 --> ImmutableArray.re:16:6
@@ -691,7 +690,6 @@
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/A.cmt
   addTypeDeclaration A A.re:3:6 path:+A.M.t
   addTypeDeclaration A A.re:7:8 path:+A.M.T.t
-  XXX T #incl_type:1
   addTypeDeclaration A A.re:7:8 path:+A.M.t
   extendTypeDependencies A.re:7:8 --> A.re:3:6
   extendTypeDependencies A.re:3:6 --> A.re:7:8

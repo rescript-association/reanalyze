@@ -409,6 +409,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
         | _ => ()
         };
       };
+
     | Tstr_primitive(vd) when doValues && analyzeExternals =>
       let path = currentModulePath^ @ [currentModuleName^];
       let exists =
@@ -424,6 +425,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
           vd.val_id |> Ident.name |> Name.create(~isInterface=false),
         );
       };
+
     | Tstr_type(_recFlag, typeDeclarations) when doTypes =>
       if (analyzeTypes^) {
         typeDeclarations
@@ -434,37 +436,22 @@ let traverseStructure = (~doTypes, ~doValues) => {
              )
            });
       }
+
     | Tstr_include({incl_mod, incl_type}) =>
       switch (incl_mod.mod_desc) {
       | Tmod_ident(path, _lid) =>
-        // TODO: continue with this
-        let pathName = {
-          switch (path |> Path.flatten) {
-          | `Ok(id, mods) =>
-            [Ident.name(id), ...mods] |> String.concat(".")
-          | `Contains_apply => "Apply!!!"
-          };
-        };
-        Log_.item(
-          "XXX %s #incl_type:%d@.",
-          pathName,
-          incl_type |> List.length,
-        );
-
         let currentPath = currentModulePath^ @ [currentModuleName^];
         incl_type
         |> List.iter(
              processSignatureItem(
                ~doTypes,
-               ~doValues=false,
+               ~doValues=false, // TODO: also values?
                ~path=currentPath,
              ),
            );
-
       | _ => ()
-      };
-      // TODO: anything special?
-      ();
+      }
+
     | _ => ()
     };
     let result = super.structure_item(self, structureItem);
