@@ -186,6 +186,10 @@ var GloobLive = {
   globallyLive3: 3
 };
 
+var WithInclude = { };
+
+console.log(/* A */0);
+
 var fortytwo = 42;
 
 var fortyTwoButExported = 42;
@@ -247,6 +251,7 @@ export {
   theSideEffectIsLogging ,
   stringLengthNoSideEffects ,
   GloobLive ,
+  WithInclude ,
   
 }
 /* $ExportWithRename$OR$DynamicallyLoadedComponent$RequireCond Not a pure module */

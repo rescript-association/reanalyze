@@ -179,3 +179,16 @@ module GloobLive = {
   let globallyLive2 = 2;
   let globallyLive3 = 3;
 };
+
+module WithInclude: {
+  type t =
+    | A;
+} = {
+  module T = {
+    type t =
+      | A;
+  };
+  include T;
+};
+
+Js.log(WithInclude.A);
