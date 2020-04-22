@@ -444,7 +444,11 @@ let traverseStructure = (~doTypes, ~doValues) => {
           | `Contains_apply => "Apply!!!"
           };
         };
-        Log_.item("XXX %s@.", pathName);
+        Log_.item(
+          "XXX %s #incl_type:%d@.",
+          pathName,
+          incl_type |> List.length,
+        );
 
       | _ => ()
       };
