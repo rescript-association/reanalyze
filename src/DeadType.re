@@ -101,13 +101,19 @@ let addTypeDependenciesImplementationInterface = (~loc, ~name, path_) => {
   };
 };
 
-let processTypeDeclaration = (typeId: Ident.t, typeKind: Types.type_kind) => {
-  let typeName = typeId |> Ident.name |> Name.create;
-  let updateDependencies = (~loc, name) => {
+let addDeclaration =
+    (~isInterface, ~typeId: Ident.t, ~typeKind: Types.type_kind) => {
+  let path_ = [
+    typeId |> Ident.name |> Name.create(~isInterface),
+    ...currentModulePath^ @ [currentModuleName^],
+  ];
+
+  let updateDependenciesInterface = (~loc, name) => {
+    let typeNameInterface = typeId |> Ident.name |> Name.create;
     let pathOfName =
       [
         currentModuleName^,
-        ...List.rev([name |> Name.create, typeName, ...currentModulePath^]),
+        ...List.rev([name, typeNameInterface, ...currentModulePath^]),
       ]
       |> List.map(Name.toString)
       |> String.concat(".");
@@ -121,33 +127,7 @@ let processTypeDeclaration = (typeId: Ident.t, typeKind: Types.type_kind) => {
     };
   };
 
-  switch (typeKind) {
-  | Type_record(l, _) =>
-    l
-    |> List.iter(({Types.ld_id, ld_loc}) =>
-         ld_id |> Ident.name |> updateDependencies(~loc=ld_loc)
-       )
-
-  | Type_variant(l) =>
-    l
-    |> List.iter(({Types.cd_id, cd_loc}) =>
-         cd_id |> Ident.name |> updateDependencies(~loc=cd_loc)
-       )
-
-  | _ => ()
-  };
-};
-let addDeclaration =
-    (~isInterface, ~typeId: Ident.t, ~typeKind: Types.type_kind) => {
-  let path_ = [
-    typeId |> Ident.name |> Name.create(~isInterface),
-    ...currentModulePath^ @ [currentModuleName^],
-  ];
-
-  processTypeDeclaration(typeId, typeKind);
-
   let save = (~declKind, ~loc: Location.t, ~name) => {
-    let name = name |> Name.create;
     let path = [name, ...path_];
     addTypeDeclaration(~declKind, ~path=path_, ~loc, name);
 
@@ -159,14 +139,20 @@ let addDeclaration =
   switch (typeKind) {
   | Type_record(l, _) =>
     List.iter(
-      ({Types.ld_id, ld_loc}) =>
-        save(~declKind=RecordLabel, ~loc=ld_loc, ~name=Ident.name(ld_id)),
+      ({Types.ld_id, ld_loc}) => {
+        let name = Ident.name(ld_id) |> Name.create;
+        save(~declKind=RecordLabel, ~loc=ld_loc, ~name);
+        name |> updateDependenciesInterface(~loc=ld_loc);
+      },
       l,
     )
   | Type_variant(l) =>
     List.iter(
-      ({Types.cd_id, cd_loc}) =>
-        save(~declKind=VariantCase, ~loc=cd_loc, ~name=Ident.name(cd_id)),
+      ({Types.cd_id, cd_loc}) => {
+        let name = Ident.name(cd_id) |> Name.create;
+        save(~declKind=VariantCase, ~loc=cd_loc, ~name);
+        name |> updateDependenciesInterface(~loc=cd_loc);
+      },
       l,
     )
   | _ => ()

@@ -1560,9 +1560,9 @@
   addValueReference DeadTest.re:20:4 --> DeadTest.re:17:4
   addValueDeclaration +thisSignatureItemIsDead DeadTest.re:31:6 path:+DeadTest.M
   addTypeDeclaration A DeadTest.re:36:6 path:+DeadTest.VariantUsedOnlyInImplementation.t
+  addTypeDeclaration A DeadTest.re:40:6 path:+DeadTest.VariantUsedOnlyInImplementation.+t
   extendTypeDependencies DeadTest.re:40:6 --> DeadTest.re:36:6
   extendTypeDependencies DeadTest.re:36:6 --> DeadTest.re:40:6
-  addTypeDeclaration A DeadTest.re:40:6 path:+DeadTest.VariantUsedOnlyInImplementation.+t
   addValueDeclaration +a DeadTest.re:41:6 path:+DeadTest.VariantUsedOnlyInImplementation
   addTypeReference DeadTest.re:41:10 --> DeadTest.re:40:6
   addValueReference DeadTest.re:44:17 --> DeadTest.re:37:2
