@@ -21,7 +21,7 @@ child_process.spawnSync(
     "globallyLive1",
     "-live-names",
     "globallyLive2,globallyLive3",
-    "-live-path",
+    "-live-paths",
     path.join(__dirname, "src/EverythingLiveHere.re"),
   ],
   {

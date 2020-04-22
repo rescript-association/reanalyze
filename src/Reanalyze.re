@@ -33,7 +33,8 @@ let cli = () => {
     DeadCommon.liveNames := names @ DeadCommon.liveNames.contents;
   }
   and setLivePaths = s => {
-    DeadCommon.livePaths := [s, ...DeadCommon.livePaths.contents];
+    let paths = s |> String.split_on_char(',');
+    DeadCommon.livePaths := paths @ DeadCommon.livePaths.contents;
   }
   and speclist = [
     ("-dce", Arg.Unit(() => setDCE(None)), "experimental DCE"),
@@ -58,9 +59,9 @@ let cli = () => {
       "comma-separated-names consider all values with the give names as lives",
     ),
     (
-      "-live-path",
+      "-live-paths",
       Arg.String(s => setLivePaths(s)),
-      "path_prefix consider all values if path_prefix is a prefix of their path",
+      "comma-separated-path-prefixes consider all values whose path has a prefix in the list",
     ),
     (
       "-version",
