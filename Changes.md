@@ -1,6 +1,7 @@
 # master
-- Add command-line option `-live-names this,that` to treat values `this` and `that` as globally live.
+- Add command-line option `-live-names this,that` to treat items `this` and `that` as globally live.
 - Support `@warning "-32"` in addition `@ocaml.warning "-32"` to mean `@live`.
+- Add command-line option `live-path prefix/of/path` to treat all items in the path prefix as live.
 
 # 1.2.0
 - Turn off reporting on `_` as it interferes with the `@deriving` ppx.
