@@ -138,21 +138,13 @@ let processTypeDeclaration = (typeId: Ident.t, typeKind: Types.type_kind) => {
   };
 };
 let addDeclaration =
-    (
-      ~isInterface,
-      ~typId: Ident.t,
-      {type_kind}: Types.type_declaration,
-      ~typKind,
-    ) => {
+    (~isInterface, ~typeId: Ident.t, ~typeKind: Types.type_kind) => {
   let path_ = [
-    typId |> Ident.name |> Name.create(~isInterface),
+    typeId |> Ident.name |> Name.create(~isInterface),
     ...currentModulePath^ @ [currentModuleName^],
   ];
 
-  switch (typKind) {
-  | None => ()
-  | Some(typKind) => processTypeDeclaration(typId, typKind)
-  };
+  processTypeDeclaration(typeId, typeKind);
 
   let save = (~declKind, ~loc: Location.t, ~name) => {
     let name = name |> Name.create;
@@ -164,7 +156,7 @@ let addDeclaration =
     Hashtbl.replace(fields, path |> pathToString, loc);
   };
 
-  switch (type_kind) {
+  switch (typeKind) {
   | Type_record(l, _) =>
     List.iter(
       ({Types.ld_id, ld_loc}) =>
