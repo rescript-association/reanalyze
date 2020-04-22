@@ -53,13 +53,14 @@ let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
     typeDependencies := [(loc1, loc2), ...typeDependencies^];
   };
 
-let addTypeDependenciesImplementationInterface = (~loc, ~name, path_) => {
+// Type dependencies between Foo.re and Foo.rei
+let addTypeDependenciesAcrossFiles = (~loc, ~typeItemName, path_) => {
   let isInterface = Filename.check_suffix(currentSrc^, "i");
   if (!isInterface) {
     let path_1 = path_ |> pathModuleToInterface;
     let path_2 = path_1 |> pathTypeToInterface;
-    let path1 = [name, ...path_1] |> pathToString;
-    let path2 = [name, ...path_2] |> pathToString;
+    let path1 = [typeItemName, ...path_1] |> pathToString;
+    let path2 = [typeItemName, ...path_2] |> pathToString;
 
     switch (Hashtbl.find_opt(fields, path1)) {
     | None =>
@@ -80,8 +81,8 @@ let addTypeDependenciesImplementationInterface = (~loc, ~name, path_) => {
   } else {
     let path_1 = path_ |> pathModuleToImplementation;
     let path_2 = path_1 |> pathTypeToImplementation;
-    let path1 = [name, ...path_1] |> pathToString;
-    let path2 = [name, ...path_2] |> pathToString;
+    let path1 = [typeItemName, ...path_1] |> pathToString;
+    let path2 = [typeItemName, ...path_2] |> pathToString;
     switch (Hashtbl.find_opt(fields, path1)) {
     | None =>
       switch (Hashtbl.find_opt(fields, path2)) {
@@ -108,7 +109,8 @@ let addDeclaration =
     ...currentModulePath^ @ [currentModuleName^],
   ];
 
-  let updateDependenciesInterface = (~loc, name) => {
+  // Add type dependencies between implementation and interface in inner module
+  let addTypeDependenciesInnerModule = (~loc, name) => {
     let typeNameInterface = typeId |> Ident.name |> Name.create;
     let pathOfName =
       [
@@ -127,12 +129,12 @@ let addDeclaration =
     };
   };
 
-  let save = (~declKind, ~loc: Location.t, ~name) => {
-    let path = [name, ...path_];
-    addTypeDeclaration(~declKind, ~path=path_, ~loc, name);
+  let save = (~declKind, ~loc: Location.t, ~typeItemName) => {
+    let path = [typeItemName, ...path_];
+    addTypeDeclaration(~declKind, ~path=path_, ~loc, typeItemName);
 
-    path_ |> addTypeDependenciesImplementationInterface(~loc, ~name);
-    updateDependenciesInterface(~loc, name);
+    path_ |> addTypeDependenciesAcrossFiles(~loc, ~typeItemName);
+    addTypeDependenciesInnerModule(~loc, typeItemName);
 
     Hashtbl.replace(fields, path |> pathToString, loc);
   };
@@ -141,16 +143,16 @@ let addDeclaration =
   | Type_record(l, _) =>
     List.iter(
       ({Types.ld_id, ld_loc}) => {
-        let name = Ident.name(ld_id) |> Name.create;
-        save(~declKind=RecordLabel, ~loc=ld_loc, ~name);
+        let typeItemName = Ident.name(ld_id) |> Name.create;
+        save(~declKind=RecordLabel, ~loc=ld_loc, ~typeItemName);
       },
       l,
     )
   | Type_variant(l) =>
     List.iter(
       ({Types.cd_id, cd_loc}) => {
-        let name = Ident.name(cd_id) |> Name.create;
-        save(~declKind=VariantCase, ~loc=cd_loc, ~name);
+        let typeItemName = Ident.name(cd_id) |> Name.create;
+        save(~declKind=VariantCase, ~loc=cd_loc, ~typeItemName);
       },
       l,
     )
