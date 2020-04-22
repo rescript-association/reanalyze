@@ -104,18 +104,18 @@ let addTypeDependenciesAcrossFiles = (~loc, ~typeItemName, path_) => {
 
 let addDeclaration =
     (~isInterface, ~typeId: Ident.t, ~typeKind: Types.type_kind) => {
-  let path_ = [
+  let path = [
     typeId |> Ident.name |> Name.create(~isInterface),
     ...currentModulePath^ @ [currentModuleName^],
   ];
 
   // Add type dependencies between implementation and interface in inner module
-  let addTypeDependenciesInnerModule = (~loc, name) => {
+  let addTypeDependenciesInnerModule = (~loc, ~typeItemName) => {
     let typeNameInterface = typeId |> Ident.name |> Name.create;
     let pathOfName =
       [
         currentModuleName^,
-        ...List.rev([name, typeNameInterface, ...currentModulePath^]),
+        ...List.rev([typeItemName, typeNameInterface, ...currentModulePath^]),
       ]
       |> List.map(Name.toString)
       |> String.concat(".");
@@ -130,13 +130,12 @@ let addDeclaration =
   };
 
   let save = (~declKind, ~loc: Location.t, ~typeItemName) => {
-    let path = [typeItemName, ...path_];
-    addTypeDeclaration(~declKind, ~path=path_, ~loc, typeItemName);
+    addTypeDeclaration(~declKind, ~path, ~loc, typeItemName);
 
-    path_ |> addTypeDependenciesAcrossFiles(~loc, ~typeItemName);
-    addTypeDependenciesInnerModule(~loc, typeItemName);
+    path |> addTypeDependenciesAcrossFiles(~loc, ~typeItemName);
+    addTypeDependenciesInnerModule(~loc, ~typeItemName);
 
-    Hashtbl.replace(fields, path |> pathToString, loc);
+    Hashtbl.replace(fields, [typeItemName, ...path] |> pathToString, loc);
   };
 
   switch (typeKind) {
