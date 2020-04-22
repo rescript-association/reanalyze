@@ -203,7 +203,8 @@ let currentBindings = ref(PosSet.empty);
 let lastBinding = ref(Location.none);
 let getLastBinding = () => lastBinding^;
 let maxValuePosEnd = ref(Lexing.dummy_pos); // max end position of a value reported dead
-let liveNames = ref([]: list(string));
+let liveNames = ref([]: list(string)); // names to be considered live values
+let livePaths = ref([]: list(string)); // paths of files where all values are considered live
 
 let declGetLoc = decl => {
   Location.loc_start: decl.posStart,
@@ -412,7 +413,7 @@ module ProcessDeadAnnotations = {
     PosHash.replace(positionsAnnotated, pos, Live);
   };
 
-  let processAttributes = (~doGenType, ~pos, attributes) => {
+  let processAttributes = (~doGenType, ~name, ~pos, attributes) => {
     let getPayloadFun = f => attributes |> Annotation.getAttributePayload(f);
     let getPayload = (x: string) =>
       attributes |> Annotation.getAttributePayload((==)(x));
@@ -426,7 +427,20 @@ module ProcessDeadAnnotations = {
       pos |> annotateDead;
     };
 
-    if (getPayload(liveAnnotation) != None) {
+    let nameIsInLiveNamesOrPaths = () =>
+      liveNames^
+      |> List.mem(name)
+      || {
+        let fname = pos.pos_fname;
+        let fnameLen = String.length(fname);
+        livePaths^
+        |> List.exists(prefix =>
+             String.length(prefix) <= fnameLen
+             && String.sub(fname, 0, String.length(prefix)) == prefix
+           );
+      };
+
+    if (getPayload(liveAnnotation) != None || nameIsInLiveNamesOrPaths()) {
       pos |> annotateLive;
     };
 
@@ -444,11 +458,12 @@ module ProcessDeadAnnotations = {
           {vb_attributes, vb_pat} as value_binding: Typedtree.value_binding,
         ) => {
       switch (vb_pat.pat_desc) {
-      | Tpat_var(_id, {loc: {loc_start: pos}}) =>
+      | Tpat_var(id, {loc: {loc_start: pos}}) =>
         if (currentlyDisableWarnings^) {
           pos |> annotateLive;
         };
-        vb_attributes |> processAttributes(~doGenType, ~pos);
+        vb_attributes
+        |> processAttributes(~doGenType, ~name=id |> Ident.name, ~pos);
 
       | _ => ()
       };
@@ -460,14 +475,14 @@ module ProcessDeadAnnotations = {
         labelDeclarations
         |> List.iter(({ld_attributes, ld_loc}: Typedtree.label_declaration) =>
              ld_attributes
-             |> processAttributes(~doGenType, ~pos=ld_loc.loc_start)
+             |> processAttributes(~doGenType, ~name="", ~pos=ld_loc.loc_start)
            )
       | Ttype_variant(constructorDeclarations) =>
         constructorDeclarations
         |> List.iter(
              ({cd_attributes, cd_loc}: Typedtree.constructor_declaration) =>
              cd_attributes
-             |> processAttributes(~doGenType, ~pos=cd_loc.loc_start)
+             |> processAttributes(~doGenType, ~name="", ~pos=cd_loc.loc_start)
            )
       | _ => ()
       };
@@ -476,12 +491,13 @@ module ProcessDeadAnnotations = {
     let value_description =
         (
           self,
-          {val_attributes, val_val: {val_loc: {loc_start: pos}}} as value_description: Typedtree.value_description,
+          {val_attributes, val_id, val_val: {val_loc: {loc_start: pos}}} as value_description: Typedtree.value_description,
         ) => {
       if (currentlyDisableWarnings^) {
         pos |> annotateLive;
       };
-      val_attributes |> processAttributes(~doGenType, ~pos);
+      val_attributes
+      |> processAttributes(~doGenType, ~name=val_id |> Ident.name, ~pos);
       super.value_description(self, value_description);
     };
     let structure_item = (self, item: Typedtree.structure_item) => {
@@ -545,6 +561,11 @@ module ProcessDeadAnnotations = {
 
 let pathToString = path =>
   path |> List.rev_map(Name.toString) |> String.concat(".");
+
+let pathToStringNoPlus = path =>
+  path
+  |> List.rev_map(n => n |> Name.toInterface |> Name.toString)
+  |> String.concat(".");
 
 let pathWithoutHead = path => {
   path |> List.rev_map(Name.toString) |> List.tl |> String.concat(".");
@@ -714,20 +735,12 @@ module WriteDeadAnnotations = {
   let write = () => writeFile(currentFile^, currentFileLines^);
 };
 
-let declIsInLiveNames = decl =>
-  switch (decl.declKind, decl.path) {
-  | (Value, [name, ..._]) =>
-    liveNames^ |> List.mem(name |> Name.toInterface |> Name.toString)
-  | _ => false
-  };
-
 let declIsDead = (~refs, decl) => {
   let liveRefs =
     refs |> PosSet.filter(p => !ProcessDeadAnnotations.isAnnotatedDead(p));
   liveRefs
   |> PosSet.cardinal == 0
-  && !ProcessDeadAnnotations.isAnnotatedGenTypeOrLive(decl.pos)
-  && !declIsInLiveNames(decl);
+  && !ProcessDeadAnnotations.isAnnotatedGenTypeOrLive(decl.pos);
 };
 
 let doReportDead = pos =>
