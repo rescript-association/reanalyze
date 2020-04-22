@@ -132,6 +132,7 @@ let addDeclaration =
     addTypeDeclaration(~declKind, ~path=path_, ~loc, name);
 
     path_ |> addTypeDependenciesImplementationInterface(~loc, ~name);
+    updateDependenciesInterface(~loc, name);
 
     Hashtbl.replace(fields, path |> pathToString, loc);
   };
@@ -142,7 +143,6 @@ let addDeclaration =
       ({Types.ld_id, ld_loc}) => {
         let name = Ident.name(ld_id) |> Name.create;
         save(~declKind=RecordLabel, ~loc=ld_loc, ~name);
-        name |> updateDependenciesInterface(~loc=ld_loc);
       },
       l,
     )
@@ -151,7 +151,6 @@ let addDeclaration =
       ({Types.cd_id, cd_loc}) => {
         let name = Ident.name(cd_id) |> Name.create;
         save(~declKind=VariantCase, ~loc=cd_loc, ~name);
-        name |> updateDependenciesInterface(~loc=cd_loc);
       },
       l,
     )
