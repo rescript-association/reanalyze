@@ -188,11 +188,14 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     let valueName = path |> Path.last |> Name.create(~isInterface=false);
     switch (getPosOfValue(~moduleName, ~valueName)) {
     | Some(posName) =>
+      if (verbose) {
+        Log_.item("collectExpr %s: fix ghost location reference@.", path |> Path.name);
+      };
       addValueReference(
         ~addFileReference=true,
         ~locFrom,
         ~locTo={loc_start: posName, loc_end: posName, loc_ghost: false},
-      )
+      );
     | None => ()
     };
 

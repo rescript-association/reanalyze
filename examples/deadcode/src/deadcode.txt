@@ -1628,11 +1628,13 @@
   addValueDeclaration +a1 DeadTest.re:151:6 path:+DeadTest
   addValueDeclaration +a2 DeadTest.re:152:6 path:+DeadTest
   addValueDeclaration +a3 DeadTest.re:153:6 path:+DeadTest
+  collectExpr DynamicallyLoadedComponent.make: fix ghost location reference
   addValueReference DeadTest.re:157:17 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:157:17 --> React.re:13:0
   addValueReference DeadTest.re:160:4 --> DeadTest.re:159:4
   addValueReference DeadTest.re:167:4 --> DeadTest.re:167:11
   addValueReference DeadTest.re:167:4 --> React.re:5:0
+  collectExpr make: fix ghost location reference
   addValueReference DeadTest.re:169:16 --> DeadTest.re:167:4
   addValueReference DeadTest.re:175:30 --> DeadTest.re:175:22
   addTypeReference DeadTest.re:175:21 --> trace.mli:3:11
