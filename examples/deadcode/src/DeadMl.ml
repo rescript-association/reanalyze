@@ -109,4 +109,4 @@ struct
   let live11 = 11
 end
 
-let [@ocaml.warning "-32"] foo x = print_int x
+let [@warning "-32"] foo x = print_int x
