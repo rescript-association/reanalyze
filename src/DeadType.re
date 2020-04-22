@@ -54,10 +54,9 @@ let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
   };
 
 // Type dependencies between Foo.re and Foo.rei
-let addTypeDependenciesAcrossFiles =
-    (~isInterface, ~loc, ~typeLabelName, ~typeId) => {
+let addTypeDependenciesAcrossFiles = (~loc, ~typeLabelName, ~typeId) => {
   let currentPath = [
-    typeId |> Ident.name |> Name.create(~isInterface),
+    typeId |> Ident.name |> Name.create,
     ...currentModulePath^ @ [currentModuleName^],
   ];
 
@@ -129,22 +128,16 @@ let addTypeDependenciesInnerModule = (~loc, ~typeId, ~typeLabelName) => {
   };
 };
 
-let addDeclaration =
-    (~isInterface, ~typeId: Ident.t, ~typeKind: Types.type_kind) => {
+let addDeclaration = (~typeId: Ident.t, ~typeKind: Types.type_kind) => {
   let currentPath = [
-    typeId |> Ident.name |> Name.create(~isInterface),
+    typeId |> Ident.name |> Name.create,
     ...currentModulePath^ @ [currentModuleName^],
   ];
 
   let processTypeLabel = (typeLabelName, ~declKind, ~loc: Location.t) => {
     addTypeDeclaration(~declKind, ~path=currentPath, ~loc, typeLabelName);
 
-    addTypeDependenciesAcrossFiles(
-      ~loc,
-      ~isInterface,
-      ~typeLabelName,
-      ~typeId,
-    );
+    addTypeDependenciesAcrossFiles(~loc, ~typeLabelName, ~typeId);
     addTypeDependenciesInnerModule(~loc, ~typeLabelName, ~typeId);
 
     Hashtbl.replace(
