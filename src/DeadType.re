@@ -143,22 +143,6 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
       |> List.map(Name.toString)
       |> String.concat(".");
 
-    try(
-      switch (typeDeclaration.typ_manifest) {
-      | Some({ctyp_desc: Ttyp_constr(_, {txt}, _)}) =>
-        let path1 =
-          [currentModule^, ...Longident.flatten(txt)]
-          @ [name.Asttypes.txt]
-          |> String.concat(".");
-        let loc1 = Hashtbl.find(fields, path1);
-        let loc2 = Hashtbl.find(fields, path2);
-        extendTypeDependencies(loc, loc1);
-        extendTypeDependencies(loc1, loc2);
-      | _ => ()
-      }
-    ) {
-    | _ => ()
-    };
     switch (Hashtbl.find_opt(fields, path2)) {
     | Some(loc2) =>
       extendTypeDependencies(loc, loc2);
