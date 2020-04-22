@@ -23,6 +23,8 @@ child_process.spawnSync(
     "globallyLive2,globallyLive3",
     "-live-paths",
     path.join(__dirname, "src/EverythingLiveHere.re"),
+    "-live-paths",
+    path.join(__dirname, "src/Hooks.re"),
   ],
   {
     stdio: ["inherit", "inherit"],
