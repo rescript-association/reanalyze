@@ -388,13 +388,6 @@ let traverseStructure = (~doTypes, ~doValues) => {
   let expr = (self, e) => e |> collectExpr(super, self);
   let pat = (self, p) => p |> collectPattern(super, self);
   let value_binding = (self, vb) => vb |> collectValueBinding(super, self);
-  let type_declaration = (self, typeDeclaration: Typedtree.type_declaration) => {
-    DeadType.processTypeDeclaration(
-      typeDeclaration.typ_name,
-      typeDeclaration.typ_kind,
-    );
-    super.type_declaration(self, typeDeclaration);
-  };
   let structure_item = (self, structureItem: Typedtree.structure_item) => {
     let oldModulePath = currentModulePath^;
     switch (structureItem.str_desc) {
@@ -446,6 +439,10 @@ let traverseStructure = (~doTypes, ~doValues) => {
                ...currentModulePath^ @ [currentModuleName^],
              ];
              typeDeclaration.typ_type |> DeadType.addDeclaration(~path);
+             DeadType.processTypeDeclaration(
+               typeDeclaration.typ_name,
+               typeDeclaration.typ_kind,
+             );
            });
       }
     | Tstr_include({incl_mod, incl_type, incl_loc, incl_attributes}) =>
@@ -470,14 +467,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
     currentModulePath := oldModulePath;
     result;
   };
-  Tast_mapper.{
-    ...super,
-    expr,
-    pat,
-    structure_item,
-    type_declaration,
-    value_binding,
-  };
+  Tast_mapper.{...super, expr, pat, structure_item, value_binding};
 };
 
 /* Merge a location's references to another one's */
