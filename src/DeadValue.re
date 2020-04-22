@@ -439,7 +439,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
 
     | Tstr_include({incl_mod, incl_type}) =>
       switch (incl_mod.mod_desc) {
-      | Tmod_ident(path, _lid) =>
+      | Tmod_ident(_path, _lid) =>
         let currentPath = currentModulePath^ @ [currentModuleName^];
         incl_type
         |> List.iter(

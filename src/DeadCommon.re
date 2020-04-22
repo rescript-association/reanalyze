@@ -25,7 +25,6 @@ let warnOnCircularDependencies = false;
 module Name: {
   type t;
   let create: (~isInterface: bool=?, string) => t;
-  let isInterface: t => bool;
   let isUnderscore: t => bool;
   let startsWithUnderscore: t => bool;
   let toImplementation: t => t;
@@ -561,11 +560,6 @@ module ProcessDeadAnnotations = {
 
 let pathToString = path =>
   path |> List.rev_map(Name.toString) |> String.concat(".");
-
-let pathToStringNoPlus = path =>
-  path
-  |> List.rev_map(n => n |> Name.toInterface |> Name.toString)
-  |> String.concat(".");
 
 let pathWithoutHead = path => {
   path |> List.rev_map(Name.toString) |> List.tl |> String.concat(".");
