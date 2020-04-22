@@ -130,8 +130,8 @@ let addDeclaration = (~path as path_, {type_kind}: Types.type_declaration) => {
 };
 
 let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
-  let updateDependencies = (name, loc) => {
-    let path2 =
+  let updateDependencies = (~loc, name) => {
+    let pathOfName =
       [
         currentModuleName^,
         ...List.rev([
@@ -142,14 +142,13 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
       ]
       |> List.map(Name.toString)
       |> String.concat(".");
-
-    switch (Hashtbl.find_opt(fields, path2)) {
+    switch (Hashtbl.find_opt(fields, pathOfName)) {
     | Some(loc2) =>
       extendTypeDependencies(loc, loc2);
       if (!reportTypesDeadOnlyInInterface) {
         extendTypeDependencies(loc2, loc);
       };
-    | None => Hashtbl.add(fields, path2, loc)
+    | None => Hashtbl.add(fields, pathOfName, loc)
     };
   };
 
@@ -157,13 +156,13 @@ let processTypeDeclaration = (typeDeclaration: Typedtree.type_declaration) => {
   | Ttype_record(l) =>
     l
     |> List.iter(({Typedtree.ld_name, ld_loc}) =>
-         updateDependencies(ld_name, ld_loc)
+         ld_name |> updateDependencies(~loc=ld_loc)
        )
 
   | Ttype_variant(l) =>
     l
     |> List.iter(({Typedtree.cd_name, cd_loc}) =>
-         updateDependencies(cd_name, cd_loc)
+         cd_name |> updateDependencies(~loc=cd_loc)
        )
 
   | _ => ()
