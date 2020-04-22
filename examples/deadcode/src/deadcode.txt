@@ -687,15 +687,6 @@
   addTypeReference Tuples.re:47:19 --> Tuples.re:32:2
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/A.cmt
-  addTypeDeclaration A A.re:3:6 path:+A.M.t
-  addTypeDeclaration A A.re:7:8 path:+A.M.T.t
-  addTypeDeclaration A A.re:7:8 path:+A.M.t
-  extendTypeDependencies A.re:7:8 --> A.re:3:6
-  extendTypeDependencies A.re:3:6 --> A.re:7:8
-  addTypeReference A.re:12:7 --> A.re:3:6
-  addTypeReference A.re:7:8 --> A.re:3:6
-  addTypeReference A.re:3:6 --> A.re:7:8
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType1.cmt
   addValueDeclaration +convert TransitiveType1.re:2:4 path:+TransitiveType1
   addValueDeclaration +convertAlias TransitiveType1.re:5:4 path:+TransitiveType1
@@ -1661,7 +1652,6 @@ File References
   Opaque.re -->> 
   TypeParams2.re -->> 
   TypeParams3.re -->> 
-  A.re -->> 
   TransitiveType1.re -->> 
   BootloaderResource.re -->> 
   ComponentAsProp.re -->> ReactDOMRe.re, ReasonReact.rei
@@ -1728,8 +1718,6 @@ File References
   ImportIndex.re -->> 
   ImportHookDefault.re -->> 
   ModuleAliases2.re -->> 
-  Live Type +A.M.t.A: 1 references (A.re:12:7) [1]
-  Live Type +A.M.t.A: 1 references (A.re:3:6) [0]
   Dead Type +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
   Dead Type +AutoAnnotate.annotatedVariant.R2: 0 references () [0]
   Dead Type +AutoAnnotate.r4.r4: 0 references () [0]
