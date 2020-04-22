@@ -35,12 +35,6 @@ let pathTypeToInterface = path =>
   | [] => path
   };
 
-let pathTypeToImplementation = path =>
-  switch (path) {
-  | [typeName, ...rest] => [typeName |> Name.toImplementation, ...rest]
-  | [] => path
-  };
-
 let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
   if (loc1.loc_start != loc2.loc_start) {
     if (verbose) {
@@ -85,19 +79,9 @@ let addTypeDependenciesAcrossFiles = (~loc, ~typeLabelName, ~typeId) => {
     };
   } else {
     let path_1 = currentPath |> pathModuleToImplementation;
-    let path_2 = path_1 |> pathTypeToImplementation;
     let path1 = [typeLabelName, ...path_1] |> pathToString;
-    let path2 = [typeLabelName, ...path_2] |> pathToString;
     switch (Hashtbl.find_opt(typeLabels, path1)) {
-    | None =>
-      switch (Hashtbl.find_opt(typeLabels, path2)) {
-      | None => ()
-      | Some(loc2) =>
-        extendTypeDependencies(loc2, loc);
-        if (!reportTypesDeadOnlyInInterface) {
-          extendTypeDependencies(loc, loc2);
-        };
-      }
+    | None => ()
     | Some(loc1) =>
       extendTypeDependencies(loc1, loc);
       if (!reportTypesDeadOnlyInInterface) {
