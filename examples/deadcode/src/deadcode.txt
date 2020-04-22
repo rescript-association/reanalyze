@@ -457,7 +457,6 @@
   addValueReference ImmutableArray.re:118:6 --> ImmutableArray.re:118:16
   addValueReference ImmutableArray.re:118:6 --> ImmutableArray.re:5:2
   addValueReference ImmutableArray.re:118:6 --> ImmutableArray.re:118:20
-  XXX Array #incl_type:67
   addValueReference ImmutableArray.rei:5:15 --> ImmutableArray.re:24:6
   addValueReference ImmutableArray.rei:7:0 --> ImmutableArray.re:14:6
   addValueReference ImmutableArray.rei:10:0 --> ImmutableArray.re:16:6
@@ -688,10 +687,6 @@
   addTypeReference Tuples.re:47:19 --> Tuples.re:32:2
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/A.cmt
-  addTypeDeclaration A A.re:3:6 path:+A.M.t
-  addTypeDeclaration A A.re:7:8 path:+A.M.T.t
-  XXX T #incl_type:1
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType1.cmt
   addValueDeclaration +convert TransitiveType1.re:2:4 path:+TransitiveType1
   addValueDeclaration +convertAlias TransitiveType1.re:5:4 path:+TransitiveType1
@@ -1651,7 +1646,6 @@ File References
   Opaque.re -->> 
   TypeParams2.re -->> 
   TypeParams3.re -->> 
-  A.re -->> 
   TransitiveType1.re -->> 
   BootloaderResource.re -->> 
   ComponentAsProp.re -->> ReactDOMRe.re, ReasonReact.rei
@@ -1717,8 +1711,6 @@ File References
   ImportIndex.re -->> 
   ImportHookDefault.re -->> 
   ModuleAliases2.re -->> 
-  Dead Type +A.M.T.t.A: 0 references () [0]
-  Dead Type +A.M.t.A: 0 references () [0]
   Dead Type +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
   Dead Type +AutoAnnotate.annotatedVariant.R2: 0 references () [0]
   Dead Type +AutoAnnotate.r4.r4: 0 references () [0]
@@ -2346,18 +2338,6 @@ File References
   Live Value +ImmutableArray.+fromT: 1 references (ImmutableArray.re:24:6) [0]
   Live Value +trace.+infok: 1 references (trace.mli:5:0) [0]
   Live Type +trace.pf.pf: 1 references (trace.mli:3:11) [0]
-
-  Warning Dead Type
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.re 3:7
-  M.t.A is a variant case which is never constructed
-  <-- line 3
-      | [@dead "M.t.A"] A;
-
-  Warning Dead Type
-  /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.re 7:9
-  M.T.t.A is a variant case which is never constructed
-  <-- line 7
-        | [@dead "M.T.t.A"] A;
 
   Warning Dead Type
   /Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re 2:5-10

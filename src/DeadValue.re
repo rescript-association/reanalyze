@@ -434,9 +434,10 @@ let traverseStructure = (~doTypes, ~doValues) => {
              )
            });
       }
-    | Tstr_include({incl_mod, incl_type, incl_loc, incl_attributes}) =>
+    | Tstr_include({incl_mod, incl_type}) =>
       switch (incl_mod.mod_desc) {
-      | Tmod_ident(path, lid) =>
+      | Tmod_ident(path, _lid) when false =>
+        // TODO: continue with this
         let pathName = {
           switch (path |> Path.flatten) {
           | `Ok(id, mods) =>
@@ -449,6 +450,12 @@ let traverseStructure = (~doTypes, ~doValues) => {
           pathName,
           incl_type |> List.length,
         );
+
+        let currentPath = currentModulePath^ @ [currentModuleName^];
+        incl_type
+        |> List.iter(
+             processSignatureItem(~doTypes, ~doValues, ~path=currentPath),
+           );
 
       | _ => ()
       };
