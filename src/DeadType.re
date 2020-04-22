@@ -48,10 +48,10 @@ let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
   };
 
 // Type dependencies between Foo.re and Foo.rei
-let addTypeDependenciesAcrossFiles = (~currentPath, ~loc, ~typeLabelName) => {
+let addTypeDependenciesAcrossFiles = (~pahToType, ~loc, ~typeLabelName) => {
   let isInterface = Filename.check_suffix(currentSrc^, "i");
   if (!isInterface) {
-    let path_1 = currentPath |> pathModuleToInterface;
+    let path_1 = pahToType |> pathModuleToInterface;
     let path_2 = path_1 |> pathTypeToInterface;
     let path1 = [typeLabelName, ...path_1] |> pathToString;
     let path2 = [typeLabelName, ...path_2] |> pathToString;
@@ -73,7 +73,7 @@ let addTypeDependenciesAcrossFiles = (~currentPath, ~loc, ~typeLabelName) => {
       };
     };
   } else {
-    let path_1 = currentPath |> pathModuleToImplementation;
+    let path_1 = pahToType |> pathModuleToImplementation;
     let path1 = [typeLabelName, ...path_1] |> pathToString;
     switch (Hashtbl.find_opt(typeLabels, path1)) {
     | None => ()
@@ -87,8 +87,8 @@ let addTypeDependenciesAcrossFiles = (~currentPath, ~loc, ~typeLabelName) => {
 };
 
 // Add type dependencies between implementation and interface in inner module
-let addTypeDependenciesInnerModule = (~currentPath, ~loc, ~typeLabelName) => {
-  let typeLabelPath = [typeLabelName, ...currentPath];
+let addTypeDependenciesInnerModule = (~pahToType, ~loc, ~typeLabelName) => {
+  let typeLabelPath = [typeLabelName, ...pahToType];
 
   let typeLabelPathStr = typeLabelPath |> pathToString;
 
@@ -103,20 +103,20 @@ let addTypeDependenciesInnerModule = (~currentPath, ~loc, ~typeLabelName) => {
 };
 
 let addDeclaration = (~typeId: Ident.t, ~typeKind: Types.type_kind) => {
-  let currentPath = [
+  let pahToType = [
     typeId |> Ident.name |> Name.create,
     ...currentModulePath^ @ [currentModuleName^],
   ];
 
   let processTypeLabel = (typeLabelName, ~declKind, ~loc: Location.t) => {
-    addTypeDeclaration(~declKind, ~path=currentPath, ~loc, typeLabelName);
+    addTypeDeclaration(~declKind, ~path=pahToType, ~loc, typeLabelName);
 
-    addTypeDependenciesAcrossFiles(~currentPath, ~loc, ~typeLabelName);
-    addTypeDependenciesInnerModule(~currentPath, ~loc, ~typeLabelName);
+    addTypeDependenciesAcrossFiles(~pahToType, ~loc, ~typeLabelName);
+    addTypeDependenciesInnerModule(~pahToType, ~loc, ~typeLabelName);
 
     Hashtbl.replace(
       typeLabels,
-      [typeLabelName, ...currentPath] |> pathToString,
+      [typeLabelName, ...pahToType] |> pathToString,
       loc,
     );
   };
