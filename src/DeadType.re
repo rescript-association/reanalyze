@@ -112,8 +112,9 @@ let addTypeDependenciesAcrossFiles =
 let addTypeDependenciesInnerModule = (~loc, ~typeId, ~typeLabelName) => {
   let typeNameInterface = typeId |> Ident.name |> Name.create;
   let typeLabelPath = [
-    currentModuleName^,
-    ...List.rev([typeLabelName, typeNameInterface, ...currentModulePath^]),
+    typeLabelName,
+    typeNameInterface,
+    ...currentModulePath^ @ [currentModuleName^],
   ];
 
   let typeLabelPathStr = typeLabelPath |> pathToString;
