@@ -129,9 +129,8 @@ let addDeclaration = (~path as path_, {type_kind}: Types.type_declaration) => {
   };
 };
 
-let processTypeDeclaration =
-    (typName: Asttypes.loc(string), typeKind: Types.type_kind) => {
-  let typeName = typName.txt |> Name.create;
+let processTypeDeclaration = (typeId: Ident.t, typeKind: Types.type_kind) => {
+  let typeName = typeId |> Ident.name |> Name.create;
   let updateDependencies = (~loc, name) => {
     let pathOfName =
       [

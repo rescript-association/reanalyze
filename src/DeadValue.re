@@ -439,7 +439,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
              ];
              typeDeclaration.typ_type |> DeadType.addDeclaration(~path);
              DeadType.processTypeDeclaration(
-               typeDeclaration.typ_name,
+               typeDeclaration.typ_id,
                typeDeclaration.typ_type.type_kind,
              );
            });
