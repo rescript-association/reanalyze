@@ -445,9 +445,22 @@ let traverseStructure = (~doTypes, ~doValues) => {
              typeDeclaration.typ_type |> DeadType.addDeclaration(~path);
            });
       }
-    | Tstr_include(_) =>
+    | Tstr_include({incl_mod, incl_type, incl_loc, incl_attributes}) =>
+      switch (incl_mod.mod_desc) {
+      | Tmod_ident(path, lid) =>
+        let pathName = {
+          switch (path |> Path.flatten) {
+          | `Ok(id, mods) =>
+            [Ident.name(id), ...mods] |> String.concat(".")
+          | `Contains_apply => "Apply!!!"
+          };
+        };
+        Log_.item("XXX %s@.", pathName);
+
+      | _ => ()
+      };
       // TODO: anything special?
-      ()
+      ();
     | _ => ()
     };
     let result = super.structure_item(self, structureItem);
