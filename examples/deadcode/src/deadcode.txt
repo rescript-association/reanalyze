@@ -1637,10 +1637,18 @@
   addValueReference DeadTest.re:175:30 --> DeadTest.re:175:22
   addTypeReference DeadTest.re:175:21 --> trace.mli:3:11
   addValueReference DeadTest.re:175:0 --> trace.mli:5:0
+  addTypeDeclaration A DeadTest.re:185:6 path:+DeadTest.WithInclude.t
+  addTypeDeclaration A DeadTest.re:189:8 path:+DeadTest.WithInclude.T.t
+  addTypeDeclaration A DeadTest.re:189:8 path:+DeadTest.WithInclude.t
+  extendTypeDependencies DeadTest.re:189:8 --> DeadTest.re:185:6
+  extendTypeDependencies DeadTest.re:185:6 --> DeadTest.re:189:8
+  addTypeReference DeadTest.re:194:7 --> DeadTest.re:185:6
   addValueReference DeadTest.re:37:2 --> DeadTest.re:41:6
   addValueReference DeadTest.re:62:2 --> DeadTest.re:66:6
   addValueReference DeadTest.re:63:2 --> DeadTest.re:65:6
   addValueReference DeadTest.re:105:2 --> DeadTest.re:107:2
+  addTypeReference DeadTest.re:189:8 --> DeadTest.re:185:6
+  addTypeReference DeadTest.re:185:6 --> DeadTest.re:189:8
   addTypeReference DeadTest.re:40:6 --> DeadTest.re:36:6
   addTypeReference DeadTest.re:36:6 --> DeadTest.re:40:6
   
@@ -1777,6 +1785,8 @@ File References
   Live Type DeadRT.moduleAccessPath.Root: 1 references (DeadTest.re:110:16) [1]
   Live Type +DeadRT.moduleAccessPath.Root: 1 references (DeadRT.rei:2:4) [0]
   Live Type DeadRT.moduleAccessPath.Kaboom: 1 references (DeadRT.re:3:4) [0]
+  Live Type +DeadTest.WithInclude.t.A: 1 references (DeadTest.re:194:7) [1]
+  Live Type +DeadTest.WithInclude.t.A: 1 references (DeadTest.re:185:6) [0]
   Live Value +DeadTest.GloobLive.+globallyLive3: 0 references () [0]
   Live Value +DeadTest.GloobLive.+globallyLive2: 0 references () [0]
   Live Value +DeadTest.GloobLive.+globallyLive1: 0 references () [0]
