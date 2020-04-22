@@ -334,10 +334,7 @@ let rec processSignatureItem =
   | Sig_type(_) when doTypes =>
     let (id, t) = si |> Compat.getSigType;
     if (analyzeTypes^) {
-      DeadType.addDeclaration(
-        ~path=[id |> Ident.name |> Name.create, ...path],
-        t,
-      );
+      DeadType.addDeclaration(~typeId=id, ~typeKind=t.type_kind);
     };
   | Sig_value(_) when doValues =>
     let (id, loc, kind) = si |> Compat.getSigValue;
@@ -388,10 +385,6 @@ let traverseStructure = (~doTypes, ~doValues) => {
   let expr = (self, e) => e |> collectExpr(super, self);
   let pat = (self, p) => p |> collectPattern(super, self);
   let value_binding = (self, vb) => vb |> collectValueBinding(super, self);
-  let type_declaration = (self, typeDeclaration: Typedtree.type_declaration) => {
-    DeadType.processTypeDeclaration(typeDeclaration);
-    super.type_declaration(self, typeDeclaration);
-  };
   let structure_item = (self, structureItem: Typedtree.structure_item) => {
     let oldModulePath = currentModulePath^;
     switch (structureItem.str_desc) {
@@ -435,33 +428,46 @@ let traverseStructure = (~doTypes, ~doValues) => {
       if (analyzeTypes^) {
         typeDeclarations
         |> List.iter((typeDeclaration: Typedtree.type_declaration) => {
-             let isInterface = false;
-             let path = [
-               typeDeclaration.typ_id
-               |> Ident.name
-               |> Name.create(~isInterface),
-               ...currentModulePath^ @ [currentModuleName^],
-             ];
-             typeDeclaration.typ_type |> DeadType.addDeclaration(~path);
+             DeadType.addDeclaration(
+               ~typeId=typeDeclaration.typ_id,
+               ~typeKind=typeDeclaration.typ_type.type_kind,
+             )
            });
       }
-    | Tstr_include(_) =>
+    | Tstr_include({incl_mod, incl_type}) =>
+      switch (incl_mod.mod_desc) {
+      | Tmod_ident(path, _lid) when false =>
+        // TODO: continue with this
+        let pathName = {
+          switch (path |> Path.flatten) {
+          | `Ok(id, mods) =>
+            [Ident.name(id), ...mods] |> String.concat(".")
+          | `Contains_apply => "Apply!!!"
+          };
+        };
+        Log_.item(
+          "XXX %s #incl_type:%d@.",
+          pathName,
+          incl_type |> List.length,
+        );
+
+        let currentPath = currentModulePath^ @ [currentModuleName^];
+        incl_type
+        |> List.iter(
+             processSignatureItem(~doTypes, ~doValues, ~path=currentPath),
+           );
+
+      | _ => ()
+      };
       // TODO: anything special?
-      ()
+      ();
     | _ => ()
     };
     let result = super.structure_item(self, structureItem);
     currentModulePath := oldModulePath;
     result;
   };
-  Tast_mapper.{
-    ...super,
-    expr,
-    pat,
-    structure_item,
-    type_declaration,
-    value_binding,
-  };
+  Tast_mapper.{...super, expr, pat, structure_item, value_binding};
 };
 
 /* Merge a location's references to another one's */
