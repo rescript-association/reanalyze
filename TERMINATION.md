@@ -126,15 +126,11 @@ let rec loop = () => {
 
 ## TODO
 
-- The `@progress` annotation.
 - The real examples.
 - Hygiene restrictions (so relevant functions cannot escape).
 - Higher-order cases.
 
 Some examples:
-
-- obviously non-terminating recursion OK if you don't opt into checking
-- check for a single function
 - mutual recursion
 - non-terminating program which makes progress w.r.t. a single function (e.g. positive: a server, or maybe negative: a programming mistake)
 
