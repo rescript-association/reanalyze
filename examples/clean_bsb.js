@@ -10,11 +10,11 @@ const spawn = child_process.spawn;
 
 const isWindows = /^win/i.test(process.platform);
 
-const genTypeNativePath = path.join(__dirname, "../_esy/default/build/install/default/bin/reanalyze.exe");
+const reanalyzeNativePath = path.join(__dirname, "../_esy/default/build/install/default/bin/reanalyze.exe");
 
 const shell = isWindows ? true : false;
 
-child_process.spawnSync(genTypeNativePath, ["-clean"], {
+child_process.spawnSync(reanalyzeNativePath, ["-clean"], {
   stdio: ["inherit", "inherit"],
   shell
 });
