@@ -146,14 +146,51 @@ cheekyLoop can only be called directly, or passed as labeled argument
 
 What's going on is that functions we opt into termination checking, such as `checkyLoop`, are restricted. Storing them in a reference is not allowed.
 
+# No aliasing
+
+Another restriction: you can't alias a function you opted into for termination checking:
+
+
+```reason
+[@progress]
+let rec loop = () => loop();
+```
+
+That also gives a hygiene violation error:
+```
+loop can only be called directly, or passed as labeled argument
+```
+
+# Mutual recursion
+
+This reports an infinite loop
+
+```reason
+[@progress]
+let rec foo = () => bar()
+and bar = () => foo();
+```
+
+But this does not report:
+
+```reason
+let progress = () => ();
+
+[@progress progress]
+let rec foo = () => bar()
+and bar = () => {
+  progress();
+  foo();
+};
+```
+
+That's becuse every infinite loop through either `foo`, or `bar`, makes progress infinitely often.
+
 ## TODO
 
-- The real examples.
-- Hygiene restrictions (so relevant functions cannot escape).
 - Higher-order cases.
 
 Some examples:
-- mutual recursion
 - non-terminating program which makes progress w.r.t. a single function (e.g. positive: a server, or maybe negative: a programming mistake)
 
 
