@@ -75,6 +75,55 @@ let rec loop = n =>
 It's not difficult to see, in isolation, that the `progress` function makes progress.
 And, it's not difficult to see that the `loop` function cannot be called infinitely often without making progress infinitely often: because `progress` is called each time `loop` is.
 
+# Easy pass
+
+If you don't opt in, nothing is checked, and no issues are reported on the following:
+
+```reason
+let rec loop = () => loop();
+```
+
+# Easy fail
+
+This time, opt into terminatioon checking with the `@progress` annotation. This time a potential infinite loop is reported.
+
+
+```reason
+let rec loop = () => loop();
+```
+
+# Progress function
+
+This time, an actual progress function is defined, which initially does not do anything. This can be used for quick experimentation.
+No warnings are reported as every infinite loop makes infinite progress.
+
+
+```reason
+let progress = () => ();
+
+[@progress progress]
+let rec loop = () => {
+  progress();
+  loop();
+};
+```
+
+# A trivial mistake
+
+See what's wrong now? A possible infinite loop is reporteed.
+
+```reason
+let progress = () => ();
+
+[@progress progress]
+let rec loop = () => {
+  loop();
+  progress();
+};
+```
+
+
+
 ## TODO
 
 - The `@progress` annotation.
