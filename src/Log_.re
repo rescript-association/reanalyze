@@ -89,9 +89,11 @@ module Loc = {
       Format.fprintf(ppf, "%s", Location.show_filename(real_file))
     };
 
+  let useOcamlLocations = true;
+
   let print_loc = (~normalizedRange, ppf, loc: Location.t) => {
     let (file, _, _) = Location.get_pos_info(loc.loc_start);
-    if (!posIsReason(loc.loc_start)) {
+    if (useOcamlLocations) {
       Location.print_loc(ppf, loc);
     } else {
       let dim_loc = ppf =>
@@ -131,7 +133,7 @@ module Loc = {
 
       Format.fprintf(
         ppf,
-        "@{<filename>%a@}%a",
+        "File \"%a\", line %a",
         print_filename,
         file,
         dim_loc,
