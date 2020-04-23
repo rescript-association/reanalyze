@@ -122,7 +122,28 @@ let rec loop = () => {
 };
 ```
 
+# Let's get cheeky
 
+It's possivble to play a trick, and use references to implement indirect recursion via the store,
+in the style of (Peter) Landin's knot:
+
+```reason
+let cheekyRef = ref(() => ());
+
+[@progress]
+let rec cheekyLoop = () => {
+  cheekyRef := cheekyLoop;
+  cheekyRef^();
+};
+```
+
+This triggers a hygiene violation:
+
+```
+cheekyLoop can only be called directly, or passed as labeled argument
+```
+
+What's going on is that functions we opt into termination checking, such as `checkyLoop`, are restricted. Storing them in a reference is not allowed.
 
 ## TODO
 
@@ -133,18 +154,6 @@ let rec loop = () => {
 Some examples:
 - mutual recursion
 - non-terminating program which makes progress w.r.t. a single function (e.g. positive: a server, or maybe negative: a programming mistake)
-
-Cheeky example: indirect recursion via the store, in the style of (Peter) Landin's knot
-
-```reason
-let cheekyRef = ref(() => ());
-
-let rec cheekyLoop = () => {
-  cheekyRef := cheekyLoop;
-  cheekyRef^();
-};
-```
-
 
 
 
