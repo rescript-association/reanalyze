@@ -89,6 +89,7 @@ This time, opt into terminatioon checking with the `@progress` annotation. This 
 
 
 ```reason
+[@progress]
 let rec loop = () => loop();
 ```
 
