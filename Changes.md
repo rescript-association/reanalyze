@@ -1,4 +1,6 @@
 # master
+
+# 1.3.0
 - Add command-line option `-live-names this,that` to treat items `this` and `that` as globally live.
 - Support `@warning "-32"` in addition `@ocaml.warning "-32"` to mean `@live`.
 - Add command-line option `live-paths prefix/of/path1,prefix/of/path2` to treat all items in the path prefixes as live.
