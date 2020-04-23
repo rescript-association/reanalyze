@@ -163,6 +163,8 @@ loop can only be called directly, or passed as labeled argument
 
 # Mutual recursion
 
+A progress annotation on mutually recursive functions opts them all into termination checking.
+
 This reports an infinite loop
 
 ```reason
