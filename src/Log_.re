@@ -1,3 +1,5 @@
+let useOcamlLocations = true;
+
 let posIsReason = (pos: Lexing.position) =>
   Filename.check_suffix(pos.pos_fname, ".re")
   || Filename.check_suffix(pos.pos_fname, ".rei");
@@ -73,6 +75,10 @@ module Color = {
     if (!get_color_enabled()) {
       Misc.Color.setup(Some(Never));
     };
+    if (useOcamlLocations) {
+      // do on extra dummy print, as the first time print_loc is used, flushing is incorrect
+      Location.print_loc(Format.str_formatter, Location.none);
+    };
   };
 
   let error = (ppf, s) => Format.fprintf(ppf, "@{<error>%s@}", s);
@@ -88,8 +94,6 @@ module Loc = {
     | real_file =>
       Format.fprintf(ppf, "%s", Location.show_filename(real_file))
     };
-
-  let useOcamlLocations = true;
 
   let print_loc = (~normalizedRange, ppf, loc: Location.t) => {
     let (file, _, _) = Location.get_pos_info(loc.loc_start);
