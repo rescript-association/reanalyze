@@ -56,7 +56,7 @@ This automatically annotates `@live` all the items in file `Hello.re`:
 -live-paths Hello.re
 ```
 
-This automatically annotates `@live` all the items in the `src/test` and `tmp` folders:`:
+This automatically annotates `@live` all the items in the `src/test` and `tmp` folders:
 
 ```sh
 -live-paths src/test,tmp
