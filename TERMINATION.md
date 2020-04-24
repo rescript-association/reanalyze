@@ -15,7 +15,7 @@ Does this program terminate for all integers `n`? How do I make sure it does?
 
 The typical argument goes as follows. Consider a progress function on the state, and check that it's not possible to make progress infinitely often. In the example, the progress function is the distance from `n.contents ` to zero. At each iteration the number descreases, and it cannot decrease infinitely often. Therefore, the program terminates.
 
-Consider now the recursive version of the program:
+Consider now a recursive version of the program:
 
 ```reason
 let rec loop = n =>
@@ -26,8 +26,8 @@ let rec loop = n =>
   };
 ```
 
-Then a pattern begins to merge. There is a recursive function, and some progress happens in its body. And the argument becomes the following: every execution of the loop makes progress. So does the program terminate?
-If in an execution of the program `loop` is called infinitely often, then progress is made infinitely often. But that is not possible. Therefore `loop` is not called infinitely often. Therefore the program terminates.
+A pattern begins to merge. There is a recursive function, and some progress happens in its body. And the argument becomes the following: every execution of the loop makes progress. So does the program terminate?
+If, in an execution of the program, `loop` is called infinitely often, then progress is made infinitely often. But making progress infinitely often is not possible. Therefore, `loop` is not called infinitely often. Therefore, the program always terminates.
 
 Now let's consider the previous argument for a second. While there's a **global** character to it "the program terminates", there's also a **local** sub-argument: "function `loop` is not called infinitely often".
 
@@ -188,7 +188,7 @@ and bar = () => {
 
 That's becuse every infinite loop through either `foo`, or `bar`, makes progress infinitely often.
 
-# A riddle
+# A higher-order riddle
 
 Does this always terminate?
 
@@ -233,7 +233,7 @@ Notice this shows a higher-order use of functions we opt into for terminaition. 
 The properties checked by the analysis can be abstract, and termination is just one of the applications.
 Another one is liveness.
 
-Here's an examople of server, which obviously never terminates, yet the analysis checks that it keeps on responding to requests:
+Here's an example of a server, which obviously never terminates, yet the analysis checks that it keeps on responding to requests:
 
 ```reason
 type state;
