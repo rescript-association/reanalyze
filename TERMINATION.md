@@ -126,7 +126,7 @@ let rec loop = () => {
 
 # Let's get cheeky
 
-It's possivble to play a trick, and use references to implement indirect recursion via the store,
+It's possible to play a trick, and use references to implement indirect recursion via the store,
 in the style of (Peter) Landin's knot:
 
 ```reason
