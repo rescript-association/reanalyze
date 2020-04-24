@@ -188,17 +188,64 @@ and bar = () => {
 
 That's becuse every infinite loop through either `foo`, or `bar`, makes progress infinitely often.
 
-## TODO
+# A riddle
 
-- Higher-order cases.
+Does this always terminate?
 
-Some examples:
-- non-terminating program which makes progress w.r.t. a single function (e.g. positive: a server, or maybe negative: a programming mistake)
+```reason
+let next = _ => ();
 
+type token =
+  | Int(int)
+  | Float(float)
+  | Eof;
 
+type t = {token};
 
+[@progress next]
+let rec f = p =>
+  switch (p.token) {
+  | Int(i) => g(p) + i
+  | Eof => 0
+  | _ =>
+    next(p);
+    f(p);
+  }
 
+and gParam = (p, ~g) => {
+  switch (p.token) {
+  | Int(i) => g(p) + i
+  | _ => f(p)
+  };
+}
 
+and g = p => {
+  next(p);
+  gParam(p, ~g);
+};
+```
 
+According to the analysis, it does.
+Notice this shows a higher-order use of functions we opt into for terminaition. Specifically, `gParam` takes `g` as a labeled parameter. So that is the one case which does not trigger a hygiene violation: functions we opt into can either be called directly or passed via labeled arguments.
 
+# Liveness
 
+The properties checked by the analysis can be abstract, and termination is just one of the applications.
+Another one is liveness.
+
+Here's an examople of server, which obviously never terminates, yet the analysis checks that it keeps on responding to requests:
+
+```reason
+type state;
+type request;
+
+let getRequest = (_: state): (request, state) => assert(false);
+let processRequest: request => unit = assert(false);
+
+[@progress getRequest]
+let rec server = state => {
+  let (request, state1) = getRequest(state);
+  processRequest(request);
+  server(state1);
+};
+```
