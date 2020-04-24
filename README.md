@@ -39,20 +39,33 @@ The main difference between `@dead` and `@live` is the transitive behaviour: `@d
 Several examples can be found in
 [`examples/deadcode/src/DeadTest.re`](examples/deadcode/src/DeadTest.re)
 
-## Undocumented features
-Here are several undocumented features, which could change substantially over time. Ask to for more information.
+## Unstable features
+Here are several unstable features, which could change substantially over time. Ask for more information.
 
-### Debug
+### CLI -live-names
+This automatically annotates `@live` all the items called `foo` or `bar`:
+
+```sh
+-live-names foo,bar
+```
+
+### CLI -live-paths
+This automatically annotates `@live` all the items in file `Hello.re`:
+
+```sh
+-live-paths Hello.re
+```
+
+This automatically annotates `@live` all the items in the `src/test` and `tmp` folders:`:
+
+```sh
+-live-paths src/test,tmp
+```
+
+### Env Debug
 ```sh
 Debug=1 reanalyze.exe ...
 ```
-
-### Whitelist and Blacklist
-```sh
-Whitelist=src Blacklist=src/DeadTestBlacklist.re reanalyze.exe ... 
-``` 
-This currently only affects final reporting, not the analysis itself.
-
 
 ### Add annotations automatically
 This overwrites your source files automatically with dead code annotations:
