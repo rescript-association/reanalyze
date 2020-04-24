@@ -1,6 +1,6 @@
 # reanalyze
 
-Experimental analyses for OCaml/Reason: for dead values/types, and for termination.
+Experimental analyses for OCaml/Reason: for globally dead values/types, and for termination.
 Supports bucklescript projects, as well as native projects (e.g. dune).
 
 **Status `master (v3.*)`:** [![Build
