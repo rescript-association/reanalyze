@@ -95,13 +95,14 @@ let loadCmtFile = cmtFilePath => {
   };
 };
 
-let reportResults = () => {
-  reportDead();
+let reportResults = ppf => {
+  reportDead(ppf);
   WriteDeadAnnotations.write();
 };
 
 let runAnalysis = (~cmtRoot) => {
   Log_.Color.setup();
+  let ppf = Format.std_formatter;
   switch (cmtRoot) {
   | Some(root) =>
     let rec walkSubDirs = dir => {
@@ -121,7 +122,7 @@ let runAnalysis = (~cmtRoot) => {
     };
     walkSubDirs("");
     if (dce^) {
-      reportResults();
+      reportResults(ppf);
     };
     if (analyzeTermination^) {
       Arnold.reportResults();
@@ -154,7 +155,7 @@ let runAnalysis = (~cmtRoot) => {
        });
 
     if (dce^) {
-      reportResults();
+      reportResults(ppf);
     };
     if (analyzeTermination^) {
       Arnold.reportResults();

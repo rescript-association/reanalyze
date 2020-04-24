@@ -1,5 +1,6 @@
 # master
 - Always use OCaml's location format, which is picked up automatically by most tooling.
+- Add warning emitted when a live item is annotated @dead.
 
 # 1.3.0
 - Add command-line option `-live-names this,that` to treat items `this` and `that` as globally live.

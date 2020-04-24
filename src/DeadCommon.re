@@ -619,6 +619,17 @@ let addValueDeclaration = (~sideEffects, ~path, ~loc: Location.t, name) =>
 
 /**** REPORTING ****/
 
+let emitWarning = (~decl, ~message, ~name) => {
+  Log_.info(~loc=decl |> declGetLoc, ~name, (ppf, ()) =>
+    Format.fprintf(
+      ppf,
+      "@{<info>%s@} %s",
+      decl.path |> pathWithoutHead,
+      message,
+    )
+  );
+};
+
 module WriteDeadAnnotations = {
   type line = {
     mutable declarations: list(decl),
@@ -841,6 +852,12 @@ let rec resolveRecursiveRefs =
         if (decl |> checkSideEffects) {
           decl.pos |> ProcessDeadAnnotations.annotateDead;
         };
+      } else if (decl.pos |> ProcessDeadAnnotations.isAnnotatedDead) {
+        emitWarning(
+          ~decl,
+          ~message=" is annotated @dead but is live",
+          ~name="Warning Incorrect Annotation",
+        );
       };
 
       if (verbose) {
@@ -931,12 +948,6 @@ module Decl = {
     );
   };
 
-  let emitWarning = (~message, ~loc, ~name, ~path) => {
-    Log_.info(~loc, ~name, (ppf, ()) =>
-      Format.fprintf(ppf, "@{<info>%s@} %s", path |> pathWithoutHead, message)
-    );
-  };
-
   let isInsideReportedValue = decl => {
     let fileHasChanged = maxValuePosEnd^.pos_fname != decl.pos.pos_fname;
 
@@ -996,7 +1007,7 @@ module Decl = {
       );
     let shouldWriteAnnotation = shouldEmitWarning && decl |> checkSideEffects;
     if (shouldEmitWarning) {
-      emitWarning(~message, ~loc=decl |> declGetLoc, ~name, ~path=decl.path);
+      emitWarning(~decl, ~message, ~name);
     };
     if (shouldWriteAnnotation) {
       decl |> WriteDeadAnnotations.onDeadDecl(~ppf);
@@ -1004,7 +1015,7 @@ module Decl = {
   };
 };
 
-let reportDead = () => {
+let reportDead = ppf => {
   let iterDeclInOrder = (~orderedFiles, ~deadDeclarations, decl) => {
     let refs =
       decl.pos
@@ -1063,7 +1074,6 @@ let reportDead = () => {
   orderedDeclarations
   |> List.iter(iterDeclInOrder(~orderedFiles, ~deadDeclarations));
 
-  let ppf = Format.std_formatter;
   let sortedDeadDeclarations =
     deadDeclarations^ |> List.fast_sort(Decl.compareForReporting);
   sortedDeadDeclarations |> List.iter(Decl.report(~ppf));
