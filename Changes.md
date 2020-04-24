@@ -1,5 +1,8 @@
 # master
 
+# 1.5.0
+- Work around issue with flushing when printing first location.
+
 # 1.4.0
 - Always use OCaml's location format, which is picked up automatically by most tooling.
 - Add warning emitted when a live item is annotated @dead.
