@@ -1,4 +1,6 @@
 # master
+
+# 1.4.0
 - Always use OCaml's location format, which is picked up automatically by most tooling.
 - Add warning emitted when a live item is annotated @dead.
 
