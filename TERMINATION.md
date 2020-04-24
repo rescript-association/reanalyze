@@ -74,7 +74,7 @@ let rec loop = n =>
 It is not difficult to see, in isolation, that 1) the `progress` function makes progress.
 And, it's not difficult to see that 2) the `loop` function cannot be called infinitely often without making progress infinitely often: because `progress` is called each time `loop` is.
 
-The analysis **assumes** 1) and **proves** 2).
+The analysis **assumes** 1) and **checks** 2).
 
 # Easy pass
 
