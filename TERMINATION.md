@@ -154,8 +154,10 @@ Another restriction: you can't alias a function you opted into for termination c
 
 ```reason
 [@progress]
-let rec loop = () => loop();
-```
+let rec loop = () => {
+  let l = loop;
+  l();
+};```
 
 That also gives a hygiene violation error:
 ```

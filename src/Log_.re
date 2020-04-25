@@ -77,7 +77,10 @@ module Color = {
     };
     if (useOcamlLocations) {
       // do on extra dummy print, as the first time print_loc is used, flushing is incorrect
-      Location.print_loc(Format.str_formatter, Location.none);
+      Location.print_loc(
+        Format.str_formatter,
+        Location.none,
+      );
     };
   };
 
@@ -98,7 +101,22 @@ module Loc = {
   let print_loc = (~normalizedRange, ppf, loc: Location.t) => {
     let (file, _, _) = Location.get_pos_info(loc.loc_start);
     if (useOcamlLocations) {
-      Location.print_loc(ppf, loc);
+      let mkPosRelative = (pos: Lexing.position) => {
+        ...pos,
+        pos_fname:
+          Filename.(
+            is_implicit(pos.pos_fname)
+              ? concat(current_dir_name, pos.pos_fname) : pos.pos_fname
+          ),
+      };
+      Location.print_loc(
+        ppf,
+        {
+          ...loc,
+          loc_start: loc.loc_start |> mkPosRelative,
+          loc_end: loc.loc_end |> mkPosRelative,
+        },
+      );
     } else {
       let dim_loc = ppf =>
         fun

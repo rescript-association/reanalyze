@@ -1,4 +1,5 @@
 # master
+- When file paths are implicit, e.g. `Foo.re` turn them into `./Foo.re` to help editor integration.
 
 # 1.5.0
 - Work around issue with flushing when printing first location.
