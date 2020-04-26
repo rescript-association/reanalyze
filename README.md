@@ -62,16 +62,17 @@ This automatically annotates `@live` all the items in the `src/test` and `tmp` f
 -live-paths src/test,tmp
 ```
 
-### Env Debug
+### CLI -debug
+Print debug information during the analysis
 ```sh
-Debug=1 reanalyze.exe ...
+reanalyze.exe -debug ...
 ```
 
 ### Add annotations automatically
 This overwrites your source files automatically with dead code annotations:
 
 ```sh
-Write=1 reanalyze.exe ...
+reanalyze.exe -write ...
 ```
 
 ### Remove code automatically (not interactively)
