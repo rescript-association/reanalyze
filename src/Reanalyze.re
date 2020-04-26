@@ -25,6 +25,9 @@ let cli = () => {
   and setDCE = cmtRoot => {
     DCE(cmtRoot) |> setCliCommand;
   }
+  and setDebug = () => {
+    DeadCommon.debug := true;
+  }
   and setTermination = cmtRoot => {
     Termination(cmtRoot) |> setCliCommand;
   }
@@ -38,6 +41,7 @@ let cli = () => {
   }
   and speclist = [
     ("-dce", Arg.Unit(() => setDCE(None)), "experimental DCE"),
+    ("-debug", Arg.Unit(setDebug), "print debug information"),
     (
       "-dce-cmt",
       Arg.String(s => setDCE(Some(s))),

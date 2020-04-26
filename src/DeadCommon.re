@@ -10,7 +10,7 @@ let analyzeTermination = ref(false);
 
 let analyzeExternals = true;
 
-let debug = ref(Sys.getenv_opt("Debug") != None);
+let debug = ref(false);
 
 let removeDeadValuesWithSideEffects = false;
 
