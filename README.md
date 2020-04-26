@@ -8,7 +8,7 @@ Status](https://dev.azure.com/ccrisccris/reanalyze/_apis/build/status/cristianoc
 
 ## Expectations
 
-Early release. While the core functionality is reasomably stable, the CLI and annotations are subject to change. However, this is a tiny surface at the moment.
+Early release. While the core functionality is reasonably stable, the CLI and annotations are subject to change. However, this is a tiny surface at the moment.
 
 ## Use
 Build and run on existing projects using the Build and Try instructions below. The analysis uses `.cmt[i]` files which are generated during compilation, so should be run *after* building your project. Remember to rebuild the project before running again.
