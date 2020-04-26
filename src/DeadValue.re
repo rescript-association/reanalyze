@@ -188,7 +188,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     let valueName = path |> Path.last |> Name.create(~isInterface=false);
     switch (getPosOfValue(~moduleName, ~valueName)) {
     | Some(posName) =>
-      if (verbose) {
+      if (debug) {
         Log_.item("collectExpr %s: fix ghost location reference@.", path |> Path.name);
       };
       addValueReference(
@@ -220,7 +220,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     ) {
     | None => ()
     | Some(posMake) =>
-      if (verbose) {
+      if (debug) {
         Log_.item(
           "lazyLoad %s(%s) %s defined in %s@.",
           path |> Path.name,
@@ -258,7 +258,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     let positionsFalse = getDeclPositions(~moduleName=moduleFalse);
     let allPositions = PosSet.union(positionsTrue, positionsFalse);
 
-    if (verbose) {
+    if (debug) {
       Log_.item(
         "requireCond  true:%s false:%s allPositions:[%s]@.",
         moduleTrue |> Name.toString,
