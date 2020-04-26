@@ -91,7 +91,7 @@ let posInBlacklist = (pos: Lexing.position) => {
   pos.pos_fname |> Lazy.force(blacklistSourceDir);
 };
 
-let write = Sys.getenv_opt("Write") != None;
+let write = ref(false);
 
 let deadAnnotation = "dead";
 let liveAnnotation = "live";
@@ -696,7 +696,7 @@ module WriteDeadAnnotations = {
   };
 
   let writeFile = (fileName, lines) =>
-    if (fileName != "" && write) {
+    if (fileName != "" && write^) {
       let channel = open_out(fileName);
       let lastLine = Array.length(lines);
       lines

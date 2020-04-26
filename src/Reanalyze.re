@@ -28,6 +28,9 @@ let cli = () => {
   and setDebug = () => {
     DeadCommon.debug := true;
   }
+  and setWrite = () => {
+    DeadCommon.write := true;
+  }
   and setTermination = cmtRoot => {
     Termination(cmtRoot) |> setCliCommand;
   }
@@ -40,43 +43,44 @@ let cli = () => {
     DeadCommon.livePaths := paths @ DeadCommon.livePaths.contents;
   }
   and speclist = [
-    ("-dce", Arg.Unit(() => setDCE(None)), "experimental DCE"),
-    ("-debug", Arg.Unit(setDebug), "print debug information"),
+    ("-dce", Arg.Unit(() => setDCE(None)), "Eperimental DCE"),
+    ("-debug", Arg.Unit(setDebug), "Print debug information"),
     (
       "-dce-cmt",
       Arg.String(s => setDCE(Some(s))),
-      "root_path experimental DCE for all the .cmt files under the root path",
+      "root_path Experimental DCE for all the .cmt files under the root path",
     ),
     (
       "-termination",
       Arg.Unit(() => setTermination(None)),
-      "experimental termination",
+      "Experimental termination analysis",
     ),
     (
       "-termination-cmt",
       Arg.String(s => setTermination(Some(s))),
-      "root_path experimental termination for all the .cmt files under the root path",
+      "root_path Experimental termination analysis for all the .cmt files under the root path",
     ),
     (
       "-live-names",
       Arg.String(s => setLiveNames(s)),
-      "comma-separated-names consider all values with the give names as lives",
+      "comma-separated-names Consider all values with the give names as lives",
     ),
     (
       "-live-paths",
       Arg.String(s => setLivePaths(s)),
-      "comma-separated-path-prefixes consider all values whose path has a prefix in the list",
+      "comma-separated-path-prefixes Consider all values whose path has a prefix in the list",
     ),
     (
       "-version",
       Arg.Unit(versionAndExit),
-      "show version information and exit",
+      "Show version information and exit",
     ),
     (
       "--version",
       Arg.Unit(versionAndExit),
-      "show version information and exit",
+      "Show version information and exit",
     ),
+    ("-write", Arg.Unit(setWrite), "Write @dead annotations directly in the source files"),
   ];
 
   let executeCliCommand = cliCommand =>
