@@ -5,7 +5,7 @@ open DeadCommon;
 let typeDependencies = ref([]);
 
 let addTypeReference = (~posFrom, ~posTo) => {
-  if (debug) {
+  if (debug^) {
     Log_.item(
       "addTypeReference %s --> %s@.",
       posFrom |> posToString,
@@ -37,7 +37,7 @@ let pathTypeToInterface = path =>
 
 let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
   if (loc1.loc_start != loc2.loc_start) {
-    if (debug) {
+    if (debug^) {
       Log_.item(
         "extendTypeDependencies %s --> %s@.",
         loc1.loc_start |> posToString,

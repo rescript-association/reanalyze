@@ -159,7 +159,7 @@ module Stats = {
     if (hit) {
       incr(nCacheHits);
     };
-    if (debug) {
+    if (debug^) {
       Log_.info(~loc, ~name="Termination Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
@@ -172,7 +172,7 @@ module Stats = {
   };
 
   let logResult = (~functionCall, ~loc, ~resString) =>
-    if (debug) {
+    if (debug^) {
       Log_.info(~loc, ~name="Termination Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
@@ -723,7 +723,7 @@ module ExtendFunctionTable = {
             let functionName = Path.name(callee);
             if (!(callee |> FunctionTable.isInFunctionInTable(~functionTable))) {
               functionTable |> FunctionTable.addFunction(~functionName);
-              if (debug) {
+              if (debug^) {
                 Log_.info(~loc, ~name="Termination Analysis", (ppf, ()) =>
                   Format.fprintf(
                     ppf,
@@ -748,7 +748,7 @@ module ExtendFunctionTable = {
                    path |> FunctionTable.isInFunctionInTable(~functionTable) =>
                functionTable
                |> FunctionTable.addLabelToKind(~functionName, ~label);
-               if (debug) {
+               if (debug^) {
                  Log_.info(~loc, ~name="Termination Analysis", (ppf, ()) =>
                    Format.fprintf(
                      ppf,
@@ -828,7 +828,7 @@ module CheckExpressionWellFormed = {
                      };
                      functionTable
                      |> FunctionTable.addLabelToKind(~functionName, ~label);
-                     if (debug) {
+                     if (debug^) {
                        Log_.info(
                          ~loc=body.exp_loc,
                          ~name="Termination Analysis",
@@ -1036,7 +1036,7 @@ module Compile = {
         newFunctionName,
       );
       newFunctionDefinition.body = Some(vb_expr |> expression(~ctx=newCtx));
-      if (debug) {
+      if (debug^) {
         Log_.info(~loc=pat_loc, ~name="Termination Analysis", (ppf, ()) =>
           Format.fprintf(
             ppf,
@@ -1526,7 +1526,7 @@ module Eval = {
     };
 
   let analyzeFunction = (~cache, ~functionTable, ~loc, functionName) => {
-    if (debug) {
+    if (debug^) {
       Log_.log(
         "@[<v 2>@,@{<warning>Termination Analysis@} for @{<info>%s@}@]@.",
         functionName,
@@ -1724,7 +1724,7 @@ let traverseAst = (~valueBindingsTable) => {
            }
          );
 
-      if (debug) {
+      if (debug^) {
         FunctionTable.dump(functionTable);
       };
 
@@ -1757,6 +1757,6 @@ let processStructure = (structure: Typedtree.structure) => {
 };
 
 let reportResults = () =>
-  if (debug) {
+  if (debug^) {
     Stats.dump();
   };

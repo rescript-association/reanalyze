@@ -10,7 +10,7 @@ let analyzeTermination = ref(false);
 
 let analyzeExternals = true;
 
-let debug = Sys.getenv_opt("Debug") != None;
+let debug = ref(Sys.getenv_opt("Debug") != None);
 
 let removeDeadValuesWithSideEffects = false;
 
@@ -250,7 +250,7 @@ let addValueReference =
   let lastBinding = getLastBinding();
   let locFrom = lastBinding == Location.none ? locFrom : lastBinding;
   if (!locFrom.loc_ghost) {
-    if (debug) {
+    if (debug^) {
       Log_.item(
         "addValueReference %s --> %s@.",
         locFrom.loc_start |> posToString,
@@ -583,7 +583,7 @@ let addDeclaration_ =
      */
   if (!loc.loc_ghost
       && (currentSrc^ == pos.pos_fname || currentModule^ === "*include*")) {
-    if (debug) {
+    if (debug^) {
       Log_.item(
         "add%sDeclaration %s %s path:%s@.",
         declKind == Value ? "Value" : "Type",
@@ -860,7 +860,7 @@ let rec resolveRecursiveRefs =
         );
       };
 
-      if (debug) {
+      if (debug^) {
         let refsString =
           newRefs
           |> PosSet.elements
@@ -1033,7 +1033,7 @@ let reportDead = ppf => {
     |> ignore;
   };
 
-  if (debug) {
+  if (debug^) {
     Log_.item("@.File References@.@.");
     fileReferences
     |> FileHash.iter((file, files) =>

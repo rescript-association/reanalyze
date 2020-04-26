@@ -32,12 +32,12 @@ module FindSourceFile = {
   let cmt = cmt_annots =>
     switch (cmt_annots) {
     | Cmt_format.Interface(signature) =>
-      if (debug && signature.sig_items == []) {
+      if (debug^ && signature.sig_items == []) {
         Log_.item("Interface %d@.", signature.sig_items |> List.length);
       };
       interface(signature.sig_items);
     | Implementation(structure) =>
-      if (debug && structure.str_items == []) {
+      if (debug^ && structure.str_items == []) {
         Log_.item("Implementation %d@.", structure.str_items |> List.length);
       };
       implementation(structure.str_items);
@@ -46,7 +46,7 @@ module FindSourceFile = {
 };
 
 let loadCmtFile = cmtFilePath => {
-  if (debug) {
+  if (debug^) {
     Log_.item("Scanning %s@.", cmtFilePath);
   };
 
