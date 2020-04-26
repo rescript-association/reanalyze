@@ -1,4 +1,6 @@
 # master
+
+# 1.6.0
 - When file paths are implicit, e.g. `Foo.re` turn them into `./Foo.re` to help editor integration.
 - Add command-line option `-debug` and discontinue environment variable `Debug`.
 - Add command-line option `-write` and discontinue environment variable `Write`.
