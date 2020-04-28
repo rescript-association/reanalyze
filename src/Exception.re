@@ -2,6 +2,8 @@ type event =
   | Raises(Location.t)
   | Catches(Location.t);
 
+let valueBindingsTable = Hashtbl.create(15);
+
 let traverseAst = {
   let super = Tast_mapper.default;
 
@@ -27,7 +29,15 @@ let traverseAst = {
     let oldId = currentId^;
     let oldEvents = currentEvents^;
     switch (vb.vb_pat.pat_desc) {
-    | Tpat_var(id, _) => currentId := Ident.name(id)
+    | Tpat_var(id, {loc: {loc_start: pos}}) =>
+      currentId := Ident.name(id);
+      let hasRaisesAnnotation =
+        vb.vb_attributes |> Annotation.getAttributePayload((==)("raises"));
+      Hashtbl.replace(
+        valueBindingsTable,
+        Ident.name(id),
+        (pos, hasRaisesAnnotation),
+      );
     | _ => ()
     };
     let res = super.value_binding(self, vb);
@@ -47,12 +57,17 @@ let traverseAst = {
            | Catches(_) => true
            }
          );
-    let shouldReport = hasRaise && !hasCatch;
+    let hasRaisesAnnotation =
+      switch (Hashtbl.find_opt(valueBindingsTable, currentId^)) {
+      | Some((_loc, Some(_))) => true
+      | _ => false
+      };
+    let shouldReport = hasRaise && !hasCatch && !hasRaisesAnnotation;
     if (shouldReport) {
       Log_.info(~loc=vb.vb_pat.pat_loc, ~name="Exception Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
-          "%s might raise an exception and is not annotated with @raise",
+          "%s might raise an exception and is not annotated with @raises",
           currentId^,
         )
       );

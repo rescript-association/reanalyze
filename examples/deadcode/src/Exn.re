@@ -15,3 +15,6 @@ let raiseAndCatch =
   try(raise(Not_found)) {
   | _ => ()
   };
+
+[@raises]
+let raisesWithAnnotaion = () => raise(Not_found);
