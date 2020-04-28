@@ -13,25 +13,39 @@ module Event = {
 
 let valueBindingsTable = Hashtbl.create(15);
 
+type exceptions =
+  | Failure
+  | Invalid_argument
+  | Not_found;
+
 let raisesLibTable = {
   let table = Hashtbl.create(15);
   [
-    "List.hd",
-    "List.tl",
-    "List.nth",
-    "List.nth_opt",
-    "List.init",
-    "List.iter2",
-    "List.map2",
-    "List.fold_left2",
-    "List.fold_right2",
-    "List.for_all2",
-    "List.exists2",
-    "List.find",
-    "List.assoc",
-    "List.combine",
+    (
+      "List",
+      [
+        ("hd", [Failure]),
+        ("tl", [Failure]),
+        ("nth", [Failure, Invalid_argument]),
+        ("nth_opt", [Invalid_argument]),
+        ("init", [Invalid_argument]),
+        ("iter2", [Invalid_argument]),
+        ("map2", [Invalid_argument]),
+        ("fold_left2", [Invalid_argument]),
+        ("fold_right2", [Invalid_argument]),
+        ("for_all2", [Invalid_argument]),
+        ("exists2", [Invalid_argument]),
+        ("find", [Not_found]),
+        ("assoc", [Not_found]),
+        ("combine", [Invalid_argument]),
+      ],
+    ),
   ]
-  |> List.iter(s => Hashtbl.add(table, s, ()));
+  |> List.iter(((name, group)) =>
+       group
+       |> List.iter(((s, e)) => Hashtbl.add(table, name ++ "." ++ s, e))
+     );
+
   table;
 };
 
