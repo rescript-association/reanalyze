@@ -86,34 +86,21 @@ let traverseAst = {
     | _ => ()
     };
     let res = super.value_binding(self, vb);
-    let hasRaise =
-      currentEvents^
-      |> List.exists((event: Event.t) =>
-           switch (event.kind) {
-           | Calls
-           | Lib
-           | Raises => true
-           | Catches => false
-           }
-         );
-    let hasCatch =
-      currentEvents^
-      |> List.exists((event: Event.t) =>
-           switch (event.kind) {
-           | Calls
-           | Lib
-           | Raises => false
-           | Catches => true
-           }
-         );
+    let eventIsCatches = (event: Event.t) => event.kind == Catches;
+    let (eventsCatches, eventsNotCatches) =
+      currentEvents^ |> List.partition(event => eventIsCatches(event));
     let hasRaisesAnnotation =
       switch (Hashtbl.find_opt(valueBindingsTable, currentId^)) {
       | Some((_loc, Some(_))) => true
       | _ => false
       };
-    let shouldReport = hasRaise && !hasCatch && !hasRaisesAnnotation;
+    let shouldReport =
+      eventsNotCatches != [] && eventsCatches == [] && !hasRaisesAnnotation;
     if (shouldReport) {
-      Log_.info(~loc=vb.vb_pat.pat_loc, ~name="Exception Analysis", (ppf, ()) =>
+      Log_.info(
+        ~loc=(eventsNotCatches |> List.hd).loc,
+        ~name="Exception Analysis",
+        (ppf, ()) =>
         Format.fprintf(
           ppf,
           "%s might raise an exception and is not annotated with @raises",
