@@ -182,7 +182,7 @@ let cli = () => {
     ),
     (
       "-exception-cmt",
-      Arg.String(s => setDCE(Some(s))),
+      Arg.String(s => setException(Some(s))),
       "root_path Experimental exception analysis for all the .cmt files under the root path",
     ),
     (
