@@ -6,8 +6,22 @@ let traverseAst = {
     | Texp_apply({exp_desc: Texp_ident(callee, _, _)}, _) =>
       let functionName = Path.name(callee);
       if (functionName == "Pervasives.raise") {
-        Log_.item("XXX this throws@.");
+        Log_.item(
+          "XXX %s this raises@.",
+          e.exp_loc.loc_start |> DeadCommon.posToString,
+        );
       };
+    | Texp_match(_) when e.exp_desc |> Compat.texpMatchHasExceptions =>
+        Log_.item(
+          "XXX %s this catches@.",
+          e.exp_loc.loc_start |> DeadCommon.posToString,
+        );
+    | Texp_try(_) =>
+            Log_.item(
+          "XXX %s this catches@.",
+          e.exp_loc.loc_start |> DeadCommon.posToString,
+        );
+
     | _ => ()
     };
     super.expr(self, e);
