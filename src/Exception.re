@@ -8,7 +8,23 @@ let valueBindingsTable = Hashtbl.create(15);
 
 let raisesLibTable = {
   let table = Hashtbl.create(15);
-  ["List.hd"] |> List.iter(s => Hashtbl.add(table, s, ()));
+  [
+    "List.hd",
+    "List.tl",
+    "List.nth",
+    "List.nth_opt",
+    "List.init",
+    "List.iter2",
+    "List.map2",
+    "List.fold_left2",
+    "List.fold_right2",
+    "List.for_all2",
+    "List.exists2",
+    "List.find",
+    "List.assoc",
+    "List.combine",
+  ]
+  |> List.iter(s => Hashtbl.add(table, s, ()));
   table;
 };
 
@@ -31,9 +47,7 @@ let traverseAst = {
         | _ =>
           if (Hashtbl.mem(raisesLibTable, functionName)) {
             currentEvents := [Lib(functionName), ...currentEvents^];
-          };
-
-          Log_.item("XXX functionName:%s@.", functionName);
+          }
         };
       };
     | Texp_match(_) when e.exp_desc |> Compat.texpMatchHasExceptions =>
