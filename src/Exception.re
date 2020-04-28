@@ -140,7 +140,7 @@ let traverseAst = {
     let oldEvents = currentEvents^;
     let shouldUpdateCurrent = nested || currentId^ == "";
     switch (vb.vb_pat.pat_desc) {
-    | Tpat_var(id, {loc}) =>
+    | Tpat_var(id, _) =>
       if (shouldUpdateCurrent) {
         currentId := Ident.name(id);
       };
