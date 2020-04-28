@@ -74,8 +74,8 @@ let traverseAst = {
   let expr = (self: Tast_mapper.mapper, e: Typedtree.expression) => {
     switch (e.exp_desc) {
     | Texp_apply({exp_desc: Texp_ident(callee, _, _)}, args) =>
-      let functionName = Path.name(callee);
-      if (functionName == "Pervasives.raise") {
+      let calleeName = Path.name(callee);
+      if (calleeName == "Pervasives.raise") {
         let exceptions =
           switch (args) {
           | [(_, Some({exp_desc: Texp_construct(lid, _, _)}))] => [
@@ -91,7 +91,7 @@ let traverseAst = {
             ...currentEvents^,
           ];
       } else {
-        switch (Hashtbl.find_opt(valueBindingsTable, functionName)) {
+        switch (Hashtbl.find_opt(valueBindingsTable, calleeName)) {
         | Some((loc, Some(payload))) =>
           let exceptions =
             switch (payload) {
@@ -102,7 +102,7 @@ let traverseAst = {
           currentEvents :=
             [{Event.kind: Calls, loc, exceptions}, ...currentEvents^];
         | _ =>
-          switch (Hashtbl.find_opt(raisesLibTable, functionName)) {
+          switch (Hashtbl.find_opt(raisesLibTable, calleeName)) {
           | Some(exceptions) =>
             currentEvents :=
               [
