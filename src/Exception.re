@@ -1,8 +1,18 @@
-type exn =
-  | Failure
-  | Invalid_argument
-  | Not_found
-  | Other(string);
+module Exn: {
+  type t;
+  let failure: t;
+  let fromString: string => t;
+  let invalidArgument: t;
+  let notFound: t;
+  let toString: t => string;
+} = {
+  type t = string;
+  let failure = "Failure";
+  let invalidArgument = "Invalid_argument";
+  let notFound = "Not_found";
+  let fromString = s => s;
+  let toString = s => s;
+};
 
 module Event = {
   type kind =
@@ -12,34 +22,38 @@ module Event = {
     | Lib;
 
   type t = {
-    exceptions: list(exn),
+    exceptions: list(Exn.t),
     kind,
     loc: Location.t,
   };
+
+  let exceptionsToString = exceptions =>
+    exceptions |> List.map(Exn.toString) |> String.concat(" ");
 };
 
 let valueBindingsTable = Hashtbl.create(15);
 
 let raisesLibTable = {
   let table = Hashtbl.create(15);
+  open Exn;
   [
     (
       "List",
       [
-        ("hd", [Failure]),
-        ("tl", [Failure]),
-        ("nth", [Failure, Invalid_argument]),
-        ("nth_opt", [Invalid_argument]),
-        ("init", [Invalid_argument]),
-        ("iter2", [Invalid_argument]),
-        ("map2", [Invalid_argument]),
-        ("fold_left2", [Invalid_argument]),
-        ("fold_right2", [Invalid_argument]),
-        ("for_all2", [Invalid_argument]),
-        ("exists2", [Invalid_argument]),
-        ("find", [Not_found]),
-        ("assoc", [Not_found]),
-        ("combine", [Invalid_argument]),
+        ("hd", [failure]),
+        ("tl", [failure]),
+        ("nth", [failure, invalidArgument]),
+        ("nth_opt", [invalidArgument]),
+        ("init", [invalidArgument]),
+        ("iter2", [invalidArgument]),
+        ("map2", [invalidArgument]),
+        ("fold_left2", [invalidArgument]),
+        ("fold_right2", [invalidArgument]),
+        ("for_all2", [invalidArgument]),
+        ("exists2", [invalidArgument]),
+        ("find", [notFound]),
+        ("assoc", [notFound]),
+        ("combine", [invalidArgument]),
       ],
     ),
   ]
@@ -67,7 +81,7 @@ let traverseAst = {
             {
               Event.kind: Raises,
               loc: e.exp_loc,
-              exceptions: [Other("TODO_from_raise")],
+              exceptions: [Exn.fromString("TODO_from_raise")],
             },
             ...currentEvents^,
           ];
@@ -79,7 +93,7 @@ let traverseAst = {
               {
                 Event.kind: Calls,
                 loc,
-                exceptions: [Other("TODO_from_call")],
+                exceptions: [Exn.fromString("TODO_from_call")],
               },
               ...currentEvents^,
             ]
@@ -144,14 +158,13 @@ let traverseAst = {
     let shouldReport =
       eventsNotCatches != [] && eventsCatches == [] && !hasRaisesAnnotation;
     if (shouldReport) {
-      Log_.info(
-        ~loc=(eventsNotCatches |> List.hd).loc,
-        ~name="Exception Analysis",
-        (ppf, ()) =>
+      let event = eventsNotCatches |> List.hd;
+      Log_.info(~loc=event.loc, ~name="Exception Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
-          "%s might raise an exception and is not annotated with @raises",
+          "@{<info>%s@} might raise an exception @{<info>%s@} and is not annotated with @raises",
           currentId^,
+          event.exceptions |> Event.exceptionsToString,
         )
       );
     };
