@@ -70,12 +70,17 @@ let traverseAst = {
     super.expr(self, e);
   };
 
+  let nested = false;
+
   let value_binding = (self: Tast_mapper.mapper, vb: Typedtree.value_binding) => {
     let oldId = currentId^;
     let oldEvents = currentEvents^;
+    let shouldUpdateCurrent = nested || currentId^ == "";
     switch (vb.vb_pat.pat_desc) {
     | Tpat_var(id, {loc}) =>
-      currentId := Ident.name(id);
+      if (shouldUpdateCurrent) {
+        currentId := Ident.name(id);
+      };
       let hasRaisesAnnotation =
         vb.vb_attributes |> Annotation.getAttributePayload((==)("raises"));
       Hashtbl.replace(
@@ -108,8 +113,10 @@ let traverseAst = {
         )
       );
     };
-    currentId := oldId;
-    currentEvents := oldEvents;
+    if (shouldUpdateCurrent) {
+      currentId := oldId;
+      currentEvents := oldEvents;
+    };
     res;
   };
 
