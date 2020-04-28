@@ -92,7 +92,7 @@ let traverseAst = {
           ];
       } else {
         switch (Hashtbl.find_opt(valueBindingsTable, calleeName)) {
-        | Some((loc, Some(payload))) =>
+        | Some(Some(payload)) =>
           let exceptions =
             switch (payload) {
             | Annotation.StringPayload(s)
@@ -100,7 +100,10 @@ let traverseAst = {
             | _ => [Exn.fromString("TODO_from_call")]
             };
           currentEvents :=
-            [{Event.kind: Calls, loc, exceptions}, ...currentEvents^];
+            [
+              {Event.kind: Calls, loc: e.exp_loc, exceptions},
+              ...currentEvents^,
+            ];
         | _ =>
           switch (Hashtbl.find_opt(raisesLibTable, calleeName)) {
           | Some(exceptions) =>
@@ -146,7 +149,7 @@ let traverseAst = {
       Hashtbl.replace(
         valueBindingsTable,
         Ident.name(id),
-        (loc, raisesAnnotationPayload),
+        raisesAnnotationPayload,
       );
     | _ => ()
     };
@@ -156,7 +159,7 @@ let traverseAst = {
       currentEvents^ |> List.partition(event => eventIsCatches(event));
     let hasRaisesAnnotation =
       switch (Hashtbl.find_opt(valueBindingsTable, currentId^)) {
-      | Some((_loc, Some(_))) => true
+      | Some(Some(_)) => true
       | _ => false
       };
     let shouldReport =
