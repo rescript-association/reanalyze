@@ -141,7 +141,7 @@ module Stats = {
     Format.fprintf(ppf, "@]");
   };
 
-  let dump = () => Format.fprintf(Format.std_formatter, "%a@.", print, ());
+  let dump = (~ppf) => Format.fprintf(ppf, "%a@.", print, ());
 
   let newFile = () => incr(nFiles);
 
@@ -1756,7 +1756,7 @@ let processStructure = (structure: Typedtree.structure) => {
   structure |> traverseAst.structure(traverseAst) |> ignore;
 };
 
-let reportResults = () =>
+let reportResults = (~ppf) =>
   if (debug^) {
-    Stats.dump();
+    Stats.dump(~ppf);
   };

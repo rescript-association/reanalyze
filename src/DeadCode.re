@@ -85,7 +85,7 @@ let loadCmtFile = cmtFilePath => {
       | _ => ()
       };
     };
-    if (analyzeTermination^) {
+    if (termination^) {
       switch (cmt_annots) {
       | Interface(_) => ()
       | Implementation(structure) => Arnold.processStructure(structure)
@@ -100,9 +100,16 @@ let reportResults = ppf => {
   WriteDeadAnnotations.write();
 };
 
-let runAnalysis = (~cmtRoot) => {
+type analysisType =
+  | Dce
+  | Termination;
+
+let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
+  switch (analysis) {
+  | Dce => dce := true
+  | Termination => termination := true
+  };
   Log_.Color.setup();
-  let ppf = Format.std_formatter;
   switch (cmtRoot) {
   | Some(root) =>
     let rec walkSubDirs = dir => {
@@ -121,12 +128,6 @@ let runAnalysis = (~cmtRoot) => {
       };
     };
     walkSubDirs("");
-    if (dce^) {
-      reportResults(ppf);
-    };
-    if (analyzeTermination^) {
-      Arnold.reportResults();
-    };
 
   | None =>
     Paths.setProjectRoot();
@@ -153,18 +154,5 @@ let runAnalysis = (~cmtRoot) => {
               cmtFilePath |> loadCmtFile;
             });
        });
-
-    if (dce^) {
-      reportResults(ppf);
-    };
-    if (analyzeTermination^) {
-      Arnold.reportResults();
-    };
   };
-};
-
-let runTerminationAnalysis = (~cmtRoot) => {
-  dce := false;
-  analyzeTermination := true;
-  runAnalysis(~cmtRoot);
 };

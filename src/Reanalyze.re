@@ -1,3 +1,5 @@
+open DeadCommon;
+
 let version = Version.version;
 
 type cliCommand =
@@ -80,14 +82,23 @@ let cli = () => {
       Arg.Unit(versionAndExit),
       "Show version information and exit",
     ),
-    ("-write", Arg.Unit(setWrite), "Write @dead annotations directly in the source files"),
+    (
+      "-write",
+      Arg.Unit(setWrite),
+      "Write @dead annotations directly in the source files",
+    ),
   ];
 
+  let ppf = Format.std_formatter;
   let executeCliCommand = cliCommand =>
     switch (cliCommand) {
     | NoOp => printUsageAndExit()
-    | DCE(cmtRoot) => DeadCode.runAnalysis(~cmtRoot)
-    | Termination(cmtRoot) => DeadCode.runTerminationAnalysis(~cmtRoot)
+    | DCE(cmtRoot) =>
+      DeadCode.runAnalysis(~analysis=Dce, ~cmtRoot, ~ppf);
+      DeadCode.reportResults(ppf);
+    | Termination(cmtRoot) =>
+      DeadCode.runAnalysis(~analysis=Termination, ~cmtRoot, ~ppf);
+      Arnold.reportResults(~ppf);
     };
 
   Arg.parse(speclist, print_endline, usage);
