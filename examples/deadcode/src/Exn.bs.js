@@ -41,11 +41,16 @@ catch (exn$2){
   raiseAndCatch = undefined;
 }
 
+function raisesWithAnnotaion(param) {
+  throw Caml_builtin_exceptions.not_found;
+}
+
 export {
   raises ,
   catches1 ,
   catches2 ,
   raiseAndCatch ,
+  raisesWithAnnotaion ,
   
 }
 /* catches1 Not a pure module */
