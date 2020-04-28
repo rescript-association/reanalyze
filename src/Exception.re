@@ -1,26 +1,31 @@
 let traverseAst = {
   let super = Tast_mapper.default;
 
+  let currentId = ref("");
+
   let expr = (self: Tast_mapper.mapper, e: Typedtree.expression) => {
     switch (e.exp_desc) {
     | Texp_apply({exp_desc: Texp_ident(callee, _, _)}, _) =>
       let functionName = Path.name(callee);
       if (functionName == "Pervasives.raise") {
         Log_.item(
-          "XXX %s this raises@.",
+          "XXX %s %s this raises@.",
+          currentId^,
           e.exp_loc.loc_start |> DeadCommon.posToString,
         );
       };
     | Texp_match(_) when e.exp_desc |> Compat.texpMatchHasExceptions =>
-        Log_.item(
-          "XXX %s this catches@.",
-          e.exp_loc.loc_start |> DeadCommon.posToString,
-        );
+      Log_.item(
+        "XXX %s %s this catches@.",
+        currentId^,
+        e.exp_loc.loc_start |> DeadCommon.posToString,
+      )
     | Texp_try(_) =>
-            Log_.item(
-          "XXX %s this catches@.",
-          e.exp_loc.loc_start |> DeadCommon.posToString,
-        );
+      Log_.item(
+        "XXX %s %s this catches@.",
+        currentId^,
+        e.exp_loc.loc_start |> DeadCommon.posToString,
+      )
 
     | _ => ()
     };
@@ -29,18 +34,16 @@ let traverseAst = {
 
   let value_bindings = (self: Tast_mapper.mapper, (recFlag, valueBindings)) => {
     valueBindings
-    |> List.iter((vb: Typedtree.value_binding) =>
+    |> List.iter((vb: Typedtree.value_binding) => {
+         let oldId = currentId^;
          switch (vb.vb_pat.pat_desc) {
          | Tpat_var(id, _) =>
-           // Log_.item("XXX value %s@.", Ident.name(id))
-           ()
+           currentId := Ident.name(id);
+           ();
          | _ => ()
-         }
-       );
-
-    valueBindings
-    |> List.iter(valueBinding => {
-         super.value_binding(self, valueBinding) |> ignore
+         };
+         super.value_binding(self, vb) |> ignore;
+         currentId := oldId;
        });
 
     (recFlag, valueBindings);
