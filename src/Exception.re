@@ -1,6 +1,7 @@
 type event =
   | Raises(Location.t)
-  | Catches(Location.t);
+  | Catches(Location.t)
+  | Calls(Location.t);
 
 let valueBindingsTable = Hashtbl.create(15);
 
@@ -16,6 +17,12 @@ let traverseAst = {
       let functionName = Path.name(callee);
       if (functionName == "Pervasives.raise") {
         currentEvents := [Raises(e.exp_loc), ...currentEvents^];
+      } else {
+        switch (Hashtbl.find_opt(valueBindingsTable, functionName)) {
+        | Some((loc, Some(_))) =>
+          currentEvents := [Calls(loc), ...currentEvents^]
+        | _ => ()
+        };
       };
     | Texp_match(_) when e.exp_desc |> Compat.texpMatchHasExceptions =>
       currentEvents := [Catches(e.exp_loc), ...currentEvents^]
@@ -29,14 +36,14 @@ let traverseAst = {
     let oldId = currentId^;
     let oldEvents = currentEvents^;
     switch (vb.vb_pat.pat_desc) {
-    | Tpat_var(id, {loc: {loc_start: pos}}) =>
+    | Tpat_var(id, {loc}) =>
       currentId := Ident.name(id);
       let hasRaisesAnnotation =
         vb.vb_attributes |> Annotation.getAttributePayload((==)("raises"));
       Hashtbl.replace(
         valueBindingsTable,
         Ident.name(id),
-        (pos, hasRaisesAnnotation),
+        (loc, hasRaisesAnnotation),
       );
     | _ => ()
     };
@@ -45,6 +52,7 @@ let traverseAst = {
       currentEvents^
       |> List.exists(event =>
            switch (event) {
+           | Calls(_)
            | Raises(_) => true
            | Catches(_) => false
            }
@@ -53,6 +61,7 @@ let traverseAst = {
       currentEvents^
       |> List.exists(event =>
            switch (event) {
+           | Calls(_)
            | Raises(_) => false
            | Catches(_) => true
            }
