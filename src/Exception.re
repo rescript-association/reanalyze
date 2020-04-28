@@ -1,8 +1,15 @@
-type event =
-  | Raises(Location.t)
-  | Catches(Location.t)
-  | Calls(Location.t)
-  | Lib(string);
+module Event = {
+  type kind =
+    | Raises
+    | Catches
+    | Calls
+    | Lib;
+
+  type t = {
+    kind,
+    loc: Location.t,
+  };
+};
 
 let valueBindingsTable = Hashtbl.create(15);
 
@@ -39,20 +46,25 @@ let traverseAst = {
     | Texp_apply({exp_desc: Texp_ident(callee, _, _)}, _) =>
       let functionName = Path.name(callee);
       if (functionName == "Pervasives.raise") {
-        currentEvents := [Raises(e.exp_loc), ...currentEvents^];
+        currentEvents :=
+          [{Event.kind: Raises, loc: e.exp_loc}, ...currentEvents^];
       } else {
         switch (Hashtbl.find_opt(valueBindingsTable, functionName)) {
         | Some((loc, Some(_))) =>
-          currentEvents := [Calls(loc), ...currentEvents^]
+          currentEvents := [{Event.kind: Calls, loc}, ...currentEvents^]
         | _ =>
           if (Hashtbl.mem(raisesLibTable, functionName)) {
-            currentEvents := [Lib(functionName), ...currentEvents^];
+            currentEvents :=
+              [{Event.kind: Lib, loc: e.exp_loc}, ...currentEvents^];
           }
         };
       };
     | Texp_match(_) when e.exp_desc |> Compat.texpMatchHasExceptions =>
-      currentEvents := [Catches(e.exp_loc), ...currentEvents^]
-    | Texp_try(_) => currentEvents := [Catches(e.exp_loc), ...currentEvents^]
+      currentEvents :=
+        [{Event.kind: Catches, loc: e.exp_loc}, ...currentEvents^]
+    | Texp_try(_) =>
+      currentEvents :=
+        [{Event.kind: Catches, loc: e.exp_loc}, ...currentEvents^]
     | _ => ()
     };
     super.expr(self, e);
@@ -76,22 +88,22 @@ let traverseAst = {
     let res = super.value_binding(self, vb);
     let hasRaise =
       currentEvents^
-      |> List.exists(event =>
-           switch (event) {
-           | Calls(_)
-           | Lib(_)
-           | Raises(_) => true
-           | Catches(_) => false
+      |> List.exists((event: Event.t) =>
+           switch (event.kind) {
+           | Calls
+           | Lib
+           | Raises => true
+           | Catches => false
            }
          );
     let hasCatch =
       currentEvents^
-      |> List.exists(event =>
-           switch (event) {
-           | Calls(_)
-           | Lib(_)
-           | Raises(_) => false
-           | Catches(_) => true
+      |> List.exists((event: Event.t) =>
+           switch (event.kind) {
+           | Calls
+           | Lib
+           | Raises => false
+           | Catches => true
            }
          );
     let hasRaisesAnnotation =
