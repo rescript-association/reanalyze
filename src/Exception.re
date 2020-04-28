@@ -1,3 +1,9 @@
+type exn =
+  | Failure
+  | Invalid_argument
+  | Not_found
+  | Other(string);
+
 module Event = {
   type kind =
     | Raises
@@ -6,17 +12,13 @@ module Event = {
     | Lib;
 
   type t = {
+    exceptions: list(exn),
     kind,
     loc: Location.t,
   };
 };
 
 let valueBindingsTable = Hashtbl.create(15);
-
-type exceptions =
-  | Failure
-  | Invalid_argument
-  | Not_found;
 
 let raisesLibTable = {
   let table = Hashtbl.create(15);
@@ -61,24 +63,50 @@ let traverseAst = {
       let functionName = Path.name(callee);
       if (functionName == "Pervasives.raise") {
         currentEvents :=
-          [{Event.kind: Raises, loc: e.exp_loc}, ...currentEvents^];
+          [
+            {
+              Event.kind: Raises,
+              loc: e.exp_loc,
+              exceptions: [Other("TODO_from_raise")],
+            },
+            ...currentEvents^,
+          ];
       } else {
         switch (Hashtbl.find_opt(valueBindingsTable, functionName)) {
         | Some((loc, Some(_))) =>
-          currentEvents := [{Event.kind: Calls, loc}, ...currentEvents^]
+          currentEvents :=
+            [
+              {
+                Event.kind: Calls,
+                loc,
+                exceptions: [Other("TODO_from_call")],
+              },
+              ...currentEvents^,
+            ]
         | _ =>
-          if (Hashtbl.mem(raisesLibTable, functionName)) {
+          switch (Hashtbl.find_opt(raisesLibTable, functionName)) {
+          | Some(exceptions) =>
             currentEvents :=
-              [{Event.kind: Lib, loc: e.exp_loc}, ...currentEvents^];
+              [
+                {Event.kind: Lib, loc: e.exp_loc, exceptions},
+                ...currentEvents^,
+              ]
+          | None => ()
           }
         };
       };
     | Texp_match(_) when e.exp_desc |> Compat.texpMatchHasExceptions =>
       currentEvents :=
-        [{Event.kind: Catches, loc: e.exp_loc}, ...currentEvents^]
+        [
+          {Event.kind: Catches, loc: e.exp_loc, exceptions: []},
+          ...currentEvents^,
+        ]
     | Texp_try(_) =>
       currentEvents :=
-        [{Event.kind: Catches, loc: e.exp_loc}, ...currentEvents^]
+        [
+          {Event.kind: Catches, loc: e.exp_loc, exceptions: []},
+          ...currentEvents^,
+        ]
     | _ => ()
     };
     super.expr(self, e);
