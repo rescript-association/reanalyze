@@ -1,9 +1,16 @@
 type event =
   | Raises(Location.t)
   | Catches(Location.t)
-  | Calls(Location.t);
+  | Calls(Location.t)
+  | Lib(string);
 
 let valueBindingsTable = Hashtbl.create(15);
+
+let raisesLibTable = {
+  let table = Hashtbl.create(15);
+  ["List.hd"] |> List.iter(s => Hashtbl.add(table, s, ()));
+  table;
+};
 
 let traverseAst = {
   let super = Tast_mapper.default;
@@ -21,7 +28,12 @@ let traverseAst = {
         switch (Hashtbl.find_opt(valueBindingsTable, functionName)) {
         | Some((loc, Some(_))) =>
           currentEvents := [Calls(loc), ...currentEvents^]
-        | _ => ()
+        | _ =>
+          if (Hashtbl.mem(raisesLibTable, functionName)) {
+            currentEvents := [Lib(functionName), ...currentEvents^];
+          };
+
+          Log_.item("XXX functionName:%s@.", functionName);
         };
       };
     | Texp_match(_) when e.exp_desc |> Compat.texpMatchHasExceptions =>
@@ -53,6 +65,7 @@ let traverseAst = {
       |> List.exists(event =>
            switch (event) {
            | Calls(_)
+           | Lib(_)
            | Raises(_) => true
            | Catches(_) => false
            }
@@ -62,6 +75,7 @@ let traverseAst = {
       |> List.exists(event =>
            switch (event) {
            | Calls(_)
+           | Lib(_)
            | Raises(_) => false
            | Catches(_) => true
            }

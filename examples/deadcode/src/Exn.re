@@ -23,3 +23,5 @@ let callsRaiseWithAnnotation = raisesWithAnnotaion();
 
 [@raises]
 let callsRaiseWithAnnotationAndIsAnnotated = raisesWithAnnotaion();
+
+let z = List.hd([]);
