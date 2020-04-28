@@ -47,9 +47,7 @@ let traverseAst = {
     let oldId = currentId^;
     let oldEvents = currentEvents^;
     switch (vb.vb_pat.pat_desc) {
-    | Tpat_var(id, _) =>
-      currentId := Ident.name(id);
-      ();
+    | Tpat_var(id, _) => currentId := Ident.name(id)
     | _ => ()
     };
     let res = super.value_binding(self, vb);

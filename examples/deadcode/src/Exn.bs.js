@@ -32,10 +32,20 @@ catch (exn$1){
   }
 }
 
+var raiseAndCatch;
+
+try {
+  throw Caml_builtin_exceptions.not_found;
+}
+catch (exn$2){
+  raiseAndCatch = undefined;
+}
+
 export {
   raises ,
   catches1 ,
   catches2 ,
+  raiseAndCatch ,
   
 }
 /* catches1 Not a pure module */

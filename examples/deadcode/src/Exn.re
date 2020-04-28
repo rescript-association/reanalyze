@@ -10,3 +10,8 @@ let catches2 =
   | _ => ()
   | exception Not_found => ()
   };
+
+let raiseAndCatch =
+  try(raise(Not_found)) {
+  | _ => ()
+  };
