@@ -35,6 +35,7 @@ module FindSourceFile = {
 
 type analysisType =
   | Dce
+  | Exception
   | Termination;
 
 let loadCmtFile = (~analysis, cmtFilePath) => {
@@ -57,6 +58,7 @@ let loadCmtFile = (~analysis, cmtFilePath) => {
 
     switch (analysis) {
     | Dce => cmt_infos |> DeadCode.processCmt(~cmtFilePath)
+    | Exception => cmt_infos |> Exception.processCmt
     | Termination => cmt_infos |> Arnold.processCmt
     };
   };
@@ -114,11 +116,13 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
   | Dce =>
     reportDead(ppf);
     WriteDeadAnnotations.write();
+  | Exception => Exception.reportResults(~ppf)
   | Termination => Arnold.reportResults(~ppf)
   };
 };
 
 type cliCommand =
+  | Exception(option(string))
   | DCE(option(string))
   | NoOp
   | Termination(option(string));
@@ -142,6 +146,9 @@ let cli = () => {
   }
   and setDCE = cmtRoot => {
     DCE(cmtRoot) |> setCliCommand;
+  }
+  and setException = cmtRoot => {
+    Exception(cmtRoot) |> setCliCommand;
   }
   and setDebug = () => {
     DeadCommon.debug := true;
@@ -167,6 +174,16 @@ let cli = () => {
       "-dce-cmt",
       Arg.String(s => setDCE(Some(s))),
       "root_path Experimental DCE for all the .cmt files under the root path",
+    ),
+    (
+      "-exception",
+      Arg.Unit(() => setException(None)),
+      "Experimental eexception analysis",
+    ),
+    (
+      "-exception-cmt",
+      Arg.String(s => setDCE(Some(s))),
+      "root_path Experimental exception analysis for all the .cmt files under the root path",
     ),
     (
       "-termination",
@@ -210,6 +227,7 @@ let cli = () => {
     switch (cliCommand) {
     | NoOp => printUsageAndExit()
     | DCE(cmtRoot) => runAnalysis(~analysis=Dce, ~cmtRoot, ~ppf)
+    | Exception(cmtRoot) => runAnalysis(~analysis=Exception, ~cmtRoot, ~ppf)
     | Termination(cmtRoot) =>
       runAnalysis(~analysis=Termination, ~cmtRoot, ~ppf)
     };
