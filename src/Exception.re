@@ -73,16 +73,21 @@ let traverseAst = {
 
   let expr = (self: Tast_mapper.mapper, e: Typedtree.expression) => {
     switch (e.exp_desc) {
-    | Texp_apply({exp_desc: Texp_ident(callee, _, _)}, _) =>
+    | Texp_apply({exp_desc: Texp_ident(callee, _, _)}, args) =>
       let functionName = Path.name(callee);
       if (functionName == "Pervasives.raise") {
+        let exceptions =
+          switch (args) {
+          | [(_, Some({exp_desc: Texp_construct(lid, _, _)}))] => [
+              Exn.fromString(
+                lid.txt |> Longident.flatten |> String.concat("."),
+              ),
+            ]
+          | _ => [Exn.fromString("TODO_from_raise")]
+          };
         currentEvents :=
           [
-            {
-              Event.kind: Raises,
-              loc: e.exp_loc,
-              exceptions: [Exn.fromString("TODO_from_raise")],
-            },
+            {Event.kind: Raises, loc: e.exp_loc, exceptions},
             ...currentEvents^,
           ];
       } else {
