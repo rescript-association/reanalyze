@@ -1,5 +1,6 @@
 type attributePayload =
   | BoolPayload(bool)
+  | ConstructPayload(string)
   | FloatPayload(string)
   | IdentPayload(Longident.t)
   | IntPayload(string)
@@ -30,6 +31,8 @@ let rec getAttributePayload = (checkText, attributes: Typedtree.attributes) => {
         _,
       } =>
       Some(BoolPayload(s == "true"))
+    | {pexp_desc: Pexp_construct({txt: Lident(s)}, _), _} =>
+      Some(ConstructPayload(s))
     | {pexp_desc: Pexp_tuple(exprs)} =>
       let payloads =
         exprs

@@ -92,16 +92,15 @@ let traverseAst = {
           ];
       } else {
         switch (Hashtbl.find_opt(valueBindingsTable, functionName)) {
-        | Some((loc, Some(_))) =>
+        | Some((loc, Some(payload))) =>
+          let exceptions =
+            switch (payload) {
+            | Annotation.StringPayload(s)
+            | Annotation.ConstructPayload(s) => [Exn.fromString(s)]
+            | _ => [Exn.fromString("TODO_from_call")]
+            };
           currentEvents :=
-            [
-              {
-                Event.kind: Calls,
-                loc,
-                exceptions: [Exn.fromString("TODO_from_call")],
-              },
-              ...currentEvents^,
-            ]
+            [{Event.kind: Calls, loc, exceptions}, ...currentEvents^];
         | _ =>
           switch (Hashtbl.find_opt(raisesLibTable, functionName)) {
           | Some(exceptions) =>
@@ -142,12 +141,12 @@ let traverseAst = {
       if (shouldUpdateCurrent) {
         currentId := Ident.name(id);
       };
-      let hasRaisesAnnotation =
+      let raisesAnnotationPayload =
         vb.vb_attributes |> Annotation.getAttributePayload((==)("raises"));
       Hashtbl.replace(
         valueBindingsTable,
         Ident.name(id),
-        (loc, hasRaisesAnnotation),
+        (loc, raisesAnnotationPayload),
       );
     | _ => ()
     };
