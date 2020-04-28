@@ -45,12 +45,16 @@ function raisesWithAnnotaion(param) {
   throw Caml_builtin_exceptions.not_found;
 }
 
+throw Caml_builtin_exceptions.not_found;
+
 export {
   raises ,
   catches1 ,
   catches2 ,
   raiseAndCatch ,
   raisesWithAnnotaion ,
+  callsRaiseWithAnnotation ,
+  callsRaiseWithAnnotationAndIsAnnotated ,
   
 }
 /* catches1 Not a pure module */

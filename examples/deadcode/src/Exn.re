@@ -18,3 +18,8 @@ let raiseAndCatch =
 
 [@raises]
 let raisesWithAnnotaion = () => raise(Not_found);
+
+let callsRaiseWithAnnotation = raisesWithAnnotaion();
+
+[@raises]
+let callsRaiseWithAnnotationAndIsAnnotated = raisesWithAnnotaion();
