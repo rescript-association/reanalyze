@@ -1,11 +1,25 @@
 let traverseAst = {
   let super = Tast_mapper.default;
 
+  let expr = (self: Tast_mapper.mapper, e: Typedtree.expression) => {
+    switch (e.exp_desc) {
+    | Texp_apply({exp_desc: Texp_ident(callee, _, _)}, _) =>
+      let functionName = Path.name(callee);
+      if (functionName == "Pervasives.raise") {
+        Log_.item("XXX this throws@.");
+      };
+    | _ => ()
+    };
+    super.expr(self, e);
+  };
+
   let value_bindings = (self: Tast_mapper.mapper, (recFlag, valueBindings)) => {
     valueBindings
     |> List.iter((vb: Typedtree.value_binding) =>
          switch (vb.vb_pat.pat_desc) {
-         | Tpat_var(id, _) => Log_.item("XXX value %s@.", Ident.name(id))
+         | Tpat_var(id, _) =>
+           // Log_.item("XXX value %s@.", Ident.name(id))
+           ()
          | _ => ()
          }
        );
@@ -18,7 +32,7 @@ let traverseAst = {
     (recFlag, valueBindings);
   };
 
-  Tast_mapper.{...super, value_bindings};
+  Tast_mapper.{...super, expr, value_bindings};
 };
 
 let processStructure = (structure: Typedtree.structure) => {
