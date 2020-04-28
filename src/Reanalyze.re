@@ -2,6 +2,122 @@ open DeadCommon;
 
 let version = Version.version;
 
+module FindSourceFile = {
+  let rec interface = items =>
+    switch (items) {
+    | [{Typedtree.sig_loc}, ...rest] =>
+      !Sys.file_exists(sig_loc.loc_start.pos_fname)
+        ? interface(rest) : Some(sig_loc.loc_start.pos_fname)
+    | [] => None
+    };
+  let rec implementation = items =>
+    switch (items) {
+    | [{Typedtree.str_loc}, ...rest] =>
+      !Sys.file_exists(str_loc.loc_start.pos_fname)
+        ? implementation(rest) : Some(str_loc.loc_start.pos_fname)
+    | [] => None
+    };
+  let cmt = cmt_annots =>
+    switch (cmt_annots) {
+    | Cmt_format.Interface(signature) =>
+      if (debug^ && signature.sig_items == []) {
+        Log_.item("Interface %d@.", signature.sig_items |> List.length);
+      };
+      interface(signature.sig_items);
+    | Implementation(structure) =>
+      if (debug^ && structure.str_items == []) {
+        Log_.item("Implementation %d@.", structure.str_items |> List.length);
+      };
+      implementation(structure.str_items);
+    | _ => None
+    };
+};
+
+type analysisType =
+  | Dce
+  | Termination;
+
+let loadCmtFile = (~analysis, cmtFilePath) => {
+  if (debug^) {
+    Log_.item("Scanning %s@.", cmtFilePath);
+  };
+
+  let cmt_infos = Cmt_format.read_cmt(cmtFilePath);
+
+  switch (cmt_infos.cmt_annots |> FindSourceFile.cmt) {
+  | None => ()
+
+  | Some(sourceFile) =>
+    FileHash.addFile(fileReferences, sourceFile);
+    currentSrc := sourceFile;
+    currentModule := Paths.getModuleName(sourceFile);
+    currentModuleName :=
+      currentModule^
+      |> Name.create(~isInterface=Filename.check_suffix(currentSrc^, "i"));
+
+    switch (analysis) {
+    | Dce => cmt_infos |> DeadCode.processCmt(~cmtFilePath)
+    | Termination => cmt_infos |> Arnold.processCmt
+    };
+  };
+};
+
+let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
+  Log_.Color.setup();
+  let (+++) = Filename.concat;
+  switch (cmtRoot) {
+  | Some(root) =>
+    let rec walkSubDirs = dir => {
+      let absDir = dir == "" ? root : root +++ dir;
+      let skipDir = {
+        let base = Filename.basename(dir);
+        base == "node_modules" || base == "_esy";
+      };
+      if (!skipDir && Sys.file_exists(absDir)) {
+        if (Sys.is_directory(absDir)) {
+          absDir |> Sys.readdir |> Array.iter(d => walkSubDirs(dir +++ d));
+        } else if (Filename.check_suffix(absDir, ".cmt")
+                   || Filename.check_suffix(absDir, ".cmti")) {
+          absDir |> loadCmtFile(~analysis);
+        };
+      };
+    };
+    walkSubDirs("");
+
+  | None =>
+    Paths.setProjectRoot();
+    let lib_bs = Paths.projectRoot^ +++ "lib" +++ "bs";
+
+    let sourceDirs = Paths.readSourceDirs(~configSources=None);
+    sourceDirs
+    |> List.iter(sourceDir => {
+         let libBsSourceDir = Filename.concat(lib_bs, sourceDir);
+         let files =
+           switch (Sys.readdir(libBsSourceDir) |> Array.to_list) {
+           | files => files
+           | exception (Sys_error(_)) => []
+           };
+         let cmtFiles =
+           files
+           |> List.filter(x =>
+                Filename.check_suffix(x, ".cmt")
+                || Filename.check_suffix(x, ".cmti")
+              );
+         cmtFiles
+         |> List.iter(cmtFile => {
+              let cmtFilePath = Filename.concat(libBsSourceDir, cmtFile);
+              cmtFilePath |> loadCmtFile(~analysis);
+            });
+       });
+  };
+  switch (analysis) {
+  | Dce =>
+    reportDead(ppf);
+    WriteDeadAnnotations.write();
+  | Termination => Arnold.reportResults(~ppf)
+  };
+};
+
 type cliCommand =
   | DCE(option(string))
   | NoOp
@@ -93,12 +209,9 @@ let cli = () => {
   let executeCliCommand = cliCommand =>
     switch (cliCommand) {
     | NoOp => printUsageAndExit()
-    | DCE(cmtRoot) =>
-      DeadCode.runAnalysis(~analysis=Dce, ~cmtRoot, ~ppf);
-      DeadCode.reportResults(ppf);
+    | DCE(cmtRoot) => runAnalysis(~analysis=Dce, ~cmtRoot, ~ppf)
     | Termination(cmtRoot) =>
-      DeadCode.runAnalysis(~analysis=Termination, ~cmtRoot, ~ppf);
-      Arnold.reportResults(~ppf);
+      runAnalysis(~analysis=Termination, ~cmtRoot, ~ppf)
     };
 
   Arg.parse(speclist, print_endline, usage);

@@ -1756,6 +1756,13 @@ let processStructure = (structure: Typedtree.structure) => {
   structure |> traverseAst.structure(traverseAst) |> ignore;
 };
 
+let processCmt = (cmt_infos: Cmt_format.cmt_infos) =>
+  switch (cmt_infos.cmt_annots) {
+  | Interface(_) => ()
+  | Implementation(structure) => processStructure(structure)
+  | _ => ()
+  };
+
 let reportResults = (~ppf) =>
   if (debug^) {
     Stats.dump(~ppf);

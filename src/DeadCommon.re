@@ -1,13 +1,7 @@
 /* Adapted from https://github.com/LexiFi/dead_code_analyzer */
 
-// Turn on the main dead code analysis
-let dce = ref(false);
-// Turn on the termination analysis
-let termination = ref(false);
-
 // Turn on type analysis
 let analyzeTypes = ref(true);
-
 
 let analyzeExternals = true;
 
