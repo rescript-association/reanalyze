@@ -14,30 +14,10 @@ let traverseAst = {
       let functionName = Path.name(callee);
       if (functionName == "Pervasives.raise") {
         currentEvents := [Raises(e.exp_loc), ...currentEvents^];
-        Log_.item(
-          "XXX %s %s this raises #currentEvents:%d@.",
-          currentId^,
-          e.exp_loc.loc_start |> DeadCommon.posToString,
-          List.length(currentEvents^),
-        );
       };
     | Texp_match(_) when e.exp_desc |> Compat.texpMatchHasExceptions =>
-      currentEvents := [Catches(e.exp_loc), ...currentEvents^];
-      Log_.item(
-        "XXX %s %s this catches #currentEvents:%d@.",
-        currentId^,
-        e.exp_loc.loc_start |> DeadCommon.posToString,
-        List.length(currentEvents^),
-      );
-    | Texp_try(_) =>
-      currentEvents := [Catches(e.exp_loc), ...currentEvents^];
-      Log_.item(
-        "XXX %s %s this catches #currentEvents:%d@.",
-        currentId^,
-        e.exp_loc.loc_start |> DeadCommon.posToString,
-        List.length(currentEvents^),
-      );
-
+      currentEvents := [Catches(e.exp_loc), ...currentEvents^]
+    | Texp_try(_) => currentEvents := [Catches(e.exp_loc), ...currentEvents^]
     | _ => ()
     };
     super.expr(self, e);
@@ -51,6 +31,32 @@ let traverseAst = {
     | _ => ()
     };
     let res = super.value_binding(self, vb);
+    let hasRaise =
+      currentEvents^
+      |> List.exists(event =>
+           switch (event) {
+           | Raises(_) => true
+           | Catches(_) => false
+           }
+         );
+    let hasCatch =
+      currentEvents^
+      |> List.exists(event =>
+           switch (event) {
+           | Raises(_) => false
+           | Catches(_) => true
+           }
+         );
+    let shouldReport = hasRaise && !hasCatch;
+    if (shouldReport) {
+      Log_.info(~loc=vb.vb_pat.pat_loc, ~name="Exception Analysis", (ppf, ()) =>
+        Format.fprintf(
+          ppf,
+          "%s might raise an exception and is not annotated with @raise",
+          currentId^,
+        )
+      );
+    };
     currentId := oldId;
     currentEvents := oldEvents;
     res;
