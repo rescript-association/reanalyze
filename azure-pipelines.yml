@@ -37,16 +37,25 @@ jobs:
     parameters:
       platform: Linux
       vmImage: ubuntu-16.04
+      test: true
+
+  - template: .ci/build-platform.yml
+    parameters:
+      platform: Linux
+      vmImage: ubuntu-16.04
+      test: false
 
   - template: .ci/build-platform.yml
     parameters:
       platform: macOS
       vmImage: macOS-10.14
+      test: true
 
   - template: .ci/build-platform.yml
     parameters:
       platform: Windows
       vmImage: vs2017-win2016
+      test: true
 
   # This job is kept here as we want to have the platform names in the same file
   - job: Release
