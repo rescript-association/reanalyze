@@ -3,7 +3,7 @@ parameters:
   vmImage: "macOS-10.14"
 
 jobs:
-  - job: ${{ parameters.platform }}
+  - job: ${{ parameters.name }}
     pool:
       vmImage: ${{ parameters.vmImage }}
       demands: node.js
