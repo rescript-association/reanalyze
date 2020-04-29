@@ -46,6 +46,7 @@ jobs:
       platform: Linux
       vmImage: ubuntu-16.04
       test: false
+      esy: @408
 
   - template: .ci/build-platform.yml
     parameters:
