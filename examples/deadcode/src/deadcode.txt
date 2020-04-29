@@ -1074,6 +1074,17 @@
   addValueDeclaration +make ExportWithRename.re:3:4 path:+ExportWithRename
   addValueReference ExportWithRename.re:3:4 --> ExportWithRename.re:3:13
   addValueReference ExportWithRename.re:3:4 --> React.re:5:0
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Exn.cmt
+  addValueDeclaration +raises Exn.re:1:4 path:+Exn
+  addValueDeclaration +catches1 Exn.re:3:4 path:+Exn
+  addValueDeclaration +catches2 Exn.re:8:4 path:+Exn
+  addValueDeclaration +raiseAndCatch Exn.re:14:4 path:+Exn
+  addValueDeclaration +raisesWithAnnotaion Exn.re:20:4 path:+Exn
+  addValueDeclaration +callsRaiseWithAnnotation Exn.re:22:4 path:+Exn
+  addValueDeclaration +callsRaiseWithAnnotationAndIsAnnotated Exn.re:25:4 path:+Exn
+  addValueDeclaration +z Exn.re:27:4 path:+Exn
+  addValueReference Exn.re:22:4 --> Exn.re:20:4
+  addValueReference Exn.re:25:4 --> Exn.re:20:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmti
   addValueDeclaration +get ImmutableArray.rei:5:15 path:ImmutableArray.Array
   addValueDeclaration +fromArray ImmutableArray.rei:7:0 path:ImmutableArray
@@ -1658,6 +1669,7 @@ File References
 
   TestFirstClassModules.re -->> 
   TestEmitInnerModules.re -->> 
+  Exn.re -->> 
   DeadTestBlacklist.re -->> 
   Opaque.re -->> 
   TypeParams2.re -->> 
@@ -1882,6 +1894,14 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +Exn.+z: 0 references () [0]
+  Dead Value +Exn.+callsRaiseWithAnnotationAndIsAnnotated: 0 references () [0]
+  Dead Value +Exn.+callsRaiseWithAnnotation: 0 references () [0]
+  Live Value +Exn.+raisesWithAnnotaion: 2 references (Exn.re:22:4, Exn.re:25:4) [0]
+  Dead Value +Exn.+raiseAndCatch: 0 references () [0]
+  Dead Value +Exn.+catches2: 0 references () [0]
+  Dead Value +Exn.+catches1: 0 references () [0]
+  Dead Value +Exn.+raises: 0 references () [0]
   Live Value +ExportWithRename.+make: 1 references (DeadTest:0:-1) [0]
   Live Value +FirstClassModules.+someFunctorAsFunction: 0 references () [0]
   Live Value +FirstClassModules.SomeFunctor.+ww: 1 references (FirstClassModules.re:46:20) [0]
@@ -2819,6 +2839,40 @@ File References
   +x is never used
   <-- line 7
   [@dead "+x"] let x: int;
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 1, characters 0-35
+  +raises is never used
+  <-- line 1
+  [@dead "+raises"] let raises = () => raise(Not_found);
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 3, characters 0-48
+  +catches1 is never used
+  <-- line 3
+  [@dead "+catches1"] let catches1 =
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 8, characters 0-74
+  +catches2 is never used
+  <-- line 8
+  [@dead "+catches2"] let catches2 =
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 14, characters 0-61
+  +raiseAndCatch is never used and could have side effects
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 22, characters 0-52
+  +callsRaiseWithAnnotation is never used and could have side effects
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 24, characters 0-76
+  +callsRaiseWithAnnotationAndIsAnnotated is never used and could have side effects
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 27, characters 0-19
+  +z is never used and could have side effects
 
   Warning Dead Type
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.re", line 2, characters 2-8
