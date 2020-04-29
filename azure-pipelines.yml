@@ -39,6 +39,7 @@ jobs:
       platform: Linux
       vmImage: ubuntu-16.04
       test: true
+      esy: ""
 
   - template: .ci/build-platform.yml
     parameters:
@@ -54,6 +55,7 @@ jobs:
       platform: macOS
       vmImage: macOS-10.14
       test: true
+      esy: ""
 
   - template: .ci/build-platform.yml
     parameters:
@@ -61,6 +63,7 @@ jobs:
       platform: Windows
       vmImage: vs2017-win2016
       test: true
+      esy: ""
 
   # This job is kept here as we want to have the platform names in the same file
   - job: Release
