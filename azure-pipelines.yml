@@ -43,19 +43,19 @@ jobs:
 
   - template: .ci/build-platform.yml
     parameters:
-      name: macOS408
-      platform: macOS
-      vmImage: macOS-10.14
-      test: false
-      esy: "@408"
-
-  - template: .ci/build-platform.yml
-    parameters:
       name: macOS
       platform: macOS
       vmImage: macOS-10.14
       test: true
       esy: ""
+
+  - template: .ci/build-platform.yml
+    parameters:
+      name: macOS408
+      platform: macOS
+      vmImage: macOS-10.14
+      test: false
+      esy: "@408"
 
   - template: .ci/build-platform.yml
     parameters:
