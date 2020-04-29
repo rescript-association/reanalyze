@@ -43,9 +43,9 @@ jobs:
 
   - template: .ci/build-platform.yml
     parameters:
-      name: Linux408
-      platform: Linux
-      vmImage: ubuntu-16.04
+      name: macOS408
+      platform: macOS
+      vmImage: macOS-10.14
       test: false
       esy: "@408"
 
