@@ -43,6 +43,13 @@ jobs:
           echo "##vso[task.setvariable variable=esy_cache_source_path]$ESY_CACHE_SOURCE_PATH"
         displayName: "Set ESY_CACHE_SOURCE_PATH"
       - bash: |
+          ESY_CMDLINE=${{ parameters.esy }}
+          echo "ESY_CMDLINE: $ESY_CMDLINE"
+          # This will be exposed as an env var ESY_CMDLINE, or an
+          # Azure var esy_cmdline
+          echo "##vso[task.setvariable variable=esy_cmdline]$ESY_CMDLINE"
+        displayName: "Set ESY_CMDLINE"
+      - bash: |
           if [ "$AGENT_OS" == "Windows_NT" ]; then
             STAGING_DIRECTORY_UNIX=$( cygpath --unix "$STAGING_DIRECTORY")
           else
