@@ -81,18 +81,18 @@ jobs:
         displayName: "Find reanalyze.exe"
       - bash: |
           rm examples/reanalyze.exe
-          cp `npx esy x which reanalyze.exe` examples/reanalyze.exe	
+          cp `npx esy ${{ parameters.esy }} x which reanalyze.exe` examples/reanalyze.exe	
           rm examples/deadcodeppx.exe
-          cp `npx esy x which deadcodeppx.exe` examples/deadcodeppx.exe
+          cp `npx esy ${{ parameters.esy }} x which deadcodeppx.exe` examples/deadcodeppx.exe
           rm examples/lazyLoad.exe
-          cp `npx esy x which lazyLoad.exe` examples/lazyLoad.exe
+          cp `npx esy ${{ parameters.esy }} x which lazyLoad.exe` examples/lazyLoad.exe
         displayName: "Copy reanalyze.exe, deadcodeppx.exe, lazyLoad.exe to examples/"
       - bash: npm test
         displayName: "Test command"
         condition: eq('${{ parameters.test }}', true)
       - bash: mkdir _release
         displayName: "Create _release directory"
-      - bash: cp `npx esy x which reanalyze.exe` _release/reanalyze.exe
+      - bash: cp `npx esy ${{ parameters.esy }} x which reanalyze.exe` _release/reanalyze.exe
         displayName: "Copy reanalyze.exe to _release"
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact: ${{ parameters.name }}"
