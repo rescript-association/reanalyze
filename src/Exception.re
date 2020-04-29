@@ -202,5 +202,4 @@ let processCmt = (cmt_infos: Cmt_format.cmt_infos) =>
   | _ => ()
   };
 
-let reportResults = (~ppf) =>
-  Format.fprintf(ppf, "Report Exception results@.");
+let reportResults = (~ppf as _) => ();

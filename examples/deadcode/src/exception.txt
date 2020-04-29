@@ -1,0 +1,12 @@
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 1, characters 19-35
+  raises might raise an exception Not_found and is not annotated with @raises
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 22, characters 31-52
+  callsRaiseWithAnnotation might raise an exception Not_found and is not annotated with @raises
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 27, characters 8-19
+  z might raise an exception Failure and is not annotated with @raises
