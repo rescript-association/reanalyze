@@ -1,7 +1,9 @@
 module Exn: {
   type t;
   let failure: t;
+  let fromLid: Asttypes.loc(Longident.t) => t;
   let fromString: string => t;
+  let matchFailure: t;
   let invalidArgument: t;
   let notFound: t;
   let toString: t => string;
@@ -9,7 +11,10 @@ module Exn: {
   type t = string;
   let failure = "Failure";
   let invalidArgument = "Invalid_argument";
+  let matchFailure = "Match_failure";
   let notFound = "Not_found";
+  let fromLid = lid =>
+    lid.Asttypes.txt |> Longident.flatten |> String.concat(".");
   let fromString = s => s;
   let toString = s => s;
 };
@@ -71,25 +76,35 @@ let traverseAst = {
   let currentId = ref("");
   let currentEvents = ref([]);
 
-  let expr = (self: Tast_mapper.mapper, e: Typedtree.expression) => {
-    switch (e.exp_desc) {
+  let exceptionsOfPatterns = patterns =>
+    patterns
+    |> List.fold_left(
+         (acc, desc) =>
+           switch (desc) {
+           | Typedtree.Tpat_construct(lid, _, _) => [
+               Exn.fromLid(lid),
+               ...acc,
+             ]
+           | _ => acc
+           },
+         [],
+       );
+
+  let expr = (self: Tast_mapper.mapper, expr: Typedtree.expression) => {
+    let loc = expr.exp_loc;
+    switch (expr.exp_desc) {
     | Texp_apply({exp_desc: Texp_ident(callee, _, _)}, args) =>
       let calleeName = Path.name(callee);
       if (calleeName == "Pervasives.raise") {
         let exceptions =
           switch (args) {
           | [(_, Some({exp_desc: Texp_construct(lid, _, _)}))] => [
-              Exn.fromString(
-                lid.txt |> Longident.flatten |> String.concat("."),
-              ),
+              Exn.fromLid(lid),
             ]
           | _ => [Exn.fromString("TODO_from_raise")]
           };
         currentEvents :=
-          [
-            {Event.kind: Raises, loc: e.exp_loc, exceptions},
-            ...currentEvents^,
-          ];
+          [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
       } else {
         switch (Hashtbl.find_opt(valueBindingsTable, calleeName)) {
         | Some(Some(payload)) =>
@@ -100,37 +115,39 @@ let traverseAst = {
             | _ => [Exn.fromString("TODO_from_call")]
             };
           currentEvents :=
-            [
-              {Event.kind: Calls, loc: e.exp_loc, exceptions},
-              ...currentEvents^,
-            ];
+            [{Event.kind: Calls, loc, exceptions}, ...currentEvents^];
         | _ =>
           switch (Hashtbl.find_opt(raisesLibTable, calleeName)) {
           | Some(exceptions) =>
             currentEvents :=
-              [
-                {Event.kind: Lib, loc: e.exp_loc, exceptions},
-                ...currentEvents^,
-              ]
+              [{Event.kind: Lib, loc, exceptions}, ...currentEvents^]
           | None => ()
           }
         };
       };
-    | Texp_match(_) when e.exp_desc |> Compat.texpMatchHasExceptions =>
+    | Texp_match(_) =>
+      let (_, _, partial) = Compat.getTexpMatch(expr.exp_desc);
+      let exceptions =
+        expr.exp_desc |> Compat.texpMatchGetExceptions |> exceptionsOfPatterns;
+
+      let exceptions =
+        partial == Partial ? [Exn.matchFailure, ...exceptions] : exceptions;
+      if (exceptions != []) {
+        currentEvents :=
+          [{Event.kind: Catches, loc, exceptions}, ...currentEvents^];
+        Log_.item("XXX %s@.", exceptions |> Event.exceptionsToString);
+      };
+    | Texp_try(_, cases) =>
+      let exceptions =
+        cases
+        |> List.map((case: Typedtree.case) => case.c_lhs.pat_desc)
+        |> exceptionsOfPatterns;
       currentEvents :=
-        [
-          {Event.kind: Catches, loc: e.exp_loc, exceptions: []},
-          ...currentEvents^,
-        ]
-    | Texp_try(_) =>
-      currentEvents :=
-        [
-          {Event.kind: Catches, loc: e.exp_loc, exceptions: []},
-          ...currentEvents^,
-        ]
+        [{Event.kind: Catches, loc, exceptions}, ...currentEvents^];
+      Log_.item("YYY %s@.", exceptions |> Event.exceptionsToString);
     | _ => ()
     };
-    super.expr(self, e);
+    super.expr(self, expr);
   };
 
   let nested = true;
