@@ -929,6 +929,7 @@ module Compile = {
         let functionDefinition =
           functionTable |> FunctionTable.getFunctionDefinition(~functionName);
         exception ArgError;
+        [@raises ArgError]
         let getFunctionArg = ({Kind.label}) => {
           let argOpt =
             args
@@ -943,7 +944,8 @@ module Compile = {
             | Some((_, Some(e))) => Some(e)
             | _ => None
             };
-          let functionArg =
+          [@raises ArgError]
+          let functionArg = () =>
             switch (
               argOpt
               |> ExtendFunctionTable.extractLabelledArgument(
@@ -974,7 +976,7 @@ module Compile = {
               Stats.logHygieneNamedArgValue(~label, ~loc);
               raise(ArgError);
             };
-          functionArg;
+          functionArg();
         };
         let functionArgsOpt =
           try(Some(functionDefinition.kind |> List.map(getFunctionArg))) {
