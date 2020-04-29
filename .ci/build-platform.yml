@@ -79,7 +79,7 @@ jobs:
         displayName: "Copy reanalyze.exe, deadcodeppx.exe, lazyLoad.exe to examples/"
       - bash: npm test
         displayName: "Test command"
-        condition: eq('${{ parameters.test }}', true))
+        condition: eq('${{ parameters.test }}', true)
       - bash: mkdir _release
         displayName: "Create _release directory"
       - bash: cp `npx esy x which reanalyze.exe` _release/reanalyze.exe
