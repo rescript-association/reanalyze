@@ -85,7 +85,7 @@ jobs:
       - bash: cp `npx esy x which reanalyze.exe` _release/reanalyze.exe
         displayName: "Copy reanalyze.exe to _release"
       - task: PublishBuildArtifacts@1
-        displayName: "Publish Artifact: ${{ parameters.platform }}"
+        displayName: "Publish Artifact: ${{ parameters.name }}"
         inputs:
           PathtoPublish: "_release"
-          ArtifactName: ${{ parameters.platform }}
+          ArtifactName: ${{ parameters.name }}
