@@ -133,7 +133,7 @@ let traverseAst = {
     super.expr(self, e);
   };
 
-  let nested = false;
+  let nested = true;
 
   let value_binding = (self: Tast_mapper.mapper, vb: Typedtree.value_binding) => {
     let oldId = currentId^;
@@ -141,8 +141,10 @@ let traverseAst = {
     let shouldUpdateCurrent = nested || currentId^ == "";
     switch (vb.vb_pat.pat_desc) {
     | Tpat_var(id, _) =>
+      let name = Ident.name(id);
       if (shouldUpdateCurrent) {
-        currentId := Ident.name(id);
+        currentId := name;
+        currentEvents := [];
       };
       let raisesAnnotationPayload =
         vb.vb_attributes |> Annotation.getAttributePayload((==)("raises"));
@@ -151,35 +153,39 @@ let traverseAst = {
         Ident.name(id),
         raisesAnnotationPayload,
       );
-    | _ => ()
-    };
-    let res = super.value_binding(self, vb);
-    let eventIsCatches = (event: Event.t) => event.kind == Catches;
-    let (eventsCatches, eventsNotCatches) =
-      currentEvents^ |> List.partition(event => eventIsCatches(event));
-    let hasRaisesAnnotation =
-      switch (Hashtbl.find_opt(valueBindingsTable, currentId^)) {
-      | Some(Some(_)) => true
-      | _ => false
+      let res = super.value_binding(self, vb);
+      let eventIsCatches = (event: Event.t) => event.kind == Catches;
+      let (eventsCatches, eventsNotCatches) =
+        currentEvents^ |> List.partition(event => eventIsCatches(event));
+      let hasRaisesAnnotation =
+        switch (Hashtbl.find_opt(valueBindingsTable, name)) {
+        | Some(Some(_)) => true
+        | _ => false
+        };
+
+      let shouldReport =
+        eventsNotCatches != [] && eventsCatches == [] && !hasRaisesAnnotation;
+      if (shouldReport) {
+        let event = eventsNotCatches |> List.hd;
+        Log_.info(~loc=event.loc, ~name="Exception Analysis", (ppf, ()) =>
+          Format.fprintf(
+            ppf,
+            "@{<info>%s@} might raise an exception @{<info>%s@} and is not annotated with @raises",
+            name,
+            event.exceptions |> Event.exceptionsToString,
+          )
+        );
       };
-    let shouldReport =
-      eventsNotCatches != [] && eventsCatches == [] && !hasRaisesAnnotation;
-    if (shouldReport) {
-      let event = eventsNotCatches |> List.hd;
-      Log_.info(~loc=event.loc, ~name="Exception Analysis", (ppf, ()) =>
-        Format.fprintf(
-          ppf,
-          "@{<info>%s@} might raise an exception @{<info>%s@} and is not annotated with @raises",
-          currentId^,
-          event.exceptions |> Event.exceptionsToString,
-        )
-      );
+
+      if (shouldUpdateCurrent) {
+        currentId := oldId;
+        currentEvents := oldEvents;
+      };
+
+      res;
+
+    | _ => super.value_binding(self, vb)
     };
-    if (shouldUpdateCurrent) {
-      currentId := oldId;
-      currentEvents := oldEvents;
-    };
-    res;
   };
 
   Tast_mapper.{...super, expr, value_binding};
