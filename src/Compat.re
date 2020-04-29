@@ -77,21 +77,28 @@ let getTexpMatch = desc => switch desc {
   | _ => assert false
 }
 
-let texpMatchHasExceptions = desc => switch desc {
+let texpMatchGetExceptions = desc => switch desc {
 #if OCAML_MINOR >= 8
   | Typedtree.Texp_match(_, cases, _) =>
     cases
-    |> List.for_all(({c_lhs: pat}: Typedtree.case) =>
+    |> List.filter(({c_lhs: pat}: Typedtree.case) =>
           switch (pat.pat_desc) {
           | Tpat_exception(_) => true
           | _ => false
+          }) |> List.map (({c_lhs: pat}: Typedtree.case) =>
+          switch (pat.pat_desc) {
+          | Tpat_exception({pat_desc}) => pat_desc
+          | _ => assert(false)
           })
 #else
   | Typedtree.Texp_match(_, _, casesExn, _) =>
-    casesExn != []
+    casesExn |> List.map ((case: Typedtree.case) => case.c_lhs.pat_desc)
 #endif
   | _ => assert false
 }
+
+
+let texpMatchHasExceptions = desc => texpMatchGetExceptions(desc) != []
 
 
 
