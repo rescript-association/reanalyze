@@ -21,16 +21,18 @@ module Exn: {
 
 module Event = {
   type kind =
-    | Raises // raise E
     | Catches // with | E => ...
     | CallRaises // foo() when foo is annotated @raises
-    | LibFunRaises; // List.hd when it's modeled as raising exceptions
+    | LibFunRaises // List.hd when it's modeled as raising exceptions
+    | Raises; // raise E
 
   type t = {
     exceptions: list(Exn.t),
     kind,
     loc: Location.t,
   };
+
+  let isCatches = event => event.kind == Catches;
 
   let exceptionsToString = exceptions =>
     exceptions |> List.map(Exn.toString) |> String.concat(" ");
@@ -120,7 +122,10 @@ let traverseAst = {
           switch (Hashtbl.find_opt(raisesLibTable, calleeName)) {
           | Some(exceptions) =>
             currentEvents :=
-              [{Event.kind: LibFunRaises, loc, exceptions}, ...currentEvents^]
+              [
+                {Event.kind: LibFunRaises, loc, exceptions},
+                ...currentEvents^,
+              ]
           | None => ()
           }
         };
@@ -176,9 +181,8 @@ let traverseAst = {
         raisesAnnotationPayload,
       );
       let res = super.value_binding(self, vb);
-      let eventIsCatches = (event: Event.t) => event.kind == Catches;
       let (eventsCatches, eventsNotCatches) =
-        currentEvents^ |> List.partition(event => eventIsCatches(event));
+        currentEvents^ |> List.partition(event => event |> Event.isCatches);
       let hasRaisesAnnotation =
         switch (Hashtbl.find_opt(valueBindingsTable, name)) {
         | Some(Some(_)) => true
