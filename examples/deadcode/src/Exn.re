@@ -25,3 +25,8 @@ let callsRaiseWithAnnotation = raisesWithAnnotaion();
 let callsRaiseWithAnnotationAndIsAnnotated = raisesWithAnnotaion();
 
 let z = List.hd([]);
+
+let incompleteMatch = l =>
+  switch (l) {
+  | [] => ()
+  };
