@@ -1,20 +1,28 @@
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 1, characters 19-35
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 1, characters 4-10
   raises might raise Not_found and is not annotated with @raises
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 22, characters 31-52
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 22, characters 4-28
   callsRaiseWithAnnotation might raise Not_found and is not annotated with @raises
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 27, characters 8-19
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 27, characters 4-5
   z might raise Failure and is not annotated with @raises
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 30, characters 2-31
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 29, characters 4-19
   incompleteMatch might raise Match_failure and is not annotated with @raises
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 38, characters 9-28
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 37, characters 4-13
   twoRaises might raise A B and is not annotated with @raises
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 46, characters 4-14
+  sequencing might raise A and is not annotated with @raises
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 53, characters 4-14
+  wrongCatch might raise B and is not annotated with @raises
