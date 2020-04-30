@@ -229,8 +229,6 @@ let traverseAst = {
         raisesAnnotationPayload,
       );
       let res = super.value_binding(self, vb);
-      let (eventsCatches, eventsNotCatches) =
-        currentEvents^ |> List.partition(event => event |> Event.isCatches);
       let raiseSet = currentEvents^ |> Event.combine;
       let hasRaisesAnnotation =
         switch (Hashtbl.find_opt(valueBindingsTable, name)) {
@@ -240,13 +238,17 @@ let traverseAst = {
 
       let shouldReport = !ExnSet.is_empty(raiseSet) && !hasRaisesAnnotation;
       if (shouldReport) {
-        let event = eventsNotCatches |> List.hd;
-        Log_.info(~loc=event.loc, ~name="Exception Analysis", (ppf, ()) =>
+        let firstRaise =
+          currentEvents^ |> List.find(event => !Event.isCatches(event));
+        Log_.info(~loc=firstRaise.loc, ~name="Exception Analysis", (ppf, ()) =>
           Format.fprintf(
             ppf,
-            "@{<info>%s@} might raise an exception @{<info>%s@} and is not annotated with @raises",
+            "@{<info>%s@} might raise @{<info>%s@} and is not annotated with @raises",
             name,
-            event.exceptions |> exceptionsToString,
+            raiseSet
+            |> ExnSet.elements
+            |> List.map(Exn.toString)
+            |> String.concat(" "),
           )
         );
       };
