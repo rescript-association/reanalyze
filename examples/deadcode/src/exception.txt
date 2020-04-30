@@ -38,3 +38,7 @@
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 59, characters 4-15
   wrongCatch2 might raise C Match_failure and is not annotated with @raises C Match_failure
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 67, characters 4-19
+  raise2Annotate3 might raise A B and is annotated with redundant @raises C

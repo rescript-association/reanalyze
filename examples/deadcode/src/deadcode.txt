@@ -1088,6 +1088,7 @@
   addValueDeclaration +sequencing Exn.re:46:4 path:+Exn
   addValueDeclaration +wrongCatch Exn.re:53:4 path:+Exn
   addValueDeclaration +wrongCatch2 Exn.re:59:4 path:+Exn
+  addValueDeclaration +raise2Annotate3 Exn.re:67:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -1101,6 +1102,10 @@
   addTypeReference Exn.re:60:31 --> Exn.re:58:10
   addTypeReference Exn.re:60:20 --> Exn.re:35:10
   addValueReference Exn.re:59:4 --> Exn.re:59:18
+  addTypeReference Exn.re:72:10 --> Exn.re:35:10
+  addValueReference Exn.re:67:4 --> Exn.re:67:26
+  addTypeReference Exn.re:69:10 --> Exn.re:34:10
+  addValueReference Exn.re:67:4 --> Exn.re:67:23
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmti
   addValueDeclaration +get ImmutableArray.rei:5:15 path:ImmutableArray.Array
   addValueDeclaration +fromArray ImmutableArray.rei:7:0 path:ImmutableArray
@@ -1910,6 +1915,7 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +Exn.+raise2Annotate3: 0 references () [0]
   Dead Value +Exn.+wrongCatch2: 0 references () [0]
   Dead Value +Exn.+wrongCatch: 0 references () [0]
   Dead Value +Exn.+sequencing: 0 references () [0]
@@ -2924,6 +2930,12 @@ File References
   +wrongCatch2 is never used
   <-- line 59
   [@dead "+wrongCatch2"] let wrongCatch2 = b =>
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 66, characters 0-115
+  +raise2Annotate3 is never used
+  <-- line 67
+  [@dead "+raise2Annotate3"] [@raises (A, B, C)]
 
   Warning Dead Type
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.re", line 2, characters 2-8
