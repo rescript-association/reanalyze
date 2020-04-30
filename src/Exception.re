@@ -27,7 +27,10 @@ module Exn: {
 module ExnSet = Set.Make(Exn);
 
 let exceptionsToString = exceptions =>
-  exceptions |> List.map(Exn.toString) |> String.concat(" ");
+  exceptions
+  |> ExnSet.elements
+  |> List.map(Exn.toString)
+  |> String.concat(" ");
 
 module Event = {
   type kind =
@@ -37,7 +40,7 @@ module Event = {
     | Raises // raise E
 
   and t = {
-    exceptions: list(Exn.t),
+    exceptions: ExnSet.t,
     kind,
     loc: Location.t,
   };
@@ -85,8 +88,9 @@ module Event = {
         if (debug^) {
           Log_.item("%a@.", print, ev);
         };
-        loop(ExnSet.union(acc, exceptions |> ExnSet.of_list), rest);
-      | [{kind: Catches(_), exceptions: [] /* catch-all */} as ev, ...rest] =>
+        loop(ExnSet.union(acc, exceptions), rest);
+      | [{kind: Catches(_), exceptions} as ev, ...rest]
+          when ExnSet.is_empty(exceptions) /* catch-all */ =>
         if (debug^) {
           Log_.item("%a@.", print, ev);
         };
@@ -96,8 +100,7 @@ module Event = {
           Log_.item("%a@.", print, ev);
         };
         let nestedExnSet = loop(ExnSet.empty, nestedEvents);
-        let newRaises =
-          ExnSet.diff(nestedExnSet, exceptions |> ExnSet.of_list);
+        let newRaises = ExnSet.diff(nestedExnSet, exceptions);
         loop(ExnSet.union(acc, newRaises), rest);
       | [] => acc
       };
@@ -133,7 +136,9 @@ let raisesLibTable = {
   ]
   |> List.iter(((name, group)) =>
        group
-       |> List.iter(((s, e)) => Hashtbl.add(table, name ++ "." ++ s, e))
+       |> List.iter(((s, e)) =>
+            Hashtbl.add(table, name ++ "." ++ s, e |> ExnSet.of_list)
+          )
      );
 
   table;
@@ -150,13 +155,11 @@ let traverseAst = {
     |> List.fold_left(
          (acc, desc) =>
            switch (desc) {
-           | Typedtree.Tpat_construct(lid, _, _) => [
-               Exn.fromLid(lid),
-               ...acc,
-             ]
+           | Typedtree.Tpat_construct(lid, _, _) =>
+             ExnSet.add(Exn.fromLid(lid), acc)
            | _ => acc
            },
-         [],
+         ExnSet.empty,
        );
 
   let iterExpr = (self, e) => self.Tast_mapper.expr(self, e) |> ignore;
@@ -182,24 +185,17 @@ let traverseAst = {
       if (calleeName == "Pervasives.raise") {
         let exceptions =
           switch (args) {
-          | [(_, Some({exp_desc: Texp_construct(lid, _, _)}))] => [
-              Exn.fromLid(lid),
-            ]
-          | _ => [Exn.fromString("TODO_from_raise")]
+          | [(_, Some({exp_desc: Texp_construct(lid, _, _)}))] =>
+            Exn.fromLid(lid) |> ExnSet.singleton
+          | _ => Exn.fromString("TODO_from_raise") |> ExnSet.singleton
           };
         currentEvents :=
           [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
       } else {
         switch (Hashtbl.find_opt(valueBindingsTable, calleeName)) {
-        | Some(Some(payload)) =>
-          let exceptions =
-            switch (payload) {
-            | Annotation.StringPayload(s)
-            | Annotation.ConstructPayload(s) => [Exn.fromString(s)]
-            | _ => [Exn.fromString("TODO_from_call")]
-            };
+        | Some(exceptions) when !ExnSet.is_empty(exceptions) =>
           currentEvents :=
-            [{Event.kind: CallRaises, loc, exceptions}, ...currentEvents^];
+            [{Event.kind: CallRaises, loc, exceptions}, ...currentEvents^]
         | _ =>
           switch (Hashtbl.find_opt(raisesLibTable, calleeName)) {
           | Some(exceptions) =>
@@ -219,7 +215,7 @@ let traverseAst = {
       let (e, cases, partial) = Compat.getTexpMatch(expr.exp_desc);
       let exceptions =
         expr.exp_desc |> Compat.texpMatchGetExceptions |> exceptionsOfPatterns;
-      if (exceptions != []) {
+      if (!ExnSet.is_empty(exceptions)) {
         let oldEvents = currentEvents^;
         currentEvents := [];
         e |> iterExpr(self);
@@ -236,7 +232,11 @@ let traverseAst = {
       if (partial == Partial) {
         currentEvents :=
           [
-            {Event.kind: Raises, loc, exceptions: [Exn.matchFailure]},
+            {
+              Event.kind: Raises,
+              loc,
+              exceptions: Exn.matchFailure |> ExnSet.singleton,
+            },
             ...currentEvents^,
           ];
       };
@@ -276,31 +276,44 @@ let traverseAst = {
       };
       let raisesAnnotationPayload =
         vb.vb_attributes |> Annotation.getAttributePayload((==)("raises"));
-      Hashtbl.replace(
-        valueBindingsTable,
-        Ident.name(id),
-        raisesAnnotationPayload,
-      );
+      let exceptions =
+        switch (raisesAnnotationPayload) {
+        | Some(Annotation.StringPayload(s) | Annotation.ConstructPayload(s)) =>
+          Exn.fromString(s) |> ExnSet.singleton
+        | _ => ExnSet.empty
+        };
+      Hashtbl.replace(valueBindingsTable, Ident.name(id), exceptions);
       let res = super.value_binding(self, vb);
       let raiseSet = currentEvents^ |> Event.combine;
-      let hasRaisesAnnotation =
+      let reaisesAnnotations =
         switch (Hashtbl.find_opt(valueBindingsTable, name)) {
-        | Some(Some(_)) => true
-        | _ => false
+        | Some(exceptions) => exceptions
+        | _ => ExnSet.empty
         };
 
-      let shouldReport = !ExnSet.is_empty(raiseSet) && !hasRaisesAnnotation;
-      if (shouldReport) {
+      let missingAnnotations = ExnSet.diff(raiseSet, reaisesAnnotations);
+      let redundantAnnotations = ExnSet.diff(reaisesAnnotations, raiseSet);
+      if (!ExnSet.is_empty(missingAnnotations)) {
         Log_.info(
           ~loc=vb.vb_pat.pat_loc, ~name="Exception Analysis", (ppf, ()) =>
           Format.fprintf(
             ppf,
-            "@{<info>%s@} might raise @{<info>%s@} and is not annotated with @raises",
+            "@{<info>%s@} might raise @{<info>%s@} and is not annotated with @raises %s",
             name,
-            raiseSet
-            |> ExnSet.elements
-            |> List.map(Exn.toString)
-            |> String.concat(" "),
+            raiseSet |> exceptionsToString,
+            missingAnnotations |> exceptionsToString,
+          )
+        );
+      };
+      if (!ExnSet.is_empty(redundantAnnotations)) {
+        Log_.info(
+          ~loc=vb.vb_pat.pat_loc, ~name="Exception Analysis", (ppf, ()) =>
+          Format.fprintf(
+            ppf,
+            "@{<info>%s@} might raise @{<info>%s@} and is annotated with redundant @raises %s",
+            name,
+            raiseSet |> exceptionsToString,
+            redundantAnnotations |> exceptionsToString,
           )
         );
       };

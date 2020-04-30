@@ -1,32 +1,40 @@
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 1, characters 4-10
-  raises might raise Not_found and is not annotated with @raises
+  raises might raise Not_found and is not annotated with @raises Not_found
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 22, characters 4-28
-  callsRaiseWithAnnotation might raise Not_found and is not annotated with @raises
+  callsRaiseWithAnnotation might raise Not_found and is not annotated with @raises Not_found
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 25, characters 4-42
+  callsRaiseWithAnnotationAndIsAnnotated might raise Not_found and is not annotated with @raises Not_found
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 25, characters 4-42
+  callsRaiseWithAnnotationAndIsAnnotated might raise Not_found and is annotated with redundant @raises A
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 27, characters 4-5
-  z might raise Failure and is not annotated with @raises
+  z might raise Failure and is not annotated with @raises Failure
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 29, characters 4-19
-  incompleteMatch might raise Match_failure and is not annotated with @raises
+  incompleteMatch might raise Match_failure and is not annotated with @raises Match_failure
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 37, characters 4-13
-  twoRaises might raise A B and is not annotated with @raises
+  twoRaises might raise A B and is not annotated with @raises A B
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 46, characters 4-14
-  sequencing might raise A and is not annotated with @raises
+  sequencing might raise A and is not annotated with @raises A
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 53, characters 4-14
-  wrongCatch might raise B and is not annotated with @raises
+  wrongCatch might raise B and is not annotated with @raises B
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 59, characters 4-15
-  wrongCatch2 might raise C Match_failure and is not annotated with @raises
+  wrongCatch2 might raise C Match_failure and is not annotated with @raises C Match_failure

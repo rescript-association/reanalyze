@@ -2888,7 +2888,7 @@ File References
   +callsRaiseWithAnnotation is never used and could have side effects
 
   Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 24, characters 0-76
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 24, characters 0-78
   +callsRaiseWithAnnotationAndIsAnnotated is never used and could have side effects
 
   Warning Dead Value With Side Effects
