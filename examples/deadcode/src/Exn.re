@@ -21,7 +21,7 @@ let raisesWithAnnotaion = () => raise(Not_found);
 
 let callsRaiseWithAnnotation = raisesWithAnnotaion();
 
-[@raises]
+[@raises A]
 let callsRaiseWithAnnotationAndIsAnnotated = raisesWithAnnotaion();
 
 let z = List.hd([]);
