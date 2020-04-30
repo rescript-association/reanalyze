@@ -133,7 +133,6 @@ let traverseAst = {
       if (exceptions != []) {
         currentEvents :=
           [{Event.kind: Catches, loc, exceptions}, ...currentEvents^];
-        Log_.item("XXX %s@.", exceptions |> Event.exceptionsToString);
       };
       if (partial == Partial) {
         currentEvents :=
@@ -150,7 +149,6 @@ let traverseAst = {
         |> exceptionsOfPatterns;
       currentEvents :=
         [{Event.kind: Catches, loc, exceptions}, ...currentEvents^];
-      Log_.item("YYY %s@.", exceptions |> Event.exceptionsToString);
 
     | _ => ()
     };
