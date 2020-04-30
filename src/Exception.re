@@ -125,18 +125,24 @@ let traverseAst = {
           }
         };
       };
+
     | Texp_match(_) =>
       let (_, _, partial) = Compat.getTexpMatch(expr.exp_desc);
       let exceptions =
         expr.exp_desc |> Compat.texpMatchGetExceptions |> exceptionsOfPatterns;
-
-      let exceptions =
-        partial == Partial ? [Exn.matchFailure, ...exceptions] : exceptions;
       if (exceptions != []) {
         currentEvents :=
           [{Event.kind: Catches, loc, exceptions}, ...currentEvents^];
         Log_.item("XXX %s@.", exceptions |> Event.exceptionsToString);
       };
+      if (partial == Partial) {
+        currentEvents :=
+          [
+            {Event.kind: Raises, loc, exceptions: [Exn.matchFailure]},
+            ...currentEvents^,
+          ];
+      };
+
     | Texp_try(_, cases) =>
       let exceptions =
         cases
@@ -145,6 +151,7 @@ let traverseAst = {
       currentEvents :=
         [{Event.kind: Catches, loc, exceptions}, ...currentEvents^];
       Log_.item("YYY %s@.", exceptions |> Event.exceptionsToString);
+
     | _ => ()
     };
     super.expr(self, expr);
