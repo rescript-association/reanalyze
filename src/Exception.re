@@ -79,7 +79,7 @@ module Event = {
     let rec loop = (acc, events) =>
       switch (events) {
       | [
-          {kind: Raises | CallRaises | LibFunRaises, exceptions, loc} as ev,
+          {kind: Raises | CallRaises | LibFunRaises, exceptions} as ev,
           ...rest,
         ] =>
         if (debug^) {
