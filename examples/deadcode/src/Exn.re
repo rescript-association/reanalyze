@@ -62,3 +62,13 @@ let wrongCatch2 = b =>
   | exception B => ()
   | [] => ()
   };
+
+[@raises (A, B, C)]
+let raise2Annotate3 = (x, y) => {
+  if (x) {
+    raise(A);
+  };
+  if (y) {
+    raise(B);
+  };
+};
