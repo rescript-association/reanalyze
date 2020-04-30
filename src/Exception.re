@@ -140,6 +140,21 @@ let traverseAst = {
          [],
        );
 
+  let iterExpr = (self, e) => super.expr(self, e) |> ignore;
+  let iterExprOpt = (self, eo) =>
+    switch (eo) {
+    | None => ()
+    | Some(e) => e |> iterExpr(self)
+    };
+  let iterPat = (self, p) => super.pat(self, p) |> ignore;
+  let iterCases = (self, cases) =>
+    cases
+    |> List.iter((case: Typedtree.case) => {
+         case.c_lhs |> iterPat(self);
+         case.c_guard |> iterExprOpt(self);
+         case.c_rhs |> iterExpr(self);
+       });
+
   let expr = (self: Tast_mapper.mapper, expr: Typedtree.expression) => {
     let loc = expr.exp_loc;
     switch (expr.exp_desc) {
@@ -179,8 +194,10 @@ let traverseAst = {
         };
       };
 
+      args |> List.iter(((_, eOpt)) => eOpt |> iterExprOpt(self));
+
     | Texp_match(_) =>
-      let (_, _, partial) = Compat.getTexpMatch(expr.exp_desc);
+      let (e, cases, partial) = Compat.getTexpMatch(expr.exp_desc);
       let exceptions =
         expr.exp_desc |> Compat.texpMatchGetExceptions |> exceptionsOfPatterns;
       if (exceptions != []) {
@@ -195,6 +212,9 @@ let traverseAst = {
           ];
       };
 
+      e |> iterExpr(self);
+      cases |> iterCases(self);
+
     | Texp_try(_, cases) =>
       let exceptions =
         cases
@@ -202,10 +222,11 @@ let traverseAst = {
         |> exceptionsOfPatterns;
       currentEvents :=
         [{Event.kind: Catches, loc, exceptions}, ...currentEvents^];
+      cases |> iterCases(self);
 
-    | _ => ()
+    | _ => expr |> iterExpr(self)
     };
-    super.expr(self, expr);
+    expr;
   };
 
   let nested = true;
