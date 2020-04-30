@@ -21,10 +21,10 @@ module Exn: {
 
 module Event = {
   type kind =
-    | Raises
-    | Catches
-    | Calls
-    | Lib;
+    | Raises // raise E
+    | Catches // with | E => ...
+    | CallRaises // foo() when foo is annotated @raises
+    | LibFunRaises; // List.hd when it's modeled as raising exceptions
 
   type t = {
     exceptions: list(Exn.t),
@@ -115,12 +115,12 @@ let traverseAst = {
             | _ => [Exn.fromString("TODO_from_call")]
             };
           currentEvents :=
-            [{Event.kind: Calls, loc, exceptions}, ...currentEvents^];
+            [{Event.kind: CallRaises, loc, exceptions}, ...currentEvents^];
         | _ =>
           switch (Hashtbl.find_opt(raisesLibTable, calleeName)) {
           | Some(exceptions) =>
             currentEvents :=
-              [{Event.kind: Lib, loc, exceptions}, ...currentEvents^]
+              [{Event.kind: LibFunRaises, loc, exceptions}, ...currentEvents^]
           | None => ()
           }
         };
