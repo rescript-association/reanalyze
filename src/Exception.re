@@ -33,10 +33,10 @@ module Event = {
   };
 
   let isCatches = event => event.kind == Catches;
-
-  let exceptionsToString = exceptions =>
-    exceptions |> List.map(Exn.toString) |> String.concat(" ");
 };
+
+let exceptionsToString = exceptions =>
+  exceptions |> List.map(Exn.toString) |> String.concat(" ");
 
 let valueBindingsTable = Hashtbl.create(15);
 
@@ -198,7 +198,7 @@ let traverseAst = {
             ppf,
             "@{<info>%s@} might raise an exception @{<info>%s@} and is not annotated with @raises",
             name,
-            event.exceptions |> Event.exceptionsToString,
+            event.exceptions |> exceptionsToString,
           )
         );
       };
