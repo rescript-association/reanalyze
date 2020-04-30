@@ -276,11 +276,22 @@ let traverseAst = {
       };
       let raisesAnnotationPayload =
         vb.vb_attributes |> Annotation.getAttributePayload((==)("raises"));
+      let rec getExceptions = payload =>
+        switch (payload) {
+        | Annotation.StringPayload(s) => Exn.fromString(s) |> ExnSet.singleton
+        | Annotation.ConstructPayload(s) =>
+          Exn.fromString(s) |> ExnSet.singleton
+        | Annotation.TuplePayload(tuple) =>
+          tuple
+          |> List.map(payload => payload |> getExceptions |> ExnSet.elements)
+          |> List.concat
+          |> ExnSet.of_list
+        | _ => ExnSet.empty
+        };
       let exceptions =
         switch (raisesAnnotationPayload) {
-        | Some(Annotation.StringPayload(s) | Annotation.ConstructPayload(s)) =>
-          Exn.fromString(s) |> ExnSet.singleton
-        | _ => ExnSet.empty
+        | None => ExnSet.empty
+        | Some(payload) => payload |> getExceptions
         };
       Hashtbl.replace(valueBindingsTable, Ident.name(id), exceptions);
       let res = super.value_binding(self, vb);
