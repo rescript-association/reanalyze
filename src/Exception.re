@@ -31,18 +31,45 @@ let exceptionsToString = exceptions =>
 
 module Event = {
   type kind =
-    | Catches // with | E => ...
+    | Catches(list(t)) // with | E => ...
     | CallRaises // foo() when foo is annotated @raises
     | LibFunRaises // List.hd when it's modeled as raising exceptions
-    | Raises; // raise E
+    | Raises // raise E
 
-  type t = {
+  and t = {
     exceptions: list(Exn.t),
     kind,
     loc: Location.t,
   };
 
-  let isCatches = event => event.kind == Catches;
+  let isCatches = event =>
+    switch (event.kind) {
+    | Catches(_) => true
+    | _ => false
+    };
+
+  let rec print = (ppf, event) =>
+    switch (event) {
+    | {kind: Raises | CallRaises | LibFunRaises, exceptions, loc} =>
+      Format.fprintf(
+        ppf,
+        "%s Events combine.loop: raises %s@.",
+        loc.loc_start |> posToString,
+        exceptions |> exceptionsToString,
+      )
+    | {kind: Catches(nestedEvents), exceptions, loc} =>
+      Format.fprintf(
+        ppf,
+        "%s Events combine.loop: Catches exceptions:%s nestedEvents:%a@.",
+        loc.loc_start |> posToString,
+        exceptions |> exceptionsToString,
+        (ppf, ()) => {
+          nestedEvents
+          |> List.iter(e => {Format.fprintf(ppf, "%a ", print, e)})
+        },
+        (),
+      )
+    };
 
   let combine = events => {
     if (debug^) {
@@ -52,34 +79,26 @@ module Event = {
     let rec loop = (acc, events) =>
       switch (events) {
       | [
-          {kind: Raises | CallRaises | LibFunRaises, exceptions, loc},
+          {kind: Raises | CallRaises | LibFunRaises, exceptions, loc} as ev,
           ...rest,
         ] =>
         if (debug^) {
-          Log_.item(
-            "%s Events combine.loop: raises %s@.",
-            loc.loc_start |> posToString,
-            exceptions |> exceptionsToString,
-          );
+          Log_.item("%a@.", print, ev);
         };
         loop(ExnSet.union(acc, exceptions |> ExnSet.of_list), rest);
-      | [{kind: Catches, exceptions: [] /* catch-all */, loc}, ...rest] =>
+      | [{kind: Catches(_), exceptions: [] /* catch-all */} as ev, ...rest] =>
         if (debug^) {
-          Log_.item(
-            "%s Events combine.loop: Catches all@.",
-            loc.loc_start |> posToString,
-          );
+          Log_.item("%a@.", print, ev);
         };
-        loop(ExnSet.empty, rest);
-      | [{kind: Catches, exceptions, loc}, ...rest] =>
+        loop(acc, rest);
+      | [{kind: Catches(nestedEvents), exceptions} as ev, ...rest] =>
         if (debug^) {
-          Log_.item(
-            "%s Events combine.loop: catches %s@.",
-            loc.loc_start |> posToString,
-            exceptions |> exceptionsToString,
-          );
+          Log_.item("%a@.", print, ev);
         };
-        loop(ExnSet.diff(acc, exceptions |> ExnSet.of_list), rest);
+        let nestedExnSet = loop(ExnSet.empty, nestedEvents);
+        let newRaises =
+          ExnSet.diff(nestedExnSet, exceptions |> ExnSet.of_list);
+        loop(ExnSet.union(acc, newRaises), rest);
       | [] => acc
       };
     loop(ExnSet.empty, events);
@@ -140,13 +159,13 @@ let traverseAst = {
          [],
        );
 
-  let iterExpr = (self, e) => super.expr(self, e) |> ignore;
+  let iterExpr = (self, e) => self.Tast_mapper.expr(self, e) |> ignore;
   let iterExprOpt = (self, eo) =>
     switch (eo) {
     | None => ()
     | Some(e) => e |> iterExpr(self)
     };
-  let iterPat = (self, p) => super.pat(self, p) |> ignore;
+  let iterPat = (self, p) => self.Tast_mapper.pat(self, p) |> ignore;
   let iterCases = (self, cases) =>
     cases
     |> List.iter((case: Typedtree.case) => {
@@ -201,8 +220,18 @@ let traverseAst = {
       let exceptions =
         expr.exp_desc |> Compat.texpMatchGetExceptions |> exceptionsOfPatterns;
       if (exceptions != []) {
+        let oldEvents = currentEvents^;
+        currentEvents := [];
+        e |> iterExpr(self);
+        cases |> iterCases(self);
         currentEvents :=
-          [{Event.kind: Catches, loc, exceptions}, ...currentEvents^];
+          [
+            {Event.kind: Catches(currentEvents^), loc, exceptions},
+            ...oldEvents,
+          ];
+      } else {
+        e |> iterExpr(self);
+        cases |> iterCases(self);
       };
       if (partial == Partial) {
         currentEvents :=
@@ -212,19 +241,22 @@ let traverseAst = {
           ];
       };
 
-      e |> iterExpr(self);
-      cases |> iterCases(self);
-
-    | Texp_try(_, cases) =>
+    | Texp_try(e, cases) =>
       let exceptions =
         cases
         |> List.map((case: Typedtree.case) => case.c_lhs.pat_desc)
         |> exceptionsOfPatterns;
-      currentEvents :=
-        [{Event.kind: Catches, loc, exceptions}, ...currentEvents^];
+      let oldEvents = currentEvents^;
+      currentEvents := [];
+      e |> iterExpr(self);
       cases |> iterCases(self);
+      currentEvents :=
+        [
+          {Event.kind: Catches(currentEvents^), loc, exceptions},
+          ...oldEvents,
+        ];
 
-    | _ => expr |> iterExpr(self)
+    | _ => super.expr(self, expr) |> ignore
     };
     expr;
   };
@@ -259,9 +291,8 @@ let traverseAst = {
 
       let shouldReport = !ExnSet.is_empty(raiseSet) && !hasRaisesAnnotation;
       if (shouldReport) {
-        let firstRaise =
-          currentEvents^ |> List.find(event => !Event.isCatches(event));
-        Log_.info(~loc=firstRaise.loc, ~name="Exception Analysis", (ppf, ()) =>
+        Log_.info(
+          ~loc=vb.vb_pat.pat_loc, ~name="Exception Analysis", (ppf, ()) =>
           Format.fprintf(
             ppf,
             "@{<info>%s@} might raise @{<info>%s@} and is not annotated with @raises",

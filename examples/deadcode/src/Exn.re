@@ -42,3 +42,15 @@ let twoRaises = (x, y) => {
     raise(B);
   };
 };
+
+let sequencing = () => {
+  raise(A);
+  try(raise(B)) {
+  | _ => ()
+  };
+};
+
+let wrongCatch = () =>
+  try(raise(B)) {
+  | A => ()
+  };

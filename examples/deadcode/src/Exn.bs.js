@@ -60,6 +60,8 @@ export {
   A ,
   B ,
   twoRaises ,
+  sequencing ,
+  wrongCatch ,
   
 }
 /* catches1 Not a pure module */
