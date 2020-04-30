@@ -57,6 +57,9 @@ export {
   callsRaiseWithAnnotationAndIsAnnotated ,
   z ,
   incompleteMatch ,
+  A ,
+  B ,
+  twoRaises ,
   
 }
 /* catches1 Not a pure module */

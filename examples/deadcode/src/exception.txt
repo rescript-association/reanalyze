@@ -14,3 +14,7 @@
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 30, characters 2-31
   incompleteMatch might raise an exception Match_failure and is not annotated with @raises
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 38, characters 9-28
+  twoRaises might raise an exception A and is not annotated with @raises
