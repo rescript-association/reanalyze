@@ -30,3 +30,15 @@ let incompleteMatch = l =>
   switch (l) {
   | [] => ()
   };
+
+exception A;
+exception B;
+
+let twoRaises = (x, y) => {
+  if (x) {
+    raise(A);
+  };
+  if (y) {
+    raise(B);
+  };
+};

@@ -1084,9 +1084,14 @@
   addValueDeclaration +callsRaiseWithAnnotationAndIsAnnotated Exn.re:25:4 path:+Exn
   addValueDeclaration +z Exn.re:27:4 path:+Exn
   addValueDeclaration +incompleteMatch Exn.re:29:4 path:+Exn
+  addValueDeclaration +twoRaises Exn.re:37:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
+  addTypeReference Exn.re:42:10 --> Exn.re:35:10
+  addValueReference Exn.re:37:4 --> Exn.re:37:20
+  addTypeReference Exn.re:39:10 --> Exn.re:34:10
+  addValueReference Exn.re:37:4 --> Exn.re:37:17
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmti
   addValueDeclaration +get ImmutableArray.rei:5:15 path:ImmutableArray.Array
   addValueDeclaration +fromArray ImmutableArray.rei:7:0 path:ImmutableArray
@@ -1896,6 +1901,7 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +Exn.+twoRaises: 0 references () [0]
   Dead Value +Exn.+incompleteMatch: 0 references () [0]
   Dead Value +Exn.+z: 0 references () [0]
   Dead Value +Exn.+callsRaiseWithAnnotationAndIsAnnotated: 0 references () [0]
@@ -2882,6 +2888,12 @@ File References
   +incompleteMatch is never used
   <-- line 29
   [@dead "+incompleteMatch"] let incompleteMatch = l =>
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 37, characters 0-89
+  +twoRaises is never used
+  <-- line 37
+  [@dead "+twoRaises"] let twoRaises = (x, y) => {
 
   Warning Dead Type
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.re", line 2, characters 2-8

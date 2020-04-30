@@ -1,5 +1,9 @@
+let debug = DeadCommon.debug;
+let posToString = DeadCommon.posToString;
+
 module Exn: {
   type t;
+  let compare: (t, t) => int;
   let failure: t;
   let fromLid: Asttypes.loc(Longident.t) => t;
   let fromString: string => t;
@@ -9,6 +13,7 @@ module Exn: {
   let toString: t => string;
 } = {
   type t = string;
+  let compare = String.compare;
   let failure = "Failure";
   let invalidArgument = "Invalid_argument";
   let matchFailure = "Match_failure";
@@ -18,6 +23,11 @@ module Exn: {
   let fromString = s => s;
   let toString = s => s;
 };
+
+module ExnSet = Set.Make(Exn);
+
+let exceptionsToString = exceptions =>
+  exceptions |> List.map(Exn.toString) |> String.concat(" ");
 
 module Event = {
   type kind =
@@ -33,10 +43,48 @@ module Event = {
   };
 
   let isCatches = event => event.kind == Catches;
-};
 
-let exceptionsToString = exceptions =>
-  exceptions |> List.map(Exn.toString) |> String.concat(" ");
+  let combine = events => {
+    if (debug^) {
+      Log_.item("@.");
+      Log_.item("Events combine: #events %d@.", events |> List.length);
+    };
+    let rec loop = (acc, events) =>
+      switch (events) {
+      | [
+          {kind: Raises | CallRaises | LibFunRaises, exceptions, loc},
+          ...rest,
+        ] =>
+        if (debug^) {
+          Log_.item(
+            "%s Events combine.loop: raises %s@.",
+            loc.loc_start |> posToString,
+            exceptions |> exceptionsToString,
+          );
+        };
+        loop(ExnSet.union(acc, exceptions |> ExnSet.of_list), rest);
+      | [{kind: Catches, exceptions: [] /* catch-all */, loc}, ...rest] =>
+        if (debug^) {
+          Log_.item(
+            "%s Events combine.loop: Catches all@.",
+            loc.loc_start |> posToString,
+          );
+        };
+        loop(ExnSet.empty, rest);
+      | [{kind: Catches, exceptions, loc}, ...rest] =>
+        if (debug^) {
+          Log_.item(
+            "%s Events combine.loop: catches %s@.",
+            loc.loc_start |> posToString,
+            exceptions |> exceptionsToString,
+          );
+        };
+        loop(ExnSet.diff(acc, exceptions |> ExnSet.of_list), rest);
+      | [] => acc
+      };
+    loop(ExnSet.empty, events);
+  };
+};
 
 let valueBindingsTable = Hashtbl.create(15);
 
@@ -183,14 +231,14 @@ let traverseAst = {
       let res = super.value_binding(self, vb);
       let (eventsCatches, eventsNotCatches) =
         currentEvents^ |> List.partition(event => event |> Event.isCatches);
+      let raiseSet = currentEvents^ |> Event.combine;
       let hasRaisesAnnotation =
         switch (Hashtbl.find_opt(valueBindingsTable, name)) {
         | Some(Some(_)) => true
         | _ => false
         };
 
-      let shouldReport =
-        eventsNotCatches != [] && eventsCatches == [] && !hasRaisesAnnotation;
+      let shouldReport = !ExnSet.is_empty(raiseSet) && !hasRaisesAnnotation;
       if (shouldReport) {
         let event = eventsNotCatches |> List.hd;
         Log_.info(~loc=event.loc, ~name="Exception Analysis", (ppf, ()) =>
