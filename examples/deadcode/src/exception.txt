@@ -26,3 +26,7 @@
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 53, characters 4-14
   wrongCatch might raise B and is not annotated with @raises
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 59, characters 4-15
+  wrongCatch2 might raise C Match_failure and is not annotated with @raises

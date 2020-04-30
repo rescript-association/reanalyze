@@ -54,3 +54,11 @@ let wrongCatch = () =>
   try(raise(B)) {
   | A => ()
   };
+
+exception C;
+let wrongCatch2 = b =>
+  switch (b ? raise(B) : raise(C)) {
+  | exception A => ()
+  | exception B => ()
+  | [] => ()
+  };
