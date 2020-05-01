@@ -1,4 +1,5 @@
- 
+module StringMap = Map.Make(String)
+
 type error =
   | Illegal_character of char
   | Unterminated_string
@@ -519,7 +520,7 @@ let parse_json lexbuf =
     | Number s ->  Flo s  
     | String s -> Str s
     | Lbracket -> parse_array  lexbuf.lex_start_p lexbuf.lex_curr_p [] lexbuf
-    | Lbrace -> parse_map lexbuf.lex_start_p String_map.empty lexbuf
+    | Lbrace -> parse_map lexbuf.lex_start_p StringMap.empty lexbuf
     |  _ -> error lexbuf Unexpected_token
 (* Note if we remove [trailing_comma] support 
     we should report errors (actually more work), for example 
@@ -564,9 +565,9 @@ let parse_json lexbuf =
       | Colon ->
         let value = json lexbuf in
         begin match token () with 
-        | Rbrace -> Obj (String_map.add key value acc)
+        | Rbrace -> Obj (StringMap.add key value acc)
         | Comma -> 
-          parse_map loc_start  (String_map.add key value acc) lexbuf 
+          parse_map loc_start  (StringMap.add key value acc) lexbuf 
         | _ -> error lexbuf Expect_comma_or_rbrace
         end
       | _ -> error lexbuf Expect_colon

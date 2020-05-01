@@ -27,9 +27,11 @@ type json_str = string
 
 type json_flo  = string
 
+module StringMap = Map.Make(String)
+
 type json_array = t array
 
-and json_map = t String_map.t
+and json_map = t StringMap.t
 
 and t = 
   | True of loc 

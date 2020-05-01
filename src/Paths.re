@@ -1,3 +1,5 @@
+module StringMap = Map.Make(String);
+
 let projectRoot = ref("");
 let bsbProjectRoot = ref("");
 
@@ -71,10 +73,10 @@ let readDirsFromConfig = (~configSources) => {
     switch (sourceItem) {
     | Str(str) => str |> processDir(~subdirs=false)
     | Obj(map) =>
-      switch (map |> String_map.find_opt("dir")) {
+      switch (map |> StringMap.find_opt("dir")) {
       | Some(Str(str)) =>
         let subdirs =
-          switch (map |> String_map.find_opt("subdirs")) {
+          switch (map |> StringMap.find_opt("subdirs")) {
           | Some(True(_)) => true
           | Some(False(_)) => false
           | _ => false
@@ -102,7 +104,7 @@ let readSourceDirs = (~configSources) => {
   let readDirs = json => {
     switch (json) {
     | Ext_json_types.Obj(map) =>
-      switch (map |> String_map.find_opt("dirs")) {
+      switch (map |> StringMap.find_opt("dirs")) {
       | Some(Arr(arr)) =>
         arr
         |> Array.iter(x =>
