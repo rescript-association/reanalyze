@@ -82,6 +82,7 @@ type token =
   
 let error  (lexbuf : Lexing.lexbuf) e = 
   raise (Error (lexbuf.lex_start_p, lexbuf.lex_curr_p, e))
+[@@raises Error]
 
 
 let lexeme_len (x : Lexing.lexbuf) =
@@ -371,6 +372,7 @@ let
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_lex_json_rec buf lexbuf __ocaml_lex_state
+[@@raises Error]
 
 and comment buf lexbuf =
     __ocaml_lex_comment_rec buf lexbuf 40
@@ -387,6 +389,7 @@ and __ocaml_lex_comment_rec buf lexbuf __ocaml_lex_state =
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_comment_rec buf lexbuf __ocaml_lex_state
+[@@raises Error]
 
 and scan_string buf start lexbuf =
     __ocaml_lex_scan_string_rec buf start lexbuf 45
@@ -490,7 +493,7 @@ let
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_scan_string_rec buf start lexbuf __ocaml_lex_state
-
+[@@raises Error]
 ;;
 
  
@@ -540,6 +543,8 @@ let parse_json lexbuf =
 
     ]}   
  *)
+  [@@raises Error]
+
   and parse_array   loc_start loc_finish acc lexbuf 
     : Ext_json_types.t =
     match token () with 
@@ -547,7 +552,7 @@ let parse_json lexbuf =
         Arr (Ext_array.reverse_of_list acc)
     | x -> 
       push x ;
-      let new_one = json lexbuf in 
+      let new_one = json lexbuf [@@raises Error]  in 
       begin match token ()  with 
       | Comma -> 
           parse_array  loc_start loc_finish (new_one :: acc) lexbuf 
@@ -556,6 +561,8 @@ let parse_json lexbuf =
       | _ -> 
         error lexbuf Expect_comma_or_rbracket
       end
+  [@@raises Error]
+
   and parse_map loc_start  acc lexbuf : Ext_json_types.t = 
     match token () with 
     | Rbrace -> 
@@ -563,7 +570,7 @@ let parse_json lexbuf =
     | String key -> 
       begin match token () with 
       | Colon ->
-        let value = json lexbuf in
+        let value = json lexbuf [@@raises Error] in
         begin match token () with 
         | Rbrace -> Obj (StringMap.add key value acc)
         | Comma -> 
@@ -573,11 +580,14 @@ let parse_json lexbuf =
       | _ -> error lexbuf Expect_colon
       end
     | _ -> error lexbuf Expect_string_or_rbrace
+  [@@raises Error]
+
   in 
-  let v = json lexbuf in 
+  let v = json lexbuf [@@raises Error] in 
   match token () with 
   | Eof -> v 
   | _ -> error lexbuf Expect_eof
+[@@raises Error]
 
 let parse_json_from_file s = 
   let in_chan = open_in s in 
@@ -585,5 +595,5 @@ let parse_json_from_file s =
     Ext_position.lexbuf_from_channel_with_fname
     in_chan s in 
   match parse_json lexbuf with 
-  | exception e -> close_in in_chan ; raise e
-  | v  -> close_in in_chan;  v
+  | exception Error _ -> close_in in_chan ; None
+  | v  -> close_in in_chan;  Some(v)

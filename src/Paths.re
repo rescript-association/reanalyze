@@ -121,16 +121,16 @@ let readSourceDirs = (~configSources) => {
   };
 
   if (sourceDirs |> Sys.file_exists) {
-    try({
-      let json = sourceDirs |> Ext_json_parse.parse_json_from_file;
+    let jsonOpt = sourceDirs |> Ext_json_parse.parse_json_from_file;
+    switch (jsonOpt) {
+    | Some(json) =>
       if (bsbProjectRoot^ != projectRoot^) {
         readDirs(json);
         dirs := readDirsFromConfig(~configSources);
       } else {
         readDirs(json);
-      };
-    }) {
-    | _ => ()
+      }
+    | None => ()
     };
   } else {
     Log_.item("Warning: can't find source dirs: %s\n", sourceDirs);
