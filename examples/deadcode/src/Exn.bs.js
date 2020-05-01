@@ -65,6 +65,8 @@ export {
   C ,
   wrongCatch2 ,
   raise2Annotate3 ,
+  $$Error ,
+  parse_json_from_file ,
   
 }
 /* catches1 Not a pure module */
