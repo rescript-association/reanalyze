@@ -42,3 +42,7 @@
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 67, characters 4-19
   raise2Annotate3 might raise A B and is annotated with redundant @raises C
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 78, characters 4-24
+  parse_json_from_file might raise Error and is not annotated with @raises Error

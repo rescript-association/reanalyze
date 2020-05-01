@@ -219,7 +219,6 @@ let traverseAst = {
         let oldEvents = currentEvents^;
         currentEvents := [];
         e |> iterExpr(self);
-        cases |> iterCases(self);
         currentEvents :=
           [
             {Event.kind: Catches(currentEvents^), loc, exceptions},
@@ -227,8 +226,8 @@ let traverseAst = {
           ];
       } else {
         e |> iterExpr(self);
-        cases |> iterCases(self);
       };
+      cases |> iterCases(self);
       if (partial == Partial) {
         currentEvents :=
           [
@@ -249,12 +248,12 @@ let traverseAst = {
       let oldEvents = currentEvents^;
       currentEvents := [];
       e |> iterExpr(self);
-      cases |> iterCases(self);
       currentEvents :=
         [
           {Event.kind: Catches(currentEvents^), loc, exceptions},
           ...oldEvents,
         ];
+      cases |> iterCases(self);
 
     | _ => super.expr(self, expr) |> ignore
     };
