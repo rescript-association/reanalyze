@@ -86,3 +86,9 @@ let parse_json_from_file = s => {
     v;
   };
 };
+
+let reRaise = () =>
+  switch (raise(A)) {
+  | exception A => raise(B)
+  | _ => 11
+  };

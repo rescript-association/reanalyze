@@ -67,6 +67,7 @@ export {
   raise2Annotate3 ,
   $$Error ,
   parse_json_from_file ,
+  reRaise ,
   
 }
 /* catches1 Not a pure module */

@@ -1090,6 +1090,7 @@
   addValueDeclaration +wrongCatch2 Exn.re:59:4 path:+Exn
   addValueDeclaration +raise2Annotate3 Exn.re:67:4 path:+Exn
   addValueDeclaration +parse_json_from_file Exn.re:78:4 path:+Exn
+  addValueDeclaration +reRaise Exn.re:90:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -1116,6 +1117,8 @@
   addValueReference Exn.re:78:4 --> Exn.re:79:6
   addValueReference Exn.re:78:4 --> Exn.re:84:2
   addValueReference Exn.re:78:4 --> Exn.re:79:6
+  addTypeReference Exn.re:92:25 --> Exn.re:35:10
+  addTypeReference Exn.re:91:16 --> Exn.re:34:10
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmti
   addValueDeclaration +get ImmutableArray.rei:5:15 path:ImmutableArray.Array
   addValueDeclaration +fromArray ImmutableArray.rei:7:0 path:ImmutableArray
@@ -1925,6 +1928,7 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +Exn.+reRaise: 0 references () [0]
   Dead Value +Exn.+parse_json_from_file: 0 references () [1]
   Dead Value +Exn.+in_chan: 0 references () [0]
   Dead Value +Exn.+raise2Annotate3: 0 references () [0]
@@ -2954,6 +2958,12 @@ File References
   +parse_json_from_file is never used
   <-- line 78
   [@dead "+parse_json_from_file"] let parse_json_from_file = s => {
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 90, characters 0-85
+  +reRaise is never used
+  <-- line 90
+  [@dead "+reRaise"] let reRaise = () =>
 
   Warning Dead Type
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.re", line 2, characters 2-8
