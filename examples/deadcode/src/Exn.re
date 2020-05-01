@@ -92,3 +92,9 @@ let reRaise = () =>
   | exception A => raise(B)
   | _ => 11
   };
+
+let switchWithCatchAll =
+  switch (raise(A)) {
+  | exception _ => 1
+  | _ => 2
+  };

@@ -213,9 +213,9 @@ let traverseAst = {
 
     | Texp_match(_) =>
       let (e, cases, partial) = Compat.getTexpMatch(expr.exp_desc);
-      let exceptions =
-        expr.exp_desc |> Compat.texpMatchGetExceptions |> exceptionsOfPatterns;
-      if (!ExnSet.is_empty(exceptions)) {
+      let exceptionPatterns = expr.exp_desc |> Compat.texpMatchGetExceptions;
+      let exceptions = exceptionPatterns |> exceptionsOfPatterns;
+      if (exceptionPatterns != []) {
         let oldEvents = currentEvents^;
         currentEvents := [];
         e |> iterExpr(self);

@@ -68,6 +68,7 @@ export {
   $$Error ,
   parse_json_from_file ,
   reRaise ,
+  switchWithCatchAll ,
   
 }
 /* catches1 Not a pure module */
