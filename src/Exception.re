@@ -418,7 +418,8 @@ let traverseAst = {
       currentEvents := [];
 
       let raisesAnnotationPayload =
-        vb.vb_attributes |> Annotation.getAttributePayload((==)("raises"));
+        vb.vb_attributes
+        |> Annotation.getAttributePayload(s => s == "raises" || s == "raise");
       let rec getExceptions = payload =>
         switch (payload) {
         | Annotation.StringPayload(s) => Exn.fromString(s) |> ExnSet.singleton
