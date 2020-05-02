@@ -62,11 +62,26 @@ let raisesLibTable = {
 
 module Exceptions = {
   type t = ExnSet.t;
-  let toString = exceptions =>
-    exceptions
-    |> ExnSet.elements
-    |> List.map(Exn.toString)
-    |> String.concat(" ");
+  let pp = (~exnTable, ppf, exceptions) => {
+    let ppExn = exn => {
+      let name = Exn.toString(exn);
+      switch (exnTable) {
+      | Some(exnTable) =>
+        switch (Hashtbl.find_opt(exnTable, exn)) {
+        | Some(loc) =>
+          Format.fprintf(
+            ppf,
+            " @{<info>%s@} (@{<filename>%s@})",
+            name,
+            posToString(loc.Location.loc_start),
+          )
+        | None => Format.fprintf(ppf, "@{<info>%s@}", name)
+        }
+      | None => Format.fprintf(ppf, "@{<info>%s@}", name)
+      };
+    };
+    exceptions |> ExnSet.iter(ppExn);
+  };
 };
 
 module Values = {
@@ -129,24 +144,27 @@ module Event = {
     | {kind: Call(path), exceptions, loc} =>
       Format.fprintf(
         ppf,
-        "%s Call(%s) %s@.",
+        "%s Call(%s) %a@.",
         loc.loc_start |> posToString,
         path |> Path.name,
-        exceptions |> Exceptions.toString,
+        Exceptions.pp(~exnTable=None),
+        exceptions,
       )
     | {kind: Raises, exceptions, loc} =>
       Format.fprintf(
         ppf,
-        "%s raises %s@.",
+        "%s raises %a@.",
         loc.loc_start |> posToString,
-        exceptions |> Exceptions.toString,
+        Exceptions.pp(~exnTable=None),
+        exceptions,
       )
     | {kind: Catches(nestedEvents), exceptions, loc} =>
       Format.fprintf(
         ppf,
-        "%s Catches exceptions:%s nestedEvents:%a@.",
+        "%s Catches exceptions:%a nestedEvents:%a@.",
         loc.loc_start |> posToString,
-        exceptions |> Exceptions.toString,
+        Exceptions.pp(~exnTable=None),
+        exceptions,
         (ppf, ()) => {
           nestedEvents
           |> List.iter(e => {Format.fprintf(ppf, "%a ", print, e)})
@@ -160,42 +178,48 @@ module Event = {
       Log_.item("@.");
       Log_.item("Events combine: #events %d@.", events |> List.length);
     };
-    let rec loop = (acc, events) =>
+    let exnTable = Hashtbl.create(1);
+    let rec loop = (exnSet, events) =>
       switch (events) {
-      | [{kind: Raises, exceptions} as ev, ...rest] =>
+      | [{kind: Raises, exceptions, loc} as ev, ...rest] =>
         if (debug^) {
           Log_.item("%a@.", print, ev);
         };
-        loop(ExnSet.union(acc, exceptions), rest);
-      | [{kind: Call(path)} as ev, ...rest] =>
+        exceptions |> ExnSet.iter(exn => Hashtbl.replace(exnTable, exn, loc));
+        loop(ExnSet.union(exnSet, exceptions), rest);
+      | [{kind: Call(path), loc} as ev, ...rest] =>
         if (debug^) {
           Log_.item("%a@.", print, ev);
         };
         switch (path |> Values.findPath(~moduleName)) {
         | Some(exceptions) when !ExnSet.is_empty(exceptions) =>
-          loop(ExnSet.union(acc, exceptions), rest)
+          exceptions
+          |> ExnSet.iter(exn => Hashtbl.replace(exnTable, exn, loc));
+          loop(ExnSet.union(exnSet, exceptions), rest);
         | _ =>
           switch (Hashtbl.find_opt(raisesLibTable, path |> Path.name)) {
-          | Some(exceptions) => loop(ExnSet.union(acc, exceptions), rest)
-          | None => loop(acc, rest)
+          | Some(exceptions) =>
+            exceptions
+            |> ExnSet.iter(exn => Hashtbl.replace(exnTable, exn, loc));
+            loop(ExnSet.union(exnSet, exceptions), rest);
+          | None => loop(exnSet, rest)
           }
         };
-      | [{kind: Catches(_), exceptions} as ev, ...rest]
-          when ExnSet.is_empty(exceptions) /* catch-all */ =>
-        if (debug^) {
-          Log_.item("%a@.", print, ev);
-        };
-        loop(acc, rest);
       | [{kind: Catches(nestedEvents), exceptions} as ev, ...rest] =>
         if (debug^) {
           Log_.item("%a@.", print, ev);
         };
-        let nestedExnSet = loop(ExnSet.empty, nestedEvents);
-        let newRaises = ExnSet.diff(nestedExnSet, exceptions);
-        loop(ExnSet.union(acc, newRaises), rest);
-      | [] => acc
+        if (ExnSet.is_empty(exceptions /* catch-all */)) {
+          loop(exnSet, rest);
+        } else {
+          let nestedExnSet = loop(ExnSet.empty, nestedEvents);
+          let newRaises = ExnSet.diff(nestedExnSet, exceptions);
+          loop(ExnSet.union(exnSet, newRaises), rest);
+        };
+      | [] => exnSet
       };
-    loop(ExnSet.empty, events);
+    let exnSet = loop(ExnSet.empty, events);
+    (exnSet, exnTable);
   };
 };
 
@@ -215,17 +239,19 @@ module Checks = {
     checks := [{events, exceptions, id, loc, moduleName}, ...checks^];
 
   let doCheck = ({events, exceptions, id, loc, moduleName}) => {
-    let raiseSet = events |> Event.combine(~moduleName);
+    let (raiseSet, exnTable) = events |> Event.combine(~moduleName);
     let missingAnnotations = ExnSet.diff(raiseSet, exceptions);
     let redundantAnnotations = ExnSet.diff(exceptions, raiseSet);
     if (!ExnSet.is_empty(missingAnnotations)) {
       Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
-          "@{<info>%s@} might raise @{<info>%s@} and is not annotated with @raises %s",
+          "@{<info>%s@} might raise%a and is not annotated with @raises %a",
           id |> Ident.name,
-          raiseSet |> Exceptions.toString,
-          missingAnnotations |> Exceptions.toString,
+          Exceptions.pp(~exnTable=Some(exnTable)),
+          raiseSet,
+          Exceptions.pp(~exnTable=None),
+          missingAnnotations,
         )
       );
     };
@@ -233,10 +259,12 @@ module Checks = {
       Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
-          "@{<info>%s@} might raise @{<info>%s@} and is annotated with redundant @raises %s",
+          "@{<info>%s@} might raise%a and is annotated with redundant @raises %a",
           id |> Ident.name,
-          raiseSet |> Exceptions.toString,
-          redundantAnnotations |> Exceptions.toString,
+          Exceptions.pp(~exnTable=Some(exnTable)),
+          raiseSet,
+          Exceptions.pp(~exnTable=None),
+          redundantAnnotations,
         )
       );
     };
