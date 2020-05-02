@@ -205,23 +205,19 @@ module Checks = {
     id: Ident.t,
     loc: Location.t,
     moduleName: string,
+    exceptions: Exceptions.t,
   };
   type t = list(check);
 
   let checks: ref(t) = ref([]);
 
-  let add = (~events, ~id, ~loc, ~moduleName) =>
-    checks := [{events, id, loc, moduleName}, ...checks^];
+  let add = (~events, ~exceptions, ~id, ~loc, ~moduleName) =>
+    checks := [{events, exceptions, id, loc, moduleName}, ...checks^];
 
-  let doCheck = ({events, id, loc, moduleName}) => {
-    let raisesAnnotations =
-      switch (id |> Values.findId(~moduleName)) {
-      | Some(exceptions) => exceptions
-      | _ => ExnSet.empty
-      };
+  let doCheck = ({events, exceptions, id, loc, moduleName}) => {
     let raiseSet = events |> Event.combine(~moduleName);
-    let missingAnnotations = ExnSet.diff(raiseSet, raisesAnnotations);
-    let redundantAnnotations = ExnSet.diff(raisesAnnotations, raiseSet);
+    let missingAnnotations = ExnSet.diff(raiseSet, exceptions);
+    let redundantAnnotations = ExnSet.diff(exceptions, raiseSet);
     if (!ExnSet.is_empty(missingAnnotations)) {
       Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
         Format.fprintf(
@@ -390,11 +386,18 @@ let traverseAst = {
       exceptions |> Values.add(~id);
       let res = super.value_binding(self, vb);
 
+      let moduleName = DeadCommon.currentModule^;
+      let exceptions =
+        switch (id |> Values.findId(~moduleName)) {
+        | Some(exceptions) => exceptions
+        | _ => ExnSet.empty
+        };
       Checks.add(
         ~events=currentEvents^,
+        ~exceptions,
         ~id,
         ~loc=vb.vb_pat.pat_loc,
-        ~moduleName=DeadCommon.currentModule^,
+        ~moduleName,
       );
 
       currentId := oldId;
