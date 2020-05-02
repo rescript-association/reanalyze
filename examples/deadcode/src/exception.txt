@@ -1,3 +1,8 @@
+  XXX module:B value:foo found:true
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.re", line 1, characters 4-7
+  bar might raise Not_found and is not annotated with @raises Not_found
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 1, characters 4-10
@@ -50,3 +55,13 @@
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 90, characters 4-11
   reRaise might raise B and is not annotated with @raises B
+  XXX module:ImportJsValue value:AbsoluteValue.getProp found:false
+  XXX module:ImmutableArray value:Array.get found:false
+  XXX module:ImportHooks value:makeProps found:false
+  XXX module:ImportHookDefault value:makeProps found:false
+  XXX module:RequireCond value:either found:false
+  XXX module:JSResource value:jSResource found:false
+  XXX module:BootloaderResource value:read found:false
+  XXX module:JSResource value:jSResource found:false
+  XXX module:BootloaderResource value:read found:false
+  XXX module:DynamicallyLoadedComponent value:makeProps found:false

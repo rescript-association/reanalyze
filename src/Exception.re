@@ -38,15 +38,46 @@ module Exceptions = {
 module Values = {
   let valueBindingsTable: Hashtbl.t(string, Hashtbl.t(string, Exceptions.t)) =
     Hashtbl.create(15);
-  let currentSourceFile = ref("");
   let currentFileTable = ref(Hashtbl.create(1));
   let add = (~id, exceptions) =>
     Hashtbl.replace(currentFileTable^, Ident.name(id), exceptions);
-  let find = name => Hashtbl.find_opt(currentFileTable^, name);
-  let setSourceFile = s => {
+  let findId = id => Hashtbl.find_opt(currentFileTable^, id |> Ident.name);
+  let findPath = path => {
+    let name = Path.name(path);
+    switch (Hashtbl.find_opt(currentFileTable^, name)) {
+    | Some(exceptions) => Some(exceptions)
+    | None =>
+      switch (path) {
+      | Pdot(_) =>
+        let (moduleName, valuePath) =
+          switch (path |> Path.flatten) {
+          | `Ok(id, mods) => (Ident.name(id), mods |> String.concat("."))
+          | `Contains_apply => ("", "")
+          };
+        switch (Hashtbl.find_opt(valueBindingsTable, moduleName)) {
+        | Some(tbl) =>
+          let res = Hashtbl.find_opt(tbl, valuePath);
+          Log_.item(
+            "XXX module:%s value:%s found:%b@.",
+            moduleName,
+            valuePath,
+            res != None,
+          );
+          res;
+        | None => None
+        };
+      | _ => None
+      }
+    };
+  };
+
+  let newCmt = () => {
     currentFileTable := Hashtbl.create(15);
-    Hashtbl.replace(valueBindingsTable, s, currentFileTable^);
-    currentSourceFile := s;
+    Hashtbl.replace(
+      valueBindingsTable,
+      DeadCommon.currentModule^,
+      currentFileTable^,
+    );
   };
 };
 
@@ -202,7 +233,7 @@ let traverseAst = {
         currentEvents :=
           [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
       } else {
-        switch (calleeName |> Values.find) {
+        switch (callee |> Values.findPath) {
         | Some(exceptions) when !ExnSet.is_empty(exceptions) =>
           currentEvents :=
             [{Event.kind: CallRaises, loc, exceptions}, ...currentEvents^]
@@ -307,7 +338,7 @@ let traverseAst = {
       let res = super.value_binding(self, vb);
       let raiseSet = currentEvents^ |> Event.combine;
       let reaisesAnnotations =
-        switch (name |> Values.find) {
+        switch (id |> Values.findId) {
         | Some(exceptions) => exceptions
         | _ => ExnSet.empty
         };
@@ -353,11 +384,7 @@ let traverseAst = {
   Tast_mapper.{...super, expr, value_binding};
 };
 
-let processStructure = (~sourceFile, structure: Typedtree.structure) => {
-  switch (sourceFile) {
-  | None => ()
-  | Some(s) => Values.setSourceFile(s)
-  };
+let processStructure = (structure: Typedtree.structure) => {
   structure |> traverseAst.structure(traverseAst) |> ignore;
 };
 
@@ -365,8 +392,8 @@ let processCmt = (cmt_infos: Cmt_format.cmt_infos) =>
   switch (cmt_infos.cmt_annots) {
   | Interface(_) => ()
   | Implementation(structure) =>
-    structure
-    |> processStructure(~sourceFile=FindSourceFile.cmt(cmt_infos.cmt_annots))
+    Values.newCmt();
+    structure |> processStructure;
   | _ => ()
   };
 
