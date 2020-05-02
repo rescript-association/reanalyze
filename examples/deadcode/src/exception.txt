@@ -1,6 +1,6 @@
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.re", line 1, characters 4-7
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 4-7
   bar might raise Not_found and is not annotated with @raises Not_found
 
   Exception Analysis
