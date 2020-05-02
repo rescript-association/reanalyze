@@ -1098,6 +1098,7 @@
   addValueDeclaration +reRaise Exn.re:90:4 path:+Exn
   addValueDeclaration +switchWithCatchAll Exn.re:96:4 path:+Exn
   addValueDeclaration +raiseInInternalLet Exn.re:102:4 path:+Exn
+  addValueDeclaration +indirectCall Exn.re:107:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -1131,6 +1132,7 @@
   addTypeReference Exn.re:103:20 --> Exn.re:34:10
   addValueReference Exn.re:103:6 --> Exn.re:102:25
   addValueReference Exn.re:102:4 --> Exn.re:103:6
+  addValueReference Exn.re:107:4 --> Exn.re:20:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmti
   addValueDeclaration +get ImmutableArray.rei:5:15 path:ImmutableArray.Array
   addValueDeclaration +fromArray ImmutableArray.rei:7:0 path:ImmutableArray
@@ -1942,6 +1944,7 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +Exn.+indirectCall: 0 references () [0]
   Dead Value +Exn.+raiseInInternalLet: 0 references () [1]
   Dead Value +Exn.+a: 0 references () [0]
   Dead Value +Exn.+switchWithCatchAll: 0 references () [0]
@@ -2993,6 +2996,12 @@ File References
   +raiseInInternalLet is never used
   <-- line 102
   [@dead "+raiseInInternalLet"] let raiseInInternalLet = b => {
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 107, characters 0-50
+  +indirectCall is never used
+  <-- line 107
+  [@dead "+indirectCall"] let indirectCall = () => () |> raisesWithAnnotaion;
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 0-26

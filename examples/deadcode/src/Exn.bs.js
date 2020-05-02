@@ -70,6 +70,7 @@ export {
   reRaise ,
   switchWithCatchAll ,
   raiseInInternalLet ,
+  indirectCall ,
   
 }
 /* catches1 Not a pure module */
