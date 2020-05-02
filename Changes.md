@@ -1,5 +1,8 @@
 # master
 
+# 1.8.0
+- First feature-complete exception analysis with `-exception` (bucklescript) and `-exception-cmt` for native.
+
 # 1.7.0
 - Early preview of exception analysis with `-exception` (bucklescript) and `-exception-cmt` for native.
 
