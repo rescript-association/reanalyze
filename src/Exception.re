@@ -310,6 +310,39 @@ let traverseAst = {
 
   let nested = true;
 
+  let report = (~id, ~loc) => {
+    let raisesAnnotations =
+      switch (id |> Values.findId) {
+      | Some(exceptions) => exceptions
+      | _ => ExnSet.empty
+      };
+    let raiseSet = currentEvents^ |> Event.combine;
+    let missingAnnotations = ExnSet.diff(raiseSet, raisesAnnotations);
+    let redundantAnnotations = ExnSet.diff(raisesAnnotations, raiseSet);
+    if (!ExnSet.is_empty(missingAnnotations)) {
+      Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
+        Format.fprintf(
+          ppf,
+          "@{<info>%s@} might raise @{<info>%s@} and is not annotated with @raises %s",
+          id |> Ident.name,
+          raiseSet |> Exceptions.toString,
+          missingAnnotations |> Exceptions.toString,
+        )
+      );
+    };
+    if (!ExnSet.is_empty(redundantAnnotations)) {
+      Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
+        Format.fprintf(
+          ppf,
+          "@{<info>%s@} might raise @{<info>%s@} and is annotated with redundant @raises %s",
+          id |> Ident.name,
+          raiseSet |> Exceptions.toString,
+          redundantAnnotations |> Exceptions.toString,
+        )
+      );
+    };
+  };
+
   let value_binding = (self: Tast_mapper.mapper, vb: Typedtree.value_binding) => {
     let oldId = currentId^;
     let oldEvents = currentEvents^;
@@ -343,39 +376,8 @@ let traverseAst = {
         };
       exceptions |> Values.add(~id);
       let res = super.value_binding(self, vb);
-      let raiseSet = currentEvents^ |> Event.combine;
-      let reaisesAnnotations =
-        switch (id |> Values.findId) {
-        | Some(exceptions) => exceptions
-        | _ => ExnSet.empty
-        };
 
-      let missingAnnotations = ExnSet.diff(raiseSet, reaisesAnnotations);
-      let redundantAnnotations = ExnSet.diff(reaisesAnnotations, raiseSet);
-      if (!ExnSet.is_empty(missingAnnotations)) {
-        Log_.info(
-          ~loc=vb.vb_pat.pat_loc, ~name="Exception Analysis", (ppf, ()) =>
-          Format.fprintf(
-            ppf,
-            "@{<info>%s@} might raise @{<info>%s@} and is not annotated with @raises %s",
-            name,
-            raiseSet |> Exceptions.toString,
-            missingAnnotations |> Exceptions.toString,
-          )
-        );
-      };
-      if (!ExnSet.is_empty(redundantAnnotations)) {
-        Log_.info(
-          ~loc=vb.vb_pat.pat_loc, ~name="Exception Analysis", (ppf, ()) =>
-          Format.fprintf(
-            ppf,
-            "@{<info>%s@} might raise @{<info>%s@} and is annotated with redundant @raises %s",
-            name,
-            raiseSet |> Exceptions.toString,
-            redundantAnnotations |> Exceptions.toString,
-          )
-        );
-      };
+      report(~id, ~loc=vb.vb_pat.pat_loc);
 
       if (shouldUpdateCurrent) {
         currentId := oldId;
