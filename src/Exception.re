@@ -92,11 +92,27 @@ module Values = {
   let add = (~id, exceptions) =>
     Hashtbl.replace(currentFileTable^, Ident.name(id), exceptions);
 
-  let getFromModule = (~moduleName, name) =>
-    switch (Hashtbl.find_opt(valueBindingsTable, moduleName)) {
+  let getFromModule = (~moduleName, name) => {
+    switch (
+      Hashtbl.find_opt(
+        valueBindingsTable,
+        String.capitalize_ascii(moduleName),
+      )
+    ) {
     | Some(tbl) => Hashtbl.find_opt(tbl, name)
-    | None => None
+    | None =>
+      switch (
+        Hashtbl.find_opt(
+          valueBindingsTable,
+          String.uncapitalize_ascii(moduleName),
+        )
+      ) {
+      | Some(tbl) =>
+        Hashtbl.find_opt(tbl, name);
+      | None => None
+      }
     };
+  };
 
   let findId = (~moduleName, id) =>
     id |> Ident.name |> getFromModule(~moduleName);
