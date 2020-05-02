@@ -527,11 +527,12 @@
   addValueDeclaration +make DynamicallyLoadedComponent.re:2:4 path:+DynamicallyLoadedComponent
   addValueReference DynamicallyLoadedComponent.re:2:4 --> DynamicallyLoadedComponent.re:2:13
   addValueReference DynamicallyLoadedComponent.re:2:4 --> React.re:5:0
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/B.cmt
-  addValueDeclaration +foo B.re:2:4 path:+B
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType2.cmt
   addValueDeclaration +convertT2 TransitiveType2.re:7:4 path:+TransitiveType2
   addValueReference TransitiveType2.re:7:4 --> TransitiveType2.re:7:17
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ExnA.cmt
+  addValueDeclaration +bar ExnA.re:1:4 path:+ExnA
+  addValueReference ExnA.re:1:4 --> ExnB.re:2:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Variants.cmt
   addValueDeclaration +isWeekend Variants.re:13:4 path:+Variants
   addValueDeclaration +monday Variants.re:21:4 path:+Variants
@@ -689,14 +690,13 @@
   addTypeReference Tuples.re:47:19 --> Tuples.re:32:2
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/A.cmt
-  addValueDeclaration +bar A.re:1:4 path:+A
-  addValueReference A.re:1:4 --> B.re:2:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType1.cmt
   addValueDeclaration +convert TransitiveType1.re:2:4 path:+TransitiveType1
   addValueDeclaration +convertAlias TransitiveType1.re:5:4 path:+TransitiveType1
   addValueReference TransitiveType1.re:2:4 --> TransitiveType1.re:2:15
   addValueReference TransitiveType1.re:5:4 --> TransitiveType1.re:5:20
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ExnB.cmt
+  addValueDeclaration +foo ExnB.re:2:4 path:+ExnB
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TypeParams2.cmt
   addValueDeclaration +exportSomething TypeParams2.re:10:4 path:+TypeParams2
   addTypeDeclaration id TypeParams2.re:2:13 path:+TypeParams2.item
@@ -1715,13 +1715,13 @@ File References
   Opaque.re -->> 
   TypeParams2.re -->> 
   TypeParams3.re -->> 
-  A.re -->> B.re
   TransitiveType1.re -->> 
   BootloaderResource.re -->> 
   ComponentAsProp.re -->> ReactDOMRe.re, ReasonReact.rei
   ManyComponents.re -->> ReactDOMRe.re, ReasonReact.rei
   TransitiveType2.re -->> 
   ExportWithRename.re -->> React.re
+  ExnB.re -->> 
   Shadow.re -->> 
   Unboxed.re -->> 
   DeadTestWithInterface.re -->> 
@@ -1738,7 +1738,6 @@ File References
   trace.ml -->> 
   UseImportJsValue.re -->> ImportJsValue.re
   trace.mli -->> trace.ml
-  B.re -->> 
   IgnoreInterface.re -->> 
   ImmutableArray.re -->> 
   TestImmutableArray.re -->> ImmutableArray.rei
@@ -1749,6 +1748,7 @@ File References
   DeadCodeImplementation.re -->> 
   VariantsWithPayload.re -->> 
   ReasonComponent.re -->> ReactDOMRe.re, ReasonReact.rei, ImportMyBanner.re
+  ExnA.re -->> ExnB.re
   Types.re -->> 
   DeadCodeInterface.re -->> 
   References.re -->> 
@@ -1783,7 +1783,6 @@ File References
   ImportIndex.re -->> 
   ImportHookDefault.re -->> 
   ModuleAliases2.re -->> 
-  Dead Value +A.+bar: 0 references () [0]
   Dead Type +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
   Dead Type +AutoAnnotate.annotatedVariant.R2: 0 references () [0]
   Dead Type +AutoAnnotate.r4.r4: 0 references () [0]
@@ -1956,6 +1955,7 @@ File References
   Dead Value +Exn.+catches2: 0 references () [0]
   Dead Value +Exn.+catches1: 0 references () [0]
   Dead Value +Exn.+raises: 0 references () [0]
+  Dead Value +ExnA.+bar: 0 references () [0]
   Live Value +ExportWithRename.+make: 1 references (DeadTest:0:-1) [0]
   Live Value +FirstClassModules.+someFunctorAsFunction: 0 references () [0]
   Live Value +FirstClassModules.SomeFunctor.+ww: 1 references (FirstClassModules.re:46:20) [0]
@@ -2251,7 +2251,6 @@ File References
   Live Value +VariantsWithPayload.+testWithPayload: 0 references () [0]
   Live Type +VariantsWithPayload.payload.y: 2 references (VariantsWithPayload.re:27:59, VariantsWithPayload.re:46:53) [0]
   Live Type +VariantsWithPayload.payload.x: 2 references (VariantsWithPayload.re:27:42, VariantsWithPayload.re:46:36) [0]
-  Dead Value +B.+foo: 0 references () [0]
   Live Value +BootloaderResource.+read: 1 references (DeadTest.re:112:40) [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
@@ -2264,6 +2263,7 @@ File References
   Live Value +DynamicallyLoadedComponent.+make: 4 references (DeadTest.re:112:40, DeadTest.re:119:6, DeadTest.re:157:17, DeadTest:0:-1) [0]
   Dead Value ErrorHandler.+x: 0 references () [0]
   Live Value ErrorHandler.Make.+notify: 1 references (CreateErrorHandler1.re:8:0) [0]
+  Dead Value +ExnB.+foo: 0 references () [0]
   Dead Value +FirstClassModulesInterface.+r: 0 references () [0]
   Dead Type +FirstClassModulesInterface.record.y: 0 references () [0]
   Dead Type +FirstClassModulesInterface.record.x: 0 references () [0]
@@ -2437,12 +2437,6 @@ File References
   Live Value +trace.+infok: 1 references (trace.mli:5:0) [0]
   Live Type +trace.pf.pf: 1 references (trace.mli:3:11) [0]
 
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/A.re", line 1, characters 0-23
-  +bar is never used
-  <-- line 1
-  [@dead "+bar"] let bar = () => B.foo();
-
   Warning Dead Type
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re", line 2, characters 4-10
   variant.R is a variant case which is never constructed
@@ -2484,12 +2478,6 @@ File References
   annotatedVariant.R4 is a variant case which is never constructed
   <-- line 16
     | [@dead "annotatedVariant.R4"] R4(r4);
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/B.re", line 1, characters 0-52
-  +foo is never used
-  <-- line 2
-  [@dead "+foo"] [@raises Not_found]
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/BucklescriptAnnotations.re", line 19, characters 0-53
@@ -2992,6 +2980,18 @@ File References
   Warning Dead Value With Side Effects
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 96, characters 0-82
   +switchWithCatchAll is never used and could have side effects
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 0-26
+  +bar is never used
+  <-- line 1
+  [@dead "+bar"] let bar = () => ExnB.foo();
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnB.re", line 1, characters 0-52
+  +foo is never used
+  <-- line 2
+  [@dead "+foo"] [@raises Not_found]
 
   Warning Dead Type
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.re", line 2, characters 2-8
