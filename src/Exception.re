@@ -356,9 +356,15 @@ let traverseAst = {
   let value_binding = (self: Tast_mapper.mapper, vb: Typedtree.value_binding) => {
     let oldId = currentId^;
     let oldEvents = currentEvents^;
+    let isFunction =
+      switch (vb.vb_expr.exp_desc) {
+      | Texp_function(_) => true
+      | _ => false
+      };
+    let isToplevel = currentId^ == "";
     switch (vb.vb_pat.pat_desc) {
     | Tpat_var(id, {loc: {loc_ghost}})
-        when !loc_ghost && !vb.vb_loc.loc_ghost =>
+        when (isFunction || isToplevel) && !loc_ghost && !vb.vb_loc.loc_ghost =>
       let name = Ident.name(id);
 
       currentId := name;

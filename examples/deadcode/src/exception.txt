@@ -54,3 +54,7 @@
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 90, characters 4-11
   reRaise might raise B and is not annotated with @raises B
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 102, characters 4-22
+  raiseInInternalLet might raise A and is not annotated with @raises A
