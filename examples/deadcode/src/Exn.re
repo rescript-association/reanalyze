@@ -103,3 +103,5 @@ let raiseInInternalLet = b => {
   let a = b ? raise(A) : 22;
   a + 34;
 };
+
+let indirectCall = () => () |> raisesWithAnnotaion;

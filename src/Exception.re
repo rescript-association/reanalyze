@@ -107,8 +107,7 @@ module Values = {
           String.uncapitalize_ascii(moduleName),
         )
       ) {
-      | Some(tbl) =>
-        Hashtbl.find_opt(tbl, name);
+      | Some(tbl) => Hashtbl.find_opt(tbl, name)
       | None => None
       }
     };
@@ -328,7 +327,14 @@ let traverseAst = {
   let expr = (self: Tast_mapper.mapper, expr: Typedtree.expression) => {
     let loc = expr.exp_loc;
     switch (expr.exp_desc) {
-    | Texp_apply({exp_desc: Texp_ident(callee, _, _)}, args) =>
+    | Texp_ident(callee, _, _) =>
+      currentEvents :=
+        [
+          {Event.kind: Call(callee), loc, exceptions: ExnSet.empty},
+          ...currentEvents^,
+        ]
+
+    | Texp_apply({exp_desc: Texp_ident(callee, _, _)} as e, args) =>
       let calleeName = Path.name(callee);
       if (calleeName == "Pervasives.raise") {
         let exceptions =
@@ -340,11 +346,7 @@ let traverseAst = {
         currentEvents :=
           [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
       } else {
-        currentEvents :=
-          [
-            {Event.kind: Call(callee), loc, exceptions: ExnSet.empty},
-            ...currentEvents^,
-          ];
+        e |> iterExpr(self);
       };
 
       args |> List.iter(((_, eOpt)) => eOpt |> iterExprOpt(self));
