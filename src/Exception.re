@@ -384,12 +384,12 @@ let traverseAst = {
           |> ExnSet.of_list
         | _ => ExnSet.empty
         };
-      let exceptions =
+      let exceptionsFromAnnotations =
         switch (raisesAnnotationPayload) {
         | None => ExnSet.empty
         | Some(payload) => payload |> getExceptions
         };
-      exceptions |> Values.add(~id);
+      exceptionsFromAnnotations |> Values.add(~id);
       let res = super.value_binding(self, vb);
 
       let moduleName = DeadCommon.currentModule^;
