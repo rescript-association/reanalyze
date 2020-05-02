@@ -557,7 +557,10 @@ let pathToString = path =>
   path |> List.rev_map(Name.toString) |> String.concat(".");
 
 let pathWithoutHead = path => {
-  path |> List.rev_map(Name.toString) |> List.tl |> String.concat(".");
+  switch (path |> List.rev_map(Name.toString)) {
+  | [_, ...tl] => tl |> String.concat(".")
+  | [] => ""
+  };
 };
 
 let annotateAtEnd = (~pos) => !posIsReason(pos);
@@ -964,7 +967,13 @@ module Decl = {
 
   let report = (~ppf, decl) => {
     let noSideEffectsOrUnderscore =
-      !decl.sideEffects || decl.path |> List.hd |> Name.startsWithUnderscore;
+      !decl.sideEffects
+      || (
+        switch (decl.path) {
+        | [hd, ..._] => hd |> Name.startsWithUnderscore
+        | [] => false
+        }
+      );
 
     let (name, message) =
       switch (decl.declKind) {
