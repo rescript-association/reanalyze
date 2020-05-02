@@ -313,8 +313,6 @@ let traverseAst = {
     expr;
   };
 
-  let nested = true;
-
   let report = (~id, ~loc, ~moduleName) => {
     let raisesAnnotations =
       switch (id |> Values.findId(~moduleName)) {
@@ -351,15 +349,14 @@ let traverseAst = {
   let value_binding = (self: Tast_mapper.mapper, vb: Typedtree.value_binding) => {
     let oldId = currentId^;
     let oldEvents = currentEvents^;
-    let shouldUpdateCurrent = nested || currentId^ == "";
     switch (vb.vb_pat.pat_desc) {
     | Tpat_var(id, {loc: {loc_ghost}})
         when !loc_ghost && !vb.vb_loc.loc_ghost =>
       let name = Ident.name(id);
-      if (shouldUpdateCurrent) {
-        currentId := name;
-        currentEvents := [];
-      };
+
+      currentId := name;
+      currentEvents := [];
+
       let raisesAnnotationPayload =
         vb.vb_attributes |> Annotation.getAttributePayload((==)("raises"));
       let rec getExceptions = payload =>
@@ -382,12 +379,14 @@ let traverseAst = {
       exceptions |> Values.add(~id);
       let res = super.value_binding(self, vb);
 
-      report(~id, ~loc=vb.vb_pat.pat_loc, ~moduleName=DeadCommon.currentModule^);
+      report(
+        ~id,
+        ~loc=vb.vb_pat.pat_loc,
+        ~moduleName=DeadCommon.currentModule^,
+      );
 
-      if (shouldUpdateCurrent) {
-        currentId := oldId;
-        currentEvents := oldEvents;
-      };
+      currentId := oldId;
+      currentEvents := oldEvents;
 
       res;
 
