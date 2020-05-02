@@ -75,10 +75,15 @@ module Values = {
   let currentFileTable = ref(Hashtbl.create(1));
   let add = (~id, exceptions) =>
     Hashtbl.replace(currentFileTable^, Ident.name(id), exceptions);
-  let findId = id => Hashtbl.find_opt(currentFileTable^, id |> Ident.name);
-  let findPath = path => {
-    let name = Path.name(path);
-    switch (Hashtbl.find_opt(currentFileTable^, name)) {
+  let getFromModule = (~moduleName, name) =>
+    switch (Hashtbl.find_opt(valueBindingsTable, moduleName)) {
+    | Some(tbl) => Hashtbl.find_opt(tbl, name)
+    | None => None
+    };
+  let findId = (~moduleName, id) =>
+    id |> Ident.name |> getFromModule(~moduleName);
+  let findPath = (~moduleName, path) => {
+    switch (path |> Path.name |> getFromModule(~moduleName)) {
     | Some(exceptions) => Some(exceptions)
     | None =>
       switch (path) {
@@ -158,7 +163,7 @@ module Event = {
       )
     };
 
-  let combine = events => {
+  let combine = (~moduleName, events) => {
     if (debug^) {
       Log_.item("@.");
       Log_.item("Events combine: #events %d@.", events |> List.length);
@@ -174,7 +179,7 @@ module Event = {
         if (debug^) {
           Log_.item("%a@.", print, ev);
         };
-        switch (path |> Values.findPath) {
+        switch (path |> Values.findPath(~moduleName)) {
         | Some(exceptions) when !ExnSet.is_empty(exceptions) =>
           loop(ExnSet.union(acc, exceptions), rest)
         | _ =>
@@ -310,13 +315,13 @@ let traverseAst = {
 
   let nested = true;
 
-  let report = (~id, ~loc) => {
+  let report = (~id, ~loc, ~moduleName) => {
     let raisesAnnotations =
-      switch (id |> Values.findId) {
+      switch (id |> Values.findId(~moduleName)) {
       | Some(exceptions) => exceptions
       | _ => ExnSet.empty
       };
-    let raiseSet = currentEvents^ |> Event.combine;
+    let raiseSet = currentEvents^ |> Event.combine(~moduleName);
     let missingAnnotations = ExnSet.diff(raiseSet, raisesAnnotations);
     let redundantAnnotations = ExnSet.diff(raisesAnnotations, raiseSet);
     if (!ExnSet.is_empty(missingAnnotations)) {
@@ -377,7 +382,7 @@ let traverseAst = {
       exceptions |> Values.add(~id);
       let res = super.value_binding(self, vb);
 
-      report(~id, ~loc=vb.vb_pat.pat_loc);
+      report(~id, ~loc=vb.vb_pat.pat_loc, ~moduleName=DeadCommon.currentModule^);
 
       if (shouldUpdateCurrent) {
         currentId := oldId;
