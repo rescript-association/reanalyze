@@ -88,15 +88,19 @@ module Values = {
   let valueBindingsTable: Hashtbl.t(string, Hashtbl.t(string, Exceptions.t)) =
     Hashtbl.create(15);
   let currentFileTable = ref(Hashtbl.create(1));
+
   let add = (~id, exceptions) =>
     Hashtbl.replace(currentFileTable^, Ident.name(id), exceptions);
+
   let getFromModule = (~moduleName, name) =>
     switch (Hashtbl.find_opt(valueBindingsTable, moduleName)) {
     | Some(tbl) => Hashtbl.find_opt(tbl, name)
     | None => None
     };
+
   let findId = (~moduleName, id) =>
     id |> Ident.name |> getFromModule(~moduleName);
+
   let findPath = (~moduleName, path) => {
     switch (path |> Path.name |> getFromModule(~moduleName)) {
     | Some(exceptions) => Some(exceptions)
