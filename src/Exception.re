@@ -26,6 +26,40 @@ module Exn: {
 
 module ExnSet = Set.Make(Exn);
 
+let raisesLibTable = {
+  let table = Hashtbl.create(15);
+  open Exn;
+  [
+    (
+      "List",
+      [
+        ("hd", [failure]),
+        ("tl", [failure]),
+        ("nth", [failure, invalidArgument]),
+        ("nth_opt", [invalidArgument]),
+        ("init", [invalidArgument]),
+        ("iter2", [invalidArgument]),
+        ("map2", [invalidArgument]),
+        ("fold_left2", [invalidArgument]),
+        ("fold_right2", [invalidArgument]),
+        ("for_all2", [invalidArgument]),
+        ("exists2", [invalidArgument]),
+        ("find", [notFound]),
+        ("assoc", [notFound]),
+        ("combine", [invalidArgument]),
+      ],
+    ),
+  ]
+  |> List.iter(((name, group)) =>
+       group
+       |> List.iter(((s, e)) =>
+            Hashtbl.add(table, name ++ "." ++ s, e |> ExnSet.of_list)
+          )
+     );
+
+  table;
+};
+
 module Exceptions = {
   type t = ExnSet.t;
   let toString = exceptions =>
@@ -84,8 +118,7 @@ module Values = {
 module Event = {
   type kind =
     | Catches(list(t)) // with | E => ...
-    | CallRaises // foo() when foo is annotated @raises
-    | LibFunRaises // List.hd when it's modeled as raising exceptions
+    | Call(Path.t) // foo()
     | Raises // raise E
 
   and t = {
@@ -96,17 +129,25 @@ module Event = {
 
   let rec print = (ppf, event) =>
     switch (event) {
-    | {kind: Raises | CallRaises | LibFunRaises, exceptions, loc} =>
+    | {kind: Call(path), exceptions, loc} =>
       Format.fprintf(
         ppf,
-        "%s Events combine.loop: raises %s@.",
+        "%s Call(%s) %s@.",
+        loc.loc_start |> posToString,
+        path |> Path.name,
+        exceptions |> Exceptions.toString,
+      )
+    | {kind: Raises, exceptions, loc} =>
+      Format.fprintf(
+        ppf,
+        "%s raises %s@.",
         loc.loc_start |> posToString,
         exceptions |> Exceptions.toString,
       )
     | {kind: Catches(nestedEvents), exceptions, loc} =>
       Format.fprintf(
         ppf,
-        "%s Events combine.loop: Catches exceptions:%s nestedEvents:%a@.",
+        "%s Catches exceptions:%s nestedEvents:%a@.",
         loc.loc_start |> posToString,
         exceptions |> Exceptions.toString,
         (ppf, ()) => {
@@ -124,14 +165,24 @@ module Event = {
     };
     let rec loop = (acc, events) =>
       switch (events) {
-      | [
-          {kind: Raises | CallRaises | LibFunRaises, exceptions} as ev,
-          ...rest,
-        ] =>
+      | [{kind: Raises, exceptions} as ev, ...rest] =>
         if (debug^) {
           Log_.item("%a@.", print, ev);
         };
         loop(ExnSet.union(acc, exceptions), rest);
+      | [{kind: Call(path)} as ev, ...rest] =>
+        if (debug^) {
+          Log_.item("%a@.", print, ev);
+        };
+        switch (path |> Values.findPath) {
+        | Some(exceptions) when !ExnSet.is_empty(exceptions) =>
+          loop(ExnSet.union(acc, exceptions), rest)
+        | _ =>
+          switch (Hashtbl.find_opt(raisesLibTable, path |> Path.name)) {
+          | Some(exceptions) => loop(ExnSet.union(acc, exceptions), rest)
+          | None => loop(acc, rest)
+          }
+        };
       | [{kind: Catches(_), exceptions} as ev, ...rest]
           when ExnSet.is_empty(exceptions) /* catch-all */ =>
         if (debug^) {
@@ -149,40 +200,6 @@ module Event = {
       };
     loop(ExnSet.empty, events);
   };
-};
-
-let raisesLibTable = {
-  let table = Hashtbl.create(15);
-  open Exn;
-  [
-    (
-      "List",
-      [
-        ("hd", [failure]),
-        ("tl", [failure]),
-        ("nth", [failure, invalidArgument]),
-        ("nth_opt", [invalidArgument]),
-        ("init", [invalidArgument]),
-        ("iter2", [invalidArgument]),
-        ("map2", [invalidArgument]),
-        ("fold_left2", [invalidArgument]),
-        ("fold_right2", [invalidArgument]),
-        ("for_all2", [invalidArgument]),
-        ("exists2", [invalidArgument]),
-        ("find", [notFound]),
-        ("assoc", [notFound]),
-        ("combine", [invalidArgument]),
-      ],
-    ),
-  ]
-  |> List.iter(((name, group)) =>
-       group
-       |> List.iter(((s, e)) =>
-            Hashtbl.add(table, name ++ "." ++ s, e |> ExnSet.of_list)
-          )
-     );
-
-  table;
 };
 
 let traverseAst = {
@@ -233,21 +250,11 @@ let traverseAst = {
         currentEvents :=
           [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
       } else {
-        switch (callee |> Values.findPath) {
-        | Some(exceptions) when !ExnSet.is_empty(exceptions) =>
-          currentEvents :=
-            [{Event.kind: CallRaises, loc, exceptions}, ...currentEvents^]
-        | _ =>
-          switch (Hashtbl.find_opt(raisesLibTable, calleeName)) {
-          | Some(exceptions) =>
-            currentEvents :=
-              [
-                {Event.kind: LibFunRaises, loc, exceptions},
-                ...currentEvents^,
-              ]
-          | None => ()
-          }
-        };
+        currentEvents :=
+          [
+            {Event.kind: Call(callee), loc, exceptions: ExnSet.empty},
+            ...currentEvents^,
+          ];
       };
 
       args |> List.iter(((_, eOpt)) => eOpt |> iterExprOpt(self));
