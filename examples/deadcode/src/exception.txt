@@ -57,11 +57,9 @@
   reRaise might raise B and is not annotated with @raises B
   XXX module:ImportJsValue value:AbsoluteValue.getProp found:false
   XXX module:ImmutableArray value:Array.get found:false
-  XXX module:ImportHooks value:makeProps found:false
   XXX module:ImportHookDefault value:makeProps found:false
-  XXX module:RequireCond value:either found:false
+  XXX module:ImportHooks value:makeProps found:false
   XXX module:JSResource value:jSResource found:false
   XXX module:BootloaderResource value:read found:false
   XXX module:JSResource value:jSResource found:false
   XXX module:BootloaderResource value:read found:false
-  XXX module:DynamicallyLoadedComponent value:makeProps found:false
