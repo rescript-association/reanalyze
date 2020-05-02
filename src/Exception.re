@@ -36,11 +36,18 @@ module Exceptions = {
 };
 
 module Values = {
-  let valueBindingsTable: Hashtbl.t(string, Exceptions.t) =
+  let valueBindingsTable: Hashtbl.t(string, Hashtbl.t(string, Exceptions.t)) =
     Hashtbl.create(15);
+  let currentSourceFile = ref("");
+  let currentFileTable = ref(Hashtbl.create(1));
   let add = (~id, exceptions) =>
-    Hashtbl.replace(valueBindingsTable, Ident.name(id), exceptions);
-  let find = name => Hashtbl.find_opt(valueBindingsTable, name);
+    Hashtbl.replace(currentFileTable^, Ident.name(id), exceptions);
+  let find = name => Hashtbl.find_opt(currentFileTable^, name);
+  let setSourceFile = s => {
+    currentFileTable := Hashtbl.create(15);
+    Hashtbl.replace(valueBindingsTable, s, currentFileTable^);
+    currentSourceFile := s;
+  };
 };
 
 module Event = {
@@ -55,12 +62,6 @@ module Event = {
     kind,
     loc: Location.t,
   };
-
-  let isCatches = event =>
-    switch (event.kind) {
-    | Catches(_) => true
-    | _ => false
-    };
 
   let rec print = (ppf, event) =>
     switch (event) {
@@ -351,14 +352,20 @@ let traverseAst = {
   Tast_mapper.{...super, expr, value_binding};
 };
 
-let processStructure = (structure: Typedtree.structure) => {
+let processStructure = (~sourceFile, structure: Typedtree.structure) => {
+  switch (sourceFile) {
+  | None => ()
+  | Some(s) => Values.setSourceFile(s)
+  };
   structure |> traverseAst.structure(traverseAst) |> ignore;
 };
 
 let processCmt = (cmt_infos: Cmt_format.cmt_infos) =>
   switch (cmt_infos.cmt_annots) {
   | Interface(_) => ()
-  | Implementation(structure) => processStructure(structure)
+  | Implementation(structure) =>
+    structure
+    |> processStructure(~sourceFile=FindSourceFile.cmt(cmt_infos.cmt_annots))
   | _ => ()
   };
 
