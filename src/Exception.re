@@ -1,64 +1,7 @@
 let debug = DeadCommon.debug;
 let posToString = DeadCommon.posToString;
 
-module Exn: {
-  type t;
-  let compare: (t, t) => int;
-  let failure: t;
-  let fromLid: Asttypes.loc(Longident.t) => t;
-  let fromString: string => t;
-  let matchFailure: t;
-  let invalidArgument: t;
-  let notFound: t;
-  let toString: t => string;
-} = {
-  type t = string;
-  let compare = String.compare;
-  let failure = "Failure";
-  let invalidArgument = "Invalid_argument";
-  let matchFailure = "Match_failure";
-  let notFound = "Not_found";
-  let fromLid = lid =>
-    lid.Asttypes.txt |> Longident.flatten |> String.concat(".");
-  let fromString = s => s;
-  let toString = s => s;
-};
-
 module ExnSet = Set.Make(Exn);
-
-let raisesLibTable = {
-  let table = Hashtbl.create(15);
-  open Exn;
-  [
-    (
-      "List",
-      [
-        ("hd", [failure]),
-        ("tl", [failure]),
-        ("nth", [failure, invalidArgument]),
-        ("nth_opt", [invalidArgument]),
-        ("init", [invalidArgument]),
-        ("iter2", [invalidArgument]),
-        ("map2", [invalidArgument]),
-        ("fold_left2", [invalidArgument]),
-        ("fold_right2", [invalidArgument]),
-        ("for_all2", [invalidArgument]),
-        ("exists2", [invalidArgument]),
-        ("find", [notFound]),
-        ("assoc", [notFound]),
-        ("combine", [invalidArgument]),
-      ],
-    ),
-  ]
-  |> List.iter(((name, group)) =>
-       group
-       |> List.iter(((s, e)) =>
-            Hashtbl.add(table, name ++ "." ++ s, e |> ExnSet.of_list)
-          )
-     );
-
-  table;
-};
 
 module Exceptions = {
   type t = ExnSet.t;
@@ -213,7 +156,7 @@ module Event = {
           |> ExnSet.iter(exn => Hashtbl.replace(exnTable, exn, loc));
           loop(ExnSet.union(exnSet, exceptions), rest);
         | _ =>
-          switch (Hashtbl.find_opt(raisesLibTable, path |> Path.name)) {
+          switch (ExnLib.find(path)) {
           | Some(exceptions) =>
             exceptions
             |> ExnSet.iter(exn => Hashtbl.replace(exnTable, exn, loc));
