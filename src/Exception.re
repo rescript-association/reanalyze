@@ -208,7 +208,20 @@ module Event = {
 };
 
 module Checks = {
-  let report = (~events, ~id, ~loc, ~moduleName) => {
+  type check = {
+    events: list(Event.t),
+    id: Ident.t,
+    loc: Location.t,
+    moduleName: string,
+  };
+  type t = list(check);
+
+  let checks: ref(t) = ref([]);
+
+  let add = (~events, ~id, ~loc, ~moduleName) =>
+    checks := [{events, id, loc, moduleName}, ...checks^];
+
+  let doCheck = ({events, id, loc, moduleName}) => {
     let raisesAnnotations =
       switch (id |> Values.findId(~moduleName)) {
       | Some(exceptions) => exceptions
@@ -239,6 +252,10 @@ module Checks = {
         )
       );
     };
+  };
+
+  let doChecks = () => {
+    checks^ |> List.rev |> List.iter(doCheck);
   };
 };
 
@@ -381,7 +398,7 @@ let traverseAst = {
       exceptions |> Values.add(~id);
       let res = super.value_binding(self, vb);
 
-      Checks.report(
+      Checks.add(
         ~events=currentEvents^,
         ~id,
         ~loc=vb.vb_pat.pat_loc,
@@ -413,4 +430,4 @@ let processCmt = (cmt_infos: Cmt_format.cmt_infos) =>
   | _ => ()
   };
 
-let reportResults = (~ppf as _) => ();
+let reportResults = (~ppf as _) => Checks.doChecks();

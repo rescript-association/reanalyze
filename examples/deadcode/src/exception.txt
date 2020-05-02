@@ -1,3 +1,4 @@
+  XXX module:ImportMyBanner value:make found:true
   XXX module:B value:foo found:true
 
   Exception Analysis
