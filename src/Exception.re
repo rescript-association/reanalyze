@@ -26,11 +26,22 @@ module Exn: {
 
 module ExnSet = Set.Make(Exn);
 
-let exceptionsToString = exceptions =>
-  exceptions
-  |> ExnSet.elements
-  |> List.map(Exn.toString)
-  |> String.concat(" ");
+module Exceptions = {
+  type t = ExnSet.t;
+  let toString = exceptions =>
+    exceptions
+    |> ExnSet.elements
+    |> List.map(Exn.toString)
+    |> String.concat(" ");
+};
+
+module Values = {
+  let valueBindingsTable: Hashtbl.t(string, Exceptions.t) =
+    Hashtbl.create(15);
+  let add = (~id, exceptions) =>
+    Hashtbl.replace(valueBindingsTable, Ident.name(id), exceptions);
+  let find = name => Hashtbl.find_opt(valueBindingsTable, name);
+};
 
 module Event = {
   type kind =
@@ -58,14 +69,14 @@ module Event = {
         ppf,
         "%s Events combine.loop: raises %s@.",
         loc.loc_start |> posToString,
-        exceptions |> exceptionsToString,
+        exceptions |> Exceptions.toString,
       )
     | {kind: Catches(nestedEvents), exceptions, loc} =>
       Format.fprintf(
         ppf,
         "%s Events combine.loop: Catches exceptions:%s nestedEvents:%a@.",
         loc.loc_start |> posToString,
-        exceptions |> exceptionsToString,
+        exceptions |> Exceptions.toString,
         (ppf, ()) => {
           nestedEvents
           |> List.iter(e => {Format.fprintf(ppf, "%a ", print, e)})
@@ -107,8 +118,6 @@ module Event = {
     loop(ExnSet.empty, events);
   };
 };
-
-let valueBindingsTable = Hashtbl.create(15);
 
 let raisesLibTable = {
   let table = Hashtbl.create(15);
@@ -192,7 +201,7 @@ let traverseAst = {
         currentEvents :=
           [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
       } else {
-        switch (Hashtbl.find_opt(valueBindingsTable, calleeName)) {
+        switch (calleeName |> Values.find) {
         | Some(exceptions) when !ExnSet.is_empty(exceptions) =>
           currentEvents :=
             [{Event.kind: CallRaises, loc, exceptions}, ...currentEvents^]
@@ -292,11 +301,11 @@ let traverseAst = {
         | None => ExnSet.empty
         | Some(payload) => payload |> getExceptions
         };
-      Hashtbl.replace(valueBindingsTable, Ident.name(id), exceptions);
+      exceptions |> Values.add(~id);
       let res = super.value_binding(self, vb);
       let raiseSet = currentEvents^ |> Event.combine;
       let reaisesAnnotations =
-        switch (Hashtbl.find_opt(valueBindingsTable, name)) {
+        switch (name |> Values.find) {
         | Some(exceptions) => exceptions
         | _ => ExnSet.empty
         };
@@ -310,8 +319,8 @@ let traverseAst = {
             ppf,
             "@{<info>%s@} might raise @{<info>%s@} and is not annotated with @raises %s",
             name,
-            raiseSet |> exceptionsToString,
-            missingAnnotations |> exceptionsToString,
+            raiseSet |> Exceptions.toString,
+            missingAnnotations |> Exceptions.toString,
           )
         );
       };
@@ -322,8 +331,8 @@ let traverseAst = {
             ppf,
             "@{<info>%s@} might raise @{<info>%s@} and is annotated with redundant @raises %s",
             name,
-            raiseSet |> exceptionsToString,
-            redundantAnnotations |> exceptionsToString,
+            raiseSet |> Exceptions.toString,
+            redundantAnnotations |> Exceptions.toString,
           )
         );
       };
