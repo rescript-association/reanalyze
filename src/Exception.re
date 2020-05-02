@@ -94,15 +94,7 @@ module Values = {
           | `Contains_apply => ("", "")
           };
         switch (Hashtbl.find_opt(valueBindingsTable, moduleName)) {
-        | Some(tbl) =>
-          let res = Hashtbl.find_opt(tbl, valuePath);
-          Log_.item(
-            "XXX module:%s value:%s found:%b@.",
-            moduleName,
-            valuePath,
-            res != None,
-          );
-          res;
+        | Some(tbl) => Hashtbl.find_opt(tbl, valuePath)
         | None => None
         };
       | _ => None
