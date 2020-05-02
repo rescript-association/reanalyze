@@ -1097,6 +1097,7 @@
   addValueDeclaration +parse_json_from_file Exn.re:78:4 path:+Exn
   addValueDeclaration +reRaise Exn.re:90:4 path:+Exn
   addValueDeclaration +switchWithCatchAll Exn.re:96:4 path:+Exn
+  addValueDeclaration +raiseInInternalLet Exn.re:102:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -1126,6 +1127,10 @@
   addTypeReference Exn.re:92:25 --> Exn.re:35:10
   addTypeReference Exn.re:91:16 --> Exn.re:34:10
   addTypeReference Exn.re:97:16 --> Exn.re:34:10
+  addValueDeclaration +a Exn.re:103:6 path:+Exn
+  addTypeReference Exn.re:103:20 --> Exn.re:34:10
+  addValueReference Exn.re:103:6 --> Exn.re:102:25
+  addValueReference Exn.re:102:4 --> Exn.re:103:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmti
   addValueDeclaration +get ImmutableArray.rei:5:15 path:ImmutableArray.Array
   addValueDeclaration +fromArray ImmutableArray.rei:7:0 path:ImmutableArray
@@ -1937,6 +1942,8 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +Exn.+raiseInInternalLet: 0 references () [1]
+  Dead Value +Exn.+a: 0 references () [0]
   Dead Value +Exn.+switchWithCatchAll: 0 references () [0]
   Dead Value +Exn.+reRaise: 0 references () [0]
   Dead Value +Exn.+parse_json_from_file: 0 references () [1]
@@ -2980,6 +2987,12 @@ File References
   Warning Dead Value With Side Effects
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 96, characters 0-82
   +switchWithCatchAll is never used and could have side effects
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 102, characters 0-72
+  +raiseInInternalLet is never used
+  <-- line 102
+  [@dead "+raiseInInternalLet"] let raiseInInternalLet = b => {
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 0-26

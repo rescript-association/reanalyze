@@ -556,7 +556,7 @@ let parse_json lexbuf =
         Arr (Ext_array.reverse_of_list acc)
     | x -> 
       push x ;
-      let new_one = json lexbuf [@@raises Error]  in 
+      let new_one = json lexbuf in 
       begin match token ()  with 
       | Comma -> 
           parse_array  loc_start loc_finish (new_one :: acc) lexbuf 
@@ -574,7 +574,7 @@ let parse_json lexbuf =
     | String key -> 
       begin match token () with 
       | Colon ->
-        let value = json lexbuf [@@raises Error] in
+        let value = json lexbuf in
         begin match token () with 
         | Rbrace -> Obj (StringMap.add key value acc)
         | Comma -> 
@@ -587,7 +587,7 @@ let parse_json lexbuf =
   [@@raises Error]
 
   in 
-  let v = json lexbuf [@@raises Error] in 
+  let v = json lexbuf in 
   match token () with 
   | Eof -> v 
   | _ -> error lexbuf Expect_eof
