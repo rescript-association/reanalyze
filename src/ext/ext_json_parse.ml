@@ -305,6 +305,7 @@ let __ocaml_lex_tables = {
 
 let rec lex_json buf lexbuf =
     __ocaml_lex_lex_json_rec buf lexbuf 0
+[@@raises Error]
 and __ocaml_lex_lex_json_rec buf lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
@@ -376,6 +377,7 @@ let
 
 and comment buf lexbuf =
     __ocaml_lex_comment_rec buf lexbuf 40
+[@@raises Error]
 and __ocaml_lex_comment_rec buf lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
@@ -393,6 +395,7 @@ and __ocaml_lex_comment_rec buf lexbuf __ocaml_lex_state =
 
 and scan_string buf start lexbuf =
     __ocaml_lex_scan_string_rec buf start lexbuf 45
+[@@raises Error]
 and __ocaml_lex_scan_string_rec buf start lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
@@ -513,6 +516,7 @@ let parse_json lexbuf =
     | Some x -> 
       look_ahead := None ;
       x 
+  [@@raises Error]
   in
   let push e = look_ahead := Some e in 
   let rec json (lexbuf : Lexing.lexbuf) : Ext_json_types.t = 
