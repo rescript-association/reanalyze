@@ -1,6 +1,6 @@
 # reanalyze
 
-Experimental analyses for OCaml/Reason: for globally dead values/types, and for termination.
+Experimental analyses for OCaml/Reason: globally dead values/types, exception analysis, and termination.
 Supports bucklescript projects, as well as native projects (e.g. dune).
 
 **Status `master (v3.*)`:** [![Build
@@ -11,17 +11,31 @@ Status](https://dev.azure.com/ccrisccris/reanalyze/_apis/build/status/cristianoc
 Early release. While the core functionality is reasonably stable, the CLI and annotations are subject to change. However, this is a tiny surface at the moment.
 
 ## Use
+The rest of this document describes the dead code analysis.
+For the exception analysis, projects are built in the same way and only the command-line invocation is different.
+Here is [how to use the exception analysis](EXCEPTION.md): 
+
 Build and run on existing projects using the Build and Try instructions below. The analysis uses `.cmt[i]` files which are generated during compilation, so should be run *after* building your project. Remember to rebuild the project before running again.
 
 ### CLI for bucklescript projects
 ```
+# dead code analysis
 reanalyze.exe -dce
+
+# exception analysis
+reanalyze.exe -exception
 ```
+
+
 The requirement is that `bsconfig.json` can be found by walking up the current directory.
 
 ### CLI for native projects
 ```
+# dead code analysis
 reanalyze.exe -dce-cmt root/containing/cmt/files
+
+# exception analysis
+reanalyze.exe -exception-cmt root/containing/cmt/files
 ```
 Subdirectories are scanned recursively looking for `.cmt[i]` files.
 
