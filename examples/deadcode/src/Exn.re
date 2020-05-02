@@ -98,3 +98,8 @@ let switchWithCatchAll =
   | exception _ => 1
   | _ => 2
   };
+
+let raiseInInternalLet = b => {
+  let a = b ? raise(A) : 22;
+  a + 34;
+};
