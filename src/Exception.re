@@ -112,10 +112,7 @@ module Values = {
           | `Ok(id, mods) => (Ident.name(id), mods |> String.concat("."))
           | `Contains_apply => ("", "")
           };
-        switch (Hashtbl.find_opt(valueBindingsTable, moduleName)) {
-        | Some(tbl) => Hashtbl.find_opt(tbl, valuePath)
-        | None => None
-        };
+        valuePath |> getFromModule(~moduleName);
       | _ => None
       }
     };
