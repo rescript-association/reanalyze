@@ -1,4 +1,6 @@
 # master
+
+# 1.9.0
 - Exception analysis: Model exceptions for `Array`, `Buffer`, `Bytes`, `Char`, `Filename`, `Hashtbl`, `Pervasives`, `Str`, `String`.
 
 # 1.8.0
