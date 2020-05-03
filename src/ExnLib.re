@@ -69,5 +69,3 @@ let raisesLibTable = {
 };
 
 let find = path => Hashtbl.find_opt(raisesLibTable, path |> Path.name);
-
-let x = Filename.basename;
