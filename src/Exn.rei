@@ -1,5 +1,7 @@
 type t;
 let compare: (t, t) => int;
+
+let endOfFile: t;
 let failure: t;
 let fromLid: Asttypes.loc(Longident.t) => t;
 let fromString: string => t;

@@ -37,6 +37,17 @@ let raisesLibTable = {
         ("map2", [invalidArgument]),
       ],
     ),
+    (
+      "Buffer",
+      [
+        ("sub", [invalidArgument]),
+        ("blit", [invalidArgument]),
+        ("nth", [invalidArgument]),
+        ("add_substitute", [notFound]),
+        ("add_channel", [endOfFile]),
+        ("truncate", [invalidArgument]),
+      ],
+    ),
   ]
   |> List.iter(((name, group)) =>
        group

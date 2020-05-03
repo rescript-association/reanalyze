@@ -1,5 +1,7 @@
 type t = string;
 let compare = String.compare;
+
+let endOfFile = "End_of_file";
 let failure = "Failure";
 let invalidArgument = "Invalid_argument";
 let matchFailure = "Match_failure";
