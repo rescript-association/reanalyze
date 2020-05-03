@@ -38,6 +38,7 @@ let raisesLibTable = {
         ("open_temp_file", [sysError]),
       ],
     ),
+    ("Hashtbl", [("find", [notFound])]),
     (
       "List",
       [
