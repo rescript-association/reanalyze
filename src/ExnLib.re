@@ -29,6 +29,32 @@ let raisesLibTable = {
         ("truncate", [invalidArgument]),
       ],
     ),
+    (
+      "Bytes",
+      [
+        ("get", [invalidArgument]),
+        ("set", [invalidArgument]),
+        ("create", [invalidArgument]),
+        ("make", [invalidArgument]),
+        ("init", [invalidArgument]),
+        ("sub", [invalidArgument]),
+        ("extend", [invalidArgument]),
+        ("fill", [invalidArgument]),
+        ("blit", [invalidArgument]),
+        ("blit_string", [invalidArgument]),
+        // ("concat", [invalidArgument]), if longer than {!Sys.max_string_length}
+        // ("cat", [invalidArgument]), if longer than {!Sys.max_string_length}
+        // ("escaped", [invalidArgument]), if longer than {!Sys.max_string_length}
+        ("index", [notFound]),
+        ("rindex", [notFound]),
+        ("index_from", [invalidArgument, notFound]),
+        ("index_from_opt", [invalidArgument]),
+        ("rindex_from", [invalidArgument, notFound]),
+        ("rindex_from_opt", [invalidArgument]),
+        ("contains_from", [invalidArgument]),
+        ("rcontains_from", [invalidArgument]),
+      ],
+    ),
     ("Char", [("chr", [invalidArgument])]),
     (
       "Filename",
@@ -101,8 +127,9 @@ let raisesLibTable = {
         ("make", [invalidArgument]),
         ("init", [invalidArgument]),
         ("sub", [invalidArgument]),
-        // ("concat", [invalidArgument]), uf the result is longer than s{!Sys.max_string_length} bytes.
-        // ("escaped", [invalidArgument]),
+        ("fill", [invalidArgument]),
+        // ("concat", [invalidArgument]), if longer than {!Sys.max_string_length}
+        // ("escaped", [invalidArgument]), if longer than {!Sys.max_string_length}
         ("index", [notFound]),
         ("rindex", [notFound]),
         ("index_from", [invalidArgument, notFound]),
