@@ -92,6 +92,27 @@ let raisesLibTable = {
         ("group_end", [notFound, invalidArgument]),
       ],
     ),
+    (
+      "String",
+      [
+        ("get", [invalidArgument]),
+        ("set", [invalidArgument]),
+        ("create", [invalidArgument]),
+        ("make", [invalidArgument]),
+        ("init", [invalidArgument]),
+        ("sub", [invalidArgument]),
+        // ("concat", [invalidArgument]), uf the result is longer than s{!Sys.max_string_length} bytes.
+        // ("escaped", [invalidArgument]),
+        ("index", [notFound]),
+        ("rindex", [notFound]),
+        ("index_from", [invalidArgument, notFound]),
+        ("index_from_opt", [invalidArgument]),
+        ("rindex_from", [invalidArgument, notFound]),
+        ("rindex_from_opt", [invalidArgument]),
+        ("contains_from", [invalidArgument]),
+        ("rcontains_from", [invalidArgument]),
+      ],
+    ),
   ]
   |> List.iter(((name, group)) =>
        group
