@@ -42,11 +42,11 @@ let handleNamespace = cmt => {
     };
   let noDir = Filename.basename(cmt) == cmt;
   if (noDir) {
-    cmt |> Filename.chop_extension |> cutAfterDash;
+    cmt |> Filename.remove_extension |> cutAfterDash;
   } else {
     let dir = cmt |> Filename.dirname;
     let base =
-      cmt |> Filename.basename |> Filename.chop_extension |> cutAfterDash;
+      cmt |> Filename.basename |> Filename.remove_extension |> cutAfterDash;
     Filename.concat(dir, base);
   };
 };

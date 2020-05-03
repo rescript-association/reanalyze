@@ -72,6 +72,8 @@ export {
   raiseInInternalLet ,
   indirectCall ,
   array ,
+  id ,
+  tryChar ,
   
 }
 /* catches1 Not a pure module */

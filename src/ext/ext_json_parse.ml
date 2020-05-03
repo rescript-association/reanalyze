@@ -440,10 +440,11 @@ and
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos (lexbuf.Lexing.lex_start_pos + 4) in
       (
         let v = dec_code c1 c2 c3 in
-        if v > 255 then
-          error lexbuf (Illegal_escape s) ;
-        Buffer.add_char buf (Char.chr v);
-
+        begin
+          try Buffer.add_char buf (Char.chr v) with
+          | _ ->
+            error lexbuf (Illegal_escape s)
+        end;
         scan_string buf start lexbuf
       )
 
@@ -456,7 +457,11 @@ and
 = Lexing.sub_lexeme_char lexbuf (lexbuf.Lexing.lex_start_pos + 3) in
       (
         let v = hex_code c1 c2 in
-        Buffer.add_char buf (Char.chr v);
+        begin
+          try Buffer.add_char buf (Char.chr v) with
+          | _ ->
+            error lexbuf (Illegal_escape (Char.escaped c2))
+        end;
 
         scan_string buf start lexbuf
       )

@@ -1100,6 +1100,8 @@
   addValueDeclaration +raiseInInternalLet Exn.re:102:4 path:+Exn
   addValueDeclaration +indirectCall Exn.re:107:4 path:+Exn
   addValueDeclaration +array Exn.re:110:4 path:+Exn
+  addValueDeclaration +id Exn.re:112:4 path:+Exn
+  addValueDeclaration +tryChar Exn.re:114:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -1135,6 +1137,9 @@
   addValueReference Exn.re:102:4 --> Exn.re:103:6
   addValueReference Exn.re:107:4 --> Exn.re:20:4
   addValueReference Exn.re:110:4 --> Exn.re:110:12
+  addValueReference Exn.re:112:4 --> Exn.re:112:9
+  addValueReference Exn.re:114:4 --> Exn.re:114:14
+  addValueReference Exn.re:114:4 --> Exn.re:112:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmti
   addValueDeclaration +get ImmutableArray.rei:5:15 path:ImmutableArray.Array
   addValueDeclaration +fromArray ImmutableArray.rei:7:0 path:ImmutableArray
@@ -1946,6 +1951,8 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +Exn.+tryChar: 0 references () [0]
+  Dead Value +Exn.+id: 0 references () [0]
   Dead Value +Exn.+array: 0 references () [0]
   Dead Value +Exn.+indirectCall: 0 references () [0]
   Dead Value +Exn.+raiseInInternalLet: 0 references () [1]
@@ -3011,6 +3018,18 @@ File References
   +array is never used
   <-- line 110
   [@dead "+array"] [@raises Invalid_argument]
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 112, characters 0-15
+  +id is never used
+  <-- line 112
+  [@dead "+id"] let id = x => x;
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 114, characters 0-80
+  +tryChar is never used
+  <-- line 114
+  [@dead "+tryChar"] let tryChar = v => {
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 0-26

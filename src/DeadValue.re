@@ -211,7 +211,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
         |> Path.name == "JSResource.jSResource"
         && Filename.check_suffix(s, ".bs") =>
     let moduleName =
-      Filename.chop_extension(s) |> Name.create(~isInterface=false);
+      Filename.remove_extension(s) |> Name.create(~isInterface=false);
     switch (
       getPosOfValue(
         ~moduleName,
@@ -250,9 +250,9 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
         && Filename.check_suffix(sTrue, ".bs")
         && Filename.check_suffix(sFalse, ".bs") =>
     let moduleTrue =
-      Filename.chop_extension(sTrue) |> Name.create(~isInterface=false);
+      Filename.remove_extension(sTrue) |> Name.create(~isInterface=false);
     let moduleFalse =
-      Filename.chop_extension(sFalse) |> Name.create(~isInterface=false);
+      Filename.remove_extension(sFalse) |> Name.create(~isInterface=false);
 
     let positionsTrue = getDeclPositions(~moduleName=moduleTrue);
     let positionsFalse = getDeclPositions(~moduleName=moduleFalse);

@@ -108,3 +108,12 @@ let indirectCall = () => () |> raisesWithAnnotaion;
 
 [@raises Invalid_argument]
 let array = a => a[2];
+
+let id = x => x;
+
+let tryChar = v => {
+  try(id(Char.chr(v)) |> ignore) {
+  | _ => ()
+  };
+  42;
+};
