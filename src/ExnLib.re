@@ -58,6 +58,30 @@ let raisesLibTable = {
         ("combine", [invalidArgument]),
       ],
     ),
+    (
+      "Pervasives",
+      [
+        ("invalid_arg", [invalidArgument]),
+        ("failwith", [failure]),
+        ("/", [divisionByZero]),
+        ("mod", [divisionByZero]),
+        ("char_of_int", [invalidArgument]),
+        ("bool_of_string", [invalidArgument]),
+        ("int_of_string", [failure]),
+        ("float_of_string", [failure]),
+        ("read_int", [failure]),
+        ("output", [invalidArgument]),
+        ("close_out", [sysError]),
+        ("input_char", [endOfFile]),
+        ("input_line", [endOfFile]),
+        ("input", [invalidArgument]),
+        ("really_input", [endOfFile, invalidArgument]),
+        ("really_input_string", [endOfFile]),
+        ("input_byte", [endOfFile]),
+        ("input_binary_int", [endOfFile]),
+        ("close_in", [sysError]),
+      ],
+    ),
   ]
   |> List.iter(((name, group)) =>
        group
@@ -70,3 +94,5 @@ let raisesLibTable = {
 };
 
 let find = path => Hashtbl.find_opt(raisesLibTable, path |> Path.name);
+
+let q = Pervasives.fst;

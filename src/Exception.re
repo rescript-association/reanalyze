@@ -279,7 +279,8 @@ let traverseAst = {
 
     | Texp_apply({exp_desc: Texp_ident(callee, _, _)} as e, args) =>
       let calleeName = Path.name(callee);
-      if (calleeName == "Pervasives.raise") {
+      if (calleeName == "Pervasives.raise"
+          || calleeName == "Pervasives.raise_notracee") {
         let exceptions =
           switch (args) {
           | [(_, Some({exp_desc: Texp_construct(lid, _, _)}))] =>
