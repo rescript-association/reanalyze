@@ -105,3 +105,6 @@ let raiseInInternalLet = b => {
 };
 
 let indirectCall = () => () |> raisesWithAnnotaion;
+
+[@raises Invalid_argument]
+let array = a => a[2];

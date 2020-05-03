@@ -23,6 +23,20 @@ let raisesLibTable = {
         ("combine", [invalidArgument]),
       ],
     ),
+    (
+      "Array",
+      [
+        ("get", [invalidArgument]),
+        ("set", [invalidArgument]),
+        ("make", [invalidArgument]),
+        ("init", [invalidArgument]),
+        ("make_matrix", [invalidArgument]),
+        ("fill", [invalidArgument]),
+        ("blit", [invalidArgument]),
+        ("iter2", [invalidArgument]),
+        ("map2", [invalidArgument]),
+      ],
+    ),
   ]
   |> List.iter(((name, group)) =>
        group

@@ -71,6 +71,7 @@ export {
   switchWithCatchAll ,
   raiseInInternalLet ,
   indirectCall ,
+  array ,
   
 }
 /* catches1 Not a pure module */
