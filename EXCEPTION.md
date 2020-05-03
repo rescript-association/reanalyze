@@ -49,3 +49,14 @@ try (foo()) { | exn => raise(exn) }
 ```
 
 - Uses of e.g. `List.hd` are interpered as belonging to the standard libry. If you re-define `List` in the local scope, the analysis it will think it's dealing with `List` from the standard library.
+
+- There is no special support for functors. So with `Hashtbl.Make(...)` the builtin model will not apply. So the analysis won't report that the following can raise `Not_found`:
+
+```reason
+module StringHash =
+  Hashtbl.Make({
+    include String;
+    let hash = Hashtbl.hash;
+  });
+let specializedHash = tbl => StringHash.find(tbl, "abc");
+```

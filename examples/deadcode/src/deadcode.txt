@@ -1102,6 +1102,8 @@
   addValueDeclaration +array Exn.re:110:4 path:+Exn
   addValueDeclaration +id Exn.re:112:4 path:+Exn
   addValueDeclaration +tryChar Exn.re:114:4 path:+Exn
+  addValueDeclaration +specializedHash Exn.re:127:4 path:+Exn
+  addValueDeclaration +genericHash Exn.re:130:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -1140,6 +1142,9 @@
   addValueReference Exn.re:112:4 --> Exn.re:112:9
   addValueReference Exn.re:114:4 --> Exn.re:114:14
   addValueReference Exn.re:114:4 --> Exn.re:112:4
+  addValueDeclaration +hash Exn.re:124:8 path:+Exn.StringHash
+  addValueReference Exn.re:127:4 --> Exn.re:127:22
+  addValueReference Exn.re:130:4 --> Exn.re:130:18
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmti
   addValueDeclaration +get ImmutableArray.rei:5:15 path:ImmutableArray.Array
   addValueDeclaration +fromArray ImmutableArray.rei:7:0 path:ImmutableArray
@@ -1951,6 +1956,9 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +Exn.+genericHash: 0 references () [0]
+  Dead Value +Exn.+specializedHash: 0 references () [0]
+  Dead Value +Exn.StringHash.+hash: 0 references () [0]
   Dead Value +Exn.+tryChar: 0 references () [0]
   Dead Value +Exn.+id: 0 references () [0]
   Dead Value +Exn.+array: 0 references () [0]
@@ -3030,6 +3038,24 @@ File References
   +tryChar is never used
   <-- line 114
   [@dead "+tryChar"] let tryChar = v => {
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 124, characters 4-27
+  StringHash.+hash is never used
+  <-- line 124
+      [@dead "StringHash.+hash"] let hash = Hashtbl.hash;
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 127, characters 0-56
+  +specializedHash is never used
+  <-- line 127
+  [@dead "+specializedHash"] let specializedHash = tbl => StringHash.find(tbl, "abc");
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 129, characters 0-69
+  +genericHash is never used
+  <-- line 130
+  [@dead "+genericHash"] [@raises Not_found]
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 0-26

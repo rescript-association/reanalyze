@@ -74,6 +74,9 @@ export {
   array ,
   id ,
   tryChar ,
+  StringHash ,
+  specializedHash ,
+  genericHash ,
   
 }
 /* catches1 Not a pure module */

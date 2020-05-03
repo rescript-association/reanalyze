@@ -117,3 +117,14 @@ let tryChar = v => {
   };
   42;
 };
+
+module StringHash =
+  Hashtbl.Make({
+    include String;
+    let hash = Hashtbl.hash;
+  });
+
+let specializedHash = tbl => StringHash.find(tbl, "abc");
+
+[@raises Not_found]
+let genericHash = tbl => Hashtbl.find(tbl, "abc");
