@@ -1665,18 +1665,19 @@ let traverseAst = (~valueBindingsTable) => {
           valueBindings,
         )
         |> List.rev;
+
       let recursiveDefinitions =
         recursiveFunctions
-        |> List.map(functionName =>
-             (
-               functionName,
-               {
-                 let (_pos, e, _set) =
-                   Hashtbl.find(valueBindingsTable, functionName);
-                 e;
-               },
-             )
-           );
+        |> List.fold_left(
+             (acc, functionName) => {
+               switch (Hashtbl.find_opt(valueBindingsTable, functionName)) {
+               | Some((_pos, e, _set)) => [(functionName, e), ...acc]
+               | None => acc
+               }
+             },
+             [],
+           )
+        |> List.rev;
 
       recursiveDefinitions
       |> List.iter(((functionName, _body)) => {
@@ -1709,24 +1710,26 @@ let traverseAst = (~valueBindingsTable) => {
              functionDefinition: FunctionTable.functionDefinition,
            ) =>
            if (functionDefinition.body == None) {
-             let (_pos, body, _) =
-               Hashtbl.find(valueBindingsTable, functionName);
-             functionTable
-             |> FunctionTable.addBody(
-                  ~body=
-                    Some(
-                      body
-                      |> Compile.expression(
-                           ~ctx={
-                             currentFunctionName: functionName,
-                             functionTable,
-                             innerRecursiveFunctions: Hashtbl.create(1),
-                             isProgressFunction,
-                           },
-                         ),
-                    ),
-                  ~functionName,
-                );
+             switch (Hashtbl.find_opt(valueBindingsTable, functionName)) {
+             | None => ()
+             | Some((_pos, body, _)) =>
+               functionTable
+               |> FunctionTable.addBody(
+                    ~body=
+                      Some(
+                        body
+                        |> Compile.expression(
+                             ~ctx={
+                               currentFunctionName: functionName,
+                               functionTable,
+                               innerRecursiveFunctions: Hashtbl.create(1),
+                               isProgressFunction,
+                             },
+                           ),
+                      ),
+                    ~functionName,
+                  )
+             };
            }
          );
 

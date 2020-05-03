@@ -905,14 +905,15 @@ module Decl = {
           },
         },
       ) => {
+    [@raises Not_found]
     let findPosition = fn => Hashtbl.find(orderedFiles, fn);
 
     /* From the root of the file dependency DAG to the leaves.
        From the bottom of the file to the top. */
-    let (position1, position2) = (
-      fname1 |> findPosition,
-      fname2 |> findPosition,
-    );
+    let (position1, position2) =
+      try((fname1 |> findPosition, fname2 |> findPosition)) {
+      | Not_found => (0, 0)
+      };
     compare(
       (position1, lnum2, bol2, cnum2, kind1),
       (position2, lnum1, bol1, cnum1, kind2),
