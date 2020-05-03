@@ -1111,8 +1111,12 @@ module Compile = {
         ) =>
         let casesArr = Array.of_list(cCases);
         let (some, none) =
-          name1 == "Some"
-            ? (casesArr[0], casesArr[1]) : (casesArr[1], casesArr[0]);
+          try(
+            name1 == "Some"
+              ? (casesArr[0], casesArr[1]) : (casesArr[1], casesArr[0])
+          ) {
+          | Invalid_argument(_) => (Nothing, Nothing)
+          };
         SwitchOption({functionCall, loc, some, none});
       | _ => Command.(cE +++ nondet(cCases))
       };

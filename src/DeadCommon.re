@@ -718,8 +718,8 @@ module WriteDeadAnnotations = {
 
       let indexInLines = (decl |> getPosAnnotation).pos_lnum - 1;
 
-      if (indexInLines < Array.length(currentFileLines^)) {
-        let line = currentFileLines^[indexInLines];
+      switch (currentFileLines^[indexInLines]) {
+      | line =>
         line.declarations = [decl, ...line.declarations];
         Format.fprintf(
           ppf,
@@ -727,8 +727,8 @@ module WriteDeadAnnotations = {
           decl.pos.pos_lnum,
           line |> lineToString,
         );
-      } else {
-        Format.fprintf(ppf, "  <-- Can't find line %d@.", decl.pos.pos_lnum);
+      | exception (Invalid_argument(_)) =>
+        Format.fprintf(ppf, "  <-- Can't find line %d@.", decl.pos.pos_lnum)
       };
     } else {
       Format.fprintf(ppf, "  <-- can't find file@.");

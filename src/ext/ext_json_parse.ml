@@ -553,7 +553,7 @@ let parse_json lexbuf =
     : Ext_json_types.t =
     match token () with 
     | Rbracket ->
-        Arr (Ext_array.reverse_of_list acc)
+        Arr (Array.of_list (acc |> List.rev))
     | x -> 
       push x ;
       let new_one = json lexbuf in 
@@ -561,7 +561,7 @@ let parse_json lexbuf =
       | Comma -> 
           parse_array  loc_start loc_finish (new_one :: acc) lexbuf 
       | Rbracket 
-        -> Arr (Ext_array.reverse_of_list (new_one::acc))
+        -> Arr (Array.of_list (new_one::acc |> List.rev))
       | _ -> 
         error lexbuf Expect_comma_or_rbracket
       end
