@@ -5,25 +5,6 @@ let raisesLibTable = {
   open Exn;
   [
     (
-      "List",
-      [
-        ("hd", [failure]),
-        ("tl", [failure]),
-        ("nth", [failure, invalidArgument]),
-        ("nth_opt", [invalidArgument]),
-        ("init", [invalidArgument]),
-        ("iter2", [invalidArgument]),
-        ("map2", [invalidArgument]),
-        ("fold_left2", [invalidArgument]),
-        ("fold_right2", [invalidArgument]),
-        ("for_all2", [invalidArgument]),
-        ("exists2", [invalidArgument]),
-        ("find", [notFound]),
-        ("assoc", [notFound]),
-        ("combine", [invalidArgument]),
-      ],
-    ),
-    (
       "Array",
       [
         ("get", [invalidArgument]),
@@ -46,6 +27,26 @@ let raisesLibTable = {
         ("add_substitute", [notFound]),
         ("add_channel", [endOfFile]),
         ("truncate", [invalidArgument]),
+      ],
+    ),
+    ("Char", [("chr", [invalidArgument])]),
+    (
+      "List",
+      [
+        ("hd", [failure]),
+        ("tl", [failure]),
+        ("nth", [failure, invalidArgument]),
+        ("nth_opt", [invalidArgument]),
+        ("init", [invalidArgument]),
+        ("iter2", [invalidArgument]),
+        ("map2", [invalidArgument]),
+        ("fold_left2", [invalidArgument]),
+        ("fold_right2", [invalidArgument]),
+        ("for_all2", [invalidArgument]),
+        ("exists2", [invalidArgument]),
+        ("find", [notFound]),
+        ("assoc", [notFound]),
+        ("combine", [invalidArgument]),
       ],
     ),
   ]
