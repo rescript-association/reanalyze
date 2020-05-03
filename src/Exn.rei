@@ -8,4 +8,6 @@ let fromString: string => t;
 let matchFailure: t;
 let invalidArgument: t;
 let notFound: t;
+
+let sysError: t;
 let toString: t => string;

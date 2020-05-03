@@ -31,6 +31,14 @@ let raisesLibTable = {
     ),
     ("Char", [("chr", [invalidArgument])]),
     (
+      "Filename",
+      [
+        ("chop_extension", [invalidArgument]),
+        ("temp_file", [sysError]),
+        ("open_temp_file", [sysError]),
+      ],
+    ),
+    (
       "List",
       [
         ("hd", [failure]),
@@ -61,3 +69,5 @@ let raisesLibTable = {
 };
 
 let find = path => Hashtbl.find_opt(raisesLibTable, path |> Path.name);
+
+let x = Filename.basename;
