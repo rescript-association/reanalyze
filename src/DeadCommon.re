@@ -681,6 +681,7 @@ module WriteDeadAnnotations = {
   let readFile = fileName => {
     let channel = open_in(fileName);
     let lines = ref([]);
+    [@raises End_of_file]
     let rec loop = () => {
       let line = {original: input_line(channel), declarations: []};
       lines := [line, ...lines^];
@@ -688,7 +689,7 @@ module WriteDeadAnnotations = {
     };
     try(loop()) {
     | End_of_file =>
-      close_in(channel);
+      close_in_noerr(channel);
       lines^ |> List.rev |> Array.of_list;
     };
   };
@@ -704,7 +705,7 @@ module WriteDeadAnnotations = {
              output_char(channel, '\n');
            };
          });
-      close_out(channel);
+      close_out_noerr(channel);
     };
 
   let onDeadDecl = (~ppf, decl) => {

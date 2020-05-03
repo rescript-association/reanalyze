@@ -46,3 +46,4 @@ let lexbuf_from_channel_with_fname ic fname =
   x.lex_start_p <- pos;
   x.lex_curr_p <- pos ; 
   x
+[@@raises Invalid_argument]

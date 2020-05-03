@@ -18,9 +18,9 @@ module Exceptions = {
             name,
             posToString(loc.Location.loc_start),
           )
-        | None => Format.fprintf(ppf, "@{<info>%s@}", name)
+        | None => Format.fprintf(ppf, " @{<info>%s@}", name)
         }
-      | None => Format.fprintf(ppf, "@{<info>%s@}", name)
+      | None => Format.fprintf(ppf, " @{<info>%s@}", name)
       };
     };
     exceptions |> ExnSet.iter(ppExn);

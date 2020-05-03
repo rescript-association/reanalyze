@@ -600,9 +600,12 @@ let parse_json lexbuf =
 
 let parse_json_from_file s = 
   let in_chan = open_in s in 
-  let lexbuf = 
-    Ext_position.lexbuf_from_channel_with_fname
-    in_chan s in 
-  match parse_json lexbuf with 
-  | exception Error _ -> close_in in_chan ; None
-  | v  -> close_in in_chan;  Some(v)
+  match
+    let lexbuf = 
+      Ext_position.lexbuf_from_channel_with_fname
+      in_chan s
+    in 
+    parse_json lexbuf
+  with 
+  | exception (Error _ | Invalid_argument _ | Sys_error _) -> close_in_noerr in_chan ; None
+  | v  -> close_in_noerr in_chan;  Some(v)
