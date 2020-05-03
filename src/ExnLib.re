@@ -82,6 +82,16 @@ let raisesLibTable = {
         ("close_in", [sysError]),
       ],
     ),
+    (
+      "Str",
+      [
+        ("search_forward", [notFound]),
+        ("search_backward", [notFound]),
+        ("matched_group", [notFound]),
+        ("group_beginning", [notFound, invalidArgument]),
+        ("group_end", [notFound, invalidArgument]),
+      ],
+    ),
   ]
   |> List.iter(((name, group)) =>
        group
