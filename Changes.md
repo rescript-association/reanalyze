@@ -1,4 +1,5 @@
 # master
+- Exception analysis: Model exceptions for `Array`, `Buffer`, `Bytes`, `Char`, `Filename`, `Hashtbl`, `Pervasives`, `Str`, `String`.
 
 # 1.8.0
 - First feature-complete exception analysis with `-exception` (bucklescript) and `-exception-cmt` for native.
