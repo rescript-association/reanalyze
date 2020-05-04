@@ -2,7 +2,7 @@
   "source": "./esy.json",
   "override": {
     "dependencies": {
-      "ocaml": "~4.09.0",
+      "ocaml": "~4.09.1",
       "@opam/dune": "2.5.0"
     }
   }
