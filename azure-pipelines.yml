@@ -59,6 +59,14 @@ jobs:
 
   - template: .ci/build-platform.yml
     parameters:
+      name: macOS409
+      platform: macOS
+      vmImage: macOS-10.14
+      test: false
+      esy: "@409"
+
+  - template: .ci/build-platform.yml
+    parameters:
       name: Windows
       platform: Windows
       vmImage: vs2017-win2016
