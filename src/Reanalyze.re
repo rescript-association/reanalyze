@@ -123,10 +123,10 @@ let cli = () => {
     DeadCommon.debug := true;
   }
   and setBlacklist = (prefix) => {
-    DeadCommon.blacklist := Some(prefix);
+    Blacklist.blacklist := Some(prefix);
   }
   and setWhitelist = (prefix) => {
-    DeadCommon.whitelist := Some(prefix);
+    Blacklist.whitelist := Some(prefix);
   }
   and setWrite = () => {
     DeadCommon.write := true;
