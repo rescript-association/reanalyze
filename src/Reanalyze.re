@@ -122,6 +122,12 @@ let cli = () => {
   and setDebug = () => {
     DeadCommon.debug := true;
   }
+  and setBlacklist = (prefix) => {
+    DeadCommon.blacklist := Some(prefix);
+  }
+  and setWhitelist = (prefix) => {
+    DeadCommon.whitelist := Some(prefix);
+  }
   and setWrite = () => {
     DeadCommon.write := true;
   }
@@ -137,6 +143,11 @@ let cli = () => {
     DeadCommon.livePaths := paths @ DeadCommon.livePaths.contents;
   }
   and speclist = [
+    (
+      "-blacklist",
+      Arg.String(setBlacklist),
+      "prefix Don't report on files whose path has the given prefix",
+    ),
     ("-dce", Arg.Unit(() => setDCE(None)), "Eperimental DCE"),
     ("-debug", Arg.Unit(setDebug), "Print debug information"),
     (
@@ -183,6 +194,11 @@ let cli = () => {
       "--version",
       Arg.Unit(versionAndExit),
       "Show version information and exit",
+    ),
+    (
+      "-whitelist",
+      Arg.String(setWhitelist),
+      "prefix Report on blacklisted files whose path has the given prefix",
     ),
     (
       "-write",
