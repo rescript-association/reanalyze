@@ -1104,7 +1104,7 @@
   addValueDeclaration +tryChar Exn.re:114:4 path:+Exn
   addValueDeclaration +specializedHash Exn.re:127:4 path:+Exn
   addValueDeclaration +genericHash Exn.re:130:4 path:+Exn
-  addValueDeclaration +raiseAtAt Exn.re:132:4 path:+Exn
+  addValueDeclaration +raiseAtAt Exn.re:133:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -3060,10 +3060,10 @@ File References
   [@dead "+genericHash"] [@raises Not_found]
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 132, characters 0-40
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 132, characters 0-60
   +raiseAtAt is never used
-  <-- line 132
-  [@dead "+raiseAtAt"] let raiseAtAt = () => raise @@ Not_found;
+  <-- line 133
+  [@dead "+raiseAtAt"] [@raises Not_found]
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 0-26

@@ -290,6 +290,30 @@ let traverseAst = {
           ...currentEvents^,
         ];
 
+    | Texp_apply(
+        {exp_desc: Texp_ident(atat, _, _)},
+        [
+          (_lbl1, Some({exp_desc: Texp_ident(callee, _, _)})),
+          (_lbl2, arg),
+        ],
+      )
+        // raise @@ Exn(...)
+        when
+          atat
+          |> Path.name == "Pervasives.@@"
+          && callee
+          |> Path.name
+          |> isRaise =>
+      let exceptions =
+        switch (arg) {
+        | Some({exp_desc: Texp_construct(lid, _, _)}) =>
+          Exn.fromLid(lid) |> ExnSet.singleton
+        | _ => Exn.fromString("TODO_from_raise") |> ExnSet.singleton
+        };
+      currentEvents :=
+        [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
+      arg |> iterExprOpt(self);
+
     | Texp_apply({exp_desc: Texp_ident(callee, _, _)} as e, args) =>
       let calleeName = Path.name(callee);
       if (calleeName |> isRaise) {

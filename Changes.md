@@ -1,4 +1,6 @@
 # master
+- Add warning when `raise` or `raise_notrace` are used not in a direct call.
+- Support `raise @@ Exn`.
 
 # 1.9.0
 - Exception analysis: Model exceptions for `Array`, `Buffer`, `Bytes`, `Char`, `Filename`, `Hashtbl`, `Pervasives`, `Str`, `String`.

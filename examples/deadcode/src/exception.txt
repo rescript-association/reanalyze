@@ -1,9 +1,5 @@
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 132, characters 22-27
-  Pervasives.raise can be analyzed only if called direclty
-
-  Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 4-7
   bar might raise Not_found (ExnA.re:1:16) and is not annotated with @raises  Not_found
 
