@@ -1,4 +1,8 @@
 # master
+- Add command-line options `-blacklist` and `-whitelist` that apply to all the analyses.
+  Example: `../reanalyze.exe -exception -blacklist src -whitelist src/Ex`
+  will only show results for files `src/Ex*`.
+  The analyses are not affected (e.g. transitively dead code), only the reporting is.
 
 # 1.10.0
 - Exception: Add warning when `raise` or `raise_notrace` are used not in a direct call.
