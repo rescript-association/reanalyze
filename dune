@@ -1,1 +1,1 @@
-(dirs :standard \ node_modules)
+(dirs :standard \ examples node_modules)
