@@ -107,6 +107,12 @@ There's obviously a level of risk in doing this automatic elimination. The safet
 
 ## Build
 
+## No build required for bucklescript projects
+
+```
+npm add --save-dev reanalyze
+```
+
 ### Build for OCaml 4.06.1 using esy (for bucklescript and native projects)
 
 ```sh
@@ -150,7 +156,7 @@ dune build
 
 ```sh
 npm run build # or whatever command to build the project
-npm add reanalyze
+npm add --save-dev reanalyze
 npx reanalyze -dce
 ```
 
