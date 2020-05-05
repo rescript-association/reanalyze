@@ -1,4 +1,5 @@
 (lang dune 2.0)
+(name reanalyze)
 
 (generate_opam_files true)
 
