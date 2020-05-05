@@ -41,7 +41,7 @@ let twExceptions = (x, y) => {
 
 ## Limitations
 
-- The libraries currently modeled are limited to `Array`, `Buffer`, `Bytes`, `Char`, `Filename`, `Hashtbl`, `List`, `Pervasives`, `Str`, `String` from the standard library. Models are currently vendored in the analysis, and are easy to add (see [`src/ExnLib.re`](src/ExnLib.re))
+- The libraries currently modeled are limited to `Array`, `Buffer`, `Bytes`, `Char`, `Filename`, `Hashtbl`, `List`, `Pervasives`, `Str`, `String` from the standard library, and `bs-json`, and `Json` from `Js`. Models are currently vendored in the analysis, and are easy to add (see [`src/ExnLib.re`](src/ExnLib.re))
 - Generic exceptions are not understood by the analysis. For example `exn` is not recognized below (only concrete exceptions are):
 
 ```reason
