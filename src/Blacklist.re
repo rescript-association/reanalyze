@@ -1,5 +1,5 @@
-let blacklist: ref(option(string)) = ref(None);
-let whitelist: ref(option(string)) = ref(None);
+let blacklist: ref(list(string)) = ref([]);
+let whitelist: ref(list(string)) = ref([]);
 
 let checkPrefix = prefix_ => {
   let prefix =
@@ -13,22 +13,14 @@ let checkPrefix = prefix_ => {
 
 let blacklistSourceDir =
   lazy(
-    {
-      switch (blacklist^) {
-      | None => (_sourceDir => false)
-      | Some(prefix) => checkPrefix(prefix)
-      };
-    }
+    sourceDir =>
+      blacklist^ |> List.exists(prefix => checkPrefix(prefix, sourceDir))
   );
 
 let whitelistSourceDir =
   lazy(
-    {
-      switch (whitelist^) {
-      | None => (_sourceDir => false)
-      | Some(prefix) => checkPrefix(prefix)
-      };
-    }
+    sourceDir =>
+      whitelist^ |> List.exists(prefix => checkPrefix(prefix, sourceDir))
   );
 
 let posInBlacklist = (pos: Lexing.position) => {
@@ -38,7 +30,6 @@ let posInBlacklist = (pos: Lexing.position) => {
 let posInWhitelist = (pos: Lexing.position) => {
   pos.pos_fname |> Lazy.force(whitelistSourceDir);
 };
-
 
 // First blacklist, then override with whitelist
 let filter = pos => !posInBlacklist(pos) || posInWhitelist(pos);

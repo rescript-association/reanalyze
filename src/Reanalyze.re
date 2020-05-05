@@ -122,11 +122,13 @@ let cli = () => {
   and setDebug = () => {
     DeadCommon.debug := true;
   }
-  and setBlacklist = (prefix) => {
-    Blacklist.blacklist := Some(prefix);
+  and setBlacklist = s => {
+    let names = s |> String.split_on_char(',');
+    Blacklist.blacklist := names @ Blacklist.blacklist.contents;
   }
-  and setWhitelist = (prefix) => {
-    Blacklist.whitelist := Some(prefix);
+  and setWhitelist = s => {
+    let names = s |> String.split_on_char(',');
+    Blacklist.whitelist := names @ Blacklist.whitelist.contents;
   }
   and setWrite = () => {
     DeadCommon.write := true;
@@ -146,7 +148,7 @@ let cli = () => {
     (
       "-blacklist",
       Arg.String(setBlacklist),
-      "prefix Don't report on files whose path has the given prefix",
+      "comma-separated-path-prefixes Don't report on files whose path has a prefix in the list",
     ),
     ("-dce", Arg.Unit(() => setDCE(None)), "Eperimental DCE"),
     ("-debug", Arg.Unit(setDebug), "Print debug information"),
@@ -198,7 +200,7 @@ let cli = () => {
     (
       "-whitelist",
       Arg.String(setWhitelist),
-      "prefix Report on files whose path has the given prefix, overriding blacklist (no-op if a blacklist is not specified)",
+      "comma-separated-path-prefixes Report on files whose path a prefix in the list, overriding blacklist (no-op if a blacklist is not specified)",
     ),
     (
       "-write",
