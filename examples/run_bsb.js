@@ -14,7 +14,43 @@ const input = (args = process.argv.slice(2));
 
 const shell = isWindows ? true : false;
 
+try {
+  fs.unlinkSync("../lazyLoad.exe");
+} catch (err) {}
+
+fs.symlink(
+  "../_esy/default/build/install/default/bin/lazyLoad.exe",
+  "../lazyLoad.exe",
+  function (err) {
+    console.log(err || "Done.");
+  }
+);
+
+try {
+  fs.unlinkSync("../DeadCodePPX.exe");
+} catch (err) {}
+
+fs.symlink(
+  "../_esy/default/build/install/default/bin/DeadCodePPX.exe",
+  "../DeadCodePPX.exe",
+  function (err) {
+    console.log(err || "Done.");
+  }
+);
+
+try {
+  fs.unlinkSync("../reanalyze.exe");
+} catch (err) {}
+
+fs.symlink(
+  "../_esy/default/build/install/default/bin/reanalyze.exe",
+  "../reanalyze.exe",
+  function (err) {
+    console.log(err || "Done.");
+  }
+);
+
 spawn("bsb", input, { stdio: ["inherit", "inherit"], shell }).on(
   "exit",
-  code => process.exit(code)
+  (code) => process.exit(code)
 );
