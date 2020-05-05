@@ -11,9 +11,11 @@ let fromLid: Asttypes.loc(Longident.t) => t;
 
 let fromString: string => t;
 
-let matchFailure: t;
-
 let invalidArgument: t;
+
+let jsExnError: t;
+
+let matchFailure: t;
 
 let notFound: t;
 

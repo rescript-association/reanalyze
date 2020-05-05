@@ -65,6 +65,7 @@ let raisesLibTable = {
       ],
     ),
     ("Hashtbl", [("find", [notFound])]),
+    ("Js.Json", [("parseExn", [jsExnError])]),
     (
       "List",
       [

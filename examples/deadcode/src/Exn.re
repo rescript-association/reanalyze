@@ -137,3 +137,11 @@ let raisePipe = Not_found |> raise;
 
 [@raises Not_found]
 let raiseArrow = Not_found->raise;
+
+[@raises Js.Exn.Error]
+let bar = () => Js.Json.parseExn("!!!");
+
+let foo = () =>
+  try(Js.Json.parseExn("!!!")) {
+  | Js.Exn.Error(_) => Js.Json.null
+  };

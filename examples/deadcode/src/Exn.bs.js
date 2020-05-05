@@ -80,6 +80,8 @@ export {
   raiseAtAt ,
   raisePipe ,
   raiseArrow ,
+  bar ,
+  foo ,
   
 }
 /* catches1 Not a pure module */
