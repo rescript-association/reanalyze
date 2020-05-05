@@ -168,12 +168,12 @@ let cli = () => {
     (
       "-live-names",
       Arg.String(s => setLiveNames(s)),
-      "comma-separated-names Consider all values with the give names as lives",
+      "comma-separated-names Consider all values with the give names as live",
     ),
     (
       "-live-paths",
       Arg.String(s => setLivePaths(s)),
-      "comma-separated-path-prefixes Consider all values whose path has a prefix in the list",
+      "comma-separated-path-prefixes Consider all values whose path has a prefix in the list as live",
     ),
     (
       "-termination",
