@@ -11,7 +11,6 @@ let checkPrefix = prefix_ => {
     && String.sub(sourceDir, 0, prefixLen) == prefix;
 };
 
-// Blacklist=prefix don't report on source dirs with the given prefix
 let blacklistSourceDir =
   lazy(
     {
@@ -22,7 +21,6 @@ let blacklistSourceDir =
     }
   );
 
-// Whitelist=prefix only report on source dirs with the given prefix
 let whitelistSourceDir =
   lazy(
     {
@@ -41,4 +39,6 @@ let posInWhitelist = (pos: Lexing.position) => {
   pos.pos_fname |> Lazy.force(whitelistSourceDir);
 };
 
+
+// First blacklist, then override with whitelist
 let filter = pos => posInWhitelist(pos) && !posInBlacklist(pos);
