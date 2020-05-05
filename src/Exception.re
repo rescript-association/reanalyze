@@ -267,20 +267,32 @@ let traverseAst = {
          case.c_rhs |> iterExpr(self);
        });
 
+  let isRaise = s =>
+    s == "Pervasives.raise" || s == "Pervasives.raise_notracee";
+
   let expr = (self: Tast_mapper.mapper, expr: Typedtree.expression) => {
     let loc = expr.exp_loc;
     switch (expr.exp_desc) {
     | Texp_ident(callee, _, _) =>
+      let calleeName = callee |> Path.name;
+      if (calleeName |> isRaise) {
+        Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
+          Format.fprintf(
+            ppf,
+            "@{<info>%s@} can be analyzed only if called direclty",
+            calleeName,
+          )
+        );
+      };
       currentEvents :=
         [
           {Event.kind: Call(callee), loc, exceptions: ExnSet.empty},
           ...currentEvents^,
-        ]
+        ];
 
     | Texp_apply({exp_desc: Texp_ident(callee, _, _)} as e, args) =>
       let calleeName = Path.name(callee);
-      if (calleeName == "Pervasives.raise"
-          || calleeName == "Pervasives.raise_notracee") {
+      if (calleeName |> isRaise) {
         let exceptions =
           switch (args) {
           | [(_, Some({exp_desc: Texp_construct(lid, _, _)}))] =>
