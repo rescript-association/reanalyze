@@ -134,3 +134,6 @@ let raiseAtAt = () => raise @@ Not_found;
 
 [@raises Not_found]
 let raisePipe = Not_found |> raise;
+
+[@raises Not_found]
+let raiseArrow = Not_found->raise;
