@@ -155,16 +155,6 @@ let cli = () => {
       "root_path Experimental exception analysis for all the .cmt files under the root path",
     ),
     (
-      "-termination",
-      Arg.Unit(() => setTermination(None)),
-      "Experimental termination analysis",
-    ),
-    (
-      "-termination-cmt",
-      Arg.String(s => setTermination(Some(s))),
-      "root_path Experimental termination analysis for all the .cmt files under the root path",
-    ),
-    (
       "-live-names",
       Arg.String(s => setLiveNames(s)),
       "comma-separated-names Consider all values with the give names as lives",
@@ -173,6 +163,16 @@ let cli = () => {
       "-live-paths",
       Arg.String(s => setLivePaths(s)),
       "comma-separated-path-prefixes Consider all values whose path has a prefix in the list",
+    ),
+    (
+      "-termination",
+      Arg.Unit(() => setTermination(None)),
+      "Experimental termination analysis",
+    ),
+    (
+      "-termination-cmt",
+      Arg.String(s => setTermination(Some(s))),
+      "root_path Experimental termination analysis for all the .cmt files under the root path",
     ),
     (
       "-version",
