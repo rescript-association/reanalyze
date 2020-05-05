@@ -3,6 +3,31 @@ module ExnSet = Set.Make(Exn);
 let raisesLibTable = {
   let table = Hashtbl.create(15);
   open Exn;
+
+  let bsJson =
+    // bs-json
+    [
+      ("bool", [decodeError]),
+      ("float", [decodeError]),
+      ("int", [decodeError]),
+      ("string", [decodeError]),
+      ("char", [decodeError]),
+      ("date", [decodeError]),
+      ("nullable", [decodeError]),
+      ("nullAs", [decodeError]),
+      ("array", [decodeError]),
+      ("list", [decodeError]),
+      ("pair", [decodeError]),
+      ("tuple2", [decodeError]),
+      ("tuple3", [decodeError]),
+      ("tuple4", [decodeError]),
+      ("dict", [decodeError]),
+      ("field", [decodeError]),
+      ("at", [decodeError, invalidArgument]),
+      ("oneOf", [decodeError]),
+      ("either", [decodeError]),
+    ];
+
   [
     (
       "Array",
@@ -66,30 +91,8 @@ let raisesLibTable = {
     ),
     ("Hashtbl", [("find", [notFound])]),
     ("Js.Json", [("parseExn", [jsExnError])]),
-    (
-      "Json_decode", // bs-json
-      [
-        ("bool", [decodeError]),
-        ("float", [decodeError]),
-        ("int", [decodeError]),
-        ("string", [decodeError]),
-        ("char", [decodeError]),
-        ("date", [decodeError]),
-        ("nullable", [decodeError]),
-        ("nullAs", [decodeError]),
-        ("array", [decodeError]),
-        ("list", [decodeError]),
-        ("pair", [decodeError]),
-        ("tuple2", [decodeError]),
-        ("tuple3", [decodeError]),
-        ("tuple4", [decodeError]),
-        ("dict", [decodeError]),
-        ("field", [decodeError]),
-        ("at", [decodeError, invalidArgument]),
-        ("oneOf", [decodeError]),
-        ("either", [decodeError]),
-      ],
-    ),
+    ("Json_decode", bsJson),
+    ("Json.Decode", bsJson),
     (
       "List",
       [
