@@ -25,7 +25,7 @@ let whitelistSourceDir =
   lazy(
     {
       switch (whitelist^) {
-      | None => (_sourceDir => true)
+      | None => (_sourceDir => false)
       | Some(prefix) => checkPrefix(prefix)
       };
     }
@@ -41,4 +41,4 @@ let posInWhitelist = (pos: Lexing.position) => {
 
 
 // First blacklist, then override with whitelist
-let filter = pos => posInWhitelist(pos) && !posInBlacklist(pos);
+let filter = pos => !posInBlacklist(pos) || posInWhitelist(pos);
