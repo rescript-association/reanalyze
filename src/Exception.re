@@ -270,6 +270,13 @@ let traverseAst = {
   let isRaise = s =>
     s == "Pervasives.raise" || s == "Pervasives.raise_notracee";
 
+  let raiseArgs = args =>
+    switch (args) {
+    | [(_, Some({Typedtree.exp_desc: Texp_construct(lid, _, _)}))] =>
+      Exn.fromLid(lid) |> ExnSet.singleton
+    | _ => Exn.fromString("TODO_from_raise") |> ExnSet.singleton
+    };
+
   let expr = (self: Tast_mapper.mapper, expr: Typedtree.expression) => {
     let loc = expr.exp_loc;
     switch (expr.exp_desc) {
@@ -292,10 +299,7 @@ let traverseAst = {
 
     | Texp_apply(
         {exp_desc: Texp_ident(atat, _, _)},
-        [
-          (_lbl1, Some({exp_desc: Texp_ident(callee, _, _)})),
-          (_lbl2, arg),
-        ],
+        [(_lbl1, Some({exp_desc: Texp_ident(callee, _, _)})), arg],
       )
         // raise @@ Exn(...)
         when
@@ -304,25 +308,15 @@ let traverseAst = {
           && callee
           |> Path.name
           |> isRaise =>
-      let exceptions =
-        switch (arg) {
-        | Some({exp_desc: Texp_construct(lid, _, _)}) =>
-          Exn.fromLid(lid) |> ExnSet.singleton
-        | _ => Exn.fromString("TODO_from_raise") |> ExnSet.singleton
-        };
+      let exceptions = [arg] |> raiseArgs;
       currentEvents :=
         [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
-      arg |> iterExprOpt(self);
+      arg |> snd |> iterExprOpt(self);
 
     | Texp_apply({exp_desc: Texp_ident(callee, _, _)} as e, args) =>
       let calleeName = Path.name(callee);
       if (calleeName |> isRaise) {
-        let exceptions =
-          switch (args) {
-          | [(_, Some({exp_desc: Texp_construct(lid, _, _)}))] =>
-            Exn.fromLid(lid) |> ExnSet.singleton
-          | _ => Exn.fromString("TODO_from_raise") |> ExnSet.singleton
-          };
+        let exceptions = args |> raiseArgs;
         currentEvents :=
           [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
       } else {
