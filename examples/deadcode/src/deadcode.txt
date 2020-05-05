@@ -1107,6 +1107,8 @@
   addValueDeclaration +raiseAtAt Exn.re:133:4 path:+Exn
   addValueDeclaration +raisePipe Exn.re:136:4 path:+Exn
   addValueDeclaration +raiseArrow Exn.re:139:4 path:+Exn
+  addValueDeclaration +bar Exn.re:142:4 path:+Exn
+  addValueDeclaration +foo Exn.re:144:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -1959,6 +1961,8 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +Exn.+foo: 0 references () [0]
+  Dead Value +Exn.+bar: 0 references () [0]
   Dead Value +Exn.+raiseArrow: 0 references () [0]
   Dead Value +Exn.+raisePipe: 0 references () [0]
   Dead Value +Exn.+raiseAtAt: 0 references () [0]
@@ -3076,6 +3080,18 @@ File References
   Warning Dead Value With Side Effects
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 138, characters 0-53
   +raiseArrow is never used and could have side effects
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 141, characters 0-62
+  +bar is never used
+  <-- line 142
+  [@dead "+bar"] [@raises Js.Exn.Error]
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 144, characters 0-88
+  +foo is never used
+  <-- line 144
+  [@dead "+foo"] let foo = () =>
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 0-26

@@ -205,7 +205,7 @@ module Checks = {
       Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
-          "@{<info>%s@} might raise%a and is not annotated with @raises %a",
+          "@{<info>%s@} might raise%a and is not annotated with @raises%a",
           id |> Ident.name,
           Exceptions.pp(~exnTable=Some(exnTable)),
           raiseSet,
@@ -218,7 +218,7 @@ module Checks = {
       Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
-          "@{<info>%s@} might raise%a and is annotated with redundant @raises %a",
+          "@{<info>%s@} might raise%a and is annotated with redundant @raises%a",
           id |> Ident.name,
           Exceptions.pp(~exnTable=Some(exnTable)),
           raiseSet,
