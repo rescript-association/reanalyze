@@ -56,11 +56,16 @@ let fileIsImplementationOf = (s1, s2) => {
   n2 == n1 + 1 && checkSub(s1, s2, n1 - 1);
 };
 
+let whitelist = ref(None);
+let blacklist = ref(None);
+whitelist := Sys.getenv_opt("Whitelist");
+blacklist := Sys.getenv_opt("Blacklist");
+
 // Whitelist=prefix only report on source dirs with the given prefix
 let whitelistSourceDir =
   lazy(
     {
-      switch (Sys.getenv_opt("Whitelist")) {
+      switch (whitelist^) {
       | None => (_sourceDir => true)
       | Some(prefix) => checkPrefix(prefix)
       };
@@ -75,7 +80,7 @@ let posInWhitelist = (pos: Lexing.position) => {
 let blacklistSourceDir =
   lazy(
     {
-      switch (Sys.getenv_opt("Blacklist")) {
+      switch (blacklist^) {
       | None => (_sourceDir => false)
       | Some(prefix) => checkPrefix(prefix)
       };
