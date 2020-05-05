@@ -12,7 +12,7 @@
   "bsc-flags": ["-bs-super-errors"],
   "ppx-flags": ["../deadcodeppx.exe", "../lazyLoad.exe"],
   "reason": { "react-jsx": 3 },
-  "bs-dependencies": ["reason-react"],
+  "bs-dependencies": ["reason-react", "@glennsl/bs-json"],
   "sources": [
     {
       "dir": "src",

@@ -1,5 +1,8 @@
 type t;
+
 let compare: (t, t) => int;
+
+let decodeError: t;
 
 let divisionByZero: t;
 
