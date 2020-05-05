@@ -58,8 +58,6 @@ let fileIsImplementationOf = (s1, s2) => {
 
 let whitelist = ref(None);
 let blacklist = ref(None);
-whitelist := Sys.getenv_opt("Whitelist");
-blacklist := Sys.getenv_opt("Blacklist");
 
 // Whitelist=prefix only report on source dirs with the given prefix
 let whitelistSourceDir =
