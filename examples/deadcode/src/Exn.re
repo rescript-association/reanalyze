@@ -128,3 +128,5 @@ let specializedHash = tbl => StringHash.find(tbl, "abc");
 
 [@raises Not_found]
 let genericHash = tbl => Hashtbl.find(tbl, "abc");
+
+let raiseAtAt = () => raise @@ Not_found;

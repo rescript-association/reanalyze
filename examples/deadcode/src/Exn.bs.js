@@ -77,6 +77,7 @@ export {
   StringHash ,
   specializedHash ,
   genericHash ,
+  raiseAtAt ,
   
 }
 /* catches1 Not a pure module */
