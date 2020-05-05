@@ -38,55 +38,12 @@ module Name: {
   let toString = s => s;
 };
 
-let checkPrefix = prefix_ => {
-  let prefix =
-    Paths.projectRoot^ == ""
-      ? prefix_ : Filename.concat(Paths.projectRoot^, prefix_);
-  let prefixLen = prefix |> String.length;
-  sourceDir =>
-    String.length(sourceDir) >= prefixLen
-    && String.sub(sourceDir, 0, prefixLen) == prefix;
-};
-
 let rec checkSub = (s1, s2, n) =>
   n <= 0 || s1.[n] == s2.[n] && checkSub(s1, s2, n - 1);
 let fileIsImplementationOf = (s1, s2) => {
   let n1 = String.length(s1)
   and n2 = String.length(s2);
   n2 == n1 + 1 && checkSub(s1, s2, n1 - 1);
-};
-
-let whitelist = ref(None);
-let blacklist = ref(None);
-
-// Whitelist=prefix only report on source dirs with the given prefix
-let whitelistSourceDir =
-  lazy(
-    {
-      switch (whitelist^) {
-      | None => (_sourceDir => true)
-      | Some(prefix) => checkPrefix(prefix)
-      };
-    }
-  );
-
-let posInWhitelist = (pos: Lexing.position) => {
-  pos.pos_fname |> Lazy.force(whitelistSourceDir);
-};
-
-// Blacklist=prefix don't report on source dirs with the given prefix
-let blacklistSourceDir =
-  lazy(
-    {
-      switch (blacklist^) {
-      | None => (_sourceDir => false)
-      | Some(prefix) => checkPrefix(prefix)
-      };
-    }
-  );
-
-let posInBlacklist = (pos: Lexing.position) => {
-  pos.pos_fname |> Lazy.force(blacklistSourceDir);
 };
 
 let write = ref(false);
@@ -752,8 +709,7 @@ let declIsDead = (~refs, decl) => {
 
 let doReportDead = pos =>
   !ProcessDeadAnnotations.isAnnotatedGenTypeOrDead(pos)
-  && posInWhitelist(pos)
-  && !posInBlacklist(pos);
+  && Blacklist.filter(pos);
 
 let checkSideEffects = decl =>
   removeDeadValuesWithSideEffects || !decl.sideEffects;
