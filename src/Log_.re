@@ -190,20 +190,24 @@ let item = x => {
   Format.fprintf(Format.std_formatter, x);
 };
 
-let logKind = (body, ~color, ~loc, ~name) => {
-  Format.fprintf(
-    Format.std_formatter,
-    "@[<v 2>@,%a@,%a@,%a@]@.",
-    color,
-    name,
-    Loc.print,
-    loc,
-    body,
-    (),
-  );
-};
+let logKind = (body, ~filter=?, ~color, ~loc: Location.t, ~name) =>
+  if (switch (filter) {
+      | Some(f) => f(loc.loc_start)
+      | None => Blacklist.filter(loc.loc_start)
+      }) {
+    Format.fprintf(
+      Format.std_formatter,
+      "@[<v 2>@,%a@,%a@,%a@]@.",
+      color,
+      name,
+      Loc.print,
+      loc,
+      body,
+      (),
+    );
+  };
 
-let info = (body, ~loc, ~name) =>
-  logKind(body, ~color=Color.info, ~loc, ~name);
-let error = (body, ~loc, ~name) =>
-  logKind(body, ~color=Color.error, ~loc, ~name);
+let info = (~filter=?, ~loc, ~name, body) =>
+  logKind(body, ~color=Color.info, ~filter?, ~loc, ~name);
+let error = (~filter=?, ~loc, ~name, body) =>
+  logKind(body, ~color=Color.error, ~filter?, ~loc, ~name);
