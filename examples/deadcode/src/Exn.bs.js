@@ -78,6 +78,7 @@ export {
   specializedHash ,
   genericHash ,
   raiseAtAt ,
+  raisePipe ,
   
 }
 /* catches1 Not a pure module */
