@@ -14,6 +14,7 @@
  (name reanalyze)
  (description "Experimental analyses for OCaml/Reason: for globally dead values/types, exception analysis, and termination analysis.")
  (depends
-  (ocaml (>= 4.06))
-  (dune (>= 2.0))
+  dune
+  ocaml
+  reason
 ))
