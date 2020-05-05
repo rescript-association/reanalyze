@@ -3,7 +3,7 @@
   "version": "2.41.0",
   "dependencies": {
     "ocaml": "~4.06.1",
-    "@opam/dune": "2.0.1",
+    "@opam/dune": "1.7.3",
     "@opam/reason": "*",
     "refmterr": "*"
   },
