@@ -1,6 +1,8 @@
 # master
-- Add warning when `raise` or `raise_notrace` are used not in a direct call.
-- Support `raise @@ Exn` and `Exn |> raise`.
+- Exception: Add warning when `raise` or `raise_notrace` are used not in a direct call.
+- Exception: support `raise @@ Exn` and `Exn |> raise`.
+- Exception: model `Js.Json`.
+- Exception: model `bs-json`.
 
 # 1.9.0
 - Exception analysis: Model exceptions for `Array`, `Buffer`, `Bytes`, `Char`, `Filename`, `Hashtbl`, `Pervasives`, `Str`, `String`.
