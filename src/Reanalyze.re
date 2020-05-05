@@ -198,7 +198,7 @@ let cli = () => {
     (
       "-whitelist",
       Arg.String(setWhitelist),
-      "prefix Report on blacklisted files whose path has the given prefix",
+      "prefix Report on files whose path has the given prefix, overriding blacklist (no-op if a blacklist is not specified)",
     ),
     (
       "-write",
