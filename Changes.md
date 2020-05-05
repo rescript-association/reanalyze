@@ -1,4 +1,6 @@
 # master
+
+# 1.10.0
 - Exception: Add warning when `raise` or `raise_notrace` are used not in a direct call.
 - Exception: support `raise @@ Exn` and `Exn |> raise`.
 - Exception: model `Js.Json`.
