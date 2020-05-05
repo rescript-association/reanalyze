@@ -1019,8 +1019,11 @@
   addValueDeclaration +read BootloaderResource.re:3:0 path:+BootloaderResource
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/BsJson.cmt
   addValueDeclaration +testBsJson BsJson.re:2:4 path:+BsJson
+  addValueDeclaration +testBsJson2 BsJson.re:5:4 path:+BsJson
   addValueReference BsJson.re:2:4 --> BsJson.re:2:17
   addValueReference BsJson.re:2:4 --> Json_decode.mli:78:0
+  addValueReference BsJson.re:5:4 --> BsJson.re:5:18
+  addValueReference BsJson.re:5:4 --> Json_decode.mli:78:0
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTypeTest.cmt
   addValueDeclaration +a DeadTypeTest.re:4:4 path:+DeadTypeTest
   addTypeDeclaration A DeadTypeTest.re:2:4 path:+DeadTypeTest.t
@@ -1819,6 +1822,7 @@ File References
   Dead Type +AutoAnnotate.r2.r2: 0 references () [0]
   Dead Type +AutoAnnotate.record.variant: 0 references () [0]
   Dead Type +AutoAnnotate.variant.R: 0 references () [0]
+  Dead Value +BsJson.+testBsJson2: 0 references () [0]
   Dead Value +BsJson.+testBsJson: 0 references () [0]
   Dead Value +BucklescriptAnnotations.+bar: 0 references () [1]
   Dead Value +BucklescriptAnnotations.+f: 0 references () [0]
@@ -2528,6 +2532,12 @@ File References
   +testBsJson is never used
   <-- line 2
   [@dead "+testBsJson"] [@raise DecodeError]
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/BsJson.re", line 4, characters 0-65
+  +testBsJson2 is never used
+  <-- line 5
+  [@dead "+testBsJson2"] [@raise DecodeError]
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/BucklescriptAnnotations.re", line 19, characters 0-53
