@@ -1,8 +1,5 @@
 module StringMap = Map.Make(String);
 
-let projectRoot = ref("");
-let bsbProjectRoot = ref("");
-
 let bsconfig = "bsconfig.json";
 
 let rec findProjectRoot = (~dir) =>
@@ -20,11 +17,11 @@ let rec findProjectRoot = (~dir) =>
     };
   };
 let setProjectRoot = () => {
-  projectRoot := findProjectRoot(~dir=Sys.getcwd());
-  bsbProjectRoot :=
+  Blacklist.projectRoot := findProjectRoot(~dir=Sys.getcwd());
+  Blacklist.bsbProjectRoot :=
     (
       switch (Sys.getenv_opt("BSB_PROJECT_ROOT")) {
-      | None => projectRoot^
+      | None => Blacklist.projectRoot^
       | Some(s) => s
       }
     );
@@ -55,7 +52,7 @@ let getModuleName = cmt => cmt |> handleNamespace |> Filename.basename;
 
 let readDirsFromConfig = (~configSources) => {
   let dirs = ref([]);
-  let root = projectRoot^;
+  let root = Blacklist.projectRoot^;
 
   let rec processDir = (~subdirs, dir) => {
     let absDir = dir == "" ? root : Filename.concat(root, dir);
@@ -98,7 +95,7 @@ let readDirsFromConfig = (~configSources) => {
 let readSourceDirs = (~configSources) => {
   let sourceDirs =
     ["lib", "bs", ".sourcedirs.json"]
-    |> List.fold_left(Filename.concat, bsbProjectRoot^);
+    |> List.fold_left(Filename.concat, Blacklist.bsbProjectRoot^);
   let dirs = ref([]);
 
   let readDirs = json => {
@@ -124,7 +121,7 @@ let readSourceDirs = (~configSources) => {
     let jsonOpt = sourceDirs |> Ext_json_parse.parse_json_from_file;
     switch (jsonOpt) {
     | Some(json) =>
-      if (bsbProjectRoot^ != projectRoot^) {
+      if (Blacklist.bsbProjectRoot^ != Blacklist.projectRoot^) {
         readDirs(json);
         dirs := readDirsFromConfig(~configSources);
       } else {

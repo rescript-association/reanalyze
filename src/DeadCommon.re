@@ -708,8 +708,7 @@ let declIsDead = (~refs, decl) => {
 };
 
 let doReportDead = pos =>
-  !ProcessDeadAnnotations.isAnnotatedGenTypeOrDead(pos)
-  && Blacklist.filter(pos);
+  !ProcessDeadAnnotations.isAnnotatedGenTypeOrDead(pos);
 
 let checkSideEffects = decl =>
   removeDeadValuesWithSideEffects || !decl.sideEffects;
@@ -970,7 +969,11 @@ module Decl = {
         | _ => true
         }
       );
-    let shouldWriteAnnotation = shouldEmitWarning && decl |> checkSideEffects;
+    let shouldWriteAnnotation =
+      shouldEmitWarning
+      && decl
+      |> checkSideEffects
+      && Blacklist.filter(decl.pos);
     if (shouldEmitWarning) {
       emitWarning(~decl, ~message, ~name);
     };

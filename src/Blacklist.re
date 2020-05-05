@@ -1,10 +1,13 @@
 let blacklist: ref(list(string)) = ref([]);
 let whitelist: ref(list(string)) = ref([]);
 
+let projectRoot = ref("");
+let bsbProjectRoot = ref("");
+
 let checkPrefix = prefix_ => {
   let prefix =
-    Paths.projectRoot^ == ""
-      ? prefix_ : Filename.concat(Paths.projectRoot^, prefix_);
+    projectRoot^ == ""
+      ? prefix_ : Filename.concat(projectRoot^, prefix_);
   let prefixLen = prefix |> String.length;
   sourceDir =>
     String.length(sourceDir) >= prefixLen

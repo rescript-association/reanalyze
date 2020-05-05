@@ -57,7 +57,7 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
 
   | None =>
     Paths.setProjectRoot();
-    let lib_bs = Paths.projectRoot^ +++ "lib" +++ "bs";
+    let lib_bs = Blacklist.projectRoot^ +++ "lib" +++ "bs";
 
     let sourceDirs = Paths.readSourceDirs(~configSources=None);
     sourceDirs
