@@ -131,3 +131,6 @@ let genericHash = tbl => Hashtbl.find(tbl, "abc");
 
 [@raises Not_found]
 let raiseAtAt = () => raise @@ Not_found;
+
+[@raises Not_found]
+let raisePipe = Not_found |> raise;

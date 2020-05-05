@@ -1105,6 +1105,7 @@
   addValueDeclaration +specializedHash Exn.re:127:4 path:+Exn
   addValueDeclaration +genericHash Exn.re:130:4 path:+Exn
   addValueDeclaration +raiseAtAt Exn.re:133:4 path:+Exn
+  addValueDeclaration +raisePipe Exn.re:136:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -1957,6 +1958,7 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +Exn.+raisePipe: 0 references () [0]
   Dead Value +Exn.+raiseAtAt: 0 references () [0]
   Dead Value +Exn.+genericHash: 0 references () [0]
   Dead Value +Exn.+specializedHash: 0 references () [0]
@@ -3064,6 +3066,10 @@ File References
   +raiseAtAt is never used
   <-- line 133
   [@dead "+raiseAtAt"] [@raises Not_found]
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 135, characters 0-54
+  +raisePipe is never used and could have side effects
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 0-26

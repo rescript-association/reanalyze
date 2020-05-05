@@ -313,6 +313,22 @@ let traverseAst = {
         [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
       arg |> snd |> iterExprOpt(self);
 
+    | Texp_apply(
+        {exp_desc: Texp_ident(atat, _, _)},
+        [arg, (_lbl1, Some({exp_desc: Texp_ident(callee, _, _)}))],
+      )
+        // Exn(...) |> raises
+        when
+          atat
+          |> Path.name == "Pervasives.|>"
+          && callee
+          |> Path.name
+          |> isRaise =>
+      let exceptions = [arg] |> raiseArgs;
+      currentEvents :=
+        [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
+      arg |> snd |> iterExprOpt(self);
+
     | Texp_apply({exp_desc: Texp_ident(callee, _, _)} as e, args) =>
       let calleeName = Path.name(callee);
       if (calleeName |> isRaise) {
