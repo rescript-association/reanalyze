@@ -145,3 +145,11 @@ let foo = () =>
   try(Js.Json.parseExn("!!!")) {
   | Js.Exn.Error(_) => Js.Json.null
   };
+
+
+[@raises Invalid_argument]
+let stringMake1 = String.make(12, ' ');
+
+let stringMake2 = ([@doesNotRaise] String.make)(12, ' ');
+
+let stringMake3 = [@doesNotRaise] String.make(12, ' ');

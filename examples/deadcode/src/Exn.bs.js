@@ -82,6 +82,9 @@ export {
   raiseArrow ,
   bar ,
   foo ,
+  stringMake1 ,
+  stringMake2 ,
+  stringMake3 ,
   
 }
 /* catches1 Not a pure module */

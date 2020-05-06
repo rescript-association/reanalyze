@@ -277,9 +277,21 @@ let traverseAst = {
     | _ => Exn.fromString("TODO_from_raise") |> ExnSet.singleton
     };
 
+  let doesNotRaise = attributes =>
+    attributes
+    |> Annotation.getAttributePayload(s =>
+         s == "doesNotRaise"
+         || s == "doesnotraise"
+         || s == "DoesNoRaise"
+         || s == "doesNotraise"
+       )
+    != None;
+
   let expr = (self: Tast_mapper.mapper, expr: Typedtree.expression) => {
     let loc = expr.exp_loc;
     switch (expr.exp_desc) {
+    | _ when expr.exp_attributes |> doesNotRaise => ()
+
     | Texp_ident(callee, _, _) =>
       let calleeName = callee |> Path.name;
       if (calleeName |> isRaise) {

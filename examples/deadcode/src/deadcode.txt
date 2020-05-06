@@ -1116,6 +1116,9 @@
   addValueDeclaration +raiseArrow Exn.re:139:4 path:+Exn
   addValueDeclaration +bar Exn.re:142:4 path:+Exn
   addValueDeclaration +foo Exn.re:144:4 path:+Exn
+  addValueDeclaration +stringMake1 Exn.re:151:4 path:+Exn
+  addValueDeclaration +stringMake2 Exn.re:153:4 path:+Exn
+  addValueDeclaration +stringMake3 Exn.re:155:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -1971,6 +1974,9 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +Exn.+stringMake3: 0 references () [0]
+  Dead Value +Exn.+stringMake2: 0 references () [0]
+  Dead Value +Exn.+stringMake1: 0 references () [0]
   Dead Value +Exn.+foo: 0 references () [0]
   Dead Value +Exn.+bar: 0 references () [0]
   Dead Value +Exn.+raiseArrow: 0 references () [0]
@@ -3114,6 +3120,18 @@ File References
   +foo is never used
   <-- line 144
   [@dead "+foo"] let foo = () =>
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 150, characters 0-65
+  +stringMake1 is never used and could have side effects
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 153, characters 0-56
+  +stringMake2 is never used and could have side effects
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 155, characters 0-54
+  +stringMake3 is never used and could have side effects
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 0-26
