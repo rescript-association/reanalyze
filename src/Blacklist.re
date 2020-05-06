@@ -6,12 +6,12 @@ let bsbProjectRoot = ref("");
 
 let checkPrefix = prefix_ => {
   let prefix =
-    projectRoot^ == ""
-      ? prefix_ : Filename.concat(projectRoot^, prefix_);
+    projectRoot^ == "" ? prefix_ : Filename.concat(projectRoot^, prefix_);
   let prefixLen = prefix |> String.length;
   sourceDir =>
-    String.length(sourceDir) >= prefixLen
-    && String.sub(sourceDir, 0, prefixLen) == prefix;
+    try(String.sub(sourceDir, 0, prefixLen) == prefix) {
+    | Invalid_argument(_) => false
+    };
 };
 
 let blacklistSourceDir =

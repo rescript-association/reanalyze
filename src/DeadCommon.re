@@ -28,18 +28,39 @@ module Name: {
 } = {
   type t = string;
   let create = (~isInterface=true, s) => isInterface ? s : "+" ++ s;
-  let isInterface = s => s.[0] != '+';
+  let isInterface = s =>
+    try(s.[0] != '+') {
+    | Invalid_argument(_) => false
+    };
   let isUnderscore = s => s == "_" || s == "+_";
   let startsWithUnderscore = s =>
-    s |> String.length >= 2 && (s.[0] == '_' || s.[0] == '+' && s.[1] == '_');
+    s
+    |> String.length >= 2
+    && (
+      try(s.[0] == '_' || s.[0] == '+' && s.[1] == '_') {
+      | Invalid_argument(_) => false
+      }
+    );
   let toInterface = s =>
-    isInterface(s) ? s : String.sub(s, 1, String.length(s) - 1);
+    isInterface(s)
+      ? s
+      : (
+        try(String.sub(s, 1, String.length(s) - 1)) {
+        | Invalid_argument(_) => s
+        }
+      );
   let toImplementation = s => isInterface(s) ? "+" ++ s : s;
   let toString = s => s;
 };
 
 let rec checkSub = (s1, s2, n) =>
-  n <= 0 || s1.[n] == s2.[n] && checkSub(s1, s2, n - 1);
+  n <= 0
+  || (
+    try(s1.[n] == s2.[n]) {
+    | Invalid_argument(_) => false
+    }
+  )
+  && checkSub(s1, s2, n - 1);
 let fileIsImplementationOf = (s1, s2) => {
   let n1 = String.length(s1)
   and n2 = String.length(s2);
@@ -390,7 +411,11 @@ module ProcessDeadAnnotations = {
         livePaths^
         |> List.exists(prefix =>
              String.length(prefix) <= fnameLen
-             && String.sub(fname, 0, String.length(prefix)) == prefix
+             && (
+               try(String.sub(fname, 0, String.length(prefix)) == prefix) {
+               | Invalid_argument(_) => false
+               }
+             )
            );
       };
 
@@ -613,8 +638,13 @@ module WriteDeadAnnotations = {
       {
         original:
           if (String.length(original) >= col && col > 0) {
-            let original1 = String.sub(original, 0, col);
-            let original2 = String.sub(original, col, originalLen - col);
+            let (original1, original2) =
+              try((
+                String.sub(original, 0, col),
+                String.sub(original, col, originalLen - col),
+              )) {
+              | Invalid_argument(_) => (original, "")
+              };
             original1 ++ annotationStr ++ original2;
           } else {
             isReason ? annotationStr ++ original : original ++ annotationStr;

@@ -34,7 +34,10 @@ let setProjectRoot = () => {
 let handleNamespace = cmt => {
   let cutAfterDash = s =>
     switch (String.index(s, '-')) {
-    | n => String.sub(s, 0, n)
+    | n =>
+      try(String.sub(s, 0, n)) {
+      | Invalid_argument(_) => s
+      }
     | exception Not_found => s
     };
   let noDir = Filename.basename(cmt) == cmt;
