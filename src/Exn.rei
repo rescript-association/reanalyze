@@ -25,3 +25,5 @@ let notFound: t;
 let sysError: t;
 
 let toString: t => string;
+
+let yojsonJsonError: t;

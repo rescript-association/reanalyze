@@ -2,7 +2,9 @@ type t = string;
 
 let compare = String.compare;
 
-let decodeError = {"DecodeError"}
+let decodeError = {
+  "DecodeError";
+};
 
 let divisionByZero = "Division_by_zero";
 
@@ -26,3 +28,5 @@ let fromLid = lid =>
 let fromString = s => s;
 
 let toString = s => s;
+
+let yojsonJsonError = "Yojson.Json_error";
