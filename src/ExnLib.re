@@ -168,6 +168,7 @@ let raisesLibTable = {
         ("rcontains_from", [invalidArgument]),
       ],
     ),
+    ("Yojson.Basic", [("from_string", [yojsonJsonError])]),
   ]
   |> List.iter(((name, group)) =>
        group
