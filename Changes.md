@@ -6,6 +6,7 @@
   will only show results for files `src/Ex*`.
   The analyses are not affected (e.g. transitively dead code), only the reporting is.
 - Exception analysis: add support for `@doesNotRaise` to indicat that an expression does not raise any exceptions (to suppress possible analysis reports).
+- Exception Analysis: add model for `Yojson.Basic.from_string`.
 
 # 1.10.0
 - Exception: Add warning when `raise` or `raise_notrace` are used not in a direct call.
