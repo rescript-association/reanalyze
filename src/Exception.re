@@ -284,6 +284,10 @@ let traverseAst = {
          || s == "doesnotraise"
          || s == "DoesNoRaise"
          || s == "doesNotraise"
+         || s == "doNotRaise"
+         || s == "donotraise"
+         || s == "DoNoRaise"
+         || s == "doNotraise"
        )
     != None;
 
@@ -482,3 +486,5 @@ let processCmt = (cmt_infos: Cmt_format.cmt_infos) =>
   };
 
 let reportResults = (~ppf as _) => Checks.doChecks();
+
+let x = Pervasives.input;
