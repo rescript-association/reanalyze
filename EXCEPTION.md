@@ -1,6 +1,6 @@
 ## Exception analysis
 
-The exception analysis is designed to keep track staically of the exceptions that might be raised at runtime. It works by issuing warning and recognizing annotations. Warnings are issued whenever an exception is raised and not immediately caught. Annotations are used to push warning from he local point where the exception is raised, to the outside context: callers of the current function.
+The exception analysis is designed to keep track statically of the exceptions that might be raised at runtime. It works by issuing warnings and recognizing annotations. Warnings are issued whenever an exception is raised and not immediately caught. Annotations are used to push warnings from he local point where the exception is raised, to the outside context: callers of the current function.
 Nested functions need to be annotated separately.
 
 Instructions on how to run the exception analysis using the `-exception` and `-exception-cmt` command-line arguments are contained in the general [README.md](README.md).
