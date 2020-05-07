@@ -1,4 +1,11 @@
-The exception analysis reports a warning any time an exception is raised, and not caught:
+## Exception analysis
+
+The exception analysis is designed to keep track staically of the exceptions that might be raised at runtime. It works by issuing warning and recognizing annotations. Warnings are issued whenever an exception is raised and not immediately caught. Annotations are used to push warning from he local point where the exception is raised, to the outside context: callers of the current function.
+Nested functions need to be annotated separately.
+
+Instructions on how to run the exception analysis using the `-exception` and `-exception-cmt` command-line arguments are contained in the general [README.md](README.md).
+
+Here's an example, where the analysis reports a warning any time an exception is raised, and not caught:
 
 ```reason
 let raises = () => raise(Not_found);
@@ -38,6 +45,19 @@ let twExceptions = (x, y) => {
 };
 ```
 
+It is possible to silence the analysis by adding a `[@doesNotRaise]` annotaion:
+
+```reason
+[@raises Invalid_argument]
+let stringMake1 = String.make(12, ' ');
+
+// Silence only the make function
+let stringMake2 = ([@doesNotRaise] String.make)(12, ' ');
+
+// Silence the entire call (including arguments to make)
+let stringMake3 = [@doesNotRaise] String.make(12, ' ');
+
+```
 
 ## Limitations
 
