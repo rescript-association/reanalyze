@@ -1,6 +1,8 @@
 let debug = DeadCommon.debug;
 let posToString = DeadCommon.posToString;
 
+module LocSet = DeadCommon.LocSet;
+
 module Values = {
   let valueBindingsTable: Hashtbl.t(string, Hashtbl.t(string, Exceptions.t)) =
     Hashtbl.create(15);
@@ -112,14 +114,20 @@ module Event = {
       Log_.item("Events combine: #events %d@.", events |> List.length);
     };
     let exnTable = Hashtbl.create(1);
+    let extendExnTable = (exn, loc) =>
+      switch (Hashtbl.find_opt(exnTable, exn)) {
+      | Some(locSet) =>
+        Hashtbl.replace(exnTable, exn, LocSet.add(loc, locSet))
+      | None => Hashtbl.replace(exnTable, exn, LocSet.add(loc, LocSet.empty))
+      };
+
     let rec loop = (exnSet, events) =>
       switch (events) {
       | [{kind: Raises, exceptions, loc} as ev, ...rest] =>
         if (debug^) {
           Log_.item("%a@.", print, ev);
         };
-        exceptions
-        |> Exceptions.iter(exn => Hashtbl.replace(exnTable, exn, loc));
+        exceptions |> Exceptions.iter(exn => extendExnTable(exn, loc));
         loop(Exceptions.union(exnSet, exceptions), rest);
       | [{kind: Call(path), loc} as ev, ...rest] =>
         if (debug^) {
@@ -127,14 +135,12 @@ module Event = {
         };
         switch (path |> Values.findPath(~moduleName)) {
         | Some(exceptions) when !Exceptions.isEmpty(exceptions) =>
-          exceptions
-          |> Exceptions.iter(exn => Hashtbl.replace(exnTable, exn, loc));
+          exceptions |> Exceptions.iter(exn => extendExnTable(exn, loc));
           loop(Exceptions.union(exnSet, exceptions), rest);
         | _ =>
           switch (ExnLib.find(path)) {
           | Some(exceptions) =>
-            exceptions
-            |> Exceptions.iter(exn => Hashtbl.replace(exnTable, exn, loc));
+            exceptions |> Exceptions.iter(exn => extendExnTable(exn, loc));
             loop(Exceptions.union(exnSet, exceptions), rest);
           | None => loop(exnSet, rest)
           }

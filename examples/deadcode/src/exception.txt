@@ -65,4 +65,4 @@
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 156, characters 4-16
-  severalCases might raise Failure (Exn.re:158:13) and is not annotated with @raises Failure
+  severalCases might raise Failure (Exn.re:160:15) and is not annotated with @raises Failure
