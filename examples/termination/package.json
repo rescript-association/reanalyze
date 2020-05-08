@@ -9,6 +9,6 @@
     "analyze": "time ../reanalyze.exe -termination -debug >src/termination.txt"
   },
   "devDependencies": {
-    "bs-platform": "7.3.0"
+    "bs-platform": "7.3.2"
   }
 }

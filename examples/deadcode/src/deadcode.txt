@@ -525,8 +525,10 @@
   addValueReference TransitiveType3.re:8:4 --> TransitiveType3.re:8:17
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DynamicallyLoadedComponent.cmt
   addValueDeclaration +make DynamicallyLoadedComponent.re:2:4 path:+DynamicallyLoadedComponent
-  addValueReference DynamicallyLoadedComponent.re:2:4 --> DynamicallyLoadedComponent.re:2:13
-  addValueReference DynamicallyLoadedComponent.re:2:4 --> React.re:7:0
+  addValueReference DynamicallyLoadedComponent.re:2:32 --> DynamicallyLoadedComponent.re:2:13
+  addValueReference DynamicallyLoadedComponent.re:2:19 --> React.re:7:0
+  collectExpr make: fix ghost location reference
+  addValueReference DynamicallyLoadedComponent.re:2:4 --> DynamicallyLoadedComponent.re:2:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType2.cmt
   addValueDeclaration +convertT2 TransitiveType2.re:7:4 path:+TransitiveType2
   addValueReference TransitiveType2.re:7:4 --> TransitiveType2.re:7:17
@@ -1084,8 +1086,10 @@
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadCodeInterface.cmt
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ExportWithRename.cmt
   addValueDeclaration +make ExportWithRename.re:3:4 path:+ExportWithRename
-  addValueReference ExportWithRename.re:3:4 --> ExportWithRename.re:3:13
-  addValueReference ExportWithRename.re:3:4 --> React.re:7:0
+  addValueReference ExportWithRename.re:3:32 --> ExportWithRename.re:3:13
+  addValueReference ExportWithRename.re:3:19 --> React.re:7:0
+  collectExpr make: fix ghost location reference
+  addValueReference ExportWithRename.re:3:4 --> ExportWithRename.re:3:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Exn.cmt
   addValueDeclaration +raises Exn.re:1:4 path:+Exn
   addValueDeclaration +catches1 Exn.re:3:4 path:+Exn
@@ -1412,6 +1416,11 @@
   addValueDeclaration +make Hooks.re:4:4 path:+Hooks
   addValueDeclaration +default Hooks.re:36:4 path:+Hooks
   addValueDeclaration +anotherComponent Hooks.re:40:4 path:+Hooks
+  addValueDeclaration +make Hooks.re:48:6 path:+Hooks.Inner
+  addValueDeclaration +anotherComponent Hooks.re:53:6 path:+Hooks.Inner
+  addValueDeclaration +make Hooks.re:59:8 path:+Hooks.Inner.Inner2
+  addValueDeclaration +anotherComponent Hooks.re:64:8 path:+Hooks.Inner.Inner2
+  addValueDeclaration +make Hooks.re:72:6 path:+Hooks.NoProps
   addValueDeclaration +functionWithRenamedArgs Hooks.re:80:4 path:+Hooks
   addValueDeclaration +componentWithRenamedArgs Hooks.re:87:4 path:+Hooks
   addValueDeclaration +makeWithRef Hooks.re:94:4 path:+Hooks
@@ -1419,63 +1428,60 @@
   addValueDeclaration +input Hooks.re:111:4 path:+Hooks
   addValueDeclaration +polymorphicComponent Hooks.re:130:4 path:+Hooks
   addValueDeclaration +functionReturningReactElement Hooks.re:134:4 path:+Hooks
+  addValueDeclaration +make Hooks.re:139:6 path:+Hooks.RenderPropRequiresConversion
   addValueDeclaration +aComponentWithChildren Hooks.re:156:4 path:+Hooks
   addTypeDeclaration name Hooks.re:1:16 path:+Hooks.vehicle
-  addValueReference Hooks.re:4:4 --> React.re:160:0
+  addValueReference Hooks.re:5:26 --> React.re:160:0
   addTypeReference Hooks.re:11:12 --> Hooks.re:1:16
-  addValueReference Hooks.re:4:4 --> Hooks.re:4:13
-  addValueReference Hooks.re:4:4 --> Hooks.re:5:7
-  addValueReference Hooks.re:4:4 --> React.re:7:0
-  addValueReference Hooks.re:4:4 --> ReactDOMRe.re:1125:0
-  addValueReference Hooks.re:4:4 --> Hooks.re:5:7
-  addValueReference Hooks.re:4:4 --> Hooks.re:5:14
-  addValueReference Hooks.re:4:4 --> React.re:7:0
-  addValueReference Hooks.re:4:4 --> ReactDOMRe.re:1125:0
-  addValueReference Hooks.re:4:4 --> ImportHooks.re:15:0
-  addValueReference Hooks.re:4:4 --> React.re:3:0
-  addValueReference Hooks.re:4:4 --> Hooks.re:22:16
-  addValueReference Hooks.re:4:4 --> React.re:7:0
-  addValueReference Hooks.re:4:4 --> ImportHooks.re:15:0
-  addValueReference Hooks.re:4:4 --> React.re:7:0
-  addValueReference Hooks.re:4:4 --> React.re:7:0
-  addValueReference Hooks.re:4:4 --> React.re:22:0
-  addValueReference Hooks.re:4:4 --> ImportHookDefault.re:6:0
-  addValueReference Hooks.re:4:4 --> React.re:3:0
-  addValueReference Hooks.re:4:4 --> Hooks.re:28:16
-  addValueReference Hooks.re:4:4 --> React.re:7:0
-  addValueReference Hooks.re:4:4 --> ImportHookDefault.re:6:0
-  addValueReference Hooks.re:4:4 --> React.re:7:0
-  addValueReference Hooks.re:4:4 --> React.re:7:0
-  addValueReference Hooks.re:4:4 --> React.re:22:0
-  addValueReference Hooks.re:4:4 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:11:12 --> Hooks.re:4:13
+  addValueReference Hooks.re:13:26 --> Hooks.re:5:7
+  addValueReference Hooks.re:9:7 --> React.re:7:0
+  addValueReference Hooks.re:8:4 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:17:40 --> Hooks.re:5:7
+  addValueReference Hooks.re:17:26 --> Hooks.re:5:14
+  addValueReference Hooks.re:18:7 --> React.re:7:0
+  addValueReference Hooks.re:17:4 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:20:5 --> ImportHooks.re:15:0
+  addValueReference Hooks.re:20:5 --> React.re:3:0
+  addValueReference Hooks.re:22:34 --> Hooks.re:22:16
+  addValueReference Hooks.re:22:21 --> React.re:7:0
+  addValueReference Hooks.re:20:5 --> ImportHooks.re:15:0
+  addValueReference Hooks.re:23:7 --> React.re:7:0
+  addValueReference Hooks.re:24:7 --> React.re:7:0
+  addValueReference Hooks.re:20:5 --> React.re:22:0
+  addValueReference Hooks.re:26:5 --> ImportHookDefault.re:6:0
+  addValueReference Hooks.re:26:5 --> React.re:3:0
+  addValueReference Hooks.re:28:34 --> Hooks.re:28:16
+  addValueReference Hooks.re:28:21 --> React.re:7:0
+  addValueReference Hooks.re:26:5 --> ImportHookDefault.re:6:0
+  addValueReference Hooks.re:29:7 --> React.re:7:0
+  addValueReference Hooks.re:30:7 --> React.re:7:0
+  addValueReference Hooks.re:26:5 --> React.re:22:0
+  addValueReference Hooks.re:7:2 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:36:4 --> Hooks.re:4:4
   addTypeReference Hooks.re:42:41 --> Hooks.re:1:16
-  addValueReference Hooks.re:40:4 --> Hooks.re:40:25
-  addValueReference Hooks.re:40:4 --> React.re:7:0
-  addValueReference Hooks.re:40:4 --> ReactDOMRe.re:1125:0
-  addValueReference Hooks.re:40:4 --> Hooks.re:40:35
-  addValueDeclaration +make Hooks.re:48:6 path:+Hooks.Inner
+  addValueReference Hooks.re:42:41 --> Hooks.re:40:25
+  addValueReference Hooks.re:42:9 --> React.re:7:0
+  addValueReference Hooks.re:42:2 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:41:2 --> Hooks.re:40:35
   addTypeReference Hooks.re:49:43 --> Hooks.re:1:16
-  addValueReference Hooks.re:48:6 --> Hooks.re:48:15
-  addValueReference Hooks.re:48:6 --> React.re:7:0
-  addValueReference Hooks.re:48:6 --> ReactDOMRe.re:1125:0
-  addValueDeclaration +anotherComponent Hooks.re:53:6 path:+Hooks.Inner
+  addValueReference Hooks.re:49:43 --> Hooks.re:48:15
+  addValueReference Hooks.re:49:11 --> React.re:7:0
+  addValueReference Hooks.re:49:4 --> ReactDOMRe.re:1125:0
   addTypeReference Hooks.re:54:43 --> Hooks.re:1:16
-  addValueReference Hooks.re:53:6 --> Hooks.re:53:27
-  addValueReference Hooks.re:53:6 --> React.re:7:0
-  addValueReference Hooks.re:53:6 --> ReactDOMRe.re:1125:0
-  addValueDeclaration +make Hooks.re:59:8 path:+Hooks.Inner.Inner2
+  addValueReference Hooks.re:54:43 --> Hooks.re:53:27
+  addValueReference Hooks.re:54:11 --> React.re:7:0
+  addValueReference Hooks.re:54:4 --> ReactDOMRe.re:1125:0
   addTypeReference Hooks.re:60:45 --> Hooks.re:1:16
-  addValueReference Hooks.re:59:8 --> Hooks.re:59:17
-  addValueReference Hooks.re:59:8 --> React.re:7:0
-  addValueReference Hooks.re:59:8 --> ReactDOMRe.re:1125:0
-  addValueDeclaration +anotherComponent Hooks.re:64:8 path:+Hooks.Inner.Inner2
+  addValueReference Hooks.re:60:45 --> Hooks.re:59:17
+  addValueReference Hooks.re:60:13 --> React.re:7:0
+  addValueReference Hooks.re:60:6 --> ReactDOMRe.re:1125:0
   addTypeReference Hooks.re:65:45 --> Hooks.re:1:16
-  addValueReference Hooks.re:64:8 --> Hooks.re:64:29
-  addValueReference Hooks.re:64:8 --> React.re:7:0
-  addValueReference Hooks.re:64:8 --> ReactDOMRe.re:1125:0
-  addValueDeclaration +make Hooks.re:72:6 path:+Hooks.NoProps
-  addValueReference Hooks.re:72:6 --> ReasonReact.rei:15:0
-  addValueReference Hooks.re:72:6 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:65:45 --> Hooks.re:64:29
+  addValueReference Hooks.re:65:13 --> React.re:7:0
+  addValueReference Hooks.re:65:6 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:73:10 --> ReasonReact.rei:15:0
+  addValueReference Hooks.re:73:4 --> ReactDOMRe.re:1125:0
   addTypeReference Hooks.re:82:2 --> Hooks.re:1:16
   addValueReference Hooks.re:80:4 --> Hooks.re:80:32
   addTypeReference Hooks.re:82:14 --> Hooks.re:1:16
@@ -1483,45 +1489,53 @@
   addValueReference Hooks.re:80:4 --> Hooks.re:80:32
   addValueReference Hooks.re:80:4 --> Hooks.re:80:46
   addTypeReference Hooks.re:89:15 --> Hooks.re:1:16
-  addValueReference Hooks.re:87:4 --> Hooks.re:87:33
+  addValueReference Hooks.re:89:15 --> Hooks.re:87:33
   addTypeReference Hooks.re:89:27 --> Hooks.re:1:16
-  addValueReference Hooks.re:87:4 --> Hooks.re:87:39
-  addValueReference Hooks.re:87:4 --> React.re:7:0
-  addValueReference Hooks.re:87:4 --> Hooks.re:87:33
-  addValueReference Hooks.re:87:4 --> Hooks.re:87:47
-  addValueReference Hooks.re:94:4 --> Hooks.re:96:9
-  addValueReference Hooks.re:94:4 --> ReactDOMRe.re:120:2
+  addValueReference Hooks.re:89:27 --> Hooks.re:87:39
+  addValueReference Hooks.re:89:2 --> React.re:7:0
+  addValueReference Hooks.re:88:6 --> Hooks.re:87:33
+  addValueReference Hooks.re:88:2 --> Hooks.re:87:47
+  addValueReference Hooks.re:97:39 --> Hooks.re:96:9
+  addValueReference Hooks.re:97:17 --> ReactDOMRe.re:120:2
   addTypeReference Hooks.re:98:20 --> Hooks.re:1:16
-  addValueReference Hooks.re:94:4 --> Hooks.re:94:20
-  addValueReference Hooks.re:94:4 --> React.re:7:0
-  addValueReference Hooks.re:94:4 --> ReactDOMRe.re:1125:0
-  addValueReference Hooks.re:94:4 --> React.re:3:0
-  addValueReference Hooks.re:94:4 --> Hooks.re:94:29
+  addValueReference Hooks.re:98:20 --> Hooks.re:94:20
+  addValueReference Hooks.re:98:7 --> React.re:7:0
+  addValueReference Hooks.re:97:4 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:100:12 --> React.re:3:0
+  addValueReference Hooks.re:95:10 --> Hooks.re:94:29
+  addValueReference Hooks.re:105:4 --> Hooks.re:94:4
   addValueReference Hooks.re:105:4 --> React.re:81:0
   addTypeDeclaration x Hooks.re:107:10 path:+Hooks.r
-  addValueReference Hooks.re:111:4 --> Hooks.re:112:28
+  addValueReference Hooks.re:113:24 --> Hooks.re:112:28
   addTypeReference Hooks.re:113:45 --> Hooks.re:107:10
-  addValueReference Hooks.re:111:4 --> Hooks.re:112:21
-  addValueReference Hooks.re:111:4 --> React.re:7:0
-  addValueReference Hooks.re:111:4 --> ReactDOMRe.re:1125:0
-  addValueReference Hooks.re:112:2 --> React.re:81:0
+  addValueReference Hooks.re:113:45 --> Hooks.re:112:21
+  addValueReference Hooks.re:113:32 --> React.re:7:0
+  addValueReference Hooks.re:113:4 --> ReactDOMRe.re:1125:0
+  collectExpr input: fix ghost location reference
+  addValueReference Hooks.re:111:4 --> Hooks.re:111:4
+  addValueReference Hooks.re:111:4 --> React.re:81:0
   addTypeReference Hooks.re:130:58 --> Hooks.re:1:16
-  addValueReference Hooks.re:130:4 --> Hooks.re:130:35
-  addValueReference Hooks.re:130:4 --> React.re:7:0
-  addValueReference Hooks.re:134:4 --> Hooks.re:134:38
-  addValueReference Hooks.re:134:4 --> React.re:7:0
-  addValueDeclaration +make Hooks.re:139:6 path:+Hooks.RenderPropRequiresConversion
+  addValueReference Hooks.re:130:58 --> Hooks.re:130:35
+  addValueReference Hooks.re:130:45 --> React.re:7:0
+  collectExpr polymorphicComponent: fix ghost location reference
+  addValueReference Hooks.re:130:4 --> Hooks.re:130:4
+  addValueReference Hooks.re:134:60 --> Hooks.re:134:38
+  addValueReference Hooks.re:134:47 --> React.re:7:0
+  collectExpr functionReturningReactElement: fix ghost location reference
+  addValueReference Hooks.re:134:4 --> Hooks.re:134:4
   addValueDeclaration +car Hooks.re:149:8 path:+Hooks.RenderPropRequiresConversion
-  addValueReference Hooks.re:139:6 --> Hooks.re:149:8
-  addValueReference Hooks.re:139:6 --> Hooks.re:150:18
+  addValueReference Hooks.re:150:30 --> Hooks.re:149:8
+  addValueReference Hooks.re:150:18 --> Hooks.re:150:18
   addValueDeclaration +unsafe_expr Hooks.re:150:18 path:+Hooks.RenderPropRequiresConversion
-  addValueReference Hooks.re:139:6 --> Hooks.re:141:9
+  addValueReference Hooks.re:150:4 --> Hooks.re:141:9
   addTypeReference Hooks.re:158:37 --> Hooks.re:1:16
-  addValueReference Hooks.re:156:4 --> Hooks.re:156:31
-  addValueReference Hooks.re:156:4 --> React.re:7:0
-  addValueReference Hooks.re:156:4 --> Hooks.re:156:41
-  addValueReference Hooks.re:156:4 --> ReactDOMRe.re:1125:0
-  addValueReference Hooks.re:156:4 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:158:37 --> Hooks.re:156:31
+  addValueReference Hooks.re:158:5 --> React.re:7:0
+  addValueReference Hooks.re:159:10 --> Hooks.re:156:41
+  addValueReference Hooks.re:159:4 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:157:2 --> ReactDOMRe.re:1125:0
+  collectExpr aComponentWithChildren: fix ghost location reference
+  addValueReference Hooks.re:156:4 --> Hooks.re:156:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestPromise.cmt
   addValueDeclaration +convert TestPromise.re:14:4 path:+TestPromise
   addTypeDeclaration x TestPromise.re:6:2 path:+TestPromise.fromPayload
@@ -1693,6 +1707,7 @@
   lazyLoad JSResource.jSResource(+DynamicallyLoadedComponent) JSResource.re:3:0 defined in DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:112:40 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:112:40 --> JSResource.re:3:0
+  addValueReference DeadTest.re:112:40 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:112:40 --> DeadTest.re:112:40
   addValueReference DeadTest.re:112:40 --> BootloaderResource.re:3:0
   addValueReference DeadTest.re:112:40 --> DeadTest.re:112:40
@@ -1700,6 +1715,7 @@
   lazyLoad JSResource.jSResource(+DynamicallyLoadedComponent) JSResource.re:3:0 defined in DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:119:6 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:119:6 --> JSResource.re:3:0
+  addValueReference DeadTest.re:122:6 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:122:6 --> DeadTest.re:119:6
   addValueReference DeadTest.re:122:6 --> BootloaderResource.re:3:0
   addValueReference DeadTest.re:122:6 --> DeadTest.re:122:13
@@ -1714,13 +1730,14 @@
   addValueDeclaration +a1 DeadTest.re:151:6 path:+DeadTest
   addValueDeclaration +a2 DeadTest.re:152:6 path:+DeadTest
   addValueDeclaration +a3 DeadTest.re:153:6 path:+DeadTest
-  collectExpr DynamicallyLoadedComponent.make: fix ghost location reference
   addValueReference DeadTest.re:157:17 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:157:17 --> React.re:15:0
   addValueReference DeadTest.re:160:4 --> DeadTest.re:159:4
-  addValueReference DeadTest.re:167:4 --> DeadTest.re:167:11
-  addValueReference DeadTest.re:167:4 --> React.re:7:0
+  addValueReference DeadTest.re:164:4 --> ExportWithRename.re:3:4
+  addValueReference DeadTest.re:167:29 --> DeadTest.re:167:11
+  addValueReference DeadTest.re:167:16 --> React.re:7:0
   collectExpr make: fix ghost location reference
+  addValueReference DeadTest.re:167:4 --> DeadTest.re:167:4
   addValueReference DeadTest.re:169:16 --> DeadTest.re:167:4
   addValueReference DeadTest.re:175:30 --> DeadTest.re:175:22
   addTypeReference DeadTest.re:175:21 --> trace.mli:3:11
@@ -1731,6 +1748,8 @@
   extendTypeDependencies DeadTest.re:189:8 --> DeadTest.re:185:6
   extendTypeDependencies DeadTest.re:185:6 --> DeadTest.re:189:8
   addTypeReference DeadTest.re:194:7 --> DeadTest.re:185:6
+  addValueReference ExportWithRename.re:3:4 --> DynamicallyLoadedComponent.re:2:4
+  addValueReference DynamicallyLoadedComponent.re:2:4 --> ExportWithRename.re:3:4
   addValueReference DeadTest.re:37:2 --> DeadTest.re:41:6
   addValueReference DeadTest.re:62:2 --> DeadTest.re:66:6
   addValueReference DeadTest.re:63:2 --> DeadTest.re:65:6
@@ -1765,7 +1784,7 @@ File References
   Docstrings.re -->> 
   TestPromise.re -->> 
   ModuleAliases.re -->> 
-  DeadTest.re -->> React.re, BootloaderResource.re, DeadValueTest.rei, DynamicallyLoadedComponent.re, ImmutableArray.rei, JSResource.re, trace.mli
+  DeadTest.re -->> React.re, BootloaderResource.re, DeadValueTest.rei, DynamicallyLoadedComponent.re, ExportWithRename.re, ImmutableArray.rei, JSResource.re, trace.mli
   AutoAnnotate.re -->> 
   ImportHooks.re -->> 
   NestedModulesInSignature.rei -->> NestedModulesInSignature.re
@@ -2010,7 +2029,6 @@ File References
   Dead Value +Exn.+catches1: 0 references () [0]
   Dead Value +Exn.+raises: 0 references () [0]
   Dead Value +ExnA.+bar: 0 references () [0]
-  Live Value +ExportWithRename.+make: 1 references (DeadTest:0:-1) [0]
   Live Value +FirstClassModules.+someFunctorAsFunction: 0 references () [0]
   Live Value +FirstClassModules.SomeFunctor.+ww: 1 references (FirstClassModules.re:46:20) [0]
   Live Value +FirstClassModules.+testConvert: 0 references () [0]
@@ -2025,15 +2043,15 @@ File References
   Dead Type FirstClassModulesInterface.record.y: 0 references () [0]
   Dead Type FirstClassModulesInterface.record.x: 0 references () [0]
   Live Value +Hooks.+aComponentWithChildren: 0 references () [0]
-  Live Value +Hooks.RenderPropRequiresConversion.+make: 0 references () [1]
-  Live Value +Hooks.RenderPropRequiresConversion.+unsafe_expr: 1 references (Hooks.re:139:6) [0]
-  Live Value +Hooks.RenderPropRequiresConversion.+car: 1 references (Hooks.re:139:6) [0]
+  Live Value +Hooks.RenderPropRequiresConversion.+unsafe_expr: 0 references () [0]
+  Live Value +Hooks.RenderPropRequiresConversion.+car: 1 references (Hooks.re:150:30) [0]
+  Live Value +Hooks.RenderPropRequiresConversion.+make: 0 references () [0]
   Live Value +Hooks.+functionReturningReactElement: 0 references () [0]
   Live Value +Hooks.+polymorphicComponent: 0 references () [0]
   Live Value +Hooks.+input: 0 references () [0]
   Live Type +Hooks.r.x: 1 references (Hooks.re:113:45) [0]
   Live Value +Hooks.+testForwardRef: 0 references () [0]
-  Live Value +Hooks.+makeWithRef: 0 references () [0]
+  Live Value +Hooks.+makeWithRef: 1 references (Hooks.re:105:4) [0]
   Live Value +Hooks.+componentWithRenamedArgs: 0 references () [0]
   Live Value +Hooks.+functionWithRenamedArgs: 0 references () [0]
   Live Value +Hooks.NoProps.+make: 0 references () [0]
@@ -2043,7 +2061,7 @@ File References
   Live Value +Hooks.Inner.+make: 0 references () [0]
   Live Value +Hooks.+anotherComponent: 0 references () [0]
   Live Value +Hooks.+default: 0 references () [0]
-  Live Value +Hooks.+make: 0 references () [0]
+  Live Value +Hooks.+make: 1 references (Hooks.re:36:4) [0]
   Live Type +Hooks.vehicle.name: 13 references (Hooks.re:11:12, Hooks.re:42:41, Hooks.re:49:43, Hooks.re:54:43, Hooks.re:60:45, Hooks.re:65:45, Hooks.re:82:2, Hooks.re:82:14, Hooks.re:89:15, Hooks.re:89:27, Hooks.re:98:20, Hooks.re:130:58, Hooks.re:158:37) [0]
   Live Value +ImportIndex.+make: 0 references () [0]
   Live Value +LetPrivate.+y: 0 references () [0]
@@ -2314,7 +2332,8 @@ File References
   Dead Type +DeadTypeTest.t.B: 0 references () [0]
   Dead Value DeadValueTest.+valueDead: 0 references () [0]
   Live Value DeadValueTest.+valueAlive: 1 references (DeadTest.re:77:16) [0]
-  Live Value +DynamicallyLoadedComponent.+make: 4 references (DeadTest.re:112:40, DeadTest.re:119:6, DeadTest.re:157:17, DeadTest:0:-1) [0]
+  Live Value +ExportWithRename.+make: 1 references (DeadTest:0:-1) [1]
+  Live Value +DynamicallyLoadedComponent.+make: 5 references (DeadTest.re:112:40, DeadTest.re:119:6, DeadTest.re:157:17, ExportWithRename.re:3:4, DeadTest:0:-1) [0]
   Dead Value ErrorHandler.+x: 0 references () [0]
   Live Value ErrorHandler.Make.+notify: 1 references (CreateErrorHandler1.re:8:0) [0]
   Dead Value +ExnB.+foo: 0 references () [0]
@@ -2383,11 +2402,11 @@ File References
   Live Value ImmutableArray.+fromArray: 1 references (DeadTest.re:1:15) [0]
   Live Value ImmutableArray.Array.+get: 1 references (TestImmutableArray.re:2:4) [0]
   Live Value +ImportHookDefault.+make2: 0 references () [0]
-  Live Value +ImportHookDefault.+make: 1 references (Hooks.re:4:4) [0]
+  Live Value +ImportHookDefault.+make: 1 references (Hooks.re:26:5) [0]
   Dead Type +ImportHookDefault.person.age: 0 references () [0]
   Dead Type +ImportHookDefault.person.name: 0 references () [0]
   Live Value +ImportHooks.+foo: 0 references () [0]
-  Live Value +ImportHooks.+make: 1 references (Hooks.re:4:4) [0]
+  Live Value +ImportHooks.+make: 1 references (Hooks.re:20:5) [0]
   Dead Type +ImportHooks.person.age: 0 references () [0]
   Dead Type +ImportHooks.person.name: 0 references () [0]
   Live Value +ImportJsValue.+default: 0 references () [0]
