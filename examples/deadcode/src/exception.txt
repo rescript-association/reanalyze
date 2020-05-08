@@ -49,7 +49,7 @@
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 78, characters 4-24
-  parse_json_from_file might raise Error (Exn.re:83:4) Sys_error (Exn.re:85:4) and is not annotated with @raises Error Sys_error
+  parse_json_from_file might raise Error (Exn.re:83:4) Sys_error (Exn.re:82:4 Exn.re:85:4) and is not annotated with @raises Error Sys_error
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 90, characters 4-11
@@ -65,4 +65,4 @@
 
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 156, characters 4-16
-  severalCases might raise Failure (Exn.re:160:15) and is not annotated with @raises Failure
+  severalCases might raise Failure (Exn.re:158:13 Exn.re:159:13 Exn.re:160:15) and is not annotated with @raises Failure

@@ -23,12 +23,15 @@ let pp = (~exnTable, ppf, exceptions) => {
     | Some(exnTable) =>
       switch (Hashtbl.find_opt(exnTable, exn)) {
       | Some(locSet) =>
-        let loc = locSet |> DeadCommon.LocSet.max_elt;
+        let positions =
+          locSet
+          |> DeadCommon.LocSet.elements
+          |> List.map(loc => loc.Location.loc_start);
         Format.fprintf(
           ppf,
           " @{<info>%s@} (@{<filename>%s@})",
           name,
-          DeadCommon.posToString(loc.Location.loc_start),
+          positions |> List.map(DeadCommon.posToString) |> String.concat(" "),
         );
       | None => Format.fprintf(ppf, " @{<info>%s@}", name)
       }
