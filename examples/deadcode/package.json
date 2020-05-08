@@ -7,7 +7,7 @@
     "build": "node ../run_bsb.js -make-world",
     "clean": "node ../clean_bsb.js",
     "dce": "node ./analyze.js >src/deadcode.txt",
-    "exception": "../reanalyze.exe -exception >src/exception.txt",
+    "exception": "../reanalyze.exe -blacklist src -whitelist src/exception -exception >src/exception.txt",
     "analyze": "npm run dce && npm run exception"
   },
   "devDependencies": {
