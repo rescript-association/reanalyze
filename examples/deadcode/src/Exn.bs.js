@@ -85,6 +85,7 @@ export {
   stringMake1 ,
   stringMake2 ,
   stringMake3 ,
+  severalCases ,
   
 }
 /* catches1 Not a pure module */

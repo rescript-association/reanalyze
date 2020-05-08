@@ -62,3 +62,7 @@
   Exception Analysis
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 107, characters 4-16
   indirectCall might raise Not_found (Exn.re:107:31) and is not annotated with @raises Not_found
+
+  Exception Analysis
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 156, characters 4-16
+  severalCases might raise Failure (Exn.re:158:13) and is not annotated with @raises Failure

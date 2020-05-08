@@ -1120,9 +1120,10 @@
   addValueDeclaration +raiseArrow Exn.re:139:4 path:+Exn
   addValueDeclaration +bar Exn.re:142:4 path:+Exn
   addValueDeclaration +foo Exn.re:144:4 path:+Exn
-  addValueDeclaration +stringMake1 Exn.re:151:4 path:+Exn
-  addValueDeclaration +stringMake2 Exn.re:153:4 path:+Exn
-  addValueDeclaration +stringMake3 Exn.re:155:4 path:+Exn
+  addValueDeclaration +stringMake1 Exn.re:150:4 path:+Exn
+  addValueDeclaration +stringMake2 Exn.re:152:4 path:+Exn
+  addValueDeclaration +stringMake3 Exn.re:154:4 path:+Exn
+  addValueDeclaration +severalCases Exn.re:156:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -1164,6 +1165,7 @@
   addValueDeclaration +hash Exn.re:124:8 path:+Exn.StringHash
   addValueReference Exn.re:127:4 --> Exn.re:127:22
   addValueReference Exn.re:130:4 --> Exn.re:130:18
+  addValueReference Exn.re:156:4 --> Exn.re:156:19
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmti
   addValueDeclaration +get ImmutableArray.rei:5:15 path:ImmutableArray.Array
   addValueDeclaration +fromArray ImmutableArray.rei:7:0 path:ImmutableArray
@@ -1993,6 +1995,7 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +Exn.+severalCases: 0 references () [0]
   Dead Value +Exn.+stringMake3: 0 references () [0]
   Dead Value +Exn.+stringMake2: 0 references () [0]
   Dead Value +Exn.+stringMake1: 0 references () [0]
@@ -3141,16 +3144,22 @@ File References
   [@dead "+foo"] let foo = () =>
 
   Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 150, characters 0-65
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 149, characters 0-65
   +stringMake1 is never used and could have side effects
 
   Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 153, characters 0-56
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 152, characters 0-56
   +stringMake2 is never used and could have side effects
 
   Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 155, characters 0-54
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 154, characters 0-54
   +stringMake3 is never used and could have side effects
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 156, characters 0-153
+  +severalCases is never used
+  <-- line 156
+  [@dead "+severalCases"] let severalCases = cases =>
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 0-26
