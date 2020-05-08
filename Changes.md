@@ -1,5 +1,5 @@
 # master
-
+- Exception Analysis: print all the locations where a given exception is raised, not just one.
 # 1.11.0
 - Add command-line options `-blacklist` and `-whitelist` that apply to all the analyses.
   Example: `../reanalyze.exe -exception -blacklist src -whitelist src/Ex`
