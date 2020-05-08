@@ -470,5 +470,3 @@ let processCmt = (cmt_infos: Cmt_format.cmt_infos) =>
   };
 
 let reportResults = (~ppf as _) => Checks.doChecks();
-
-let x = Pervasives.input;
