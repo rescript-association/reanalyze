@@ -1,5 +1,3 @@
-module ExnSet = Set.Make(Exn);
-
 let raisesLibTable = {
   let table = Hashtbl.create(15);
   open Exn;
@@ -173,7 +171,7 @@ let raisesLibTable = {
   |> List.iter(((name, group)) =>
        group
        |> List.iter(((s, e)) =>
-            Hashtbl.add(table, name ++ "." ++ s, e |> ExnSet.of_list)
+            Hashtbl.add(table, name ++ "." ++ s, e |> Exceptions.fromList)
           )
      );
 

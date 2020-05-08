@@ -1,32 +1,6 @@
 let debug = DeadCommon.debug;
 let posToString = DeadCommon.posToString;
 
-module ExnSet = Set.Make(Exn);
-
-module Exceptions = {
-  type t = ExnSet.t;
-  let pp = (~exnTable, ppf, exceptions) => {
-    let ppExn = exn => {
-      let name = Exn.toString(exn);
-      switch (exnTable) {
-      | Some(exnTable) =>
-        switch (Hashtbl.find_opt(exnTable, exn)) {
-        | Some(loc) =>
-          Format.fprintf(
-            ppf,
-            " @{<info>%s@} (@{<filename>%s@})",
-            name,
-            posToString(loc.Location.loc_start),
-          )
-        | None => Format.fprintf(ppf, " @{<info>%s@}", name)
-        }
-      | None => Format.fprintf(ppf, " @{<info>%s@}", name)
-      };
-    };
-    exceptions |> ExnSet.iter(ppExn);
-  };
-};
-
 module Values = {
   let valueBindingsTable: Hashtbl.t(string, Hashtbl.t(string, Exceptions.t)) =
     Hashtbl.create(15);
@@ -93,7 +67,7 @@ module Event = {
     | Raises // raise E
 
   and t = {
-    exceptions: ExnSet.t,
+    exceptions: Exceptions.t,
     kind,
     loc: Location.t,
   };
@@ -144,23 +118,24 @@ module Event = {
         if (debug^) {
           Log_.item("%a@.", print, ev);
         };
-        exceptions |> ExnSet.iter(exn => Hashtbl.replace(exnTable, exn, loc));
-        loop(ExnSet.union(exnSet, exceptions), rest);
+        exceptions
+        |> Exceptions.iter(exn => Hashtbl.replace(exnTable, exn, loc));
+        loop(Exceptions.union(exnSet, exceptions), rest);
       | [{kind: Call(path), loc} as ev, ...rest] =>
         if (debug^) {
           Log_.item("%a@.", print, ev);
         };
         switch (path |> Values.findPath(~moduleName)) {
-        | Some(exceptions) when !ExnSet.is_empty(exceptions) =>
+        | Some(exceptions) when !Exceptions.isEmpty(exceptions) =>
           exceptions
-          |> ExnSet.iter(exn => Hashtbl.replace(exnTable, exn, loc));
-          loop(ExnSet.union(exnSet, exceptions), rest);
+          |> Exceptions.iter(exn => Hashtbl.replace(exnTable, exn, loc));
+          loop(Exceptions.union(exnSet, exceptions), rest);
         | _ =>
           switch (ExnLib.find(path)) {
           | Some(exceptions) =>
             exceptions
-            |> ExnSet.iter(exn => Hashtbl.replace(exnTable, exn, loc));
-            loop(ExnSet.union(exnSet, exceptions), rest);
+            |> Exceptions.iter(exn => Hashtbl.replace(exnTable, exn, loc));
+            loop(Exceptions.union(exnSet, exceptions), rest);
           | None => loop(exnSet, rest)
           }
         };
@@ -168,16 +143,16 @@ module Event = {
         if (debug^) {
           Log_.item("%a@.", print, ev);
         };
-        if (ExnSet.is_empty(exceptions /* catch-all */)) {
+        if (Exceptions.isEmpty(exceptions /* catch-all */)) {
           loop(exnSet, rest);
         } else {
-          let nestedExnSet = loop(ExnSet.empty, nestedEvents);
-          let newRaises = ExnSet.diff(nestedExnSet, exceptions);
-          loop(ExnSet.union(exnSet, newRaises), rest);
+          let nestedExnSet = loop(Exceptions.empty, nestedEvents);
+          let newRaises = Exceptions.diff(nestedExnSet, exceptions);
+          loop(Exceptions.union(exnSet, newRaises), rest);
         };
       | [] => exnSet
       };
-    let exnSet = loop(ExnSet.empty, events);
+    let exnSet = loop(Exceptions.empty, events);
     (exnSet, exnTable);
   };
 };
@@ -199,9 +174,9 @@ module Checks = {
 
   let doCheck = ({events, exceptions, id, loc, moduleName}) => {
     let (raiseSet, exnTable) = events |> Event.combine(~moduleName);
-    let missingAnnotations = ExnSet.diff(raiseSet, exceptions);
-    let redundantAnnotations = ExnSet.diff(exceptions, raiseSet);
-    if (!ExnSet.is_empty(missingAnnotations)) {
+    let missingAnnotations = Exceptions.diff(raiseSet, exceptions);
+    let redundantAnnotations = Exceptions.diff(exceptions, raiseSet);
+    if (!Exceptions.isEmpty(missingAnnotations)) {
       Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
@@ -214,7 +189,7 @@ module Checks = {
         )
       );
     };
-    if (!ExnSet.is_empty(redundantAnnotations)) {
+    if (!Exceptions.isEmpty(redundantAnnotations)) {
       Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
@@ -246,10 +221,10 @@ let traverseAst = {
          (acc, desc) =>
            switch (desc) {
            | Typedtree.Tpat_construct(lid, _, _) =>
-             ExnSet.add(Exn.fromLid(lid), acc)
+             Exceptions.add(Exn.fromLid(lid), acc)
            | _ => acc
            },
-         ExnSet.empty,
+         Exceptions.empty,
        );
 
   let iterExpr = (self, e) => self.Tast_mapper.expr(self, e) |> ignore;
@@ -273,8 +248,8 @@ let traverseAst = {
   let raiseArgs = args =>
     switch (args) {
     | [(_, Some({Typedtree.exp_desc: Texp_construct(lid, _, _)}))] =>
-      Exn.fromLid(lid) |> ExnSet.singleton
-    | _ => Exn.fromString("TODO_from_raise") |> ExnSet.singleton
+      [Exn.fromLid(lid)] |> Exceptions.fromList
+    | _ => [Exn.fromString("TODO_from_raise")] |> Exceptions.fromList
     };
 
   let doesNotRaise = attributes =>
@@ -309,7 +284,7 @@ let traverseAst = {
       };
       currentEvents :=
         [
-          {Event.kind: Call(callee), loc, exceptions: ExnSet.empty},
+          {Event.kind: Call(callee), loc, exceptions: Exceptions.empty},
           ...currentEvents^,
         ];
 
@@ -380,7 +355,7 @@ let traverseAst = {
             {
               Event.kind: Raises,
               loc,
-              exceptions: Exn.matchFailure |> ExnSet.singleton,
+              exceptions: [Exn.matchFailure] |> Exceptions.fromList,
             },
             ...currentEvents^,
           ];
@@ -428,19 +403,22 @@ let traverseAst = {
         |> Annotation.getAttributePayload(s => s == "raises" || s == "raise");
       let rec getExceptions = payload =>
         switch (payload) {
-        | Annotation.StringPayload(s) => Exn.fromString(s) |> ExnSet.singleton
+        | Annotation.StringPayload(s) =>
+          [Exn.fromString(s)] |> Exceptions.fromList
         | Annotation.ConstructPayload(s) =>
-          Exn.fromString(s) |> ExnSet.singleton
+          [Exn.fromString(s)] |> Exceptions.fromList
         | Annotation.TuplePayload(tuple) =>
           tuple
-          |> List.map(payload => payload |> getExceptions |> ExnSet.elements)
+          |> List.map(payload =>
+               payload |> getExceptions |> Exceptions.toList
+             )
           |> List.concat
-          |> ExnSet.of_list
-        | _ => ExnSet.empty
+          |> Exceptions.fromList
+        | _ => Exceptions.empty
         };
       let exceptionsFromAnnotations =
         switch (raisesAnnotationPayload) {
-        | None => ExnSet.empty
+        | None => Exceptions.empty
         | Some(payload) => payload |> getExceptions
         };
       exceptionsFromAnnotations |> Values.add(~id);
@@ -450,7 +428,7 @@ let traverseAst = {
       let exceptions =
         switch (id |> Values.findId(~moduleName)) {
         | Some(exceptions) => exceptions
-        | _ => ExnSet.empty
+        | _ => Exceptions.empty
         };
       Checks.add(
         ~events=currentEvents^,
