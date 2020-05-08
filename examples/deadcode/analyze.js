@@ -19,7 +19,7 @@ child_process.spawnSync(
     "-dce",
     "-debug",
     "-blacklist",
-    "src/DeadTestBlacklist.re",
+    "src/exception",
     "-live-names",
     "globallyLive1",
     "-live-names",
