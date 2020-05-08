@@ -115,6 +115,12 @@ module PosHash = {
   };
 };
 
+module LocSet =
+  Set.Make({
+    include Location;
+    let compare = compare;
+  });
+
 module FileSet = Set.Make(String);
 
 module FileHash = {
