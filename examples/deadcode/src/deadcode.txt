@@ -1,3 +1,97 @@
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/exception/ExnA.cmt
+  addValueDeclaration +bar ExnA.re:1:4 path:+ExnA
+  addValueReference ExnA.re:1:4 --> ExnB.re:2:4
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/exception/ExnB.cmt
+  addValueDeclaration +foo ExnB.re:2:4 path:+ExnB
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/exception/BsJson.cmt
+  addValueDeclaration +testBsJson BsJson.re:2:4 path:+BsJson
+  addValueDeclaration +testBsJson2 BsJson.re:5:4 path:+BsJson
+  addValueReference BsJson.re:2:4 --> BsJson.re:2:17
+  addValueReference BsJson.re:2:4 --> Json_decode.mli:78:0
+  addValueReference BsJson.re:5:4 --> BsJson.re:5:18
+  addValueReference BsJson.re:5:4 --> Json_decode.mli:78:0
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/exception/ExportWithRename.cmt
+  addValueDeclaration +make ExportWithRename.re:3:4 path:+ExportWithRename
+  addValueReference ExportWithRename.re:3:32 --> ExportWithRename.re:3:13
+  addValueReference ExportWithRename.re:3:19 --> React.re:7:0
+  collectExpr make: fix ghost location reference
+  addValueReference ExportWithRename.re:3:4 --> ExportWithRename.re:3:4
+  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/exception/Exn.cmt
+  addValueDeclaration +raises Exn.re:1:4 path:+Exn
+  addValueDeclaration +catches1 Exn.re:3:4 path:+Exn
+  addValueDeclaration +catches2 Exn.re:8:4 path:+Exn
+  addValueDeclaration +raiseAndCatch Exn.re:14:4 path:+Exn
+  addValueDeclaration +raisesWithAnnotaion Exn.re:20:4 path:+Exn
+  addValueDeclaration +callsRaiseWithAnnotation Exn.re:22:4 path:+Exn
+  addValueDeclaration +callsRaiseWithAnnotationAndIsAnnotated Exn.re:25:4 path:+Exn
+  addValueDeclaration +z Exn.re:27:4 path:+Exn
+  addValueDeclaration +incompleteMatch Exn.re:29:4 path:+Exn
+  addValueDeclaration +twoRaises Exn.re:37:4 path:+Exn
+  addValueDeclaration +sequencing Exn.re:46:4 path:+Exn
+  addValueDeclaration +wrongCatch Exn.re:53:4 path:+Exn
+  addValueDeclaration +wrongCatch2 Exn.re:59:4 path:+Exn
+  addValueDeclaration +raise2Annotate3 Exn.re:67:4 path:+Exn
+  addValueDeclaration +parse_json_from_file Exn.re:78:4 path:+Exn
+  addValueDeclaration +reRaise Exn.re:90:4 path:+Exn
+  addValueDeclaration +switchWithCatchAll Exn.re:96:4 path:+Exn
+  addValueDeclaration +raiseInInternalLet Exn.re:102:4 path:+Exn
+  addValueDeclaration +indirectCall Exn.re:107:4 path:+Exn
+  addValueDeclaration +array Exn.re:110:4 path:+Exn
+  addValueDeclaration +id Exn.re:112:4 path:+Exn
+  addValueDeclaration +tryChar Exn.re:114:4 path:+Exn
+  addValueDeclaration +specializedHash Exn.re:127:4 path:+Exn
+  addValueDeclaration +genericHash Exn.re:130:4 path:+Exn
+  addValueDeclaration +raiseAtAt Exn.re:133:4 path:+Exn
+  addValueDeclaration +raisePipe Exn.re:136:4 path:+Exn
+  addValueDeclaration +raiseArrow Exn.re:139:4 path:+Exn
+  addValueDeclaration +bar Exn.re:142:4 path:+Exn
+  addValueDeclaration +foo Exn.re:144:4 path:+Exn
+  addValueDeclaration +stringMake1 Exn.re:150:4 path:+Exn
+  addValueDeclaration +stringMake2 Exn.re:152:4 path:+Exn
+  addValueDeclaration +stringMake3 Exn.re:154:4 path:+Exn
+  addValueDeclaration +severalCases Exn.re:156:4 path:+Exn
+  addValueReference Exn.re:22:4 --> Exn.re:20:4
+  addValueReference Exn.re:25:4 --> Exn.re:20:4
+  addValueReference Exn.re:29:4 --> Exn.re:29:22
+  addTypeReference Exn.re:42:10 --> Exn.re:35:10
+  addValueReference Exn.re:37:4 --> Exn.re:37:20
+  addTypeReference Exn.re:39:10 --> Exn.re:34:10
+  addValueReference Exn.re:37:4 --> Exn.re:37:17
+  addTypeReference Exn.re:48:12 --> Exn.re:35:10
+  addTypeReference Exn.re:47:8 --> Exn.re:34:10
+  addTypeReference Exn.re:54:12 --> Exn.re:35:10
+  addTypeReference Exn.re:60:31 --> Exn.re:58:10
+  addTypeReference Exn.re:60:20 --> Exn.re:35:10
+  addValueReference Exn.re:59:4 --> Exn.re:59:18
+  addTypeReference Exn.re:72:10 --> Exn.re:35:10
+  addValueReference Exn.re:67:4 --> Exn.re:67:26
+  addTypeReference Exn.re:69:10 --> Exn.re:34:10
+  addValueReference Exn.re:67:4 --> Exn.re:67:23
+  addValueDeclaration +in_chan Exn.re:79:6 path:+Exn
+  addValueReference Exn.re:79:6 --> Exn.re:78:27
+  addTypeReference Exn.re:83:10 --> Exn.re:76:10
+  addValueReference Exn.re:78:4 --> Exn.re:81:21
+  addValueReference Exn.re:78:4 --> Exn.re:81:25
+  addValueReference Exn.re:78:4 --> Exn.re:81:29
+  addValueReference Exn.re:78:4 --> Exn.re:79:6
+  addValueReference Exn.re:78:4 --> Exn.re:84:2
+  addValueReference Exn.re:78:4 --> Exn.re:79:6
+  addTypeReference Exn.re:92:25 --> Exn.re:35:10
+  addTypeReference Exn.re:91:16 --> Exn.re:34:10
+  addTypeReference Exn.re:97:16 --> Exn.re:34:10
+  addValueDeclaration +a Exn.re:103:6 path:+Exn
+  addTypeReference Exn.re:103:20 --> Exn.re:34:10
+  addValueReference Exn.re:103:6 --> Exn.re:102:25
+  addValueReference Exn.re:102:4 --> Exn.re:103:6
+  addValueReference Exn.re:107:4 --> Exn.re:20:4
+  addValueReference Exn.re:110:4 --> Exn.re:110:12
+  addValueReference Exn.re:112:4 --> Exn.re:112:9
+  addValueReference Exn.re:114:4 --> Exn.re:114:14
+  addValueReference Exn.re:114:4 --> Exn.re:112:4
+  addValueDeclaration +hash Exn.re:124:8 path:+Exn.StringHash
+  addValueReference Exn.re:127:4 --> Exn.re:127:22
+  addValueReference Exn.re:130:4 --> Exn.re:130:18
+  addValueReference Exn.re:156:4 --> Exn.re:156:19
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ReasonComponent.cmt
   addValueDeclaration +component ReasonComponent.re:3:4 path:+ReasonComponent
   addValueDeclaration +onClick ReasonComponent.re:15:4 path:+ReasonComponent
@@ -532,9 +626,6 @@
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType2.cmt
   addValueDeclaration +convertT2 TransitiveType2.re:7:4 path:+TransitiveType2
   addValueReference TransitiveType2.re:7:4 --> TransitiveType2.re:7:17
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ExnA.cmt
-  addValueDeclaration +bar ExnA.re:1:4 path:+ExnA
-  addValueReference ExnA.re:1:4 --> ExnB.re:2:4
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Variants.cmt
   addValueDeclaration +isWeekend Variants.re:13:4 path:+Variants
   addValueDeclaration +monday Variants.re:21:4 path:+Variants
@@ -697,8 +788,6 @@
   addValueDeclaration +convertAlias TransitiveType1.re:5:4 path:+TransitiveType1
   addValueReference TransitiveType1.re:2:4 --> TransitiveType1.re:2:15
   addValueReference TransitiveType1.re:5:4 --> TransitiveType1.re:5:20
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ExnB.cmt
-  addValueDeclaration +foo ExnB.re:2:4 path:+ExnB
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TypeParams2.cmt
   addValueDeclaration +exportSomething TypeParams2.re:10:4 path:+TypeParams2
   addTypeDeclaration id TypeParams2.re:2:13 path:+TypeParams2.item
@@ -1019,13 +1108,6 @@
   addValueReference ErrorHandler.rei:3:2 --> CreateErrorHandler2.re:3:6
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/BootloaderResource.cmt
   addValueDeclaration +read BootloaderResource.re:3:0 path:+BootloaderResource
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/BsJson.cmt
-  addValueDeclaration +testBsJson BsJson.re:2:4 path:+BsJson
-  addValueDeclaration +testBsJson2 BsJson.re:5:4 path:+BsJson
-  addValueReference BsJson.re:2:4 --> BsJson.re:2:17
-  addValueReference BsJson.re:2:4 --> Json_decode.mli:78:0
-  addValueReference BsJson.re:5:4 --> BsJson.re:5:18
-  addValueReference BsJson.re:5:4 --> Json_decode.mli:78:0
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTypeTest.cmt
   addValueDeclaration +a DeadTypeTest.re:4:4 path:+DeadTypeTest
   addTypeDeclaration A DeadTypeTest.re:2:4 path:+DeadTypeTest.t
@@ -1084,88 +1166,6 @@
   addValueReference ModuleAliases.re:25:4 --> ModuleAliases.re:25:17
   addValueReference ModuleAliases.re:28:4 --> ModuleAliases.re:28:18
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadCodeInterface.cmt
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ExportWithRename.cmt
-  addValueDeclaration +make ExportWithRename.re:3:4 path:+ExportWithRename
-  addValueReference ExportWithRename.re:3:32 --> ExportWithRename.re:3:13
-  addValueReference ExportWithRename.re:3:19 --> React.re:7:0
-  collectExpr make: fix ghost location reference
-  addValueReference ExportWithRename.re:3:4 --> ExportWithRename.re:3:4
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Exn.cmt
-  addValueDeclaration +raises Exn.re:1:4 path:+Exn
-  addValueDeclaration +catches1 Exn.re:3:4 path:+Exn
-  addValueDeclaration +catches2 Exn.re:8:4 path:+Exn
-  addValueDeclaration +raiseAndCatch Exn.re:14:4 path:+Exn
-  addValueDeclaration +raisesWithAnnotaion Exn.re:20:4 path:+Exn
-  addValueDeclaration +callsRaiseWithAnnotation Exn.re:22:4 path:+Exn
-  addValueDeclaration +callsRaiseWithAnnotationAndIsAnnotated Exn.re:25:4 path:+Exn
-  addValueDeclaration +z Exn.re:27:4 path:+Exn
-  addValueDeclaration +incompleteMatch Exn.re:29:4 path:+Exn
-  addValueDeclaration +twoRaises Exn.re:37:4 path:+Exn
-  addValueDeclaration +sequencing Exn.re:46:4 path:+Exn
-  addValueDeclaration +wrongCatch Exn.re:53:4 path:+Exn
-  addValueDeclaration +wrongCatch2 Exn.re:59:4 path:+Exn
-  addValueDeclaration +raise2Annotate3 Exn.re:67:4 path:+Exn
-  addValueDeclaration +parse_json_from_file Exn.re:78:4 path:+Exn
-  addValueDeclaration +reRaise Exn.re:90:4 path:+Exn
-  addValueDeclaration +switchWithCatchAll Exn.re:96:4 path:+Exn
-  addValueDeclaration +raiseInInternalLet Exn.re:102:4 path:+Exn
-  addValueDeclaration +indirectCall Exn.re:107:4 path:+Exn
-  addValueDeclaration +array Exn.re:110:4 path:+Exn
-  addValueDeclaration +id Exn.re:112:4 path:+Exn
-  addValueDeclaration +tryChar Exn.re:114:4 path:+Exn
-  addValueDeclaration +specializedHash Exn.re:127:4 path:+Exn
-  addValueDeclaration +genericHash Exn.re:130:4 path:+Exn
-  addValueDeclaration +raiseAtAt Exn.re:133:4 path:+Exn
-  addValueDeclaration +raisePipe Exn.re:136:4 path:+Exn
-  addValueDeclaration +raiseArrow Exn.re:139:4 path:+Exn
-  addValueDeclaration +bar Exn.re:142:4 path:+Exn
-  addValueDeclaration +foo Exn.re:144:4 path:+Exn
-  addValueDeclaration +stringMake1 Exn.re:150:4 path:+Exn
-  addValueDeclaration +stringMake2 Exn.re:152:4 path:+Exn
-  addValueDeclaration +stringMake3 Exn.re:154:4 path:+Exn
-  addValueDeclaration +severalCases Exn.re:156:4 path:+Exn
-  addValueReference Exn.re:22:4 --> Exn.re:20:4
-  addValueReference Exn.re:25:4 --> Exn.re:20:4
-  addValueReference Exn.re:29:4 --> Exn.re:29:22
-  addTypeReference Exn.re:42:10 --> Exn.re:35:10
-  addValueReference Exn.re:37:4 --> Exn.re:37:20
-  addTypeReference Exn.re:39:10 --> Exn.re:34:10
-  addValueReference Exn.re:37:4 --> Exn.re:37:17
-  addTypeReference Exn.re:48:12 --> Exn.re:35:10
-  addTypeReference Exn.re:47:8 --> Exn.re:34:10
-  addTypeReference Exn.re:54:12 --> Exn.re:35:10
-  addTypeReference Exn.re:60:31 --> Exn.re:58:10
-  addTypeReference Exn.re:60:20 --> Exn.re:35:10
-  addValueReference Exn.re:59:4 --> Exn.re:59:18
-  addTypeReference Exn.re:72:10 --> Exn.re:35:10
-  addValueReference Exn.re:67:4 --> Exn.re:67:26
-  addTypeReference Exn.re:69:10 --> Exn.re:34:10
-  addValueReference Exn.re:67:4 --> Exn.re:67:23
-  addValueDeclaration +in_chan Exn.re:79:6 path:+Exn
-  addValueReference Exn.re:79:6 --> Exn.re:78:27
-  addTypeReference Exn.re:83:10 --> Exn.re:76:10
-  addValueReference Exn.re:78:4 --> Exn.re:81:21
-  addValueReference Exn.re:78:4 --> Exn.re:81:25
-  addValueReference Exn.re:78:4 --> Exn.re:81:29
-  addValueReference Exn.re:78:4 --> Exn.re:79:6
-  addValueReference Exn.re:78:4 --> Exn.re:84:2
-  addValueReference Exn.re:78:4 --> Exn.re:79:6
-  addTypeReference Exn.re:92:25 --> Exn.re:35:10
-  addTypeReference Exn.re:91:16 --> Exn.re:34:10
-  addTypeReference Exn.re:97:16 --> Exn.re:34:10
-  addValueDeclaration +a Exn.re:103:6 path:+Exn
-  addTypeReference Exn.re:103:20 --> Exn.re:34:10
-  addValueReference Exn.re:103:6 --> Exn.re:102:25
-  addValueReference Exn.re:102:4 --> Exn.re:103:6
-  addValueReference Exn.re:107:4 --> Exn.re:20:4
-  addValueReference Exn.re:110:4 --> Exn.re:110:12
-  addValueReference Exn.re:112:4 --> Exn.re:112:9
-  addValueReference Exn.re:114:4 --> Exn.re:114:14
-  addValueReference Exn.re:114:4 --> Exn.re:112:4
-  addValueDeclaration +hash Exn.re:124:8 path:+Exn.StringHash
-  addValueReference Exn.re:127:4 --> Exn.re:127:22
-  addValueReference Exn.re:130:4 --> Exn.re:130:18
-  addValueReference Exn.re:156:4 --> Exn.re:156:19
   Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmti
   addValueDeclaration +get ImmutableArray.rei:5:15 path:ImmutableArray.Array
   addValueDeclaration +fromArray ImmutableArray.rei:7:0 path:ImmutableArray
@@ -1765,7 +1765,6 @@ File References
 
   TestFirstClassModules.re -->> 
   TestEmitInnerModules.re -->> 
-  Exn.re -->> 
   DeadTestBlacklist.re -->> 
   Opaque.re -->> 
   TypeParams2.re -->> 
@@ -1775,18 +1774,17 @@ File References
   ComponentAsProp.re -->> ReactDOMRe.re, ReasonReact.rei
   ManyComponents.re -->> ReactDOMRe.re, ReasonReact.rei
   TransitiveType2.re -->> 
-  ExportWithRename.re -->> React.re
-  ExnB.re -->> 
   Shadow.re -->> 
   Unboxed.re -->> 
   DeadTestWithInterface.re -->> 
   FirstClassModulesInterface.rei -->> FirstClassModulesInterface.re
   RequireCond.re -->> 
   Hooks.re -->> React.re, ReactDOMRe.re, ReasonReact.rei, ImportHookDefault.re, ImportHooks.re
+  ExportWithRename.re -->> React.re
   Docstrings.re -->> 
   TestPromise.re -->> 
   ModuleAliases.re -->> 
-  DeadTest.re -->> React.re, BootloaderResource.re, DeadValueTest.rei, DynamicallyLoadedComponent.re, ExportWithRename.re, ImmutableArray.rei, JSResource.re, trace.mli
+  DeadTest.re -->> React.re, BootloaderResource.re, DeadValueTest.rei, DynamicallyLoadedComponent.re, ImmutableArray.rei, JSResource.re, ExportWithRename.re, trace.mli
   AutoAnnotate.re -->> 
   ImportHooks.re -->> 
   NestedModulesInSignature.rei -->> NestedModulesInSignature.re
@@ -1803,12 +1801,13 @@ File References
   DeadCodeImplementation.re -->> 
   VariantsWithPayload.re -->> 
   ReasonComponent.re -->> ReactDOMRe.re, ReasonReact.rei, ImportMyBanner.re
-  BsJson.re -->> Json_decode.mli
-  ExnA.re -->> ExnB.re
   Types.re -->> 
   DeadCodeInterface.re -->> 
   References.re -->> 
+  BsJson.re -->> Json_decode.mli
+  ExnB.re -->> 
   JSResource.re -->> 
+  ExnA.re -->> ExnB.re
   TestModuleAliases.re -->> 
   ImportJsValue.re -->> 
   Tuples.re -->> 
@@ -1827,6 +1826,7 @@ File References
   TypeParams1.re -->> 
   FirstClassModules.re -->> 
   CreateErrorHandler1.re -->> ErrorHandler.rei
+  Exn.re -->> 
   ImportMyBanner.re -->> 
   Variants.re -->> 
   DynamicallyLoadedComponent.re -->> React.re
@@ -1846,8 +1846,6 @@ File References
   Dead Type +AutoAnnotate.r2.r2: 0 references () [0]
   Dead Type +AutoAnnotate.record.variant: 0 references () [0]
   Dead Type +AutoAnnotate.variant.R: 0 references () [0]
-  Dead Value +BsJson.+testBsJson2: 0 references () [0]
-  Dead Value +BsJson.+testBsJson: 0 references () [0]
   Dead Value +BucklescriptAnnotations.+bar: 0 references () [1]
   Dead Value +BucklescriptAnnotations.+f: 0 references () [0]
   Dead Value +BucklescriptAnnotations.+foo: 0 references () [0]
@@ -1995,43 +1993,6 @@ File References
   Live Value +EverythingLiveHere.+z: 0 references () [0]
   Live Value +EverythingLiveHere.+y: 0 references () [0]
   Live Value +EverythingLiveHere.+x: 0 references () [0]
-  Dead Value +Exn.+severalCases: 0 references () [0]
-  Dead Value +Exn.+stringMake3: 0 references () [0]
-  Dead Value +Exn.+stringMake2: 0 references () [0]
-  Dead Value +Exn.+stringMake1: 0 references () [0]
-  Dead Value +Exn.+foo: 0 references () [0]
-  Dead Value +Exn.+bar: 0 references () [0]
-  Dead Value +Exn.+raiseArrow: 0 references () [0]
-  Dead Value +Exn.+raisePipe: 0 references () [0]
-  Dead Value +Exn.+raiseAtAt: 0 references () [0]
-  Dead Value +Exn.+genericHash: 0 references () [0]
-  Dead Value +Exn.+specializedHash: 0 references () [0]
-  Dead Value +Exn.StringHash.+hash: 0 references () [0]
-  Dead Value +Exn.+tryChar: 0 references () [0]
-  Dead Value +Exn.+id: 0 references () [0]
-  Dead Value +Exn.+array: 0 references () [0]
-  Dead Value +Exn.+indirectCall: 0 references () [0]
-  Dead Value +Exn.+raiseInInternalLet: 0 references () [1]
-  Dead Value +Exn.+a: 0 references () [0]
-  Dead Value +Exn.+switchWithCatchAll: 0 references () [0]
-  Dead Value +Exn.+reRaise: 0 references () [0]
-  Dead Value +Exn.+parse_json_from_file: 0 references () [1]
-  Dead Value +Exn.+in_chan: 0 references () [0]
-  Dead Value +Exn.+raise2Annotate3: 0 references () [0]
-  Dead Value +Exn.+wrongCatch2: 0 references () [0]
-  Dead Value +Exn.+wrongCatch: 0 references () [0]
-  Dead Value +Exn.+sequencing: 0 references () [0]
-  Dead Value +Exn.+twoRaises: 0 references () [0]
-  Dead Value +Exn.+incompleteMatch: 0 references () [0]
-  Dead Value +Exn.+z: 0 references () [0]
-  Dead Value +Exn.+callsRaiseWithAnnotationAndIsAnnotated: 0 references () [0]
-  Dead Value +Exn.+callsRaiseWithAnnotation: 0 references () [0]
-  Live Value +Exn.+raisesWithAnnotaion: 2 references (Exn.re:22:4, Exn.re:25:4) [0]
-  Dead Value +Exn.+raiseAndCatch: 0 references () [0]
-  Dead Value +Exn.+catches2: 0 references () [0]
-  Dead Value +Exn.+catches1: 0 references () [0]
-  Dead Value +Exn.+raises: 0 references () [0]
-  Dead Value +ExnA.+bar: 0 references () [0]
   Live Value +FirstClassModules.+someFunctorAsFunction: 0 references () [0]
   Live Value +FirstClassModules.SomeFunctor.+ww: 1 references (FirstClassModules.re:46:20) [0]
   Live Value +FirstClassModules.+testConvert: 0 references () [0]
@@ -2326,6 +2287,45 @@ File References
   Live Value +VariantsWithPayload.+testWithPayload: 0 references () [0]
   Live Type +VariantsWithPayload.payload.y: 2 references (VariantsWithPayload.re:27:59, VariantsWithPayload.re:46:53) [0]
   Live Type +VariantsWithPayload.payload.x: 2 references (VariantsWithPayload.re:27:42, VariantsWithPayload.re:46:36) [0]
+  Dead Value +BsJson.+testBsJson2: 0 references () [0]
+  Dead Value +BsJson.+testBsJson: 0 references () [0]
+  Dead Value +Exn.+severalCases: 0 references () [0]
+  Dead Value +Exn.+stringMake3: 0 references () [0]
+  Dead Value +Exn.+stringMake2: 0 references () [0]
+  Dead Value +Exn.+stringMake1: 0 references () [0]
+  Dead Value +Exn.+foo: 0 references () [0]
+  Dead Value +Exn.+bar: 0 references () [0]
+  Dead Value +Exn.+raiseArrow: 0 references () [0]
+  Dead Value +Exn.+raisePipe: 0 references () [0]
+  Dead Value +Exn.+raiseAtAt: 0 references () [0]
+  Dead Value +Exn.+genericHash: 0 references () [0]
+  Dead Value +Exn.+specializedHash: 0 references () [0]
+  Dead Value +Exn.StringHash.+hash: 0 references () [0]
+  Dead Value +Exn.+tryChar: 0 references () [0]
+  Dead Value +Exn.+id: 0 references () [0]
+  Dead Value +Exn.+array: 0 references () [0]
+  Dead Value +Exn.+indirectCall: 0 references () [0]
+  Dead Value +Exn.+raiseInInternalLet: 0 references () [1]
+  Dead Value +Exn.+a: 0 references () [0]
+  Dead Value +Exn.+switchWithCatchAll: 0 references () [0]
+  Dead Value +Exn.+reRaise: 0 references () [0]
+  Dead Value +Exn.+parse_json_from_file: 0 references () [1]
+  Dead Value +Exn.+in_chan: 0 references () [0]
+  Dead Value +Exn.+raise2Annotate3: 0 references () [0]
+  Dead Value +Exn.+wrongCatch2: 0 references () [0]
+  Dead Value +Exn.+wrongCatch: 0 references () [0]
+  Dead Value +Exn.+sequencing: 0 references () [0]
+  Dead Value +Exn.+twoRaises: 0 references () [0]
+  Dead Value +Exn.+incompleteMatch: 0 references () [0]
+  Dead Value +Exn.+z: 0 references () [0]
+  Dead Value +Exn.+callsRaiseWithAnnotationAndIsAnnotated: 0 references () [0]
+  Dead Value +Exn.+callsRaiseWithAnnotation: 0 references () [0]
+  Live Value +Exn.+raisesWithAnnotaion: 2 references (Exn.re:22:4, Exn.re:25:4) [0]
+  Dead Value +Exn.+raiseAndCatch: 0 references () [0]
+  Dead Value +Exn.+catches2: 0 references () [0]
+  Dead Value +Exn.+catches1: 0 references () [0]
+  Dead Value +Exn.+raises: 0 references () [0]
+  Dead Value +ExnA.+bar: 0 references () [0]
   Live Value +BootloaderResource.+read: 1 references (DeadTest.re:112:40) [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
@@ -2339,7 +2339,6 @@ File References
   Live Value +DynamicallyLoadedComponent.+make: 5 references (DeadTest.re:112:40, DeadTest.re:119:6, DeadTest.re:157:17, ExportWithRename.re:3:4, DeadTest:0:-1) [0]
   Dead Value ErrorHandler.+x: 0 references () [0]
   Live Value ErrorHandler.Make.+notify: 1 references (CreateErrorHandler1.re:8:0) [0]
-  Dead Value +ExnB.+foo: 0 references () [0]
   Dead Value +FirstClassModulesInterface.+r: 0 references () [0]
   Dead Type +FirstClassModulesInterface.record.y: 0 references () [0]
   Dead Type +FirstClassModulesInterface.record.x: 0 references () [0]
@@ -2437,6 +2436,7 @@ File References
   Dead Type +ImportMyBanner.message.text: 0 references () [0]
   Live Value +JSResource.+jSResource: 2 references (DeadTest.re:112:40, DeadTest.re:119:6) [0]
   Live Value +NestedModulesInSignature.Universe.+theAnswer: 1 references (NestedModulesInSignature.rei:2:2) [0]
+  Dead Value +ExnB.+foo: 0 references () [0]
   Live Value trace.+infok: 1 references (DeadTest.re:175:0) [0]
   Live Type trace.pf.pf: 1 references (DeadTest.re:175:21) [0]
   Dead Value +DeadValueTest.+valueOnlyInImplementation: 0 references () [0]
@@ -2554,18 +2554,6 @@ File References
   annotatedVariant.R4 is a variant case which is never constructed
   <-- line 16
     | [@dead "annotatedVariant.R4"] R4(r4);
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/BsJson.re", line 1, characters 0-64
-  +testBsJson is never used
-  <-- line 2
-  [@dead "+testBsJson"] [@raise DecodeError]
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/BsJson.re", line 4, characters 0-65
-  +testBsJson2 is never used
-  <-- line 5
-  [@dead "+testBsJson2"] [@raise DecodeError]
 
   Warning Dead Value
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/BucklescriptAnnotations.re", line 19, characters 0-53
@@ -2982,196 +2970,6 @@ File References
   +x is never used
   <-- line 7
   [@dead "+x"] let x: int;
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 1, characters 0-35
-  +raises is never used
-  <-- line 1
-  [@dead "+raises"] let raises = () => raise(Not_found);
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 3, characters 0-48
-  +catches1 is never used
-  <-- line 3
-  [@dead "+catches1"] let catches1 =
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 8, characters 0-74
-  +catches2 is never used
-  <-- line 8
-  [@dead "+catches2"] let catches2 =
-
-  Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 14, characters 0-61
-  +raiseAndCatch is never used and could have side effects
-
-  Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 22, characters 0-52
-  +callsRaiseWithAnnotation is never used and could have side effects
-
-  Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 24, characters 0-78
-  +callsRaiseWithAnnotationAndIsAnnotated is never used and could have side effects
-
-  Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 27, characters 0-19
-  +z is never used and could have side effects
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 29, characters 0-58
-  +incompleteMatch is never used
-  <-- line 29
-  [@dead "+incompleteMatch"] let incompleteMatch = l =>
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 37, characters 0-89
-  +twoRaises is never used
-  <-- line 37
-  [@dead "+twoRaises"] let twoRaises = (x, y) => {
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 46, characters 0-73
-  +sequencing is never used
-  <-- line 46
-  [@dead "+sequencing"] let sequencing = () => {
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 53, characters 0-56
-  +wrongCatch is never used
-  <-- line 53
-  [@dead "+wrongCatch"] let wrongCatch = () =>
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 59, characters 0-120
-  +wrongCatch2 is never used
-  <-- line 59
-  [@dead "+wrongCatch2"] let wrongCatch2 = b =>
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 66, characters 0-115
-  +raise2Annotate3 is never used
-  <-- line 67
-  [@dead "+raise2Annotate3"] [@raises (A, B, C)]
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 78, characters 0-211
-  +parse_json_from_file is never used
-  <-- line 78
-  [@dead "+parse_json_from_file"] let parse_json_from_file = s => {
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 90, characters 0-85
-  +reRaise is never used
-  <-- line 90
-  [@dead "+reRaise"] let reRaise = () =>
-
-  Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 96, characters 0-82
-  +switchWithCatchAll is never used and could have side effects
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 102, characters 0-72
-  +raiseInInternalLet is never used
-  <-- line 102
-  [@dead "+raiseInInternalLet"] let raiseInInternalLet = b => {
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 107, characters 0-50
-  +indirectCall is never used
-  <-- line 107
-  [@dead "+indirectCall"] let indirectCall = () => () |> raisesWithAnnotaion;
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 109, characters 0-48
-  +array is never used
-  <-- line 110
-  [@dead "+array"] [@raises Invalid_argument]
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 112, characters 0-15
-  +id is never used
-  <-- line 112
-  [@dead "+id"] let id = x => x;
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 114, characters 0-80
-  +tryChar is never used
-  <-- line 114
-  [@dead "+tryChar"] let tryChar = v => {
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 124, characters 4-27
-  StringHash.+hash is never used
-  <-- line 124
-      [@dead "StringHash.+hash"] let hash = Hashtbl.hash;
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 127, characters 0-56
-  +specializedHash is never used
-  <-- line 127
-  [@dead "+specializedHash"] let specializedHash = tbl => StringHash.find(tbl, "abc");
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 129, characters 0-69
-  +genericHash is never used
-  <-- line 130
-  [@dead "+genericHash"] [@raises Not_found]
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 132, characters 0-60
-  +raiseAtAt is never used
-  <-- line 133
-  [@dead "+raiseAtAt"] [@raises Not_found]
-
-  Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 135, characters 0-54
-  +raisePipe is never used and could have side effects
-
-  Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 138, characters 0-53
-  +raiseArrow is never used and could have side effects
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 141, characters 0-62
-  +bar is never used
-  <-- line 142
-  [@dead "+bar"] [@raises Js.Exn.Error]
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 144, characters 0-88
-  +foo is never used
-  <-- line 144
-  [@dead "+foo"] let foo = () =>
-
-  Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 149, characters 0-65
-  +stringMake1 is never used and could have side effects
-
-  Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 152, characters 0-56
-  +stringMake2 is never used and could have side effects
-
-  Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 154, characters 0-54
-  +stringMake3 is never used and could have side effects
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Exn.re", line 156, characters 0-153
-  +severalCases is never used
-  <-- line 156
-  [@dead "+severalCases"] let severalCases = cases =>
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnA.re", line 1, characters 0-26
-  +bar is never used
-  <-- line 1
-  [@dead "+bar"] let bar = () => ExnB.foo();
-
-  Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ExnB.re", line 1, characters 0-52
-  +foo is never used
-  <-- line 2
-  [@dead "+foo"] [@raises Not_found]
 
   Warning Dead Type
   File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.re", line 2, characters 2-8
@@ -4432,3 +4230,205 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/BsJson.re", line 1, characters 0-64
+  +testBsJson is never used
+  <-- line 2
+  [@dead "+testBsJson"] [@raise DecodeError]
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/BsJson.re", line 4, characters 0-65
+  +testBsJson2 is never used
+  <-- line 5
+  [@dead "+testBsJson2"] [@raise DecodeError]
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 1, characters 0-35
+  +raises is never used
+  <-- line 1
+  [@dead "+raises"] let raises = () => raise(Not_found);
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 3, characters 0-48
+  +catches1 is never used
+  <-- line 3
+  [@dead "+catches1"] let catches1 =
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 8, characters 0-74
+  +catches2 is never used
+  <-- line 8
+  [@dead "+catches2"] let catches2 =
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 14, characters 0-61
+  +raiseAndCatch is never used and could have side effects
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 22, characters 0-52
+  +callsRaiseWithAnnotation is never used and could have side effects
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 24, characters 0-78
+  +callsRaiseWithAnnotationAndIsAnnotated is never used and could have side effects
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 27, characters 0-19
+  +z is never used and could have side effects
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 29, characters 0-58
+  +incompleteMatch is never used
+  <-- line 29
+  [@dead "+incompleteMatch"] let incompleteMatch = l =>
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 37, characters 0-89
+  +twoRaises is never used
+  <-- line 37
+  [@dead "+twoRaises"] let twoRaises = (x, y) => {
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 46, characters 0-73
+  +sequencing is never used
+  <-- line 46
+  [@dead "+sequencing"] let sequencing = () => {
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 53, characters 0-56
+  +wrongCatch is never used
+  <-- line 53
+  [@dead "+wrongCatch"] let wrongCatch = () =>
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 59, characters 0-120
+  +wrongCatch2 is never used
+  <-- line 59
+  [@dead "+wrongCatch2"] let wrongCatch2 = b =>
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 66, characters 0-115
+  +raise2Annotate3 is never used
+  <-- line 67
+  [@dead "+raise2Annotate3"] [@raises (A, B, C)]
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 78, characters 0-211
+  +parse_json_from_file is never used
+  <-- line 78
+  [@dead "+parse_json_from_file"] let parse_json_from_file = s => {
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 90, characters 0-85
+  +reRaise is never used
+  <-- line 90
+  [@dead "+reRaise"] let reRaise = () =>
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 96, characters 0-82
+  +switchWithCatchAll is never used and could have side effects
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 102, characters 0-72
+  +raiseInInternalLet is never used
+  <-- line 102
+  [@dead "+raiseInInternalLet"] let raiseInInternalLet = b => {
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 107, characters 0-50
+  +indirectCall is never used
+  <-- line 107
+  [@dead "+indirectCall"] let indirectCall = () => () |> raisesWithAnnotaion;
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 109, characters 0-48
+  +array is never used
+  <-- line 110
+  [@dead "+array"] [@raises Invalid_argument]
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 112, characters 0-15
+  +id is never used
+  <-- line 112
+  [@dead "+id"] let id = x => x;
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 114, characters 0-80
+  +tryChar is never used
+  <-- line 114
+  [@dead "+tryChar"] let tryChar = v => {
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 124, characters 4-27
+  StringHash.+hash is never used
+  <-- line 124
+      [@dead "StringHash.+hash"] let hash = Hashtbl.hash;
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 127, characters 0-56
+  +specializedHash is never used
+  <-- line 127
+  [@dead "+specializedHash"] let specializedHash = tbl => StringHash.find(tbl, "abc");
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 129, characters 0-69
+  +genericHash is never used
+  <-- line 130
+  [@dead "+genericHash"] [@raises Not_found]
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 132, characters 0-60
+  +raiseAtAt is never used
+  <-- line 133
+  [@dead "+raiseAtAt"] [@raises Not_found]
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 135, characters 0-54
+  +raisePipe is never used and could have side effects
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 138, characters 0-53
+  +raiseArrow is never used and could have side effects
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 141, characters 0-62
+  +bar is never used
+  <-- line 142
+  [@dead "+bar"] [@raises Js.Exn.Error]
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 144, characters 0-88
+  +foo is never used
+  <-- line 144
+  [@dead "+foo"] let foo = () =>
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 149, characters 0-65
+  +stringMake1 is never used and could have side effects
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 152, characters 0-56
+  +stringMake2 is never used and could have side effects
+
+  Warning Dead Value With Side Effects
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 154, characters 0-54
+  +stringMake3 is never used and could have side effects
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 156, characters 0-153
+  +severalCases is never used
+  <-- line 156
+  [@dead "+severalCases"] let severalCases = cases =>
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/ExnA.re", line 1, characters 0-26
+  +bar is never used
+  <-- line 1
+  [@dead "+bar"] let bar = () => ExnB.foo();
+
+  Warning Dead Value
+  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/ExnB.re", line 1, characters 0-52
+  +foo is never used
+  <-- line 2
+  [@dead "+foo"] [@raises Not_found]
