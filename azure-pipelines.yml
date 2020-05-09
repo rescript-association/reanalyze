@@ -70,7 +70,7 @@ jobs:
       name: Windows
       platform: Windows
       vmImage: vs2017-win2016
-      test: true
+      test: false
       esy: ""
 
   # This job is kept here as we want to have the platform names in the same file
