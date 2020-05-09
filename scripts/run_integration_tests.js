@@ -76,6 +76,11 @@ function cleanBuildExamples() {
       shell,
       stdio: [0, 1, 2],
     });
+    child_process.execFileSync("npm", ["run", "analyze"], {
+      cwd,
+      shell,
+      stdio: [0, 1, 2],
+    });
   }
 }
 
