@@ -1,3 +1,5 @@
+xxx
+
   Scanning ExnA.cmt
   addValueDeclaration +bar ExnA.re:1:4 path:+ExnA
   addValueReference ExnA.re:1:4 --> ExnB.re:2:4
