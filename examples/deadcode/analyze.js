@@ -17,7 +17,6 @@ child_process.spawnSync(
   reanalyzeNativePath,
   [
     "-dce",
-    "-debug",
     "-blacklist",
     "src/exception",
     "-live-names",
