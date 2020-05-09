@@ -4,7 +4,13 @@ let currentModuleName = ref("" |> Name.create);
 
 let debug = ref(false);
 
-let test = ref(false);
+let test =
+  ref(
+    switch (Sys.getenv_opt("REANALYZE_TEST")) {
+    | Some(_) => true
+    | None => false
+    },
+  );
 
 /* Location printer: `filename:line: ' */
 let posToString = (~printCol=true, pos: Lexing.position) => {

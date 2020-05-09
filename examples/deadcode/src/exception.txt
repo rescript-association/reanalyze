@@ -1,68 +1,68 @@
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/ExnA.re", line 1, characters 4-7
+  File "./ExnA.re", line 1, characters 4-7
   bar might raise Not_found (ExnA.re:1:16) and is not annotated with @raises Not_found
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 1, characters 4-10
+  File "./Exn.re", line 1, characters 4-10
   raises might raise Not_found (Exn.re:1:19) and is not annotated with @raises Not_found
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 22, characters 4-28
+  File "./Exn.re", line 22, characters 4-28
   callsRaiseWithAnnotation might raise Not_found (Exn.re:22:31) and is not annotated with @raises Not_found
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 25, characters 4-42
+  File "./Exn.re", line 25, characters 4-42
   callsRaiseWithAnnotationAndIsAnnotated might raise Not_found (Exn.re:25:45) and is not annotated with @raises Not_found
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 25, characters 4-42
+  File "./Exn.re", line 25, characters 4-42
   callsRaiseWithAnnotationAndIsAnnotated might raise Not_found (Exn.re:25:45) and is annotated with redundant @raises A
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 27, characters 4-5
+  File "./Exn.re", line 27, characters 4-5
   z might raise Failure (Exn.re:27:8) and is not annotated with @raises Failure
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 29, characters 4-19
+  File "./Exn.re", line 29, characters 4-19
   incompleteMatch might raise Match_failure (Exn.re:30:2) and is not annotated with @raises Match_failure
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 37, characters 4-13
+  File "./Exn.re", line 37, characters 4-13
   twoRaises might raise A (Exn.re:38:9) B (Exn.re:41:9) and is not annotated with @raises A B
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 46, characters 4-14
+  File "./Exn.re", line 46, characters 4-14
   sequencing might raise A (Exn.re:47:2) and is not annotated with @raises A
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 53, characters 4-14
+  File "./Exn.re", line 53, characters 4-14
   wrongCatch might raise B (Exn.re:54:5) and is not annotated with @raises B
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 59, characters 4-15
+  File "./Exn.re", line 59, characters 4-15
   wrongCatch2 might raise C (Exn.re:60:25) Match_failure (Exn.re:60:2) and is not annotated with @raises C Match_failure
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 67, characters 4-19
+  File "./Exn.re", line 67, characters 4-19
   raise2Annotate3 might raise A (Exn.re:68:9) B (Exn.re:71:9) and is annotated with redundant @raises C
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 78, characters 4-24
+  File "./Exn.re", line 78, characters 4-24
   parse_json_from_file might raise Error (Exn.re:83:4) Sys_error (Exn.re:82:4 Exn.re:85:4) and is not annotated with @raises Error Sys_error
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 90, characters 4-11
+  File "./Exn.re", line 90, characters 4-11
   reRaise might raise B (Exn.re:92:19) and is not annotated with @raises B
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 102, characters 4-22
+  File "./Exn.re", line 102, characters 4-22
   raiseInInternalLet might raise A (Exn.re:103:14) and is not annotated with @raises A
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 107, characters 4-16
+  File "./Exn.re", line 107, characters 4-16
   indirectCall might raise Not_found (Exn.re:107:31) and is not annotated with @raises Not_found
 
   Exception Analysis
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re", line 156, characters 4-16
+  File "./Exn.re", line 156, characters 4-16
   severalCases might raise Failure (Exn.re:158:13 Exn.re:159:13 Exn.re:160:15) and is not annotated with @raises Failure

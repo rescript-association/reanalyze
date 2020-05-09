@@ -1,22 +1,22 @@
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/exception/ExnA.cmt
+  Scanning ExnA.cmt
   addValueDeclaration +bar ExnA.re:1:4 path:+ExnA
   addValueReference ExnA.re:1:4 --> ExnB.re:2:4
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/exception/ExnB.cmt
+  Scanning ExnB.cmt
   addValueDeclaration +foo ExnB.re:2:4 path:+ExnB
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/exception/BsJson.cmt
+  Scanning BsJson.cmt
   addValueDeclaration +testBsJson BsJson.re:2:4 path:+BsJson
   addValueDeclaration +testBsJson2 BsJson.re:5:4 path:+BsJson
   addValueReference BsJson.re:2:4 --> BsJson.re:2:17
   addValueReference BsJson.re:2:4 --> Json_decode.mli:78:0
   addValueReference BsJson.re:5:4 --> BsJson.re:5:18
   addValueReference BsJson.re:5:4 --> Json_decode.mli:78:0
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/exception/ExportWithRename.cmt
+  Scanning ExportWithRename.cmt
   addValueDeclaration +make ExportWithRename.re:3:4 path:+ExportWithRename
   addValueReference ExportWithRename.re:3:32 --> ExportWithRename.re:3:13
   addValueReference ExportWithRename.re:3:19 --> React.re:7:0
   collectExpr make: fix ghost location reference
   addValueReference ExportWithRename.re:3:4 --> ExportWithRename.re:3:4
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/exception/Exn.cmt
+  Scanning Exn.cmt
   addValueDeclaration +raises Exn.re:1:4 path:+Exn
   addValueDeclaration +catches1 Exn.re:3:4 path:+Exn
   addValueDeclaration +catches2 Exn.re:8:4 path:+Exn
@@ -92,7 +92,7 @@
   addValueReference Exn.re:127:4 --> Exn.re:127:22
   addValueReference Exn.re:130:4 --> Exn.re:130:18
   addValueReference Exn.re:156:4 --> Exn.re:156:19
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ReasonComponent.cmt
+  Scanning ReasonComponent.cmt
   addValueDeclaration +component ReasonComponent.re:3:4 path:+ReasonComponent
   addValueDeclaration +onClick ReasonComponent.re:15:4 path:+ReasonComponent
   addValueDeclaration +make ReasonComponent.re:18:4 path:+ReasonComponent
@@ -134,11 +134,11 @@
   addValueReference ReasonComponent.re:63:4 --> ReasonComponent.re:63:35
   addTypeReference ReasonComponent.re:63:23 --> Records.re:5:2
   addTypeReference ReasonComponent.re:63:23 --> Records.re:6:2
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/FirstClassModulesInterface.cmti
+  Scanning FirstClassModulesInterface.cmti
   addTypeDeclaration x FirstClassModulesInterface.rei:3:2 path:FirstClassModulesInterface.record
   addTypeDeclaration y FirstClassModulesInterface.rei:4:2 path:FirstClassModulesInterface.record
   addValueDeclaration +r FirstClassModulesInterface.rei:7:0 path:FirstClassModulesInterface
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Types.cmt
+  Scanning Types.cmt
   addValueDeclaration +someIntList Types.re:5:4 path:+Types
   addValueDeclaration +map Types.re:8:4 path:+Types
   addValueDeclaration +swap Types.re:28:8 path:+Types
@@ -185,7 +185,7 @@
   addTypeDeclaration id Types.re:139:19 path:+Types.someRecord
   addValueReference Types.re:144:4 --> Types.re:144:36
   addValueDeclaration +x Types.re:173:6 path:+Types.ObjectId
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ErrorHandler.cmt
+  Scanning ErrorHandler.cmt
   addValueDeclaration +notify ErrorHandler.re:7:6 path:+ErrorHandler.Make
   addValueDeclaration +x ErrorHandler.re:12:4 path:+ErrorHandler
   addValueReference ErrorHandler.re:7:6 --> ErrorHandler.re:7:15
@@ -194,7 +194,7 @@
   addValueReference ErrorHandler.re:3:2 --> ErrorHandler.rei:3:2
   addValueReference ErrorHandler.rei:5:32 --> ErrorHandler.re:7:6
   addValueReference ErrorHandler.rei:7:0 --> ErrorHandler.re:12:4
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmt
+  Scanning ImmutableArray.cmt
   addValueDeclaration +fromT ImmutableArray.re:5:2 path:+ImmutableArray.Array
   addValueDeclaration +fromTp ImmutableArray.re:6:2 path:+ImmutableArray.Array
   addValueDeclaration +fromTT ImmutableArray.re:7:2 path:+ImmutableArray.Array
@@ -612,21 +612,21 @@
   addValueReference ImmutableArray.rei:106:0 --> ImmutableArray.re:115:6
   addValueReference ImmutableArray.rei:108:0 --> ImmutableArray.re:117:6
   addValueReference ImmutableArray.rei:109:0 --> ImmutableArray.re:118:6
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType3.cmt
+  Scanning TransitiveType3.cmt
   addValueDeclaration +convertT3 TransitiveType3.re:8:4 path:+TransitiveType3
   addTypeDeclaration i TransitiveType3.re:3:2 path:+TransitiveType3.t3
   addTypeDeclaration s TransitiveType3.re:4:2 path:+TransitiveType3.t3
   addValueReference TransitiveType3.re:8:4 --> TransitiveType3.re:8:17
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DynamicallyLoadedComponent.cmt
+  Scanning DynamicallyLoadedComponent.cmt
   addValueDeclaration +make DynamicallyLoadedComponent.re:2:4 path:+DynamicallyLoadedComponent
   addValueReference DynamicallyLoadedComponent.re:2:32 --> DynamicallyLoadedComponent.re:2:13
   addValueReference DynamicallyLoadedComponent.re:2:19 --> React.re:7:0
   collectExpr make: fix ghost location reference
   addValueReference DynamicallyLoadedComponent.re:2:4 --> DynamicallyLoadedComponent.re:2:4
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType2.cmt
+  Scanning TransitiveType2.cmt
   addValueDeclaration +convertT2 TransitiveType2.re:7:4 path:+TransitiveType2
   addValueReference TransitiveType2.re:7:4 --> TransitiveType2.re:7:17
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Variants.cmt
+  Scanning Variants.cmt
   addValueDeclaration +isWeekend Variants.re:13:4 path:+Variants
   addValueDeclaration +monday Variants.re:21:4 path:+Variants
   addValueDeclaration +saturday Variants.re:23:4 path:+Variants
@@ -662,10 +662,10 @@
   addValueReference Variants.re:115:4 --> Variants.re:115:19
   addValueReference Variants.re:118:4 --> Variants.re:118:19
   addValueReference Variants.re:121:4 --> Variants.re:121:19
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/trace.cmti
+  Scanning trace.cmti
   addTypeDeclaration pf trace.mli:3:11 path:trace.pf
   addValueDeclaration +infok trace.mli:5:0 path:trace
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Uncurried.cmt
+  Scanning Uncurried.cmt
   addValueDeclaration +uncurried0 Uncurried.re:14:4 path:+Uncurried
   addValueDeclaration +uncurried1 Uncurried.re:17:4 path:+Uncurried
   addValueDeclaration +uncurried2 Uncurried.re:20:4 path:+Uncurried
@@ -709,11 +709,11 @@
   addValueReference Uncurried.re:63:4 --> Uncurried.re:65:4
   addValueReference Uncurried.re:63:4 --> Uncurried.re:63:21
   addValueReference Uncurried.re:63:4 --> Uncurried.re:63:33
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestEmitInnerModules.cmt
+  Scanning TestEmitInnerModules.cmt
   addValueDeclaration +x TestEmitInnerModules.re:3:6 path:+TestEmitInnerModules.Inner
   addValueDeclaration +y TestEmitInnerModules.re:5:6 path:+TestEmitInnerModules.Inner
   addValueDeclaration +y TestEmitInnerModules.re:12:10 path:+TestEmitInnerModules.Outer.Medium.Inner
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/NestedModules.cmt
+  Scanning NestedModules.cmt
   addValueDeclaration +notNested NestedModules.re:2:4 path:+NestedModules
   addValueDeclaration +theAnswer NestedModules.re:6:6 path:+NestedModules.Universe
   addValueDeclaration +notExported NestedModules.re:8:6 path:+NestedModules.Universe
@@ -732,24 +732,24 @@
   addValueReference NestedModules.re:41:8 --> NestedModules.re:41:27
   addTypeDeclaration A NestedModules.re:46:6 path:+NestedModules.Universe.variant
   addTypeDeclaration B NestedModules.re:47:6 path:+NestedModules.Universe.variant
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Shadow.cmt
+  Scanning Shadow.cmt
   addValueDeclaration +test Shadow.re:2:4 path:+Shadow
   addValueDeclaration +test Shadow.re:5:4 path:+Shadow
   addValueDeclaration +test Shadow.re:11:6 path:+Shadow.M
   addValueDeclaration +test Shadow.re:9:6 path:+Shadow.M
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ModuleAliases2.cmt
+  Scanning ModuleAliases2.cmt
   addValueDeclaration +q ModuleAliases2.re:21:4 path:+ModuleAliases2
   addTypeDeclaration x ModuleAliases2.re:3:2 path:+ModuleAliases2.record
   addTypeDeclaration y ModuleAliases2.re:4:2 path:+ModuleAliases2.record
   addTypeDeclaration outer ModuleAliases2.re:9:16 path:+ModuleAliases2.Outer.outer
   addTypeDeclaration inner ModuleAliases2.re:13:18 path:+ModuleAliases2.Outer.Inner.inner
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadValueTest.cmt
+  Scanning DeadValueTest.cmt
   addValueDeclaration +valueAlive DeadValueTest.re:1:4 path:+DeadValueTest
   addValueDeclaration +valueDead DeadValueTest.re:2:4 path:+DeadValueTest
   addValueDeclaration +valueOnlyInImplementation DeadValueTest.re:4:4 path:+DeadValueTest
   addValueReference DeadValueTest.rei:1:0 --> DeadValueTest.re:1:4
   addValueReference DeadValueTest.rei:2:0 --> DeadValueTest.re:2:4
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Tuples.cmt
+  Scanning Tuples.cmt
   addValueDeclaration +testTuple Tuples.re:4:4 path:+Tuples
   addValueDeclaration +origin Tuples.re:10:4 path:+Tuples
   addValueDeclaration +computeArea Tuples.re:13:4 path:+Tuples
@@ -783,15 +783,15 @@
   addTypeReference Tuples.re:47:19 --> Tuples.re:32:2
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TransitiveType1.cmt
+  Scanning TransitiveType1.cmt
   addValueDeclaration +convert TransitiveType1.re:2:4 path:+TransitiveType1
   addValueDeclaration +convertAlias TransitiveType1.re:5:4 path:+TransitiveType1
   addValueReference TransitiveType1.re:2:4 --> TransitiveType1.re:2:15
   addValueReference TransitiveType1.re:5:4 --> TransitiveType1.re:5:20
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TypeParams2.cmt
+  Scanning TypeParams2.cmt
   addValueDeclaration +exportSomething TypeParams2.re:10:4 path:+TypeParams2
   addTypeDeclaration id TypeParams2.re:2:13 path:+TypeParams2.item
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/FirstClassModules.cmt
+  Scanning FirstClassModules.cmt
   addValueDeclaration +y FirstClassModules.re:17:6 path:+FirstClassModules.M
   addValueDeclaration +k FirstClassModules.re:21:8 path:+FirstClassModules.M.InnerModule2
   addValueDeclaration +k3 FirstClassModules.re:25:8 path:+FirstClassModules.M.InnerModule3
@@ -815,7 +815,7 @@
   addValueReference FirstClassModules.re:28:20 --> FirstClassModules.re:30:8
   addValueReference FirstClassModules.re:14:2 --> FirstClassModules.re:17:6
   addValueReference FirstClassModules.re:46:20 --> FirstClassModules.re:49:6
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadMl.cmt
+  Scanning DeadMl.cmt
   addValueDeclaration +thisSpansSeveralLines DeadMl.ml:3:8 path:+DeadMl.QQ
   addValueDeclaration +thisIsInInterface DeadMl.ml:9:2 path:+DeadMl.AA
   addValueDeclaration +thisHasSemicolons DeadMl.ml:15:4 path:+DeadMl
@@ -881,24 +881,24 @@
   addValueReference DeadMl.ml:96:2 --> DeadMl.ml:107:6
   addValueReference DeadMl.ml:99:2 --> DeadMl.ml:108:6
   addValueReference DeadMl.ml:103:2 --> DeadMl.ml:109:6
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImportMyBanner.cmt
+  Scanning ImportMyBanner.cmt
   addValueDeclaration +make ImportMyBanner.re:8:0 path:+ImportMyBanner
   addValueDeclaration +make ImportMyBanner.re:19:4 path:+ImportMyBanner
   addTypeDeclaration text ImportMyBanner.re:6:16 path:+ImportMyBanner.message
   addValueReference ImportMyBanner.re:19:4 --> ImportMyBanner.re:8:0
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TypeParams3.cmt
+  Scanning TypeParams3.cmt
   addValueDeclaration +test TypeParams3.re:2:4 path:+TypeParams3
   addValueDeclaration +test2 TypeParams3.re:5:4 path:+TypeParams3
   addValueReference TypeParams3.re:2:4 --> TypeParams3.re:2:12
   addValueReference TypeParams3.re:5:4 --> TypeParams3.re:5:13
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/IgnoreInterface.cmt
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadValueTest.cmti
+  Scanning IgnoreInterface.cmt
+  Scanning DeadValueTest.cmti
   addValueDeclaration +valueAlive DeadValueTest.rei:1:0 path:DeadValueTest
   addValueDeclaration +valueDead DeadValueTest.rei:2:0 path:DeadValueTest
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/IgnoreInterface.cmti
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TypeParams1.cmt
+  Scanning IgnoreInterface.cmti
+  Scanning TypeParams1.cmt
   addValueDeclaration +exportSomething TypeParams1.re:4:4 path:+TypeParams1
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestModuleAliases.cmt
+  Scanning TestModuleAliases.cmt
   addValueDeclaration +testInner1 TestModuleAliases.re:32:4 path:+TestModuleAliases
   addValueDeclaration +testInner1Expanded TestModuleAliases.re:35:4 path:+TestModuleAliases
   addValueDeclaration +testInner2 TestModuleAliases.re:38:4 path:+TestModuleAliases
@@ -907,13 +907,13 @@
   addValueReference TestModuleAliases.re:35:4 --> TestModuleAliases.re:35:26
   addValueReference TestModuleAliases.re:38:4 --> TestModuleAliases.re:38:18
   addValueReference TestModuleAliases.re:41:4 --> TestModuleAliases.re:41:26
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Opaque.cmt
+  Scanning Opaque.cmt
   addValueDeclaration +noConversion Opaque.re:6:4 path:+Opaque
   addValueDeclaration +testConvertNestedRecordFromOtherFile Opaque.re:12:4 path:+Opaque
   addTypeDeclaration A Opaque.re:3:4 path:+Opaque.opaqueFromRecords
   addValueReference Opaque.re:6:4 --> Opaque.re:6:20
   addValueReference Opaque.re:12:4 --> Opaque.re:12:44
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ManyComponents.cmt
+  Scanning ManyComponents.cmt
   addValueDeclaration +someValueSoModuleOffsetsAreShifted ManyComponents.re:4:6 path:+ManyComponents.InnerComponent
   addValueDeclaration +component ManyComponents.re:6:6 path:+ManyComponents.InnerComponent
   addValueDeclaration +make ManyComponents.re:9:6 path:+ManyComponents.InnerComponent
@@ -937,7 +937,7 @@
   addValueReference ManyComponents.re:39:4 --> ReasonReact.rei:181:0
   addValueReference ManyComponents.re:39:4 --> ReactDOMRe.re:2136:0
   addValueReference ManyComponents.re:39:4 --> ManyComponents.re:36:4
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/trace.cmt
+  Scanning trace.cmt
   addValueDeclaration +infok trace.ml:5:4 path:+trace
   addTypeDeclaration pf trace.ml:3:11 path:+trace.pf
   extendTypeDependencies trace.ml:3:11 --> trace.mli:3:11
@@ -946,10 +946,10 @@
   addValueReference trace.mli:5:0 --> trace.ml:5:4
   addTypeReference trace.ml:3:11 --> trace.mli:3:11
   addTypeReference trace.mli:3:11 --> trace.ml:3:11
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ErrorHandler.cmti
+  Scanning ErrorHandler.cmti
   addValueDeclaration +notify ErrorHandler.rei:5:32 path:ErrorHandler.Make
   addValueDeclaration +x ErrorHandler.rei:7:0 path:ErrorHandler
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/VariantsWithPayload.cmt
+  Scanning VariantsWithPayload.cmt
   addValueDeclaration +testWithPayload VariantsWithPayload.re:16:4 path:+VariantsWithPayload
   addValueDeclaration +printVariantWithPayload VariantsWithPayload.re:19:4 path:+VariantsWithPayload
   addValueDeclaration +testManyPayloads VariantsWithPayload.re:38:4 path:+VariantsWithPayload
@@ -999,7 +999,7 @@
   addValueReference VariantsWithPayload.re:103:4 --> VariantsWithPayload.re:103:23
   addTypeDeclaration R VariantsWithPayload.re:107:4 path:+VariantsWithPayload.variant1Object
   addValueReference VariantsWithPayload.re:110:4 --> VariantsWithPayload.re:110:26
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/FirstClassModulesInterface.cmt
+  Scanning FirstClassModulesInterface.cmt
   addValueDeclaration +r FirstClassModulesInterface.re:6:4 path:+FirstClassModulesInterface
   addTypeDeclaration x FirstClassModulesInterface.re:2:2 path:+FirstClassModulesInterface.record
   extendTypeDependencies FirstClassModulesInterface.re:2:2 --> FirstClassModulesInterface.rei:3:2
@@ -1014,7 +1014,7 @@
   addTypeReference FirstClassModulesInterface.rei:4:2 --> FirstClassModulesInterface.re:3:2
   addTypeReference FirstClassModulesInterface.re:2:2 --> FirstClassModulesInterface.rei:3:2
   addTypeReference FirstClassModulesInterface.rei:3:2 --> FirstClassModulesInterface.re:2:2
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Unboxed.cmt
+  Scanning Unboxed.cmt
   addValueDeclaration +testV1 Unboxed.re:12:4 path:+Unboxed
   addValueDeclaration +r2Test Unboxed.re:24:4 path:+Unboxed
   addTypeDeclaration A Unboxed.re:4:4 path:+Unboxed.v1
@@ -1023,7 +1023,7 @@
   addTypeDeclaration x Unboxed.re:16:11 path:+Unboxed.r1
   addTypeDeclaration B Unboxed.re:21:4 path:+Unboxed.r2
   addValueReference Unboxed.re:24:4 --> Unboxed.re:24:14
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTypeTest.cmti
+  Scanning DeadTypeTest.cmti
   addTypeDeclaration A DeadTypeTest.rei:2:4 path:DeadTypeTest.t
   addTypeDeclaration B DeadTypeTest.rei:3:4 path:DeadTypeTest.t
   addValueDeclaration +a DeadTypeTest.rei:4:0 path:DeadTypeTest
@@ -1031,7 +1031,7 @@
   addTypeDeclaration OnlyInInterface DeadTypeTest.rei:8:4 path:DeadTypeTest.deadType
   addTypeDeclaration InBoth DeadTypeTest.rei:9:4 path:DeadTypeTest.deadType
   addTypeDeclaration InNeither DeadTypeTest.rei:10:4 path:DeadTypeTest.deadType
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImportJsValue.cmt
+  Scanning ImportJsValue.cmt
   addValueDeclaration +round ImportJsValue.re:1:0 path:+ImportJsValue
   addValueDeclaration +area ImportJsValue.re:14:0 path:+ImportJsValue
   addValueDeclaration +returnMixedArray ImportJsValue.re:21:0 path:+ImportJsValue
@@ -1061,7 +1061,7 @@
   addValueReference ImportJsValue.re:62:4 --> ImportJsValue.re:58:0
   addTypeDeclaration I ImportJsValue.re:65:4 path:+ImportJsValue.variant
   addTypeDeclaration S ImportJsValue.re:66:4 path:+ImportJsValue.variant
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/References.cmt
+  Scanning References.cmt
   addValueDeclaration +create References.re:4:4 path:+References
   addValueDeclaration +access References.re:7:4 path:+References
   addValueDeclaration +update References.re:10:4 path:+References
@@ -1092,23 +1092,23 @@
   addValueReference References.re:17:2 --> References.re:22:6
   addValueReference References.re:18:2 --> References.re:23:6
   addValueReference References.re:19:2 --> References.re:24:6
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTestWithInterface.cmt
+  Scanning DeadTestWithInterface.cmt
   addValueDeclaration +x DeadTestWithInterface.re:1:20 path:+DeadTestWithInterface.Ext_buffer
   addValueDeclaration +x DeadTestWithInterface.re:2:6 path:+DeadTestWithInterface.Ext_buffer
   addValueReference DeadTestWithInterface.re:1:20 --> DeadTestWithInterface.re:2:6
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/JSResource.cmt
+  Scanning JSResource.cmt
   addValueDeclaration +jSResource JSResource.re:3:0 path:+JSResource
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTestBlacklist.cmt
+  Scanning DeadTestBlacklist.cmt
   addValueDeclaration +x DeadTestBlacklist.re:1:4 path:+DeadTestBlacklist
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/NestedModulesInSignature.cmti
+  Scanning NestedModulesInSignature.cmti
   addValueDeclaration +theAnswer NestedModulesInSignature.rei:2:2 path:NestedModulesInSignature.Universe
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/CreateErrorHandler2.cmt
+  Scanning CreateErrorHandler2.cmt
   addValueDeclaration +notification CreateErrorHandler2.re:3:6 path:+CreateErrorHandler2.Error2
   addValueReference CreateErrorHandler2.re:3:6 --> CreateErrorHandler2.re:3:21
   addValueReference ErrorHandler.rei:3:2 --> CreateErrorHandler2.re:3:6
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/BootloaderResource.cmt
+  Scanning BootloaderResource.cmt
   addValueDeclaration +read BootloaderResource.re:3:0 path:+BootloaderResource
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTypeTest.cmt
+  Scanning DeadTypeTest.cmt
   addValueDeclaration +a DeadTypeTest.re:4:4 path:+DeadTypeTest
   addTypeDeclaration A DeadTypeTest.re:2:4 path:+DeadTypeTest.t
   extendTypeDependencies DeadTypeTest.re:2:4 --> DeadTypeTest.rei:2:4
@@ -1146,17 +1146,17 @@
   addTypeReference DeadTypeTest.rei:3:4 --> DeadTypeTest.re:3:4
   addTypeReference DeadTypeTest.re:2:4 --> DeadTypeTest.rei:2:4
   addTypeReference DeadTypeTest.rei:2:4 --> DeadTypeTest.re:2:4
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/CreateErrorHandler1.cmt
+  Scanning CreateErrorHandler1.cmt
   addValueDeclaration +notification CreateErrorHandler1.re:3:6 path:+CreateErrorHandler1.Error1
   addValueReference CreateErrorHandler1.re:3:6 --> CreateErrorHandler1.re:3:21
   addValueReference CreateErrorHandler1.re:3:6 --> CreateErrorHandler1.re:3:21
   addValueReference CreateErrorHandler1.re:8:0 --> ErrorHandler.rei:5:32
   addValueReference ErrorHandler.rei:3:2 --> CreateErrorHandler1.re:3:6
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/LetPrivate.cmt
+  Scanning LetPrivate.cmt
   addValueDeclaration +y LetPrivate.re:5:4 path:+LetPrivate
   addValueDeclaration +x LetPrivate.re:2:12 path:+LetPrivate.local_1
   addValueReference LetPrivate.re:5:4 --> LetPrivate.re:2:12
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ModuleAliases.cmt
+  Scanning ModuleAliases.cmt
   addValueDeclaration +testNested ModuleAliases.re:22:4 path:+ModuleAliases
   addValueDeclaration +testInner ModuleAliases.re:25:4 path:+ModuleAliases
   addValueDeclaration +testInner2 ModuleAliases.re:28:4 path:+ModuleAliases
@@ -1165,8 +1165,8 @@
   addValueReference ModuleAliases.re:22:4 --> ModuleAliases.re:22:18
   addValueReference ModuleAliases.re:25:4 --> ModuleAliases.re:25:17
   addValueReference ModuleAliases.re:28:4 --> ModuleAliases.re:28:18
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadCodeInterface.cmt
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImmutableArray.cmti
+  Scanning DeadCodeInterface.cmt
+  Scanning ImmutableArray.cmti
   addValueDeclaration +get ImmutableArray.rei:5:15 path:ImmutableArray.Array
   addValueDeclaration +fromArray ImmutableArray.rei:7:0 path:ImmutableArray
   addValueDeclaration +toArray ImmutableArray.rei:10:0 path:ImmutableArray
@@ -1228,24 +1228,24 @@
   addValueDeclaration +cmp ImmutableArray.rei:106:0 path:ImmutableArray
   addValueDeclaration +eqU ImmutableArray.rei:108:0 path:ImmutableArray
   addValueDeclaration +eq ImmutableArray.rei:109:0 path:ImmutableArray
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImportHookDefault.cmt
+  Scanning ImportHookDefault.cmt
   addValueDeclaration +makeProps ImportHookDefault.re:6:0 path:+ImportHookDefault
   addValueDeclaration +make ImportHookDefault.re:6:0 path:+ImportHookDefault
   addValueDeclaration +make2Props ImportHookDefault.re:16:0 path:+ImportHookDefault
   addValueDeclaration +make2 ImportHookDefault.re:16:0 path:+ImportHookDefault
   addTypeDeclaration name ImportHookDefault.re:2:2 path:+ImportHookDefault.person
   addTypeDeclaration age ImportHookDefault.re:3:2 path:+ImportHookDefault.person
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/EverythingLiveHere.cmt
+  Scanning EverythingLiveHere.cmt
   addValueDeclaration +x EverythingLiveHere.re:1:4 path:+EverythingLiveHere
   addValueDeclaration +y EverythingLiveHere.re:3:4 path:+EverythingLiveHere
   addValueDeclaration +z EverythingLiveHere.re:5:4 path:+EverythingLiveHere
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/UseImportJsValue.cmt
+  Scanning UseImportJsValue.cmt
   addValueDeclaration +useGetProp UseImportJsValue.re:2:4 path:+UseImportJsValue
   addValueDeclaration +useTypeImportedInOtherModule UseImportJsValue.re:6:4 path:+UseImportJsValue
   addValueReference UseImportJsValue.re:2:4 --> UseImportJsValue.re:2:18
   addValueReference UseImportJsValue.re:2:4 --> ImportJsValue.re:35:2
   addValueReference UseImportJsValue.re:6:4 --> UseImportJsValue.re:6:36
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestImport.cmt
+  Scanning TestImport.cmt
   addValueDeclaration +innerStuffContents TestImport.re:1:0 path:+TestImport
   addValueDeclaration +innerStuffContentsAsEmptyObject TestImport.re:9:0 path:+TestImport
   addValueDeclaration +innerStuffContents TestImport.re:18:4 path:+TestImport
@@ -1257,7 +1257,7 @@
   addValueReference TestImport.re:18:4 --> TestImport.re:1:0
   addTypeDeclaration text TestImport.re:28:16 path:+TestImport.message
   addValueReference TestImport.re:42:4 --> TestImport.re:30:0
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestImmutableArray.cmt
+  Scanning TestImmutableArray.cmt
   addValueDeclaration +testImmutableArrayGet TestImmutableArray.re:2:4 path:+TestImmutableArray
   addValueDeclaration +testBeltArrayGet TestImmutableArray.re:9:4 path:+TestImmutableArray
   addValueDeclaration +testBeltArraySet TestImmutableArray.re:11:4 path:+TestImmutableArray
@@ -1265,28 +1265,28 @@
   addValueReference TestImmutableArray.re:2:4 --> ImmutableArray.rei:5:15
   addValueReference TestImmutableArray.re:9:4 --> TestImmutableArray.re:9:23
   addValueReference TestImmutableArray.re:11:4 --> TestImmutableArray.re:11:23
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImportHooks.cmt
+  Scanning ImportHooks.cmt
   addValueDeclaration +makeProps ImportHooks.re:15:0 path:+ImportHooks
   addValueDeclaration +make ImportHooks.re:15:0 path:+ImportHooks
   addValueDeclaration +foo ImportHooks.re:21:0 path:+ImportHooks
   addTypeDeclaration name ImportHooks.re:3:2 path:+ImportHooks.person
   addTypeDeclaration age ImportHooks.re:4:2 path:+ImportHooks.person
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTestWithInterface.cmti
+  Scanning DeadTestWithInterface.cmti
   Interface 0
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/RequireCond.cmt
+  Scanning RequireCond.cmt
   addValueDeclaration +make RequireCond.re:1:0 path:+RequireCond
   addValueDeclaration +either RequireCond.re:14:0 path:+RequireCond
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/BucklescriptAnnotations.cmt
+  Scanning BucklescriptAnnotations.cmt
   addValueDeclaration +foo BucklescriptAnnotations.re:19:4 path:+BucklescriptAnnotations
   addValueDeclaration +bar BucklescriptAnnotations.re:21:4 path:+BucklescriptAnnotations
   addValueReference BucklescriptAnnotations.re:19:4 --> BucklescriptAnnotations.re:19:11
   addValueDeclaration +f BucklescriptAnnotations.re:22:6 path:+BucklescriptAnnotations
   addValueReference BucklescriptAnnotations.re:22:6 --> BucklescriptAnnotations.re:21:11
   addValueReference BucklescriptAnnotations.re:21:4 --> BucklescriptAnnotations.re:22:6
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadRT.cmti
+  Scanning DeadRT.cmti
   addTypeDeclaration Root DeadRT.rei:2:4 path:DeadRT.moduleAccessPath
   addTypeDeclaration Kaboom DeadRT.rei:3:4 path:DeadRT.moduleAccessPath
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ComponentAsProp.cmt
+  Scanning ComponentAsProp.cmt
   addValueDeclaration +component ComponentAsProp.re:1:4 path:+ComponentAsProp
   addValueDeclaration +make ComponentAsProp.re:5:4 path:+ComponentAsProp
   addValueReference ComponentAsProp.re:1:4 --> ReasonReact.rei:153:0
@@ -1298,7 +1298,7 @@
   addValueReference ComponentAsProp.re:5:4 --> ReactDOMRe.re:1125:0
   addValueReference ComponentAsProp.re:5:4 --> ReactDOMRe.re:1125:0
   addValueReference ComponentAsProp.re:5:4 --> ComponentAsProp.re:1:4
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Records.cmt
+  Scanning Records.cmt
   addValueDeclaration +origin Records.re:11:4 path:+Records
   addValueDeclaration +computeArea Records.re:14:4 path:+Records
   addValueDeclaration +coord2d Records.re:18:4 path:+Records
@@ -1396,7 +1396,7 @@
   addTypeReference Records.re:167:38 --> Records.re:162:2
   addValueReference Records.re:167:4 --> Records.re:167:21
   addValueReference Records.re:170:4 --> Records.re:170:22
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadRT.cmt
+  Scanning DeadRT.cmt
   addValueDeclaration +emitModuleAccessPath DeadRT.re:5:8 path:+DeadRT
   addTypeDeclaration Root DeadRT.re:2:4 path:+DeadRT.moduleAccessPath
   extendTypeDependencies DeadRT.re:2:4 --> DeadRT.rei:2:4
@@ -1411,10 +1411,10 @@
   addTypeReference DeadRT.rei:3:4 --> DeadRT.re:3:4
   addTypeReference DeadRT.re:2:4 --> DeadRT.rei:2:4
   addTypeReference DeadRT.rei:2:4 --> DeadRT.re:2:4
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/ImportIndex.cmt
+  Scanning ImportIndex.cmt
   addValueDeclaration +makeProps ImportIndex.re:2:0 path:+ImportIndex
   addValueDeclaration +make ImportIndex.re:2:0 path:+ImportIndex
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Hooks.cmt
+  Scanning Hooks.cmt
   addValueDeclaration +make Hooks.re:4:4 path:+Hooks
   addValueDeclaration +default Hooks.re:36:4 path:+Hooks
   addValueDeclaration +anotherComponent Hooks.re:40:4 path:+Hooks
@@ -1538,17 +1538,17 @@
   addValueReference Hooks.re:157:2 --> ReactDOMRe.re:1125:0
   collectExpr aComponentWithChildren: fix ghost location reference
   addValueReference Hooks.re:156:4 --> Hooks.re:156:4
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestPromise.cmt
+  Scanning TestPromise.cmt
   addValueDeclaration +convert TestPromise.re:14:4 path:+TestPromise
   addTypeDeclaration x TestPromise.re:6:2 path:+TestPromise.fromPayload
   addTypeDeclaration s TestPromise.re:7:2 path:+TestPromise.fromPayload
   addTypeDeclaration result TestPromise.re:11:18 path:+TestPromise.toPayload
   addValueReference TestPromise.re:14:4 --> TestPromise.re:14:33
   addTypeReference TestPromise.re:14:32 --> TestPromise.re:7:2
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/NestedModulesInSignature.cmt
+  Scanning NestedModulesInSignature.cmt
   addValueDeclaration +theAnswer NestedModulesInSignature.re:2:6 path:+NestedModulesInSignature.Universe
   addValueReference NestedModulesInSignature.rei:2:2 --> NestedModulesInSignature.re:2:6
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/Docstrings.cmt
+  Scanning Docstrings.cmt
   addValueDeclaration +flat Docstrings.re:3:4 path:+Docstrings
   addValueDeclaration +signMessage Docstrings.re:13:4 path:+Docstrings
   addValueDeclaration +one Docstrings.re:16:4 path:+Docstrings
@@ -1594,7 +1594,7 @@
   addTypeDeclaration B Docstrings.re:62:4 path:+Docstrings.t
   addTypeReference Docstrings.re:65:34 --> Docstrings.re:61:4
   addTypeReference Docstrings.re:68:36 --> Docstrings.re:61:4
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/TestFirstClassModules.cmt
+  Scanning TestFirstClassModules.cmt
   addValueDeclaration +convert TestFirstClassModules.re:2:4 path:+TestFirstClassModules
   addValueDeclaration +convertInterface TestFirstClassModules.re:5:4 path:+TestFirstClassModules
   addValueDeclaration +convertRecord TestFirstClassModules.re:8:4 path:+TestFirstClassModules
@@ -1603,7 +1603,7 @@
   addValueReference TestFirstClassModules.re:5:4 --> TestFirstClassModules.re:5:24
   addValueReference TestFirstClassModules.re:8:4 --> TestFirstClassModules.re:8:21
   addValueReference TestFirstClassModules.re:26:4 --> TestFirstClassModules.re:30:6
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/AutoAnnotate.cmt
+  Scanning AutoAnnotate.cmt
   addTypeDeclaration R AutoAnnotate.re:2:4 path:+AutoAnnotate.variant
   addTypeDeclaration variant AutoAnnotate.re:5:15 path:+AutoAnnotate.record
   addTypeDeclaration r2 AutoAnnotate.re:7:11 path:+AutoAnnotate.r2
@@ -1611,10 +1611,10 @@
   addTypeDeclaration r4 AutoAnnotate.re:11:11 path:+AutoAnnotate.r4
   addTypeDeclaration R2 AutoAnnotate.re:15:4 path:+AutoAnnotate.annotatedVariant
   addTypeDeclaration R4 AutoAnnotate.re:16:4 path:+AutoAnnotate.annotatedVariant
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadCodeImplementation.cmt
+  Scanning DeadCodeImplementation.cmt
   addValueDeclaration +x DeadCodeImplementation.re:2:6 path:+DeadCodeImplementation.M
   addValueReference DeadCodeInterface.re:1:17 --> DeadCodeImplementation.re:2:6
-  Scanning /Users/cristianoc/reasonml/reanalyze/examples/deadcode/lib/bs/src/DeadTest.cmt
+  Scanning DeadTest.cmt
   addValueDeclaration +fortytwo DeadTest.re:2:4 path:+DeadTest
   addValueDeclaration +fortyTwoButExported DeadTest.re:5:4 path:+DeadTest
   addValueDeclaration +thisIsUsedOnce DeadTest.re:7:4 path:+DeadTest
@@ -2514,1725 +2514,1725 @@ File References
   Live Type +trace.pf.pf: 1 references (trace.mli:3:11) [0]
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re", line 2, characters 4-10
+  File "./AutoAnnotate.re", line 2, characters 4-10
   variant.R is a variant case which is never constructed
   <-- line 2
     | [@dead "variant.R"] R(int);
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re", line 5, characters 15-22
+  File "./AutoAnnotate.re", line 5, characters 15-22
   record.variant is a record label never used to read a value
   <-- line 5
   type record = {[@dead "record.variant"] variant};
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re", line 7, characters 11-18
+  File "./AutoAnnotate.re", line 7, characters 11-18
   r2.r2 is a record label never used to read a value
   <-- line 7
   type r2 = {[@dead "r2.r2"] r2: int};
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re", line 9, characters 11-18
+  File "./AutoAnnotate.re", line 9, characters 11-18
   r3.r3 is a record label never used to read a value
   <-- line 9
   type r3 = {[@dead "r3.r3"] r3: int};
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re", line 11, characters 11-18
+  File "./AutoAnnotate.re", line 11, characters 11-18
   r4.r4 is a record label never used to read a value
   <-- line 11
   type r4 = {[@dead "r4.r4"] r4: int};
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re", line 15, characters 4-14
+  File "./AutoAnnotate.re", line 15, characters 4-14
   annotatedVariant.R2 is a variant case which is never constructed
   <-- line 15
     | [@dead "annotatedVariant.R2"] R2(r2, r3)
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re", line 16, characters 4-10
+  File "./AutoAnnotate.re", line 16, characters 4-10
   annotatedVariant.R4 is a variant case which is never constructed
   <-- line 16
     | [@dead "annotatedVariant.R4"] R4(r4);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/BucklescriptAnnotations.re", line 19, characters 0-53
+  File "./BucklescriptAnnotations.re", line 19, characters 0-53
   +foo is never used
   <-- line 19
   [@dead "+foo"] let foo = (x: someMethods) => x##threeargs(3, "a", 4);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/BucklescriptAnnotations.re", line 21, characters 0-70
+  File "./BucklescriptAnnotations.re", line 21, characters 0-70
   +bar is never used
   <-- line 21
   [@dead "+bar"] let bar = (x: someMethods) => {
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 3, characters 4-93
+  File "./DeadMl.ml", line 3, characters 4-93
   QQ.+thisSpansSeveralLines is never used
   <-- line 3
             x + y : int -> int -> int) [@@dead "QQ.+thisSpansSeveralLines"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 9, characters 2-40
+  File "./DeadMl.ml", line 9, characters 2-40
   AA.+thisIsInInterface is never used
   <-- line 9
       int -> int [@@dead "AA.+thisIsInInterface"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 12, characters 2-29
+  File "./DeadMl.ml", line 12, characters 2-29
   AA.+thisIsInInterface is never used
   <-- line 12
     let thisIsInInterface x = x [@@dead "AA.+thisIsInInterface"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 15, characters 0-25
+  File "./DeadMl.ml", line 15, characters 0-25
   +thisHasSemicolons is never used
   <-- line 15
   let thisHasSemicolons = 3 [@@dead "+thisHasSemicolons"] ;;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 17, characters 18-25
+  File "./DeadMl.ml", line 17, characters 18-25
   thisIsDead.DeadA is a variant case which is never constructed
   <-- line 17
   type thisIsDead = | DeadA [@dead "thisIsDead.DeadA"]  | DeadB
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 17, characters 26-33
+  File "./DeadMl.ml", line 17, characters 26-33
   thisIsDead.DeadB is a variant case which is never constructed
   <-- line 17
   type thisIsDead = | DeadA [@dead "thisIsDead.DeadA"]  | DeadB [@dead "thisIsDead.DeadB"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 26, characters 6-26
+  File "./DeadMl.ml", line 26, characters 6-26
   Bs_version.+version is never used
   <-- line 26
     sig val version : string [@@dead "Bs_version.+version"]  val header : string val package_name : string end 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 26, characters 27-46
+  File "./DeadMl.ml", line 26, characters 27-46
   Bs_version.+header is never used
   <-- line 26
     sig val version : string [@@dead "Bs_version.+version"]  val header : string [@@dead "Bs_version.+header"]  val package_name : string end 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 26, characters 47-72
+  File "./DeadMl.ml", line 26, characters 47-72
   Bs_version.+package_name is never used
   <-- line 26
     sig val version : string [@@dead "Bs_version.+version"]  val header : string [@@dead "Bs_version.+header"]  val package_name : string [@@dead "Bs_version.+package_name"]  end 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 29, characters 4-31
+  File "./DeadMl.ml", line 29, characters 4-31
   Bs_version.+version is never used
   <-- line 29
       let version = "7.2.0-dev.4" [@@dead "Bs_version.+version"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 30, characters 4-70
+  File "./DeadMl.ml", line 30, characters 4-70
   Bs_version.+header is never used
   <-- line 30
       let header = "// Generated by BUCKLESCRIPT, PLEASE EDIT WITH CARE" [@@dead "Bs_version.+header"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 31, characters 4-36
+  File "./DeadMl.ml", line 31, characters 4-36
   Bs_version.+package_name is never used
   <-- line 31
       let package_name = "bs-platform" [@@dead "Bs_version.+package_name"] 
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 35, characters 2-137
+  File "./DeadMl.ml", line 35, characters 2-137
   l.Lfunction is a variant case which is never constructed
   <-- line 35
                          } [@dead "l.Lfunction"] 
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 41, characters 2-22
+  File "./DeadMl.ml", line 41, characters 2-22
   module_info.module_name is a record label never used to read a value
   <-- line 41
     module_name: string; [@dead "module_info.module_name"] 
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 42, characters 2-12
+  File "./DeadMl.ml", line 42, characters 2-12
   module_info.case is a record label never used to read a value
   <-- line 42
     case: bool [@dead "module_info.case"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 45, characters 0-305
+  File "./DeadMl.ml", line 45, characters 0-305
   +map_split_opt is never used
   <-- line 45
       (match d with Some d -> d::ds | None -> ds) [@@dead "+map_split_opt"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 56, characters 0-40
+  File "./DeadMl.ml", line 56, characters 0-40
   +inline_threshold is never used
   <-- line 56
   let inline_threshold = Some (10. /. 8.); [@@dead "+inline_threshold"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 59, characters 2-15
+  File "./DeadMl.ml", line 59, characters 2-15
   Scope.+dead1 is never used
   <-- line 59
     let dead1 = 1 [@@dead "Scope.+dead1"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 62, characters 4-22
+  File "./DeadMl.ml", line 62, characters 4-22
   Scope.Inner1.+deadInner1 is never used
   <-- line 62
       let deadInner1 = 0 [@@dead "Scope.Inner1.+deadInner1"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 69, characters 2-15
+  File "./DeadMl.ml", line 69, characters 2-15
   Scope.+dead2 is never used
   <-- line 69
     let dead2 = 2 [@@dead "Scope.+dead2"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 80, characters 0-13
+  File "./DeadMl.ml", line 80, characters 0-13
   +dead4 is never used
   <-- line 80
   let dead4 = 4 [@@dead "+dead4"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 85, characters 0-13
+  File "./DeadMl.ml", line 85, characters 0-13
   +dead5 is never used
   <-- line 85
   let dead5 = 5 [@@dead "+dead5"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 90, characters 0-37
+  File "./DeadMl.ml", line 90, characters 0-37
   +dead7 is never used
   <-- line 90
   [@@ocaml.warning "-30"] [@@dead "+dead7"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 94, characters 2-16
+  File "./DeadMl.ml", line 94, characters 2-16
   WithSignature.+dead8 is never used
   <-- line 94
     val dead8: int [@@dead "WithSignature.+dead8"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 99, characters 2-17
+  File "./DeadMl.ml", line 99, characters 2-17
   WithSignature.+dead10 is never used
   <-- line 99
     val dead10: int [@@dead "WithSignature.+dead10"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 106, characters 2-15
+  File "./DeadMl.ml", line 106, characters 2-15
   WithSignature.+dead8 is never used
   <-- line 106
     let dead8 = 8 [@@dead "WithSignature.+dead8"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml", line 108, characters 2-17
+  File "./DeadMl.ml", line 108, characters 2-17
   WithSignature.+dead10 is never used
   <-- line 108
     let dead10 = 10 [@@dead "WithSignature.+dead10"] 
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadRT.re", line 5, characters 0-118
+  File "./DeadRT.re", line 5, characters 0-118
   +emitModuleAccessPath is never used
   <-- line 5
   [@dead "+emitModuleAccessPath"] let rec emitModuleAccessPath = moduleAccessPath =>
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 2, characters 0-17
+  File "./DeadTest.re", line 2, characters 0-17
   +fortytwo is never used
   <-- line 2
   [@dead "+fortytwo"] let fortytwo = 42;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 31, characters 2-34
+  File "./DeadTest.re", line 31, characters 2-34
   M.+thisSignatureItemIsDead is never used
   <-- line 31
     [@dead "M.+thisSignatureItemIsDead"] let thisSignatureItemIsDead = 34;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 63, characters 2-12
+  File "./DeadTest.re", line 63, characters 2-12
   MM.+y is never used
   <-- line 63
     [@dead "MM.+y"] let y: int;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 69, characters 2-35
+  File "./DeadTest.re", line 69, characters 2-35
   MM.+valueOnlyInImplementation is never used
   <-- line 69
     [@dead "MM.+valueOnlyInImplementation"] let valueOnlyInImplementation = 7;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 79, characters 0-37
+  File "./DeadTest.re", line 79, characters 0-37
   +unusedRec is never used
   <-- line 79
   [@dead "+unusedRec"] let rec unusedRec = () => unusedRec();
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 81, characters 0-58
+  File "./DeadTest.re", line 81, characters 0-58
   +split_map is never used
   <-- line 81
   [@dead "+split_map"] let rec split_map = l => {
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 86, characters 0-27
+  File "./DeadTest.re", line 86, characters 0-27
   +rec1 is never used
   <-- line 86
   [@dead "+rec1"] let rec rec1 = () => rec2()
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 87, characters 0-23
+  File "./DeadTest.re", line 87, characters 0-23
   +rec2 is never used
   <-- line 87
   [@dead "+rec2"] and rec2 = () => rec1();
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 89, characters 0-79
+  File "./DeadTest.re", line 89, characters 0-79
   +recWithCallback is never used
   <-- line 89
   [@dead "+recWithCallback"] let rec recWithCallback = () => {
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 94, characters 0-55
+  File "./DeadTest.re", line 94, characters 0-55
   +foo is never used
   <-- line 94
   [@dead "+foo"] let rec foo = () => {
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 98, characters 0-21
+  File "./DeadTest.re", line 98, characters 0-21
   +bar is never used
   <-- line 98
   [@dead "+bar"] and bar = () => foo();
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 100, characters 0-71
+  File "./DeadTest.re", line 100, characters 0-71
   +withDefaultValue is never used
   <-- line 100
   [@dead "+withDefaultValue"] let withDefaultValue = (~paramWithDefault=3, y) => paramWithDefault + y;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 102, characters 0-74
+  File "./DeadTest.re", line 102, characters 0-74
   +unsafe_string1 is never used
   <-- line 102
   [@dead "+unsafe_string1"] external unsafe_string1: (bytes, int, int) => Digest.t = "caml_md5_string";
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 105, characters 2-76
+  File "./DeadTest.re", line 105, characters 2-76
   Ext_buffer.+unsafe_string2 is never used
   <-- line 105
     [@dead "Ext_buffer.+unsafe_string2"] external unsafe_string2: (bytes, int, int) => Digest.t = "caml_md5_string";
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 107, characters 2-76
+  File "./DeadTest.re", line 107, characters 2-76
   Ext_buffer.+unsafe_string2 is never used
   <-- line 107
     [@dead "Ext_buffer.+unsafe_string2"] external unsafe_string2: (bytes, int, int) => Digest.t = "caml_md5_string";
 
   Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 119, characters 2-136
+  File "./DeadTest.re", line 119, characters 2-136
   LazyDynamicallyLoadedComponent2.+reasonResource is never used and could have side effects
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 121, characters 2-54
+  File "./DeadTest.re", line 121, characters 2-54
   LazyDynamicallyLoadedComponent2.+makeProps is never used
   <-- line 121
     [@dead "LazyDynamicallyLoadedComponent2.+makeProps"] let makeProps = DynamicallyLoadedComponent.makeProps;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 122, characters 2-170
+  File "./DeadTest.re", line 122, characters 2-170
   LazyDynamicallyLoadedComponent2.+make is never used
   <-- line 122
     [@dead "LazyDynamicallyLoadedComponent2.+make"] let make = props =>
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 134, characters 0-62
+  File "./DeadTest.re", line 134, characters 0-62
   +cmp2 is never used
   <-- line 134
   [@dead "+cmp2"] let cmp2 = () => <LazyDynamicallyLoadedComponent2 s="hello" />;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 150, characters 0-61
+  File "./DeadTest.re", line 150, characters 0-61
   +zzz is never used
   <-- line 150
   [@dead "+zzz"] let zzz = {
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 159, characters 0-15
+  File "./DeadTest.re", line 159, characters 0-15
   +second is never used
   <-- line 159
   [@dead "+second"] let second = 1L;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 160, characters 0-35
+  File "./DeadTest.re", line 160, characters 0-35
   +minute is never used
   <-- line 160
   [@dead "+minute"] let minute = Int64.mul(60L, second);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 162, characters 0-21
+  File "./DeadTest.re", line 162, characters 0-21
   +deadRef is never used
   <-- line 162
   [@dead "+deadRef"] let deadRef = ref(12);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 164, characters 0-37
+  File "./DeadTest.re", line 164, characters 0-37
   +makeSwitch is never used
   <-- line 164
   [@dead "+makeSwitch"] let makeSwitch = ComponentSwitch.make;
 
   Warning Dead Value With Side Effects
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 171, characters 0-40
+  File "./DeadTest.re", line 171, characters 0-40
   +theSideEffectIsLogging is never used and could have side effects
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re", line 173, characters 0-54
+  File "./DeadTest.re", line 173, characters 0-54
   +stringLengthNoSideEffects is never used
   <-- line 173
   [@dead "+stringLengthNoSideEffects"] let stringLengthNoSideEffects = String.length("sdkdl");
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTestBlacklist.re", line 1, characters 0-10
+  File "./DeadTestBlacklist.re", line 1, characters 0-10
   +x is never used
   <-- line 1
   [@dead "+x"] let x = 34;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTestWithInterface.re", line 1, characters 20-30
+  File "./DeadTestWithInterface.re", line 1, characters 20-30
   Ext_buffer.+x is never used
   <-- line 1
   module Ext_buffer: {[@dead "Ext_buffer.+x"] let x: int;} = {
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTestWithInterface.re", line 2, characters 2-12
+  File "./DeadTestWithInterface.re", line 2, characters 2-12
   Ext_buffer.+x is never used
   <-- line 2
     [@dead "Ext_buffer.+x"] let x = 42;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.re", line 3, characters 4-5
+  File "./DeadTypeTest.re", line 3, characters 4-5
   t.B is a variant case which is never constructed
   <-- line 3
     | [@dead "t.B"] B;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.re", line 4, characters 0-9
+  File "./DeadTypeTest.re", line 4, characters 0-9
   +a is never used
   <-- line 4
   [@dead "+a"] let a = A;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.re", line 10, characters 4-13
+  File "./DeadTypeTest.re", line 10, characters 4-13
   deadType.InNeither is a variant case which is never constructed
   <-- line 10
     | [@dead "deadType.InNeither"] InNeither;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.rei", line 3, characters 4-5
+  File "./DeadTypeTest.rei", line 3, characters 4-5
   t.B is a variant case which is never constructed
   <-- line 3
     | [@dead "t.B"] B;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.rei", line 4, characters 0-8
+  File "./DeadTypeTest.rei", line 4, characters 0-8
   +a is never used
   <-- line 4
   [@dead "+a"] let a: t;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.rei", line 10, characters 4-13
+  File "./DeadTypeTest.rei", line 10, characters 4-13
   deadType.InNeither is a variant case which is never constructed
   <-- line 10
     | [@dead "deadType.InNeither"] InNeither;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadValueTest.re", line 2, characters 0-17
+  File "./DeadValueTest.re", line 2, characters 0-17
   +valueDead is never used
   <-- line 2
   [@dead "+valueDead"] let valueDead = 2;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadValueTest.re", line 4, characters 0-33
+  File "./DeadValueTest.re", line 4, characters 0-33
   +valueOnlyInImplementation is never used
   <-- line 4
   [@dead "+valueOnlyInImplementation"] let valueOnlyInImplementation = 3;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadValueTest.rei", line 2, characters 0-18
+  File "./DeadValueTest.rei", line 2, characters 0-18
   +valueDead is never used
   <-- line 2
   [@dead "+valueDead"] let valueDead: int;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Docstrings.re", line 62, characters 4-5
+  File "./Docstrings.re", line 62, characters 4-5
   t.B is a variant case which is never constructed
   <-- line 62
     | [@dead "t.B"] B;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ErrorHandler.re", line 11, characters 0-21
+  File "./ErrorHandler.re", line 11, characters 0-21
   +x is never used
   <-- line 12
   [@dead "+x"] [@genType]
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ErrorHandler.rei", line 7, characters 0-10
+  File "./ErrorHandler.rei", line 7, characters 0-10
   +x is never used
   <-- line 7
   [@dead "+x"] let x: int;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.re", line 2, characters 2-8
+  File "./FirstClassModulesInterface.re", line 2, characters 2-8
   record.x is a record label never used to read a value
   <-- line 2
     [@dead "record.x"] x: int,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.re", line 3, characters 2-11
+  File "./FirstClassModulesInterface.re", line 3, characters 2-11
   record.y is a record label never used to read a value
   <-- line 3
     [@dead "record.y"] y: string,
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.re", line 6, characters 0-26
+  File "./FirstClassModulesInterface.re", line 6, characters 0-26
   +r is never used
   <-- line 6
   [@dead "+r"] let r = {x: 3, y: "hello"};
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.rei", line 3, characters 2-8
+  File "./FirstClassModulesInterface.rei", line 3, characters 2-8
   record.x is a record label never used to read a value
   <-- line 3
     [@dead "record.x"] x: int,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.rei", line 4, characters 2-11
+  File "./FirstClassModulesInterface.rei", line 4, characters 2-11
   record.y is a record label never used to read a value
   <-- line 4
     [@dead "record.y"] y: string,
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.rei", line 7, characters 0-13
+  File "./FirstClassModulesInterface.rei", line 7, characters 0-13
   +r is never used
   <-- line 7
   [@dead "+r"] let r: record;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 6, characters 2-63
+  File "./ImmutableArray.re", line 6, characters 2-63
   +fromTp is never used
   <-- line 6
     [@dead "+fromTp"] external fromTp: t(('a, 'b)) => array(('a, 'b)) = "%identity";
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 7, characters 2-61
+  File "./ImmutableArray.re", line 7, characters 2-61
   +fromTT is never used
   <-- line 7
     [@dead "+fromTT"] external fromTT: t(t('a)) => array(array('a)) = "%identity";
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 9, characters 2-61
+  File "./ImmutableArray.re", line 9, characters 2-61
   +toTp is never used
   <-- line 9
     [@dead "+toTp"] external toTp: array(('a, 'b)) => t(('a, 'b)) = "%identity";
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 10, characters 2-59
+  File "./ImmutableArray.re", line 10, characters 2-59
   +toT2 is never used
   <-- line 10
     [@dead "+toT2"] external toT2: array2('a) => (t('a), t('a)) = "%identity";
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 16, characters 2-41
+  File "./ImmutableArray.re", line 16, characters 2-41
   +toArray is never used
   <-- line 16
     [@dead "+toArray"] let toArray = a => Array.copy(a->fromT);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 20, characters 2-42
+  File "./ImmutableArray.re", line 20, characters 2-42
   +length is never used
   <-- line 20
     [@dead "+length"] let length = a => Array.length(a->fromT);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 22, characters 2-38
+  File "./ImmutableArray.re", line 22, characters 2-38
   +size is never used
   <-- line 22
     [@dead "+size"] let size = a => Array.size(a->fromT);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 26, characters 2-50
+  File "./ImmutableArray.re", line 26, characters 2-50
   +getExn is never used
   <-- line 26
     [@dead "+getExn"] let getExn = (a, x) => Array.getExn(a->fromT, x);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 28, characters 2-56
+  File "./ImmutableArray.re", line 28, characters 2-56
   +getUnsafe is never used
   <-- line 28
     [@dead "+getUnsafe"] let getUnsafe = (a, x) => Array.getUnsafe(a->fromT, x);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 30, characters 2-62
+  File "./ImmutableArray.re", line 30, characters 2-62
   +getUndefined is never used
   <-- line 30
     [@dead "+getUndefined"] let getUndefined = (a, x) => Array.getUndefined(a->fromT, x);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 32, characters 2-49
+  File "./ImmutableArray.re", line 32, characters 2-49
   +shuffle is never used
   <-- line 32
     [@dead "+shuffle"] let shuffle = x => Array.shuffle(x->fromT)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 34, characters 2-49
+  File "./ImmutableArray.re", line 34, characters 2-49
   +reverse is never used
   <-- line 34
     [@dead "+reverse"] let reverse = x => Array.reverse(x->fromT)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 36, characters 2-62
+  File "./ImmutableArray.re", line 36, characters 2-62
   +makeUninitialized is never used
   <-- line 36
     [@dead "+makeUninitialized"] let makeUninitialized = x => Array.makeUninitialized(x)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 38, characters 2-74
+  File "./ImmutableArray.re", line 38, characters 2-74
   +makeUninitializedUnsafe is never used
   <-- line 38
     [@dead "+makeUninitializedUnsafe"] let makeUninitializedUnsafe = x => Array.makeUninitializedUnsafe(x)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 40, characters 2-44
+  File "./ImmutableArray.re", line 40, characters 2-44
   +make is never used
   <-- line 40
     [@dead "+make"] let make = (x, y) => Array.make(x, y)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 42, characters 2-46
+  File "./ImmutableArray.re", line 42, characters 2-46
   +range is never used
   <-- line 42
     [@dead "+range"] let range = (x, y) => Array.range(x, y)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 44, characters 2-64
+  File "./ImmutableArray.re", line 44, characters 2-64
   +rangeBy is never used
   <-- line 44
     [@dead "+rangeBy"] let rangeBy = (x, y, ~step) => Array.rangeBy(x, y, ~step)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 46, characters 2-50
+  File "./ImmutableArray.re", line 46, characters 2-50
   +makeByU is never used
   <-- line 46
     [@dead "+makeByU"] let makeByU = (c, f) => Array.makeByU(c, f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 47, characters 2-48
+  File "./ImmutableArray.re", line 47, characters 2-48
   +makeBy is never used
   <-- line 47
     [@dead "+makeBy"] let makeBy = (c, f) => Array.makeBy(c, f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 49, characters 2-70
+  File "./ImmutableArray.re", line 49, characters 2-70
   +makeByAndShuffleU is never used
   <-- line 49
     [@dead "+makeByAndShuffleU"] let makeByAndShuffleU = (c, f) => Array.makeByAndShuffleU(c, f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 50, characters 2-68
+  File "./ImmutableArray.re", line 50, characters 2-68
   +makeByAndShuffle is never used
   <-- line 50
     [@dead "+makeByAndShuffle"] let makeByAndShuffle = (c, f) => Array.makeByAndShuffle(c, f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 52, characters 2-61
+  File "./ImmutableArray.re", line 52, characters 2-61
   +zip is never used
   <-- line 52
     [@dead "+zip"] let zip = (a1, a2) => Array.zip(fromT(a1), fromT(a2))->toTp;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 54, characters 2-72
+  File "./ImmutableArray.re", line 54, characters 2-72
   +zipByU is never used
   <-- line 54
     [@dead "+zipByU"] let zipByU = (a1, a2, f) => Array.zipByU(fromT(a1), fromT(a2), f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 55, characters 2-70
+  File "./ImmutableArray.re", line 55, characters 2-70
   +zipBy is never used
   <-- line 55
     [@dead "+zipBy"] let zipBy = (a1, a2, f) => Array.zipBy(fromT(a1), fromT(a2), f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 57, characters 2-47
+  File "./ImmutableArray.re", line 57, characters 2-47
   +unzip is never used
   <-- line 57
     [@dead "+unzip"] let unzip = a => Array.unzip(a->fromTp)->toT2;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 59, characters 2-66
+  File "./ImmutableArray.re", line 59, characters 2-66
   +concat is never used
   <-- line 59
     [@dead "+concat"] let concat = (a1, a2) => Array.concat(a1->fromT, a2->fromT)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 61, characters 2-67
+  File "./ImmutableArray.re", line 61, characters 2-67
   +concatMany is never used
   <-- line 61
     [@dead "+concatMany"] let concatMany = (a: t(t(_))) => Array.concatMany(a->fromTT)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 63, characters 2-81
+  File "./ImmutableArray.re", line 63, characters 2-81
   +slice is never used
   <-- line 63
     [@dead "+slice"] let slice = (a, ~offset, ~len) =>
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 66, characters 2-63
+  File "./ImmutableArray.re", line 66, characters 2-63
   +sliceToEnd is never used
   <-- line 66
     [@dead "+sliceToEnd"] let sliceToEnd = (a, b) => Array.sliceToEnd(a->fromT, b)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 68, characters 2-43
+  File "./ImmutableArray.re", line 68, characters 2-43
   +copy is never used
   <-- line 68
     [@dead "+copy"] let copy = a => Array.copy(a->fromT)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 70, characters 2-54
+  File "./ImmutableArray.re", line 70, characters 2-54
   +forEachU is never used
   <-- line 70
     [@dead "+forEachU"] let forEachU = (a, f) => Array.forEachU(a->fromT, f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 71, characters 2-52
+  File "./ImmutableArray.re", line 71, characters 2-52
   +forEach is never used
   <-- line 71
     [@dead "+forEach"] let forEach = (a, f) => Array.forEach(a->fromT, f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 73, characters 2-51
+  File "./ImmutableArray.re", line 73, characters 2-51
   +mapU is never used
   <-- line 73
     [@dead "+mapU"] let mapU = (a, f) => Array.mapU(a->fromT, f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 74, characters 2-49
+  File "./ImmutableArray.re", line 74, characters 2-49
   +map is never used
   <-- line 74
     [@dead "+map"] let map = (a, f) => Array.map(a->fromT, f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 76, characters 2-71
+  File "./ImmutableArray.re", line 76, characters 2-71
   +keepWithIndexU is never used
   <-- line 76
     [@dead "+keepWithIndexU"] let keepWithIndexU = (a, f) => Array.keepWithIndexU(a->fromT, f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 77, characters 2-69
+  File "./ImmutableArray.re", line 77, characters 2-69
   +keepWithIndex is never used
   <-- line 77
     [@dead "+keepWithIndex"] let keepWithIndex = (a, f) => Array.keepWithIndex(a->fromT, f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 79, characters 2-59
+  File "./ImmutableArray.re", line 79, characters 2-59
   +keepMapU is never used
   <-- line 79
     [@dead "+keepMapU"] let keepMapU = (a, f) => Array.keepMapU(a->fromT, f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 80, characters 2-57
+  File "./ImmutableArray.re", line 80, characters 2-57
   +keepMap is never used
   <-- line 80
     [@dead "+keepMap"] let keepMap = (a, f) => Array.keepMap(a->fromT, f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 82, characters 2-72
+  File "./ImmutableArray.re", line 82, characters 2-72
   +forEachWithIndexU is never used
   <-- line 82
     [@dead "+forEachWithIndexU"] let forEachWithIndexU = (a, f) => Array.forEachWithIndexU(a->fromT, f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 83, characters 2-70
+  File "./ImmutableArray.re", line 83, characters 2-70
   +forEachWithIndex is never used
   <-- line 83
     [@dead "+forEachWithIndex"] let forEachWithIndex = (a, f) => Array.forEachWithIndex(a->fromT, f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 85, characters 2-69
+  File "./ImmutableArray.re", line 85, characters 2-69
   +mapWithIndexU is never used
   <-- line 85
     [@dead "+mapWithIndexU"] let mapWithIndexU = (a, f) => Array.mapWithIndexU(a->fromT, f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 86, characters 2-67
+  File "./ImmutableArray.re", line 86, characters 2-67
   +mapWithIndex is never used
   <-- line 86
     [@dead "+mapWithIndex"] let mapWithIndex = (a, f) => Array.mapWithIndex(a->fromT, f)->toT;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 88, characters 2-64
+  File "./ImmutableArray.re", line 88, characters 2-64
   +partitionU is never used
   <-- line 88
     [@dead "+partitionU"] let partitionU = (a, f) => Array.partitionU(a->fromT, f)->toT2;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 89, characters 2-62
+  File "./ImmutableArray.re", line 89, characters 2-62
   +partition is never used
   <-- line 89
     [@dead "+partition"] let partition = (a, f) => Array.partition(a->fromT, f)->toT2;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 91, characters 2-58
+  File "./ImmutableArray.re", line 91, characters 2-58
   +reduceU is never used
   <-- line 91
     [@dead "+reduceU"] let reduceU = (a, b, f) => Array.reduceU(a->fromT, b, f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 92, characters 2-56
+  File "./ImmutableArray.re", line 92, characters 2-56
   +reduce is never used
   <-- line 92
     [@dead "+reduce"] let reduce = (a, b, f) => Array.reduce(a->fromT, b, f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 94, characters 2-72
+  File "./ImmutableArray.re", line 94, characters 2-72
   +reduceReverseU is never used
   <-- line 94
     [@dead "+reduceReverseU"] let reduceReverseU = (a, b, f) => Array.reduceReverseU(a->fromT, b, f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 95, characters 2-70
+  File "./ImmutableArray.re", line 95, characters 2-70
   +reduceReverse is never used
   <-- line 95
     [@dead "+reduceReverse"] let reduceReverse = (a, b, f) => Array.reduceReverse(a->fromT, b, f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 97, characters 2-95
+  File "./ImmutableArray.re", line 97, characters 2-95
   +reduceReverse2U is never used
   <-- line 97
     [@dead "+reduceReverse2U"] let reduceReverse2U = (a1, a2, c, f) =>
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 99, characters 2-93
+  File "./ImmutableArray.re", line 99, characters 2-93
   +reduceReverse2 is never used
   <-- line 99
     [@dead "+reduceReverse2"] let reduceReverse2 = (a1, a2, c, f) =>
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 102, characters 2-48
+  File "./ImmutableArray.re", line 102, characters 2-48
   +someU is never used
   <-- line 102
     [@dead "+someU"] let someU = (a, f) => Array.someU(a->fromT, f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 103, characters 2-46
+  File "./ImmutableArray.re", line 103, characters 2-46
   +some is never used
   <-- line 103
     [@dead "+some"] let some = (a, f) => Array.some(a->fromT, f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 105, characters 2-50
+  File "./ImmutableArray.re", line 105, characters 2-50
   +everyU is never used
   <-- line 105
     [@dead "+everyU"] let everyU = (a, f) => Array.everyU(a->fromT, f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 106, characters 2-48
+  File "./ImmutableArray.re", line 106, characters 2-48
   +every is never used
   <-- line 106
     [@dead "+every"] let every = (a, f) => Array.every(a->fromT, f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 108, characters 2-69
+  File "./ImmutableArray.re", line 108, characters 2-69
   +every2U is never used
   <-- line 108
     [@dead "+every2U"] let every2U = (a1, a2, f) => Array.every2U(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 109, characters 2-67
+  File "./ImmutableArray.re", line 109, characters 2-67
   +every2 is never used
   <-- line 109
     [@dead "+every2"] let every2 = (a1, a2, f) => Array.every2(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 111, characters 2-67
+  File "./ImmutableArray.re", line 111, characters 2-67
   +some2U is never used
   <-- line 111
     [@dead "+some2U"] let some2U = (a1, a2, f) => Array.some2U(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 112, characters 2-65
+  File "./ImmutableArray.re", line 112, characters 2-65
   +some2 is never used
   <-- line 112
     [@dead "+some2"] let some2 = (a1, a2, f) => Array.some2(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 114, characters 2-63
+  File "./ImmutableArray.re", line 114, characters 2-63
   +cmpU is never used
   <-- line 114
     [@dead "+cmpU"] let cmpU = (a1, a2, f) => Array.cmpU(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 115, characters 2-61
+  File "./ImmutableArray.re", line 115, characters 2-61
   +cmp is never used
   <-- line 115
     [@dead "+cmp"] let cmp = (a1, a2, f) => Array.cmp(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 117, characters 2-61
+  File "./ImmutableArray.re", line 117, characters 2-61
   +eqU is never used
   <-- line 117
     [@dead "+eqU"] let eqU = (a1, a2, f) => Array.eqU(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re", line 118, characters 2-59
+  File "./ImmutableArray.re", line 118, characters 2-59
   +eq is never used
   <-- line 118
     [@dead "+eq"] let eq = (a1, a2, f) => Array.eq(fromT(a1), fromT(a2), f);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 10, characters 0-31
+  File "./ImmutableArray.rei", line 10, characters 0-31
   +toArray is never used
   <-- line 10
   [@dead "+toArray"] let toArray: t('a) => array('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 12, characters 0-99
+  File "./ImmutableArray.rei", line 12, characters 0-99
   +length is never used
   <-- line 12
   [@dead "+length"] /** Subset of the Belt.Array oprerations that do not mutate the array. */
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 16, characters 0-22
+  File "./ImmutableArray.rei", line 16, characters 0-22
   +size is never used
   <-- line 16
   [@dead "+size"] let size: t('a) => int;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 18, characters 0-35
+  File "./ImmutableArray.rei", line 18, characters 0-35
   +get is never used
   <-- line 18
   [@dead "+get"] let get: (t('a), int) => option('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 20, characters 0-30
+  File "./ImmutableArray.rei", line 20, characters 0-30
   +getExn is never used
   <-- line 20
   [@dead "+getExn"] let getExn: (t('a), int) => 'a;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 22, characters 0-33
+  File "./ImmutableArray.rei", line 22, characters 0-33
   +getUnsafe is never used
   <-- line 22
   [@dead "+getUnsafe"] let getUnsafe: (t('a), int) => 'a;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 24, characters 0-50
+  File "./ImmutableArray.rei", line 24, characters 0-50
   +getUndefined is never used
   <-- line 24
   [@dead "+getUndefined"] let getUndefined: (t('a), int) => Js.undefined('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 26, characters 0-27
+  File "./ImmutableArray.rei", line 26, characters 0-27
   +shuffle is never used
   <-- line 26
   [@dead "+shuffle"] let shuffle: t('a) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 28, characters 0-27
+  File "./ImmutableArray.rei", line 28, characters 0-27
   +reverse is never used
   <-- line 28
   [@dead "+reverse"] let reverse: t('a) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 30, characters 0-49
+  File "./ImmutableArray.rei", line 30, characters 0-49
   +makeUninitialized is never used
   <-- line 30
   [@dead "+makeUninitialized"] let makeUninitialized: int => t(Js.undefined('a));
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 32, characters 0-41
+  File "./ImmutableArray.rei", line 32, characters 0-41
   +makeUninitializedUnsafe is never used
   <-- line 32
   [@dead "+makeUninitializedUnsafe"] let makeUninitializedUnsafe: int => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 34, characters 0-28
+  File "./ImmutableArray.rei", line 34, characters 0-28
   +make is never used
   <-- line 34
   [@dead "+make"] let make: (int, 'a) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 36, characters 0-31
+  File "./ImmutableArray.rei", line 36, characters 0-31
   +range is never used
   <-- line 36
   [@dead "+range"] let range: (int, int) => t(int);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 38, characters 0-45
+  File "./ImmutableArray.rei", line 38, characters 0-45
   +rangeBy is never used
   <-- line 38
   [@dead "+rangeBy"] let rangeBy: (int, int, ~step: int) => t(int);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 40, characters 0-42
+  File "./ImmutableArray.rei", line 40, characters 0-42
   +makeByU is never used
   <-- line 40
   [@dead "+makeByU"] let makeByU: (int, (. int) => 'a) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 41, characters 0-37
+  File "./ImmutableArray.rei", line 41, characters 0-37
   +makeBy is never used
   <-- line 41
   [@dead "+makeBy"] let makeBy: (int, int => 'a) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 43, characters 0-52
+  File "./ImmutableArray.rei", line 43, characters 0-52
   +makeByAndShuffleU is never used
   <-- line 43
   [@dead "+makeByAndShuffleU"] let makeByAndShuffleU: (int, (. int) => 'a) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 44, characters 0-47
+  File "./ImmutableArray.rei", line 44, characters 0-47
   +makeByAndShuffle is never used
   <-- line 44
   [@dead "+makeByAndShuffle"] let makeByAndShuffle: (int, int => 'a) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 46, characters 0-38
+  File "./ImmutableArray.rei", line 46, characters 0-38
   +zip is never used
   <-- line 46
   [@dead "+zip"] let zip: (t('a), t('b)) => t(('a, 'b));
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 48, characters 0-53
+  File "./ImmutableArray.rei", line 48, characters 0-53
   +zipByU is never used
   <-- line 48
   [@dead "+zipByU"] let zipByU: (t('a), t('b), (. 'a, 'b) => 'c) => t('c);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 49, characters 0-50
+  File "./ImmutableArray.rei", line 49, characters 0-50
   +zipBy is never used
   <-- line 49
   [@dead "+zipBy"] let zipBy: (t('a), t('b), ('a, 'b) => 'c) => t('c);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 51, characters 0-40
+  File "./ImmutableArray.rei", line 51, characters 0-40
   +unzip is never used
   <-- line 51
   [@dead "+unzip"] let unzip: t(('a, 'a)) => (t('a), t('a));
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 53, characters 0-35
+  File "./ImmutableArray.rei", line 53, characters 0-35
   +concat is never used
   <-- line 53
   [@dead "+concat"] let concat: (t('a), t('a)) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 55, characters 0-33
+  File "./ImmutableArray.rei", line 55, characters 0-33
   +concatMany is never used
   <-- line 55
   [@dead "+concatMany"] let concatMany: t(t('a)) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 57, characters 0-52
+  File "./ImmutableArray.rei", line 57, characters 0-52
   +slice is never used
   <-- line 57
   [@dead "+slice"] let slice: (t('a), ~offset: int, ~len: int) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 59, characters 0-37
+  File "./ImmutableArray.rei", line 59, characters 0-37
   +sliceToEnd is never used
   <-- line 59
   [@dead "+sliceToEnd"] let sliceToEnd: (t('a), int) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 61, characters 0-24
+  File "./ImmutableArray.rei", line 61, characters 0-24
   +copy is never used
   <-- line 61
   [@dead "+copy"] let copy: t('a) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 63, characters 0-45
+  File "./ImmutableArray.rei", line 63, characters 0-45
   +forEachU is never used
   <-- line 63
   [@dead "+forEachU"] let forEachU: (t('a), (. 'a) => unit) => unit;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 64, characters 0-40
+  File "./ImmutableArray.rei", line 64, characters 0-40
   +forEach is never used
   <-- line 64
   [@dead "+forEach"] let forEach: (t('a), 'a => unit) => unit;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 66, characters 0-40
+  File "./ImmutableArray.rei", line 66, characters 0-40
   +mapU is never used
   <-- line 66
   [@dead "+mapU"] let mapU: (t('a), (. 'a) => 'b) => t('b);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 67, characters 0-35
+  File "./ImmutableArray.rei", line 67, characters 0-35
   +map is never used
   <-- line 67
   [@dead "+map"] let map: (t('a), 'a => 'b) => t('b);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 69, characters 0-57
+  File "./ImmutableArray.rei", line 69, characters 0-57
   +keepWithIndexU is never used
   <-- line 69
   [@dead "+keepWithIndexU"] let keepWithIndexU: (t('a), (. 'a, int) => bool) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 70, characters 0-54
+  File "./ImmutableArray.rei", line 70, characters 0-54
   +keepWithIndex is never used
   <-- line 70
   [@dead "+keepWithIndex"] let keepWithIndex: (t('a), ('a, int) => bool) => t('a);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 72, characters 0-52
+  File "./ImmutableArray.rei", line 72, characters 0-52
   +keepMapU is never used
   <-- line 72
   [@dead "+keepMapU"] let keepMapU: (t('a), (. 'a) => option('b)) => t('b);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 73, characters 0-47
+  File "./ImmutableArray.rei", line 73, characters 0-47
   +keepMap is never used
   <-- line 73
   [@dead "+keepMap"] let keepMap: (t('a), 'a => option('b)) => t('b);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 75, characters 0-59
+  File "./ImmutableArray.rei", line 75, characters 0-59
   +forEachWithIndexU is never used
   <-- line 75
   [@dead "+forEachWithIndexU"] let forEachWithIndexU: (t('a), (. int, 'a) => unit) => unit;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 76, characters 0-56
+  File "./ImmutableArray.rei", line 76, characters 0-56
   +forEachWithIndex is never used
   <-- line 76
   [@dead "+forEachWithIndex"] let forEachWithIndex: (t('a), (int, 'a) => unit) => unit;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 78, characters 0-54
+  File "./ImmutableArray.rei", line 78, characters 0-54
   +mapWithIndexU is never used
   <-- line 78
   [@dead "+mapWithIndexU"] let mapWithIndexU: (t('a), (. int, 'a) => 'b) => t('b);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 79, characters 0-51
+  File "./ImmutableArray.rei", line 79, characters 0-51
   +mapWithIndex is never used
   <-- line 79
   [@dead "+mapWithIndex"] let mapWithIndex: (t('a), (int, 'a) => 'b) => t('b);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 81, characters 0-57
+  File "./ImmutableArray.rei", line 81, characters 0-57
   +partitionU is never used
   <-- line 81
   [@dead "+partitionU"] let partitionU: (t('a), (. 'a) => bool) => (t('a), t('a));
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 82, characters 0-52
+  File "./ImmutableArray.rei", line 82, characters 0-52
   +partition is never used
   <-- line 82
   [@dead "+partition"] let partition: (t('a), 'a => bool) => (t('a), t('a));
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 84, characters 0-48
+  File "./ImmutableArray.rei", line 84, characters 0-48
   +reduceU is never used
   <-- line 84
   [@dead "+reduceU"] let reduceU: (t('a), 'b, (. 'b, 'a) => 'b) => 'b;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 85, characters 0-45
+  File "./ImmutableArray.rei", line 85, characters 0-45
   +reduce is never used
   <-- line 85
   [@dead "+reduce"] let reduce: (t('a), 'b, ('b, 'a) => 'b) => 'b;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 87, characters 0-55
+  File "./ImmutableArray.rei", line 87, characters 0-55
   +reduceReverseU is never used
   <-- line 87
   [@dead "+reduceReverseU"] let reduceReverseU: (t('a), 'b, (. 'b, 'a) => 'b) => 'b;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 88, characters 0-52
+  File "./ImmutableArray.rei", line 88, characters 0-52
   +reduceReverse is never used
   <-- line 88
   [@dead "+reduceReverse"] let reduceReverse: (t('a), 'b, ('b, 'a) => 'b) => 'b;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 90, characters 0-67
+  File "./ImmutableArray.rei", line 90, characters 0-67
   +reduceReverse2U is never used
   <-- line 90
   [@dead "+reduceReverse2U"] let reduceReverse2U: (t('a), t('b), 'c, (. 'c, 'a, 'b) => 'c) => 'c;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 91, characters 0-64
+  File "./ImmutableArray.rei", line 91, characters 0-64
   +reduceReverse2 is never used
   <-- line 91
   [@dead "+reduceReverse2"] let reduceReverse2: (t('a), t('b), 'c, ('c, 'a, 'b) => 'c) => 'c;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 93, characters 0-42
+  File "./ImmutableArray.rei", line 93, characters 0-42
   +someU is never used
   <-- line 93
   [@dead "+someU"] let someU: (t('a), (. 'a) => bool) => bool;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 94, characters 0-37
+  File "./ImmutableArray.rei", line 94, characters 0-37
   +some is never used
   <-- line 94
   [@dead "+some"] let some: (t('a), 'a => bool) => bool;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 96, characters 0-43
+  File "./ImmutableArray.rei", line 96, characters 0-43
   +everyU is never used
   <-- line 96
   [@dead "+everyU"] let everyU: (t('a), (. 'a) => bool) => bool;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 97, characters 0-38
+  File "./ImmutableArray.rei", line 97, characters 0-38
   +every is never used
   <-- line 97
   [@dead "+every"] let every: (t('a), 'a => bool) => bool;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 99, characters 0-55
+  File "./ImmutableArray.rei", line 99, characters 0-55
   +every2U is never used
   <-- line 99
   [@dead "+every2U"] let every2U: (t('a), t('b), (. 'a, 'b) => bool) => bool;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 100, characters 0-52
+  File "./ImmutableArray.rei", line 100, characters 0-52
   +every2 is never used
   <-- line 100
   [@dead "+every2"] let every2: (t('a), t('b), ('a, 'b) => bool) => bool;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 102, characters 0-54
+  File "./ImmutableArray.rei", line 102, characters 0-54
   +some2U is never used
   <-- line 102
   [@dead "+some2U"] let some2U: (t('a), t('b), (. 'a, 'b) => bool) => bool;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 103, characters 0-51
+  File "./ImmutableArray.rei", line 103, characters 0-51
   +some2 is never used
   <-- line 103
   [@dead "+some2"] let some2: (t('a), t('b), ('a, 'b) => bool) => bool;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 105, characters 0-50
+  File "./ImmutableArray.rei", line 105, characters 0-50
   +cmpU is never used
   <-- line 105
   [@dead "+cmpU"] let cmpU: (t('a), t('a), (. 'a, 'a) => int) => int;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 106, characters 0-47
+  File "./ImmutableArray.rei", line 106, characters 0-47
   +cmp is never used
   <-- line 106
   [@dead "+cmp"] let cmp: (t('a), t('a), ('a, 'a) => int) => int;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 108, characters 0-51
+  File "./ImmutableArray.rei", line 108, characters 0-51
   +eqU is never used
   <-- line 108
   [@dead "+eqU"] let eqU: (t('a), t('a), (. 'a, 'a) => bool) => bool;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei", line 109, characters 0-48
+  File "./ImmutableArray.rei", line 109, characters 0-48
   +eq is never used
   <-- line 109
   [@dead "+eq"] let eq: (t('a), t('a), ('a, 'a) => bool) => bool;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportHookDefault.re", line 2, characters 2-14
+  File "./ImportHookDefault.re", line 2, characters 2-14
   person.name is a record label never used to read a value
   <-- line 2
     [@dead "person.name"] name: string,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportHookDefault.re", line 3, characters 2-10
+  File "./ImportHookDefault.re", line 3, characters 2-10
   person.age is a record label never used to read a value
   <-- line 3
     [@dead "person.age"] age: int,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportHooks.re", line 3, characters 2-14
+  File "./ImportHooks.re", line 3, characters 2-14
   person.name is a record label never used to read a value
   <-- line 3
     [@dead "person.name"] name: string,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportHooks.re", line 4, characters 2-10
+  File "./ImportHooks.re", line 4, characters 2-10
   person.age is a record label never used to read a value
   <-- line 4
     [@dead "person.age"] age: int,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportJsValue.re", line 10, characters 2-8
+  File "./ImportJsValue.re", line 10, characters 2-8
   point.x is a record label never used to read a value
   <-- line 10
     [@dead "point.x"] x: int,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportJsValue.re", line 11, characters 2-16
+  File "./ImportJsValue.re", line 11, characters 2-16
   point.y is a record label never used to read a value
   <-- line 11
     [@dead "point.y"] y: option(int),
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportJsValue.re", line 65, characters 4-10
+  File "./ImportJsValue.re", line 65, characters 4-10
   variant.I is a variant case which is never constructed
   <-- line 65
     | [@dead "variant.I"] I(int)
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportJsValue.re", line 66, characters 4-13
+  File "./ImportJsValue.re", line 66, characters 4-13
   variant.S is a variant case which is never constructed
   <-- line 66
     | [@dead "variant.S"] S(string);
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportMyBanner.re", line 6, characters 16-28
+  File "./ImportMyBanner.re", line 6, characters 16-28
   message.text is a record label never used to read a value
   <-- line 6
   type message = {[@dead "message.text"] text: string};
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ManyComponents.re", line 4, characters 2-45
+  File "./ManyComponents.re", line 4, characters 2-45
   InnerComponent.+someValueSoModuleOffsetsAreShifted is never used
   <-- line 4
     [@dead "InnerComponent.+someValueSoModuleOffsetsAreShifted"] let someValueSoModuleOffsetsAreShifted = 77;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ModuleAliases.re", line 3, characters 19-32
+  File "./ModuleAliases.re", line 3, characters 19-32
   Outer.Inner.innerT.inner is a record label never used to read a value
   <-- line 3
       type innerT = {[@dead "Outer.Inner.innerT.inner"] inner: string};
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ModuleAliases.re", line 11, characters 16-27
+  File "./ModuleAliases.re", line 11, characters 16-27
   Outer2.Inner2.InnerNested.t.nested is a record label never used to read a value
   <-- line 11
         type t = {[@dead "Outer2.Inner2.InnerNested.t.nested"] nested: int};
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ModuleAliases2.re", line 3, characters 2-8
+  File "./ModuleAliases2.re", line 3, characters 2-8
   record.x is a record label never used to read a value
   <-- line 3
     [@dead "record.x"] x: int,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ModuleAliases2.re", line 4, characters 2-11
+  File "./ModuleAliases2.re", line 4, characters 2-11
   record.y is a record label never used to read a value
   <-- line 4
     [@dead "record.y"] y: string,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ModuleAliases2.re", line 9, characters 16-29
+  File "./ModuleAliases2.re", line 9, characters 16-29
   Outer.outer.outer is a record label never used to read a value
   <-- line 9
     type outer = {[@dead "Outer.outer.outer"] outer: string};
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ModuleAliases2.re", line 13, characters 18-31
+  File "./ModuleAliases2.re", line 13, characters 18-31
   Outer.Inner.inner.inner is a record label never used to read a value
   <-- line 13
       type inner = {[@dead "Outer.Inner.inner.inner"] inner: string};
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ModuleAliases2.re", line 21, characters 0-10
+  File "./ModuleAliases2.re", line 21, characters 0-10
   +q is never used
   <-- line 21
   [@dead "+q"] let q = 42;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/NestedModules.re", line 8, characters 2-22
+  File "./NestedModules.re", line 8, characters 2-22
   Universe.+notExported is never used
   <-- line 8
     [@dead "Universe.+notExported"] let notExported = 33;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/NestedModules.re", line 14, characters 4-13
+  File "./NestedModules.re", line 14, characters 4-13
   Universe.Nested2.+x is never used
   <-- line 14
       [@dead "Universe.Nested2.+x"] let x = 0;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/NestedModules.re", line 19, characters 4-13
+  File "./NestedModules.re", line 19, characters 4-13
   Universe.Nested2.+y is never used
   <-- line 19
       [@dead "Universe.Nested2.+y"] let y = 2;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/NestedModules.re", line 25, characters 6-15
+  File "./NestedModules.re", line 25, characters 6-15
   Universe.Nested2.Nested3.+x is never used
   <-- line 25
         [@dead "Universe.Nested2.Nested3.+x"] let x = 0;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/NestedModules.re", line 26, characters 6-15
+  File "./NestedModules.re", line 26, characters 6-15
   Universe.Nested2.Nested3.+y is never used
   <-- line 26
         [@dead "Universe.Nested2.Nested3.+y"] let y = 1;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/NestedModules.re", line 27, characters 6-15
+  File "./NestedModules.re", line 27, characters 6-15
   Universe.Nested2.Nested3.+z is never used
   <-- line 27
         [@dead "Universe.Nested2.Nested3.+z"] let z = 2;
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/NestedModules.re", line 28, characters 6-15
+  File "./NestedModules.re", line 28, characters 6-15
   Universe.Nested2.Nested3.+w is never used
   <-- line 28
         [@dead "Universe.Nested2.Nested3.+w"] let w = 3;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/NestedModules.re", line 46, characters 6-7
+  File "./NestedModules.re", line 46, characters 6-7
   Universe.variant.A is a variant case which is never constructed
   <-- line 46
       | [@dead "Universe.variant.A"] A
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/NestedModules.re", line 47, characters 6-15
+  File "./NestedModules.re", line 47, characters 6-15
   Universe.variant.B is a variant case which is never constructed
   <-- line 47
       | [@dead "Universe.variant.B"] B(string);
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Opaque.re", line 3, characters 4-20
+  File "./Opaque.re", line 3, characters 4-20
   opaqueFromRecords.A is a variant case which is never constructed
   <-- line 3
     | [@dead "opaqueFromRecords.A"] A(Records.coord);
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ReasonComponent.re", line 8, characters 2-17
+  File "./ReasonComponent.re", line 8, characters 2-17
   person.surname is a record label never used to read a value
   <-- line 8
     [@dead "person.surname"] surname: string,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ReasonComponent.re", line 9, characters 2-38
+  File "./ReasonComponent.re", line 9, characters 2-38
   person.type_ is a record label never used to read a value
   <-- line 9
     [@dead "person.type_"] [@genType.as "type"]
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ReasonComponent.re", line 11, characters 2-24
+  File "./ReasonComponent.re", line 11, characters 2-24
   person.polymorphicPayload is a record label never used to read a value
   <-- line 11
     [@dead "person.polymorphicPayload"] polymorphicPayload: 'a,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ReasonComponent.re", line 50, characters 4-5
+  File "./ReasonComponent.re", line 50, characters 4-5
   t.A is a variant case which is never constructed
   <-- line 50
     | [@dead "t.A"] A
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ReasonComponent.re", line 51, characters 4-10
+  File "./ReasonComponent.re", line 51, characters 4-10
   t.B is a variant case which is never constructed
   <-- line 51
     | [@dead "t.B"] B(int)
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ReasonComponent.re", line 52, characters 4-13
+  File "./ReasonComponent.re", line 52, characters 4-13
   t.C is a variant case which is never constructed
   <-- line 52
     | [@dead "t.C"] C(string);
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Records.re", line 22, characters 2-14
+  File "./Records.re", line 22, characters 2-14
   person.name is a record label never used to read a value
   <-- line 22
     [@dead "person.name"] name: string,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Records.re", line 23, characters 2-10
+  File "./Records.re", line 23, characters 2-10
   person.age is a record label never used to read a value
   <-- line 23
     [@dead "person.age"] age: int,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Records.re", line 29, characters 2-14
+  File "./Records.re", line 29, characters 2-14
   business.name is a record label never used to read a value
   <-- line 29
     [@dead "business.name"] name: string,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Records.re", line 56, characters 2-10
+  File "./Records.re", line 56, characters 2-10
   payload.num is a record label never used to read a value
   <-- line 56
     [@dead "payload.num"] num: int,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Records.re", line 66, characters 2-8
+  File "./Records.re", line 66, characters 2-8
   record.w is a record label never used to read a value
   <-- line 66
     [@dead "record.w"] w: int,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Records.re", line 86, characters 2-14
+  File "./Records.re", line 86, characters 2-14
   business2.name is a record label never used to read a value
   <-- line 86
     [@dead "business2.name"] name: string,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Records.re", line 87, characters 2-30
+  File "./Records.re", line 87, characters 2-30
   business2.owner is a record label never used to read a value
   <-- line 87
     [@dead "business2.owner"] owner: Js.Nullable.t(person),
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/References.re", line 39, characters 27-33
+  File "./References.re", line 39, characters 27-33
   requiresConversion.x is a record label never used to read a value
   <-- line 39
   type requiresConversion = {[@dead "requiresConversion.x"] x: int};
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/RequireCond.re", line 1, characters 0-288
+  File "./RequireCond.re", line 1, characters 0-288
   +make is never used
   <-- line 1
   [@dead "+make"] [@bs.module]
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/RequireCond.re", line 14, characters 0-351
+  File "./RequireCond.re", line 14, characters 0-351
   +either is never used
   <-- line 14
   [@dead "+either"] [@bs.module]
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Shadow.re", line 11, characters 2-22
+  File "./Shadow.re", line 11, characters 2-22
   M.+test is never used
   <-- line 11
     [@dead "M.+test"] let test = () => "a";
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestImmutableArray.re", line 9, characters 0-43
+  File "./TestImmutableArray.re", line 9, characters 0-43
   +testBeltArrayGet is never used
   <-- line 9
   [@dead "+testBeltArrayGet"] let testBeltArrayGet = arr => Belt.(arr[3]);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestImmutableArray.re", line 11, characters 0-47
+  File "./TestImmutableArray.re", line 11, characters 0-47
   +testBeltArraySet is never used
   <-- line 11
   [@dead "+testBeltArraySet"] let testBeltArraySet = arr => Belt.(arr[3] = 4);
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestImport.re", line 18, characters 0-43
+  File "./TestImport.re", line 18, characters 0-43
   +innerStuffContents is never used
   <-- line 18
   [@dead "+innerStuffContents"] let innerStuffContents = innerStuffContents;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestImport.re", line 28, characters 16-28
+  File "./TestImport.re", line 28, characters 16-28
   message.text is a record label never used to read a value
   <-- line 28
   type message = {[@dead "message.text"] text: string};
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestImport.re", line 42, characters 0-15
+  File "./TestImport.re", line 42, characters 0-15
   +make is never used
   <-- line 42
   [@dead "+make"] let make = make;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestPromise.re", line 6, characters 2-8
+  File "./TestPromise.re", line 6, characters 2-8
   fromPayload.x is a record label never used to read a value
   <-- line 6
     [@dead "fromPayload.x"] x: int,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestPromise.re", line 11, characters 18-32
+  File "./TestPromise.re", line 11, characters 18-32
   toPayload.result is a record label never used to read a value
   <-- line 11
   type toPayload = {[@dead "toPayload.result"] result: string};
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TransitiveType2.re", line 7, characters 0-28
+  File "./TransitiveType2.re", line 7, characters 0-28
   +convertT2 is never used
   <-- line 7
   [@dead "+convertT2"] let convertT2 = (x: t2) => x;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TransitiveType3.re", line 3, characters 2-8
+  File "./TransitiveType3.re", line 3, characters 2-8
   t3.i is a record label never used to read a value
   <-- line 3
     [@dead "t3.i"] i: int,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TransitiveType3.re", line 4, characters 2-11
+  File "./TransitiveType3.re", line 4, characters 2-11
   t3.s is a record label never used to read a value
   <-- line 4
     [@dead "t3.s"] s: string,
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TypeParams1.re", line 4, characters 0-24
+  File "./TypeParams1.re", line 4, characters 0-24
   +exportSomething is never used
   <-- line 4
   [@dead "+exportSomething"] let exportSomething = 10;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TypeParams2.re", line 2, characters 13-20
+  File "./TypeParams2.re", line 2, characters 13-20
   item.id is a record label never used to read a value
   <-- line 2
   type item = {[@dead "item.id"] id: int};
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TypeParams2.re", line 10, characters 0-24
+  File "./TypeParams2.re", line 10, characters 0-24
   +exportSomething is never used
   <-- line 10
   [@dead "+exportSomething"] let exportSomething = 10;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Types.re", line 12, characters 4-13
+  File "./Types.re", line 12, characters 4-13
   typeWithVars.A is a variant case which is never constructed
   <-- line 12
     | [@dead "typeWithVars.A"] A('x, 'y)
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Types.re", line 13, characters 4-9
+  File "./Types.re", line 13, characters 4-9
   typeWithVars.B is a variant case which is never constructed
   <-- line 13
     | [@dead "typeWithVars.B"] B('z);
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Types.re", line 39, characters 26-47
+  File "./Types.re", line 39, characters 26-47
   mutuallyRecursiveB.a is a record label never used to read a value
   <-- line 39
   and mutuallyRecursiveB = {[@dead "mutuallyRecursiveB.a"] a: mutuallyRecursiveA};
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Types.re", line 60, characters 4-5
+  File "./Types.re", line 60, characters 4-5
   opaqueVariant.A is a variant case which is never constructed
   <-- line 60
     | [@dead "opaqueVariant.A"] A
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Types.re", line 61, characters 4-5
+  File "./Types.re", line 61, characters 4-5
   opaqueVariant.B is a variant case which is never constructed
   <-- line 61
     | [@dead "opaqueVariant.B"] B;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Types.re", line 91, characters 2-8
+  File "./Types.re", line 91, characters 2-8
   record.i is a record label never used to read a value
   <-- line 91
     [@dead "record.i"] i: int,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Types.re", line 92, characters 2-11
+  File "./Types.re", line 92, characters 2-11
   record.s is a record label never used to read a value
   <-- line 92
     [@dead "record.s"] s: string,
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Types.re", line 139, characters 19-26
+  File "./Types.re", line 139, characters 19-26
   someRecord.id is a record label never used to read a value
   <-- line 139
   type someRecord = {[@dead "someRecord.id"] id: int};
 
   Warning Dead Value
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Types.re", line 173, characters 2-11
+  File "./Types.re", line 173, characters 2-11
   ObjectId.+x is never used
   <-- line 173
     [@dead "ObjectId.+x"] let x = 1;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Unboxed.re", line 4, characters 4-10
+  File "./Unboxed.re", line 4, characters 4-10
   v1.A is a variant case which is never constructed
   <-- line 4
     | [@dead "v1.A"] A(int);
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Unboxed.re", line 9, characters 4-10
+  File "./Unboxed.re", line 9, characters 4-10
   v2.A is a variant case which is never constructed
   <-- line 9
     | [@dead "v2.A"] A(int);
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Unboxed.re", line 16, characters 11-17
+  File "./Unboxed.re", line 16, characters 11-17
   r1.x is a record label never used to read a value
   <-- line 16
   type r1 = {[@dead "r1.x"] x: int};
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Unboxed.re", line 21, characters 4-18
+  File "./Unboxed.re", line 21, characters 4-18
   r2.B is a variant case which is never constructed
   <-- line 21
     | [@dead "r2.B"] B({g: string});
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Variants.re", line 97, characters 4-29
+  File "./Variants.re", line 97, characters 4-29
   type_.Type is a variant case which is never constructed
   <-- line 97
     | [@dead "type_.Type"] [@genType.as "type"] Type;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Variants.re", line 105, characters 4-10
+  File "./Variants.re", line 105, characters 4-10
   result1.Ok is a variant case which is never constructed
   <-- line 105
     | [@dead "result1.Ok"] Ok('a)
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Variants.re", line 106, characters 4-13
+  File "./Variants.re", line 106, characters 4-13
   result1.Error is a variant case which is never constructed
   <-- line 106
     | [@dead "result1.Error"] Error('b);
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/VariantsWithPayload.re", line 51, characters 4-5
+  File "./VariantsWithPayload.re", line 51, characters 4-5
   simpleVariant.A is a variant case which is never constructed
   <-- line 51
     | [@dead "simpleVariant.A"] A
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/VariantsWithPayload.re", line 52, characters 4-5
+  File "./VariantsWithPayload.re", line 52, characters 4-5
   simpleVariant.B is a variant case which is never constructed
   <-- line 52
     | [@dead "simpleVariant.B"] B
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/VariantsWithPayload.re", line 53, characters 4-5
+  File "./VariantsWithPayload.re", line 53, characters 4-5
   simpleVariant.C is a variant case which is never constructed
   <-- line 53
     | [@dead "simpleVariant.C"] C;
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/VariantsWithPayload.re", line 60, characters 4-30
+  File "./VariantsWithPayload.re", line 60, characters 4-30
   variantWithPayloads.A is a variant case which is never constructed
   <-- line 60
     | [@dead "variantWithPayloads.A"] [@genType.as "ARenamed"] A
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/VariantsWithPayload.re", line 61, characters 4-10
+  File "./VariantsWithPayload.re", line 61, characters 4-10
   variantWithPayloads.B is a variant case which is never constructed
   <-- line 61
     | [@dead "variantWithPayloads.B"] B(int)
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/VariantsWithPayload.re", line 62, characters 4-15
+  File "./VariantsWithPayload.re", line 62, characters 4-15
   variantWithPayloads.C is a variant case which is never constructed
   <-- line 62
     | [@dead "variantWithPayloads.C"] C(int, int)
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/VariantsWithPayload.re", line 63, characters 4-17
+  File "./VariantsWithPayload.re", line 63, characters 4-17
   variantWithPayloads.D is a variant case which is never constructed
   <-- line 63
     | [@dead "variantWithPayloads.D"] D((int, int))
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/VariantsWithPayload.re", line 64, characters 4-23
+  File "./VariantsWithPayload.re", line 64, characters 4-23
   variantWithPayloads.E is a variant case which is never constructed
   <-- line 64
     | [@dead "variantWithPayloads.E"] E(int, string, int);
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/VariantsWithPayload.re", line 100, characters 4-10
+  File "./VariantsWithPayload.re", line 100, characters 4-10
   variant1Int.R is a variant case which is never constructed
   <-- line 100
     | [@dead "variant1Int.R"] R(int);
 
   Warning Dead Type
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/VariantsWithPayload.re", line 107, characters 4-14
+  File "./VariantsWithPayload.re", line 107, characters 4-14
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
