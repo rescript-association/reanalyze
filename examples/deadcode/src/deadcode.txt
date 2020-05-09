@@ -1765,82 +1765,82 @@ xxx
   
 File References
 
-  TestFirstClassModules.re -->> 
-  TestEmitInnerModules.re -->> 
+  AutoAnnotate.re -->> 
+  BootloaderResource.re -->> 
+  BucklescriptAnnotations.re -->> 
+  ComponentAsProp.re -->> ReactDOMRe.re, ReasonReact.rei
+  CreateErrorHandler1.re -->> ErrorHandler.rei
+  CreateErrorHandler2.re -->> 
+  DeadCodeImplementation.re -->> 
+  DeadCodeInterface.re -->> 
+  DeadMl.ml -->> 
+  DeadRT.re -->> 
+  DeadRT.rei -->> 
+  DeadTest.re -->> React.re, BootloaderResource.re, DeadValueTest.rei, DynamicallyLoadedComponent.re, ImmutableArray.rei, JSResource.re, ExportWithRename.re, trace.mli
   DeadTestBlacklist.re -->> 
+  DeadTestWithInterface.re -->> 
+  DeadTypeTest.re -->> 
+  DeadTypeTest.rei -->> DeadTypeTest.re
+  DeadValueTest.re -->> 
+  DeadValueTest.rei -->> DeadValueTest.re
+  Docstrings.re -->> 
+  DynamicallyLoadedComponent.re -->> React.re
+  ErrorHandler.re -->> 
+  ErrorHandler.rei -->> ErrorHandler.re
+  EverythingLiveHere.re -->> 
+  FirstClassModules.re -->> 
+  FirstClassModulesInterface.re -->> 
+  FirstClassModulesInterface.rei -->> FirstClassModulesInterface.re
+  Hooks.re -->> React.re, ReactDOMRe.re, ReasonReact.rei, ImportHookDefault.re, ImportHooks.re
+  IgnoreInterface.re -->> 
+  IgnoreInterface.rei -->> 
+  ImmutableArray.re -->> 
+  ImmutableArray.rei -->> ImmutableArray.re
+  ImportHookDefault.re -->> 
+  ImportHooks.re -->> 
+  ImportIndex.re -->> 
+  ImportJsValue.re -->> 
+  ImportMyBanner.re -->> 
+  JSResource.re -->> 
+  LetPrivate.re -->> 
+  ManyComponents.re -->> ReactDOMRe.re, ReasonReact.rei
+  ModuleAliases.re -->> 
+  ModuleAliases2.re -->> 
+  NestedModules.re -->> 
+  NestedModulesInSignature.re -->> 
+  NestedModulesInSignature.rei -->> NestedModulesInSignature.re
   Opaque.re -->> 
+  ReasonComponent.re -->> ReactDOMRe.re, ReasonReact.rei, ImportMyBanner.re
+  Records.re -->> 
+  References.re -->> 
+  RequireCond.re -->> 
+  Shadow.re -->> 
+  TestEmitInnerModules.re -->> 
+  TestFirstClassModules.re -->> 
+  TestImmutableArray.re -->> ImmutableArray.rei
+  TestImport.re -->> 
+  TestModuleAliases.re -->> 
+  TestPromise.re -->> 
+  TransitiveType1.re -->> 
+  TransitiveType2.re -->> 
+  TransitiveType3.re -->> 
+  Tuples.re -->> 
+  TypeParams1.re -->> 
   TypeParams2.re -->> 
   TypeParams3.re -->> 
-  TransitiveType1.re -->> 
-  BootloaderResource.re -->> 
-  ComponentAsProp.re -->> ReactDOMRe.re, ReasonReact.rei
-  ManyComponents.re -->> ReactDOMRe.re, ReasonReact.rei
-  TransitiveType2.re -->> 
-  Shadow.re -->> 
-  Unboxed.re -->> 
-  DeadTestWithInterface.re -->> 
-  FirstClassModulesInterface.rei -->> FirstClassModulesInterface.re
-  RequireCond.re -->> 
-  Hooks.re -->> React.re, ReactDOMRe.re, ReasonReact.rei, ImportHookDefault.re, ImportHooks.re
-  ExportWithRename.re -->> React.re
-  Docstrings.re -->> 
-  TestPromise.re -->> 
-  ModuleAliases.re -->> 
-  DeadTest.re -->> React.re, BootloaderResource.re, DeadValueTest.rei, DynamicallyLoadedComponent.re, ImmutableArray.rei, JSResource.re, ExportWithRename.re, trace.mli
-  AutoAnnotate.re -->> 
-  ImportHooks.re -->> 
-  NestedModulesInSignature.rei -->> NestedModulesInSignature.re
-  trace.ml -->> 
-  UseImportJsValue.re -->> ImportJsValue.re
-  trace.mli -->> trace.ml
-  IgnoreInterface.re -->> 
-  ImmutableArray.re -->> 
-  TestImmutableArray.re -->> ImmutableArray.rei
-  EverythingLiveHere.re -->> 
-  Uncurried.re -->> 
-  FirstClassModulesInterface.re -->> 
-  DeadValueTest.re -->> 
-  DeadCodeImplementation.re -->> 
-  VariantsWithPayload.re -->> 
-  ReasonComponent.re -->> ReactDOMRe.re, ReasonReact.rei, ImportMyBanner.re
   Types.re -->> 
-  DeadCodeInterface.re -->> 
-  References.re -->> 
-  BsJson.re -->> Json_decode.mli
-  ExnB.re -->> 
-  JSResource.re -->> 
-  ExnA.re -->> ExnB.re
-  TestModuleAliases.re -->> 
-  ImportJsValue.re -->> 
-  Tuples.re -->> 
-  TestImport.re -->> 
-  TransitiveType3.re -->> 
-  IgnoreInterface.rei -->> 
-  NestedModulesInSignature.re -->> 
-  DeadMl.ml -->> 
-  ErrorHandler.re -->> 
-  CreateErrorHandler2.re -->> 
-  DeadTypeTest.rei -->> DeadTypeTest.re
-  DeadValueTest.rei -->> DeadValueTest.re
-  DeadRT.rei -->> 
-  DeadRT.re -->> 
-  DeadTypeTest.re -->> 
-  TypeParams1.re -->> 
-  FirstClassModules.re -->> 
-  CreateErrorHandler1.re -->> ErrorHandler.rei
-  Exn.re -->> 
-  ImportMyBanner.re -->> 
+  Unboxed.re -->> 
+  Uncurried.re -->> 
+  UseImportJsValue.re -->> ImportJsValue.re
   Variants.re -->> 
-  DynamicallyLoadedComponent.re -->> React.re
-  BucklescriptAnnotations.re -->> 
-  ErrorHandler.rei -->> ErrorHandler.re
-  LetPrivate.re -->> 
-  ImmutableArray.rei -->> ImmutableArray.re
-  NestedModules.re -->> 
-  Records.re -->> 
-  ImportIndex.re -->> 
-  ImportHookDefault.re -->> 
-  ModuleAliases2.re -->> 
+  VariantsWithPayload.re -->> 
+  BsJson.re -->> Json_decode.mli
+  Exn.re -->> 
+  ExnA.re -->> ExnB.re
+  ExnB.re -->> 
+  ExportWithRename.re -->> React.re
+  trace.ml -->> 
+  trace.mli -->> trace.ml
   Dead Type +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
   Dead Type +AutoAnnotate.annotatedVariant.R2: 0 references () [0]
   Dead Type +AutoAnnotate.r4.r4: 0 references () [0]
