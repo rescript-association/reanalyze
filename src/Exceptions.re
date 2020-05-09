@@ -1,3 +1,5 @@
+open Common;
+
 module ExnSet = Set.Make(Exn);
 
 type t = ExnSet.t;
@@ -25,13 +27,13 @@ let pp = (~exnTable, ppf, exceptions) => {
       | Some(locSet) =>
         let positions =
           locSet
-          |> DeadCommon.LocSet.elements
+          |> Common.LocSet.elements
           |> List.map(loc => loc.Location.loc_start);
         Format.fprintf(
           ppf,
           " @{<info>%s@} (@{<filename>%s@})",
           name,
-          positions |> List.map(DeadCommon.posToString) |> String.concat(" "),
+          positions |> List.map(posToString) |> String.concat(" "),
         );
       | None => Format.fprintf(ppf, " @{<info>%s@}", name)
       }

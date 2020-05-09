@@ -5,7 +5,7 @@ open DeadCommon;
 let typeDependencies = ref([]);
 
 let addTypeReference = (~posFrom, ~posTo) => {
-  if (debug^) {
+  if (Common.debug^) {
     Log_.item(
       "addTypeReference %s --> %s@.",
       posFrom |> posToString,
@@ -37,7 +37,7 @@ let pathTypeToInterface = path =>
 
 let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
   if (loc1.loc_start != loc2.loc_start) {
-    if (debug^) {
+    if (Common.debug^) {
       Log_.item(
         "extendTypeDependencies %s --> %s@.",
         loc1.loc_start |> posToString,
@@ -49,7 +49,7 @@ let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
 
 // Type dependencies between Foo.re and Foo.rei
 let addTypeDependenciesAcrossFiles = (~pahToType, ~loc, ~typeLabelName) => {
-  let isInterface = Filename.check_suffix(currentSrc^, "i");
+  let isInterface = Filename.check_suffix(Common.currentSrc^, "i");
   if (!isInterface) {
     let path_1 = pahToType |> pathModuleToInterface;
     let path_2 = path_1 |> pathTypeToInterface;
@@ -105,7 +105,7 @@ let addTypeDependenciesInnerModule = (~pahToType, ~loc, ~typeLabelName) => {
 let addDeclaration = (~typeId: Ident.t, ~typeKind: Types.type_kind) => {
   let pahToType = [
     typeId |> Ident.name |> Name.create,
-    ...currentModulePath^ @ [currentModuleName^],
+    ...currentModulePath^ @ [Common.currentModuleName^],
   ];
 
   let processTypeLabel = (typeLabelName, ~declKind, ~loc: Location.t) => {

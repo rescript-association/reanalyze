@@ -1,6 +1,4 @@
-open DeadCommon;
-
-let version = Version.version;
+open Common;
 
 type analysisType =
   | Dce
@@ -83,8 +81,8 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
   };
   switch (analysis) {
   | Dce =>
-    reportDead(ppf);
-    WriteDeadAnnotations.write();
+    DeadCommon.reportDead(ppf);
+    DeadCommon.WriteDeadAnnotations.write();
   | Exception => Exception.reportResults(~ppf)
   | Termination => Arnold.reportResults(~ppf)
   };
@@ -98,7 +96,7 @@ type cliCommand =
 
 let cli = () => {
   let cliCommand = ref(NoOp);
-  let usage = "reanalyze version " ++ version;
+  let usage = "reanalyze version " ++ Version.version;
   let versionAndExit = () => {
     print_endline(usage);
     exit(0);
@@ -120,7 +118,7 @@ let cli = () => {
     Exception(cmtRoot) |> setCliCommand;
   }
   and setDebug = () => {
-    DeadCommon.debug := true;
+    debug := true;
   }
   and setBlacklist = s => {
     let names = s |> String.split_on_char(',');

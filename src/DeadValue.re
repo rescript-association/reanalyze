@@ -121,7 +121,7 @@ let checkAnyValueBindingWithNoSideEffects =
   switch (pat_desc) {
   | Tpat_any when exprNoSideEffects(expr) && !loc.loc_ghost =>
     let name = "_" |> Name.create(~isInterface=false);
-    let path = currentModulePath^ @ [currentModuleName^];
+    let path = currentModulePath^ @ [Common.currentModuleName^];
     addValueDeclaration(~path, ~loc, ~sideEffects=false, name);
   | _ => ()
   };
@@ -140,7 +140,7 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
         | Some({declKind: Value}) => true
         | _ => false
         };
-      let path = currentModulePath^ @ [currentModuleName^];
+      let path = currentModulePath^ @ [Common.currentModuleName^];
       if (!exists) {
         let sideEffects = !exprNoSideEffects(vb.vb_expr);
         addValueDeclaration(~path, ~loc, ~sideEffects, name);
@@ -181,15 +181,18 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     // When the ppx uses a dummy location, find the original location.
     let moduleName =
       switch (path) {
-      | Pident(_) => currentModuleName^
+      | Pident(_) => Common.currentModuleName^
       | _ => path |> Path.head |> Ident.name |> Name.create
       };
 
     let valueName = path |> Path.last |> Name.create(~isInterface=false);
     switch (getPosOfValue(~moduleName, ~valueName)) {
     | Some(posName) =>
-      if (debug^) {
-        Log_.item("collectExpr %s: fix ghost location reference@.", path |> Path.name);
+      if (Common.debug^) {
+        Log_.item(
+          "collectExpr %s: fix ghost location reference@.",
+          path |> Path.name,
+        );
       };
       addValueReference(
         ~addFileReference=true,
@@ -220,7 +223,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     ) {
     | None => ()
     | Some(posMake) =>
-      if (debug^) {
+      if (Common.debug^) {
         Log_.item(
           "lazyLoad %s(%s) %s defined in %s@.",
           path |> Path.name,
@@ -258,7 +261,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     let positionsFalse = getDeclPositions(~moduleName=moduleFalse);
     let allPositions = PosSet.union(positionsTrue, positionsFalse);
 
-    if (debug^) {
+    if (Common.debug^) {
       Log_.item(
         "requireCond  true:%s false:%s allPositions:[%s]@.",
         moduleTrue |> Name.toString,
@@ -272,7 +275,10 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
 
     allPositions
     |> PosSet.iter(pos => {
-         let posFrom = {...Lexing.dummy_pos, pos_fname: currentModule^};
+         let posFrom = {
+           ...Lexing.dummy_pos,
+           pos_fname: Common.currentModule^,
+         };
          let locFrom = {
            Location.loc_start: posFrom,
            loc_end: posFrom,
@@ -406,7 +412,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
                processSignatureItem(
                  ~doTypes,
                  ~doValues=false,
-                 ~path=currentModulePath^ @ [currentModuleName^],
+                 ~path=currentModulePath^ @ [Common.currentModuleName^],
                ),
              )
         | _ => ()
@@ -414,7 +420,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
       };
 
     | Tstr_primitive(vd) when doValues && analyzeExternals =>
-      let path = currentModulePath^ @ [currentModuleName^];
+      let path = currentModulePath^ @ [Common.currentModuleName^];
       let exists =
         switch (PosHash.find_opt(decls, vd.val_loc.loc_start)) {
         | Some({declKind: Value}) => true
@@ -443,7 +449,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
     | Tstr_include({incl_mod, incl_type}) =>
       switch (incl_mod.mod_desc) {
       | Tmod_ident(_path, _lid) =>
-        let currentPath = currentModulePath^ @ [currentModuleName^];
+        let currentPath = currentModulePath^ @ [Common.currentModuleName^];
         incl_type
         |> List.iter(
              processSignatureItem(

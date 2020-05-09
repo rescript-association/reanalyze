@@ -12,7 +12,7 @@ let iter: (Exn.t => unit, t) => unit;
 let fromList: list(Exn.t) => t;
 
 let pp:
-  (~exnTable: option(Hashtbl.t(Exn.t, DeadCommon.LocSet.t)), Format.formatter, t) =>
+  (~exnTable: option(Hashtbl.t(Exn.t, Common.LocSet.t)), Format.formatter, t) =>
   unit;
 
 let toList: t => list(Exn.t);

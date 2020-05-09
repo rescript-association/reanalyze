@@ -6,7 +6,7 @@ let processSignature = (~doValues, ~doTypes, signature: Types.signature) => {
        DeadValue.processSignatureItem(
          ~doValues,
          ~doTypes,
-         ~path=[currentModuleName^],
+         ~path=[Common.currentModuleName^],
          sig_item,
        )
      );

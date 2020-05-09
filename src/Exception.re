@@ -1,7 +1,6 @@
-let debug = DeadCommon.debug;
-let posToString = DeadCommon.posToString;
+let posToString = Common.posToString;
 
-module LocSet = DeadCommon.LocSet;
+module LocSet = Common.LocSet;
 
 module Values = {
   let valueBindingsTable: Hashtbl.t(string, Hashtbl.t(string, Exceptions.t)) =
@@ -56,7 +55,7 @@ module Values = {
     currentFileTable := Hashtbl.create(15);
     Hashtbl.replace(
       valueBindingsTable,
-      DeadCommon.currentModule^,
+      Common.currentModule^,
       currentFileTable^,
     );
   };
@@ -109,7 +108,7 @@ module Event = {
     };
 
   let combine = (~moduleName, events) => {
-    if (debug^) {
+    if (Common.debug^) {
       Log_.item("@.");
       Log_.item("Events combine: #events %d@.", events |> List.length);
     };
@@ -124,13 +123,13 @@ module Event = {
     let rec loop = (exnSet, events) =>
       switch (events) {
       | [{kind: Raises, exceptions, loc} as ev, ...rest] =>
-        if (debug^) {
+        if (Common.debug^) {
           Log_.item("%a@.", print, ev);
         };
         exceptions |> Exceptions.iter(exn => extendExnTable(exn, loc));
         loop(Exceptions.union(exnSet, exceptions), rest);
       | [{kind: Call(path), loc} as ev, ...rest] =>
-        if (debug^) {
+        if (Common.debug^) {
           Log_.item("%a@.", print, ev);
         };
         switch (path |> Values.findPath(~moduleName)) {
@@ -146,7 +145,7 @@ module Event = {
           }
         };
       | [{kind: Catches(nestedEvents), exceptions} as ev, ...rest] =>
-        if (debug^) {
+        if (Common.debug^) {
           Log_.item("%a@.", print, ev);
         };
         if (Exceptions.isEmpty(exceptions /* catch-all */)) {
@@ -430,7 +429,7 @@ let traverseAst = {
       exceptionsFromAnnotations |> Values.add(~id);
       let res = super.value_binding(self, vb);
 
-      let moduleName = DeadCommon.currentModule^;
+      let moduleName = Common.currentModule^;
       let exceptions =
         switch (id |> Values.findId(~moduleName)) {
         | Some(exceptions) => exceptions

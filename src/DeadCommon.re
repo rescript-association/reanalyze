@@ -1,11 +1,11 @@
 /* Adapted from https://github.com/LexiFi/dead_code_analyzer */
 
+open Common;
+
 // Turn on type analysis
 let analyzeTypes = ref(true);
 
 let analyzeExternals = true;
-
-let debug = ref(false);
 
 let removeDeadValuesWithSideEffects = false;
 
@@ -16,42 +16,6 @@ let reportTypesDeadOnlyInInterface = false;
 let recursiveDebug = false;
 
 let warnOnCircularDependencies = false;
-
-module Name: {
-  type t;
-  let create: (~isInterface: bool=?, string) => t;
-  let isUnderscore: t => bool;
-  let startsWithUnderscore: t => bool;
-  let toImplementation: t => t;
-  let toInterface: t => t;
-  let toString: t => string;
-} = {
-  type t = string;
-  let create = (~isInterface=true, s) => isInterface ? s : "+" ++ s;
-  let isInterface = s =>
-    try(s.[0] != '+') {
-    | Invalid_argument(_) => false
-    };
-  let isUnderscore = s => s == "_" || s == "+_";
-  let startsWithUnderscore = s =>
-    s
-    |> String.length >= 2
-    && (
-      try(s.[0] == '_' || s.[0] == '+' && s.[1] == '_') {
-      | Invalid_argument(_) => false
-      }
-    );
-  let toInterface = s =>
-    isInterface(s)
-      ? s
-      : (
-        try(String.sub(s, 1, String.length(s) - 1)) {
-        | Invalid_argument(_) => s
-        }
-      );
-  let toImplementation = s => isInterface(s) ? "+" ++ s : s;
-  let toString = s => s;
-};
 
 let rec checkSub = (s1, s2, n) =>
   n <= 0
@@ -72,16 +36,7 @@ let write = ref(false);
 let deadAnnotation = "dead";
 let liveAnnotation = "live";
 
-/* Location printer: `filename:line: ' */
-let posToString = (~printCol=true, ~shortFile=true, pos: Lexing.position) => {
-  let file = pos.Lexing.pos_fname;
-  let line = pos.Lexing.pos_lnum;
-  let col = pos.Lexing.pos_cnum - pos.Lexing.pos_bol;
-  (shortFile ? file |> Filename.basename : file)
-  ++ ":"
-  ++ string_of_int(line)
-  ++ (printCol ? ":" ++ string_of_int(col) : ": ");
-};
+let posToString = posToString;
 
 let posIsReason = Log_.posIsReason;
 
@@ -115,39 +70,6 @@ module PosHash = {
   };
 };
 
-module LocSet =
-  Set.Make({
-    include Location;
-    let compare = compare;
-  });
-
-module FileSet = Set.Make(String);
-
-module FileHash = {
-  include Hashtbl.Make({
-    type t = string;
-
-    let hash = (x: t) => Hashtbl.hash(x);
-
-    let equal = (x: t, y) => x == y;
-  });
-
-  let findSet = (table, key) =>
-    try(find(table, key)) {
-    | Not_found => FileSet.empty
-    };
-
-  let addFile = (table, key) => {
-    let set = findSet(table, key);
-    replace(table, key, set);
-  };
-
-  let addSet = (table, key, value) => {
-    let set = findSet(table, key);
-    replace(table, key, FileSet.add(value, set));
-  };
-};
-
 type path = list(Name.t);
 
 type declKind =
@@ -173,13 +95,8 @@ let moduleDecls: Hashtbl.t(Name.t, PosSet.t) = Hashtbl.create(1); /* from module
 let valueReferences: PosHash.t(PosSet.t) = PosHash.create(256); /* all value references */
 let typeReferences: PosHash.t(PosSet.t) = PosHash.create(256); /* all type references */
 
-let fileReferences: FileHash.t(FileSet.t) = FileHash.create(256); /* references across files */
-
 let typeLabels: Hashtbl.t(string, Location.t) = Hashtbl.create(256); /* map from type items (record/variant label) paths and locations */
 
-let currentSrc = ref("");
-let currentModule = ref("");
-let currentModuleName = ref("" |> Name.create);
 let currentBindings = ref(PosSet.empty);
 let lastBinding = ref(Location.none);
 let getLastBinding = () => lastBinding^;
