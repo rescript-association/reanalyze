@@ -956,8 +956,14 @@ let reportDead = ppf => {
 
   if (debug^) {
     Log_.item("@.File References@.@.");
+    let fileList = ref([]);
     fileReferences
     |> FileHash.iter((file, files) =>
+         fileList := [(file, files), ...fileList^]
+       );
+    fileList^
+    |> List.sort(((f1, _), (f2, _)) => String.compare(f1, f2))
+    |> List.iter(((file, files)) =>
          Log_.item(
            "%s -->> %s@.",
            file |> Filename.basename,
