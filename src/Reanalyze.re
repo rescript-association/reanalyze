@@ -9,7 +9,7 @@ let loadCmtFile = (~analysis, cmtFilePath) => {
   if (debug^) {
     Log_.item(
       "Scanning %s@.",
-      test^ ? Filename.basename(cmtFilePath) : cmtFilePath,
+      ci^ ? Filename.basename(cmtFilePath) : cmtFilePath,
     );
   };
 
@@ -150,6 +150,11 @@ let cli = () => {
       "-blacklist",
       Arg.String(setBlacklist),
       "comma-separated-path-prefixes Don't report on files whose path has a prefix in the list",
+    ),
+    (
+      "-ci",
+      Arg.Unit(() => Common.ci := true),
+      "Internal flag for use in CI",
     ),
     ("-dce", Arg.Unit(() => setDCE(None)), "Eperimental DCE"),
     ("-debug", Arg.Unit(setDebug), "Print debug information"),
