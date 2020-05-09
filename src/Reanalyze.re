@@ -7,7 +7,10 @@ type analysisType =
 
 let loadCmtFile = (~analysis, cmtFilePath) => {
   if (debug^) {
-    Log_.item("Scanning %s@.", cmtFilePath);
+    Log_.item(
+      "Scanning %s@.",
+      test^ ? Filename.basename(cmtFilePath) : cmtFilePath,
+    );
   };
 
   let cmt_infos = Cmt_format.read_cmt(cmtFilePath);

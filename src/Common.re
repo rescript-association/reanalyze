@@ -3,6 +3,7 @@ let currentModule = ref("");
 let currentModuleName = ref("" |> Name.create);
 
 let debug = ref(false);
+
 let test = ref(false);
 
 /* Location printer: `filename:line: ' */

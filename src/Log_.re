@@ -190,6 +190,24 @@ let item = x => {
   Format.fprintf(Format.std_formatter, x);
 };
 
+let locToString = (ppf, loc: Location.t) =>
+  (
+    Common.test^
+      ? {
+        ...loc,
+        loc_start: {
+          ...loc.loc_start,
+          pos_fname: loc.loc_start.pos_fname |> Filename.basename,
+        },
+        loc_end: {
+          ...loc.loc_end,
+          pos_fname: loc.loc_end.pos_fname |> Filename.basename,
+        },
+      }
+      : loc
+  )
+  |> Loc.print(ppf);
+
 let logKind = (body, ~filter=?, ~color, ~loc: Location.t, ~name) =>
   if (switch (filter) {
       | Some(f) => f(loc.loc_start)
@@ -200,7 +218,7 @@ let logKind = (body, ~filter=?, ~color, ~loc: Location.t, ~name) =>
       "@[<v 2>@,%a@,%a@,%a@]@.",
       color,
       name,
-      Loc.print,
+      locToString,
       loc,
       body,
       (),
