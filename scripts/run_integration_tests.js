@@ -13,7 +13,7 @@ const isWindows = /^win/i.test(process.platform);
 
 // To prevent all kinds of cross-platform symlink errors, we decided to always
 // copy the built binary to the examples folder.
-const reanalyzeFile = path.join(__dirname, "../examples/reanalyze.exe");
+const reanalyzeFile = path.join(__dirname, "../_esy/default/build/install/default/bin/reanalyze.exe");
 
 /*
 Needed for wrapping the stdout pipe with a promise
