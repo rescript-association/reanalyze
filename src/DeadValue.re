@@ -206,40 +206,6 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     addValueReference(~addFileReference=true, ~locFrom, ~locTo)
 
   | Texp_apply(
-      {exp_desc: Texp_ident(path, _, {Types.val_loc: locTo, _})},
-      [(_lbl, Some({exp_desc: Texp_constant(Const_string(s, _))}))],
-    )
-      when
-        path
-        |> Path.name == "JSResource.jSResource"
-        && Filename.check_suffix(s, ".bs") =>
-    let moduleName =
-      Filename.remove_extension(s) |> Name.create(~isInterface=false);
-    switch (
-      "make"
-      |> Name.create(~isInterface=false)
-      |> ModuleDecls.findPos(~moduleName)
-    ) {
-    | None => ()
-    | Some(posMake) =>
-      if (Common.debug^) {
-        Log_.item(
-          "lazyLoad %s(%s) %s defined in %s@.",
-          path |> Path.name,
-          moduleName |> Name.toString,
-          locTo.loc_start |> posToString,
-          posMake |> posToString,
-        );
-      };
-      let locMake = {
-        Location.loc_start: posMake,
-        loc_end: posMake,
-        loc_ghost: false,
-      };
-      addValueReference(~addFileReference=true, ~locFrom, ~locTo=locMake);
-    };
-
-  | Texp_apply(
       {exp_desc: Texp_ident(path, _, _)},
       [
         (_, Some({exp_desc: Texp_constant(Const_string(sTrue, _))})),
