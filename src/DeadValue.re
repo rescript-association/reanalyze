@@ -186,8 +186,8 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
       };
 
     let valueName = path |> Path.last |> Name.create(~isInterface=false);
-    switch (getPosOfValue(~moduleName, ~valueName)) {
-    | Some(posName) =>
+    switch (valueName |> ModuleDecls.findPos(~moduleName)) {
+    | Some(pos) =>
       if (Common.debug^) {
         Log_.item(
           "collectExpr %s: fix ghost location reference@.",
@@ -197,7 +197,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
       addValueReference(
         ~addFileReference=true,
         ~locFrom,
-        ~locTo={loc_start: posName, loc_end: posName, loc_ghost: false},
+        ~locTo={loc_start: pos, loc_end: pos, loc_ghost: false},
       );
     | None => ()
     };
@@ -216,10 +216,9 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     let moduleName =
       Filename.remove_extension(s) |> Name.create(~isInterface=false);
     switch (
-      getPosOfValue(
-        ~moduleName,
-        ~valueName="make" |> Name.create(~isInterface=false),
-      )
+      "make"
+      |> Name.create(~isInterface=false)
+      |> ModuleDecls.findPos(~moduleName)
     ) {
     | None => ()
     | Some(posMake) =>
@@ -257,8 +256,9 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     let moduleFalse =
       Filename.remove_extension(sFalse) |> Name.create(~isInterface=false);
 
-    let positionsTrue = getDeclPositions(~moduleName=moduleTrue);
-    let positionsFalse = getDeclPositions(~moduleName=moduleFalse);
+    let positionsTrue = ModuleDecls.findAllPositions(~moduleName=moduleTrue);
+    let positionsFalse =
+      ModuleDecls.findAllPositions(~moduleName=moduleFalse);
     let allPositions = PosSet.union(positionsTrue, positionsFalse);
 
     if (Common.debug^) {
