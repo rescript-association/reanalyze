@@ -509,7 +509,8 @@ let addDeclaration_ =
 
     switch (path) {
     | [moduleName] when declKind == Value =>
-      pos |> ModuleDecls.addPos(~moduleName)
+    ()
+      // pos |> ModuleDecls.addPos(~moduleName)
     | _ => ()
     };
     let decl = {
