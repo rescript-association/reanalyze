@@ -109,44 +109,6 @@ let declGetLoc = decl => {
   loc_ghost: false,
 };
 
-module ModuleDecls = {
-  let table: Hashtbl.t(Name.t, PosSet.t) = Hashtbl.create(1); /* from module name to its decls */
-
-  let findPos = (~moduleName, valueName) => {
-    let lookup = name =>
-      switch (Hashtbl.find_opt(table, name)) {
-      | Some(posSet) =>
-        posSet
-        |> PosSet.find_first_opt(pos =>
-             switch (PosHash.find_opt(decls, pos)) {
-             | Some({declKind: Value, path: [name, ..._]})
-                 when name == valueName =>
-               true
-             | _ => false
-             }
-           )
-      | None => None
-      };
-
-    switch (lookup(moduleName |> Name.toInterface)) {
-    | None => lookup(moduleName |> Name.toImplementation)
-    | Some(x) => Some(x)
-    };
-  };
-
-  let findAllPositions = (~moduleName) => {
-    switch (Hashtbl.find_opt(table, moduleName)) {
-    | Some(posSet) => posSet
-    | None => PosSet.empty
-    };
-  };
-
-  let addPos = (~moduleName, pos) => {
-    let oldSet = findAllPositions(~moduleName);
-    Hashtbl.replace(table, moduleName, PosSet.add(pos, oldSet));
-  };
-};
-
 /* Keep track of the module path while traversing with Tast_mapper */
 let currentModulePath: ref(path) = ref([]);
 
@@ -507,12 +469,6 @@ let addDeclaration_ =
       );
     };
 
-    switch (path) {
-    | [moduleName] when declKind == Value =>
-    ()
-      // pos |> ModuleDecls.addPos(~moduleName)
-    | _ => ()
-    };
     let decl = {
       declKind,
       path: [name, ...path],
