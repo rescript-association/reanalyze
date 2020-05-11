@@ -177,85 +177,8 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
 let collectExpr = (super, self, e: Typedtree.expression) => {
   let locFrom = e.exp_loc;
   switch (e.exp_desc) {
-  | Texp_ident(path, _, {Types.val_loc: {loc_ghost: true}}) =>
-    // When the ppx uses a dummy location, find the original location.
-    let moduleName =
-      switch (path) {
-      | Pident(_) => Common.currentModuleName^
-      | _ => path |> Path.head |> Ident.name |> Name.create
-      };
-
-    let valueName = path |> Path.last |> Name.create(~isInterface=false);
-    switch (valueName |> ModuleDecls.findPos(~moduleName)) {
-    | Some(pos) =>
-      if (Common.debug^) {
-        Log_.item(
-          "collectExpr %s: fix ghost location reference@.",
-          path |> Path.name,
-        );
-      };
-      addValueReference(
-        ~addFileReference=true,
-        ~locFrom,
-        ~locTo={loc_start: pos, loc_end: pos, loc_ghost: false},
-      );
-    | None => ()
-    };
-
   | Texp_ident(_path, _, {Types.val_loc: {loc_ghost: false, _} as locTo, _}) =>
     addValueReference(~addFileReference=true, ~locFrom, ~locTo)
-
-  | Texp_apply(
-      {exp_desc: Texp_ident(path, _, _)},
-      [
-        (_, Some({exp_desc: Texp_constant(Const_string(sTrue, _))})),
-        (_, Some({exp_desc: Texp_constant(Const_string(sFalse, _))})),
-      ],
-    )
-      when
-        path
-        |> Path.name == "J.unsafe_expr"
-        && Filename.check_suffix(sTrue, ".bs")
-        && Filename.check_suffix(sFalse, ".bs") =>
-    let moduleTrue =
-      Filename.remove_extension(sTrue) |> Name.create(~isInterface=false);
-    let moduleFalse =
-      Filename.remove_extension(sFalse) |> Name.create(~isInterface=false);
-
-    let positionsTrue = ModuleDecls.findAllPositions(~moduleName=moduleTrue);
-    let positionsFalse =
-      ModuleDecls.findAllPositions(~moduleName=moduleFalse);
-    let allPositions = PosSet.union(positionsTrue, positionsFalse);
-
-    if (Common.debug^) {
-      Log_.item(
-        "requireCond  true:%s false:%s allPositions:[%s]@.",
-        moduleTrue |> Name.toString,
-        moduleFalse |> Name.toString,
-        allPositions
-        |> PosSet.elements
-        |> List.map(posToString)
-        |> String.concat(", "),
-      );
-    };
-
-    allPositions
-    |> PosSet.iter(pos => {
-         let posFrom = {
-           ...Lexing.dummy_pos,
-           pos_fname: Common.currentModule^,
-         };
-         let locFrom = {
-           Location.loc_start: posFrom,
-           loc_end: posFrom,
-           loc_ghost: false,
-         };
-         addValueReference(
-           ~addFileReference=false,
-           ~locTo={Location.loc_start: pos, loc_end: pos, loc_ghost: false},
-           ~locFrom,
-         );
-       });
 
   | Texp_field(
       _,
