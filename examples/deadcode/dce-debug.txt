@@ -14,8 +14,6 @@
   addValueDeclaration +make ExportWithRename.re:3:4 path:+ExportWithRename
   addValueReference ExportWithRename.re:3:32 --> ExportWithRename.re:3:13
   addValueReference ExportWithRename.re:3:19 --> React.re:7:0
-  collectExpr make: fix ghost location reference
-  addValueReference ExportWithRename.re:3:4 --> ExportWithRename.re:3:4
   Scanning Exn.cmt
   addValueDeclaration +raises Exn.re:1:4 path:+Exn
   addValueDeclaration +catches1 Exn.re:3:4 path:+Exn
@@ -621,8 +619,6 @@
   addValueDeclaration +make DynamicallyLoadedComponent.re:2:4 path:+DynamicallyLoadedComponent
   addValueReference DynamicallyLoadedComponent.re:2:32 --> DynamicallyLoadedComponent.re:2:13
   addValueReference DynamicallyLoadedComponent.re:2:19 --> React.re:7:0
-  collectExpr make: fix ghost location reference
-  addValueReference DynamicallyLoadedComponent.re:2:4 --> DynamicallyLoadedComponent.re:2:4
   Scanning TransitiveType2.cmt
   addValueDeclaration +convertT2 TransitiveType2.re:7:4 path:+TransitiveType2
   addValueReference TransitiveType2.re:7:4 --> TransitiveType2.re:7:17
@@ -1513,18 +1509,12 @@
   addValueReference Hooks.re:113:45 --> Hooks.re:112:21
   addValueReference Hooks.re:113:32 --> React.re:7:0
   addValueReference Hooks.re:113:4 --> ReactDOMRe.re:1125:0
-  collectExpr input: fix ghost location reference
-  addValueReference Hooks.re:111:4 --> Hooks.re:111:4
   addValueReference Hooks.re:111:4 --> React.re:81:0
   addTypeReference Hooks.re:130:58 --> Hooks.re:1:16
   addValueReference Hooks.re:130:58 --> Hooks.re:130:35
   addValueReference Hooks.re:130:45 --> React.re:7:0
-  collectExpr polymorphicComponent: fix ghost location reference
-  addValueReference Hooks.re:130:4 --> Hooks.re:130:4
   addValueReference Hooks.re:134:60 --> Hooks.re:134:38
   addValueReference Hooks.re:134:47 --> React.re:7:0
-  collectExpr functionReturningReactElement: fix ghost location reference
-  addValueReference Hooks.re:134:4 --> Hooks.re:134:4
   addValueDeclaration +car Hooks.re:149:8 path:+Hooks.RenderPropRequiresConversion
   addValueReference Hooks.re:150:30 --> Hooks.re:149:8
   addValueReference Hooks.re:150:18 --> Hooks.re:150:18
@@ -1536,8 +1526,6 @@
   addValueReference Hooks.re:159:10 --> Hooks.re:156:41
   addValueReference Hooks.re:159:4 --> ReactDOMRe.re:1125:0
   addValueReference Hooks.re:157:2 --> ReactDOMRe.re:1125:0
-  collectExpr aComponentWithChildren: fix ghost location reference
-  addValueReference Hooks.re:156:4 --> Hooks.re:156:4
   Scanning TestPromise.cmt
   addValueDeclaration +convert TestPromise.re:14:4 path:+TestPromise
   addTypeDeclaration x TestPromise.re:6:2 path:+TestPromise.fromPayload
@@ -1653,9 +1641,7 @@
   addValueDeclaration +globallyLive1 DeadTest.re:178:6 path:+DeadTest.GloobLive
   addValueDeclaration +globallyLive2 DeadTest.re:179:6 path:+DeadTest.GloobLive
   addValueDeclaration +globallyLive3 DeadTest.re:180:6 path:+DeadTest.GloobLive
-  requireCond  true:+ExportWithRename false:+DynamicallyLoadedComponent allPositions:[DynamicallyLoadedComponent.re:2:4, ExportWithRename.re:3:4]
-  addValueReference DeadTest:0:-1 --> DynamicallyLoadedComponent.re:2:4
-  addValueReference DeadTest:0:-1 --> ExportWithRename.re:3:4
+  requireCond  true:+ExportWithRename false:+DynamicallyLoadedComponent allPositions:[]
   addValueReference DeadTest.re:1:15 --> ImmutableArray.rei:7:0
   addValueReference DeadTest.re:8:7 --> DeadTest.re:7:4
   addValueReference DeadTest.re:11:7 --> DeadTest.re:10:4
@@ -1734,8 +1720,6 @@
   addValueReference DeadTest.re:164:4 --> ExportWithRename.re:3:4
   addValueReference DeadTest.re:167:29 --> DeadTest.re:167:11
   addValueReference DeadTest.re:167:16 --> React.re:7:0
-  collectExpr make: fix ghost location reference
-  addValueReference DeadTest.re:167:4 --> DeadTest.re:167:4
   addValueReference DeadTest.re:169:16 --> DeadTest.re:167:4
   addValueReference DeadTest.re:175:30 --> DeadTest.re:175:22
   addTypeReference DeadTest.re:175:21 --> trace.mli:3:11
@@ -2331,8 +2315,8 @@ File References
   Dead Type +DeadTypeTest.t.B: 0 references () [0]
   Dead Value DeadValueTest.+valueDead: 0 references () [0]
   Live Value DeadValueTest.+valueAlive: 1 references (DeadTest.re:77:16) [0]
-  Live Value +ExportWithRename.+make: 1 references (DeadTest:0:-1) [1]
-  Live Value +DynamicallyLoadedComponent.+make: 4 references (DeadTest.re:112:40, DeadTest.re:157:17, ExportWithRename.re:3:4, DeadTest:0:-1) [0]
+  Live Value +ExportWithRename.+make: 0 references () [1]
+  Live Value +DynamicallyLoadedComponent.+make: 3 references (DeadTest.re:112:40, DeadTest.re:157:17, ExportWithRename.re:3:4) [0]
   Dead Value ErrorHandler.+x: 0 references () [0]
   Live Value ErrorHandler.Make.+notify: 1 references (CreateErrorHandler1.re:8:0) [0]
   Dead Value +FirstClassModulesInterface.+r: 0 references () [0]
