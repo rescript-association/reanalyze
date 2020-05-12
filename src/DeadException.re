@@ -16,6 +16,7 @@ let add = (~path, ~loc, ~strLoc: Location.t, name) => {
        ~posEnd=strLoc.loc_end,
        ~posStart=strLoc.loc_start,
        ~declKind=Exception,
+       ~moduleLoc=ModulePath.getCurrent().loc,
        ~path,
        ~loc,
      );

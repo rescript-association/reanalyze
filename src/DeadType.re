@@ -111,13 +111,20 @@ let addTypeDependenciesInnerModule = (~pathToType, ~loc, ~typeLabelName) => {
 };
 
 let addDeclaration = (~typeId: Ident.t, ~typeKind: Types.type_kind) => {
+  let currentModulePath = ModulePath.getCurrent();
   let pathToType = [
     typeId |> Ident.name |> Name.create,
-    ...Current.modulePath^ @ [Common.currentModuleName^],
+    ...currentModulePath.path @ [Common.currentModuleName^],
   ];
 
   let processTypeLabel = (typeLabelName, ~declKind, ~loc: Location.t) => {
-    addDeclaration_(~declKind, ~path=pathToType, ~loc, typeLabelName);
+    addDeclaration_(
+      ~declKind,
+      ~path=pathToType,
+      ~loc,
+      ~moduleLoc=currentModulePath.loc,
+      typeLabelName,
+    );
 
     addTypeDependenciesAcrossFiles(~pathToType, ~loc, ~typeLabelName);
     addTypeDependenciesInnerModule(~pathToType, ~loc, ~typeLabelName);

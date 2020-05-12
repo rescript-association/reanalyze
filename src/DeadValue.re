@@ -9,8 +9,15 @@ let checkAnyValueBindingWithNoSideEffects =
   switch (pat_desc) {
   | Tpat_any when !SideEffects.checkExpr(expr) && !loc.loc_ghost =>
     let name = "_" |> Name.create(~isInterface=false);
-    let path = Current.modulePath^ @ [Common.currentModuleName^];
-    name |> addValueDeclaration(~path, ~loc, ~sideEffects=false);
+    let currentModulePath = ModulePath.getCurrent();
+    let path = currentModulePath.path @ [Common.currentModuleName^];
+    name
+    |> addValueDeclaration(
+         ~path,
+         ~loc,
+         ~moduleLoc=currentModulePath.loc,
+         ~sideEffects=false,
+       );
   | _ => ()
   };
 
@@ -31,7 +38,8 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
           true;
         | _ => false
         };
-      let path = Current.modulePath^ @ [Common.currentModuleName^];
+      let currentModulePath = ModulePath.getCurrent();
+      let path = currentModulePath.path @ [Common.currentModuleName^];
       if (!exists) {
         // This is never toplevel currently
         let isToplevel = oldLastBinding == Location.none;
@@ -40,6 +48,7 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
         |> addValueDeclaration(
              ~isToplevel,
              ~loc,
+             ~moduleLoc=currentModulePath.loc,
              ~optionalArgs,
              ~path,
              ~sideEffects,
@@ -171,7 +180,7 @@ let rec getSignature = (moduleType: Types.module_type) =>
   };
 
 let rec processSignatureItem =
-        (~doTypes, ~doValues, ~path, si: Types.signature_item) =>
+        (~doTypes, ~doValues, ~moduleLoc, ~path, si: Types.signature_item) =>
   switch (si) {
   | Sig_type(_) when doTypes =>
     let (id, t) = si |> Compat.getSigType;
@@ -189,13 +198,13 @@ let rec processSignatureItem =
       if (!isPrimitive || Config.analyzeExternals) {
         Ident.name(id)
         |> Name.create(~isInterface=false)
-        |> addValueDeclaration(~sideEffects=false, ~path, ~loc);
+        |> addValueDeclaration(~sideEffects=false, ~path, ~loc, ~moduleLoc);
       };
     };
   | Sig_module(_)
   | Sig_modtype(_) =>
     switch (si |> Compat.getSigModuleModtype) {
-    | Some((id, moduleType)) =>
+    | Some((id, moduleType, moduleLoc)) =>
       let collect =
         switch (si) {
         | Sig_modtype(_) => false
@@ -207,6 +216,7 @@ let rec processSignatureItem =
              processSignatureItem(
                ~doTypes,
                ~doValues,
+               ~moduleLoc,
                ~path=[id |> Ident.name |> Name.create, ...path],
              ),
            );
@@ -225,16 +235,18 @@ let traverseStructure = (~doTypes, ~doValues) => {
   let pat = (self, p) => p |> collectPattern(super, self);
   let value_binding = (self, vb) => vb |> collectValueBinding(super, self);
   let structure_item = (self, structureItem: Typedtree.structure_item) => {
-    let oldModulePath = Current.modulePath^;
+    let oldModulePath = ModulePath.getCurrent();
     switch (structureItem.str_desc) {
-    | Tstr_module({mb_expr, mb_name}) =>
+    | Tstr_module({mb_expr, mb_name, mb_loc}) =>
       let hasInterface =
         switch (mb_expr.mod_desc) {
         | Tmod_constraint(_) => true
         | _ => false
         };
-      Current.modulePath :=
-        [mb_name |> Compat.locGetTxt |> Name.create, ...Current.modulePath^];
+      ModulePath.setCurrent({
+        loc: mb_loc,
+        path: [mb_name.txt |> Name.create, ...ModulePath.getCurrent().path],
+      });
       if (hasInterface) {
         switch (mb_expr.mod_type) {
         | Mty_signature(signature) =>
@@ -243,7 +255,9 @@ let traverseStructure = (~doTypes, ~doValues) => {
                processSignatureItem(
                  ~doTypes,
                  ~doValues=false,
-                 ~path=Current.modulePath^ @ [Common.currentModuleName^],
+                 ~moduleLoc=mb_expr.mod_loc,
+                 ~path=
+                   ModulePath.getCurrent().path @ [Common.currentModuleName^],
                ),
              )
         | _ => ()
@@ -251,7 +265,8 @@ let traverseStructure = (~doTypes, ~doValues) => {
       };
 
     | Tstr_primitive(vd) when doValues && Config.analyzeExternals =>
-      let path = Current.modulePath^ @ [Common.currentModuleName^];
+      let currentModulePath = ModulePath.getCurrent();
+      let path = currentModulePath.path @ [Common.currentModuleName^];
       let exists =
         switch (PosHash.find_opt(decls, vd.val_loc.loc_start)) {
         | Some({declKind: Value(_)}) => true
@@ -261,7 +276,12 @@ let traverseStructure = (~doTypes, ~doValues) => {
         vd.val_id
         |> Ident.name
         |> Name.create(~isInterface=false)
-        |> addValueDeclaration(~path, ~loc=vd.val_loc, ~sideEffects=false);
+        |> addValueDeclaration(
+             ~path,
+             ~loc=vd.val_loc,
+             ~moduleLoc=currentModulePath.loc,
+             ~sideEffects=false,
+           );
       };
 
     | Tstr_type(_recFlag, typeDeclarations) when doTypes =>
@@ -278,12 +298,14 @@ let traverseStructure = (~doTypes, ~doValues) => {
     | Tstr_include({incl_mod, incl_type}) =>
       switch (incl_mod.mod_desc) {
       | Tmod_ident(_path, _lid) =>
-        let currentPath = Current.modulePath^ @ [Common.currentModuleName^];
+        let currentPath =
+          ModulePath.getCurrent().path @ [Common.currentModuleName^];
         incl_type
         |> List.iter(
              processSignatureItem(
                ~doTypes,
                ~doValues=false, // TODO: also values?
+               ~moduleLoc=incl_mod.mod_loc,
                ~path=currentPath,
              ),
            );
@@ -301,7 +323,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
     | _ => ()
     };
     let result = super.structure_item(self, structureItem);
-    Current.modulePath := oldModulePath;
+    ModulePath.setCurrent(oldModulePath);
     result;
   };
   Tast_mapper.{...super, expr, pat, structure_item, value_binding};
