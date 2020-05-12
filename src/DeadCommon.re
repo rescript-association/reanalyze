@@ -170,6 +170,7 @@ module DeclKind = {
 
 type decl = {
   declKind: DeclKind.t,
+  moduleLoc: Location.t,
   path: Path.t,
   pos: Lexing.position,
   posEnd: Lexing.position,
@@ -201,6 +202,26 @@ let declGetLoc = decl => {
   Location.loc_start: decl.posStart,
   loc_end: decl.posEnd,
   loc_ghost: false,
+};
+
+module ModulePath: {
+  type t = {
+    loc: Location.t,
+    path: Path.t,
+  };
+  let getCurrent: unit => t;
+  let setCurrent: t => unit;
+} = {
+  type t = {
+    loc: Location.t,
+    path: Path.t,
+  };
+  /* Keep track of the module path while traversing with Tast_mapper */
+  let current: ref(t) = ref({loc: Location.none, path: []});
+
+  let getCurrent = () => current^;
+
+  let setCurrent = p => current := p;
 };
 
 /********   HELPERS   ********/
@@ -512,13 +533,39 @@ module ProcessDeadAnnotations = {
 
 /********   PROCESSING  ********/
 
+let pathToString = path =>
+  path |> List.rev_map(Name.toString) |> String.concat(".");
+
+let pathWithoutHead = path => {
+  switch (path |> List.rev_map(Name.toString)) {
+  | [_, ...tl] => tl |> String.concat(".")
+  | [] => ""
+  };
+};
+
+let pathToModuleName = (~isValue, path) => {
+  switch (path) {
+  | [_, ...tl] when isValue => tl |> pathToString
+  | [_, _, ...tl] when !isValue => tl |> pathToString
+  | _ => ""
+  };
+};
+
 let annotateAtEnd = (~pos) => !posIsReason(pos);
 
 let getPosAnnotation = decl =>
   annotateAtEnd(~pos=decl.pos) ? decl.posEnd : decl.posStart;
 
 let addDeclaration_ =
-    (~posEnd=?, ~posStart=?, ~declKind, ~loc: Location.t, ~path, name: Name.t) => {
+    (
+      ~posEnd=?,
+      ~posStart=?,
+      ~declKind,
+      ~path,
+      ~loc: Location.t,
+      ~moduleLoc,
+      name: Name.t,
+    ) => {
   let pos = loc.loc_start;
   let posStart =
     switch (posStart) {
@@ -550,6 +597,7 @@ let addDeclaration_ =
 
     let decl = {
       declKind,
+      moduleLoc,
       path: [name, ...path],
       pos,
       posEnd,
@@ -564,6 +612,7 @@ let addValueDeclaration =
     (
       ~isToplevel=true,
       ~loc: Location.t,
+      ~moduleLoc,
       ~optionalArgs=[],
       ~path,
       ~sideEffects,
@@ -573,6 +622,7 @@ let addValueDeclaration =
   |> addDeclaration_(
        ~declKind=Value({isToplevel, optionalArgs, sideEffects}),
        ~loc,
+       ~moduleLoc,
        ~path,
      );
 
@@ -722,6 +772,51 @@ let isToplevelValueWithSideEffects = decl =>
   | _ => false
   };
 
+module LiveModules = {
+  let table = Hashtbl.create(1);
+
+  let markDead = (~loc, moduleName) => {
+    switch (Hashtbl.find_opt(table, moduleName)) {
+    | Some((false, _)) => ()
+    | _ => Hashtbl.replace(table, moduleName, (false, loc))
+    };
+  };
+
+  let markLive = (~loc: Location.t, moduleName) => {
+    switch (Hashtbl.find_opt(table, moduleName)) {
+    | None => Hashtbl.replace(table, moduleName, (true, loc))
+    | Some(_) =>
+      // Do nothing: if dead it stays dead, if live it stays live
+      ()
+    };
+  };
+
+  let checkModuleDead = (~fileName as pos_fname, moduleName) => {
+    switch (Hashtbl.find_opt(table, moduleName)) {
+    | Some((false, loc)) =>
+      Hashtbl.remove(table, moduleName); // only report once
+      let loc =
+        if (loc.loc_ghost) {
+          let pos = {Lexing.pos_fname, pos_lnum: 0, pos_bol: 0, pos_cnum: 0};
+          {Location.loc_start: pos, loc_end: pos, loc_ghost: false};
+        } else {
+          loc;
+        };
+
+      Log_.info(~loc, ~name="Warning Dead Module", (ppf, ()) =>
+        Format.fprintf(
+          ppf,
+          "@{<info>%s@} %s",
+          moduleName,
+          "is a dead module as all its items are dead.",
+        )
+      );
+
+    | _ => ()
+    };
+  };
+};
+
 let rec resolveRecursiveRefs =
         (
           ~checkOptionalArg,
@@ -812,6 +907,10 @@ let rec resolveRecursiveRefs =
       decl.resolved = true;
 
       if (isDead) {
+        decl.path
+        |> pathToModuleName(~isValue=decl.declKind |> DeclKind.isValue)
+        |> LiveModules.markDead(~loc=decl.moduleLoc);
+
         if (decl.pos |> doReportDead) {
           deadDeclarations := [decl, ...deadDeclarations^];
         };
@@ -826,6 +925,10 @@ let rec resolveRecursiveRefs =
             ~message=" is annotated @dead but is live",
             ~name="Warning Incorrect Annotation",
           );
+        } else {
+          decl.path
+          |> pathToModuleName(~isValue=decl.declKind |> DeclKind.isValue)
+          |> LiveModules.markLive(~loc=decl.moduleLoc);
         };
       };
 
@@ -993,6 +1096,9 @@ module Decl = {
       && !isToplevelValueWithSideEffects(decl)
       && Suppress.filter(decl.pos);
     if (shouldEmitWarning) {
+      decl.path
+      |> pathToModuleName(~isValue=decl.declKind |> DeclKind.isValue)
+      |> LiveModules.checkModuleDead(~fileName=decl.pos.pos_fname);
       emitWarning(~decl, ~message, ~name);
     };
     if (shouldWriteAnnotation) {
@@ -1002,7 +1108,7 @@ module Decl = {
 };
 
 let reportDead = (~checkOptionalArg, ppf) => {
-  let iterDeclInOrder = (~orderedFiles, ~deadDeclarations, decl) => {
+  let iterDeclInOrder = (~deadDeclarations, ~orderedFiles, decl) => {
     let refs =
       decl.declKind |> DeclKind.isValue
         ? ValueReferences.find(decl.pos) : TypeReferences.find(decl.pos);

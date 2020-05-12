@@ -15,6 +15,10 @@
   File "./OptArg.re", line 1, characters 0-48
   optional argument z of function +foo is never used
 
+  Warning Dead Module
+  File "./AutoAnnotate.re", line 0, characters 0-0
+  +AutoAnnotate is a dead module as all its items are dead.
+
   Warning Dead Type
   File "./AutoAnnotate.re", line 2, characters 4-10
   variant.R is a variant case which is never constructed
@@ -57,6 +61,10 @@
   <-- line 16
     | [@dead "annotatedVariant.R4"] R4(r4);
 
+  Warning Dead Module
+  File "./BucklescriptAnnotations.re", line 0, characters 0-0
+  +BucklescriptAnnotations is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./BucklescriptAnnotations.re", line 19, characters 0-53
   +foo is never used
@@ -69,11 +77,19 @@
   <-- line 21
   [@dead "+bar"] let bar = (x: someMethods) => {
 
+  Warning Dead Module
+  File "./DeadExn.re", line 0, characters 0-0
+   is a dead module as all its items are dead.
+
   Warning Dead Exception
   File "./DeadExn.re", line 7, characters 0-15
   DeadE is never raised or passed as value
   <-- line 7
   [@dead "DeadE"] exception DeadE;
+
+  Warning Dead Module
+  File "./DeadExn.re", line 0, characters 0-0
+  +DeadExn is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./DeadExn.re", line 8, characters 0-25
@@ -81,11 +97,19 @@
   <-- line 8
   [@dead "+eToplevel"] let eToplevel = Etoplevel;
 
+  Warning Dead Module
+  File "./DeadMl.ml", line 1, characters 0-120
+  +DeadMl.QQ is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./DeadMl.ml", line 3, characters 4-93
   QQ.+thisSpansSeveralLines is never used
   <-- line 3
             x + y : int -> int -> int) [@@dead "QQ.+thisSpansSeveralLines"] 
+
+  Warning Dead Module
+  File "./DeadMl.ml", line 8, characters 0-103
+  +DeadMl.AA is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./DeadMl.ml", line 9, characters 2-40
@@ -98,6 +122,10 @@
   AA.+thisIsInInterface is never used
   <-- line 12
     let thisIsInInterface x = x [@@dead "AA.+thisIsInInterface"] 
+
+  Warning Dead Module
+  File "./DeadMl.ml", line 0, characters 0-0
+  +DeadMl is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./DeadMl.ml", line 15, characters 0-25
@@ -116,6 +144,10 @@
   thisIsDead.DeadB is a variant case which is never constructed
   <-- line 17
   type thisIsDead = | DeadA [@dead "thisIsDead.DeadA"]  | DeadB [@dead "thisIsDead.DeadB"] 
+
+  Warning Dead Module
+  File "./DeadMl.ml", line 25, characters 0-256
+  +DeadMl.Bs_version is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./DeadMl.ml", line 26, characters 6-26
@@ -183,11 +215,19 @@
   <-- line 56
   let inline_threshold = Some (10. /. 8.); [@@dead "+inline_threshold"] 
 
+  Warning Dead Module
+  File "./DeadMl.ml", line 58, characters 0-267
+  +DeadMl.Scope is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./DeadMl.ml", line 59, characters 2-15
   Scope.+dead1 is never used
   <-- line 59
     let dead1 = 1 [@@dead "Scope.+dead1"] 
+
+  Warning Dead Module
+  File "./DeadMl.ml", line 61, characters 2-107
+  +DeadMl.Scope.Inner1 is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./DeadMl.ml", line 62, characters 4-22
@@ -219,6 +259,10 @@
   <-- line 90
   [@@ocaml.warning "-30"] [@@dead "+dead7"] 
 
+  Warning Dead Module
+  File "./DeadMl.ml", line 93, characters 0-238
+  +DeadMl.WithSignature is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./DeadMl.ml", line 94, characters 2-16
   WithSignature.+dead8 is never used
@@ -243,11 +287,19 @@
   <-- line 108
     let dead10 = 10 [@@dead "WithSignature.+dead10"] 
 
+  Warning Dead Module
+  File "./DeadRT.re", line 0, characters 0-0
+  +DeadRT is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./DeadRT.re", line 5, characters 0-118
   +emitModuleAccessPath is never used
   <-- line 5
   [@dead "+emitModuleAccessPath"] let rec emitModuleAccessPath = moduleAccessPath =>
+
+  Warning Dead Module
+  File "./DeadTest.re", line 0, characters 0-0
+  +DeadTest is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./DeadTest.re", line 2, characters 0-17
@@ -255,11 +307,19 @@
   <-- line 2
   [@dead "+fortytwo"] let fortytwo = 42;
 
+  Warning Dead Module
+  File "./DeadTest.re", line 27, characters 0-101
+  +DeadTest.M is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./DeadTest.re", line 31, characters 2-34
   M.+thisSignatureItemIsDead is never used
   <-- line 31
     [@dead "M.+thisSignatureItemIsDead"] let thisSignatureItemIsDead = 34;
+
+  Warning Dead Module
+  File "./DeadTest.re", line 61, characters 0-123
+  +DeadTest.MM is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./DeadTest.re", line 63, characters 2-12
@@ -327,6 +387,10 @@
   <-- line 102
   [@dead "+unsafe_string1"] external unsafe_string1: (bytes, int, int) => Digest.t = "caml_md5_string";
 
+  Warning Dead Module
+  File "./DeadTest.re", line 104, characters 0-184
+  +DeadTest.Ext_buffer is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./DeadTest.re", line 105, characters 2-76
   Ext_buffer.+unsafe_string2 is never used
@@ -338,6 +402,10 @@
   Ext_buffer.+unsafe_string2 is never used
   <-- line 107
     [@dead "Ext_buffer.+unsafe_string2"] external unsafe_string2: (bytes, int, int) => Digest.t = "caml_md5_string";
+
+  Warning Dead Module
+  File "./DeadTest.re", line 118, characters 0-410
+  +DeadTest.LazyDynamicallyLoadedComponent2 is a dead module as all its items are dead.
 
   Warning Dead Value With Side Effects
   File "./DeadTest.re", line 119, characters 2-136
@@ -401,11 +469,19 @@
   <-- line 173
   [@dead "+stringLengthNoSideEffects"] let stringLengthNoSideEffects = String.length("sdkdl");
 
+  Warning Dead Module
+  File "./DeadTestBlacklist.re", line 0, characters 0-0
+  +DeadTestBlacklist is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./DeadTestBlacklist.re", line 1, characters 0-10
   +x is never used
   <-- line 1
   [@dead "+x"] let x = 34;
+
+  Warning Dead Module
+  File "./DeadTestWithInterface.re", line 1, characters 0-52
+  +DeadTestWithInterface.Ext_buffer is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./DeadTestWithInterface.re", line 1, characters 20-30
@@ -418,6 +494,10 @@
   Ext_buffer.+x is never used
   <-- line 2
     [@dead "Ext_buffer.+x"] let x = 42;
+
+  Warning Dead Module
+  File "./DeadTypeTest.re", line 0, characters 0-0
+  +DeadTypeTest is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./DeadTypeTest.re", line 3, characters 4-5
@@ -437,6 +517,10 @@
   <-- line 10
     | [@dead "deadType.InNeither"] InNeither;
 
+  Warning Dead Module
+  File "./DeadTypeTest.rei", line 0, characters 0-0
+  DeadTypeTest is a dead module as all its items are dead.
+
   Warning Dead Type
   File "./DeadTypeTest.rei", line 3, characters 4-5
   t.B is a variant case which is never constructed
@@ -454,6 +538,10 @@
   deadType.InNeither is a variant case which is never constructed
   <-- line 10
     | [@dead "deadType.InNeither"] InNeither;
+
+  Warning Dead Module
+  File "./DeadValueTest.re", line 0, characters 0-0
+  +DeadValueTest is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./DeadValueTest.re", line 2, characters 0-17
@@ -473,11 +561,19 @@
   <-- line 6
   [@dead "+subList"] let rec subList = (b, e, l) =>
 
+  Warning Dead Module
+  File "./DeadValueTest.rei", line 0, characters 0-0
+  DeadValueTest is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./DeadValueTest.rei", line 2, characters 0-18
   +valueDead is never used
   <-- line 2
   [@dead "+valueDead"] let valueDead: int;
+
+  Warning Dead Module
+  File "./Docstrings.re", line 0, characters 0-0
+  +Docstrings is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./Docstrings.re", line 62, characters 4-5
@@ -485,17 +581,29 @@
   <-- line 62
     | [@dead "t.B"] B;
 
+  Warning Dead Module
+  File "./ErrorHandler.re", line 0, characters 0-0
+  +ErrorHandler is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./ErrorHandler.re", line 11, characters 0-21
   +x is never used
   <-- line 12
   [@dead "+x"] [@genType]
 
+  Warning Dead Module
+  File "./ErrorHandler.rei", line 0, characters 0-0
+  ErrorHandler is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./ErrorHandler.rei", line 7, characters 0-10
   +x is never used
   <-- line 7
   [@dead "+x"] let x: int;
+
+  Warning Dead Module
+  File "./FirstClassModulesInterface.re", line 0, characters 0-0
+  +FirstClassModulesInterface is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./FirstClassModulesInterface.re", line 2, characters 2-8
@@ -515,6 +623,10 @@
   <-- line 6
   [@dead "+r"] let r = {x: 3, y: "hello"};
 
+  Warning Dead Module
+  File "./FirstClassModulesInterface.rei", line 0, characters 0-0
+  FirstClassModulesInterface is a dead module as all its items are dead.
+
   Warning Dead Type
   File "./FirstClassModulesInterface.rei", line 3, characters 2-8
   record.x is a record label never used to read a value
@@ -532,6 +644,10 @@
   +r is never used
   <-- line 7
   [@dead "+r"] let r: record;
+
+  Warning Dead Module
+  File "./ImmutableArray.re", line 0, characters 0-0
+  +ImmutableArray is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./ImmutableArray.re", line 6, characters 2-63
@@ -905,6 +1021,10 @@
   <-- line 118
     [@dead "+eq"] let eq = (a1, a2, f) => Array.eq(fromT(a1), fromT(a2), f);
 
+  Warning Dead Module
+  File "./ImmutableArray.rei", line 0, characters 0-0
+  ImmutableArray is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./ImmutableArray.rei", line 10, characters 0-31
   +toArray is never used
@@ -1259,6 +1379,10 @@
   <-- line 109
   [@dead "+eq"] let eq: (t('a), t('a), ('a, 'a) => bool) => bool;
 
+  Warning Dead Module
+  File "./ImportHookDefault.re", line 0, characters 0-0
+  +ImportHookDefault is a dead module as all its items are dead.
+
   Warning Dead Type
   File "./ImportHookDefault.re", line 2, characters 2-14
   person.name is a record label never used to read a value
@@ -1271,6 +1395,10 @@
   <-- line 3
     [@dead "person.age"] age: int,
 
+  Warning Dead Module
+  File "./ImportHooks.re", line 0, characters 0-0
+  +ImportHooks is a dead module as all its items are dead.
+
   Warning Dead Type
   File "./ImportHooks.re", line 3, characters 2-14
   person.name is a record label never used to read a value
@@ -1282,6 +1410,10 @@
   person.age is a record label never used to read a value
   <-- line 4
     [@dead "person.age"] age: int,
+
+  Warning Dead Module
+  File "./ImportJsValue.re", line 0, characters 0-0
+  +ImportJsValue is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./ImportJsValue.re", line 10, characters 2-8
@@ -1307,6 +1439,10 @@
   <-- line 66
     | [@dead "variant.S"] S(string);
 
+  Warning Dead Module
+  File "./ImportMyBanner.re", line 0, characters 0-0
+  +ImportMyBanner is a dead module as all its items are dead.
+
   Warning Dead Type
   File "./ImportMyBanner.re", line 6, characters 16-28
   message.text is a record label never used to read a value
@@ -1319,11 +1455,19 @@
   <-- line 19
   [@dead "+make"] let make = make;
 
+  Warning Dead Module
+  File "./ManyComponents.re", line 3, characters 0-277
+  +ManyComponents.InnerComponent is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./ManyComponents.re", line 4, characters 2-45
   InnerComponent.+someValueSoModuleOffsetsAreShifted is never used
   <-- line 4
     [@dead "InnerComponent.+someValueSoModuleOffsetsAreShifted"] let someValueSoModuleOffsetsAreShifted = 77;
+
+  Warning Dead Module
+  File "./ModuleAliases.re", line 2, characters 2-57
+  +ModuleAliases.Outer.Inner is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./ModuleAliases.re", line 3, characters 19-32
@@ -1331,11 +1475,19 @@
   <-- line 3
       type innerT = {[@dead "Outer.Inner.innerT.inner"] inner: string};
 
+  Warning Dead Module
+  File "./ModuleAliases.re", line 10, characters 4-62
+  +ModuleAliases.Outer2.Inner2.InnerNested is a dead module as all its items are dead.
+
   Warning Dead Type
   File "./ModuleAliases.re", line 11, characters 16-27
   Outer2.Inner2.InnerNested.t.nested is a record label never used to read a value
   <-- line 11
         type t = {[@dead "Outer2.Inner2.InnerNested.t.nested"] nested: int};
+
+  Warning Dead Module
+  File "./ModuleAliases2.re", line 0, characters 0-0
+  +ModuleAliases2 is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./ModuleAliases2.re", line 3, characters 2-8
@@ -1349,11 +1501,19 @@
   <-- line 4
     [@dead "record.y"] y: string,
 
+  Warning Dead Module
+  File "./ModuleAliases2.re", line 7, characters 0-137
+  +ModuleAliases2.Outer is a dead module as all its items are dead.
+
   Warning Dead Type
   File "./ModuleAliases2.re", line 9, characters 16-29
   Outer.outer.outer is a record label never used to read a value
   <-- line 9
     type outer = {[@dead "Outer.outer.outer"] outer: string};
+
+  Warning Dead Module
+  File "./ModuleAliases2.re", line 11, characters 2-71
+  +ModuleAliases2.Outer.Inner is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./ModuleAliases2.re", line 13, characters 18-31
@@ -1367,11 +1527,19 @@
   <-- line 21
   [@dead "+q"] let q = 42;
 
+  Warning Dead Module
+  File "./NestedModules.re", line 4, characters 0-776
+  +NestedModules.Universe is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./NestedModules.re", line 8, characters 2-22
   Universe.+notExported is never used
   <-- line 8
     [@dead "Universe.+notExported"] let notExported = 33;
+
+  Warning Dead Module
+  File "./NestedModules.re", line 13, characters 2-530
+  +NestedModules.Universe.Nested2 is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./NestedModules.re", line 14, characters 4-13
@@ -1384,6 +1552,10 @@
   Universe.Nested2.+y is never used
   <-- line 19
       [@dead "Universe.Nested2.+y"] let y = 2;
+
+  Warning Dead Module
+  File "./NestedModules.re", line 24, characters 4-296
+  +NestedModules.Universe.Nested2.Nested3 is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./NestedModules.re", line 25, characters 6-15
@@ -1421,11 +1593,19 @@
   <-- line 47
       | [@dead "Universe.variant.B"] B(string);
 
+  Warning Dead Module
+  File "./Opaque.re", line 0, characters 0-0
+  +Opaque is a dead module as all its items are dead.
+
   Warning Dead Type
   File "./Opaque.re", line 3, characters 4-20
   opaqueFromRecords.A is a variant case which is never constructed
   <-- line 3
     | [@dead "opaqueFromRecords.A"] A(Records.coord);
+
+  Warning Dead Module
+  File "./Records.re", line 0, characters 0-0
+  +Records is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./Records.re", line 22, characters 2-14
@@ -1469,11 +1649,19 @@
   <-- line 87
     [@dead "business2.owner"] owner: Js.Nullable.t(person),
 
+  Warning Dead Module
+  File "./References.re", line 0, characters 0-0
+  +References is a dead module as all its items are dead.
+
   Warning Dead Type
   File "./References.re", line 39, characters 27-33
   requiresConversion.x is a record label never used to read a value
   <-- line 39
   type requiresConversion = {[@dead "requiresConversion.x"] x: int};
+
+  Warning Dead Module
+  File "./RepeatedLabel.re", line 0, characters 0-0
+  +RepeatedLabel is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./RepeatedLabel.re", line 2, characters 2-9
@@ -1493,6 +1681,10 @@
   <-- line 9
     [@dead "tabState.f"] f: string,
 
+  Warning Dead Module
+  File "./RequireCond.re", line 0, characters 0-0
+  +RequireCond is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./RequireCond.re", line 1, characters 0-288
   +make is never used
@@ -1505,11 +1697,19 @@
   <-- line 14
   [@dead "+either"] [@bs.module]
 
+  Warning Dead Module
+  File "./Shadow.re", line 7, characters 0-74
+  +Shadow.M is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./Shadow.re", line 11, characters 2-22
   M.+test is never used
   <-- line 11
     [@dead "M.+test"] let test = () => "a";
+
+  Warning Dead Module
+  File "./TestImmutableArray.re", line 0, characters 0-0
+  +TestImmutableArray is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./TestImmutableArray.re", line 9, characters 0-43
@@ -1522,6 +1722,10 @@
   +testBeltArraySet is never used
   <-- line 11
   [@dead "+testBeltArraySet"] let testBeltArraySet = arr => Belt.(arr[3] = 4);
+
+  Warning Dead Module
+  File "./TestImport.re", line 0, characters 0-0
+  +TestImport is a dead module as all its items are dead.
 
   Warning Dead Value
   File "./TestImport.re", line 18, characters 0-43
@@ -1541,6 +1745,10 @@
   <-- line 42
   [@dead "+make"] let make = make;
 
+  Warning Dead Module
+  File "./TestPromise.re", line 0, characters 0-0
+  +TestPromise is a dead module as all its items are dead.
+
   Warning Dead Type
   File "./TestPromise.re", line 6, characters 2-8
   fromPayload.x is a record label never used to read a value
@@ -1553,11 +1761,19 @@
   <-- line 11
   type toPayload = {[@dead "toPayload.result"] result: string};
 
+  Warning Dead Module
+  File "./TransitiveType2.re", line 0, characters 0-0
+  +TransitiveType2 is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./TransitiveType2.re", line 7, characters 0-28
   +convertT2 is never used
   <-- line 7
   [@dead "+convertT2"] let convertT2 = (x: t2) => x;
+
+  Warning Dead Module
+  File "./TransitiveType3.re", line 0, characters 0-0
+  +TransitiveType3 is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./TransitiveType3.re", line 3, characters 2-8
@@ -1571,11 +1787,19 @@
   <-- line 4
     [@dead "t3.s"] s: string,
 
+  Warning Dead Module
+  File "./TypeParams1.re", line 0, characters 0-0
+  +TypeParams1 is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./TypeParams1.re", line 4, characters 0-24
   +exportSomething is never used
   <-- line 4
   [@dead "+exportSomething"] let exportSomething = 10;
+
+  Warning Dead Module
+  File "./TypeParams2.re", line 0, characters 0-0
+  +TypeParams2 is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./TypeParams2.re", line 2, characters 13-20
@@ -1588,6 +1812,10 @@
   +exportSomething is never used
   <-- line 10
   [@dead "+exportSomething"] let exportSomething = 10;
+
+  Warning Dead Module
+  File "./Types.re", line 0, characters 0-0
+  +Types is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./Types.re", line 12, characters 4-13
@@ -1637,11 +1865,19 @@
   <-- line 139
   type someRecord = {[@dead "someRecord.id"] id: int};
 
+  Warning Dead Module
+  File "./Types.re", line 168, characters 0-84
+  +Types.ObjectId is a dead module as all its items are dead.
+
   Warning Dead Value
   File "./Types.re", line 173, characters 2-11
   ObjectId.+x is never used
   <-- line 173
     [@dead "ObjectId.+x"] let x = 1;
+
+  Warning Dead Module
+  File "./Unboxed.re", line 0, characters 0-0
+  +Unboxed is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./Unboxed.re", line 4, characters 4-10
@@ -1667,6 +1903,10 @@
   <-- line 21
     | [@dead "r2.B"] B({g: string});
 
+  Warning Dead Module
+  File "./Variants.re", line 0, characters 0-0
+  +Variants is a dead module as all its items are dead.
+
   Warning Dead Type
   File "./Variants.re", line 97, characters 4-29
   type_.Type is a variant case which is never constructed
@@ -1684,6 +1924,10 @@
   result1.Error is a variant case which is never constructed
   <-- line 106
     | [@dead "result1.Error"] Error('b);
+
+  Warning Dead Module
+  File "./VariantsWithPayload.re", line 0, characters 0-0
+  +VariantsWithPayload is a dead module as all its items are dead.
 
   Warning Dead Type
   File "./VariantsWithPayload.re", line 51, characters 4-5
@@ -1744,4 +1988,4 @@
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 293 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:205, Warning Dead Value With Side Effects:2, Warning Unused Argument:4)
+  Analysis reported 354 issues (Warning Dead Exception:1, Warning Dead Module:61, Warning Dead Type:81, Warning Dead Value:205, Warning Dead Value With Side Effects:2, Warning Unused Argument:4)

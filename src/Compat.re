@@ -55,13 +55,13 @@ let getSigType = si => switch si {
 
 let getSigModuleModtype = si => switch si {
 #if OCAML_MINOR >= 8
-  | Types.Sig_module(id, _, {Types.md_type: moduleType}, _, _)
-  | Types.Sig_modtype(id, {Types.mtd_type: Some(moduleType)}, _) =>
-    Some((id, moduleType))
+  | Types.Sig_module(id, _, {Types.md_type: moduleType, md_loc:loc}, _, _)
+  | Types.Sig_modtype(id, {Types.mtd_type: Some(moduleType), mtd_loc:loc}, _) =>
+    Some((id, moduleType, loc))
 #else
-  | Types.Sig_module(id, {Types.md_type: moduleType}, _)
-  | Types.Sig_modtype(id, {Types.mtd_type: Some(moduleType)}) =>
-    Some((id, moduleType))
+  | Types.Sig_module(id, {Types.md_type: moduleType, md_loc:loc}, _)
+  | Types.Sig_modtype(id, {Types.mtd_type: Some(moduleType), mtd_loc:loc}) =>
+    Some((id, moduleType, loc))
 #endif
   | _ => None
 }
