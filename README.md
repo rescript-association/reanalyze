@@ -10,6 +10,9 @@ Status](https://dev.azure.com/ccrisccris/reanalyze/_apis/build/status/cristianoc
 
 Early release. While the core functionality is reasonably stable, the CLI and annotations are subject to change. However, this is a tiny surface at the moment.
 
+# Requirements
+For correct handling of ReasonReact components in the Dead Code Analysis, bucklescript version 7.3.2 is required (fixes the location in the JSX PPX).
+
 ## Use
 
 The rest of this document describes the dead code analysis.
