@@ -27,19 +27,16 @@ function newton(f, fPrimed, initial, threshold) {
     current.contents = next;
     return delta >= threshold;
   };
-  var loop = function (_param) {
-    while(true) {
-      var previous = current.contents;
-      var next = previous - Curry._1(f, previous) / Curry._1(fPrimed, previous);
-      if (!iterateMore(previous, next)) {
-        return ;
-      }
-      _param = undefined;
-      continue ;
-    };
+  var _param;
+  while(true) {
+    var previous = current.contents;
+    var next = previous - Curry._1(f, previous) / Curry._1(fPrimed, previous);
+    if (!iterateMore(previous, next)) {
+      return current.contents;
+    }
+    _param = undefined;
+    continue ;
   };
-  loop(undefined);
-  return current.contents;
 }
 
 function f(x) {

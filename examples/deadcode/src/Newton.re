@@ -16,10 +16,11 @@ let newton = (~f, ~fPrimed, ~initial, ~threshold) => {
     let next = previous - f(previous) / fPrimed(previous);
     if (iterateMore(previous, next)) {
       loop();
+    } else {
+      current.contents;
     };
   };
   loop();
-  current^;
 };
 let f = x => x * x * x - 2.0 * x * x - 11.0 * x + 12.0;
 
