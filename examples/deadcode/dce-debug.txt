@@ -1065,6 +1065,18 @@
   addValueReference VariantsWithPayload.re:103:4 --> VariantsWithPayload.re:103:23
   addTypeDeclaration R VariantsWithPayload.re:107:4 path:+VariantsWithPayload.variant1Object
   addValueReference VariantsWithPayload.re:110:4 --> VariantsWithPayload.re:110:26
+  Scanning RepeatedLabel.cmt
+  addValueDeclaration +userData RepeatedLabel.re:12:4 path:+RepeatedLabel
+  addTypeDeclaration a RepeatedLabel.re:2:2 path:+RepeatedLabel.userData
+  addTypeDeclaration b RepeatedLabel.re:3:2 path:+RepeatedLabel.userData
+  addTypeDeclaration a RepeatedLabel.re:7:2 path:+RepeatedLabel.tabState
+  addTypeDeclaration b RepeatedLabel.re:8:2 path:+RepeatedLabel.tabState
+  addTypeDeclaration f RepeatedLabel.re:9:2 path:+RepeatedLabel.tabState
+  addValueReference RepeatedLabel.re:12:4 --> RepeatedLabel.re:12:17
+  addValueReference RepeatedLabel.re:12:4 --> RepeatedLabel.re:12:20
+  addTypeReference RepeatedLabel.re:12:16 --> RepeatedLabel.re:7:2
+  addTypeReference RepeatedLabel.re:12:16 --> RepeatedLabel.re:8:2
+  addValueReference RepeatedLabel.re:14:7 --> RepeatedLabel.re:12:4
   Scanning FirstClassModulesInterface.cmt
   addValueDeclaration +r FirstClassModulesInterface.re:6:4 path:+FirstClassModulesInterface
   addTypeDeclaration x FirstClassModulesInterface.re:2:2 path:+FirstClassModulesInterface.record
@@ -1861,6 +1873,7 @@ File References
   ReasonComponent.re -->> ReactDOMRe.re, ReasonReact.rei, ImportMyBanner.re
   Records.re -->> 
   References.re -->> 
+  RepeatedLabel.re -->> 
   RequireCond.re -->> 
   Shadow.re -->> 
   TestEmitInnerModules.re -->> 
@@ -2202,6 +2215,12 @@ File References
   Live Value +References.+update: 0 references () [0]
   Live Value +References.+access: 0 references () [0]
   Live Value +References.+create: 0 references () [0]
+  Live Value +RepeatedLabel.+userData: 1 references (RepeatedLabel.re:14:7) [0]
+  Dead Type +RepeatedLabel.tabState.f: 0 references () [0]
+  Live Type +RepeatedLabel.tabState.b: 1 references (RepeatedLabel.re:12:16) [0]
+  Live Type +RepeatedLabel.tabState.a: 1 references (RepeatedLabel.re:12:16) [0]
+  Dead Type +RepeatedLabel.userData.b: 0 references () [0]
+  Dead Type +RepeatedLabel.userData.a: 0 references () [0]
   Dead Value +RequireCond.+either: 0 references () [0]
   Dead Value +RequireCond.+make: 0 references () [0]
   Dead Value +Shadow.M.+test: 0 references () [0]
@@ -4048,6 +4067,24 @@ File References
   requiresConversion.x is a record label never used to read a value
   <-- line 39
   type requiresConversion = {[@dead "requiresConversion.x"] x: int};
+
+  Warning Dead Type
+  File "./RepeatedLabel.re", line 2, characters 2-9
+  userData.a is a record label never used to read a value
+  <-- line 2
+    [@dead "userData.a"] a: bool,
+
+  Warning Dead Type
+  File "./RepeatedLabel.re", line 3, characters 2-8
+  userData.b is a record label never used to read a value
+  <-- line 3
+    [@dead "userData.b"] b: int,
+
+  Warning Dead Type
+  File "./RepeatedLabel.re", line 9, characters 2-11
+  tabState.f is a record label never used to read a value
+  <-- line 9
+    [@dead "tabState.f"] f: string,
 
   Warning Dead Value
   File "./RequireCond.re", line 1, characters 0-288

@@ -1471,6 +1471,24 @@
   <-- line 39
   type requiresConversion = {[@dead "requiresConversion.x"] x: int};
 
+  Warning Dead Type
+  File "./RepeatedLabel.re", line 2, characters 2-9
+  userData.a is a record label never used to read a value
+  <-- line 2
+    [@dead "userData.a"] a: bool,
+
+  Warning Dead Type
+  File "./RepeatedLabel.re", line 3, characters 2-8
+  userData.b is a record label never used to read a value
+  <-- line 3
+    [@dead "userData.b"] b: int,
+
+  Warning Dead Type
+  File "./RepeatedLabel.re", line 9, characters 2-11
+  tabState.f is a record label never used to read a value
+  <-- line 9
+    [@dead "tabState.f"] f: string,
+
   Warning Dead Value
   File "./RequireCond.re", line 1, characters 0-288
   +make is never used
