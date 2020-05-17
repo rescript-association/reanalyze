@@ -70,7 +70,26 @@ module PosHash = {
   };
 };
 
-type path = list(Name.t);
+module Path = {
+  type t = list(Name.t);
+
+  let toString = path =>
+    path |> List.rev_map(Name.toString) |> String.concat(".");
+
+  let withoutHead = path => {
+    switch (path |> List.rev_map(Name.toString)) {
+    | [_, ...tl] => tl |> String.concat(".")
+    | [] => ""
+    };
+  };
+
+  let onOkPath = (~whenContainsApply, ~f, path) => {
+    switch (path |> Path.flatten) {
+    | `Ok(id, mods) => f([Ident.name(id), ...mods] |> String.concat("."))
+    | `Contains_apply => whenContainsApply
+    };
+  };
+};
 
 type declKind =
   | RecordLabel
@@ -79,7 +98,7 @@ type declKind =
 
 type decl = {
   declKind,
-  path,
+  path: Path.t,
   pos: Lexing.position,
   posEnd: Lexing.position,
   posStart: Lexing.position,
@@ -94,7 +113,14 @@ let decls: decls = PosHash.create(256); /* all exported declarations */
 let valueReferences: PosHash.t(PosSet.t) = PosHash.create(256); /* all value references */
 let typeReferences: PosHash.t(PosSet.t) = PosHash.create(256); /* all type references */
 
-let typeLabels: Hashtbl.t(string, Location.t) = Hashtbl.create(256); /* map from type items (record/variant label) paths and locations */
+module TypeLabels = {
+  /* map from type items (record/variant label) paths and locations */
+  let table: Hashtbl.t(string, Location.t) = Hashtbl.create(256);
+
+  let add = (path, loc) => Hashtbl.replace(table, path |> Path.toString, loc);
+
+  let find = path => Hashtbl.find_opt(table, path |> Path.toString);
+};
 
 let currentBindings = ref(PosSet.empty);
 let lastBinding = ref(Location.none);
@@ -110,7 +136,7 @@ let declGetLoc = decl => {
 };
 
 /* Keep track of the module path while traversing with Tast_mapper */
-let currentModulePath: ref(path) = ref([]);
+let currentModulePath: ref(Path.t) = ref([]);
 
 /********   HELPERS   ********/
 
@@ -431,16 +457,6 @@ module ProcessDeadAnnotations = {
 
 /********   PROCESSING  ********/
 
-let pathToString = path =>
-  path |> List.rev_map(Name.toString) |> String.concat(".");
-
-let pathWithoutHead = path => {
-  switch (path |> List.rev_map(Name.toString)) {
-  | [_, ...tl] => tl |> String.concat(".")
-  | [] => ""
-  };
-};
-
 let annotateAtEnd = (~pos) => !posIsReason(pos);
 
 let getPosAnnotation = decl =>
@@ -465,7 +481,7 @@ let addDeclaration_ =
         declKind == Value ? "Value" : "Type",
         name |> Name.toString,
         pos |> posToString,
-        path |> pathToString,
+        path |> Path.toString,
       );
     };
 
@@ -494,7 +510,7 @@ let emitWarning = (~decl, ~message, ~name) => {
     Format.fprintf(
       ppf,
       "@{<info>%s@} %s",
-      decl.path |> pathWithoutHead,
+      decl.path |> Path.withoutHead,
       message,
     )
   );
@@ -517,7 +533,7 @@ module WriteDeadAnnotations = {
         ++ (isReason || declKind != Value ? "@" : "@@")
         ++ deadAnnotation
         ++ " \""
-        ++ (path |> pathWithoutHead)
+        ++ (path |> Path.withoutHead)
         ++ "\"] ";
       let posAnnotation = decl |> getPosAnnotation;
       let col = posAnnotation.pos_cnum - posAnnotation.pos_bol;
@@ -645,7 +661,7 @@ let rec resolveRecursiveRefs =
     if (recursiveDebug) {
       Log_.item(
         "recursiveDebug %s [%d] already resolved@.",
-        decl.path |> pathToString,
+        decl.path |> Path.toString,
         level,
       );
     };
@@ -654,7 +670,7 @@ let rec resolveRecursiveRefs =
     if (recursiveDebug) {
       Log_.item(
         "recursiveDebug %s [%d] is being resolved: assume dead@.",
-        decl.path |> pathToString,
+        decl.path |> Path.toString,
         level,
       );
     };
@@ -663,7 +679,7 @@ let rec resolveRecursiveRefs =
     if (recursiveDebug) {
       Log_.item(
         "recursiveDebug resolving %s [%d]@.",
-        decl.path |> pathToString,
+        decl.path |> Path.toString,
         level,
       );
     };
@@ -676,7 +692,7 @@ let rec resolveRecursiveRefs =
              if (recursiveDebug) {
                Log_.item(
                  "recursiveDebug %s ignoring reference to self@.",
-                 decl.path |> pathToString,
+                 decl.path |> Path.toString,
                );
              };
              false;
@@ -744,7 +760,7 @@ let rec resolveRecursiveRefs =
           "%s %s %s: %d references (%s) [%d]@.",
           isDead ? "Dead" : "Live",
           decl.declKind == Value ? "Value" : "Type",
-          decl.path |> pathToString,
+          decl.path |> Path.toString,
           newRefs |> PosSet.cardinal,
           refsString,
           level,

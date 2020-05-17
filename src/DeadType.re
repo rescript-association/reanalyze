@@ -53,12 +53,12 @@ let addTypeDependenciesAcrossFiles = (~pahToType, ~loc, ~typeLabelName) => {
   if (!isInterface) {
     let path_1 = pahToType |> pathModuleToInterface;
     let path_2 = path_1 |> pathTypeToInterface;
-    let path1 = [typeLabelName, ...path_1] |> pathToString;
-    let path2 = [typeLabelName, ...path_2] |> pathToString;
+    let path1 = [typeLabelName, ...path_1];
+    let path2 = [typeLabelName, ...path_2];
 
-    switch (Hashtbl.find_opt(typeLabels, path1)) {
+    switch (TypeLabels.find(path1)) {
     | None =>
-      switch (Hashtbl.find_opt(typeLabels, path2)) {
+      switch (TypeLabels.find(path2)) {
       | None => ()
       | Some(loc2) =>
         extendTypeDependencies(loc, loc2);
@@ -74,8 +74,8 @@ let addTypeDependenciesAcrossFiles = (~pahToType, ~loc, ~typeLabelName) => {
     };
   } else {
     let path_1 = pahToType |> pathModuleToImplementation;
-    let path1 = [typeLabelName, ...path_1] |> pathToString;
-    switch (Hashtbl.find_opt(typeLabels, path1)) {
+    let path1 = [typeLabelName, ...path_1];
+    switch (TypeLabels.find(path1)) {
     | None => ()
     | Some(loc1) =>
       extendTypeDependencies(loc1, loc);
@@ -88,17 +88,15 @@ let addTypeDependenciesAcrossFiles = (~pahToType, ~loc, ~typeLabelName) => {
 
 // Add type dependencies between implementation and interface in inner module
 let addTypeDependenciesInnerModule = (~pahToType, ~loc, ~typeLabelName) => {
-  let typeLabelPath = [typeLabelName, ...pahToType];
+  let path = [typeLabelName, ...pahToType];
 
-  let typeLabelPathStr = typeLabelPath |> pathToString;
-
-  switch (Hashtbl.find_opt(typeLabels, typeLabelPathStr)) {
+  switch (TypeLabels.find(path)) {
   | Some(loc2) =>
     extendTypeDependencies(loc, loc2);
     if (!reportTypesDeadOnlyInInterface) {
       extendTypeDependencies(loc2, loc);
     };
-  | None => Hashtbl.add(typeLabels, typeLabelPathStr, loc)
+  | None => TypeLabels.add(path, loc)
   };
 };
 
@@ -114,11 +112,7 @@ let addDeclaration = (~typeId: Ident.t, ~typeKind: Types.type_kind) => {
     addTypeDependenciesAcrossFiles(~pahToType, ~loc, ~typeLabelName);
     addTypeDependenciesInnerModule(~pahToType, ~loc, ~typeLabelName);
 
-    Hashtbl.replace(
-      typeLabels,
-      [typeLabelName, ...pahToType] |> pathToString,
-      loc,
-    );
+    TypeLabels.add([typeLabelName, ...pahToType], loc);
   };
 
   switch (typeKind) {

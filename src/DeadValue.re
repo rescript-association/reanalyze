@@ -21,14 +21,10 @@ let whiteTableSideEffects =
   });
 
 let pathIsWhitelistedForSideEffects = path => {
-  switch (path |> Path.flatten) {
-  | `Ok(id, mods) =>
-    Hashtbl.mem(
-      Lazy.force(whiteTableSideEffects),
-      [Ident.name(id), ...mods] |> String.concat("."),
-    )
-  | `Contains_apply => false
-  };
+  path
+  |> Path.onOkPath(~whenContainsApply=false, ~f=s =>
+       Hashtbl.mem(Lazy.force(whiteTableSideEffects), s)
+     );
 };
 
 let rec exprNoSideEffects = (expr: Typedtree.expression) =>
