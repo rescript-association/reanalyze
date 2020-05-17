@@ -114,12 +114,12 @@ let valueReferences: PosHash.t(PosSet.t) = PosHash.create(256); /* all value ref
 let typeReferences: PosHash.t(PosSet.t) = PosHash.create(256); /* all type references */
 
 module TypeLabels = {
-  /* map from type items (record/variant label) paths and locations */
-  let table: Hashtbl.t(string, Location.t) = Hashtbl.create(256);
+  /* map from type path (for record/variant label) to its location */
+  let table: Hashtbl.t(Path.t, Location.t) = Hashtbl.create(256);
 
-  let add = (path, loc) => Hashtbl.replace(table, path |> Path.toString, loc);
+  let add = (path, loc) => Hashtbl.replace(table, path, loc);
 
-  let find = path => Hashtbl.find_opt(table, path |> Path.toString);
+  let find = path => Hashtbl.find_opt(table, path);
 };
 
 let currentBindings = ref(PosSet.empty);
