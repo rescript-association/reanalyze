@@ -779,6 +779,76 @@
   addTypeReference Tuples.re:47:19 --> Tuples.re:32:2
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
+  Scanning Newton.cmt
+  addValueDeclaration +- Newton.re:1:4 path:+Newton
+  addValueDeclaration ++ Newton.re:2:4 path:+Newton
+  addValueDeclaration +* Newton.re:3:4 path:+Newton
+  addValueDeclaration +/ Newton.re:4:4 path:+Newton
+  addValueDeclaration +newton Newton.re:6:4 path:+Newton
+  addValueDeclaration +f Newton.re:25:4 path:+Newton
+  addValueDeclaration +fPrimed Newton.re:27:4 path:+Newton
+  addValueDeclaration +result Newton.re:29:4 path:+Newton
+  addValueDeclaration +current Newton.re:7:6 path:+Newton
+  addValueReference Newton.re:7:6 --> Newton.re:6:29
+  addValueDeclaration +iterateMore Newton.re:8:6 path:+Newton
+  addValueDeclaration +delta Newton.re:9:8 path:+Newton
+  addValueReference Newton.re:9:8 --> Newton.re:8:21
+  addValueReference Newton.re:9:8 --> Newton.re:8:31
+  addValueReference Newton.re:9:8 --> Newton.re:1:4
+  addValueReference Newton.re:9:8 --> Newton.re:8:31
+  addValueReference Newton.re:9:8 --> Newton.re:8:21
+  addValueReference Newton.re:9:8 --> Newton.re:1:4
+  addValueReference Newton.re:9:8 --> Newton.re:8:31
+  addValueReference Newton.re:9:8 --> Newton.re:8:21
+  addValueReference Newton.re:8:6 --> Newton.re:9:8
+  addValueReference Newton.re:8:6 --> Newton.re:6:39
+  addValueReference Newton.re:8:6 --> Newton.re:7:6
+  addValueReference Newton.re:8:6 --> Newton.re:8:31
+  addValueDeclaration +loop Newton.re:14:10 path:+Newton
+  addValueDeclaration +previous Newton.re:15:8 path:+Newton
+  addValueReference Newton.re:15:8 --> Newton.re:7:6
+  addValueDeclaration +next Newton.re:16:8 path:+Newton
+  addValueReference Newton.re:16:8 --> Newton.re:15:8
+  addValueReference Newton.re:16:8 --> Newton.re:15:8
+  addValueReference Newton.re:16:8 --> Newton.re:6:15
+  addValueReference Newton.re:16:8 --> Newton.re:15:8
+  addValueReference Newton.re:16:8 --> Newton.re:6:19
+  addValueReference Newton.re:16:8 --> Newton.re:4:4
+  addValueReference Newton.re:16:8 --> Newton.re:1:4
+  addValueReference Newton.re:14:10 --> Newton.re:7:6
+  addValueReference Newton.re:14:10 --> Newton.re:14:10
+  addValueReference Newton.re:14:10 --> Newton.re:15:8
+  addValueReference Newton.re:14:10 --> Newton.re:16:8
+  addValueReference Newton.re:14:10 --> Newton.re:8:6
+  addValueReference Newton.re:6:4 --> Newton.re:14:10
+  addValueReference Newton.re:25:4 --> Newton.re:25:8
+  addValueReference Newton.re:25:4 --> Newton.re:25:8
+  addValueReference Newton.re:25:4 --> Newton.re:3:4
+  addValueReference Newton.re:25:4 --> Newton.re:25:8
+  addValueReference Newton.re:25:4 --> Newton.re:3:4
+  addValueReference Newton.re:25:4 --> Newton.re:25:8
+  addValueReference Newton.re:25:4 --> Newton.re:3:4
+  addValueReference Newton.re:25:4 --> Newton.re:25:8
+  addValueReference Newton.re:25:4 --> Newton.re:3:4
+  addValueReference Newton.re:25:4 --> Newton.re:1:4
+  addValueReference Newton.re:25:4 --> Newton.re:25:8
+  addValueReference Newton.re:25:4 --> Newton.re:3:4
+  addValueReference Newton.re:25:4 --> Newton.re:1:4
+  addValueReference Newton.re:25:4 --> Newton.re:2:4
+  addValueReference Newton.re:27:4 --> Newton.re:27:14
+  addValueReference Newton.re:27:4 --> Newton.re:3:4
+  addValueReference Newton.re:27:4 --> Newton.re:27:14
+  addValueReference Newton.re:27:4 --> Newton.re:3:4
+  addValueReference Newton.re:27:4 --> Newton.re:27:14
+  addValueReference Newton.re:27:4 --> Newton.re:3:4
+  addValueReference Newton.re:27:4 --> Newton.re:1:4
+  addValueReference Newton.re:27:4 --> Newton.re:1:4
+  addValueReference Newton.re:29:4 --> Newton.re:25:4
+  addValueReference Newton.re:29:4 --> Newton.re:27:4
+  addValueReference Newton.re:29:4 --> Newton.re:6:4
+  addValueReference Newton.re:31:8 --> Newton.re:29:4
+  addValueReference Newton.re:31:18 --> Newton.re:29:4
+  addValueReference Newton.re:31:16 --> Newton.re:25:4
   Scanning TransitiveType1.cmt
   addValueDeclaration +convert TransitiveType1.re:2:4 path:+TransitiveType1
   addValueDeclaration +convertAlias TransitiveType1.re:5:4 path:+TransitiveType1
@@ -1786,6 +1856,7 @@ File References
   NestedModules.re -->> 
   NestedModulesInSignature.re -->> 
   NestedModulesInSignature.rei -->> NestedModulesInSignature.re
+  Newton.re -->> 
   Opaque.re -->> 
   ReasonComponent.re -->> ReactDOMRe.re, ReasonReact.rei, ImportMyBanner.re
   Records.re -->> 
@@ -2044,6 +2115,20 @@ File References
   Live Value +NestedModules.Universe.+theAnswer: 0 references () [0]
   Live Value +NestedModules.+notNested: 0 references () [0]
   Live Value NestedModulesInSignature.Universe.+theAnswer: 0 references () [0]
+  Live Value +Newton.+result: 2 references (Newton.re:31:8, Newton.re:31:18) [0]
+  Live Value +Newton.+fPrimed: 1 references (Newton.re:29:4) [0]
+  Live Value +Newton.+f: 2 references (Newton.re:29:4, Newton.re:31:16) [0]
+  Live Value +Newton.+newton: 1 references (Newton.re:29:4) [2]
+  Live Value +Newton.+loop: 1 references (Newton.re:6:4) [1]
+  Live Value +Newton.+next: 1 references (Newton.re:14:10) [0]
+  Live Value +Newton.+previous: 2 references (Newton.re:14:10, Newton.re:16:8) [0]
+  Live Value +Newton.+iterateMore: 1 references (Newton.re:14:10) [1]
+  Live Value +Newton.+delta: 1 references (Newton.re:8:6) [0]
+  Live Value +Newton.+current: 3 references (Newton.re:8:6, Newton.re:14:10, Newton.re:15:8) [0]
+  Live Value +Newton.+/: 1 references (Newton.re:16:8) [0]
+  Live Value +Newton.+*: 2 references (Newton.re:25:4, Newton.re:27:4) [0]
+  Live Value +Newton.++: 1 references (Newton.re:25:4) [0]
+  Live Value +Newton.+-: 4 references (Newton.re:9:8, Newton.re:16:8, Newton.re:25:4, Newton.re:27:4) [0]
   Live Value +Opaque.+testConvertNestedRecordFromOtherFile: 0 references () [0]
   Live Value +Opaque.+noConversion: 0 references () [0]
   Dead Type +Opaque.opaqueFromRecords.A: 0 references () [0]
