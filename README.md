@@ -47,7 +47,19 @@ Subdirectories are scanned recursively looking for `.cmt[i]` files.
 
 The requirement is that the _current_ directory is where file paths start from. So if the file path seen by the compiler is relative `src/core/version.ml` then the current directory should contain `src` as a subdirectory. The analysis only reports on existing files, so getting this wrong means no reporting.
 
-### Controlling reports with Annotations
+### DCE reports
+
+The dead code analysis reports on dead values and dead types.
+
+A value `x` is dead if it is never used, or if it is used by a value which itself is dead (transitivity). At the top level, function calls such as `Js.log(x)`, or other expressions that might cause side effects, keep value `x` live.
+
+The type analysis repots on variant cases, and record labels.
+
+- A variant case `| A(int)` is dead if a value such as `A(3)` is never constructed. But it can be deconstructed via pattern matching  `| A(n) => ...` or checked for equality `x == A(3)` without making the case `A` live.
+
+- A record label `x` in `type r = {x:int, y:int}` is dead if it is never read (by direct access `r.x` or pattern matching `| {x:n, y:m} => ...`). However, creating a value `let r = {x:3, y:4}` does not make `x` and `y` live.
+
+### DCE: controlling reports with Annotations
 
 The dead code analysis supports 2 annotations:
 
