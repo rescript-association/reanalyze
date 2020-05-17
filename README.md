@@ -60,6 +60,8 @@ The type analysis repots on variant cases, and record labels.
 - A record label `x` in `type r = {x:int, y:int}` is dead if it is never read (by direct access `r.x` or pattern matching `| {x:n, y:m} => ...`). However, creating a value `let r = {x:3, y:4}` does not make `x` and `y` live.
 Note that reading a value `r` does not make `r.x` or `r.y` live.
 
+While dead values can be removed automatically (see below), dead types require a bit more work. A dead variant case requires changing the type definition, and the various accesses to it. A dead record label requires changing the type definition, and removing the label from any expressions that create a value of that type.
+
 ### DCE: controlling reports with Annotations
 
 The dead code analysis supports 2 annotations:
