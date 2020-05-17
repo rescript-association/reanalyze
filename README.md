@@ -58,6 +58,7 @@ The type analysis repots on variant cases, and record labels.
 - A variant case `| A(int)` is dead if a value such as `A(3)` is never constructed. But it can be deconstructed via pattern matching  `| A(n) => ...` or checked for equality `x == A(3)` without making the case `A` live.
 
 - A record label `x` in `type r = {x:int, y:int}` is dead if it is never read (by direct access `r.x` or pattern matching `| {x:n, y:m} => ...`). However, creating a value `let r = {x:3, y:4}` does not make `x` and `y` live.
+Note that reading a value `r` does not make `r.x` or `r.y` live.
 
 ### DCE: controlling reports with Annotations
 
