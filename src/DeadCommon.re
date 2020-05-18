@@ -906,7 +906,7 @@ module Decl = {
       shouldEmitWarning
       && decl
       |> checkSideEffects
-      && Blacklist.filter(decl.pos);
+      && Suppress.filter(decl.pos);
     if (shouldEmitWarning) {
       emitWarning(~decl, ~message, ~name);
     };

@@ -58,7 +58,7 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
 
   | None =>
     Paths.setProjectRoot();
-    let lib_bs = Blacklist.projectRoot^ +++ "lib" +++ "bs";
+    let lib_bs = Suppress.projectRoot^ +++ "lib" +++ "bs";
 
     let sourceDirs = Paths.readSourceDirs(~configSources=None);
     sourceDirs
@@ -123,13 +123,13 @@ let cli = () => {
   and setDebug = () => {
     debug := true;
   }
-  and setBlacklist = s => {
+  and setSuppress = s => {
     let names = s |> String.split_on_char(',');
-    Blacklist.blacklist := names @ Blacklist.blacklist.contents;
+    Suppress.suppress := names @ Suppress.suppress^;
   }
-  and setWhitelist = s => {
+  and setUnsuppress = s => {
     let names = s |> String.split_on_char(',');
-    Blacklist.whitelist := names @ Blacklist.whitelist.contents;
+    Suppress.unsuppress := names @ Suppress.unsuppress^;
   }
   and setWrite = () => {
     DeadCommon.write := true;
@@ -180,7 +180,7 @@ let cli = () => {
     ),
     (
       "-suppress",
-      Arg.String(setBlacklist),
+      Arg.String(setSuppress),
       "comma-separated-path-prefixes Don't report on files whose path has a prefix in the list",
     ),
     (
@@ -195,7 +195,7 @@ let cli = () => {
     ),
     (
       "-unsuppress",
-      Arg.String(setWhitelist),
+      Arg.String(setUnsuppress),
       "comma-separated-path-prefixes Report on files whose path a prefix in the list, overriding -suppress (no-op if -suppress is not specified)",
     ),
     (
