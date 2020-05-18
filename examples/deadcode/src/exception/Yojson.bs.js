@@ -16,7 +16,7 @@ var Type_error = Caml_exceptions.create("Yojson.Basic.Util.Type_error");
 function member(_s, j) {
   throw [
         Type_error,
-        "Basic.Util.memeber",
+        "Basic.Util.member",
         j
       ];
 }

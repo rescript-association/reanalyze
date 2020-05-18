@@ -11,7 +11,7 @@ module Basic = {
 
     [@raises Type_error]
     let member: (string, t) => t =
-      (_s, j) => raise(Type_error("Basic.Util.memeber", j));
+      (_s, j) => raise(Type_error("Basic.Util.member", j));
 
 
     let to_int: t => int = _ => 34;
