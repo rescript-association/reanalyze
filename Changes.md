@@ -1,6 +1,7 @@
 # master
 - Exception Analysis: model functions from Yojson.Basic.Util.
 - Exception Analysis: fix issue with OCaml >= 4.08 where `raise` was not recognized.
+- Exception Analysis: fix issue with OCaml >= 4.08 where models of the standard library were not recognized.
 
 # 1.12.0
 - Exception Analysis: print all the locations where a given exception is raised, not just one.
