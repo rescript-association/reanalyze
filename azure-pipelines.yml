@@ -67,6 +67,14 @@ jobs:
 
   - template: .ci/build-platform.yml
     parameters:
+      name: macOS410
+      platform: macOS
+      vmImage: macOS-10.14
+      test: false
+      esy: "@410"
+
+  - template: .ci/build-platform.yml
+    parameters:
       name: Windows
       platform: Windows
       vmImage: vs2017-win2016
