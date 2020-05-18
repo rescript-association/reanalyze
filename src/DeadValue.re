@@ -180,15 +180,37 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
       _,
       _,
       {lbl_loc: {Location.loc_start: posTo, loc_ghost: false}, _},
-    )
-  | Texp_construct(
-      _,
-      {cstr_loc: {Location.loc_start: posTo, loc_ghost: false}, _},
-      _,
     ) =>
     if (analyzeTypes^) {
       DeadType.addTypeReference(~posTo, ~posFrom=locFrom.loc_start);
     }
+
+  | Texp_construct(
+      _,
+      {
+        cstr_loc: {Location.loc_start: posTo, loc_ghost: false},
+        cstr_tag,
+        cstr_name,
+      },
+      _,
+    ) =>
+    switch (cstr_tag) {
+    | Cstr_extension(path, b) =>
+      path
+      |> Path.onOkPath(~whenContainsApply=(), ~f=s =>
+           Log_.item(
+             "XXX %s Cstr_extension path:%s b:%b posTo:%s@.",
+             cstr_name,
+             s,
+             b,
+             posTo |> posToString,
+           )
+         )
+    | _ => ()
+    };
+    if (analyzeTypes^) {
+      DeadType.addTypeReference(~posTo, ~posFrom=locFrom.loc_start);
+    };
 
   | _ => ()
   };
