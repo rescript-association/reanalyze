@@ -188,7 +188,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
   | Texp_construct(
       _,
       {
-        cstr_loc: {Location.loc_start: posTo, loc_ghost: false},
+        cstr_loc: {Location.loc_start: posTo, loc_ghost: false} as locTo,
         cstr_tag,
         cstr_name,
       },
@@ -197,14 +197,18 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     switch (cstr_tag) {
     | Cstr_extension(path, b) =>
       path
-      |> Path.onOkPath(~whenContainsApply=(), ~f=s =>
-           Log_.item(
-             "XXX %s Cstr_extension path:%s b:%b posTo:%s@.",
-             cstr_name,
-             s,
-             b,
-             posTo |> posToString,
-           )
+      |> Path.onOkPath(
+           ~whenContainsApply=(),
+           ~f=s => {
+             Log_.item(
+               "XXX %s Cstr_extension path:%s b:%b posTo:%s@.",
+               cstr_name,
+               s,
+               b,
+               posTo |> posToString,
+             );
+             addValueReference(~addFileReference=true, ~locFrom, ~locTo);
+           },
          )
     | _ => ()
     };
