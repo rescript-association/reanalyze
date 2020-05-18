@@ -66,6 +66,16 @@ let getSigModuleModtype = si => switch si {
   | _ => None
 }
 
+let getMtyFunctorModuleType = (moduleType: Types.module_type) => switch moduleType {
+#if OCAML_MINOR >= 10
+  | Mty_functor(Named(_, mtParam), mt) => Some((Some(mtParam), mt))
+  | Mty_functor(Unit, mt) => Some((None, mt))
+#else
+  | Mty_functor(_, mtParam, mt) => Some((mtParam, mt))
+#endif
+  | _ => None
+}
+
 let getTexpMatch = desc => switch desc {
 #if OCAML_MINOR >= 8
   | Typedtree.Texp_match(e, cases, partial) =>
@@ -115,5 +125,14 @@ module Ident = {
   include Ident;
 #if OCAML_MINOR >= 8
   let create = Ident.create_local
+#endif
+}
+
+let locGetTxt = ({Location.txt}) => switch txt {
+#if OCAML_MINOR >= 10
+  | Some(s) => s
+  | None => "EmptyLocTxt"
+#else
+  | s => s
 #endif
 }

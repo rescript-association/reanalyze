@@ -213,11 +213,16 @@ let collectPattern = (super, self, pat: Typedtree.pattern) => {
 let rec getSignature = (~isfunc=false, moduleType: Types.module_type) =>
   switch (moduleType) {
   | Mty_signature(signature) => signature
-  | Mty_functor(_, tOpt) when isfunc =>
-    switch (tOpt) {
-    | moduleType => getSignature(moduleType)
+  | Mty_functor(_) when isfunc =>
+    switch (moduleType |> Compat.getMtyFunctorModuleType) {
+    | Some((Some(mtParam), _)) => getSignature(mtParam)
+    | _ => []
     }
-  | Mty_functor(_, moduleType) => getSignature(moduleType)
+  | Mty_functor(_) =>
+    switch (moduleType |> Compat.getMtyFunctorModuleType) {
+    | Some((_, mt)) => getSignature(mt)
+    | _ => []
+    }
   | _ => []
   };
 
@@ -287,12 +292,8 @@ let traverseStructure = (~doTypes, ~doValues) => {
         | Tmod_constraint(_) => true
         | _ => false
         };
-      let z =
-        switch (mb_name.txt) {
-        | Some(z) => z
-        | None => assert(false)
-        };
-      currentModulePath := [z |> Name.create, ...currentModulePath^];
+      currentModulePath :=
+        [mb_name |> Compat.locGetTxt |> Name.create, ...currentModulePath^];
       if (hasInterface) {
         switch (mb_expr.mod_type) {
         | Mty_signature(signature) =>
