@@ -374,6 +374,18 @@
   [@dead "+stringLengthNoSideEffects"] let stringLengthNoSideEffects = String.length("sdkdl");
 
   Warning Dead Value
+  File "./DeadTest.re", line 196, characters 10-19
+  Etoplevel is never used
+  <-- line 196
+  exception [@dead "Etoplevel"] Etoplevel;
+
+  Warning Dead Value
+  File "./DeadTest.re", line 199, characters 12-19
+  Inside.Einside is never used
+  <-- line 199
+    exception [@dead "Inside.Einside"] Einside;
+
+  Warning Dead Value
   File "./DeadTestBlacklist.re", line 1, characters 0-10
   +x is never used
   <-- line 1

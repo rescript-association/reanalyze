@@ -503,6 +503,10 @@ let addTypeDeclaration = addDeclaration_;
 let addValueDeclaration = (~sideEffects, ~path, ~loc: Location.t, name) =>
   name |> addDeclaration_(~sideEffects, ~declKind=Value, ~path, ~loc);
 
+let addExceptionDeclaration = (~path, ~loc: Location.t, name) =>
+  name |> addDeclaration_(~sideEffects=false, ~declKind=Value, ~path, ~loc);
+
+
 /**** REPORTING ****/
 
 let emitWarning = (~decl, ~message, ~name) => {

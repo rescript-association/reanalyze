@@ -10,6 +10,7 @@ import * as Caml_option from "bs-platform/lib/es6/caml_option.js";
 import * as RequireCond from "requireCond";
 import * as DeadValueTest from "./DeadValueTest.bs.js";
 import * as ImmutableArray from "./ImmutableArray.bs.js";
+import * as Caml_exceptions from "bs-platform/lib/es6/caml_exceptions.js";
 import * as BootloaderResource from "BootloaderResource";
 import * as DynamicallyLoadedComponent from "./DynamicallyLoadedComponent.bs.js";
 
@@ -190,6 +191,14 @@ var WithInclude = { };
 
 console.log(/* A */0);
 
+var Etoplevel = Caml_exceptions.create("DeadTest.Etoplevel");
+
+var Einside = Caml_exceptions.create("DeadTest.Inside.Einside");
+
+var Inside = {
+  Einside: Einside
+};
+
 var fortytwo = 42;
 
 var fortyTwoButExported = 42;
@@ -252,6 +261,8 @@ export {
   stringLengthNoSideEffects ,
   GloobLive ,
   WithInclude ,
+  Etoplevel ,
+  Inside ,
   
 }
 /* $ExportWithRename$OR$DynamicallyLoadedComponent$RequireCond Not a pure module */
