@@ -257,7 +257,9 @@ let traverseAst = {
     switch (args) {
     | [(_, Some({Typedtree.exp_desc: Texp_construct(lid, _, _)}))] =>
       [Exn.fromLid(lid)] |> Exceptions.fromList
-    | _ => [Exn.fromString("TODO_from_raise")] |> Exceptions.fromList
+    | [(_, Some({Typedtree.exp_desc: Texp_ident(_)}))] =>
+      [Exn.fromString("genericException")] |> Exceptions.fromList
+    | _ => [Exn.fromString("TODO_from_raise1")] |> Exceptions.fromList
     };
 
   let doesNotRaise = attributes =>
@@ -415,6 +417,9 @@ let traverseAst = {
           [Exn.fromString(s)] |> Exceptions.fromList
         | Annotation.ConstructPayload(s) =>
           [Exn.fromString(s)] |> Exceptions.fromList
+        | Annotation.IdentPayload(s) =>
+          [Exn.fromString(s |> Longident.flatten |> String.concat("."))]
+          |> Exceptions.fromList
         | Annotation.TuplePayload(tuple) =>
           tuple
           |> List.map(payload =>
