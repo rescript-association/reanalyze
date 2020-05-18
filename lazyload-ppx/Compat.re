@@ -16,3 +16,12 @@ let mkAttribute = (~loc, ~txt) => (
   Parsetree.PStr([Ast_helper.Str.eval(Ast_helper.Exp.constant(Pconst_string("-3", None)))]),
 );
 #endif
+
+
+let makeLoc = (~loc, ~txt) => {
+#if OCAML_MINOR >= 10
+  {Location.loc, txt: Some(txt)};
+#else
+  {Location.loc, txt};
+#endif
+};
