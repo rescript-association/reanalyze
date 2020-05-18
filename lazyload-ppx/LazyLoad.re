@@ -491,7 +491,7 @@ let module_expr = (mapper, module_expr) =>
                         (
                           Nolabel,
                           Exp.letmodule(
-                            {loc: default_loc^, txt: "Comp"},
+                            {loc: default_loc^, txt: Some("Comp")},
                             Mod.unpack(
                               Exp.apply(
                                 Exp.ident({
