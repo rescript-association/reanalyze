@@ -362,11 +362,14 @@ let traverseStructure = (~doTypes, ~doValues) => {
       | _ => ()
       }
 
-    | Tstr_exception({ext_id, ext_loc: loc}) =>
-      let path = currentModulePath^ @ [Common.currentModuleName^];
-      let name = ext_id |> Ident.name |> Name.create;
-      addExceptionDeclaration(~path, ~loc: Location.t, name);
-
+    | Tstr_exception(_) =>
+      switch (structureItem.str_desc |> Compat.tstrExceptionGet) {
+      | Some((id, loc)) =>
+        let path = currentModulePath^ @ [Common.currentModuleName^];
+        let name = id |> Ident.name |> Name.create;
+        addExceptionDeclaration(~path, ~loc: Location.t, name);
+      | None => ()
+      }
     | _ => ()
     };
     let result = super.structure_item(self, structureItem);
