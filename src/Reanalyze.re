@@ -147,11 +147,6 @@ let cli = () => {
   }
   and speclist = [
     (
-      "-blacklist",
-      Arg.String(setBlacklist),
-      "comma-separated-path-prefixes Don't report on files whose path has a prefix in the list",
-    ),
-    (
       "-ci",
       Arg.Unit(() => Common.ci := true),
       "Internal flag for use in CI",
@@ -184,6 +179,11 @@ let cli = () => {
       "comma-separated-path-prefixes Consider all values whose path has a prefix in the list as live",
     ),
     (
+      "-suppress",
+      Arg.String(setBlacklist),
+      "comma-separated-path-prefixes Don't report on files whose path has a prefix in the list",
+    ),
+    (
       "-termination",
       Arg.Unit(() => setTermination(None)),
       "Experimental termination analysis",
@@ -194,6 +194,11 @@ let cli = () => {
       "root_path Experimental termination analysis for all the .cmt files under the root path",
     ),
     (
+      "-unsuppress",
+      Arg.String(setWhitelist),
+      "comma-separated-path-prefixes Report on files whose path a prefix in the list, overriding -suppress (no-op if -suppress is not specified)",
+    ),
+    (
       "-version",
       Arg.Unit(versionAndExit),
       "Show version information and exit",
@@ -202,11 +207,6 @@ let cli = () => {
       "--version",
       Arg.Unit(versionAndExit),
       "Show version information and exit",
-    ),
-    (
-      "-whitelist",
-      Arg.String(setWhitelist),
-      "comma-separated-path-prefixes Report on files whose path a prefix in the list, overriding blacklist (no-op if a blacklist is not specified)",
     ),
     (
       "-write",

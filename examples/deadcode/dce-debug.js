@@ -19,7 +19,7 @@ child_process.spawnSync(
     "-dce",
     "-debug",
     "-ci",
-    "-blacklist",
+    "-suppress",
     "src/exception",
     "-live-names",
     "globallyLive1",
