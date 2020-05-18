@@ -211,7 +211,7 @@ let locToString = (ppf, loc: Location.t) =>
 let logKind = (body, ~filter=?, ~color, ~loc: Location.t, ~name) =>
   if (switch (filter) {
       | Some(f) => f(loc.loc_start)
-      | None => Blacklist.filter(loc.loc_start)
+      | None => Suppress.filter(loc.loc_start)
       }) {
     Format.fprintf(
       Format.std_formatter,
