@@ -190,26 +190,16 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
       {
         cstr_loc: {Location.loc_start: posTo, loc_ghost: false} as locTo,
         cstr_tag,
-        cstr_name,
       },
       _,
     ) =>
     switch (cstr_tag) {
-    | Cstr_extension(path, b) =>
+    | Cstr_extension(path, _) =>
+      // Exception used
       path
-      |> Path.onOkPath(
-           ~whenContainsApply=(),
-           ~f=s => {
-             Log_.item(
-               "XXX %s Cstr_extension path:%s b:%b posTo:%s@.",
-               cstr_name,
-               s,
-               b,
-               posTo |> posToString,
-             );
-             addValueReference(~addFileReference=true, ~locFrom, ~locTo);
-           },
-         )
+      |> Path.onOkPath(~whenContainsApply=(), ~f=_ => {
+           addValueReference(~addFileReference=true, ~locFrom, ~locTo)
+         })
     | _ => ()
     };
     if (analyzeTypes^) {
