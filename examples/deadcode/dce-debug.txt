@@ -1,8 +1,15 @@
+  Scanning TestYojson.cmt
+  addValueDeclaration +foo TestYojson.re:2:4 path:+TestYojson
+  addValueReference TestYojson.re:2:4 --> TestYojson.re:2:10
+  addValueReference TestYojson.re:2:4 --> Yojson.re:7:6
   Scanning ExnA.cmt
   addValueDeclaration +bar ExnA.re:1:4 path:+ExnA
   addValueReference ExnA.re:1:4 --> ExnB.re:2:4
   Scanning ExnB.cmt
   addValueDeclaration +foo ExnB.re:2:4 path:+ExnB
+  Scanning Yojson.cmt
+  addValueDeclaration +from_string Yojson.re:7:6 path:+Yojson.Basic
+  addTypeReference Yojson.re:7:44 --> Yojson.re:1:10
   Scanning BsJson.cmt
   addValueDeclaration +testBsJson BsJson.re:2:4 path:+BsJson
   addValueDeclaration +testBsJson2 BsJson.re:5:4 path:+BsJson
@@ -1900,6 +1907,8 @@ File References
   ExnA.re -->> ExnB.re
   ExnB.re -->> 
   ExportWithRename.re -->> React.re
+  TestYojson.re -->> Yojson.re
+  Yojson.re -->> 
   trace.ml -->> 
   trace.mli -->> trace.ml
   Dead Type +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
@@ -2409,6 +2418,7 @@ File References
   Dead Value +Exn.+catches1: 0 references () [0]
   Dead Value +Exn.+raises: 0 references () [0]
   Dead Value +ExnA.+bar: 0 references () [0]
+  Dead Value +TestYojson.+foo: 0 references () [0]
   Live Value +BootloaderResource.+read: 1 references (DeadTest.re:112:40) [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
@@ -2520,6 +2530,7 @@ File References
   Live Value +JSResource.+jSResource: 2 references (DeadTest.re:112:40, DeadTest.re:119:6) [0]
   Live Value +NestedModulesInSignature.Universe.+theAnswer: 1 references (NestedModulesInSignature.rei:2:2) [0]
   Dead Value +ExnB.+foo: 0 references () [0]
+  Dead Value +Yojson.Basic.+from_string: 0 references () [0]
   Live Value trace.+infok: 1 references (DeadTest.re:175:0) [0]
   Live Type trace.pf.pf: 1 references (DeadTest.re:175:21) [0]
   Dead Value +DeadValueTest.+valueOnlyInImplementation: 0 references () [0]
