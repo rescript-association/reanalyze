@@ -4,8 +4,7 @@
   "dependencies": {
     "ocaml": "~4.06.1",
     "@opam/dune": "1.7.3",
-    "@opam/reason": "*",
-    "refmterr": "*"
+    "@opam/reason": "*"
   },
   "devDependencies": {
     "@opam/merlin": "*"
