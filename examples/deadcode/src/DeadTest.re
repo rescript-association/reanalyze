@@ -192,3 +192,9 @@ module WithInclude: {
 };
 
 Js.log(WithInclude.A);
+
+exception Etoplevel;
+
+module Inside = {
+  exception Einside;
+};

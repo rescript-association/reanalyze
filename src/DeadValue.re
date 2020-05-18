@@ -118,7 +118,7 @@ let checkAnyValueBindingWithNoSideEffects =
   | Tpat_any when exprNoSideEffects(expr) && !loc.loc_ghost =>
     let name = "_" |> Name.create(~isInterface=false);
     let path = currentModulePath^ @ [Common.currentModuleName^];
-    addValueDeclaration(~path, ~loc, ~sideEffects=false, name);
+    name |> addValueDeclaration(~path, ~loc, ~sideEffects=false);
   | _ => ()
   };
 
@@ -139,7 +139,7 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
       let path = currentModulePath^ @ [Common.currentModuleName^];
       if (!exists) {
         let sideEffects = !exprNoSideEffects(vb.vb_expr);
-        addValueDeclaration(~path, ~loc, ~sideEffects, name);
+        name |> addValueDeclaration(~path, ~loc, ~sideEffects);
       };
       switch (PosHash.find_opt(decls, loc_start)) {
       | None => ()
@@ -243,12 +243,9 @@ let rec processSignatureItem =
         | _ => false
         };
       if (!isPrimitive || analyzeExternals) {
-        addValueDeclaration(
-          ~sideEffects=false,
-          ~path,
-          ~loc,
-          Ident.name(id) |> Name.create(~isInterface=false),
-        );
+        Ident.name(id)
+        |> Name.create(~isInterface=false)
+        |> addValueDeclaration(~sideEffects=false, ~path, ~loc);
       };
     };
   | Sig_module(_)
@@ -317,12 +314,10 @@ let traverseStructure = (~doTypes, ~doValues) => {
         | _ => false
         };
       if (!exists) {
-        addValueDeclaration(
-          ~path,
-          ~loc=vd.val_loc,
-          ~sideEffects=false,
-          vd.val_id |> Ident.name |> Name.create(~isInterface=false),
-        );
+        vd.val_id
+        |> Ident.name
+        |> Name.create(~isInterface=false)
+        |> addValueDeclaration(~path, ~loc=vd.val_loc, ~sideEffects=false);
       };
 
     | Tstr_type(_recFlag, typeDeclarations) when doTypes =>
@@ -350,6 +345,11 @@ let traverseStructure = (~doTypes, ~doValues) => {
            );
       | _ => ()
       }
+
+    | Tstr_exception({ext_id, ext_loc: loc}) =>
+      let path = currentModulePath^ @ [Common.currentModuleName^];
+      let name = ext_id |> Ident.name |> Name.create;
+      addExceptionDeclaration(~path, ~loc: Location.t, name);
 
     | _ => ()
     };
