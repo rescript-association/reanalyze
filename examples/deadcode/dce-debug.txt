@@ -27,8 +27,10 @@
   addValueDeclaration +to_int Yojson.re:17:8 path:+Yojson.Basic.Util
   addValueDeclaration +to_string Yojson.re:19:8 path:+Yojson.Basic.Util
   addValueDeclaration Json_error Yojson.re:1:10 path:+Yojson
+  XXX Json_error Cstr_extension path:Json_error b:false posTo:Yojson.re:1:10
   addTypeReference Yojson.re:7:44 --> Yojson.re:1:10
   addValueDeclaration Type_error Yojson.re:10:14 path:+Yojson.Basic.Util
+  XXX Type_error Cstr_extension path:Type_error b:false posTo:Yojson.re:10:14
   addTypeReference Yojson.re:14:23 --> Yojson.re:10:14
   addValueReference Yojson.re:13:8 --> Yojson.re:14:11
   Scanning BsJson.cmt
@@ -82,24 +84,34 @@
   addValueReference Exn.re:29:4 --> Exn.re:29:22
   addValueDeclaration A Exn.re:34:10 path:+Exn
   addValueDeclaration B Exn.re:35:10 path:+Exn
+  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
   addTypeReference Exn.re:42:10 --> Exn.re:35:10
   addValueReference Exn.re:37:4 --> Exn.re:37:20
+  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
   addTypeReference Exn.re:39:10 --> Exn.re:34:10
   addValueReference Exn.re:37:4 --> Exn.re:37:17
+  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
   addTypeReference Exn.re:48:12 --> Exn.re:35:10
+  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
   addTypeReference Exn.re:47:8 --> Exn.re:34:10
+  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
   addTypeReference Exn.re:54:12 --> Exn.re:35:10
   addValueDeclaration C Exn.re:58:10 path:+Exn
+  XXX C Cstr_extension path:C b:true posTo:Exn.re:58:10
   addTypeReference Exn.re:60:31 --> Exn.re:58:10
+  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
   addTypeReference Exn.re:60:20 --> Exn.re:35:10
   addValueReference Exn.re:59:4 --> Exn.re:59:18
+  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
   addTypeReference Exn.re:72:10 --> Exn.re:35:10
   addValueReference Exn.re:67:4 --> Exn.re:67:26
+  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
   addTypeReference Exn.re:69:10 --> Exn.re:34:10
   addValueReference Exn.re:67:4 --> Exn.re:67:23
   addValueDeclaration Error Exn.re:76:10 path:+Exn
   addValueDeclaration +in_chan Exn.re:79:6 path:+Exn
   addValueReference Exn.re:79:6 --> Exn.re:78:27
+  XXX Error Cstr_extension path:Error b:false posTo:Exn.re:76:10
   addTypeReference Exn.re:83:10 --> Exn.re:76:10
   addValueReference Exn.re:78:4 --> Exn.re:81:21
   addValueReference Exn.re:78:4 --> Exn.re:81:25
@@ -107,10 +119,14 @@
   addValueReference Exn.re:78:4 --> Exn.re:79:6
   addValueReference Exn.re:78:4 --> Exn.re:84:2
   addValueReference Exn.re:78:4 --> Exn.re:79:6
+  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
   addTypeReference Exn.re:92:25 --> Exn.re:35:10
+  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
   addTypeReference Exn.re:91:16 --> Exn.re:34:10
+  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
   addTypeReference Exn.re:97:16 --> Exn.re:34:10
   addValueDeclaration +a Exn.re:103:6 path:+Exn
+  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
   addTypeReference Exn.re:103:20 --> Exn.re:34:10
   addValueReference Exn.re:103:6 --> Exn.re:102:25
   addValueReference Exn.re:102:4 --> Exn.re:103:6
@@ -653,6 +669,15 @@
   addValueDeclaration +make DynamicallyLoadedComponent.re:2:4 path:+DynamicallyLoadedComponent
   addValueReference DynamicallyLoadedComponent.re:2:32 --> DynamicallyLoadedComponent.re:2:13
   addValueReference DynamicallyLoadedComponent.re:2:19 --> React.re:7:0
+  Scanning DeadExn.cmt
+  addValueDeclaration +eToplevel DeadExn.re:7:4 path:+DeadExn
+  addValueDeclaration +eInside DeadExn.re:9:4 path:+DeadExn
+  addValueDeclaration Etoplevel DeadExn.re:1:10 path:+DeadExn
+  addValueDeclaration Einside DeadExn.re:4:12 path:+DeadExn.Inside
+  XXX Etoplevel Cstr_extension path:Etoplevel b:true posTo:DeadExn.re:1:10
+  addTypeReference DeadExn.re:7:16 --> DeadExn.re:1:10
+  XXX Einside Cstr_extension path:Inside.Einside b:true posTo:DeadExn.re:4:12
+  addTypeReference DeadExn.re:9:14 --> DeadExn.re:4:12
   Scanning TransitiveType2.cmt
   addValueDeclaration +convertT2 TransitiveType2.re:7:4 path:+TransitiveType2
   addValueReference TransitiveType2.re:7:4 --> TransitiveType2.re:7:17
@@ -1845,8 +1870,6 @@
   extendTypeDependencies DeadTest.re:189:8 --> DeadTest.re:185:6
   extendTypeDependencies DeadTest.re:185:6 --> DeadTest.re:189:8
   addTypeReference DeadTest.re:194:7 --> DeadTest.re:185:6
-  addValueDeclaration Etoplevel DeadTest.re:196:10 path:+DeadTest
-  addValueDeclaration Einside DeadTest.re:199:12 path:+DeadTest.Inside
   addValueReference ExportWithRename.re:3:4 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DynamicallyLoadedComponent.re:2:4 --> ExportWithRename.re:3:4
   addValueReference DeadTest.re:37:2 --> DeadTest.re:41:6
@@ -1868,6 +1891,7 @@ File References
   CreateErrorHandler2.re -->> 
   DeadCodeImplementation.re -->> 
   DeadCodeInterface.re -->> 
+  DeadExn.re -->> 
   DeadMl.ml -->> 
   DeadRT.re -->> 
   DeadRT.rei -->> 
@@ -1955,6 +1979,10 @@ File References
   Live Value +CreateErrorHandler1.Error1.+notification: 1 references (ErrorHandler.rei:3:2) [0]
   Live Value +CreateErrorHandler2.Error2.+notification: 1 references (ErrorHandler.rei:3:2) [0]
   Live Value +DeadCodeImplementation.M.+x: 1 references (DeadCodeInterface.re:1:17) [0]
+  Dead Value +DeadExn.+eInside: 0 references () [0]
+  Dead Value +DeadExn.+eToplevel: 0 references () [0]
+  Dead Value +DeadExn.Inside.Einside: 0 references () [0]
+  Dead Value +DeadExn.Etoplevel: 0 references () [0]
   Live Value +DeadMl.+foo: 0 references () [0]
   Live Value +DeadMl.WithSignature.+live11: 0 references () [1]
   Live Value +DeadMl.WithSignature.+live11: 1 references (DeadMl.ml:103:2) [0]
@@ -1999,8 +2027,6 @@ File References
   Live Type DeadRT.moduleAccessPath.Root: 1 references (DeadTest.re:110:16) [1]
   Live Type +DeadRT.moduleAccessPath.Root: 1 references (DeadRT.rei:2:4) [0]
   Live Type DeadRT.moduleAccessPath.Kaboom: 1 references (DeadRT.re:3:4) [0]
-  Dead Value +DeadTest.Inside.Einside: 0 references () [0]
-  Dead Value +DeadTest.Etoplevel: 0 references () [0]
   Live Type +DeadTest.WithInclude.t.A: 1 references (DeadTest.re:194:7) [1]
   Live Type +DeadTest.WithInclude.t.A: 1 references (DeadTest.re:185:6) [0]
   Live Value +DeadTest.GloobLive.+globallyLive3: 0 references () [0]
@@ -2706,6 +2732,30 @@ File References
   [@dead "+bar"] let bar = (x: someMethods) => {
 
   Warning Dead Value
+  File "./DeadExn.re", line 1, characters 10-19
+  Etoplevel is never used
+  <-- line 1
+  exception [@dead "Etoplevel"] Etoplevel;
+
+  Warning Dead Value
+  File "./DeadExn.re", line 4, characters 12-19
+  Inside.Einside is never used
+  <-- line 4
+    exception [@dead "Inside.Einside"] Einside;
+
+  Warning Dead Value
+  File "./DeadExn.re", line 7, characters 0-25
+  +eToplevel is never used
+  <-- line 7
+  [@dead "+eToplevel"] let eToplevel = Etoplevel;
+
+  Warning Dead Value
+  File "./DeadExn.re", line 9, characters 0-28
+  +eInside is never used
+  <-- line 9
+  [@dead "+eInside"] let eInside = Inside.Einside;
+
+  Warning Dead Value
   File "./DeadMl.ml", line 3, characters 4-93
   QQ.+thisSpansSeveralLines is never used
   <-- line 3
@@ -3024,18 +3074,6 @@ File References
   +stringLengthNoSideEffects is never used
   <-- line 173
   [@dead "+stringLengthNoSideEffects"] let stringLengthNoSideEffects = String.length("sdkdl");
-
-  Warning Dead Value
-  File "./DeadTest.re", line 196, characters 10-19
-  Etoplevel is never used
-  <-- line 196
-  exception [@dead "Etoplevel"] Etoplevel;
-
-  Warning Dead Value
-  File "./DeadTest.re", line 199, characters 12-19
-  Inside.Einside is never used
-  <-- line 199
-    exception [@dead "Inside.Einside"] Einside;
 
   Warning Dead Value
   File "./DeadTestBlacklist.re", line 1, characters 0-10

@@ -1,3 +1,21 @@
+  XXX Json_error Cstr_extension path:Json_error b:false posTo:Yojson.re:1:10
+  XXX Type_error Cstr_extension path:Type_error b:false posTo:Yojson.re:10:14
+  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
+  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
+  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
+  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
+  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
+  XXX C Cstr_extension path:C b:true posTo:Exn.re:58:10
+  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
+  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
+  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
+  XXX Error Cstr_extension path:Error b:false posTo:Exn.re:76:10
+  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
+  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
+  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
+  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
+  XXX Etoplevel Cstr_extension path:Etoplevel b:true posTo:DeadExn.re:1:10
+  XXX Einside Cstr_extension path:Inside.Einside b:true posTo:DeadExn.re:4:12
 
   Warning Dead Type
   File "./AutoAnnotate.re", line 2, characters 4-10
@@ -52,6 +70,30 @@
   +bar is never used
   <-- line 21
   [@dead "+bar"] let bar = (x: someMethods) => {
+
+  Warning Dead Value
+  File "./DeadExn.re", line 1, characters 10-19
+  Etoplevel is never used
+  <-- line 1
+  exception [@dead "Etoplevel"] Etoplevel;
+
+  Warning Dead Value
+  File "./DeadExn.re", line 4, characters 12-19
+  Inside.Einside is never used
+  <-- line 4
+    exception [@dead "Inside.Einside"] Einside;
+
+  Warning Dead Value
+  File "./DeadExn.re", line 7, characters 0-25
+  +eToplevel is never used
+  <-- line 7
+  [@dead "+eToplevel"] let eToplevel = Etoplevel;
+
+  Warning Dead Value
+  File "./DeadExn.re", line 9, characters 0-28
+  +eInside is never used
+  <-- line 9
+  [@dead "+eInside"] let eInside = Inside.Einside;
 
   Warning Dead Value
   File "./DeadMl.ml", line 3, characters 4-93
@@ -372,18 +414,6 @@
   +stringLengthNoSideEffects is never used
   <-- line 173
   [@dead "+stringLengthNoSideEffects"] let stringLengthNoSideEffects = String.length("sdkdl");
-
-  Warning Dead Value
-  File "./DeadTest.re", line 196, characters 10-19
-  Etoplevel is never used
-  <-- line 196
-  exception [@dead "Etoplevel"] Etoplevel;
-
-  Warning Dead Value
-  File "./DeadTest.re", line 199, characters 12-19
-  Inside.Einside is never used
-  <-- line 199
-    exception [@dead "Inside.Einside"] Einside;
 
   Warning Dead Value
   File "./DeadTestBlacklist.re", line 1, characters 0-10
