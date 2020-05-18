@@ -27,11 +27,9 @@
   addValueDeclaration +to_int Yojson.re:17:8 path:+Yojson.Basic.Util
   addValueDeclaration +to_string Yojson.re:19:8 path:+Yojson.Basic.Util
   addValueDeclaration Json_error Yojson.re:1:10 path:+Yojson
-  XXX Json_error Cstr_extension path:Json_error b:false posTo:Yojson.re:1:10
   addValueReference Yojson.re:7:6 --> Yojson.re:1:10
   addTypeReference Yojson.re:7:44 --> Yojson.re:1:10
   addValueDeclaration Type_error Yojson.re:10:14 path:+Yojson.Basic.Util
-  XXX Type_error Cstr_extension path:Type_error b:false posTo:Yojson.re:10:14
   addValueReference Yojson.re:13:8 --> Yojson.re:10:14
   addTypeReference Yojson.re:14:23 --> Yojson.re:10:14
   addValueReference Yojson.re:13:8 --> Yojson.re:14:11
@@ -86,43 +84,33 @@
   addValueReference Exn.re:29:4 --> Exn.re:29:22
   addValueDeclaration A Exn.re:34:10 path:+Exn
   addValueDeclaration B Exn.re:35:10 path:+Exn
-  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
   addValueReference Exn.re:37:4 --> Exn.re:35:10
   addTypeReference Exn.re:42:10 --> Exn.re:35:10
   addValueReference Exn.re:37:4 --> Exn.re:37:20
-  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
   addValueReference Exn.re:37:4 --> Exn.re:34:10
   addTypeReference Exn.re:39:10 --> Exn.re:34:10
   addValueReference Exn.re:37:4 --> Exn.re:37:17
-  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
   addValueReference Exn.re:46:4 --> Exn.re:35:10
   addTypeReference Exn.re:48:12 --> Exn.re:35:10
-  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
   addValueReference Exn.re:46:4 --> Exn.re:34:10
   addTypeReference Exn.re:47:8 --> Exn.re:34:10
-  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
   addValueReference Exn.re:53:4 --> Exn.re:35:10
   addTypeReference Exn.re:54:12 --> Exn.re:35:10
   addValueDeclaration C Exn.re:58:10 path:+Exn
-  XXX C Cstr_extension path:C b:true posTo:Exn.re:58:10
   addValueReference Exn.re:59:4 --> Exn.re:58:10
   addTypeReference Exn.re:60:31 --> Exn.re:58:10
-  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
   addValueReference Exn.re:59:4 --> Exn.re:35:10
   addTypeReference Exn.re:60:20 --> Exn.re:35:10
   addValueReference Exn.re:59:4 --> Exn.re:59:18
-  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
   addValueReference Exn.re:67:4 --> Exn.re:35:10
   addTypeReference Exn.re:72:10 --> Exn.re:35:10
   addValueReference Exn.re:67:4 --> Exn.re:67:26
-  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
   addValueReference Exn.re:67:4 --> Exn.re:34:10
   addTypeReference Exn.re:69:10 --> Exn.re:34:10
   addValueReference Exn.re:67:4 --> Exn.re:67:23
   addValueDeclaration Error Exn.re:76:10 path:+Exn
   addValueDeclaration +in_chan Exn.re:79:6 path:+Exn
   addValueReference Exn.re:79:6 --> Exn.re:78:27
-  XXX Error Cstr_extension path:Error b:false posTo:Exn.re:76:10
   addValueReference Exn.re:78:4 --> Exn.re:76:10
   addTypeReference Exn.re:83:10 --> Exn.re:76:10
   addValueReference Exn.re:78:4 --> Exn.re:81:21
@@ -131,17 +119,13 @@
   addValueReference Exn.re:78:4 --> Exn.re:79:6
   addValueReference Exn.re:78:4 --> Exn.re:84:2
   addValueReference Exn.re:78:4 --> Exn.re:79:6
-  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
   addValueReference Exn.re:90:4 --> Exn.re:35:10
   addTypeReference Exn.re:92:25 --> Exn.re:35:10
-  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
   addValueReference Exn.re:90:4 --> Exn.re:34:10
   addTypeReference Exn.re:91:16 --> Exn.re:34:10
-  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
   addValueReference Exn.re:96:4 --> Exn.re:34:10
   addTypeReference Exn.re:97:16 --> Exn.re:34:10
   addValueDeclaration +a Exn.re:103:6 path:+Exn
-  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
   addValueReference Exn.re:103:6 --> Exn.re:34:10
   addTypeReference Exn.re:103:20 --> Exn.re:34:10
   addValueReference Exn.re:103:6 --> Exn.re:102:25
@@ -690,10 +674,8 @@
   addValueDeclaration +eInside DeadExn.re:9:4 path:+DeadExn
   addValueDeclaration Etoplevel DeadExn.re:1:10 path:+DeadExn
   addValueDeclaration Einside DeadExn.re:4:12 path:+DeadExn.Inside
-  XXX Etoplevel Cstr_extension path:Etoplevel b:true posTo:DeadExn.re:1:10
   addValueReference DeadExn.re:7:4 --> DeadExn.re:1:10
   addTypeReference DeadExn.re:7:16 --> DeadExn.re:1:10
-  XXX Einside Cstr_extension path:Inside.Einside b:true posTo:DeadExn.re:4:12
   addValueReference DeadExn.re:9:4 --> DeadExn.re:4:12
   addTypeReference DeadExn.re:9:14 --> DeadExn.re:4:12
   addValueReference DeadExn.re:11:7 --> DeadExn.re:9:4

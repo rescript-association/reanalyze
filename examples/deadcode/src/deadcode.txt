@@ -1,21 +1,3 @@
-  XXX Json_error Cstr_extension path:Json_error b:false posTo:Yojson.re:1:10
-  XXX Type_error Cstr_extension path:Type_error b:false posTo:Yojson.re:10:14
-  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
-  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
-  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
-  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
-  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
-  XXX C Cstr_extension path:C b:true posTo:Exn.re:58:10
-  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
-  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
-  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
-  XXX Error Cstr_extension path:Error b:false posTo:Exn.re:76:10
-  XXX B Cstr_extension path:B b:true posTo:Exn.re:35:10
-  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
-  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
-  XXX A Cstr_extension path:A b:true posTo:Exn.re:34:10
-  XXX Etoplevel Cstr_extension path:Etoplevel b:true posTo:DeadExn.re:1:10
-  XXX Einside Cstr_extension path:Inside.Einside b:true posTo:DeadExn.re:4:12
 
   Warning Dead Type
   File "./AutoAnnotate.re", line 2, characters 4-10
