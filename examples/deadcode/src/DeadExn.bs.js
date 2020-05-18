@@ -10,6 +10,8 @@ var Inside = {
   Einside: Einside
 };
 
+console.log(Einside);
+
 var eToplevel = Etoplevel;
 
 var eInside = Einside;
@@ -21,4 +23,4 @@ export {
   eInside ,
   
 }
-/* No side effect */
+/*  Not a pure module */

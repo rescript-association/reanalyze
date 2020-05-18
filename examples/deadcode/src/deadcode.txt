@@ -78,22 +78,10 @@
   exception [@dead "Etoplevel"] Etoplevel;
 
   Warning Dead Value
-  File "./DeadExn.re", line 4, characters 12-19
-  Inside.Einside is never used
-  <-- line 4
-    exception [@dead "Inside.Einside"] Einside;
-
-  Warning Dead Value
   File "./DeadExn.re", line 7, characters 0-25
   +eToplevel is never used
   <-- line 7
   [@dead "+eToplevel"] let eToplevel = Etoplevel;
-
-  Warning Dead Value
-  File "./DeadExn.re", line 9, characters 0-28
-  +eInside is never used
-  <-- line 9
-  [@dead "+eInside"] let eInside = Inside.Einside;
 
   Warning Dead Value
   File "./DeadMl.ml", line 3, characters 4-93
