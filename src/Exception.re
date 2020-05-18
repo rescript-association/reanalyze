@@ -248,7 +248,6 @@ let traverseAst = {
        });
 
   let isRaise = s => {
-    Log_.item("isGaise %s@.", s);
     s == "Pervasives.raise"
     || s == "Pervasives.raise_notracee"
     || s == "Stdlib.raise"
