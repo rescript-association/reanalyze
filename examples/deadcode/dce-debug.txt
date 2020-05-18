@@ -74,6 +74,7 @@
   addValueDeclaration +stringMake2 Exn.re:152:4 path:+Exn
   addValueDeclaration +stringMake3 Exn.re:154:4 path:+Exn
   addValueDeclaration +severalCases Exn.re:156:4 path:+Exn
+  addValueDeclaration +genericRaiseIsNotSupported Exn.re:164:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -116,6 +117,7 @@
   addValueReference Exn.re:127:4 --> Exn.re:127:22
   addValueReference Exn.re:130:4 --> Exn.re:130:18
   addValueReference Exn.re:156:4 --> Exn.re:156:19
+  addValueReference Exn.re:164:4 --> Exn.re:164:33
   Scanning ReasonComponent.cmt
   addValueDeclaration +component ReasonComponent.re:3:4 path:+ReasonComponent
   addValueDeclaration +onClick ReasonComponent.re:15:4 path:+ReasonComponent
@@ -2400,6 +2402,7 @@ File References
   Live Type +VariantsWithPayload.payload.x: 2 references (VariantsWithPayload.re:27:42, VariantsWithPayload.re:46:36) [0]
   Dead Value +BsJson.+testBsJson2: 0 references () [0]
   Dead Value +BsJson.+testBsJson: 0 references () [0]
+  Dead Value +Exn.+genericRaiseIsNotSupported: 0 references () [0]
   Dead Value +Exn.+severalCases: 0 references () [0]
   Dead Value +Exn.+stringMake3: 0 references () [0]
   Dead Value +Exn.+stringMake2: 0 references () [0]
