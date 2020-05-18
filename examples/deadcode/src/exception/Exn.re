@@ -161,4 +161,5 @@ let severalCases = cases =>
   | _ => ()
   };
 
+[@raises genericException]
 let genericRaiseIsNotSupported = exn => raise(exn);
