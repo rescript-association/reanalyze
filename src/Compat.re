@@ -136,3 +136,14 @@ let locGetTxt = ({Location.txt}) => switch txt {
   | s => s
 #endif
 }
+
+let tstrExceptionGet = (x : Typedtree.structure_item_desc) => switch x {
+#if OCAML_MINOR >= 8
+  | Tstr_exception({tyexn_constructor: {ext_id}, tyexn_loc}) =>
+    Some((ext_id, tyexn_loc))
+#else
+  | Tstr_exception({ext_id, ext_loc}) =>
+    Some((ext_id, ext_loc))
+#endif
+  | _ => None
+};
