@@ -247,9 +247,13 @@ let traverseAst = {
          case.c_rhs |> iterExpr(self);
        });
 
-  let isRaise = s =>
-    s == "Pervasives.raise" || s == "Pervasives.raise_notracee";
-
+  let isRaise = s => {
+    Log_.item("isGaise %s@.", s);
+    s == "Pervasives.raise"
+    || s == "Pervasives.raise_notracee"
+    || s == "Stdlib.raise"
+    || s == "Stdlib.raise_notracee";
+  };
   let raiseArgs = args =>
     switch (args) {
     | [(_, Some({Typedtree.exp_desc: Texp_construct(lid, _, _)}))] =>
