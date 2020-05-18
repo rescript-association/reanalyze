@@ -1,4 +1,5 @@
 # master
+- CLI: rename `-blacklist` to `-suppress` and `-whitelist` to `-unsuppress`. This should clarify the semantics.
 
 # 1.13.0
 - Exception Analysis: model functions from Yojson.Basic.Util.

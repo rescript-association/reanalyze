@@ -15,7 +15,7 @@ const shell = isWindows ? true : false;
 
 child_process.spawnSync(
   reanalyzeNativePath,
-  ["-exception", "-ci", "-blacklist", "src", "-whitelist", "src/exception"],
+  ["-exception", "-ci", "-suppress", "src", "-unsuppress", "src/exception"],
   {
     stdio: ["inherit", "inherit"],
     shell,
