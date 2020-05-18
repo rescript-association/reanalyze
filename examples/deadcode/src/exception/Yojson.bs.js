@@ -11,8 +11,34 @@ function from_string(param) {
       ];
 }
 
+var Type_error = Caml_exceptions.create("Yojson.Basic.Util.Type_error");
+
+function member(_s, j) {
+  throw [
+        Type_error,
+        "Basic.Util.memeber",
+        j
+      ];
+}
+
+function to_int(param) {
+  return 34;
+}
+
+function to_string(param) {
+  return "";
+}
+
+var Util = {
+  Type_error: Type_error,
+  member: member,
+  to_int: to_int,
+  to_string: to_string
+};
+
 var Basic = {
-  from_string: from_string
+  from_string: from_string,
+  Util: Util
 };
 
 export {

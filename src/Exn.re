@@ -30,3 +30,5 @@ let fromString = s => s;
 let toString = s => s;
 
 let yojsonJsonError = "Yojson.Json_error";
+
+let yojsonTypeError = "Yojson.Basic.Util.Type_error";

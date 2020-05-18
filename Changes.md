@@ -1,4 +1,5 @@
 # master
+- Exception Analysis: model functions from Yojson.Basic.Util.
 
 # 1.12.0
 - Exception Analysis: print all the locations where a given exception is raised, not just one.

@@ -27,3 +27,5 @@ let sysError: t;
 let toString: t => string;
 
 let yojsonJsonError: t;
+
+let yojsonTypeError: t;

@@ -1,7 +1,21 @@
   Scanning TestYojson.cmt
   addValueDeclaration +foo TestYojson.re:2:4 path:+TestYojson
+  addValueDeclaration +bar TestYojson.re:4:4 path:+TestYojson
+  addValueDeclaration +toString TestYojson.re:11:4 path:+TestYojson
+  addValueDeclaration +toInt TestYojson.re:14:4 path:+TestYojson
   addValueReference TestYojson.re:2:4 --> TestYojson.re:2:10
   addValueReference TestYojson.re:2:4 --> Yojson.re:7:6
+  addValueReference TestYojson.re:4:4 --> TestYojson.re:4:16
+  addValueReference TestYojson.re:4:4 --> TestYojson.re:7:49
+  addValueReference TestYojson.re:4:4 --> TestYojson.re:4:16
+  addValueReference TestYojson.re:4:4 --> TestYojson.re:6:2
+  addValueReference TestYojson.re:4:4 --> TestYojson.re:4:16
+  addValueReference TestYojson.re:4:4 --> TestYojson.re:4:11
+  addValueReference TestYojson.re:4:4 --> Yojson.re:13:8
+  addValueReference TestYojson.re:11:4 --> TestYojson.re:11:15
+  addValueReference TestYojson.re:11:4 --> Yojson.re:19:8
+  addValueReference TestYojson.re:14:4 --> TestYojson.re:14:12
+  addValueReference TestYojson.re:14:4 --> Yojson.re:17:8
   Scanning ExnA.cmt
   addValueDeclaration +bar ExnA.re:1:4 path:+ExnA
   addValueReference ExnA.re:1:4 --> ExnB.re:2:4
@@ -9,7 +23,12 @@
   addValueDeclaration +foo ExnB.re:2:4 path:+ExnB
   Scanning Yojson.cmt
   addValueDeclaration +from_string Yojson.re:7:6 path:+Yojson.Basic
+  addValueDeclaration +member Yojson.re:13:8 path:+Yojson.Basic.Util
+  addValueDeclaration +to_int Yojson.re:17:8 path:+Yojson.Basic.Util
+  addValueDeclaration +to_string Yojson.re:19:8 path:+Yojson.Basic.Util
   addTypeReference Yojson.re:7:44 --> Yojson.re:1:10
+  addTypeReference Yojson.re:14:23 --> Yojson.re:10:14
+  addValueReference Yojson.re:13:8 --> Yojson.re:14:11
   Scanning BsJson.cmt
   addValueDeclaration +testBsJson BsJson.re:2:4 path:+BsJson
   addValueDeclaration +testBsJson2 BsJson.re:5:4 path:+BsJson
@@ -2418,6 +2437,9 @@ File References
   Dead Value +Exn.+catches1: 0 references () [0]
   Dead Value +Exn.+raises: 0 references () [0]
   Dead Value +ExnA.+bar: 0 references () [0]
+  Dead Value +TestYojson.+toInt: 0 references () [0]
+  Dead Value +TestYojson.+toString: 0 references () [0]
+  Dead Value +TestYojson.+bar: 0 references () [0]
   Dead Value +TestYojson.+foo: 0 references () [0]
   Live Value +BootloaderResource.+read: 1 references (DeadTest.re:112:40) [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
@@ -2530,6 +2552,9 @@ File References
   Live Value +JSResource.+jSResource: 2 references (DeadTest.re:112:40, DeadTest.re:119:6) [0]
   Live Value +NestedModulesInSignature.Universe.+theAnswer: 1 references (NestedModulesInSignature.rei:2:2) [0]
   Dead Value +ExnB.+foo: 0 references () [0]
+  Dead Value +Yojson.Basic.Util.+to_string: 0 references () [0]
+  Dead Value +Yojson.Basic.Util.+to_int: 0 references () [0]
+  Dead Value +Yojson.Basic.Util.+member: 0 references () [0]
   Dead Value +Yojson.Basic.+from_string: 0 references () [0]
   Live Value trace.+infok: 1 references (DeadTest.re:175:0) [0]
   Live Type trace.pf.pf: 1 references (DeadTest.re:175:21) [0]

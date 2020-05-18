@@ -167,6 +167,23 @@ let raisesLibTable = {
       ],
     ),
     ("Yojson.Basic", [("from_string", [yojsonJsonError])]),
+    (
+      "Yojson.Basic.Util",
+      [
+        ("member", [yojsonTypeError]),
+        ("to_assoc", [yojsonTypeError]),
+        ("to_bool", [yojsonTypeError]),
+        ("to_bool_option", [yojsonTypeError]),
+        ("to_float", [yojsonTypeError]),
+        ("to_float_option", [yojsonTypeError]),
+        ("to_int", [yojsonTypeError]),
+        ("to_list", [yojsonTypeError]),
+        ("to_number", [yojsonTypeError]),
+        ("to_number_option", [yojsonTypeError]),
+        ("to_string", [yojsonTypeError]),
+        ("to_string_option", [yojsonTypeError]),
+      ],
+    ),
   ]
   |> List.iter(((name, group)) =>
        group
