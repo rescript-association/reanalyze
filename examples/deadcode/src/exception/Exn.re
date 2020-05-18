@@ -160,3 +160,5 @@ let severalCases = cases =>
   | "three" => failwith("three")
   | _ => ()
   };
+
+let genericRaiseIsNotSupported = exn => raise(exn);

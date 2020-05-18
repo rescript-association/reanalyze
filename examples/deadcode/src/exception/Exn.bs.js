@@ -86,6 +86,7 @@ export {
   stringMake2 ,
   stringMake3 ,
   severalCases ,
+  genericRaiseIsNotSupported ,
   
 }
 /* catches1 Not a pure module */
