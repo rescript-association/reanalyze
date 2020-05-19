@@ -187,33 +187,17 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
 
   | Texp_construct(
       _,
-      {
-        cstr_loc: {Location.loc_start: posTo, loc_ghost: false} as locTo,
-        cstr_tag,
-      },
+      {cstr_loc: {Location.loc_start: posTo, loc_ghost} as locTo, cstr_tag},
       _,
     ) =>
     switch (cstr_tag) {
     | Cstr_extension(path, _) =>
-      // Add for possiby delayed. Call into ExceptionDeclarations directly.
-
-      // Exception used
-      path
-      |> Path.onOkPath(~whenContainsApply=(), ~f=_ => {
-           addValueReference(~addFileReference=true, ~locFrom, ~locTo)
-         })
-    | _ => ()
-    };
-    if (Config.analyzeTypes^) {
-      DeadType.addTypeReference(~posTo, ~posFrom=locFrom.loc_start);
-    };
-
-  | Texp_construct(_, {cstr_loc: {loc_ghost: true} as locTo, cstr_tag}, _) =>
-    switch (cstr_tag) {
-    | Cstr_extension(path, _) =>
       path |> ExceptionDeclarations.markAsUsed(~locFrom, ~locTo)
     | _ => ()
-    }
+    };
+    if (Config.analyzeTypes^ && !loc_ghost) {
+      DeadType.addTypeReference(~posTo, ~posFrom=locFrom.loc_start);
+    };
 
   | _ => ()
   };
