@@ -1,26 +1,3 @@
-  XXX find exceptionPath:+Not_found pos:ExnB.re:2:22
-  XXX add exceptionPath:+Yojson.Json_error pos:Yojson.re:1:10
-  XXX add exceptionPath:+Yojson.Basic.Util.Type_error pos:Yojson.re:10:14
-  XXX find exceptionPath:+Not_found pos:Exn.re:1:25
-  XXX find exceptionPath:+Not_found pos:Exn.re:15:12
-  XXX find exceptionPath:+Not_found pos:Exn.re:20:38
-  XXX add exceptionPath:+Exn.A pos:Exn.re:34:10
-  XXX add exceptionPath:+Exn.B pos:Exn.re:35:10
-  XXX add exceptionPath:+Exn.C pos:Exn.re:58:10
-  XXX add exceptionPath:+Exn.Error pos:Exn.re:76:10
-  XXX find exceptionPath:+Not_found pos:Exn.re:133:31
-  XXX find exceptionPath:+Not_found pos:Exn.re:136:16
-  XXX find exceptionPath:+Not_found pos:Exn.re:139:17
-  XXX find exceptionPath:+DeadExn.Etoplevel pos:TestDeadExn.re:1:7
-  XXX add exceptionPath:+DeadExn.Etoplevel pos:DeadExn.re:1:10
-  XXX add exceptionPath:+DeadExn.Inside.Einside pos:DeadExn.re:4:12
-  QQQ exceptionPath not found +Not_found
-  QQQ exceptionPath not found +Not_found
-  QQQ exceptionPath not found +Not_found
-  QQQ exceptionPath not found +Not_found
-  QQQ exceptionPath not found +Not_found
-  QQQ exceptionPath not found +Not_found
-  QQQ exceptionPath not found +Not_found
 
   Warning Dead Type
   File "./AutoAnnotate.re", line 2, characters 4-10

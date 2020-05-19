@@ -549,11 +549,6 @@ module ExceptionDeclarations = {
   let add = (~path, ~loc, name) => {
     let exceptionPath = [name, ...path];
     Hashtbl.add(declarations, exceptionPath, loc);
-    Log_.item(
-      "XXX add exceptionPath:%s pos:%s@.",
-      exceptionPath |> Path.toString,
-      loc.Location.loc_start |> posToString,
-    );
     name |> addDeclaration_(~sideEffects=false, ~declKind=Value, ~path, ~loc);
   };
 
@@ -563,12 +558,7 @@ module ExceptionDeclarations = {
     items
     |> List.iter(({exceptionPath, locFrom}) => {
          switch (Hashtbl.find_opt(declarations, exceptionPath)) {
-         | None =>
-           Log_.item(
-             "QQQ exceptionPath not found %s@.",
-             exceptionPath |> Path.toString,
-           );
-           ();
+         | None => ()
          | Some(locTo) =>
            addValueReference(~addFileReference=true, ~locFrom, ~locTo)
          }
@@ -580,11 +570,6 @@ module ExceptionDeclarations = {
       // Probably defined in another file, delay processing and check at the end
       let exceptionPath =
         path_ |> Path.fromPathT |> Path.moduleToImplementation;
-      Log_.item(
-        "XXX find exceptionPath:%s pos:%s@.",
-        exceptionPath |> Path.toString,
-        locFrom.loc_start |> posToString,
-      );
       delayedItems := [{exceptionPath, locFrom}, ...delayedItems^];
     } else {
       addValueReference(~addFileReference=true, ~locFrom, ~locTo);

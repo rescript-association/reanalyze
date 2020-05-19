@@ -21,17 +21,14 @@
   addValueReference ExnA.re:1:4 --> ExnB.re:2:4
   Scanning ExnB.cmt
   addValueDeclaration +foo ExnB.re:2:4 path:+ExnB
-  XXX find exceptionPath:+Not_found pos:ExnB.re:2:22
   Scanning Yojson.cmt
   addValueDeclaration +from_string Yojson.re:7:6 path:+Yojson.Basic
   addValueDeclaration +member Yojson.re:13:8 path:+Yojson.Basic.Util
   addValueDeclaration +to_int Yojson.re:17:8 path:+Yojson.Basic.Util
   addValueDeclaration +to_string Yojson.re:19:8 path:+Yojson.Basic.Util
-  XXX add exceptionPath:+Yojson.Json_error pos:Yojson.re:1:10
   addValueDeclaration Json_error Yojson.re:1:10 path:+Yojson
   addValueReference Yojson.re:7:6 --> Yojson.re:1:10
   addTypeReference Yojson.re:7:44 --> Yojson.re:1:10
-  XXX add exceptionPath:+Yojson.Basic.Util.Type_error pos:Yojson.re:10:14
   addValueDeclaration Type_error Yojson.re:10:14 path:+Yojson.Basic.Util
   addValueReference Yojson.re:13:8 --> Yojson.re:10:14
   addTypeReference Yojson.re:14:23 --> Yojson.re:10:14
@@ -82,15 +79,10 @@
   addValueDeclaration +stringMake3 Exn.re:154:4 path:+Exn
   addValueDeclaration +severalCases Exn.re:156:4 path:+Exn
   addValueDeclaration +genericRaiseIsNotSupported Exn.re:165:4 path:+Exn
-  XXX find exceptionPath:+Not_found pos:Exn.re:1:25
-  XXX find exceptionPath:+Not_found pos:Exn.re:15:12
-  XXX find exceptionPath:+Not_found pos:Exn.re:20:38
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
-  XXX add exceptionPath:+Exn.A pos:Exn.re:34:10
   addValueDeclaration A Exn.re:34:10 path:+Exn
-  XXX add exceptionPath:+Exn.B pos:Exn.re:35:10
   addValueDeclaration B Exn.re:35:10 path:+Exn
   addValueReference Exn.re:37:4 --> Exn.re:35:10
   addTypeReference Exn.re:42:10 --> Exn.re:35:10
@@ -104,7 +96,6 @@
   addTypeReference Exn.re:47:8 --> Exn.re:34:10
   addValueReference Exn.re:53:4 --> Exn.re:35:10
   addTypeReference Exn.re:54:12 --> Exn.re:35:10
-  XXX add exceptionPath:+Exn.C pos:Exn.re:58:10
   addValueDeclaration C Exn.re:58:10 path:+Exn
   addValueReference Exn.re:59:4 --> Exn.re:58:10
   addTypeReference Exn.re:60:31 --> Exn.re:58:10
@@ -117,7 +108,6 @@
   addValueReference Exn.re:67:4 --> Exn.re:34:10
   addTypeReference Exn.re:69:10 --> Exn.re:34:10
   addValueReference Exn.re:67:4 --> Exn.re:67:23
-  XXX add exceptionPath:+Exn.Error pos:Exn.re:76:10
   addValueDeclaration Error Exn.re:76:10 path:+Exn
   addValueDeclaration +in_chan Exn.re:79:6 path:+Exn
   addValueReference Exn.re:79:6 --> Exn.re:78:27
@@ -148,9 +138,6 @@
   addValueDeclaration +hash Exn.re:124:8 path:+Exn.StringHash
   addValueReference Exn.re:127:4 --> Exn.re:127:22
   addValueReference Exn.re:130:4 --> Exn.re:130:18
-  XXX find exceptionPath:+Not_found pos:Exn.re:133:31
-  XXX find exceptionPath:+Not_found pos:Exn.re:136:16
-  XXX find exceptionPath:+Not_found pos:Exn.re:139:17
   addValueReference Exn.re:156:4 --> Exn.re:156:19
   addValueReference Exn.re:165:4 --> Exn.re:165:33
   Scanning ReasonComponent.cmt
@@ -200,7 +187,6 @@
   addTypeDeclaration y FirstClassModulesInterface.rei:4:2 path:FirstClassModulesInterface.record
   addValueDeclaration +r FirstClassModulesInterface.rei:7:0 path:FirstClassModulesInterface
   Scanning TestDeadExn.cmt
-  XXX find exceptionPath:+DeadExn.Etoplevel pos:TestDeadExn.re:1:7
   Scanning Types.cmt
   addValueDeclaration +someIntList Types.re:5:4 path:+Types
   addValueDeclaration +map Types.re:8:4 path:+Types
@@ -687,9 +673,7 @@
   Scanning DeadExn.cmt
   addValueDeclaration +eToplevel DeadExn.re:7:4 path:+DeadExn
   addValueDeclaration +eInside DeadExn.re:9:4 path:+DeadExn
-  XXX add exceptionPath:+DeadExn.Etoplevel pos:DeadExn.re:1:10
   addValueDeclaration Etoplevel DeadExn.re:1:10 path:+DeadExn
-  XXX add exceptionPath:+DeadExn.Inside.Einside pos:DeadExn.re:4:12
   addValueDeclaration Einside DeadExn.re:4:12 path:+DeadExn.Inside
   addValueReference DeadExn.re:7:4 --> DeadExn.re:1:10
   addTypeReference DeadExn.re:7:16 --> DeadExn.re:1:10
@@ -1898,13 +1882,6 @@
   addTypeReference DeadTest.re:185:6 --> DeadTest.re:189:8
   addTypeReference DeadTest.re:40:6 --> DeadTest.re:36:6
   addTypeReference DeadTest.re:36:6 --> DeadTest.re:40:6
-  QQQ exceptionPath not found +Not_found
-  QQQ exceptionPath not found +Not_found
-  QQQ exceptionPath not found +Not_found
-  QQQ exceptionPath not found +Not_found
-  QQQ exceptionPath not found +Not_found
-  QQQ exceptionPath not found +Not_found
-  QQQ exceptionPath not found +Not_found
   addValueReference TestDeadExn.re:1:7 --> DeadExn.re:1:10
   
 File References
