@@ -14,6 +14,13 @@
   XXX find exceptionPath:+DeadExn.Etoplevel pos:TestDeadExn.re:1:7
   XXX add exceptionPath:+DeadExn.Etoplevel pos:DeadExn.re:1:10
   XXX add exceptionPath:+DeadExn.Inside.Einside pos:DeadExn.re:4:12
+  QQQ exceptionPath not found +Not_found
+  QQQ exceptionPath not found +Not_found
+  QQQ exceptionPath not found +Not_found
+  QQQ exceptionPath not found +Not_found
+  QQQ exceptionPath not found +Not_found
+  QQQ exceptionPath not found +Not_found
+  QQQ exceptionPath not found +Not_found
 
   Warning Dead Type
   File "./AutoAnnotate.re", line 2, characters 4-10
@@ -68,12 +75,6 @@
   +bar is never used
   <-- line 21
   [@dead "+bar"] let bar = (x: someMethods) => {
-
-  Warning Dead Value
-  File "./DeadExn.re", line 1, characters 10-19
-  Etoplevel is never used
-  <-- line 1
-  exception [@dead "Etoplevel"] Etoplevel;
 
   Warning Dead Value
   File "./DeadExn.re", line 7, characters 0-25

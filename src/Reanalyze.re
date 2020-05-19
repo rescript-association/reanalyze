@@ -84,6 +84,7 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
   };
   switch (analysis) {
   | Dce =>
+    DeadCommon.ExceptionDeclarations.forceDelayedItems();
     DeadCommon.reportDead(ppf);
     DeadCommon.WriteDeadAnnotations.write();
   | Exception => Exception.reportResults(~ppf)
