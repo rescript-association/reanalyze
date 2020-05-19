@@ -1,4 +1,5 @@
 # master
+- Report analysis stats at the end.
 
 # 1.14.0
 - CLI: rename `-blacklist` to `-suppress` and `-whitelist` to `-unsuppress`. This should clarify the semantics.
