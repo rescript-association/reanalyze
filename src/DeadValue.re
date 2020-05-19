@@ -435,7 +435,6 @@ let processStructure =
 
   valueDependencies |> List.iter(processValueDependency);
 
-  DeadType.typeDependencies^ |> List.iter(processTypeDependency);
-
-  DeadType.typeDependencies := [];
+  DeadType.TypeDependencies.iter(processTypeDependency);
+  DeadType.TypeDependencies.clear();
 };
