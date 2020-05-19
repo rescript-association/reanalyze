@@ -158,7 +158,7 @@ module Stats = {
       incr(nCacheHits);
     };
     if (Common.debug^) {
-      Log_.info(~loc, ~name="Termination Analysis", (ppf, ()) =>
+      Log_.info(~count=false, ~loc, ~name="Termination Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
           "Cache %s for @{<info>%s@}",
@@ -171,7 +171,7 @@ module Stats = {
 
   let logResult = (~functionCall, ~loc, ~resString) =>
     if (Common.debug^) {
-      Log_.info(~loc, ~name="Termination Analysis", (ppf, ()) =>
+      Log_.info(~count=false, ~loc, ~name="Termination Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
           "@{<info>%s@} returns %s",
@@ -722,7 +722,8 @@ module ExtendFunctionTable = {
             if (!(callee |> FunctionTable.isInFunctionInTable(~functionTable))) {
               functionTable |> FunctionTable.addFunction(~functionName);
               if (Common.debug^) {
-                Log_.info(~loc, ~name="Termination Analysis", (ppf, ()) =>
+                Log_.info(
+                  ~count=false, ~loc, ~name="Termination Analysis", (ppf, ()) =>
                   Format.fprintf(
                     ppf,
                     "Extend Function Table with @{<info>%s@} (%a) as it calls a progress function",
@@ -747,7 +748,8 @@ module ExtendFunctionTable = {
                functionTable
                |> FunctionTable.addLabelToKind(~functionName, ~label);
                if (Common.debug^) {
-                 Log_.info(~loc, ~name="Termination Analysis", (ppf, ()) =>
+                 Log_.info(
+                   ~count=false, ~loc, ~name="Termination Analysis", (ppf, ()) =>
                    Format.fprintf(
                      ppf,
                      "@{<info>%s@} is parametric ~@{<info>%s@}=@{<info>%s@}",
@@ -828,6 +830,7 @@ module CheckExpressionWellFormed = {
                      |> FunctionTable.addLabelToKind(~functionName, ~label);
                      if (Common.debug^) {
                        Log_.info(
+                         ~count=false,
                          ~loc=body.exp_loc,
                          ~name="Termination Analysis",
                          (ppf, ()) =>
@@ -1037,7 +1040,8 @@ module Compile = {
       );
       newFunctionDefinition.body = Some(vb_expr |> expression(~ctx=newCtx));
       if (Common.debug^) {
-        Log_.info(~loc=pat_loc, ~name="Termination Analysis", (ppf, ()) =>
+        Log_.info(
+          ~count=false, ~loc=pat_loc, ~name="Termination Analysis", (ppf, ()) =>
           Format.fprintf(
             ppf,
             "Adding recursive definition @{<info>%s@}",

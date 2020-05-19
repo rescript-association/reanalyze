@@ -90,6 +90,7 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
   | Exception => Exception.reportResults(~ppf)
   | Termination => Arnold.reportResults(~ppf)
   };
+  Log_.Stats.report();
 };
 
 type cliCommand =

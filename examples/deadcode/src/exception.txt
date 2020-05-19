@@ -66,3 +66,4 @@
   Exception Analysis
   File "./Exn.re", line 156, characters 4-16
   severalCases might raise Failure (Exn.re:158:13 Exn.re:159:13 Exn.re:160:15) and is not annotated with @raises Failure
+  Analysis reported 17 issues (Exception Analysis:17)

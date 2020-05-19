@@ -208,11 +208,58 @@ let locToString = (ppf, loc: Location.t) =>
   )
   |> Loc.print(ppf);
 
-let logKind = (body, ~filter=?, ~color, ~loc: Location.t, ~name) =>
+module Stats = {
+  let counters = Hashtbl.create(1);
+  let active = ref(true);
+  let count = name =>
+    if (active^) {
+      switch (Hashtbl.find_opt(counters, name: string)) {
+      | None => Hashtbl.add(counters, name, ref(1))
+      | Some(cnt) => incr(cnt)
+      };
+    };
+
+  let clear = () => Hashtbl.clear(counters);
+
+  let report = () =>
+    if (active^) {
+      let (issues, nIssues) =
+        Hashtbl.fold(
+          (name, cnt, (issues, nIssues)) =>
+            ([(name, cnt), ...issues], nIssues + cnt^),
+          counters,
+          ([], 0),
+        );
+      let sortedIssues =
+        issues |> List.sort(((n1, _), (n2, _)) => String.compare(n1, n2));
+      item(
+        "Analysis reported %d issues%s@.",
+        nIssues,
+        switch (sortedIssues) {
+        | [] => ""
+        | [_, ..._] =>
+          " ("
+          ++ (
+            sortedIssues
+            |> List.map(((name, cnt)) =>
+                 name ++ ":" ++ string_of_int(cnt^)
+               )
+            |> String.concat(", ")
+          )
+          ++ ")"
+        },
+      );
+    };
+};
+
+let logKind = (body, ~count, ~filter=?, ~color, ~loc: Location.t, ~name) =>
   if (switch (filter) {
       | Some(f) => f(loc.loc_start)
       | None => Suppress.filter(loc.loc_start)
       }) {
+    if (count) {
+      Stats.count(name);
+    };
     Format.fprintf(
       Format.std_formatter,
       "@[<v 2>@,%a@,%a@,%a@]@.",
@@ -225,7 +272,7 @@ let logKind = (body, ~filter=?, ~color, ~loc: Location.t, ~name) =>
     );
   };
 
-let info = (~filter=?, ~loc, ~name, body) =>
-  logKind(body, ~color=Color.info, ~filter?, ~loc, ~name);
-let error = (~filter=?, ~loc, ~name, body) =>
-  logKind(body, ~color=Color.error, ~filter?, ~loc, ~name);
+let info = (~count=true, ~filter=?, ~loc, ~name, body) =>
+  logKind(body, ~color=Color.info, ~count, ~filter?, ~loc, ~name);
+let error = (~count=true, ~filter=?, ~loc, ~name, body) =>
+  logKind(body, ~color=Color.error, ~count, ~filter?, ~loc, ~name);
