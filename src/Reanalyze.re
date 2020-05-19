@@ -91,6 +91,7 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
   | Termination => Arnold.reportResults(~ppf)
   };
   Log_.Stats.report();
+  Log_.Stats.clear();
 };
 
 type cliCommand =
