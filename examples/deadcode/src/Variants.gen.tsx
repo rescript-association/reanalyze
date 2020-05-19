@@ -2,15 +2,15 @@
 /* eslint-disable import/first */
 
 
+const $$toJS7517284: { [key: string]: any } = {"449540197": "type", "-134553037": "module", "23437694": "THIS IS DIFFERENT"};
+
+const $$toRE7517284: { [key: string]: any } = {"type": 449540197, "module": -134553037, "THIS IS DIFFERENT": 23437694};
+
 const $$toRE288839514: { [key: string]: any } = {"monday": -949852400, "tuesday": 323181965, "wednesday": -863289194, "thursday": 122883354, "friday": 835226847, "saturday": -29784519, "sunday": 569248848};
 
 const $$toJS508922110: { [key: string]: any } = {"449540197": "type", "-134553037": "module", "23437694": "42"};
 
 const $$toRE508922110: { [key: string]: any } = {"type": 449540197, "module": -134553037, "42": 23437694};
-
-const $$toJS584768163: { [key: string]: any } = {"449540197": "type", "-134553037": "module", "23437694": "XXX THIS IS DIFFERENT"};
-
-const $$toRE584768163: { [key: string]: any } = {"type": 449540197, "module": -134553037, "XXX THIS IS DIFFERENT": 23437694};
 
 const $$toJS694113598: { [key: string]: any } = {"-29784519": "saturday", "569248848": "sunday"};
 
@@ -47,7 +47,7 @@ export type testGenTypeAs = "type" | "module" | "42";
 export type testGenTypeAs2 = "type" | "module" | "42";
 
 // tslint:disable-next-line:interface-over-type-literal
-export type testGenTypeAs3 = "type" | "module" | "XXX THIS IS DIFFERENT";
+export type testGenTypeAs3 = "type" | "module" | "THIS IS DIFFERENT";
 
 // tslint:disable-next-line:interface-over-type-literal
 export type x1 = "x" | "same";
@@ -110,13 +110,13 @@ export const testConvert2: (x:testGenTypeAs2) => testGenTypeAs2 = function (Arg1
 };
 
 export const testConvert3: (x:testGenTypeAs3) => testGenTypeAs3 = function (Arg1: any) {
-  const result = VariantsBS.testConvert3($$toRE584768163[Arg1]);
-  return $$toJS584768163[result]
+  const result = VariantsBS.testConvert3($$toRE7517284[Arg1]);
+  return $$toJS7517284[result]
 };
 
 export const testConvert2to3: (x:testGenTypeAs2) => testGenTypeAs3 = function (Arg1: any) {
   const result = VariantsBS.testConvert2to3($$toRE508922110[Arg1]);
-  return $$toJS584768163[result]
+  return $$toJS7517284[result]
 };
 
 export const id1: (x:x1) => x1 = function (Arg1: any) {

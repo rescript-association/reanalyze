@@ -67,7 +67,7 @@ let testConvert2 = (x: testGenTypeAs2) => x;
 type testGenTypeAs3 = [
   | [@genType.as "type"] `type_
   | [@genType.as "module"] `module_
-  | [@genType.as "XXX THIS IS DIFFERENT"] `fortytwo
+  | [@genType.as "THIS IS DIFFERENT"] `fortytwo
 ];
 
 /* Since testGenTypeAs3 has a different representation:
