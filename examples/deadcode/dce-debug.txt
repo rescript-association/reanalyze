@@ -918,6 +918,7 @@
   Scanning TypeParams2.cmt
   addValueDeclaration +exportSomething TypeParams2.re:10:4 path:+TypeParams2
   addTypeDeclaration id TypeParams2.re:2:13 path:+TypeParams2.item
+  Scanning DeadExn.cmti
   Scanning FirstClassModules.cmt
   addValueDeclaration +y FirstClassModules.re:17:6 path:+FirstClassModules.M
   addValueDeclaration +k FirstClassModules.re:21:8 path:+FirstClassModules.M.InnerModule2
@@ -1895,6 +1896,7 @@ File References
   DeadCodeImplementation.re -->> 
   DeadCodeInterface.re -->> 
   DeadExn.re -->> 
+  DeadExn.rei -->> 
   DeadMl.ml -->> 
   DeadRT.re -->> 
   DeadRT.rei -->> 
