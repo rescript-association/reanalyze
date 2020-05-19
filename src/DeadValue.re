@@ -209,12 +209,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
   | Texp_construct(_, {cstr_loc: {loc_ghost: true}, cstr_tag}, _) =>
     switch (cstr_tag) {
     | Cstr_extension(path, _) =>
-      // Exception used
-      path
-      |> Path.onOkPath(~whenContainsApply=(), ~f=p => {
-           Log_.item("XXX %s %s@.", p, locFrom.loc_start |> posToString)
-         })
-
+      path |> ExceptionDeclarations.find(~loc=locFrom)
     | _ => ()
     }
 
@@ -379,7 +374,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
       | Some((id, loc)) =>
         let path = currentModulePath^ @ [Common.currentModuleName^];
         let name = id |> Ident.name |> Name.create;
-        addExceptionDeclaration(~path, ~loc: Location.t, name);
+        name |> ExceptionDeclarations.add(~path, ~loc);
       | None => ()
       }
     | _ => ()
