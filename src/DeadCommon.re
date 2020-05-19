@@ -548,15 +548,20 @@ module ExceptionDeclarations = {
     name |> addDeclaration_(~sideEffects=false, ~declKind=Value, ~path, ~loc);
   };
 
-  let find = (~loc: Location.t, path_) => {
+  let markAsUsed = (~locFrom: Location.t, ~locTo: Location.t, path_) => {
     // Mark as used for delayed processing, as the table is not complete yet.
     // At the end, add value dependencies.
     let exceptionPath = path_ |> Path.fromPathT |> Path.moduleToImplementation;
-    Log_.item(
-      "XXX find exceptionPath:%s pos:%s@.",
-      exceptionPath |> Path.toString,
-      loc.loc_start |> posToString,
-    );
+
+    if (locTo.loc_ghost) {
+      Log_.item(
+        "XXX find exceptionPath:%s pos:%s@.",
+        exceptionPath |> Path.toString,
+        locFrom.loc_start |> posToString,
+      );
+    } else {
+      addValueReference(~addFileReference=true, ~locFrom, ~locTo);
+    };
   };
 };
 
