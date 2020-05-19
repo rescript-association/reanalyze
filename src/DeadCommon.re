@@ -31,8 +31,6 @@ let fileIsImplementationOf = (s1, s2) => {
   n2 == n1 + 1 && checkSub(s1, s2, n1 - 1);
 };
 
-let write = ref(false);
-
 let deadAnnotation = "dead";
 let liveAnnotation = "live";
 
@@ -150,12 +148,22 @@ module TypeLabels = {
   let find = path => Hashtbl.find_opt(table, path);
 };
 
-let currentBindings = ref(PosSet.empty);
-let lastBinding = ref(Location.none);
-let getLastBinding = () => lastBinding^;
-let maxValuePosEnd = ref(Lexing.dummy_pos); // max end position of a value reported dead
-let liveNames = ref([]: list(string)); // names to be considered live values
-let livePaths = ref([]: list(string)); // paths of files where all values are considered live
+module Current = {
+  let bindings = ref(PosSet.empty);
+
+  let lastBinding = ref(Location.none);
+
+  let maxValuePosEnd = ref(Lexing.dummy_pos); // max end position of a value reported dead
+
+  /* Keep track of the module path while traversing with Tast_mapper */
+  let modulePath: ref(Path.t) = ref([]);
+};
+
+module Cli = {
+  let write = ref(false);
+  let liveNames = ref([]: list(string)); // names to be considered live values
+  let livePaths = ref([]: list(string)); // paths of files where all values are considered live
+};
 
 let declGetLoc = decl => {
   Location.loc_start: decl.posStart,
@@ -163,14 +171,11 @@ let declGetLoc = decl => {
   loc_ghost: false,
 };
 
-/* Keep track of the module path while traversing with Tast_mapper */
-let currentModulePath: ref(Path.t) = ref([]);
-
 /********   HELPERS   ********/
 
 let addValueReference =
     (~addFileReference, ~locFrom: Location.t, ~locTo: Location.t) => {
-  let lastBinding = getLastBinding();
+  let lastBinding = Current.lastBinding^;
   let locFrom = lastBinding == Location.none ? locFrom : lastBinding;
   if (!locFrom.loc_ghost) {
     if (debug^) {
@@ -350,12 +355,12 @@ module ProcessDeadAnnotations = {
     };
 
     let nameIsInLiveNamesOrPaths = () =>
-      liveNames^
+      Cli.liveNames^
       |> List.mem(name)
       || {
         let fname = pos.pos_fname;
         let fnameLen = String.length(fname);
-        livePaths^
+        Cli.livePaths^
         |> List.exists(prefix =>
              String.length(prefix) <= fnameLen
              && (
@@ -543,6 +548,8 @@ module ExceptionDeclarations = {
   };
 
   let find = (~loc: Location.t, path_) => {
+    // Mark as used for delayed processing, as the table is not complete yet.
+    // At the end, add value dependencies.
     let exceptionPath = path_ |> Path.fromPathT |> Path.moduleToImplementation;
     Log_.item(
       "XXX find exceptionPath:%s pos:%s@.",
@@ -637,7 +644,7 @@ module WriteDeadAnnotations = {
   };
 
   let writeFile = (fileName, lines) =>
-    if (fileName != "" && write^) {
+    if (fileName != "" && Cli.write^) {
       let channel = open_out(fileName);
       let lastLine = Array.length(lines);
       lines
@@ -889,17 +896,19 @@ module Decl = {
   };
 
   let isInsideReportedValue = decl => {
-    let fileHasChanged = maxValuePosEnd^.pos_fname != decl.pos.pos_fname;
+    let fileHasChanged =
+      Current.maxValuePosEnd^.pos_fname != decl.pos.pos_fname;
 
     let insideReportedValue =
       decl.declKind == Value
       && !fileHasChanged
-      && maxValuePosEnd^.pos_cnum > decl.pos.pos_cnum;
+      && Current.maxValuePosEnd^.pos_cnum > decl.pos.pos_cnum;
 
     if (!insideReportedValue) {
       if (decl.declKind == Value) {
-        if (fileHasChanged || decl.posEnd.pos_cnum > maxValuePosEnd^.pos_cnum) {
-          maxValuePosEnd := decl.posEnd;
+        if (fileHasChanged
+            || decl.posEnd.pos_cnum > Current.maxValuePosEnd^.pos_cnum) {
+          Current.maxValuePosEnd := decl.posEnd;
         };
       };
     };
