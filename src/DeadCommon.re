@@ -73,7 +73,7 @@ module PosHash = {
 module Path = {
   type t = list(Name.t);
 
-  let toString = path =>
+  let toString = (path: t) =>
     path |> List.rev_map(Name.toString) |> String.concat(".");
 
   let withoutHead = path => {
@@ -87,6 +87,14 @@ module Path = {
     switch (path |> Path.flatten) {
     | `Ok(id, mods) => f([Ident.name(id), ...mods] |> String.concat("."))
     | `Contains_apply => whenContainsApply
+    };
+  };
+
+  let fromPathT = path => {
+    switch (path |> Path.flatten) {
+    | `Ok(id, mods) =>
+      [Ident.name(id), ...mods] |> List.rev_map(Name.create)
+    | `Contains_apply => []
     };
   };
 
@@ -524,14 +532,23 @@ let addValueDeclaration = (~sideEffects, ~path, ~loc: Location.t, name) =>
   name |> addDeclaration_(~sideEffects, ~declKind=Value, ~path, ~loc);
 
 module ExceptionDeclarations = {
-  let add = (~path, ~loc, name) =>
+  let add = (~path, ~loc, name) => {
+    let exceptionPath = [name, ...path];
+    Log_.item(
+      "XXX add exceptionPath:%s pos:%s@.",
+      exceptionPath |> Path.toString,
+      loc.Location.loc_start |> posToString,
+    );
     name |> addDeclaration_(~sideEffects=false, ~declKind=Value, ~path, ~loc);
+  };
 
-  let find = (~loc: Location.t, path) => {
-    path
-    |> Path.onOkPath(~whenContainsApply=(), ~f=p => {
-         Log_.item("XXX %s %s@.", p, loc.loc_start |> posToString)
-       });
+  let find = (~loc: Location.t, path_) => {
+    let exceptionPath = path_ |> Path.fromPathT |> Path.moduleToImplementation;
+    Log_.item(
+      "XXX find exceptionPath:%s pos:%s@.",
+      exceptionPath |> Path.toString,
+      loc.loc_start |> posToString,
+    );
   };
 };
 
