@@ -208,10 +208,10 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
       DeadType.addTypeReference(~posTo, ~posFrom=locFrom.loc_start);
     };
 
-  | Texp_construct(_, {cstr_loc: {loc_ghost: true}, cstr_tag}, _) =>
+  | Texp_construct(_, {cstr_loc: {loc_ghost: true} as locTo, cstr_tag}, _) =>
     switch (cstr_tag) {
     | Cstr_extension(path, _) =>
-      path |> ExceptionDeclarations.find(~loc=locFrom)
+      path |> ExceptionDeclarations.markAsUsed(~locFrom, ~locTo)
     | _ => ()
     }
 
