@@ -2,7 +2,15 @@
 
 open DeadCommon;
 
-let typeDependencies = ref([]);
+module TypeDependencies = {
+  let items = ref([]);
+
+  let add = (loc1, loc2) => items := [(loc1, loc2), ...items^];
+
+  let clear = () => items := [];
+
+  let iter = f => List.iter(f, items^);
+};
 
 let addTypeReference = (~posFrom, ~posTo) => {
   if (Common.debug^) {
@@ -44,7 +52,7 @@ let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
         loc2.loc_start |> posToString,
       );
     };
-    typeDependencies := [(loc1, loc2), ...typeDependencies^];
+    TypeDependencies.add(loc1, loc2);
   };
 
 // Type dependencies between Foo.re and Foo.rei
