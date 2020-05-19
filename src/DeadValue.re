@@ -117,14 +117,14 @@ let checkAnyValueBindingWithNoSideEffects =
   switch (pat_desc) {
   | Tpat_any when exprNoSideEffects(expr) && !loc.loc_ghost =>
     let name = "_" |> Name.create(~isInterface=false);
-    let path = currentModulePath^ @ [Common.currentModuleName^];
+    let path = Current.modulePath^ @ [Common.currentModuleName^];
     name |> addValueDeclaration(~path, ~loc, ~sideEffects=false);
   | _ => ()
   };
 
 let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
-  let oldCurrentBindings = currentBindings^;
-  let oldLastBinding = lastBinding^;
+  let oldCurrentBindings = Current.bindings^;
+  let oldLastBinding = Current.lastBinding^;
   checkAnyValueBindingWithNoSideEffects(vb);
   let loc =
     switch (vb.vb_pat.pat_desc) {
@@ -136,7 +136,7 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
         | Some({declKind: Value}) => true
         | _ => false
         };
-      let path = currentModulePath^ @ [Common.currentModuleName^];
+      let path = Current.modulePath^ @ [Common.currentModuleName^];
       if (!exists) {
         let sideEffects = !exprNoSideEffects(vb.vb_expr);
         name |> addValueDeclaration(~path, ~loc, ~sideEffects);
@@ -160,13 +160,13 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
         );
       };
       loc;
-    | _ => getLastBinding()
+    | _ => Current.lastBinding^
     };
-  currentBindings := PosSet.add(loc.loc_start, currentBindings^);
-  lastBinding := loc;
+  Current.bindings := PosSet.add(loc.loc_start, Current.bindings^);
+  Current.lastBinding := loc;
   let r = super.Tast_mapper.value_binding(self, vb);
-  currentBindings := oldCurrentBindings;
-  lastBinding := oldLastBinding;
+  Current.bindings := oldCurrentBindings;
+  Current.lastBinding := oldLastBinding;
   r;
 };
 
@@ -195,6 +195,8 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     ) =>
     switch (cstr_tag) {
     | Cstr_extension(path, _) =>
+      // Add for possiby delayed. Call into ExceptionDeclarations directly.
+
       // Exception used
       path
       |> Path.onOkPath(~whenContainsApply=(), ~f=_ => {
@@ -304,7 +306,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
   let pat = (self, p) => p |> collectPattern(super, self);
   let value_binding = (self, vb) => vb |> collectValueBinding(super, self);
   let structure_item = (self, structureItem: Typedtree.structure_item) => {
-    let oldModulePath = currentModulePath^;
+    let oldModulePath = Current.modulePath^;
     switch (structureItem.str_desc) {
     | Tstr_module({mb_expr, mb_name}) =>
       let hasInterface =
@@ -312,8 +314,8 @@ let traverseStructure = (~doTypes, ~doValues) => {
         | Tmod_constraint(_) => true
         | _ => false
         };
-      currentModulePath :=
-        [mb_name |> Compat.locGetTxt |> Name.create, ...currentModulePath^];
+      Current.modulePath :=
+        [mb_name |> Compat.locGetTxt |> Name.create, ...Current.modulePath^];
       if (hasInterface) {
         switch (mb_expr.mod_type) {
         | Mty_signature(signature) =>
@@ -322,7 +324,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
                processSignatureItem(
                  ~doTypes,
                  ~doValues=false,
-                 ~path=currentModulePath^ @ [Common.currentModuleName^],
+                 ~path=Current.modulePath^ @ [Common.currentModuleName^],
                ),
              )
         | _ => ()
@@ -330,7 +332,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
       };
 
     | Tstr_primitive(vd) when doValues && analyzeExternals =>
-      let path = currentModulePath^ @ [Common.currentModuleName^];
+      let path = Current.modulePath^ @ [Common.currentModuleName^];
       let exists =
         switch (PosHash.find_opt(decls, vd.val_loc.loc_start)) {
         | Some({declKind: Value}) => true
@@ -357,7 +359,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
     | Tstr_include({incl_mod, incl_type}) =>
       switch (incl_mod.mod_desc) {
       | Tmod_ident(_path, _lid) =>
-        let currentPath = currentModulePath^ @ [Common.currentModuleName^];
+        let currentPath = Current.modulePath^ @ [Common.currentModuleName^];
         incl_type
         |> List.iter(
              processSignatureItem(
@@ -372,7 +374,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
     | Tstr_exception(_) =>
       switch (structureItem.str_desc |> Compat.tstrExceptionGet) {
       | Some((id, loc)) =>
-        let path = currentModulePath^ @ [Common.currentModuleName^];
+        let path = Current.modulePath^ @ [Common.currentModuleName^];
         let name = id |> Ident.name |> Name.create;
         name |> ExceptionDeclarations.add(~path, ~loc);
       | None => ()
@@ -380,7 +382,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
     | _ => ()
     };
     let result = super.structure_item(self, structureItem);
-    currentModulePath := oldModulePath;
+    Current.modulePath := oldModulePath;
     result;
   };
   Tast_mapper.{...super, expr, pat, structure_item, value_binding};

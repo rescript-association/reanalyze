@@ -91,7 +91,7 @@ let addTypeDependenciesInnerModule = (~pathToType, ~loc, ~typeLabelName) => {
 let addDeclaration = (~typeId: Ident.t, ~typeKind: Types.type_kind) => {
   let pathToType = [
     typeId |> Ident.name |> Name.create,
-    ...currentModulePath^ @ [Common.currentModuleName^],
+    ...Current.modulePath^ @ [Common.currentModuleName^],
   ];
 
   let processTypeLabel = (typeLabelName, ~declKind, ~loc: Location.t) => {

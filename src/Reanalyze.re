@@ -132,18 +132,18 @@ let cli = () => {
     Suppress.unsuppress := names @ Suppress.unsuppress^;
   }
   and setWrite = () => {
-    DeadCommon.write := true;
+    DeadCommon.Cli.write := true;
   }
   and setTermination = cmtRoot => {
     Termination(cmtRoot) |> setCliCommand;
   }
   and setLiveNames = s => {
     let names = s |> String.split_on_char(',');
-    DeadCommon.liveNames := names @ DeadCommon.liveNames.contents;
+    DeadCommon.Cli.liveNames := names @ DeadCommon.Cli.liveNames.contents;
   }
   and setLivePaths = s => {
     let paths = s |> String.split_on_char(',');
-    DeadCommon.livePaths := paths @ DeadCommon.livePaths.contents;
+    DeadCommon.Cli.livePaths := paths @ DeadCommon.Cli.livePaths.contents;
   }
   and speclist = [
     (
