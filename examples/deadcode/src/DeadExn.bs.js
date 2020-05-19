@@ -6,21 +6,10 @@ var Etoplevel = Caml_exceptions.create("DeadExn.Etoplevel");
 
 var Einside = Caml_exceptions.create("DeadExn.Inside.Einside");
 
-var Inside = {
-  Einside: Einside
-};
-
 console.log(Einside);
-
-var eToplevel = Etoplevel;
-
-var eInside = Einside;
 
 export {
   Etoplevel ,
-  Inside ,
-  eToplevel ,
-  eInside ,
   
 }
 /*  Not a pure module */
