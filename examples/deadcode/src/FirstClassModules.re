@@ -2,7 +2,7 @@ module type MT = {
   let x: int;
   type t = int;
   [@bs.module "foo"] external f: int => int = "f";
-  module type XXX = {type tt = string;};
+  module type MT2 = {type tt = string;};
   module EmptyInnerModule: {};
   module InnerModule2: {let k: t;};
   module InnerModule3: {
@@ -15,7 +15,7 @@ module type MT = {
 };
 module M = {
   let y = "abc";
-  module type XXX = {type tt = string;};
+  module type MT2 = {type tt = string;};
   module EmptyInnerModule = {};
   module InnerModule2 = {
     let k = 4242;
