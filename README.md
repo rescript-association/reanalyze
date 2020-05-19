@@ -178,6 +178,19 @@ npm add --save-dev reanalyze
 npx reanalyze -dce
 ```
 
+### esy Projects (native)
+See for example project [reanalyze-esy-example](https://github.com/cristianoc/reanalyze-esy-example):
+
+```sh
+git clone https://github.com/cristianoc/reanalyze-esy-example
+cd reanalyze-esy-example
+esy
+esy dce
+esy check-exceptions
+```
+
+
+
 ### Single File Test (native project)
 
 ```sh
