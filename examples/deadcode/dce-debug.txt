@@ -21,6 +21,7 @@
   addValueReference ExnA.re:1:4 --> ExnB.re:2:4
   Scanning ExnB.cmt
   addValueDeclaration +foo ExnB.re:2:4 path:+ExnB
+  XXX Not_found ExnB.re:2:22
   Scanning Yojson.cmt
   addValueDeclaration +from_string Yojson.re:7:6 path:+Yojson.Basic
   addValueDeclaration +member Yojson.re:13:8 path:+Yojson.Basic.Util
@@ -79,6 +80,9 @@
   addValueDeclaration +stringMake3 Exn.re:154:4 path:+Exn
   addValueDeclaration +severalCases Exn.re:156:4 path:+Exn
   addValueDeclaration +genericRaiseIsNotSupported Exn.re:165:4 path:+Exn
+  XXX Not_found Exn.re:1:25
+  XXX Not_found Exn.re:15:12
+  XXX Not_found Exn.re:20:38
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -138,6 +142,9 @@
   addValueDeclaration +hash Exn.re:124:8 path:+Exn.StringHash
   addValueReference Exn.re:127:4 --> Exn.re:127:22
   addValueReference Exn.re:130:4 --> Exn.re:130:18
+  XXX Not_found Exn.re:133:31
+  XXX Not_found Exn.re:136:16
+  XXX Not_found Exn.re:139:17
   addValueReference Exn.re:156:4 --> Exn.re:156:19
   addValueReference Exn.re:165:4 --> Exn.re:165:33
   Scanning ReasonComponent.cmt
@@ -186,6 +193,8 @@
   addTypeDeclaration x FirstClassModulesInterface.rei:3:2 path:FirstClassModulesInterface.record
   addTypeDeclaration y FirstClassModulesInterface.rei:4:2 path:FirstClassModulesInterface.record
   addValueDeclaration +r FirstClassModulesInterface.rei:7:0 path:FirstClassModulesInterface
+  Scanning TestDeadExn.cmt
+  XXX DeadExn.Etoplevel TestDeadExn.re:1:7
   Scanning Types.cmt
   addValueDeclaration +someIntList Types.re:5:4 path:+Types
   addValueDeclaration +map Types.re:8:4 path:+Types
@@ -1937,6 +1946,7 @@ File References
   RepeatedLabel.re -->> 
   RequireCond.re -->> 
   Shadow.re -->> 
+  TestDeadExn.re -->> 
   TestEmitInnerModules.re -->> 
   TestFirstClassModules.re -->> 
   TestImmutableArray.re -->> ImmutableArray.rei
