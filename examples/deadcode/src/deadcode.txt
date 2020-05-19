@@ -1,3 +1,11 @@
+  XXX Not_found ExnB.re:2:22
+  XXX Not_found Exn.re:1:25
+  XXX Not_found Exn.re:15:12
+  XXX Not_found Exn.re:20:38
+  XXX Not_found Exn.re:133:31
+  XXX Not_found Exn.re:136:16
+  XXX Not_found Exn.re:139:17
+  XXX DeadExn.Etoplevel TestDeadExn.re:1:7
 
   Warning Dead Type
   File "./AutoAnnotate.re", line 2, characters 4-10

@@ -48,10 +48,10 @@ let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
   };
 
 // Type dependencies between Foo.re and Foo.rei
-let addTypeDependenciesAcrossFiles = (~pahToType, ~loc, ~typeLabelName) => {
+let addTypeDependenciesAcrossFiles = (~pathToType, ~loc, ~typeLabelName) => {
   let isInterface = Filename.check_suffix(Common.currentSrc^, "i");
   if (!isInterface) {
-    let path_1 = pahToType |> pathModuleToInterface;
+    let path_1 = pathToType |> pathModuleToInterface;
     let path_2 = path_1 |> pathTypeToInterface;
     let path1 = [typeLabelName, ...path_1];
     let path2 = [typeLabelName, ...path_2];
@@ -73,7 +73,7 @@ let addTypeDependenciesAcrossFiles = (~pahToType, ~loc, ~typeLabelName) => {
       };
     };
   } else {
-    let path_1 = pahToType |> pathModuleToImplementation;
+    let path_1 = pathToType |> pathModuleToImplementation;
     let path1 = [typeLabelName, ...path_1];
     switch (TypeLabels.find(path1)) {
     | None => ()
@@ -87,8 +87,8 @@ let addTypeDependenciesAcrossFiles = (~pahToType, ~loc, ~typeLabelName) => {
 };
 
 // Add type dependencies between implementation and interface in inner module
-let addTypeDependenciesInnerModule = (~pahToType, ~loc, ~typeLabelName) => {
-  let path = [typeLabelName, ...pahToType];
+let addTypeDependenciesInnerModule = (~pathToType, ~loc, ~typeLabelName) => {
+  let path = [typeLabelName, ...pathToType];
 
   switch (TypeLabels.find(path)) {
   | Some(loc2) =>
@@ -101,18 +101,18 @@ let addTypeDependenciesInnerModule = (~pahToType, ~loc, ~typeLabelName) => {
 };
 
 let addDeclaration = (~typeId: Ident.t, ~typeKind: Types.type_kind) => {
-  let pahToType = [
+  let pathToType = [
     typeId |> Ident.name |> Name.create,
     ...currentModulePath^ @ [Common.currentModuleName^],
   ];
 
   let processTypeLabel = (typeLabelName, ~declKind, ~loc: Location.t) => {
-    addTypeDeclaration(~declKind, ~path=pahToType, ~loc, typeLabelName);
+    addTypeDeclaration(~declKind, ~path=pathToType, ~loc, typeLabelName);
 
-    addTypeDependenciesAcrossFiles(~pahToType, ~loc, ~typeLabelName);
-    addTypeDependenciesInnerModule(~pahToType, ~loc, ~typeLabelName);
+    addTypeDependenciesAcrossFiles(~pathToType, ~loc, ~typeLabelName);
+    addTypeDependenciesInnerModule(~pathToType, ~loc, ~typeLabelName);
 
-    TypeLabels.add([typeLabelName, ...pahToType], loc);
+    TypeLabels.add([typeLabelName, ...pathToType], loc);
   };
 
   switch (typeKind) {

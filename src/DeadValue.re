@@ -206,6 +206,18 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
       DeadType.addTypeReference(~posTo, ~posFrom=locFrom.loc_start);
     };
 
+  | Texp_construct(_, {cstr_loc: {loc_ghost: true}, cstr_tag}, _) =>
+    switch (cstr_tag) {
+    | Cstr_extension(path, _) =>
+      // Exception used
+      path
+      |> Path.onOkPath(~whenContainsApply=(), ~f=p => {
+           Log_.item("XXX %s %s@.", p, locFrom.loc_start |> posToString)
+         })
+
+    | _ => ()
+    }
+
   | _ => ()
   };
   super.Tast_mapper.expr(self, e);
