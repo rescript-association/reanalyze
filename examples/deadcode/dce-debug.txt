@@ -1898,6 +1898,14 @@
   addTypeReference DeadTest.re:185:6 --> DeadTest.re:189:8
   addTypeReference DeadTest.re:40:6 --> DeadTest.re:36:6
   addTypeReference DeadTest.re:36:6 --> DeadTest.re:40:6
+  QQQ exceptionPath not found +Not_found
+  QQQ exceptionPath not found +Not_found
+  QQQ exceptionPath not found +Not_found
+  QQQ exceptionPath not found +Not_found
+  QQQ exceptionPath not found +Not_found
+  QQQ exceptionPath not found +Not_found
+  QQQ exceptionPath not found +Not_found
+  addValueReference TestDeadExn.re:1:7 --> DeadExn.re:1:10
   
 File References
 
@@ -1954,7 +1962,7 @@ File References
   RepeatedLabel.re -->> 
   RequireCond.re -->> 
   Shadow.re -->> 
-  TestDeadExn.re -->> 
+  TestDeadExn.re -->> DeadExn.re
   TestEmitInnerModules.re -->> 
   TestFirstClassModules.re -->> 
   TestImmutableArray.re -->> ImmutableArray.rei
@@ -1998,10 +2006,6 @@ File References
   Live Value +CreateErrorHandler1.Error1.+notification: 1 references (ErrorHandler.rei:3:2) [0]
   Live Value +CreateErrorHandler2.Error2.+notification: 1 references (ErrorHandler.rei:3:2) [0]
   Live Value +DeadCodeImplementation.M.+x: 1 references (DeadCodeInterface.re:1:17) [0]
-  Live Value +DeadExn.+eInside: 1 references (DeadExn.re:11:7) [0]
-  Dead Value +DeadExn.+eToplevel: 0 references () [0]
-  Live Value +DeadExn.Inside.Einside: 1 references (DeadExn.re:9:4) [0]
-  Dead Value +DeadExn.Etoplevel: 0 references () [0]
   Live Value +DeadMl.+foo: 0 references () [0]
   Live Value +DeadMl.WithSignature.+live11: 0 references () [1]
   Live Value +DeadMl.WithSignature.+live11: 1 references (DeadMl.ml:103:2) [0]
@@ -2504,6 +2508,10 @@ File References
   Dead Value +TestYojson.+bar: 0 references () [0]
   Dead Value +TestYojson.+foo: 0 references () [0]
   Live Value +BootloaderResource.+read: 1 references (DeadTest.re:112:40) [0]
+  Live Value +DeadExn.+eInside: 1 references (DeadExn.re:11:7) [0]
+  Dead Value +DeadExn.+eToplevel: 0 references () [0]
+  Live Value +DeadExn.Inside.Einside: 1 references (DeadExn.re:9:4) [0]
+  Live Value +DeadExn.Etoplevel: 1 references (TestDeadExn.re:1:7) [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
   Dead Type +DeadTypeTest.deadType.InNeither: 0 references () [0]
@@ -2749,12 +2757,6 @@ File References
   +bar is never used
   <-- line 21
   [@dead "+bar"] let bar = (x: someMethods) => {
-
-  Warning Dead Value
-  File "./DeadExn.re", line 1, characters 10-19
-  Etoplevel is never used
-  <-- line 1
-  exception [@dead "Etoplevel"] Etoplevel;
 
   Warning Dead Value
   File "./DeadExn.re", line 7, characters 0-25

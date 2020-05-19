@@ -538,14 +538,41 @@ let addValueDeclaration = (~sideEffects, ~path, ~loc: Location.t, name) =>
   name |> addDeclaration_(~sideEffects, ~declKind=Value, ~path, ~loc);
 
 module ExceptionDeclarations = {
+  type item = {
+    exceptionPath: Path.t,
+    locFrom: Location.t,
+  };
+
+  let delayedItems = ref([]);
+  let declarations = Hashtbl.create(1);
+
   let add = (~path, ~loc, name) => {
     let exceptionPath = [name, ...path];
+    Hashtbl.add(declarations, exceptionPath, loc);
     Log_.item(
       "XXX add exceptionPath:%s pos:%s@.",
       exceptionPath |> Path.toString,
       loc.Location.loc_start |> posToString,
     );
     name |> addDeclaration_(~sideEffects=false, ~declKind=Value, ~path, ~loc);
+  };
+
+  let forceDelayedItems = () => {
+    let items = delayedItems^ |> List.rev;
+    delayedItems := [];
+    items
+    |> List.iter(({exceptionPath, locFrom}) => {
+         switch (Hashtbl.find_opt(declarations, exceptionPath)) {
+         | None =>
+           Log_.item(
+             "QQQ exceptionPath not found %s@.",
+             exceptionPath |> Path.toString,
+           );
+           ();
+         | Some(locTo) =>
+           addValueReference(~addFileReference=true, ~locFrom, ~locTo)
+         }
+       });
   };
 
   let markAsUsed = (~locFrom: Location.t, ~locTo: Location.t, path_) =>
@@ -558,6 +585,7 @@ module ExceptionDeclarations = {
         exceptionPath |> Path.toString,
         locFrom.loc_start |> posToString,
       );
+      delayedItems := [{exceptionPath, locFrom}, ...delayedItems^];
     } else {
       addValueReference(~addFileReference=true, ~locFrom, ~locTo);
     };
