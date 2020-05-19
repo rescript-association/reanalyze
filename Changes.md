@@ -2,6 +2,7 @@
 - CLI: rename `-blacklist` to `-suppress` and `-whitelist` to `-unsuppress`. This should clarify the semantics.
 - When a generic exception is raised, as in `raise(exn)` report as if a specific exception of
 name `genericException` were raised. Can be suppressed just like real exceptions.
+- Add new chech for dead exceptions: that is exceptions defined but never raised directly or indirectly. An indirect raise (undecidable) is approximated by checking if the value is passed around in any way.
 
 # 1.13.0
 - Exception Analysis: model functions from Yojson.Basic.Util.
