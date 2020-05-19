@@ -50,13 +50,13 @@ let addTypeDependenciesAcrossFiles = (~pathToType, ~loc, ~typeLabelName) => {
       | None => ()
       | Some(loc2) =>
         extendTypeDependencies(loc, loc2);
-        if (!reportTypesDeadOnlyInInterface) {
+        if (!Config.reportTypesDeadOnlyInInterface) {
           extendTypeDependencies(loc2, loc);
         };
       }
     | Some(loc1) =>
       extendTypeDependencies(loc, loc1);
-      if (!reportTypesDeadOnlyInInterface) {
+      if (!Config.reportTypesDeadOnlyInInterface) {
         extendTypeDependencies(loc1, loc);
       };
     };
@@ -67,7 +67,7 @@ let addTypeDependenciesAcrossFiles = (~pathToType, ~loc, ~typeLabelName) => {
     | None => ()
     | Some(loc1) =>
       extendTypeDependencies(loc1, loc);
-      if (!reportTypesDeadOnlyInInterface) {
+      if (!Config.reportTypesDeadOnlyInInterface) {
         extendTypeDependencies(loc, loc1);
       };
     };
@@ -81,7 +81,7 @@ let addTypeDependenciesInnerModule = (~pathToType, ~loc, ~typeLabelName) => {
   switch (TypeLabels.find(path)) {
   | Some(loc2) =>
     extendTypeDependencies(loc, loc2);
-    if (!reportTypesDeadOnlyInInterface) {
+    if (!Config.reportTypesDeadOnlyInInterface) {
       extendTypeDependencies(loc2, loc);
     };
   | None => TypeLabels.add(path, loc)

@@ -181,7 +181,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
       _,
       {lbl_loc: {Location.loc_start: posTo, loc_ghost: false}, _},
     ) =>
-    if (analyzeTypes^) {
+    if (Config.analyzeTypes^) {
       DeadType.addTypeReference(~posTo, ~posFrom=locFrom.loc_start);
     }
 
@@ -204,7 +204,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
          })
     | _ => ()
     };
-    if (analyzeTypes^) {
+    if (Config.analyzeTypes^) {
       DeadType.addTypeReference(~posTo, ~posFrom=locFrom.loc_start);
     };
 
@@ -226,7 +226,7 @@ let collectPattern = (super, self, pat: Typedtree.pattern) => {
   | Tpat_record(cases, _clodsedFlag) =>
     cases
     |> List.iter(((_loc, {Types.lbl_loc: {loc_start: posTo}}, _pat)) =>
-         if (analyzeTypes^) {
+         if (Config.analyzeTypes^) {
            DeadType.addTypeReference(~posFrom, ~posTo);
          }
        )
@@ -256,7 +256,7 @@ let rec processSignatureItem =
   switch (si) {
   | Sig_type(_) when doTypes =>
     let (id, t) = si |> Compat.getSigType;
-    if (analyzeTypes^) {
+    if (Config.analyzeTypes^) {
       DeadType.addDeclaration(~typeId=id, ~typeKind=t.type_kind);
     };
   | Sig_value(_) when doValues =>
@@ -267,7 +267,7 @@ let rec processSignatureItem =
         | Val_prim(_) => true
         | _ => false
         };
-      if (!isPrimitive || analyzeExternals) {
+      if (!isPrimitive || Config.analyzeExternals) {
         Ident.name(id)
         |> Name.create(~isInterface=false)
         |> addValueDeclaration(~sideEffects=false, ~path, ~loc);
@@ -331,7 +331,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
         };
       };
 
-    | Tstr_primitive(vd) when doValues && analyzeExternals =>
+    | Tstr_primitive(vd) when doValues && Config.analyzeExternals =>
       let path = Current.modulePath^ @ [Common.currentModuleName^];
       let exists =
         switch (PosHash.find_opt(decls, vd.val_loc.loc_start)) {
@@ -346,7 +346,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
       };
 
     | Tstr_type(_recFlag, typeDeclarations) when doTypes =>
-      if (analyzeTypes^) {
+      if (Config.analyzeTypes^) {
         typeDeclarations
         |> List.iter((typeDeclaration: Typedtree.type_declaration) => {
              DeadType.addDeclaration(

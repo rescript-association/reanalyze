@@ -2,20 +2,22 @@
 
 open Common;
 
-// Turn on type analysis
-let analyzeTypes = ref(true);
+module Config = {
+  // Turn on type analysis
+  let analyzeTypes = ref(true);
 
-let analyzeExternals = true;
+  let analyzeExternals = true;
 
-let removeDeadValuesWithSideEffects = false;
+  let removeDeadValuesWithSideEffects = false;
 
-let reportUnderscore = false;
+  let reportUnderscore = false;
 
-let reportTypesDeadOnlyInInterface = false;
+  let reportTypesDeadOnlyInInterface = false;
 
-let recursiveDebug = false;
+  let recursiveDebug = false;
 
-let warnOnCircularDependencies = false;
+  let warnOnCircularDependencies = false;
+};
 
 let rec checkSub = (s1, s2, n) =>
   n <= 0
@@ -286,7 +288,7 @@ let iterFilesFromRootsToLeaves = iterFun => {
          |> FileSet.iter(fileName => {
               let pos = {...Lexing.dummy_pos, pos_fname: fileName};
               let loc = {...Location.none, loc_start: pos, loc_end: pos};
-              if (warnOnCircularDependencies) {
+              if (Config.warnOnCircularDependencies) {
                 Log_.info(
                   ~loc, ~name="Warning Dead Analysis Cycle", (ppf, ()) =>
                   Format.fprintf(
@@ -700,7 +702,7 @@ let doReportDead = pos =>
   !ProcessDeadAnnotations.isAnnotatedGenTypeOrDead(pos);
 
 let checkSideEffects = decl =>
-  removeDeadValuesWithSideEffects || !decl.sideEffects;
+  Config.removeDeadValuesWithSideEffects || !decl.sideEffects;
 
 let rec resolveRecursiveRefs =
         (
@@ -714,7 +716,7 @@ let rec resolveRecursiveRefs =
         : bool => {
   switch (decl.pos) {
   | _ when decl.resolved =>
-    if (recursiveDebug) {
+    if (Config.recursiveDebug) {
       Log_.item(
         "recursiveDebug %s [%d] already resolved@.",
         decl.path |> Path.toString,
@@ -723,7 +725,7 @@ let rec resolveRecursiveRefs =
     };
     decl.pos |> ProcessDeadAnnotations.isAnnotatedDead;
   | _ when PosSet.mem(decl.pos, refsBeingResolved^) =>
-    if (recursiveDebug) {
+    if (Config.recursiveDebug) {
       Log_.item(
         "recursiveDebug %s [%d] is being resolved: assume dead@.",
         decl.path |> Path.toString,
@@ -732,7 +734,7 @@ let rec resolveRecursiveRefs =
     };
     true;
   | _ =>
-    if (recursiveDebug) {
+    if (Config.recursiveDebug) {
       Log_.item(
         "recursiveDebug resolving %s [%d]@.",
         decl.path |> Path.toString,
@@ -745,7 +747,7 @@ let rec resolveRecursiveRefs =
       refs
       |> PosSet.filter(x =>
            if (x == decl.pos) {
-             if (recursiveDebug) {
+             if (Config.recursiveDebug) {
                Log_.item(
                  "recursiveDebug %s ignoring reference to self@.",
                  decl.path |> Path.toString,
@@ -755,7 +757,7 @@ let rec resolveRecursiveRefs =
            } else {
              switch (PosHash.find_opt(decls, x)) {
              | None =>
-               if (recursiveDebug) {
+               if (Config.recursiveDebug) {
                  Log_.item(
                    "recursiveDebug can't find decl for %s@.",
                    x |> posToString,
@@ -956,7 +958,7 @@ module Decl = {
       !insideReportedValue
       && (
         switch (decl.path) {
-        | [name, ..._] when name |> Name.isUnderscore => reportUnderscore
+        | [name, ..._] when name |> Name.isUnderscore => Config.reportUnderscore
         | _ => true
         }
       );
