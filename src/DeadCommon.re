@@ -89,6 +89,26 @@ module Path = {
     | `Contains_apply => whenContainsApply
     };
   };
+
+  let moduleToImplementation = path =>
+    switch (path |> List.rev) {
+    | [moduleName, ...rest] =>
+      [moduleName |> Name.toImplementation, ...rest] |> List.rev
+    | [] => path
+    };
+
+  let moduleToInterface = path =>
+    switch (path |> List.rev) {
+    | [moduleName, ...rest] =>
+      [moduleName |> Name.toInterface, ...rest] |> List.rev
+    | [] => path
+    };
+
+  let typeToInterface = path =>
+    switch (path) {
+    | [typeName, ...rest] => [typeName |> Name.toInterface, ...rest]
+    | [] => path
+    };
 };
 
 type declKind =
@@ -505,7 +525,6 @@ let addValueDeclaration = (~sideEffects, ~path, ~loc: Location.t, name) =>
 
 let addExceptionDeclaration = (~path, ~loc: Location.t, name) =>
   name |> addDeclaration_(~sideEffects=false, ~declKind=Value, ~path, ~loc);
-
 
 /**** REPORTING ****/
 

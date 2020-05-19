@@ -23,26 +23,6 @@ let addTypeReference = (~posFrom, ~posTo) => {
   PosHash.addSet(typeReferences, posTo, posFrom);
 };
 
-let pathModuleToImplementation = path =>
-  switch (path |> List.rev) {
-  | [moduleName, ...rest] =>
-    [moduleName |> Name.toImplementation, ...rest] |> List.rev
-  | [] => path
-  };
-
-let pathModuleToInterface = path =>
-  switch (path |> List.rev) {
-  | [moduleName, ...rest] =>
-    [moduleName |> Name.toInterface, ...rest] |> List.rev
-  | [] => path
-  };
-
-let pathTypeToInterface = path =>
-  switch (path) {
-  | [typeName, ...rest] => [typeName |> Name.toInterface, ...rest]
-  | [] => path
-  };
-
 let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
   if (loc1.loc_start != loc2.loc_start) {
     if (Common.debug^) {
@@ -59,8 +39,8 @@ let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
 let addTypeDependenciesAcrossFiles = (~pathToType, ~loc, ~typeLabelName) => {
   let isInterface = Filename.check_suffix(Common.currentSrc^, "i");
   if (!isInterface) {
-    let path_1 = pathToType |> pathModuleToInterface;
-    let path_2 = path_1 |> pathTypeToInterface;
+    let path_1 = pathToType |> Path.moduleToInterface;
+    let path_2 = path_1 |> Path.typeToInterface;
     let path1 = [typeLabelName, ...path_1];
     let path2 = [typeLabelName, ...path_2];
 
@@ -81,7 +61,7 @@ let addTypeDependenciesAcrossFiles = (~pathToType, ~loc, ~typeLabelName) => {
       };
     };
   } else {
-    let path_1 = pathToType |> pathModuleToImplementation;
+    let path_1 = pathToType |> Path.moduleToImplementation;
     let path1 = [typeLabelName, ...path_1];
     switch (TypeLabels.find(path1)) {
     | None => ()
