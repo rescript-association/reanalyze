@@ -2,6 +2,12 @@
 
 open Common;
 
+module PosSet =
+  Set.Make({
+    type t = Lexing.position;
+    let compare = compare;
+  });
+
 module Config = {
   // Turn on type analysis
   let analyzeTypes = ref(true);
@@ -19,55 +25,10 @@ module Config = {
   let warnOnCircularDependencies = false;
 };
 
-let rec checkSub = (s1, s2, n) =>
-  n <= 0
-  || (
-    try(s1.[n] == s2.[n]) {
-    | Invalid_argument(_) => false
-    }
-  )
-  && checkSub(s1, s2, n - 1);
-let fileIsImplementationOf = (s1, s2) => {
-  let n1 = String.length(s1)
-  and n2 = String.length(s2);
-  n2 == n1 + 1 && checkSub(s1, s2, n1 - 1);
-};
-
-let deadAnnotation = "dead";
-let liveAnnotation = "live";
-
-let posToString = posToString;
-
-let posIsReason = Log_.posIsReason;
-
-/********   ATTRIBUTES   ********/
-module PosSet =
-  Set.Make({
-    type t = Lexing.position;
-    let compare = compare;
-  });
-
-module PosHash = {
-  include Hashtbl.Make({
-    type t = Lexing.position;
-
-    let hash = x => {
-      let s = Filename.basename(x.Lexing.pos_fname);
-      Hashtbl.hash((x.Lexing.pos_cnum, s));
-    };
-
-    let equal = (x: t, y) => x == y;
-  });
-
-  let findSet = (h, k) =>
-    try(find(h, k)) {
-    | Not_found => PosSet.empty
-    };
-
-  let addSet = (h, k, v) => {
-    let set = findSet(h, k);
-    replace(h, k, PosSet.add(v, set));
-  };
+module Cli = {
+  let write = ref(false);
+  let liveNames = ref([]: list(string)); // names to be considered live values
+  let livePaths = ref([]: list(string)); // paths of files where all values are considered live
 };
 
 module Path = {
@@ -119,6 +80,61 @@ module Path = {
     };
 };
 
+module Current = {
+  let bindings = ref(PosSet.empty);
+
+  let lastBinding = ref(Location.none);
+
+  let maxValuePosEnd = ref(Lexing.dummy_pos); // max end position of a value reported dead
+
+  /* Keep track of the module path while traversing with Tast_mapper */
+  let modulePath: ref(Path.t) = ref([]);
+};
+
+let rec checkSub = (s1, s2, n) =>
+  n <= 0
+  || (
+    try(s1.[n] == s2.[n]) {
+    | Invalid_argument(_) => false
+    }
+  )
+  && checkSub(s1, s2, n - 1);
+let fileIsImplementationOf = (s1, s2) => {
+  let n1 = String.length(s1)
+  and n2 = String.length(s2);
+  n2 == n1 + 1 && checkSub(s1, s2, n1 - 1);
+};
+
+let deadAnnotation = "dead";
+let liveAnnotation = "live";
+
+let posToString = posToString;
+
+let posIsReason = Log_.posIsReason;
+
+module PosHash = {
+  include Hashtbl.Make({
+    type t = Lexing.position;
+
+    let hash = x => {
+      let s = Filename.basename(x.Lexing.pos_fname);
+      Hashtbl.hash((x.Lexing.pos_cnum, s));
+    };
+
+    let equal = (x: t, y) => x == y;
+  });
+
+  let findSet = (h, k) =>
+    try(find(h, k)) {
+    | Not_found => PosSet.empty
+    };
+
+  let addSet = (h, k, v) => {
+    let set = findSet(h, k);
+    replace(h, k, PosSet.add(v, set));
+  };
+};
+
 type declKind =
   | RecordLabel
   | VariantCase
@@ -148,23 +164,6 @@ module TypeLabels = {
   let add = (path, loc) => Hashtbl.replace(table, path, loc);
 
   let find = path => Hashtbl.find_opt(table, path);
-};
-
-module Current = {
-  let bindings = ref(PosSet.empty);
-
-  let lastBinding = ref(Location.none);
-
-  let maxValuePosEnd = ref(Lexing.dummy_pos); // max end position of a value reported dead
-
-  /* Keep track of the module path while traversing with Tast_mapper */
-  let modulePath: ref(Path.t) = ref([]);
-};
-
-module Cli = {
-  let write = ref(false);
-  let liveNames = ref([]: list(string)); // names to be considered live values
-  let livePaths = ref([]: list(string)); // paths of files where all values are considered live
 };
 
 let declGetLoc = decl => {
