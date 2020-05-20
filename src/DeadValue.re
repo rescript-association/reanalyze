@@ -192,7 +192,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     ) =>
     switch (cstr_tag) {
     | Cstr_extension(path, _) =>
-      path |> ExceptionDeclarations.markAsUsed(~locFrom, ~locTo)
+      path |> DeadException.markAsUsed(~locFrom, ~locTo)
     | _ => ()
     };
     if (Config.analyzeTypes^ && !loc_ghost) {
@@ -360,7 +360,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
       | Some((id, loc)) =>
         let path = Current.modulePath^ @ [Common.currentModuleName^];
         let name = id |> Ident.name |> Name.create;
-        name |> ExceptionDeclarations.add(~path, ~loc);
+        name |> DeadException.add(~path, ~loc);
       | None => ()
       }
     | _ => ()
