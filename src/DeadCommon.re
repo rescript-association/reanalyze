@@ -135,13 +135,24 @@ module PosHash = {
   };
 };
 
-type declKind =
-  | RecordLabel
-  | VariantCase
-  | Value;
+module DeclKind = {
+  type t =
+    | Exception
+    | RecordLabel
+    | VariantCase
+    | Value;
+
+  let toString = dk =>
+    switch (dk) {
+    | Exception => "Exception"
+    | RecordLabel => "RecordLabel"
+    | VariantCase => "VariantCase"
+    | Value => "Value"
+    };
+};
 
 type decl = {
-  declKind,
+  declKind: DeclKind.t,
   path: Path.t,
   pos: Lexing.position,
   posEnd: Lexing.position,
@@ -512,7 +523,7 @@ let addDeclaration_ =
     if (debug^) {
       Log_.item(
         "add%sDeclaration %s %s path:%s@.",
-        declKind == Value ? "Value" : "Type",
+        declKind |> DeclKind.toString,
         name |> Name.toString,
         pos |> posToString,
         path |> Path.toString,
@@ -743,7 +754,8 @@ let rec resolveRecursiveRefs =
              | Some(xDecl) =>
                let xRefs =
                  PosHash.findSet(
-                   xDecl.declKind == Value ? valueReferences : typeReferences,
+                   xDecl.declKind == Value || xDecl.declKind == Exception
+                     ? valueReferences : typeReferences,
                    x,
                  );
                let xDeclIsDead =
@@ -793,7 +805,7 @@ let rec resolveRecursiveRefs =
         Log_.item(
           "%s %s %s: %d references (%s) [%d]@.",
           isDead ? "Dead" : "Live",
-          decl.declKind == Value ? "Value" : "Type",
+          decl.declKind |> DeclKind.toString,
           decl.path |> Path.toString,
           newRefs |> PosSet.cardinal,
           refsString,
@@ -906,6 +918,10 @@ module Decl = {
 
     let (name, message) =
       switch (decl.declKind) {
+      | Exception => (
+          "Warning Dead Exception",
+          "is never raised or passed as value",
+        )
       | Value => (
           "Warning Dead Value"
           ++ (!noSideEffectsOrUnderscore ? " With Side Effects" : ""),

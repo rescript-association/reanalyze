@@ -1,5 +1,6 @@
 # master
 - Report analysis stats at the end.
+- Issue dead exception reports as `Warning Dead Exception`.
 
 # 1.14.0
 - CLI: rename `-blacklist` to `-suppress` and `-whitelist` to `-unsuppress`. This should clarify the semantics.

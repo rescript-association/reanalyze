@@ -11,7 +11,8 @@ let declarations = Hashtbl.create(1);
 let add = (~path, ~loc, name) => {
   let exceptionPath = [name, ...path];
   Hashtbl.add(declarations, exceptionPath, loc);
-  name |> addDeclaration_(~sideEffects=false, ~declKind=Value, ~path, ~loc);
+  name
+  |> addDeclaration_(~sideEffects=false, ~declKind=Exception, ~path, ~loc);
 };
 
 let forceDelayedItems = () => {

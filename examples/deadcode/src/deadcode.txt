@@ -53,9 +53,9 @@
   <-- line 21
   [@dead "+bar"] let bar = (x: someMethods) => {
 
-  Warning Dead Value
+  Warning Dead Exception
   File "./DeadExn.re", line 7, characters 10-15
-  DeadE is never used
+  DeadE is never raised or passed as value
   <-- line 7
   exception [@dead "DeadE"] DeadE;
 
@@ -1752,4 +1752,4 @@
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 293 issues (Warning Dead Type:87, Warning Dead Value:204, Warning Dead Value With Side Effects:2)
+  Analysis reported 293 issues (Warning Dead Exception:1, Warning Dead Type:87, Warning Dead Value:203, Warning Dead Value With Side Effects:2)
