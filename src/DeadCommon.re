@@ -508,10 +508,26 @@ let getPosAnnotation = decl =>
   annotateAtEnd(~pos=decl.pos) ? decl.posEnd : decl.posStart;
 
 let addDeclaration_ =
-    (~sideEffects=false, ~declKind, ~path, ~loc: Location.t, name: Name.t) => {
+    (
+      ~posEnd=?,
+      ~posStart=?,
+      ~sideEffects=false,
+      ~declKind,
+      ~path,
+      ~loc: Location.t,
+      name: Name.t,
+    ) => {
   let pos = loc.loc_start;
-  let posStart = pos;
-  let posEnd = loc.loc_end;
+  let posStart =
+    switch (posStart) {
+    | Some(posStart) => posStart
+    | None => pos
+    };
+  let posEnd =
+    switch (posEnd) {
+    | Some(posEnd) => posEnd
+    | None => loc.loc_end
+    };
 
   /* a .cmi file can contain locations from other files.
        For instance:

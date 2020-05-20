@@ -8,11 +8,18 @@ type item = {
 let delayedItems = ref([]);
 let declarations = Hashtbl.create(1);
 
-let add = (~path, ~loc, name) => {
+let add = (~path, ~loc, ~strLoc: Location.t, name) => {
   let exceptionPath = [name, ...path];
   Hashtbl.add(declarations, exceptionPath, loc);
   name
-  |> addDeclaration_(~sideEffects=false, ~declKind=Exception, ~path, ~loc);
+  |> addDeclaration_(
+       ~posEnd=strLoc.loc_end,
+       ~posStart=strLoc.loc_start,
+       ~sideEffects=false,
+       ~declKind=Exception,
+       ~path,
+       ~loc,
+     );
 };
 
 let forceDelayedItems = () => {

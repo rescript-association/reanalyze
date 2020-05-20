@@ -54,10 +54,10 @@
   [@dead "+bar"] let bar = (x: someMethods) => {
 
   Warning Dead Exception
-  File "./DeadExn.re", line 7, characters 10-15
+  File "./DeadExn.re", line 7, characters 0-15
   DeadE is never raised or passed as value
   <-- line 7
-  exception [@dead "DeadE"] DeadE;
+  [@dead "DeadE"] exception DeadE;
 
   Warning Dead Value
   File "./DeadExn.re", line 8, characters 0-25

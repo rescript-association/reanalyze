@@ -360,7 +360,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
       | Some((id, loc)) =>
         let path = Current.modulePath^ @ [Common.currentModuleName^];
         let name = id |> Ident.name |> Name.create;
-        name |> DeadException.add(~path, ~loc);
+        name |> DeadException.add(~path, ~loc, ~strLoc=structureItem.str_loc);
       | None => ()
       }
     | _ => ()
