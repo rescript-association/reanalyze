@@ -1,6 +1,7 @@
 open Common;
 
 type analysisType =
+  | All
   | Dce
   | Exception
   | Termination;
@@ -27,6 +28,10 @@ let loadCmtFile = (~analysis, cmtFilePath) => {
       |> Name.create(~isInterface=Filename.check_suffix(currentSrc^, "i"));
 
     switch (analysis) {
+    | All =>
+      cmt_infos |> DeadCode.processCmt(~cmtFilePath);
+      cmt_infos |> Exception.processCmt;
+      cmt_infos |> Arnold.processCmt;
     | Dce => cmt_infos |> DeadCode.processCmt(~cmtFilePath)
     | Exception => cmt_infos |> Exception.processCmt
     | Termination => cmt_infos |> Arnold.processCmt
@@ -83,6 +88,12 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
        });
   };
   switch (analysis) {
+  | All =>
+    DeadException.forceDelayedItems();
+    DeadCommon.reportDead(ppf);
+    DeadCommon.WriteDeadAnnotations.write();
+    Exception.reportResults(~ppf);
+    Arnold.reportResults(~ppf);
   | Dce =>
     DeadException.forceDelayedItems();
     DeadCommon.reportDead(ppf);
@@ -95,6 +106,7 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
 };
 
 type cliCommand =
+  | All(option(string))
   | Exception(option(string))
   | DCE(option(string))
   | NoOp
@@ -116,6 +128,9 @@ let cli = () => {
       printUsageAndExit();
     };
     cliCommand := command;
+  }
+  and setAll = cmtRoot => {
+    All(cmtRoot) |> setCliCommand;
   }
   and setDCE = cmtRoot => {
     DCE(cmtRoot) |> setCliCommand;
@@ -150,6 +165,16 @@ let cli = () => {
   }
   and speclist = [
     (
+      "-all",
+      Arg.Unit(() => setAll(None)),
+      "Run all the analyses.",
+    ),
+    (
+      "-all-cmt",
+      Arg.String(s => setAll(Some(s))),
+      "root_path Run all the analyses for all the .cmt files under the root path",
+    ),
+    (
       "-ci",
       Arg.Unit(() => Common.ci := true),
       "Internal flag for use in CI",
@@ -164,7 +189,7 @@ let cli = () => {
     (
       "-exception",
       Arg.Unit(() => setException(None)),
-      "Experimental eexception analysis",
+      "Experimental exception analysis",
     ),
     (
       "-exception-cmt",
@@ -222,6 +247,7 @@ let cli = () => {
   let executeCliCommand = cliCommand =>
     switch (cliCommand) {
     | NoOp => printUsageAndExit()
+    | All(cmtRoot) => runAnalysis(~analysis=All, ~cmtRoot, ~ppf)
     | DCE(cmtRoot) => runAnalysis(~analysis=Dce, ~cmtRoot, ~ppf)
     | Exception(cmtRoot) => runAnalysis(~analysis=Exception, ~cmtRoot, ~ppf)
     | Termination(cmtRoot) =>
