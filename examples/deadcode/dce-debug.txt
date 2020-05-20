@@ -671,15 +671,16 @@
   addValueReference DynamicallyLoadedComponent.re:2:32 --> DynamicallyLoadedComponent.re:2:13
   addValueReference DynamicallyLoadedComponent.re:2:19 --> React.re:7:0
   Scanning DeadExn.cmt
-  addValueDeclaration +eToplevel DeadExn.re:7:4 path:+DeadExn
-  addValueDeclaration +eInside DeadExn.re:9:4 path:+DeadExn
+  addValueDeclaration +eToplevel DeadExn.re:8:4 path:+DeadExn
+  addValueDeclaration +eInside DeadExn.re:10:4 path:+DeadExn
   addValueDeclaration Etoplevel DeadExn.re:1:10 path:+DeadExn
   addValueDeclaration Einside DeadExn.re:4:12 path:+DeadExn.Inside
-  addValueReference DeadExn.re:7:4 --> DeadExn.re:1:10
-  addTypeReference DeadExn.re:7:16 --> DeadExn.re:1:10
-  addValueReference DeadExn.re:9:4 --> DeadExn.re:4:12
-  addTypeReference DeadExn.re:9:14 --> DeadExn.re:4:12
-  addValueReference DeadExn.re:11:7 --> DeadExn.re:9:4
+  addValueDeclaration DeadE DeadExn.re:7:10 path:+DeadExn
+  addValueReference DeadExn.re:8:4 --> DeadExn.re:1:10
+  addTypeReference DeadExn.re:8:16 --> DeadExn.re:1:10
+  addValueReference DeadExn.re:10:4 --> DeadExn.re:4:12
+  addTypeReference DeadExn.re:10:14 --> DeadExn.re:4:12
+  addValueReference DeadExn.re:12:7 --> DeadExn.re:10:4
   Scanning TransitiveType2.cmt
   addValueDeclaration +convertT2 TransitiveType2.re:7:4 path:+TransitiveType2
   addValueReference TransitiveType2.re:7:4 --> TransitiveType2.re:7:17
@@ -2487,9 +2488,10 @@ File References
   Dead Value +TestYojson.+bar: 0 references () [0]
   Dead Value +TestYojson.+foo: 0 references () [0]
   Live Value +BootloaderResource.+read: 1 references (DeadTest.re:112:40) [0]
-  Live Value +DeadExn.+eInside: 1 references (DeadExn.re:11:7) [0]
+  Live Value +DeadExn.+eInside: 1 references (DeadExn.re:12:7) [0]
   Dead Value +DeadExn.+eToplevel: 0 references () [0]
-  Live Value +DeadExn.Inside.Einside: 1 references (DeadExn.re:9:4) [0]
+  Dead Value +DeadExn.DeadE: 0 references () [0]
+  Live Value +DeadExn.Inside.Einside: 1 references (DeadExn.re:10:4) [0]
   Live Value +DeadExn.Etoplevel: 1 references (TestDeadExn.re:1:7) [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
@@ -2738,9 +2740,15 @@ File References
   [@dead "+bar"] let bar = (x: someMethods) => {
 
   Warning Dead Value
-  File "./DeadExn.re", line 7, characters 0-25
-  +eToplevel is never used
+  File "./DeadExn.re", line 7, characters 10-15
+  DeadE is never used
   <-- line 7
+  exception [@dead "DeadE"] DeadE;
+
+  Warning Dead Value
+  File "./DeadExn.re", line 8, characters 0-25
+  +eToplevel is never used
+  <-- line 8
   [@dead "+eToplevel"] let eToplevel = Etoplevel;
 
   Warning Dead Value
@@ -4430,4 +4438,4 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 292 issues (Warning Dead Type:87, Warning Dead Value:203, Warning Dead Value With Side Effects:2)
+  Analysis reported 293 issues (Warning Dead Type:87, Warning Dead Value:204, Warning Dead Value With Side Effects:2)
