@@ -87,17 +87,17 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
             });
        });
   };
+  let dce = () => {
+    DeadException.forceDelayedItems();
+    DeadCommon.reportDead(ppf);
+    DeadCommon.WriteDeadAnnotations.write();
+  };
   switch (analysis) {
   | All =>
-    DeadException.forceDelayedItems();
-    DeadCommon.reportDead(ppf);
-    DeadCommon.WriteDeadAnnotations.write();
+    dce();
     Exception.reportResults(~ppf);
     Arnold.reportResults(~ppf);
-  | Dce =>
-    DeadException.forceDelayedItems();
-    DeadCommon.reportDead(ppf);
-    DeadCommon.WriteDeadAnnotations.write();
+  | Dce => dce()
   | Exception => Exception.reportResults(~ppf)
   | Termination => Arnold.reportResults(~ppf)
   };
@@ -164,11 +164,7 @@ let cli = () => {
     DeadCommon.Cli.livePaths := paths @ DeadCommon.Cli.livePaths.contents;
   }
   and speclist = [
-    (
-      "-all",
-      Arg.Unit(() => setAll(None)),
-      "Run all the analyses.",
-    ),
+    ("-all", Arg.Unit(() => setAll(None)), "Run all the analyses."),
     (
       "-all-cmt",
       Arg.String(s => setAll(Some(s))),
