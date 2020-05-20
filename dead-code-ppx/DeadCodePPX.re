@@ -40,6 +40,7 @@ let structure = (mapper, structure) => {
              pstr_desc: Pstr_value(rec_value, value_bindings),
            });
          };
+
        | Pstr_primitive({pval_attributes}) =>
          if (pval_attributes |> hasDeadAnnotation) {
            None;
@@ -48,6 +49,16 @@ let structure = (mapper, structure) => {
              Ast_mapper.default_mapper.structure_item(mapper, structure_item),
            );
          }
+
+       | Pstr_exception({pext_attributes}) =>
+         if (pext_attributes |> hasDeadAnnotation) {
+           None;
+         } else {
+           Some(
+             Ast_mapper.default_mapper.structure_item(mapper, structure_item),
+           );
+         }
+
        | _ =>
          Some(
            Ast_mapper.default_mapper.structure_item(mapper, structure_item),
