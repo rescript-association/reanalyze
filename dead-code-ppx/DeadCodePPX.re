@@ -50,8 +50,8 @@ let structure = (mapper, structure) => {
            );
          }
 
-       | Pstr_exception({pext_attributes}) =>
-         if (pext_attributes |> hasDeadAnnotation) {
+       | Pstr_exception(x) =>
+         if (x |> Compat.exceptionAttributes |> hasDeadAnnotation) {
            None;
          } else {
            Some(
