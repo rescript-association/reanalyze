@@ -391,17 +391,6 @@ let processValueDependency =
     addValueReference(~addFileReference, ~locFrom, ~locTo);
   };
 
-let processTypeDependency =
-    (
-      (
-        {loc_start: posTo, loc_ghost: ghost1}: Location.t,
-        {loc_start: posFrom, loc_ghost: ghost2}: Location.t,
-      ),
-    ) =>
-  if (!ghost1 && !ghost2 && posTo != posFrom) {
-    DeadType.addTypeReference(~posTo, ~posFrom);
-  };
-
 let processStructure =
     (
       ~cmt_value_dependencies,
@@ -416,6 +405,6 @@ let processStructure =
 
   valueDependencies |> List.iter(processValueDependency);
 
-  DeadType.TypeDependencies.iter(processTypeDependency);
+  DeadType.TypeDependencies.forceDelayedItems();
   DeadType.TypeDependencies.clear();
 };

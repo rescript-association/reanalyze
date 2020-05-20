@@ -2,16 +2,6 @@
 
 open DeadCommon;
 
-module TypeDependencies = {
-  let items = ref([]);
-
-  let add = (loc1, loc2) => items := [(loc1, loc2), ...items^];
-
-  let clear = () => items := [];
-
-  let iter = f => List.iter(f, items^);
-};
-
 let addTypeReference = (~posFrom, ~posTo) => {
   if (Common.debug^) {
     Log_.item(
@@ -21,6 +11,29 @@ let addTypeReference = (~posFrom, ~posTo) => {
     );
   };
   PosHash.addSet(typeReferences, posTo, posFrom);
+};
+
+module TypeDependencies = {
+  let delayedItems = ref([]);
+
+  let add = (loc1, loc2) =>
+    delayedItems := [(loc1, loc2), ...delayedItems^];
+
+  let clear = () => delayedItems := [];
+
+  let processTypeDependency =
+      (
+        (
+          {loc_start: posTo, loc_ghost: ghost1}: Location.t,
+          {loc_start: posFrom, loc_ghost: ghost2}: Location.t,
+        ),
+      ) =>
+    if (!ghost1 && !ghost2 && posTo != posFrom) {
+      addTypeReference(~posTo, ~posFrom);
+    };
+
+  let forceDelayedItems = () =>
+    List.iter(processTypeDependency, delayedItems^);
 };
 
 let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
