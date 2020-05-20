@@ -1,4 +1,6 @@
 # master
+
+# 1.15.0
 - Report analysis stats at the end.
 - Issue dead exception reports as `Warning Dead Exception`.
 - Dead exception: fix location position for `-write`.
