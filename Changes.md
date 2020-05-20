@@ -2,6 +2,7 @@
 - Report analysis stats at the end.
 - Issue dead exception reports as `Warning Dead Exception`.
 - Dead exception: fix location position for `-write`.
+- Add command-line options `-all` and `-all-cmt` to run all the analyses at once.
 
 # 1.14.0
 - CLI: rename `-blacklist` to `-suppress` and `-whitelist` to `-unsuppress`. This should clarify the semantics.
