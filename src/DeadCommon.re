@@ -153,6 +153,7 @@ module DeclKind = {
 
 type decl = {
   declKind: DeclKind.t,
+  isToplevel: bool,
   path: Path.t,
   pos: Lexing.position,
   posEnd: Lexing.position,
@@ -509,12 +510,13 @@ let getPosAnnotation = decl =>
 
 let addDeclaration_ =
     (
+      ~isToplevel=true,
       ~posEnd=?,
       ~posStart=?,
       ~sideEffects=false,
       ~declKind,
-      ~path,
       ~loc: Location.t,
+      ~path,
       name: Name.t,
     ) => {
   let pos = loc.loc_start;
@@ -548,6 +550,7 @@ let addDeclaration_ =
 
     let decl = {
       declKind,
+      isToplevel,
       path: [name, ...path],
       pos,
       posEnd,
@@ -561,8 +564,10 @@ let addDeclaration_ =
 
 let addTypeDeclaration = addDeclaration_;
 
-let addValueDeclaration = (~sideEffects, ~path, ~loc: Location.t, name) =>
-  name |> addDeclaration_(~sideEffects, ~declKind=Value, ~path, ~loc);
+let addValueDeclaration =
+    (~isToplevel=?, ~loc: Location.t, ~path, ~sideEffects, name) =>
+  name
+  |> addDeclaration_(~declKind=Value, ~isToplevel?, ~loc, ~path, ~sideEffects);
 
 /**** REPORTING ****/
 
@@ -705,7 +710,9 @@ let doReportDead = pos =>
   !ProcessDeadAnnotations.isAnnotatedGenTypeOrDead(pos);
 
 let checkSideEffects = decl =>
-  Config.removeDeadValuesWithSideEffects || !decl.sideEffects;
+  !decl.isToplevel
+  || Config.removeDeadValuesWithSideEffects
+  || !decl.sideEffects;
 
 let rec resolveRecursiveRefs =
         (

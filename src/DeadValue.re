@@ -138,8 +138,10 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
         };
       let path = Current.modulePath^ @ [Common.currentModuleName^];
       if (!exists) {
+        // This is never toplevel currently
+        let isToplevel = oldLastBinding == Location.none;
         let sideEffects = !exprNoSideEffects(vb.vb_expr);
-        name |> addValueDeclaration(~path, ~loc, ~sideEffects);
+        name |> addValueDeclaration(~isToplevel, ~loc, ~path, ~sideEffects);
       };
       switch (PosHash.find_opt(decls, loc_start)) {
       | None => ()
