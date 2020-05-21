@@ -1,4 +1,5 @@
 # master
+- Only toplevel values are considered live when they have side-effects.
 
 # 1.15.0
 - Report analysis stats at the end.
