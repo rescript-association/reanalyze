@@ -707,7 +707,7 @@ let declIsDead = (~refs, decl) => {
 let doReportDead = pos =>
   !ProcessDeadAnnotations.isAnnotatedGenTypeOrDead(pos);
 
-let checkSideEffects = decl => !decl.isToplevel || !decl.sideEffects;
+let isToplevelWithSideEffects = decl => decl.isToplevel && decl.sideEffects;
 
 let rec resolveRecursiveRefs =
         (
@@ -803,7 +803,7 @@ let rec resolveRecursiveRefs =
         if (decl.pos |> doReportDead) {
           deadDeclarations := [decl, ...deadDeclarations^];
         };
-        if (decl |> checkSideEffects) {
+        if (!isToplevelWithSideEffects(decl)) {
           decl.pos |> ProcessDeadAnnotations.annotateDead;
         };
       } else if (decl.pos |> ProcessDeadAnnotations.isAnnotatedDead) {
@@ -974,8 +974,7 @@ module Decl = {
       );
     let shouldWriteAnnotation =
       shouldEmitWarning
-      && decl
-      |> checkSideEffects
+      && !isToplevelWithSideEffects(decl)
       && Suppress.filter(decl.pos);
     if (shouldEmitWarning) {
       emitWarning(~decl, ~message, ~name);
