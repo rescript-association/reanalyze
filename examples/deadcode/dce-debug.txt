@@ -805,6 +805,18 @@
   addValueDeclaration +valueAlive DeadValueTest.re:1:4 path:+DeadValueTest
   addValueDeclaration +valueDead DeadValueTest.re:2:4 path:+DeadValueTest
   addValueDeclaration +valueOnlyInImplementation DeadValueTest.re:4:4 path:+DeadValueTest
+  addValueDeclaration +subList DeadValueTest.re:6:8 path:+DeadValueTest
+  addValueDeclaration +tail DeadValueTest.re:10:8 path:+DeadValueTest
+  addValueReference DeadValueTest.re:10:8 --> DeadValueTest.re:6:19
+  addValueReference DeadValueTest.re:10:8 --> DeadValueTest.re:6:22
+  addValueReference DeadValueTest.re:10:8 --> DeadValueTest.re:9:11
+  addValueReference DeadValueTest.re:10:8 --> DeadValueTest.re:6:8
+  addValueReference DeadValueTest.re:10:8 --> DeadValueTest.re:6:22
+  addValueReference DeadValueTest.re:6:8 --> DeadValueTest.re:9:5
+  addValueReference DeadValueTest.re:6:8 --> DeadValueTest.re:10:8
+  addValueReference DeadValueTest.re:6:8 --> DeadValueTest.re:10:8
+  addValueReference DeadValueTest.re:6:8 --> DeadValueTest.re:6:19
+  addValueReference DeadValueTest.re:6:8 --> DeadValueTest.re:6:25
   addValueReference DeadValueTest.rei:1:0 --> DeadValueTest.re:1:4
   addValueReference DeadValueTest.rei:2:0 --> DeadValueTest.re:2:4
   Scanning Tuples.cmt
@@ -2611,6 +2623,8 @@ File References
   Live Exception +Yojson.Json_error: 1 references (Yojson.re:7:44) [0]
   Live Value trace.+infok: 1 references (DeadTest.re:175:0) [0]
   Live RecordLabel trace.pf.pf: 1 references (DeadTest.re:175:21) [0]
+  Dead Value +DeadValueTest.+tail: 0 references () [0]
+  Dead Value +DeadValueTest.+subList: 0 references () [0]
   Dead Value +DeadValueTest.+valueOnlyInImplementation: 0 references () [0]
   Dead Value +DeadValueTest.+valueDead: 0 references () [0]
   Live Value +DeadValueTest.+valueAlive: 1 references (DeadValueTest.rei:1:0) [0]
@@ -3136,6 +3150,12 @@ File References
   +valueOnlyInImplementation is never used
   <-- line 4
   [@dead "+valueOnlyInImplementation"] let valueOnlyInImplementation = 3;
+
+  Warning Dead Value
+  File "./DeadValueTest.re", line 6, characters 0-270
+  +subList is never used
+  <-- line 6
+  [@dead "+subList"] let rec subList = (b, e, l) =>
 
   Warning Dead Value
   File "./DeadValueTest.rei", line 2, characters 0-18
@@ -4438,4 +4458,4 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 293 issues (Warning Dead Exception:1, Warning Dead Type:87, Warning Dead Value:203, Warning Dead Value With Side Effects:2)
+  Analysis reported 294 issues (Warning Dead Exception:1, Warning Dead Type:87, Warning Dead Value:204, Warning Dead Value With Side Effects:2)
