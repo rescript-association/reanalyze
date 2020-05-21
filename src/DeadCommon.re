@@ -138,26 +138,41 @@ module DeclKind = {
     | Exception
     | RecordLabel
     | VariantCase
-    | Value;
+    | Value({
+        sideEffects: bool,
+        isToplevel: bool,
+      });
+
+  let isType = dk =>
+    switch (dk) {
+    | RecordLabel
+    | VariantCase => true
+    | Exception
+    | Value(_) => false
+    };
+
+  let isValue = dk =>
+    switch (dk) {
+    | Value(_) => true
+    | _ => false
+    };
 
   let toString = dk =>
     switch (dk) {
     | Exception => "Exception"
     | RecordLabel => "RecordLabel"
     | VariantCase => "VariantCase"
-    | Value => "Value"
+    | Value(_) => "Value"
     };
 };
 
 type decl = {
   declKind: DeclKind.t,
-  isToplevel: bool,
   path: Path.t,
   pos: Lexing.position,
   posEnd: Lexing.position,
   posStart: Lexing.position,
   mutable resolved: bool,
-  sideEffects: bool,
 };
 
 type decls = PosHash.t(decl);
@@ -548,13 +563,11 @@ let addDeclaration_ =
 
     let decl = {
       declKind,
-      isToplevel,
       path: [name, ...path],
       pos,
       posEnd,
       posStart,
       resolved: false,
-      sideEffects,
     };
     PosHash.replace(decls, pos, decl);
   };
@@ -563,9 +576,15 @@ let addDeclaration_ =
 let addTypeDeclaration = addDeclaration_;
 
 let addValueDeclaration =
-    (~isToplevel=?, ~loc: Location.t, ~path, ~sideEffects, name) =>
+    (~isToplevel=true, ~loc: Location.t, ~path, ~sideEffects, name) =>
   name
-  |> addDeclaration_(~declKind=Value, ~isToplevel?, ~loc, ~path, ~sideEffects);
+  |> addDeclaration_(
+       ~declKind=Value({isToplevel, sideEffects}),
+       ~isToplevel,
+       ~loc,
+       ~path,
+       ~sideEffects,
+     );
 
 /**** REPORTING ****/
 
@@ -594,7 +613,7 @@ module WriteDeadAnnotations = {
       let annotationStr =
         (isReason ? "" : " ")
         ++ "["
-        ++ (isReason || declKind != Value ? "@" : "@@")
+        ++ (isReason || declKind |> DeclKind.isType ? "@" : "@@")
         ++ deadAnnotation
         ++ " \""
         ++ (path |> Path.withoutHead)
@@ -707,7 +726,11 @@ let declIsDead = (~refs, decl) => {
 let doReportDead = pos =>
   !ProcessDeadAnnotations.isAnnotatedGenTypeOrDead(pos);
 
-let isToplevelWithSideEffects = decl => decl.isToplevel && decl.sideEffects;
+let isToplevelValueWithSideEffects = decl =>
+  switch (decl.declKind) {
+  | Value({isToplevel, sideEffects}) => isToplevel && sideEffects
+  | _ => false
+  };
 
 let rec resolveRecursiveRefs =
         (
@@ -772,7 +795,7 @@ let rec resolveRecursiveRefs =
              | Some(xDecl) =>
                let xRefs =
                  PosHash.findSet(
-                   xDecl.declKind == Value || xDecl.declKind == Exception
+                   !(xDecl.declKind |> DeclKind.isType)
                      ? valueReferences : typeReferences,
                    x,
                  );
@@ -803,7 +826,7 @@ let rec resolveRecursiveRefs =
         if (decl.pos |> doReportDead) {
           deadDeclarations := [decl, ...deadDeclarations^];
         };
-        if (!isToplevelWithSideEffects(decl)) {
+        if (!isToplevelValueWithSideEffects(decl)) {
           decl.pos |> ProcessDeadAnnotations.annotateDead;
         };
       } else if (decl.pos |> ProcessDeadAnnotations.isAnnotatedDead) {
@@ -908,12 +931,13 @@ module Decl = {
       Current.maxValuePosEnd^.pos_fname != decl.pos.pos_fname;
 
     let insideReportedValue =
-      decl.declKind == Value
+      decl.declKind
+      |> DeclKind.isValue
       && !fileHasChanged
       && Current.maxValuePosEnd^.pos_cnum > decl.pos.pos_cnum;
 
     if (!insideReportedValue) {
-      if (decl.declKind == Value) {
+      if (decl.declKind |> DeclKind.isValue) {
         if (fileHasChanged
             || decl.posEnd.pos_cnum > Current.maxValuePosEnd^.pos_cnum) {
           Current.maxValuePosEnd := decl.posEnd;
@@ -925,22 +949,22 @@ module Decl = {
   };
 
   let report = (~ppf, decl) => {
-    let noSideEffectsOrUnderscore =
-      !decl.sideEffects
-      || (
-        switch (decl.path) {
-        | [hd, ..._] => hd |> Name.startsWithUnderscore
-        | [] => false
-        }
-      );
-
     let (name, message) =
       switch (decl.declKind) {
       | Exception => (
           "Warning Dead Exception",
           "is never raised or passed as value",
         )
-      | Value => (
+      | Value({sideEffects}) =>
+        let noSideEffectsOrUnderscore =
+          !sideEffects
+          || (
+            switch (decl.path) {
+            | [hd, ..._] => hd |> Name.startsWithUnderscore
+            | [] => false
+            }
+          );
+        (
           "Warning Dead Value"
           ++ (!noSideEffectsOrUnderscore ? " With Side Effects" : ""),
           switch (decl.path) {
@@ -951,7 +975,7 @@ module Decl = {
               !noSideEffectsOrUnderscore ? " and could have side effects" : ""
             )
           },
-        )
+        );
       | RecordLabel => (
           "Warning Dead Type",
           "is a record label never used to read a value",
@@ -974,7 +998,7 @@ module Decl = {
       );
     let shouldWriteAnnotation =
       shouldEmitWarning
-      && !isToplevelWithSideEffects(decl)
+      && !isToplevelValueWithSideEffects(decl)
       && Suppress.filter(decl.pos);
     if (shouldEmitWarning) {
       emitWarning(~decl, ~message, ~name);
@@ -990,7 +1014,8 @@ let reportDead = ppf => {
     let refs =
       decl.pos
       |> PosHash.findSet(
-           decl.declKind == Value ? valueReferences : typeReferences,
+           decl.declKind |> DeclKind.isValue
+             ? valueReferences : typeReferences,
          );
     resolveRecursiveRefs(
       ~deadDeclarations,
