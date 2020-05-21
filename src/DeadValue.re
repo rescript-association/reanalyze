@@ -133,7 +133,7 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
       let name = Ident.name(id) |> Name.create(~isInterface=false);
       let exists =
         switch (PosHash.find_opt(decls, loc_start)) {
-        | Some({declKind: Value}) => true
+        | Some({declKind: Value(_)}) => true
         | _ => false
         };
       let path = Current.modulePath^ @ [Common.currentModuleName^];
@@ -149,15 +149,23 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
         // Value bindings contain the correct location for the entire declaration: update final position.
         // The previous value was taken from the signature, which only has positions for the id.
 
-        let sideEffects = !exprNoSideEffects(vb.vb_expr);
+        let declKind =
+          switch (decl.declKind) {
+          | Value(vk) =>
+            DeclKind.Value({
+              ...vk,
+              sideEffects: !exprNoSideEffects(vb.vb_expr),
+            })
+          | dk => dk
+          };
         PosHash.replace(
           decls,
           loc_start,
           {
             ...decl,
+            declKind,
             posEnd: vb.vb_loc.loc_end,
             posStart: vb.vb_loc.loc_start,
-            sideEffects,
           },
         );
       };
@@ -321,7 +329,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
       let path = Current.modulePath^ @ [Common.currentModuleName^];
       let exists =
         switch (PosHash.find_opt(decls, vd.val_loc.loc_start)) {
-        | Some({declKind: Value}) => true
+        | Some({declKind: Value(_)}) => true
         | _ => false
         };
       if (!exists) {
