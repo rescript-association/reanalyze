@@ -14,8 +14,6 @@ module Config = {
 
   let analyzeExternals = true;
 
-  let removeDeadValuesWithSideEffects = false;
-
   let reportUnderscore = false;
 
   let reportTypesDeadOnlyInInterface = false;
@@ -709,10 +707,7 @@ let declIsDead = (~refs, decl) => {
 let doReportDead = pos =>
   !ProcessDeadAnnotations.isAnnotatedGenTypeOrDead(pos);
 
-let checkSideEffects = decl =>
-  !decl.isToplevel
-  || Config.removeDeadValuesWithSideEffects
-  || !decl.sideEffects;
+let checkSideEffects = decl => !decl.isToplevel || !decl.sideEffects;
 
 let rec resolveRecursiveRefs =
         (
