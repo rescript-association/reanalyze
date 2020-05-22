@@ -87,6 +87,7 @@ export {
   stringMake3 ,
   severalCases ,
   genericRaiseIsNotSupported ,
+  redundant ,
   
 }
 /* catches1 Not a pure module */
