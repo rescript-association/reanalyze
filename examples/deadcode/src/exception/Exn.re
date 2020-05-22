@@ -163,3 +163,5 @@ let severalCases = cases =>
 
 [@raises genericException]
 let genericRaiseIsNotSupported = exn => raise(exn);
+
+let redundant = ([@doesNotRaise] String.uncapitalize_ascii)("abc");

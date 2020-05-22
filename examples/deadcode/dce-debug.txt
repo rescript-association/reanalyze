@@ -79,6 +79,7 @@
   addValueDeclaration +stringMake3 Exn.re:154:4 path:+Exn
   addValueDeclaration +severalCases Exn.re:156:4 path:+Exn
   addValueDeclaration +genericRaiseIsNotSupported Exn.re:165:4 path:+Exn
+  addValueDeclaration +redundant Exn.re:167:4 path:+Exn
   addValueReference Exn.re:22:4 --> Exn.re:20:4
   addValueReference Exn.re:25:4 --> Exn.re:20:4
   addValueReference Exn.re:29:4 --> Exn.re:29:22
@@ -2453,6 +2454,7 @@ File References
   Live RecordLabel +VariantsWithPayload.payload.x: 2 references (VariantsWithPayload.re:27:42, VariantsWithPayload.re:46:36) [0]
   Dead Value +BsJson.+testBsJson2: 0 references () [0]
   Dead Value +BsJson.+testBsJson: 0 references () [0]
+  Dead Value +Exn.+redundant: 0 references () [0]
   Dead Value +Exn.+genericRaiseIsNotSupported: 0 references () [0]
   Dead Value +Exn.+severalCases: 0 references () [0]
   Dead Value +Exn.+stringMake3: 0 references () [0]

@@ -66,4 +66,8 @@
   Exception Analysis
   File "./Exn.re", line 156, characters 4-16
   severalCases might raise Failure (Exn.re:158:13 Exn.re:159:13 Exn.re:160:15) and is not annotated with @raises Failure
-  Analysis reported 17 issues (Exception Analysis:17)
+
+  Exception Analysis
+  File "./Exn.re", line 167, characters 16-59
+  String.uncapitalize_ascii does not raise and is annotated with redundant @doesNotRaise
+  Analysis reported 18 issues (Exception Analysis:18)

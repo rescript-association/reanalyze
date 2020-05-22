@@ -64,7 +64,7 @@ module Values = {
 module Event = {
   type kind =
     | Catches(list(t)) // with | E => ...
-    | Call(Path.t) // foo()
+    | Call(Path.t, bool) // foo(), doesNotRaise
     | Raises // raise E
 
   and t = {
@@ -75,12 +75,13 @@ module Event = {
 
   let rec print = (ppf, event) =>
     switch (event) {
-    | {kind: Call(path), exceptions, loc} =>
+    | {kind: Call(path, doesNotRaise), exceptions, loc} =>
       Format.fprintf(
         ppf,
-        "%s Call(%s) %a@.",
+        "%s Call(%s, %b) %a@.",
         loc.loc_start |> posToString,
         path |> Path.name,
+        doesNotRaise,
         Exceptions.pp(~exnTable=None),
         exceptions,
       )
@@ -128,22 +129,35 @@ module Event = {
         };
         exceptions |> Exceptions.iter(exn => extendExnTable(exn, loc));
         loop(Exceptions.union(exnSet, exceptions), rest);
-      | [{kind: Call(path), loc} as ev, ...rest] =>
+      | [{kind: Call(path, doesNotRaise), loc} as ev, ...rest] =>
         if (Common.debug^) {
           Log_.item("%a@.", print, ev);
         };
-        switch (path |> Values.findPath(~moduleName)) {
-        | Some(exceptions) when !Exceptions.isEmpty(exceptions) =>
+        let exceptions =
+          switch (path |> Values.findPath(~moduleName)) {
+          | Some(exceptions) => exceptions
+          | _ =>
+            switch (ExnLib.find(path)) {
+            | Some(exceptions) => exceptions
+            | None => Exceptions.empty
+            }
+          };
+        if (!doesNotRaise) {
           exceptions |> Exceptions.iter(exn => extendExnTable(exn, loc));
           loop(Exceptions.union(exnSet, exceptions), rest);
-        | _ =>
-          switch (ExnLib.find(path)) {
-          | Some(exceptions) =>
-            exceptions |> Exceptions.iter(exn => extendExnTable(exn, loc));
-            loop(Exceptions.union(exnSet, exceptions), rest);
-          | None => loop(exnSet, rest)
-          }
+        } else if (Exceptions.isEmpty(exceptions)) {
+          Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
+            Format.fprintf(
+              ppf,
+              "@{<info>%s@} does not raise and is annotated with redundant @doesNotRaise",
+              path |> Path.name,
+            )
+          );
+          loop(exnSet, rest);
+        } else {
+          loop(exnSet, rest);
         };
+
       | [{kind: Catches(nestedEvents), exceptions} as ev, ...rest] =>
         if (Common.debug^) {
           Log_.item("%a@.", print, ev);
@@ -279,8 +293,6 @@ let traverseAst = {
   let expr = (self: Tast_mapper.mapper, expr: Typedtree.expression) => {
     let loc = expr.exp_loc;
     switch (expr.exp_desc) {
-    | _ when expr.exp_attributes |> doesNotRaise => ()
-
     | Texp_ident(callee, _, _) =>
       let calleeName = callee |> Path.name;
       if (calleeName |> isRaise) {
@@ -294,9 +306,15 @@ let traverseAst = {
       };
       currentEvents :=
         [
-          {Event.kind: Call(callee), loc, exceptions: Exceptions.empty},
+          {
+            Event.exceptions: Exceptions.empty,
+            loc,
+            kind: Call(callee, expr.exp_attributes |> doesNotRaise),
+          },
           ...currentEvents^,
         ];
+
+    | _ when expr.exp_attributes |> doesNotRaise => ()
 
     | Texp_apply(
         {exp_desc: Texp_ident(atat, _, _)},
@@ -311,14 +329,14 @@ let traverseAst = {
           |> isRaise =>
       let exceptions = [arg] |> raiseArgs;
       currentEvents :=
-        [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
+        [{Event.exceptions, loc, kind: Raises}, ...currentEvents^];
       arg |> snd |> iterExprOpt(self);
 
     | Texp_apply(
         {exp_desc: Texp_ident(atat, _, _)},
         [arg, (_lbl1, Some({exp_desc: Texp_ident(callee, _, _)}))],
       )
-        // Exn(...) |> raises
+        // Exn(...) |> raise
         when
           atat
           |> Path.name == "Pervasives.|>"
@@ -327,15 +345,16 @@ let traverseAst = {
           |> isRaise =>
       let exceptions = [arg] |> raiseArgs;
       currentEvents :=
-        [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
+        [{Event.exceptions, loc, kind: Raises}, ...currentEvents^];
       arg |> snd |> iterExprOpt(self);
 
-    | Texp_apply({exp_desc: Texp_ident(callee, _, _)} as e, args) =>
+    | Texp_apply({exp_desc: Texp_ident(callee, _, _)} as e, args)
+        when !(expr.exp_attributes |> doesNotRaise) =>
       let calleeName = Path.name(callee);
       if (calleeName |> isRaise) {
         let exceptions = args |> raiseArgs;
         currentEvents :=
-          [{Event.kind: Raises, loc, exceptions}, ...currentEvents^];
+          [{Event.exceptions, loc, kind: Raises}, ...currentEvents^];
       } else {
         e |> iterExpr(self);
       };
@@ -352,7 +371,7 @@ let traverseAst = {
         e |> iterExpr(self);
         currentEvents :=
           [
-            {Event.kind: Catches(currentEvents^), loc, exceptions},
+            {Event.exceptions, loc, kind: Catches(currentEvents^)},
             ...oldEvents,
           ];
       } else {
@@ -363,9 +382,9 @@ let traverseAst = {
         currentEvents :=
           [
             {
-              Event.kind: Raises,
+              Event.exceptions: [Exn.matchFailure] |> Exceptions.fromList,
               loc,
-              exceptions: [Exn.matchFailure] |> Exceptions.fromList,
+              kind: Raises,
             },
             ...currentEvents^,
           ];
@@ -381,7 +400,7 @@ let traverseAst = {
       e |> iterExpr(self);
       currentEvents :=
         [
-          {Event.kind: Catches(currentEvents^), loc, exceptions},
+          {Event.exceptions, loc, kind: Catches(currentEvents^)},
           ...oldEvents,
         ];
       cases |> iterCases(self);
