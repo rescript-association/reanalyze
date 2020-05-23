@@ -217,11 +217,7 @@ let addValueReference =
         && !locTo.loc_ghost
         && !locFrom.loc_ghost
         && locFrom.loc_start.pos_fname != locTo.loc_start.pos_fname) {
-      FileHash.addSet(
-        fileReferences,
-        locFrom.loc_start.pos_fname,
-        locTo.loc_start.pos_fname,
-      );
+      FileReferences.add(locFrom, locTo);
     };
   };
 };
@@ -266,29 +262,26 @@ let iterFilesFromRootsToLeaves = iterFun => {
     Hashtbl.replace(referencesByNumber, newNum, newSetAtNewNum);
   };
 
-  let isSourceFile = fileName => FileHash.mem(fileReferences, fileName);
-
   let addEdge = (fromFile, toFile) =>
-    if (isSourceFile(fromFile)) {
+    if (FileReferences.exists(fromFile)) {
       addIncomingEdge(toFile);
     };
 
   let removeEdge = (fromFile, toFile) =>
-    if (isSourceFile(fromFile)) {
+    if (FileReferences.exists(fromFile)) {
       removeIncomingEdge(toFile);
     };
 
-  fileReferences
-  |> FileHash.iter((fromFile, set) => {
-       if (getNum(fromFile) == 0) {
-         Hashtbl.replace(
-           referencesByNumber,
-           0,
-           FileSet.add(fromFile, getSet(0)),
-         );
-       };
-       set |> FileSet.iter(toFile => {addEdge(fromFile, toFile)});
-     });
+  FileReferences.iter((fromFile, set) => {
+    if (getNum(fromFile) == 0) {
+      Hashtbl.replace(
+        referencesByNumber,
+        0,
+        FileSet.add(fromFile, getSet(0)),
+      );
+    };
+    set |> FileSet.iter(toFile => {addEdge(fromFile, toFile)});
+  });
 
   while (getSet(0) != FileSet.empty) {
     let filesWithNoIncomingReferences = getSet(0);
@@ -296,10 +289,7 @@ let iterFilesFromRootsToLeaves = iterFun => {
     filesWithNoIncomingReferences
     |> FileSet.iter(fileName => {
          iterFun(fileName);
-         let references =
-           try(FileHash.find(fileReferences, fileName)) {
-           | Not_found => FileSet.empty
-           };
+         let references = FileReferences.find(fileName);
          references |> FileSet.iter(toFile => removeEdge(fileName, toFile));
        });
   };
@@ -1028,10 +1018,9 @@ let reportDead = ppf => {
   if (debug^) {
     Log_.item("@.File References@.@.");
     let fileList = ref([]);
-    fileReferences
-    |> FileHash.iter((file, files) =>
-         fileList := [(file, files), ...fileList^]
-       );
+    FileReferences.iter((file, files) =>
+      fileList := [(file, files), ...fileList^]
+    );
     fileList^
     |> List.sort(((f1, _), (f2, _)) => String.compare(f1, f2))
     |> List.iter(((file, files)) =>
