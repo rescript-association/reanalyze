@@ -88,6 +88,8 @@ export {
   severalCases ,
   genericRaiseIsNotSupported ,
   redundant ,
+  redundant2 ,
+  redundant3 ,
   
 }
 /* catches1 Not a pure module */
