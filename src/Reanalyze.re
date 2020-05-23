@@ -20,7 +20,7 @@ let loadCmtFile = (~analysis, cmtFilePath) => {
   | None => ()
 
   | Some(sourceFile) =>
-    FileHash.addFile(fileReferences, sourceFile);
+    FileReferences.addFile(sourceFile);
     currentSrc := sourceFile;
     currentModule := Paths.getModuleName(sourceFile);
     currentModuleName :=

@@ -24,7 +24,6 @@ module LocSet =
   });
 
 module FileSet = Set.Make(String);
-
 module FileHash = {
   include Hashtbl.Make({
     type t = string;
@@ -33,21 +32,38 @@ module FileHash = {
 
     let equal = (x: t, y) => x == y;
   });
+};
+
+module FileReferences = {
+  let table: FileHash.t(FileSet.t) = FileHash.create(256); /* references across files */
 
   let findSet = (table, key) =>
-    try(find(table, key)) {
+    try(FileHash.find(table, key)) {
     | Not_found => FileSet.empty
     };
 
-  let addFile = (table, key) => {
+  let add = (locFrom: Location.t, locTo: Location.t) => {
+    let key = locFrom.loc_start.pos_fname;
     let set = findSet(table, key);
-    replace(table, key, set);
+    FileHash.replace(
+      table,
+      key,
+      FileSet.add(locTo.loc_start.pos_fname, set),
+    );
   };
 
-  let addSet = (table, key, value) => {
-    let set = findSet(table, key);
-    replace(table, key, FileSet.add(value, set));
+  let addFile = fileName => {
+    let set = findSet(table, fileName);
+    FileHash.replace(table, fileName, set);
   };
+
+  let exists = fileName => FileHash.mem(table, fileName);
+
+  let find = fileName =>
+    switch (FileHash.find_opt(table, fileName)) {
+    | Some(set) => set
+    | None => FileSet.empty
+    };
+
+  let iter = f => FileHash.iter(f, table);
 };
-
-let fileReferences: FileHash.t(FileSet.t) = FileHash.create(256); /* references across files */
