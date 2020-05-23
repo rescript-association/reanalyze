@@ -1,6 +1,6 @@
 # master
 - Only toplevel values are considered live when they have side-effects.
-- Report a warning when a redundant @doesNotRaise annotation is added to a function name.
+- Report a warning when a redundant @doesNotRaise annotation is used.
 
 # 1.15.0
 - Report analysis stats at the end.
