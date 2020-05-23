@@ -163,7 +163,14 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
         // This is never toplevel currently
         let isToplevel = oldLastBinding == Location.none;
         let sideEffects = !exprNoSideEffects(vb.vb_expr);
-        name |> addValueDeclaration(~isToplevel, ~loc, ~path, ~sideEffects);
+        name
+        |> addValueDeclaration(
+             ~isToplevel,
+             ~loc,
+             ~optionalArgs,
+             ~path,
+             ~sideEffects,
+           );
       };
       switch (PosHash.find_opt(decls, loc_start)) {
       | None => ()
