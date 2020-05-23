@@ -69,15 +69,15 @@
 
   Exception Analysis
   File "./Exn.re", line 167, characters 16-59
-  expression does not raise and is annotated with redundant @doesNotRaise
+  String.uncapitalize_ascii does not raise and is annotated with redundant @doesNotRaise
 
   Exception Analysis
   File "./Exn.re", line 169, characters 17-65
-  expression does not raise and is annotated with redundant @doesNotRaise
+  String.uncapitalize_ascii does not raise and is annotated with redundant @doesNotRaise
 
   Exception Analysis
   File "./Exn.re", line 172, characters 18-61
-  expression does not raise and is annotated with redundant @doesNotRaise
+  String.uncapitalize_ascii does not raise and is annotated with redundant @doesNotRaise
 
   Exception Analysis
   File "./Exn.re", line 172, characters 2-68

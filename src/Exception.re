@@ -163,10 +163,16 @@ module Event = {
         };
         let nestedExceptions = loop(Exceptions.empty, nestedEvents);
         if (Exceptions.isEmpty(nestedExceptions)) {
+          let name =
+            switch (nestedEvents) {
+            | [{kind: Call(path)}, ..._] => path |> Path.name
+            | _ => "expression"
+            };
           Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
             Format.fprintf(
               ppf,
-              "@{<info>expression@} does not raise and is annotated with redundant @doesNotRaise",
+              "@{<info>%s@} does not raise and is annotated with redundant @doesNotRaise",
+              name,
             )
           );
         };
