@@ -140,19 +140,7 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
     | Tpat_var(id, {loc: {loc_start, loc_ghost} as loc})
         when !loc_ghost && !vb.vb_loc.loc_ghost =>
       let name = Ident.name(id) |> Name.create(~isInterface=false);
-
       let optionalArgs = vb.vb_expr.exp_type |> getOptionalArgs;
-      switch (optionalArgs) {
-      | [_, ..._] =>
-        Log_.item(
-          "XXX %s %s function with optional args: %s@.",
-          loc_start |> posToString,
-          name |> Name.toString,
-          optionalArgs |> String.concat(", "),
-        )
-      | [] => ()
-      };
-
       let exists =
         switch (PosHash.find_opt(decls, loc_start)) {
         | Some({declKind: Value(_)}) => true

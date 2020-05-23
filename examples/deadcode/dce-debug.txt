@@ -157,7 +157,6 @@
   addRecordLabelDeclaration surname ReasonComponent.re:8:2 path:+ReasonComponent.person
   addRecordLabelDeclaration type_ ReasonComponent.re:9:2 path:+ReasonComponent.person
   addRecordLabelDeclaration polymorphicPayload ReasonComponent.re:11:2 path:+ReasonComponent.person
-  XXX ReasonComponent.re:18:4 +make function with optional args: message, intList
   addValueReference ReasonComponent.re:18:4 --> ReasonComponent.re:19:14
   addValueReference ReasonComponent.re:18:4 --> ReasonComponent.re:19:51
   addValueReference ReasonComponent.re:18:4 --> ReasonComponent.re:15:4
@@ -173,7 +172,6 @@
   addValueReference ReasonComponent.re:18:4 --> ReasonReact.rei:181:0
   addValueReference ReasonComponent.re:18:4 --> ReactDOMRe.re:2136:0
   addValueReference ReasonComponent.re:18:4 --> ReasonComponent.re:3:4
-  XXX ReasonComponent.re:43:4 +minus function with optional args: first
   addValueReference ReasonComponent.re:43:4 --> ReasonComponent.re:43:20
   addValueReference ReasonComponent.re:43:4 --> ReasonComponent.re:43:14
   addValueReference ReasonComponent.re:43:4 --> ReasonComponent.re:43:24
@@ -862,7 +860,6 @@
   Scanning A.cmt
   addValueDeclaration +foo A.re:1:4 path:+A
   addValueDeclaration +bar A.re:3:4 path:+A
-  XXX A.re:1:4 +foo function with optional args: x, y, z
   addValueReference A.re:1:4 --> A.re:1:14
   addValueReference A.re:1:4 --> A.re:1:20
   addValueReference A.re:1:4 --> A.re:1:26
@@ -870,7 +867,6 @@
   addValueReference A.re:1:4 --> A.re:1:18
   addValueReference A.re:1:4 --> A.re:1:24
   addValueReference A.re:1:4 --> A.re:1:29
-  XXX A.re:3:4 +bar function with optional args: x, z
   addValueReference A.re:3:4 --> A.re:3:18
   addValueReference A.re:3:4 --> A.re:3:27
   Scanning Newton.cmt
@@ -1046,7 +1042,6 @@
   addValueDeclaration +make ImportMyBanner.re:8:0 path:+ImportMyBanner
   addValueDeclaration +make ImportMyBanner.re:19:4 path:+ImportMyBanner
   addRecordLabelDeclaration text ImportMyBanner.re:6:16 path:+ImportMyBanner.message
-  XXX ImportMyBanner.re:19:4 +make function with optional args: message
   addValueReference ImportMyBanner.re:19:4 --> ImportMyBanner.re:8:0
   Scanning TypeParams3.cmt
   addValueDeclaration +test TypeParams3.re:2:4 path:+TypeParams3
@@ -1430,7 +1425,6 @@
   addValueDeclaration +defaultValue2 TestImport.re:44:0 path:+TestImport
   addValueReference TestImport.re:18:4 --> TestImport.re:1:0
   addRecordLabelDeclaration text TestImport.re:28:16 path:+TestImport.message
-  XXX TestImport.re:42:4 +make function with optional args: message
   addValueReference TestImport.re:42:4 --> TestImport.re:30:0
   Scanning TestImmutableArray.cmt
   addValueDeclaration +testImmutableArrayGet TestImmutableArray.re:2:4 path:+TestImmutableArray
@@ -1465,7 +1459,6 @@
   addValueDeclaration +component ComponentAsProp.re:1:4 path:+ComponentAsProp
   addValueDeclaration +make ComponentAsProp.re:5:4 path:+ComponentAsProp
   addValueReference ComponentAsProp.re:1:4 --> ReasonReact.rei:153:0
-  XXX ComponentAsProp.re:5:4 +make function with optional args: button
   addValueReference ComponentAsProp.re:5:4 --> ComponentAsProp.re:5:13
   addValueReference ComponentAsProp.re:5:4 --> ComponentAsProp.re:5:21
   addValueReference ComponentAsProp.re:5:4 --> ComponentAsProp.re:13:16
@@ -1866,21 +1859,18 @@
   addValueReference DeadTest.re:95:6 --> DeadTest.re:98:4
   addValueReference DeadTest.re:94:8 --> DeadTest.re:95:6
   addValueReference DeadTest.re:98:4 --> DeadTest.re:94:8
-  XXX DeadTest.re:100:4 +withDefaultValue function with optional args: paramWithDefault
   addValueReference DeadTest.re:100:4 --> DeadTest.re:100:42
   addValueReference DeadTest.re:100:4 --> DeadTest.re:100:25
   addValueReference DeadTest.re:100:4 --> DeadTest.re:100:45
   addValueDeclaration +unsafe_string2 DeadTest.re:107:2 path:+DeadTest.Ext_buffer
   addTypeReference DeadTest.re:110:16 --> DeadRT.rei:2:4
   addValueReference DeadTest.re:112:40 --> JSResource.re:3:0
-  XXX DeadTest.re:112:40 +makeProps function with optional args: key
   addValueReference DeadTest.re:112:40 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:112:40 --> DeadTest.re:112:40
   addValueReference DeadTest.re:112:40 --> BootloaderResource.re:3:0
   addValueReference DeadTest.re:112:40 --> DeadTest.re:112:40
   addValueReference DeadTest.re:112:40 --> React.re:15:0
   addValueReference DeadTest.re:119:6 --> JSResource.re:3:0
-  XXX DeadTest.re:121:6 +makeProps function with optional args: key
   addValueReference DeadTest.re:122:6 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:122:6 --> DeadTest.re:119:6
   addValueReference DeadTest.re:122:6 --> BootloaderResource.re:3:0
