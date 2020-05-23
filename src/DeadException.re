@@ -15,7 +15,6 @@ let add = (~path, ~loc, ~strLoc: Location.t, name) => {
   |> addDeclaration_(
        ~posEnd=strLoc.loc_end,
        ~posStart=strLoc.loc_start,
-       ~sideEffects=false,
        ~declKind=Exception,
        ~path,
        ~loc,

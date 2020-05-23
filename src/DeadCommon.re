@@ -523,10 +523,8 @@ let getPosAnnotation = decl =>
 
 let addDeclaration_ =
     (
-      ~isToplevel=true,
       ~posEnd=?,
       ~posStart=?,
-      ~sideEffects=false,
       ~declKind,
       ~loc: Location.t,
       ~path,
@@ -580,10 +578,8 @@ let addValueDeclaration =
   name
   |> addDeclaration_(
        ~declKind=Value({isToplevel, sideEffects}),
-       ~isToplevel,
        ~loc,
        ~path,
-       ~sideEffects,
      );
 
 /**** REPORTING ****/
