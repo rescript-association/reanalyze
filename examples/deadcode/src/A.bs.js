@@ -8,8 +8,13 @@ function foo(xOpt, yOpt, zOpt, w) {
   return ((x + y | 0) + z | 0) + w | 0;
 }
 
+function bar(x, y, z, w) {
+  return y + w | 0;
+}
+
 export {
   foo ,
+  bar ,
   
 }
 /* No side effect */
