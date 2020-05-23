@@ -1,4 +1,6 @@
 # master
+
+# 1.16.0
 - Only toplevel values are considered live when they have side-effects.
 - Report a warning when a redundant @doesNotRaise annotation is used.
 
