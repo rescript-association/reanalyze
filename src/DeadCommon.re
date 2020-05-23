@@ -180,8 +180,21 @@ type decls = PosHash.t(decl);
 
 let decls: decls = PosHash.create(256); /* all exported declarations */
 
-let valueReferences: PosHash.t(PosSet.t) = PosHash.create(256); /* all value references */
-let typeReferences: PosHash.t(PosSet.t) = PosHash.create(256); /* all type references */
+module ValueReferences = {
+  let table: PosHash.t(PosSet.t) = PosHash.create(256); /* all value references */
+
+  let add = (posTo, posFrom) => PosHash.addSet(table, posTo, posFrom);
+
+  let find = pos => PosHash.findSet(table, pos);
+};
+
+module TypeReferences = {
+  let table: PosHash.t(PosSet.t) = PosHash.create(256); /* all type references */
+
+  let add = (posTo, posFrom) => PosHash.addSet(table, posTo, posFrom);
+
+  let find = pos => PosHash.findSet(table, pos);
+};
 
 module TypeLabels = {
   /* map from type path (for record/variant label) to its location */
@@ -212,7 +225,7 @@ let addValueReference =
         locTo.loc_start |> posToString,
       );
     };
-    PosHash.addSet(valueReferences, locTo.loc_start, locFrom.loc_start);
+    ValueReferences.add(locTo.loc_start, locFrom.loc_start);
     if (addFileReference
         && !locTo.loc_ghost
         && !locFrom.loc_ghost
@@ -760,8 +773,8 @@ let rec resolveRecursiveRefs =
     let allDepsResolved = ref(true);
     let newRefs =
       refs
-      |> PosSet.filter(x =>
-           if (x == decl.pos) {
+      |> PosSet.filter(pos =>
+           if (pos == decl.pos) {
              if (Config.recursiveDebug) {
                Log_.item(
                  "recursiveDebug %s ignoring reference to self@.",
@@ -770,22 +783,19 @@ let rec resolveRecursiveRefs =
              };
              false;
            } else {
-             switch (PosHash.find_opt(decls, x)) {
+             switch (PosHash.find_opt(decls, pos)) {
              | None =>
                if (Config.recursiveDebug) {
                  Log_.item(
                    "recursiveDebug can't find decl for %s@.",
-                   x |> posToString,
+                   pos |> posToString,
                  );
                };
                true;
              | Some(xDecl) =>
                let xRefs =
-                 PosHash.findSet(
-                   !(xDecl.declKind |> DeclKind.isType)
-                     ? valueReferences : typeReferences,
-                   x,
-                 );
+                 xDecl.declKind |> DeclKind.isType
+                   ? TypeReferences.find(pos) : ValueReferences.find(pos);
                let xDeclIsDead =
                  xDecl
                  |> resolveRecursiveRefs(
@@ -999,11 +1009,8 @@ module Decl = {
 let reportDead = ppf => {
   let iterDeclInOrder = (~orderedFiles, ~deadDeclarations, decl) => {
     let refs =
-      decl.pos
-      |> PosHash.findSet(
-           decl.declKind |> DeclKind.isValue
-             ? valueReferences : typeReferences,
-         );
+      decl.declKind |> DeclKind.isValue
+        ? ValueReferences.find(decl.pos) : TypeReferences.find(decl.pos);
     resolveRecursiveRefs(
       ~deadDeclarations,
       ~level=0,
