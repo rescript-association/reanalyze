@@ -170,3 +170,11 @@ let redundant2 = [@doesNotRaise] String.uncapitalize_ascii("abc");
 
 let redundant3 =
   [@doesNotRaise] ([@doesNotRaise] String.uncapitalize_ascii)("abc");
+
+let redundant4 = () => {
+  let _ = String.uncapitalize_ascii("abc");
+  let _ = [@doesNotRaise] String.uncapitalize_ascii("abc");
+  let _ = String.uncapitalize_ascii("abc");
+  let _ = String.uncapitalize_ascii([@doesNotRaise] "abc");
+  ();
+};
