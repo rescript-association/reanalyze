@@ -203,6 +203,22 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
   | Texp_ident(_path, _, {Types.val_loc: {loc_ghost: false, _} as locTo, _}) =>
     addValueReference(~addFileReference=true, ~locFrom, ~locTo)
 
+  | Texp_apply({exp_desc: Texp_ident(path, _, _)}, args) =>
+    args
+    |> List.iter(((lbl, _)) =>
+         switch (lbl) {
+         | Asttypes.Optional(s) =>
+           Log_.item(
+             "XXX %s-%s %s called with optional arg %s@.",
+             locFrom.loc_start |> posToString,
+             locFrom.loc_end |> posToString,
+             path |> Path.fromPathT |> Path.toString,
+             s,
+           )
+         | _ => ()
+         }
+       )
+
   | Texp_field(
       _,
       _,
