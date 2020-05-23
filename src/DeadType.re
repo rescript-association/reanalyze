@@ -10,7 +10,7 @@ let addTypeReference = (~posFrom, ~posTo) => {
       posTo |> posToString,
     );
   };
-  PosHash.addSet(typeReferences, posTo, posFrom);
+  TypeReferences.add(posTo, posFrom);
 };
 
 module TypeDependencies = {
