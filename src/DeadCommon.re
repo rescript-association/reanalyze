@@ -139,8 +139,9 @@ module DeclKind = {
     | RecordLabel
     | VariantCase
     | Value({
-        sideEffects: bool,
         isToplevel: bool,
+        optionalArgs: list(string),
+        sideEffects: bool,
       });
 
   let isType = dk =>
@@ -522,14 +523,7 @@ let getPosAnnotation = decl =>
   annotateAtEnd(~pos=decl.pos) ? decl.posEnd : decl.posStart;
 
 let addDeclaration_ =
-    (
-      ~posEnd=?,
-      ~posStart=?,
-      ~declKind,
-      ~loc: Location.t,
-      ~path,
-      name: Name.t,
-    ) => {
+    (~posEnd=?, ~posStart=?, ~declKind, ~loc: Location.t, ~path, name: Name.t) => {
   let pos = loc.loc_start;
   let posStart =
     switch (posStart) {
@@ -574,10 +568,17 @@ let addDeclaration_ =
 let addTypeDeclaration = addDeclaration_;
 
 let addValueDeclaration =
-    (~isToplevel=true, ~loc: Location.t, ~path, ~sideEffects, name) =>
+    (
+      ~isToplevel=true,
+      ~loc: Location.t,
+      ~optionalArgs=[],
+      ~path,
+      ~sideEffects,
+      name,
+    ) =>
   name
   |> addDeclaration_(
-       ~declKind=Value({isToplevel, sideEffects}),
+       ~declKind=Value({isToplevel, optionalArgs, sideEffects}),
        ~loc,
        ~path,
      );

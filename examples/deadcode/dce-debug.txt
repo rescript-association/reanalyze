@@ -861,6 +861,7 @@
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
   Scanning A.cmt
   addValueDeclaration +foo A.re:1:4 path:+A
+  addValueDeclaration +bar A.re:3:4 path:+A
   XXX A.re:1:4 +foo function with optional args: x, y, z
   addValueReference A.re:1:4 --> A.re:1:14
   addValueReference A.re:1:4 --> A.re:1:20
@@ -869,6 +870,9 @@
   addValueReference A.re:1:4 --> A.re:1:18
   addValueReference A.re:1:4 --> A.re:1:24
   addValueReference A.re:1:4 --> A.re:1:29
+  XXX A.re:3:4 +bar function with optional args: x, z
+  addValueReference A.re:3:4 --> A.re:3:18
+  addValueReference A.re:3:4 --> A.re:3:27
   Scanning Newton.cmt
   addValueDeclaration +- Newton.re:1:4 path:+Newton
   addValueDeclaration ++ Newton.re:2:4 path:+Newton
@@ -2006,6 +2010,7 @@ File References
   Yojson.re -->> 
   trace.ml -->> 
   trace.mli -->> trace.ml
+  Dead Value +A.+bar: 0 references () [0]
   Dead Value +A.+foo: 0 references () [0]
   Dead VariantCase +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
   Dead VariantCase +AutoAnnotate.annotatedVariant.R2: 0 references () [0]
@@ -2732,6 +2737,12 @@ File References
   +foo is never used
   <-- line 1
   [@dead "+foo"] let foo = (~x=1, ~y=2, ~z=3, w) => x + y + z + w;
+
+  Warning Dead Value
+  File "./A.re", line 3, characters 0-38
+  +bar is never used
+  <-- line 3
+  [@dead "+bar"] let bar = (~x=?, ~y, ~z=?, w) => y + w;
 
   Warning Dead Type
   File "./AutoAnnotate.re", line 2, characters 4-10
@@ -4492,4 +4503,4 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 295 issues (Warning Dead Exception:1, Warning Dead Type:87, Warning Dead Value:205, Warning Dead Value With Side Effects:2)
+  Analysis reported 296 issues (Warning Dead Exception:1, Warning Dead Type:87, Warning Dead Value:206, Warning Dead Value With Side Effects:2)
