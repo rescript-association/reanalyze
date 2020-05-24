@@ -21,7 +21,16 @@
   XXX Hooks.re:157:2-Hooks.re:157:6 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
   XXX Hooks.re:159:4-Hooks.re:159:8 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
   XXX DeadTest.re:132:11-DeadTest.re:132:41 LazyDynamicallyLoadedComponent.makeProps called with optional arg key declFound:true argFoundfalse
-  XXX DeadTest.re:134:18-DeadTest.re:134:49 LazyDynamicallyLoadedComponent2.makeProps called with optional arg key declFound:true argFoundfalse
+  XXX DeadTest.re:134:18-DeadTest.re:134:49 LazyDynamicallyLoadedComponent2.makeProps called with optional arg key declFound:true argFoundtrue
+  XXX A.re:1:4 dead arg:x
+  XXX A.re:1:4 dead arg:y
+  XXX A.re:1:4 dead arg:z
+  XXX TestImport.re:42:4 dead arg:message
+  XXX A.re:3:4 dead arg:x
+  XXX A.re:3:4 dead arg:z
+  XXX ImportMyBanner.re:19:4 dead arg:message
+  XXX DeadTest.re:100:4 dead arg:paramWithDefault
+  XXX ComponentAsProp.re:5:4 dead arg:button
 
   Warning Dead Value
   File "./A.re", line 1, characters 0-48

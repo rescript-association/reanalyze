@@ -140,7 +140,7 @@ module DeclKind = {
     | VariantCase
     | Value({
         isToplevel: bool,
-        optionalArgs: list(string),
+        mutable optionalArgs: list(string),
         sideEffects: bool,
       });
 
