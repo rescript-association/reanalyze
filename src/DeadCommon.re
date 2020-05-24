@@ -936,7 +936,7 @@ module Decl = {
     insideReportedValue;
   };
 
-  let report = (~ppf, decl) => {
+  let report = (~checkOptionalArg, ~ppf, decl) => {
     let (name, message) =
       switch (decl.declKind) {
       | Exception => (
@@ -991,13 +991,14 @@ module Decl = {
     if (shouldEmitWarning) {
       emitWarning(~decl, ~message, ~name);
     };
+    checkOptionalArg(decl);
     if (shouldWriteAnnotation) {
       decl |> WriteDeadAnnotations.onDeadDecl(~ppf);
     };
   };
 };
 
-let reportDead = ppf => {
+let reportDead = (~checkOptionalArg, ppf) => {
   let iterDeclInOrder = (~orderedFiles, ~deadDeclarations, decl) => {
     let refs =
       decl.declKind |> DeclKind.isValue
@@ -1061,5 +1062,5 @@ let reportDead = ppf => {
 
   let sortedDeadDeclarations =
     deadDeclarations^ |> List.fast_sort(Decl.compareForReporting);
-  sortedDeadDeclarations |> List.iter(Decl.report(~ppf));
+  sortedDeadDeclarations |> List.iter(Decl.report(~checkOptionalArg, ~ppf));
 };
