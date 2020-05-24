@@ -725,6 +725,7 @@ let isToplevelValueWithSideEffects = decl =>
 
 let rec resolveRecursiveRefs =
         (
+          ~checkOptionalArg,
           ~deadDeclarations,
           ~level,
           ~orderedFiles,
@@ -790,6 +791,7 @@ let rec resolveRecursiveRefs =
                let xDeclIsDead =
                  xDecl
                  |> resolveRecursiveRefs(
+                      ~checkOptionalArg,
                       ~deadDeclarations,
                       ~level=level + 1,
                       ~orderedFiles,
@@ -817,12 +819,15 @@ let rec resolveRecursiveRefs =
         if (!isToplevelValueWithSideEffects(decl)) {
           decl.pos |> ProcessDeadAnnotations.annotateDead;
         };
-      } else if (decl.pos |> ProcessDeadAnnotations.isAnnotatedDead) {
-        emitWarning(
-          ~decl,
-          ~message=" is annotated @dead but is live",
-          ~name="Warning Incorrect Annotation",
-        );
+      } else {
+        checkOptionalArg(decl);
+        if (decl.pos |> ProcessDeadAnnotations.isAnnotatedDead) {
+          emitWarning(
+            ~decl,
+            ~message=" is annotated @dead but is live",
+            ~name="Warning Incorrect Annotation",
+          );
+        };
       };
 
       if (debug^) {
@@ -936,7 +941,7 @@ module Decl = {
     insideReportedValue;
   };
 
-  let report = (~checkOptionalArg, ~ppf, decl) => {
+  let report = (~ppf, decl) => {
     let (name, message) =
       switch (decl.declKind) {
       | Exception => (
@@ -991,7 +996,6 @@ module Decl = {
     if (shouldEmitWarning) {
       emitWarning(~decl, ~message, ~name);
     };
-    checkOptionalArg(decl);
     if (shouldWriteAnnotation) {
       decl |> WriteDeadAnnotations.onDeadDecl(~ppf);
     };
@@ -1004,6 +1008,7 @@ let reportDead = (~checkOptionalArg, ppf) => {
       decl.declKind |> DeclKind.isValue
         ? ValueReferences.find(decl.pos) : TypeReferences.find(decl.pos);
     resolveRecursiveRefs(
+      ~checkOptionalArg,
       ~deadDeclarations,
       ~level=0,
       ~orderedFiles,
@@ -1062,5 +1067,5 @@ let reportDead = (~checkOptionalArg, ppf) => {
 
   let sortedDeadDeclarations =
     deadDeclarations^ |> List.fast_sort(Decl.compareForReporting);
-  sortedDeadDeclarations |> List.iter(Decl.report(~checkOptionalArg, ~ppf));
+  sortedDeadDeclarations |> List.iter(Decl.report(~ppf));
 };

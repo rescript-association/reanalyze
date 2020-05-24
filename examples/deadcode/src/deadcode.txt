@@ -1,18 +1,14 @@
+  XXX ComponentAsProp.re:5:4 dead arg:button
 
   Warning Dead Value
   File "./A.re", line 1, characters 0-48
   +foo is never used
-  XXX A.re:1:4 dead arg:x
-  XXX A.re:1:4 dead arg:y
-  XXX A.re:1:4 dead arg:z
   <-- line 1
   [@dead "+foo"] let foo = (~x=1, ~y=2, ~z=3, w) => x + y + z + w;
 
   Warning Dead Value
   File "./A.re", line 3, characters 0-38
   +bar is never used
-  XXX A.re:3:4 dead arg:x
-  XXX A.re:3:4 dead arg:z
   <-- line 3
   [@dead "+bar"] let bar = (~x=?, ~y, ~z=?, w) => y + w;
 
@@ -319,7 +315,6 @@
   Warning Dead Value
   File "./DeadTest.re", line 100, characters 0-71
   +withDefaultValue is never used
-  XXX DeadTest.re:100:4 dead arg:paramWithDefault
   <-- line 100
   [@dead "+withDefaultValue"] let withDefaultValue = (~paramWithDefault=3, y) => paramWithDefault + y;
 
@@ -1318,7 +1313,6 @@
   Warning Dead Value
   File "./ImportMyBanner.re", line 19, characters 0-15
   +make is never used
-  XXX ImportMyBanner.re:19:4 dead arg:message
   <-- line 19
   [@dead "+make"] let make = make;
 
@@ -1541,7 +1535,6 @@
   Warning Dead Value
   File "./TestImport.re", line 42, characters 0-15
   +make is never used
-  XXX TestImport.re:42:4 dead arg:message
   <-- line 42
   [@dead "+make"] let make = make;
 
