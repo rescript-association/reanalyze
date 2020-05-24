@@ -2,6 +2,13 @@ open DeadCommon;
 
 let active = () => Cli.experimental^;
 
+type item = {
+  locTo: Location.t,
+  argName: string,
+};
+
+let delayedItems: ref(list(item)) = ref([]);
+
 let rec fromTypeExpr = (texpr: Types.type_expr) =>
   switch (texpr.desc) {
   | _ when !active() => []
@@ -12,29 +19,34 @@ let rec fromTypeExpr = (texpr: Types.type_expr) =>
   | _ => []
   };
 
-let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, s) =>
+let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, argName) =>
   if (active()) {
-    let (declFound, argFound) =
-      switch (PosHash.find_opt(decls, locTo.loc_start)) {
-      | Some({declKind: Value({optionalArgs} as r)}) =>
-        let argFound = List.mem(s, optionalArgs);
-        if (argFound) {
-          r.optionalArgs = r.optionalArgs |> List.filter(a => a != s);
-        };
-        (true, argFound);
-      | _ => (false, false)
-      };
+    delayedItems := [{locTo, argName}, ...delayedItems^];
     if (Common.debug^) {
       Log_.item(
-        "OptionalArgs.addReference %s called with optional arg %s declFound:%b%s %s@.",
+        "OptionalArgs.addReference %s called with optional arg %s %s@.",
         path |> Path.fromPathT |> Path.toString,
-        s,
-        declFound,
-        declFound ? " argFound" ++ (argFound ? "true" : "false") : "",
+        argName,
         locFrom.loc_start |> posToString,
       );
     };
   };
+
+let forceDelayedItems = () => {
+  let items = delayedItems^ |> List.rev;
+  delayedItems := [];
+  items
+  |> List.iter(({locTo, argName}) =>
+       switch (PosHash.find_opt(decls, locTo.loc_start)) {
+       | Some({declKind: Value({optionalArgs} as r)}) =>
+         let argFound = List.mem(argName, optionalArgs);
+         if (argFound) {
+           r.optionalArgs = r.optionalArgs |> List.filter(a => a != argName);
+         };
+       | _ => ()
+       }
+     );
+};
 
 let check = decl =>
   switch (decl) {
