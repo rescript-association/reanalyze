@@ -1,10 +1,10 @@
 open DeadCommon;
 
-let active = true;
+let active = () => Cli.experimental^;
 
 let rec fromTypeExpr = (texpr: Types.type_expr) =>
   switch (texpr.desc) {
-  | _ when !active => []
+  | _ when !active() => []
   | Tarrow(Optional(s), _tFrom, tTo, _) => [s, ...fromTypeExpr(tTo)]
   | Tarrow(_, _tFrom, tTo, _) => fromTypeExpr(tTo)
   | Tlink(t)
@@ -13,7 +13,7 @@ let rec fromTypeExpr = (texpr: Types.type_expr) =>
   };
 
 let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, s) =>
-  if (active) {
+  if (active()) {
     let (declFound, argFound) =
       switch (PosHash.find_opt(decls, locTo.loc_start)) {
       | Some({declKind: Value({optionalArgs} as r)}) =>
@@ -38,7 +38,7 @@ let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, s) =>
 
 let check = decl =>
   switch (decl) {
-  | {declKind: Value({optionalArgs})} when active =>
+  | {declKind: Value({optionalArgs})} when active() =>
     optionalArgs
     |> List.iter(s => {
          Log_.info(

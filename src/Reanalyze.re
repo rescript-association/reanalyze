@@ -135,11 +135,14 @@ let cli = () => {
   and setDCE = cmtRoot => {
     DCE(cmtRoot) |> setCliCommand;
   }
+  and setDebug = () => {
+    debug := true;
+  }
   and setException = cmtRoot => {
     Exception(cmtRoot) |> setCliCommand;
   }
-  and setDebug = () => {
-    debug := true;
+  and setExperimental = () => {
+    DeadCommon.Cli.experimental := true;
   }
   and setSuppress = s => {
     let names = s |> String.split_on_char(',');
@@ -191,6 +194,11 @@ let cli = () => {
       "-exception-cmt",
       Arg.String(s => setException(Some(s))),
       "root_path Experimental exception analysis for all the .cmt files under the root path",
+    ),
+    (
+      "-experimental",
+      Arg.Unit(setExperimental),
+      "Turn on experimental analyses (unused optional named argument)",
     ),
     (
       "-live-names",
