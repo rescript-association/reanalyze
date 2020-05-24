@@ -827,6 +827,8 @@
   addValueReference A.re:1:4 --> A.re:1:29
   addValueReference A.re:3:4 --> A.re:3:18
   addValueReference A.re:3:4 --> A.re:3:27
+  OptionalArgs.addReference foo called with optional arg x declFound:true argFoundtrue A.re:5:7
+  addValueReference A.re:5:7 --> A.re:1:4
   Scanning Newton.cmt
   addValueDeclaration +- Newton.re:1:4 path:+Newton
   addValueDeclaration ++ Newton.re:2:4 path:+Newton
@@ -1961,7 +1963,9 @@ File References
   trace.ml -->> 
   trace.mli -->> trace.ml
   Dead Value +A.+bar: 0 references () [0]
-  Dead Value +A.+foo: 0 references () [0]
+  XXX A.re:1:4 dead arg:y
+  XXX A.re:1:4 dead arg:z
+  Live Value +A.+foo: 1 references (A.re:5:7) [0]
   Dead VariantCase +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
   Dead VariantCase +AutoAnnotate.annotatedVariant.R2: 0 references () [0]
   Dead RecordLabel +AutoAnnotate.r4.r4: 0 references () [0]
@@ -2667,12 +2671,6 @@ File References
   Live Value +ImmutableArray.+fromT: 1 references (ImmutableArray.re:24:6) [0]
   Live Value +trace.+infok: 1 references (trace.mli:5:0) [0]
   Live RecordLabel +trace.pf.pf: 1 references (trace.mli:3:11) [0]
-
-  Warning Dead Value
-  File "./A.re", line 1, characters 0-48
-  +foo is never used
-  <-- line 1
-  [@dead "+foo"] let foo = (~x=1, ~y=2, ~z=3, w) => x + y + z + w;
 
   Warning Dead Value
   File "./A.re", line 3, characters 0-38
@@ -4409,4 +4407,4 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 291 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:207, Warning Dead Value With Side Effects:2)
+  Analysis reported 290 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2)

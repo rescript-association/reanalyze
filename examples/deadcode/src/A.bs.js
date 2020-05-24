@@ -12,9 +12,11 @@ function bar(x, y, z, w) {
   return y + w | 0;
 }
 
+console.log(foo(3, undefined, undefined, 4));
+
 export {
   foo ,
   bar ,
   
 }
-/* No side effect */
+/*  Not a pure module */
