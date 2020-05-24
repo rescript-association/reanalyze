@@ -24,15 +24,16 @@ let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, s) =>
         (true, argFound);
       | _ => (false, false)
       };
-    Log_.item(
-      "XXX %s-%s %s called with optional arg %s declFound:%b%s@.",
-      locFrom.loc_start |> posToString,
-      locFrom.loc_end |> posToString,
-      path |> Path.fromPathT |> Path.toString,
-      s,
-      declFound,
-      declFound ? " argFound" ++ (argFound ? "true" : "false") : "",
-    );
+    if (Common.debug^) {
+      Log_.item(
+        "OptionalArgs.addReference %s called with optional arg %s declFound:%b%s %s@.",
+        path |> Path.fromPathT |> Path.toString,
+        s,
+        declFound,
+        declFound ? " argFound" ++ (argFound ? "true" : "false") : "",
+        locFrom.loc_start |> posToString,
+      );
+    };
   };
 
 let findUnusedArgs = () =>

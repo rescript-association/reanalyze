@@ -1037,20 +1037,20 @@
   addValueDeclaration +component ManyComponents.re:36:4 path:+ManyComponents
   addValueDeclaration +make ManyComponents.re:39:4 path:+ManyComponents
   addValueReference ManyComponents.re:6:6 --> ReasonReact.rei:153:0
-  XXX ManyComponents.re:11:17-ManyComponents.re:11:21 ReactDOMRe.createElement called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createElement called with optional arg props declFound:false ManyComponents.re:11:17
   addValueReference ManyComponents.re:9:6 --> ReasonReact.rei:17:0
   addValueReference ManyComponents.re:9:6 --> ReactDOMRe.re:2136:0
   addValueReference ManyComponents.re:9:6 --> ManyComponents.re:6:6
   addValueReference ManyComponents.re:16:6 --> ReasonReact.rei:153:0
-  XXX ManyComponents.re:32:17-ManyComponents.re:32:21 ReactDOMRe.createElement called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createElement called with optional arg props declFound:false ManyComponents.re:32:17
   addValueReference ManyComponents.re:19:6 --> ReasonReact.rei:17:0
   addValueReference ManyComponents.re:19:6 --> ReactDOMRe.re:2136:0
   addValueReference ManyComponents.re:19:6 --> ManyComponents.re:16:6
   addValueReference ManyComponents.re:36:4 --> ReasonReact.rei:153:0
-  XXX ManyComponents.re:42:4-ManyComponents.re:42:8 ReactDOMRe.createElement called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createElement called with optional arg props declFound:false ManyComponents.re:42:4
   addValueReference ManyComponents.re:39:4 --> ReasonReact.rei:17:0
-  XXX ManyComponents.re:42:49-ManyComponents.re:42:63 ReasonReact.element called with optional arg key declFound:false
-  XXX ManyComponents.re:42:49-ManyComponents.re:42:63 ReasonReact.element called with optional arg ref declFound:false
+  OptionalArgs.addReference ReasonReact.element called with optional arg key declFound:false ManyComponents.re:42:49
+  OptionalArgs.addReference ReasonReact.element called with optional arg ref declFound:false ManyComponents.re:42:49
   addValueDeclaration +emptyArray ManyComponents.re:42:49 path:+ManyComponents
   addValueReference ManyComponents.re:39:4 --> ManyComponents.re:42:49
   addValueReference ManyComponents.re:39:4 --> ManyComponents.re:9:6
@@ -1422,8 +1422,8 @@
   addValueDeclaration +component ComponentAsProp.re:1:4 path:+ComponentAsProp
   addValueDeclaration +make ComponentAsProp.re:5:4 path:+ComponentAsProp
   addValueReference ComponentAsProp.re:1:4 --> ReasonReact.rei:153:0
-  XXX ComponentAsProp.re:8:4-ComponentAsProp.re:8:8 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
-  XXX ComponentAsProp.re:9:6-ComponentAsProp.re:9:10 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false ComponentAsProp.re:8:4
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false ComponentAsProp.re:9:6
   addValueReference ComponentAsProp.re:5:4 --> ComponentAsProp.re:5:13
   addValueReference ComponentAsProp.re:5:4 --> ComponentAsProp.re:5:21
   addValueReference ComponentAsProp.re:5:4 --> ComponentAsProp.re:13:16
@@ -1568,20 +1568,20 @@
   addValueDeclaration +aComponentWithChildren Hooks.re:156:4 path:+Hooks
   addRecordLabelDeclaration name Hooks.re:1:16 path:+Hooks.vehicle
   addValueReference Hooks.re:5:26 --> React.re:160:0
-  XXX Hooks.re:7:2-Hooks.re:7:6 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
-  XXX Hooks.re:8:4-Hooks.re:8:6 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:7:2
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:8:4
   addTypeReference Hooks.re:11:12 --> Hooks.re:1:16
   addValueReference Hooks.re:11:12 --> Hooks.re:4:13
   addValueReference Hooks.re:13:26 --> Hooks.re:5:7
   addValueReference Hooks.re:9:7 --> React.re:7:0
   addValueReference Hooks.re:8:4 --> ReactDOMRe.re:1125:0
-  XXX Hooks.re:17:4-Hooks.re:17:11 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:17:4
   addValueReference Hooks.re:17:40 --> Hooks.re:5:7
   addValueReference Hooks.re:17:26 --> Hooks.re:5:14
   addValueReference Hooks.re:18:7 --> React.re:7:0
   addValueReference Hooks.re:17:4 --> ReactDOMRe.re:1125:0
   addValueReference Hooks.re:20:5 --> ImportHooks.re:15:0
-  XXX Hooks.re:20:5-Hooks.re:20:16 ImportHooks.makeProps called with optional arg key declFound:true argFoundfalse
+  OptionalArgs.addReference ImportHooks.makeProps called with optional arg key declFound:true argFoundfalse Hooks.re:20:5
   addValueReference Hooks.re:20:5 --> React.re:3:0
   addValueReference Hooks.re:22:34 --> Hooks.re:22:16
   addValueReference Hooks.re:22:21 --> React.re:7:0
@@ -1590,7 +1590,7 @@
   addValueReference Hooks.re:24:7 --> React.re:7:0
   addValueReference Hooks.re:20:5 --> React.re:22:0
   addValueReference Hooks.re:26:5 --> ImportHookDefault.re:6:0
-  XXX Hooks.re:26:5-Hooks.re:26:22 ImportHookDefault.makeProps called with optional arg key declFound:true argFoundfalse
+  OptionalArgs.addReference ImportHookDefault.makeProps called with optional arg key declFound:true argFoundfalse Hooks.re:26:5
   addValueReference Hooks.re:26:5 --> React.re:3:0
   addValueReference Hooks.re:28:34 --> Hooks.re:28:16
   addValueReference Hooks.re:28:21 --> React.re:7:0
@@ -1600,33 +1600,33 @@
   addValueReference Hooks.re:26:5 --> React.re:22:0
   addValueReference Hooks.re:7:2 --> ReactDOMRe.re:1125:0
   addValueReference Hooks.re:36:4 --> Hooks.re:4:4
-  XXX Hooks.re:42:2-Hooks.re:42:6 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:42:2
   addTypeReference Hooks.re:42:41 --> Hooks.re:1:16
   addValueReference Hooks.re:42:41 --> Hooks.re:40:25
   addValueReference Hooks.re:42:9 --> React.re:7:0
   addValueReference Hooks.re:42:2 --> ReactDOMRe.re:1125:0
   addValueReference Hooks.re:41:2 --> Hooks.re:40:35
-  XXX Hooks.re:49:4-Hooks.re:49:8 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:49:4
   addTypeReference Hooks.re:49:43 --> Hooks.re:1:16
   addValueReference Hooks.re:49:43 --> Hooks.re:48:15
   addValueReference Hooks.re:49:11 --> React.re:7:0
   addValueReference Hooks.re:49:4 --> ReactDOMRe.re:1125:0
-  XXX Hooks.re:54:4-Hooks.re:54:8 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:54:4
   addTypeReference Hooks.re:54:43 --> Hooks.re:1:16
   addValueReference Hooks.re:54:43 --> Hooks.re:53:27
   addValueReference Hooks.re:54:11 --> React.re:7:0
   addValueReference Hooks.re:54:4 --> ReactDOMRe.re:1125:0
-  XXX Hooks.re:60:6-Hooks.re:60:10 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:60:6
   addTypeReference Hooks.re:60:45 --> Hooks.re:1:16
   addValueReference Hooks.re:60:45 --> Hooks.re:59:17
   addValueReference Hooks.re:60:13 --> React.re:7:0
   addValueReference Hooks.re:60:6 --> ReactDOMRe.re:1125:0
-  XXX Hooks.re:65:6-Hooks.re:65:10 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:65:6
   addTypeReference Hooks.re:65:45 --> Hooks.re:1:16
   addValueReference Hooks.re:65:45 --> Hooks.re:64:29
   addValueReference Hooks.re:65:13 --> React.re:7:0
   addValueReference Hooks.re:65:6 --> ReactDOMRe.re:1125:0
-  XXX Hooks.re:73:4-Hooks.re:73:8 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:73:4
   addValueReference Hooks.re:73:10 --> ReasonReact.rei:15:0
   addValueReference Hooks.re:73:4 --> ReactDOMRe.re:1125:0
   addTypeReference Hooks.re:82:2 --> Hooks.re:1:16
@@ -1642,7 +1642,7 @@
   addValueReference Hooks.re:89:2 --> React.re:7:0
   addValueReference Hooks.re:88:6 --> Hooks.re:87:33
   addValueReference Hooks.re:88:2 --> Hooks.re:87:47
-  XXX Hooks.re:97:4-Hooks.re:97:11 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:97:4
   addValueReference Hooks.re:97:39 --> Hooks.re:96:9
   addValueReference Hooks.re:97:17 --> ReactDOMRe.re:120:2
   addTypeReference Hooks.re:98:20 --> Hooks.re:1:16
@@ -1654,7 +1654,7 @@
   addValueReference Hooks.re:105:4 --> Hooks.re:94:4
   addValueReference Hooks.re:105:4 --> React.re:81:0
   addRecordLabelDeclaration x Hooks.re:107:10 path:+Hooks.r
-  XXX Hooks.re:113:4-Hooks.re:113:8 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:113:4
   addValueReference Hooks.re:113:24 --> Hooks.re:112:28
   addTypeReference Hooks.re:113:45 --> Hooks.re:107:10
   addValueReference Hooks.re:113:45 --> Hooks.re:112:21
@@ -1671,11 +1671,11 @@
   addValueReference Hooks.re:150:18 --> Hooks.re:150:18
   addValueDeclaration +unsafe_expr Hooks.re:150:18 path:+Hooks.RenderPropRequiresConversion
   addValueReference Hooks.re:150:4 --> Hooks.re:141:9
-  XXX Hooks.re:157:2-Hooks.re:157:6 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:157:2
   addTypeReference Hooks.re:158:37 --> Hooks.re:1:16
   addValueReference Hooks.re:158:37 --> Hooks.re:156:31
   addValueReference Hooks.re:158:5 --> React.re:7:0
-  XXX Hooks.re:159:4-Hooks.re:159:8 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
+  OptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false Hooks.re:159:4
   addValueReference Hooks.re:159:10 --> Hooks.re:156:41
   addValueReference Hooks.re:159:4 --> ReactDOMRe.re:1125:0
   addValueReference Hooks.re:157:2 --> ReactDOMRe.re:1125:0
@@ -1857,11 +1857,11 @@
   addValueReference DeadTest.re:122:6 --> DeadTest.re:122:13
   addValueReference DeadTest.re:122:6 --> React.re:15:0
   addValueReference DeadTest.re:132:4 --> DeadTest.re:112:40
-  XXX DeadTest.re:132:11-DeadTest.re:132:41 LazyDynamicallyLoadedComponent.makeProps called with optional arg key declFound:true argFoundfalse
+  OptionalArgs.addReference LazyDynamicallyLoadedComponent.makeProps called with optional arg key declFound:true argFoundfalse DeadTest.re:132:11
   addValueReference DeadTest.re:132:4 --> DeadTest.re:112:40
   addValueReference DeadTest.re:132:4 --> React.re:15:0
   addValueReference DeadTest.re:134:4 --> DeadTest.re:122:6
-  XXX DeadTest.re:134:18-DeadTest.re:134:49 LazyDynamicallyLoadedComponent2.makeProps called with optional arg key declFound:true argFoundtrue
+  OptionalArgs.addReference LazyDynamicallyLoadedComponent2.makeProps called with optional arg key declFound:true argFoundtrue DeadTest.re:134:18
   addValueReference DeadTest.re:134:4 --> DeadTest.re:121:6
   addValueReference DeadTest.re:134:4 --> React.re:15:0
   addValueReference DeadTest.re:136:16 --> DeadTest.re:132:4
