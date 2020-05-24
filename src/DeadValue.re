@@ -83,15 +83,25 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
 let collectExpr = (super, self, e: Typedtree.expression) => {
   let locFrom = e.exp_loc;
   switch (e.exp_desc) {
-  | Texp_ident(_path, _, {Types.val_loc: {loc_ghost: false, _} as locTo, _}) =>
+  | Texp_ident(_path, _, {Types.val_loc: {loc_ghost: false, _} as locTo}) =>
     addValueReference(~addFileReference=true, ~locFrom, ~locTo)
 
-  | Texp_apply({exp_desc: Texp_ident(path, _, _)}, args) =>
+  | Texp_apply(
+      {
+        exp_desc:
+          Texp_ident(
+            path,
+            _,
+            {Types.val_loc: {loc_ghost: false, _} as locTo},
+          ),
+      },
+      args,
+    ) =>
     args
     |> List.iter(((lbl, _)) =>
          switch (lbl) {
          | Asttypes.Optional(s) when !locFrom.loc_ghost =>
-           s |> OptionalArgs.addReference(~locFrom, ~path)
+           s |> OptionalArgs.addReference(~locFrom, ~locTo, ~path)
          | _ => ()
          }
        )
