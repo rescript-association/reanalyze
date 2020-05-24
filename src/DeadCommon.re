@@ -560,8 +560,6 @@ let addDeclaration_ =
   };
 };
 
-let addTypeDeclaration = addDeclaration_;
-
 let addValueDeclaration =
     (
       ~isToplevel=true,

@@ -252,11 +252,8 @@ module Stats = {
     };
 };
 
-let logKind = (body, ~count, ~filter=?, ~color, ~loc: Location.t, ~name) =>
-  if (switch (filter) {
-      | Some(f) => f(loc.loc_start)
-      | None => Suppress.filter(loc.loc_start)
-      }) {
+let logKind = (body, ~count, ~color, ~loc: Location.t, ~name) =>
+  if (Suppress.filter(loc.loc_start)) {
     if (count) {
       Stats.count(name);
     };
@@ -272,7 +269,7 @@ let logKind = (body, ~count, ~filter=?, ~color, ~loc: Location.t, ~name) =>
     );
   };
 
-let info = (~count=true, ~filter=?, ~loc, ~name, body) =>
-  logKind(body, ~color=Color.info, ~count, ~filter?, ~loc, ~name);
-let error = (~count=true, ~filter=?, ~loc, ~name, body) =>
-  logKind(body, ~color=Color.error, ~count, ~filter?, ~loc, ~name);
+let info = (~count=true, ~loc, ~name, body) =>
+  body |> logKind(~color=Color.info, ~count, ~loc, ~name);
+let error = (~loc, ~name, body) =>
+  body |> logKind(~color=Color.error, ~count=true, ~loc, ~name);
