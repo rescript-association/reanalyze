@@ -10,7 +10,12 @@ let ci = ref(false);
 let posToString = (pos: Lexing.position) => {
   let file = pos.Lexing.pos_fname;
   let line = pos.Lexing.pos_lnum;
-  (file |> Filename.basename) ++ ":" ++ string_of_int(line);
+  let col = pos.Lexing.pos_cnum - pos.Lexing.pos_bol;
+  (file |> Filename.basename)
+  ++ ":"
+  ++ string_of_int(line)
+  ++ ":"
+  ++ string_of_int(col);
 };
 
 module LocSet =
