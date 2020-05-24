@@ -8,10 +8,6 @@
   optional argument x of function +bar is never used
 
   Warning Unused Argument
-  File "./OptArg.re", line 3, characters 0-38
-  optional argument z of function +bar is never used
-
-  Warning Unused Argument
   File "./OptArg.re", line 1, characters 0-48
   optional argument y of function +foo is never used
 
@@ -1748,4 +1744,4 @@
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 294 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:205, Warning Dead Value With Side Effects:2, Warning Unused Argument:5)
+  Analysis reported 293 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:205, Warning Dead Value With Side Effects:2, Warning Unused Argument:4)

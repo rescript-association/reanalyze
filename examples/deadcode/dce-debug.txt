@@ -1009,6 +1009,9 @@
   addValueDeclaration +test2 TypeParams3.re:5:4 path:+TypeParams3
   addValueReference TypeParams3.re:2:4 --> TypeParams3.re:2:12
   addValueReference TypeParams3.re:5:4 --> TypeParams3.re:5:13
+  Scanning TestOptArg.cmt
+  OptionalArgs.addReference OptArg.bar called with optional arg z declFound:true argFoundtrue TestOptArg.re:1:7
+  addValueReference TestOptArg.re:1:7 --> OptArg.re:3:4
   Scanning IgnoreInterface.cmt
   Scanning DeadValueTest.cmti
   addValueDeclaration +valueAlive DeadValueTest.rei:1:0 path:DeadValueTest
@@ -1940,6 +1943,7 @@ File References
   TestImmutableArray.re -->> ImmutableArray.rei
   TestImport.re -->> 
   TestModuleAliases.re -->> 
+  TestOptArg.re -->> OptArg.re
   TestPromise.re -->> 
   TransitiveType1.re -->> 
   TransitiveType2.re -->> 
@@ -2213,24 +2217,6 @@ File References
   Live Value +Opaque.+testConvertNestedRecordFromOtherFile: 0 references () [0]
   Live Value +Opaque.+noConversion: 0 references () [0]
   Dead VariantCase +Opaque.opaqueFromRecords.A: 0 references () [0]
-
-  Warning Unused Argument
-  File "./OptArg.re", line 3, characters 0-38
-  optional argument x of function +bar is never used
-
-  Warning Unused Argument
-  File "./OptArg.re", line 3, characters 0-38
-  optional argument z of function +bar is never used
-  Live Value +OptArg.+bar: 1 references (OptArg.re:7:7) [0]
-
-  Warning Unused Argument
-  File "./OptArg.re", line 1, characters 0-48
-  optional argument y of function +foo is never used
-
-  Warning Unused Argument
-  File "./OptArg.re", line 1, characters 0-48
-  optional argument z of function +foo is never used
-  Live Value +OptArg.+foo: 1 references (OptArg.re:5:7) [0]
   Live Value +Records.+testMyRecBsAs2: 0 references () [0]
   Live Value +Records.+testMyRecBsAs: 0 references () [0]
   Live RecordLabel +Records.myRecBsAs.type_: 1 references (Records.re:167:38) [0]
@@ -2605,6 +2591,20 @@ File References
   Live Value +ImportJsValue.+round: 1 references (ImportJsValue.re:25:4) [0]
   Live Value +JSResource.+jSResource: 2 references (DeadTest.re:112:40, DeadTest.re:119:6) [0]
   Live Value +NestedModulesInSignature.Universe.+theAnswer: 1 references (NestedModulesInSignature.rei:2:2) [0]
+
+  Warning Unused Argument
+  File "./OptArg.re", line 3, characters 0-38
+  optional argument x of function +bar is never used
+  Live Value +OptArg.+bar: 2 references (OptArg.re:7:7, TestOptArg.re:1:7) [0]
+
+  Warning Unused Argument
+  File "./OptArg.re", line 1, characters 0-48
+  optional argument y of function +foo is never used
+
+  Warning Unused Argument
+  File "./OptArg.re", line 1, characters 0-48
+  optional argument z of function +foo is never used
+  Live Value +OptArg.+foo: 1 references (OptArg.re:5:7) [0]
   Dead Value +ExnB.+foo: 0 references () [0]
   Dead Value +Yojson.Basic.Util.+to_string: 0 references () [0]
   Dead Value +Yojson.Basic.Util.+to_int: 0 references () [0]
@@ -4419,4 +4419,4 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 294 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:205, Warning Dead Value With Side Effects:2, Warning Unused Argument:5)
+  Analysis reported 293 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:205, Warning Dead Value With Side Effects:2, Warning Unused Argument:4)
