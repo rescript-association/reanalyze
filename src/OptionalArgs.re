@@ -40,8 +40,16 @@ let check = decl =>
   switch (decl) {
   | {declKind: Value({optionalArgs})} when active =>
     optionalArgs
-    |> List.iter(s =>
-         Log_.item("XXX %s dead arg:%s@.", decl.pos |> posToString, s)
-       )
+    |> List.iter(s => {
+         Log_.info(
+           ~loc=decl |> declGetLoc, ~name="Warning Unused Argument", (ppf, ()) =>
+           Format.fprintf(
+             ppf,
+             "optional argument @{<info>%s@} of function @{<info>%s@} is never used",
+             s,
+             decl.path |> Path.withoutHead,
+           )
+         )
+       })
   | _ => ()
   };
