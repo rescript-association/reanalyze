@@ -26,7 +26,9 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
       let optionalArgs = vb.vb_expr.exp_type |> OptionalArgs.fromTypeExpr;
       let exists =
         switch (PosHash.find_opt(decls, loc_start)) {
-        | Some({declKind: Value(_)}) => true
+        | Some({declKind: Value(r)}) =>
+          r.optionalArgs = optionalArgs;
+          true;
         | _ => false
         };
       let path = Current.modulePath^ @ [Common.currentModuleName^];

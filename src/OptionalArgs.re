@@ -12,10 +12,12 @@ let rec fromTypeExpr = (texpr: Types.type_expr) =>
 let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, s) => {
   let (declFound, argFound) =
     switch (PosHash.find_opt(decls, locTo.loc_start)) {
-    | Some({declKind: Value({optionalArgs})}) => (
-        true,
-        List.mem(s, optionalArgs),
-      )
+    | Some({declKind: Value({optionalArgs} as r)}) =>
+      let argFound = List.mem(s, optionalArgs);
+      if (argFound) {
+        r.optionalArgs = r.optionalArgs |> List.filter(a => a != s);
+      };
+      (true, argFound);
     | _ => (false, false)
     };
   Log_.item(
@@ -27,4 +29,18 @@ let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, s) => {
     declFound,
     declFound ? " argFound" ++ (argFound ? "true" : "false") : "",
   );
+};
+
+let findUnusedArgs = () => {
+  decls
+  |> PosHash.iter((pos, decl) =>
+       switch (decl) {
+       | {declKind: Value({optionalArgs})} =>
+         optionalArgs
+         |> List.iter(s =>
+              Log_.item("XXX %s dead arg:%s@.", pos |> posToString, s)
+            )
+       | _ => ()
+       }
+     );
 };
