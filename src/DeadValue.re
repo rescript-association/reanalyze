@@ -13,14 +13,6 @@ let checkAnyValueBindingWithNoSideEffects =
     name |> addValueDeclaration(~path, ~loc, ~sideEffects=false);
   | _ => ()
   };
-let rec getOptionalArgs = (texpr: Types.type_expr) =>
-  switch (texpr.desc) {
-  | Tarrow(Optional(s), _tFrom, tTo, _) => [s, ...getOptionalArgs(tTo)]
-  | Tarrow(_, _tFrom, tTo, _) => getOptionalArgs(tTo)
-  | Tlink(t)
-  | Tsubst(t) => getOptionalArgs(t)
-  | _ => []
-  };
 
 let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
   let oldCurrentBindings = Current.bindings^;
@@ -31,7 +23,7 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
     | Tpat_var(id, {loc: {loc_start, loc_ghost} as loc})
         when !loc_ghost && !vb.vb_loc.loc_ghost =>
       let name = Ident.name(id) |> Name.create(~isInterface=false);
-      let optionalArgs = vb.vb_expr.exp_type |> getOptionalArgs;
+      let optionalArgs = vb.vb_expr.exp_type |> OptionalArgs.fromTypeExpr;
       let exists =
         switch (PosHash.find_opt(decls, loc_start)) {
         | Some({declKind: Value(_)}) => true
