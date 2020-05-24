@@ -1581,7 +1581,7 @@
   addValueReference Hooks.re:18:7 --> React.re:7:0
   addValueReference Hooks.re:17:4 --> ReactDOMRe.re:1125:0
   addValueReference Hooks.re:20:5 --> ImportHooks.re:15:0
-  XXX Hooks.re:20:5-Hooks.re:20:16 ImportHooks.makeProps called with optional arg key declFound:true
+  XXX Hooks.re:20:5-Hooks.re:20:16 ImportHooks.makeProps called with optional arg key declFound:true argFoundfalse
   addValueReference Hooks.re:20:5 --> React.re:3:0
   addValueReference Hooks.re:22:34 --> Hooks.re:22:16
   addValueReference Hooks.re:22:21 --> React.re:7:0
@@ -1590,7 +1590,7 @@
   addValueReference Hooks.re:24:7 --> React.re:7:0
   addValueReference Hooks.re:20:5 --> React.re:22:0
   addValueReference Hooks.re:26:5 --> ImportHookDefault.re:6:0
-  XXX Hooks.re:26:5-Hooks.re:26:22 ImportHookDefault.makeProps called with optional arg key declFound:true
+  XXX Hooks.re:26:5-Hooks.re:26:22 ImportHookDefault.makeProps called with optional arg key declFound:true argFoundfalse
   addValueReference Hooks.re:26:5 --> React.re:3:0
   addValueReference Hooks.re:28:34 --> Hooks.re:28:16
   addValueReference Hooks.re:28:21 --> React.re:7:0
@@ -1857,11 +1857,11 @@
   addValueReference DeadTest.re:122:6 --> DeadTest.re:122:13
   addValueReference DeadTest.re:122:6 --> React.re:15:0
   addValueReference DeadTest.re:132:4 --> DeadTest.re:112:40
-  XXX DeadTest.re:132:11-DeadTest.re:132:41 LazyDynamicallyLoadedComponent.makeProps called with optional arg key declFound:true
+  XXX DeadTest.re:132:11-DeadTest.re:132:41 LazyDynamicallyLoadedComponent.makeProps called with optional arg key declFound:true argFoundfalse
   addValueReference DeadTest.re:132:4 --> DeadTest.re:112:40
   addValueReference DeadTest.re:132:4 --> React.re:15:0
   addValueReference DeadTest.re:134:4 --> DeadTest.re:122:6
-  XXX DeadTest.re:134:18-DeadTest.re:134:49 LazyDynamicallyLoadedComponent2.makeProps called with optional arg key declFound:true
+  XXX DeadTest.re:134:18-DeadTest.re:134:49 LazyDynamicallyLoadedComponent2.makeProps called with optional arg key declFound:true argFoundfalse
   addValueReference DeadTest.re:134:4 --> DeadTest.re:121:6
   addValueReference DeadTest.re:134:4 --> React.re:15:0
   addValueReference DeadTest.re:136:16 --> DeadTest.re:132:4

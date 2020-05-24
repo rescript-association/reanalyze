@@ -8,8 +8,8 @@
   XXX Hooks.re:7:2-Hooks.re:7:6 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
   XXX Hooks.re:8:4-Hooks.re:8:6 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
   XXX Hooks.re:17:4-Hooks.re:17:11 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
-  XXX Hooks.re:20:5-Hooks.re:20:16 ImportHooks.makeProps called with optional arg key declFound:true
-  XXX Hooks.re:26:5-Hooks.re:26:22 ImportHookDefault.makeProps called with optional arg key declFound:true
+  XXX Hooks.re:20:5-Hooks.re:20:16 ImportHooks.makeProps called with optional arg key declFound:true argFoundfalse
+  XXX Hooks.re:26:5-Hooks.re:26:22 ImportHookDefault.makeProps called with optional arg key declFound:true argFoundfalse
   XXX Hooks.re:42:2-Hooks.re:42:6 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
   XXX Hooks.re:49:4-Hooks.re:49:8 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
   XXX Hooks.re:54:4-Hooks.re:54:8 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
@@ -20,8 +20,8 @@
   XXX Hooks.re:113:4-Hooks.re:113:8 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
   XXX Hooks.re:157:2-Hooks.re:157:6 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
   XXX Hooks.re:159:4-Hooks.re:159:8 ReactDOMRe.createDOMElementVariadic called with optional arg props declFound:false
-  XXX DeadTest.re:132:11-DeadTest.re:132:41 LazyDynamicallyLoadedComponent.makeProps called with optional arg key declFound:true
-  XXX DeadTest.re:134:18-DeadTest.re:134:49 LazyDynamicallyLoadedComponent2.makeProps called with optional arg key declFound:true
+  XXX DeadTest.re:132:11-DeadTest.re:132:41 LazyDynamicallyLoadedComponent.makeProps called with optional arg key declFound:true argFoundfalse
+  XXX DeadTest.re:134:18-DeadTest.re:134:49 LazyDynamicallyLoadedComponent2.makeProps called with optional arg key declFound:true argFoundfalse
 
   Warning Dead Value
   File "./A.re", line 1, characters 0-48
