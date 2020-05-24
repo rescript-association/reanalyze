@@ -91,13 +91,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     |> List.iter(((lbl, _)) =>
          switch (lbl) {
          | Asttypes.Optional(s) when !locFrom.loc_ghost =>
-           Log_.item(
-             "XXX %s-%s %s called with optional arg %s@.",
-             locFrom.loc_start |> posToString,
-             locFrom.loc_end |> posToString,
-             path |> Path.fromPathT |> Path.toString,
-             s,
-           )
+           s |> OptionalArgs.addReference(~locFrom, ~path)
          | _ => ()
          }
        )
