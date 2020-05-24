@@ -752,6 +752,21 @@
   addValueReference NestedModules.re:41:8 --> NestedModules.re:41:27
   addVariantCaseDeclaration A NestedModules.re:46:6 path:+NestedModules.Universe.variant
   addVariantCaseDeclaration B NestedModules.re:47:6 path:+NestedModules.Universe.variant
+  Scanning OptArg.cmt
+  addValueDeclaration +foo OptArg.re:1:4 path:+OptArg
+  addValueDeclaration +bar OptArg.re:3:4 path:+OptArg
+  addValueReference OptArg.re:1:4 --> OptArg.re:1:14
+  addValueReference OptArg.re:1:4 --> OptArg.re:1:20
+  addValueReference OptArg.re:1:4 --> OptArg.re:1:26
+  addValueReference OptArg.re:1:4 --> OptArg.re:1:12
+  addValueReference OptArg.re:1:4 --> OptArg.re:1:18
+  addValueReference OptArg.re:1:4 --> OptArg.re:1:24
+  addValueReference OptArg.re:1:4 --> OptArg.re:1:29
+  addValueReference OptArg.re:3:4 --> OptArg.re:3:18
+  addValueReference OptArg.re:3:4 --> OptArg.re:3:27
+  OptionalArgs.addReference foo called with optional arg x declFound:true argFoundtrue OptArg.re:5:7
+  addValueReference OptArg.re:5:7 --> OptArg.re:1:4
+  addValueReference OptArg.re:7:7 --> OptArg.re:3:4
   Scanning Shadow.cmt
   addValueDeclaration +test Shadow.re:2:4 path:+Shadow
   addValueDeclaration +test Shadow.re:5:4 path:+Shadow
@@ -815,20 +830,6 @@
   addTypeReference Tuples.re:47:19 --> Tuples.re:32:2
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
-  Scanning A.cmt
-  addValueDeclaration +foo A.re:1:4 path:+A
-  addValueDeclaration +bar A.re:3:4 path:+A
-  addValueReference A.re:1:4 --> A.re:1:14
-  addValueReference A.re:1:4 --> A.re:1:20
-  addValueReference A.re:1:4 --> A.re:1:26
-  addValueReference A.re:1:4 --> A.re:1:12
-  addValueReference A.re:1:4 --> A.re:1:18
-  addValueReference A.re:1:4 --> A.re:1:24
-  addValueReference A.re:1:4 --> A.re:1:29
-  addValueReference A.re:3:4 --> A.re:3:18
-  addValueReference A.re:3:4 --> A.re:3:27
-  OptionalArgs.addReference foo called with optional arg x declFound:true argFoundtrue A.re:5:7
-  addValueReference A.re:5:7 --> A.re:1:4
   Scanning Newton.cmt
   addValueDeclaration +- Newton.re:1:4 path:+Newton
   addValueDeclaration ++ Newton.re:2:4 path:+Newton
@@ -1879,7 +1880,6 @@
   
 File References
 
-  A.re -->> 
   AutoAnnotate.re -->> 
   BootloaderResource.re -->> 
   BucklescriptAnnotations.re -->> 
@@ -1928,6 +1928,7 @@ File References
   NestedModulesInSignature.rei -->> NestedModulesInSignature.re
   Newton.re -->> 
   Opaque.re -->> 
+  OptArg.re -->> 
   Records.re -->> 
   References.re -->> 
   RepeatedLabel.re -->> 
@@ -1962,16 +1963,6 @@ File References
   Yojson.re -->> 
   trace.ml -->> 
   trace.mli -->> trace.ml
-  Dead Value +A.+bar: 0 references () [0]
-
-  Warning Unused Argument
-  File "./A.re", line 1, characters 0-48
-  optional argument y of function +foo is never used
-
-  Warning Unused Argument
-  File "./A.re", line 1, characters 0-48
-  optional argument z of function +foo is never used
-  Live Value +A.+foo: 1 references (A.re:5:7) [0]
   Dead VariantCase +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
   Dead VariantCase +AutoAnnotate.annotatedVariant.R2: 0 references () [0]
   Dead RecordLabel +AutoAnnotate.r4.r4: 0 references () [0]
@@ -2222,6 +2213,24 @@ File References
   Live Value +Opaque.+testConvertNestedRecordFromOtherFile: 0 references () [0]
   Live Value +Opaque.+noConversion: 0 references () [0]
   Dead VariantCase +Opaque.opaqueFromRecords.A: 0 references () [0]
+
+  Warning Unused Argument
+  File "./OptArg.re", line 3, characters 0-38
+  optional argument x of function +bar is never used
+
+  Warning Unused Argument
+  File "./OptArg.re", line 3, characters 0-38
+  optional argument z of function +bar is never used
+  Live Value +OptArg.+bar: 1 references (OptArg.re:7:7) [0]
+
+  Warning Unused Argument
+  File "./OptArg.re", line 1, characters 0-48
+  optional argument y of function +foo is never used
+
+  Warning Unused Argument
+  File "./OptArg.re", line 1, characters 0-48
+  optional argument z of function +foo is never used
+  Live Value +OptArg.+foo: 1 references (OptArg.re:5:7) [0]
   Live Value +Records.+testMyRecBsAs2: 0 references () [0]
   Live Value +Records.+testMyRecBsAs: 0 references () [0]
   Live RecordLabel +Records.myRecBsAs.type_: 1 references (Records.re:167:38) [0]
@@ -2680,12 +2689,6 @@ File References
   Live Value +ImmutableArray.+fromT: 1 references (ImmutableArray.re:24:6) [0]
   Live Value +trace.+infok: 1 references (trace.mli:5:0) [0]
   Live RecordLabel +trace.pf.pf: 1 references (trace.mli:3:11) [0]
-
-  Warning Dead Value
-  File "./A.re", line 3, characters 0-38
-  +bar is never used
-  <-- line 3
-  [@dead "+bar"] let bar = (~x=?, ~y, ~z=?, w) => y + w;
 
   Warning Dead Type
   File "./AutoAnnotate.re", line 2, characters 4-10
@@ -4416,4 +4419,4 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 293 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:3)
+  Analysis reported 294 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:205, Warning Dead Value With Side Effects:2, Warning Unused Argument:5)

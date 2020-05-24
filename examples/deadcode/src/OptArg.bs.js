@@ -14,6 +14,8 @@ function bar(x, y, z, w) {
 
 console.log(foo(3, undefined, undefined, 4));
 
+console.log(7);
+
 export {
   foo ,
   bar ,
