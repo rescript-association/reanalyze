@@ -1,6 +1,15 @@
-  XXX A.re:1:4 dead arg:y
-  XXX A.re:1:4 dead arg:z
-  XXX ComponentAsProp.re:5:4 dead arg:button
+
+  Warning Unused Argument
+  File "./A.re", line 1, characters 0-48
+  optional argument y of function +foo is never used
+
+  Warning Unused Argument
+  File "./A.re", line 1, characters 0-48
+  optional argument z of function +foo is never used
+
+  Warning Unused Argument
+  File "./ComponentAsProp.re", line 3, characters 0-432
+  optional argument button of function +make is never used
 
   Warning Dead Value
   File "./A.re", line 3, characters 0-38
@@ -1737,4 +1746,4 @@
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 290 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2)
+  Analysis reported 293 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:3)

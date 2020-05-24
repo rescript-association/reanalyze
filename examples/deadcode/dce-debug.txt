@@ -1963,8 +1963,14 @@ File References
   trace.ml -->> 
   trace.mli -->> trace.ml
   Dead Value +A.+bar: 0 references () [0]
-  XXX A.re:1:4 dead arg:y
-  XXX A.re:1:4 dead arg:z
+
+  Warning Unused Argument
+  File "./A.re", line 1, characters 0-48
+  optional argument y of function +foo is never used
+
+  Warning Unused Argument
+  File "./A.re", line 1, characters 0-48
+  optional argument z of function +foo is never used
   Live Value +A.+foo: 1 references (A.re:5:7) [0]
   Dead VariantCase +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
   Dead VariantCase +AutoAnnotate.annotatedVariant.R2: 0 references () [0]
@@ -1976,7 +1982,10 @@ File References
   Dead Value +BucklescriptAnnotations.+bar: 0 references () [1]
   Dead Value +BucklescriptAnnotations.+f: 0 references () [0]
   Dead Value +BucklescriptAnnotations.+foo: 0 references () [0]
-  XXX ComponentAsProp.re:5:4 dead arg:button
+
+  Warning Unused Argument
+  File "./ComponentAsProp.re", line 3, characters 0-432
+  optional argument button of function +make is never used
   Live Value +ComponentAsProp.+make: 0 references () [0]
   Live Value +ComponentAsProp.+component: 1 references (ComponentAsProp.re:5:4) [0]
   Live Value +CreateErrorHandler1.Error1.+notification: 1 references (ErrorHandler.rei:3:2) [0]
@@ -4407,4 +4416,4 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 290 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2)
+  Analysis reported 293 issues (Warning Dead Exception:1, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:3)
