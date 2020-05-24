@@ -196,15 +196,6 @@ module TypeReferences = {
   let find = pos => PosHash.findSet(table, pos);
 };
 
-module TypeLabels = {
-  /* map from type path (for record/variant label) to its location */
-  let table: Hashtbl.t(Path.t, Location.t) = Hashtbl.create(256);
-
-  let add = (path, loc) => Hashtbl.replace(table, path, loc);
-
-  let find = path => Hashtbl.find_opt(table, path);
-};
-
 let declGetLoc = decl => {
   Location.loc_start: decl.posStart,
   loc_end: decl.posEnd,

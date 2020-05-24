@@ -2,6 +2,15 @@
 
 open DeadCommon;
 
+module TypeLabels = {
+  /* map from type path (for record/variant label) to its location */
+  let table: Hashtbl.t(Path.t, Location.t) = Hashtbl.create(256);
+
+  let add = (path, loc) => Hashtbl.replace(table, path, loc);
+
+  let find = path => Hashtbl.find_opt(table, path);
+};
+
 let addTypeReference = (~posFrom, ~posTo) => {
   if (Common.debug^) {
     Log_.item(
