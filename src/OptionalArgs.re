@@ -10,13 +10,21 @@ let rec fromTypeExpr = (texpr: Types.type_expr) =>
   };
 
 let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, s) => {
-  let declFound = PosHash.find_opt(decls, locTo.loc_start) != None;
+  let (declFound, argFound) =
+    switch (PosHash.find_opt(decls, locTo.loc_start)) {
+    | Some({declKind: Value({optionalArgs})}) => (
+        true,
+        List.mem(s, optionalArgs),
+      )
+    | _ => (false, false)
+    };
   Log_.item(
-    "XXX %s-%s %s called with optional arg %s declFound:%b@.",
+    "XXX %s-%s %s called with optional arg %s declFound:%b%s@.",
     locFrom.loc_start |> posToString,
     locFrom.loc_end |> posToString,
     path |> Path.fromPathT |> Path.toString,
     s,
     declFound,
+    declFound ? " argFound" ++ (argFound ? "true" : "false") : "",
   );
 };
