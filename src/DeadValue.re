@@ -100,13 +100,21 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
       args,
     ) =>
     args
-    |> List.iter(((lbl, _)) =>
+    |> List.iter(((lbl, arg)) => {
+         let argIsSome =
+           switch (arg) {
+           | Some({
+               Typedtree.exp_desc: Texp_construct(_, {cstr_name: "Some"}, _),
+             }) =>
+             true
+           | _ => false
+           };
          switch (lbl) {
-         | Asttypes.Optional(s) when !locFrom.loc_ghost =>
+         | Asttypes.Optional(s) when !locFrom.loc_ghost && argIsSome =>
            s |> OptionalArgs.addReference(~locFrom, ~locTo, ~path)
          | _ => ()
-         }
-       )
+         };
+       })
 
   | Texp_field(
       _,
