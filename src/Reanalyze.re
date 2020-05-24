@@ -89,6 +89,7 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
   };
   let dce = () => {
     DeadException.forceDelayedItems();
+    OptionalArgs.forceDelayedItems();
     DeadCommon.reportDead(~checkOptionalArg=OptionalArgs.check, ppf);
     DeadCommon.WriteDeadAnnotations.write();
   };
