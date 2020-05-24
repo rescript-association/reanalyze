@@ -1,4 +1,6 @@
 # master
+- Add -experimental command-line to turn on experimental analyses.
+- New analysis for unused optional named arguments, under the `-experimental` flag.
 
 # 1.16.0
 - Only toplevel values are considered live when they have side-effects.
