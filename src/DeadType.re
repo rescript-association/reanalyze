@@ -117,7 +117,7 @@ let addDeclaration = (~typeId: Ident.t, ~typeKind: Types.type_kind) => {
   ];
 
   let processTypeLabel = (typeLabelName, ~declKind, ~loc: Location.t) => {
-    addTypeDeclaration(~declKind, ~path=pathToType, ~loc, typeLabelName);
+    addDeclaration_(~declKind, ~path=pathToType, ~loc, typeLabelName);
 
     addTypeDependenciesAcrossFiles(~pathToType, ~loc, ~typeLabelName);
     addTypeDependenciesInnerModule(~pathToType, ~loc, ~typeLabelName);

@@ -7,14 +7,10 @@ let debug = ref(false);
 let ci = ref(false);
 
 /* Location printer: `filename:line: ' */
-let posToString = (~printCol=true, pos: Lexing.position) => {
+let posToString = (pos: Lexing.position) => {
   let file = pos.Lexing.pos_fname;
   let line = pos.Lexing.pos_lnum;
-  let col = pos.Lexing.pos_cnum - pos.Lexing.pos_bol;
-  (file |> Filename.basename)
-  ++ ":"
-  ++ string_of_int(line)
-  ++ (printCol ? ":" ++ string_of_int(col) : ": ");
+  (file |> Filename.basename) ++ ":" ++ string_of_int(line);
 };
 
 module LocSet =

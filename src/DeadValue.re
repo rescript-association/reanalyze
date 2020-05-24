@@ -159,14 +159,9 @@ let collectPattern = (super, self, pat: Typedtree.pattern) => {
   super.Tast_mapper.pat(self, pat);
 };
 
-let rec getSignature = (~isfunc=false, moduleType: Types.module_type) =>
+let rec getSignature = (moduleType: Types.module_type) =>
   switch (moduleType) {
   | Mty_signature(signature) => signature
-  | Mty_functor(_) when isfunc =>
-    switch (moduleType |> Compat.getMtyFunctorModuleType) {
-    | Some((Some(mtParam), _)) => getSignature(mtParam)
-    | _ => []
-    }
   | Mty_functor(_) =>
     switch (moduleType |> Compat.getMtyFunctorModuleType) {
     | Some((_, mt)) => getSignature(mt)

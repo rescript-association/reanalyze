@@ -10,7 +10,7 @@
     "test": "node ./scripts/run_integration_tests.js",
     "install:examples": "(cd examples/deadcode && npm install) & (cd examples/termination && npm install)",
     "build:examples": "(cd examples/deadcode && npm run clean && npm run build && npm run analyze) & (cd examples/termination && npm run clean && npm run build && npm run analyze)",
-    "dce": "./_esy/default/build/install/default/bin/reanalyze.exe -suppress src/nothing -unsuppress doesnotexist -dce-cmt `find  _esy/default/store/b/reanalyze-*/default/src/.Reanalyze.eobjs -name byte`",
+    "dce": "./_esy/default/build/install/default/bin/reanalyze.exe -experimental -suppress src/nothing -unsuppress doesnotexist -dce-cmt `find  _esy/default/store/b/reanalyze-*/default/src/.Reanalyze.eobjs -name byte`",
     "exception": "./_esy/default/build/install/default/bin/reanalyze.exe -exception-cmt `find  _esy/default/store/b/reanalyze-*/default/src/.Reanalyze.eobjs -name byte`",
     "exception409": "./_esy/409/build/install/default/bin/reanalyze.exe -exception-cmt `find  _esy/409/store/b/reanalyze-*/default/src/.Reanalyze.eobjs -name byte`",
     "preversion": "npm test",
