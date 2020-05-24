@@ -36,17 +36,12 @@ let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, s) =>
     };
   };
 
-let findUnusedArgs = () =>
-  if (active) {
-    decls
-    |> PosHash.iter((pos, decl) =>
-         switch (decl) {
-         | {declKind: Value({optionalArgs})} =>
-           optionalArgs
-           |> List.iter(s =>
-                Log_.item("XXX %s dead arg:%s@.", pos |> posToString, s)
-              )
-         | _ => ()
-         }
-       );
+let check = decl =>
+  switch (decl) {
+  | {declKind: Value({optionalArgs})} when active =>
+    optionalArgs
+    |> List.iter(s =>
+         Log_.item("XXX %s dead arg:%s@.", decl.pos |> posToString, s)
+       )
+  | _ => ()
   };
