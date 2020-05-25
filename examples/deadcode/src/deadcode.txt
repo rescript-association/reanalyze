@@ -3,6 +3,30 @@
   File "./ComponentAsProp.re", line 3, characters 0-432
   optional argument button of function +make is never used
 
+  Warning Unused Argument
+  File "./ImportMyBanner.re", line 8, characters 0-353
+  optional argument message of function +make is never used
+
+  Warning Unused Argument
+  File "./TestImport.re", line 30, characters 0-284
+  optional argument message of function +make is never used
+
+  Warning Unused Argument
+  File "./OptArg.rei", line 2, characters 0-50
+  optional argument x of function +bar is never used
+
+  Warning Unused Argument
+  File "./OptArg.re", line 3, characters 0-38
+  optional argument x of function +bar is never used
+
+  Warning Unused Argument
+  File "./OptArg.re", line 1, characters 0-48
+  optional argument y of function +foo is never used
+
+  Warning Unused Argument
+  File "./OptArg.re", line 1, characters 0-48
+  optional argument z of function +foo is never used
+
   Warning Dead Module
   File "./AutoAnnotate.re", line 0, characters 0-0
   +AutoAnnotate is a dead module as all its items are dead.
@@ -1986,4 +2010,4 @@
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 353 issues (Warning Dead Exception:1, Warning Dead Module:62, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:1)
+  Analysis reported 359 issues (Warning Dead Exception:1, Warning Dead Module:62, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:7)

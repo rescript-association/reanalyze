@@ -187,7 +187,7 @@ let rec processSignatureItem =
     if (Config.analyzeTypes^) {
       DeadType.addDeclaration(~typeId=id, ~typeKind=t.type_kind);
     };
-  | Sig_value(_) when doValues =>
+  | Sig_value(_, vd) when doValues =>
     let (id, loc, kind) = si |> Compat.getSigValue;
     if (!loc.Location.loc_ghost) {
       let isPrimitive =
@@ -196,9 +196,16 @@ let rec processSignatureItem =
         | _ => false
         };
       if (!isPrimitive || Config.analyzeExternals) {
+        let optionalArgs = vd.val_type |> OptionalArgs.fromTypeExpr;
         Ident.name(id)
         |> Name.create(~isInterface=false)
-        |> addValueDeclaration(~sideEffects=false, ~path, ~loc, ~moduleLoc);
+        |> addValueDeclaration(
+             ~loc,
+             ~moduleLoc,
+             ~optionalArgs,
+             ~path,
+             ~sideEffects=false,
+           );
       };
     };
   | Sig_module(_)

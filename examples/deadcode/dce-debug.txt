@@ -2169,6 +2169,10 @@ File References
   Live RecordLabel +Hooks.vehicle.name: 13 references (Hooks.re:11:12, Hooks.re:42:41, Hooks.re:49:43, Hooks.re:54:43, Hooks.re:60:45, Hooks.re:65:45, Hooks.re:82:2, Hooks.re:82:14, Hooks.re:89:15, Hooks.re:89:27, Hooks.re:98:20, Hooks.re:130:58, Hooks.re:158:37) [0]
   Live Value +ImportIndex.+make: 0 references () [0]
   Dead Value +ImportMyBanner.+make: 0 references () [0]
+
+  Warning Unused Argument
+  File "./ImportMyBanner.re", line 8, characters 0-353
+  optional argument message of function +make is never used
   Live Value +ImportMyBanner.+make: 0 references () [0]
   Dead RecordLabel +ImportMyBanner.message.text: 0 references () [0]
   Live Value +LetPrivate.+y: 0 references () [0]
@@ -2304,6 +2308,10 @@ File References
   Live Value +TestImmutableArray.+testImmutableArrayGet: 0 references () [0]
   Live Value +TestImport.+defaultValue2: 0 references () [0]
   Dead Value +TestImport.+make: 0 references () [0]
+
+  Warning Unused Argument
+  File "./TestImport.re", line 30, characters 0-284
+  optional argument message of function +make is never used
   Live Value +TestImport.+make: 0 references () [0]
   Dead RecordLabel +TestImport.message.text: 0 references () [0]
   Live Value +TestImport.+defaultValue: 0 references () [0]
@@ -2599,6 +2607,10 @@ File References
   Live Value +ImportJsValue.+round: 1 references (ImportJsValue.re:25:4) [0]
   Live Value +JSResource.+jSResource: 2 references (DeadTest.re:112:40, DeadTest.re:119:6) [0]
   Live Value +NestedModulesInSignature.Universe.+theAnswer: 1 references (NestedModulesInSignature.rei:2:2) [0]
+
+  Warning Unused Argument
+  File "./OptArg.rei", line 2, characters 0-50
+  optional argument x of function +bar is never used
   Live Value OptArg.+bar: 1 references (TestOptArg.re:1:7) [0]
   Dead Value OptArg.+foo: 0 references () [0]
   Dead Value +ExnB.+foo: 0 references () [0]
@@ -2683,7 +2695,19 @@ File References
   Dead Value +ImmutableArray.+fromTT: 0 references () [0]
   Dead Value +ImmutableArray.+fromTp: 0 references () [0]
   Live Value +ImmutableArray.+fromT: 1 references (ImmutableArray.re:24:6) [0]
+
+  Warning Unused Argument
+  File "./OptArg.re", line 3, characters 0-38
+  optional argument x of function +bar is never used
   Live Value +OptArg.+bar: 2 references (OptArg.re:7:7, OptArg.rei:2:0) [0]
+
+  Warning Unused Argument
+  File "./OptArg.re", line 1, characters 0-48
+  optional argument y of function +foo is never used
+
+  Warning Unused Argument
+  File "./OptArg.re", line 1, characters 0-48
+  optional argument z of function +foo is never used
   Live Value +OptArg.+foo: 1 references (OptArg.re:5:7) [0]
   Live Value +trace.+infok: 1 references (trace.mli:5:0) [0]
   Live RecordLabel +trace.pf.pf: 1 references (trace.mli:3:11) [0]
@@ -4671,4 +4695,4 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 353 issues (Warning Dead Exception:1, Warning Dead Module:62, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:1)
+  Analysis reported 359 issues (Warning Dead Exception:1, Warning Dead Module:62, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:7)
