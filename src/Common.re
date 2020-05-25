@@ -18,6 +18,13 @@ let posToString = (pos: Lexing.position) => {
   ++ string_of_int(col);
 };
 
+module Cli = {
+  let experimental = ref(false);
+  let write = ref(false);
+  let liveNames = ref([]: list(string)); // names to be considered live values
+  let livePaths = ref([]: list(string)); // paths of files where all values are considered live
+};
+
 module LocSet =
   Set.Make({
     include Location;

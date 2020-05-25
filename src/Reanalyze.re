@@ -143,7 +143,7 @@ let cli = () => {
     Exception(cmtRoot) |> setCliCommand;
   }
   and setExperimental = () => {
-    DeadCommon.Cli.experimental := true;
+    Common.Cli.experimental := true;
   }
   and setSuppress = s => {
     let names = s |> String.split_on_char(',');
@@ -154,18 +154,18 @@ let cli = () => {
     Suppress.unsuppress := names @ Suppress.unsuppress^;
   }
   and setWrite = () => {
-    DeadCommon.Cli.write := true;
+    Common.Cli.write := true;
   }
   and setTermination = cmtRoot => {
     Termination(cmtRoot) |> setCliCommand;
   }
   and setLiveNames = s => {
     let names = s |> String.split_on_char(',');
-    DeadCommon.Cli.liveNames := names @ DeadCommon.Cli.liveNames.contents;
+    Common.Cli.liveNames := names @ Common.Cli.liveNames.contents;
   }
   and setLivePaths = s => {
     let paths = s |> String.split_on_char(',');
-    DeadCommon.Cli.livePaths := paths @ DeadCommon.Cli.livePaths.contents;
+    Common.Cli.livePaths := paths @ Common.Cli.livePaths.contents;
   }
   and speclist = [
     ("-all", Arg.Unit(() => setAll(None)), "Run all the analyses."),
