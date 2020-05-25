@@ -767,6 +767,8 @@
   OptionalArgs.addReference foo called with optional arg x OptArg.re:5:7
   addValueReference OptArg.re:5:7 --> OptArg.re:1:4
   addValueReference OptArg.re:7:7 --> OptArg.re:3:4
+  addValueReference OptArg.rei:1:0 --> OptArg.re:1:4
+  addValueReference OptArg.rei:2:0 --> OptArg.re:3:4
   Scanning Shadow.cmt
   addValueDeclaration +test Shadow.re:2:4 path:+Shadow
   addValueDeclaration +test Shadow.re:5:4 path:+Shadow
@@ -1011,7 +1013,7 @@
   addValueReference TypeParams3.re:5:4 --> TypeParams3.re:5:13
   Scanning TestOptArg.cmt
   OptionalArgs.addReference OptArg.bar called with optional arg z TestOptArg.re:1:7
-  addValueReference TestOptArg.re:1:7 --> OptArg.re:3:4
+  addValueReference TestOptArg.re:1:7 --> OptArg.rei:2:0
   Scanning IgnoreInterface.cmt
   Scanning DeadValueTest.cmti
   addValueDeclaration +valueAlive DeadValueTest.rei:1:0 path:DeadValueTest
@@ -1070,6 +1072,9 @@
   Scanning ErrorHandler.cmti
   addValueDeclaration +notify ErrorHandler.rei:5:32 path:ErrorHandler.Make
   addValueDeclaration +x ErrorHandler.rei:7:0 path:ErrorHandler
+  Scanning OptArg.cmti
+  addValueDeclaration +foo OptArg.rei:1:0 path:OptArg
+  addValueDeclaration +bar OptArg.rei:2:0 path:OptArg
   Scanning VariantsWithPayload.cmt
   addValueDeclaration +testWithPayload VariantsWithPayload.re:16:4 path:+VariantsWithPayload
   addValueDeclaration +printVariantWithPayload VariantsWithPayload.re:19:4 path:+VariantsWithPayload
@@ -1932,6 +1937,7 @@ File References
   Newton.re -->> 
   Opaque.re -->> 
   OptArg.re -->> 
+  OptArg.rei -->> OptArg.re
   Records.re -->> 
   References.re -->> 
   RepeatedLabel.re -->> 
@@ -1943,7 +1949,7 @@ File References
   TestImmutableArray.re -->> ImmutableArray.rei
   TestImport.re -->> 
   TestModuleAliases.re -->> 
-  TestOptArg.re -->> OptArg.re
+  TestOptArg.re -->> OptArg.rei
   TestPromise.re -->> 
   TransitiveType1.re -->> 
   TransitiveType2.re -->> 
@@ -2591,20 +2597,8 @@ File References
   Live Value +ImportJsValue.+round: 1 references (ImportJsValue.re:25:4) [0]
   Live Value +JSResource.+jSResource: 2 references (DeadTest.re:112:40, DeadTest.re:119:6) [0]
   Live Value +NestedModulesInSignature.Universe.+theAnswer: 1 references (NestedModulesInSignature.rei:2:2) [0]
-
-  Warning Unused Argument
-  File "./OptArg.re", line 3, characters 0-38
-  optional argument x of function +bar is never used
-  Live Value +OptArg.+bar: 2 references (OptArg.re:7:7, TestOptArg.re:1:7) [0]
-
-  Warning Unused Argument
-  File "./OptArg.re", line 1, characters 0-48
-  optional argument y of function +foo is never used
-
-  Warning Unused Argument
-  File "./OptArg.re", line 1, characters 0-48
-  optional argument z of function +foo is never used
-  Live Value +OptArg.+foo: 1 references (OptArg.re:5:7) [0]
+  Live Value OptArg.+bar: 1 references (TestOptArg.re:1:7) [0]
+  Dead Value OptArg.+foo: 0 references () [0]
   Dead Value +ExnB.+foo: 0 references () [0]
   Dead Value +Yojson.Basic.Util.+to_string: 0 references () [0]
   Dead Value +Yojson.Basic.Util.+to_int: 0 references () [0]
@@ -2687,6 +2681,24 @@ File References
   Dead Value +ImmutableArray.+fromTT: 0 references () [0]
   Dead Value +ImmutableArray.+fromTp: 0 references () [0]
   Live Value +ImmutableArray.+fromT: 1 references (ImmutableArray.re:24:6) [0]
+
+  Warning Unused Argument
+  File "./OptArg.re", line 3, characters 0-38
+  optional argument x of function +bar is never used
+
+  Warning Unused Argument
+  File "./OptArg.re", line 3, characters 0-38
+  optional argument z of function +bar is never used
+  Live Value +OptArg.+bar: 2 references (OptArg.re:7:7, OptArg.rei:2:0) [0]
+
+  Warning Unused Argument
+  File "./OptArg.re", line 1, characters 0-48
+  optional argument y of function +foo is never used
+
+  Warning Unused Argument
+  File "./OptArg.re", line 1, characters 0-48
+  optional argument z of function +foo is never used
+  Live Value +OptArg.+foo: 1 references (OptArg.re:5:7) [0]
   Live Value +trace.+infok: 1 references (trace.mli:5:0) [0]
   Live RecordLabel +trace.pf.pf: 1 references (trace.mli:3:11) [0]
 
@@ -4279,6 +4291,16 @@ File References
     | [@dead "opaqueFromRecords.A"] A(Records.coord);
 
   Warning Dead Module
+  File "./OptArg.rei", line 0, characters 0-0
+  OptArg is a dead module as all its items are dead.
+
+  Warning Dead Value
+  File "./OptArg.rei", line 1, characters 0-54
+  +foo is never used
+  <-- line 1
+  [@dead "+foo"] let foo: (~x: int=?, ~y: int=?, ~z: int=?, int) => int;
+
+  Warning Dead Module
   File "./Records.re", line 0, characters 0-0
   +Records is a dead module as all its items are dead.
 
@@ -4663,4 +4685,4 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 354 issues (Warning Dead Exception:1, Warning Dead Module:61, Warning Dead Type:81, Warning Dead Value:205, Warning Dead Value With Side Effects:2, Warning Unused Argument:4)
+  Analysis reported 357 issues (Warning Dead Exception:1, Warning Dead Module:62, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:5)
