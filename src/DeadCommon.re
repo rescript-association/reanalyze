@@ -93,9 +93,6 @@ module Current = {
   let lastBinding = ref(Location.none);
 
   let maxValuePosEnd = ref(Lexing.dummy_pos); // max end position of a value reported dead
-
-  /* Keep track of the module path while traversing with Tast_mapper */
-  let modulePath: ref(Path.t) = ref([]);
 };
 
 let rec checkSub = (s1, s2, n) =>

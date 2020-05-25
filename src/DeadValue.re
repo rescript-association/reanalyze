@@ -318,7 +318,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
     | Tstr_exception(_) =>
       switch (structureItem.str_desc |> Compat.tstrExceptionGet) {
       | Some((id, loc)) =>
-        let path = Current.modulePath^ @ [Common.currentModuleName^];
+        let path = ModulePath.getCurrent().path @ [Common.currentModuleName^];
         let name = id |> Ident.name |> Name.create;
         name |> DeadException.add(~path, ~loc, ~strLoc=structureItem.str_loc);
       | None => ()
