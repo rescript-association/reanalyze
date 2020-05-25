@@ -237,7 +237,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
   let structure_item = (self, structureItem: Typedtree.structure_item) => {
     let oldModulePath = ModulePath.getCurrent();
     switch (structureItem.str_desc) {
-    | Tstr_module({mb_expr, mb_name, mb_loc}) =>
+    | Tstr_module({mb_expr, mb_id, mb_loc}) =>
       let hasInterface =
         switch (mb_expr.mod_desc) {
         | Tmod_constraint(_) => true
@@ -245,7 +245,10 @@ let traverseStructure = (~doTypes, ~doValues) => {
         };
       ModulePath.setCurrent({
         loc: mb_loc,
-        path: [mb_name.txt |> Name.create, ...ModulePath.getCurrent().path],
+        path: [
+          mb_id |> Compat.moduleIdName |> Name.create,
+          ...ModulePath.getCurrent().path,
+        ],
       });
       if (hasInterface) {
         switch (mb_expr.mod_type) {
