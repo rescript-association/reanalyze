@@ -1,6 +1,7 @@
 /* Adapted from https://github.com/LexiFi/dead_code_analyzer */
 
 open DeadCommon;
+open Common;
 
 module TypeLabels = {
   /* map from type path (for record/variant label) to its location */

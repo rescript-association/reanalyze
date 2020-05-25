@@ -68,3 +68,60 @@ module FileReferences = {
 
   let iter = f => FileHash.iter(f, table);
 };
+
+module Path = {
+  type t = list(Name.t);
+
+  let toString = (path: t) =>
+    path |> List.rev_map(Name.toString) |> String.concat(".");
+
+  let withoutHead = path => {
+    switch (path |> List.rev_map(Name.toString)) {
+    | [_, ...tl] => tl |> String.concat(".")
+    | [] => ""
+    };
+  };
+
+  let onOkPath = (~whenContainsApply, ~f, path) => {
+    switch (path |> Path.flatten) {
+    | `Ok(id, mods) => f([Ident.name(id), ...mods] |> String.concat("."))
+    | `Contains_apply => whenContainsApply
+    };
+  };
+
+  let fromPathT = path => {
+    switch (path |> Path.flatten) {
+    | `Ok(id, mods) =>
+      [Ident.name(id), ...mods] |> List.rev_map(Name.create)
+    | `Contains_apply => []
+    };
+  };
+
+  let moduleToImplementation = path =>
+    switch (path |> List.rev) {
+    | [moduleName, ...rest] =>
+      [moduleName |> Name.toImplementation, ...rest] |> List.rev
+    | [] => path
+    };
+
+  let moduleToInterface = path =>
+    switch (path |> List.rev) {
+    | [moduleName, ...rest] =>
+      [moduleName |> Name.toInterface, ...rest] |> List.rev
+    | [] => path
+    };
+
+  let toModuleName = (~isValue, path) => {
+    switch (path) {
+    | [_, ...tl] when isValue => tl |> toString
+    | [_, _, ...tl] when !isValue => tl |> toString
+    | _ => ""
+    };
+  };
+
+  let typeToInterface = path =>
+    switch (path) {
+    | [typeName, ...rest] => [typeName |> Name.toInterface, ...rest]
+    | [] => path
+    };
+};

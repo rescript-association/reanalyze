@@ -30,63 +30,6 @@ module Cli = {
   let livePaths = ref([]: list(string)); // paths of files where all values are considered live
 };
 
-module Path = {
-  type t = list(Name.t);
-
-  let toString = (path: t) =>
-    path |> List.rev_map(Name.toString) |> String.concat(".");
-
-  let withoutHead = path => {
-    switch (path |> List.rev_map(Name.toString)) {
-    | [_, ...tl] => tl |> String.concat(".")
-    | [] => ""
-    };
-  };
-
-  let onOkPath = (~whenContainsApply, ~f, path) => {
-    switch (path |> Path.flatten) {
-    | `Ok(id, mods) => f([Ident.name(id), ...mods] |> String.concat("."))
-    | `Contains_apply => whenContainsApply
-    };
-  };
-
-  let fromPathT = path => {
-    switch (path |> Path.flatten) {
-    | `Ok(id, mods) =>
-      [Ident.name(id), ...mods] |> List.rev_map(Name.create)
-    | `Contains_apply => []
-    };
-  };
-
-  let moduleToImplementation = path =>
-    switch (path |> List.rev) {
-    | [moduleName, ...rest] =>
-      [moduleName |> Name.toImplementation, ...rest] |> List.rev
-    | [] => path
-    };
-
-  let moduleToInterface = path =>
-    switch (path |> List.rev) {
-    | [moduleName, ...rest] =>
-      [moduleName |> Name.toInterface, ...rest] |> List.rev
-    | [] => path
-    };
-
-  let toModuleName = (~isValue, path) => {
-    switch (path) {
-    | [_, ...tl] when isValue => tl |> toString
-    | [_, _, ...tl] when !isValue => tl |> toString
-    | _ => ""
-    };
-  };
-
-  let typeToInterface = path =>
-    switch (path) {
-    | [typeName, ...rest] => [typeName |> Name.toInterface, ...rest]
-    | [] => path
-    };
-};
-
 module Current = {
   let bindings = ref(PosSet.empty);
 
@@ -156,12 +99,6 @@ module DeclKind = {
     | VariantCase => true
     | Exception
     | Value(_) => false
-    };
-
-  let isValue = dk =>
-    switch (dk) {
-    | Value(_) => true
-    | _ => false
     };
 
   let toString = dk =>
@@ -735,6 +672,171 @@ module WriteDeadAnnotations = {
   let write = () => writeFile(currentFile^, currentFileLines^);
 };
 
+module Decl = {
+  let isValue = decl =>
+    switch (decl.declKind) {
+    | Value(_) => true
+    | _ => false
+    };
+
+  let isToplevelValueWithSideEffects = decl =>
+    switch (decl.declKind) {
+    | Value({isToplevel, sideEffects}) => isToplevel && sideEffects
+    | _ => false
+    };
+
+  let compareUsingDependencies =
+      (
+        ~orderedFiles,
+        {
+          declKind: kind1,
+          path: _path1,
+          pos: {
+            pos_fname: fname1,
+            pos_lnum: lnum1,
+            pos_bol: bol1,
+            pos_cnum: cnum1,
+          },
+        },
+        {
+          declKind: kind2,
+          path: _path2,
+          pos: {
+            pos_fname: fname2,
+            pos_lnum: lnum2,
+            pos_bol: bol2,
+            pos_cnum: cnum2,
+          },
+        },
+      ) => {
+    [@raises Not_found]
+    let findPosition = fn => Hashtbl.find(orderedFiles, fn);
+
+    /* From the root of the file dependency DAG to the leaves.
+       From the bottom of the file to the top. */
+    let (position1, position2) =
+      try((fname1 |> findPosition, fname2 |> findPosition)) {
+      | Not_found => (0, 0)
+      };
+    compare(
+      (position1, lnum2, bol2, cnum2, kind1),
+      (position2, lnum1, bol1, cnum1, kind2),
+    );
+  };
+
+  let compareForReporting =
+      (
+        {
+          declKind: kind1,
+          pos: {
+            pos_fname: fname1,
+            pos_lnum: lnum1,
+            pos_bol: bol1,
+            pos_cnum: cnum1,
+          },
+        },
+        {
+          declKind: kind2,
+          pos: {
+            pos_fname: fname2,
+            pos_lnum: lnum2,
+            pos_bol: bol2,
+            pos_cnum: cnum2,
+          },
+        },
+      ) => {
+    compare(
+      (fname1, lnum1, bol1, cnum1, kind1),
+      (fname2, lnum2, bol2, cnum2, kind2),
+    );
+  };
+
+  let isInsideReportedValue = decl => {
+    let fileHasChanged =
+      Current.maxValuePosEnd^.pos_fname != decl.pos.pos_fname;
+
+    let insideReportedValue =
+      decl
+      |> isValue
+      && !fileHasChanged
+      && Current.maxValuePosEnd^.pos_cnum > decl.pos.pos_cnum;
+
+    if (!insideReportedValue) {
+      if (decl |> isValue) {
+        if (fileHasChanged
+            || decl.posEnd.pos_cnum > Current.maxValuePosEnd^.pos_cnum) {
+          Current.maxValuePosEnd := decl.posEnd;
+        };
+      };
+    };
+
+    insideReportedValue;
+  };
+
+  let report = (~ppf, decl) => {
+    let (name, message) =
+      switch (decl.declKind) {
+      | Exception => (
+          "Warning Dead Exception",
+          "is never raised or passed as value",
+        )
+      | Value({sideEffects}) =>
+        let noSideEffectsOrUnderscore =
+          !sideEffects
+          || (
+            switch (decl.path) {
+            | [hd, ..._] => hd |> Name.startsWithUnderscore
+            | [] => false
+            }
+          );
+        (
+          "Warning Dead Value"
+          ++ (!noSideEffectsOrUnderscore ? " With Side Effects" : ""),
+          switch (decl.path) {
+          | [name, ..._] when name |> Name.isUnderscore => "has no side effects and can be removed"
+          | _ =>
+            "is never used"
+            ++ (
+              !noSideEffectsOrUnderscore ? " and could have side effects" : ""
+            )
+          },
+        );
+      | RecordLabel => (
+          "Warning Dead Type",
+          "is a record label never used to read a value",
+        )
+      | VariantCase => (
+          "Warning Dead Type",
+          "is a variant case which is never constructed",
+        )
+      };
+
+    let insideReportedValue = decl |> isInsideReportedValue;
+
+    let shouldEmitWarning =
+      !insideReportedValue
+      && (
+        switch (decl.path) {
+        | [name, ..._] when name |> Name.isUnderscore => Config.reportUnderscore
+        | _ => true
+        }
+      );
+    let shouldWriteAnnotation =
+      shouldEmitWarning
+      && !isToplevelValueWithSideEffects(decl)
+      && Suppress.filter(decl.pos);
+    if (shouldEmitWarning) {
+      decl.path
+      |> Path.toModuleName(~isValue=decl |> isValue)
+      |> DeadModules.checkModuleDead(~fileName=decl.pos.pos_fname);
+      emitWarning(~decl, ~message, ~name);
+    };
+    if (shouldWriteAnnotation) {
+      decl |> WriteDeadAnnotations.onDeadDecl(~ppf);
+    };
+  };
+};
+
 let declIsDead = (~refs, decl) => {
   let liveRefs =
     refs |> PosSet.filter(p => !ProcessDeadAnnotations.isAnnotatedDead(p));
@@ -745,12 +847,6 @@ let declIsDead = (~refs, decl) => {
 
 let doReportDead = pos =>
   !ProcessDeadAnnotations.isAnnotatedGenTypeOrDead(pos);
-
-let isToplevelValueWithSideEffects = decl =>
-  switch (decl.declKind) {
-  | Value({isToplevel, sideEffects}) => isToplevel && sideEffects
-  | _ => false
-  };
 
 let rec resolveRecursiveRefs =
         (
@@ -843,13 +939,15 @@ let rec resolveRecursiveRefs =
 
       if (isDead) {
         decl.path
-        |> Path.toModuleName(~isValue=decl.declKind |> DeclKind.isValue)
-        |> DeadModules.markDead(~loc=decl.moduleLoc);
+        |> DeadModules.markDead(
+             ~isValue=decl |> Decl.isValue,
+             ~loc=decl.moduleLoc,
+           );
 
         if (decl.pos |> doReportDead) {
           deadDeclarations := [decl, ...deadDeclarations^];
         };
-        if (!isToplevelValueWithSideEffects(decl)) {
+        if (!Decl.isToplevelValueWithSideEffects(decl)) {
           decl.pos |> ProcessDeadAnnotations.annotateDead;
         };
       } else {
@@ -862,8 +960,10 @@ let rec resolveRecursiveRefs =
           );
         } else {
           decl.path
-          |> Path.toModuleName(~isValue=decl.declKind |> DeclKind.isValue)
-          |> DeadModules.markLive(~loc=decl.moduleLoc);
+          |> DeadModules.markLive(
+               ~isValue=decl |> Decl.isValue,
+               ~loc=decl.moduleLoc,
+             );
         };
       };
 
@@ -889,163 +989,10 @@ let rec resolveRecursiveRefs =
   };
 };
 
-module Decl = {
-  let compareUsingDependencies =
-      (
-        ~orderedFiles,
-        {
-          declKind: kind1,
-          path: _path1,
-          pos: {
-            pos_fname: fname1,
-            pos_lnum: lnum1,
-            pos_bol: bol1,
-            pos_cnum: cnum1,
-          },
-        },
-        {
-          declKind: kind2,
-          path: _path2,
-          pos: {
-            pos_fname: fname2,
-            pos_lnum: lnum2,
-            pos_bol: bol2,
-            pos_cnum: cnum2,
-          },
-        },
-      ) => {
-    [@raises Not_found]
-    let findPosition = fn => Hashtbl.find(orderedFiles, fn);
-
-    /* From the root of the file dependency DAG to the leaves.
-       From the bottom of the file to the top. */
-    let (position1, position2) =
-      try((fname1 |> findPosition, fname2 |> findPosition)) {
-      | Not_found => (0, 0)
-      };
-    compare(
-      (position1, lnum2, bol2, cnum2, kind1),
-      (position2, lnum1, bol1, cnum1, kind2),
-    );
-  };
-
-  let compareForReporting =
-      (
-        {
-          declKind: kind1,
-          pos: {
-            pos_fname: fname1,
-            pos_lnum: lnum1,
-            pos_bol: bol1,
-            pos_cnum: cnum1,
-          },
-        },
-        {
-          declKind: kind2,
-          pos: {
-            pos_fname: fname2,
-            pos_lnum: lnum2,
-            pos_bol: bol2,
-            pos_cnum: cnum2,
-          },
-        },
-      ) => {
-    compare(
-      (fname1, lnum1, bol1, cnum1, kind1),
-      (fname2, lnum2, bol2, cnum2, kind2),
-    );
-  };
-
-  let isInsideReportedValue = decl => {
-    let fileHasChanged =
-      Current.maxValuePosEnd^.pos_fname != decl.pos.pos_fname;
-
-    let insideReportedValue =
-      decl.declKind
-      |> DeclKind.isValue
-      && !fileHasChanged
-      && Current.maxValuePosEnd^.pos_cnum > decl.pos.pos_cnum;
-
-    if (!insideReportedValue) {
-      if (decl.declKind |> DeclKind.isValue) {
-        if (fileHasChanged
-            || decl.posEnd.pos_cnum > Current.maxValuePosEnd^.pos_cnum) {
-          Current.maxValuePosEnd := decl.posEnd;
-        };
-      };
-    };
-
-    insideReportedValue;
-  };
-
-  let report = (~ppf, decl) => {
-    let (name, message) =
-      switch (decl.declKind) {
-      | Exception => (
-          "Warning Dead Exception",
-          "is never raised or passed as value",
-        )
-      | Value({sideEffects}) =>
-        let noSideEffectsOrUnderscore =
-          !sideEffects
-          || (
-            switch (decl.path) {
-            | [hd, ..._] => hd |> Name.startsWithUnderscore
-            | [] => false
-            }
-          );
-        (
-          "Warning Dead Value"
-          ++ (!noSideEffectsOrUnderscore ? " With Side Effects" : ""),
-          switch (decl.path) {
-          | [name, ..._] when name |> Name.isUnderscore => "has no side effects and can be removed"
-          | _ =>
-            "is never used"
-            ++ (
-              !noSideEffectsOrUnderscore ? " and could have side effects" : ""
-            )
-          },
-        );
-      | RecordLabel => (
-          "Warning Dead Type",
-          "is a record label never used to read a value",
-        )
-      | VariantCase => (
-          "Warning Dead Type",
-          "is a variant case which is never constructed",
-        )
-      };
-
-    let insideReportedValue = decl |> isInsideReportedValue;
-
-    let shouldEmitWarning =
-      !insideReportedValue
-      && (
-        switch (decl.path) {
-        | [name, ..._] when name |> Name.isUnderscore => Config.reportUnderscore
-        | _ => true
-        }
-      );
-    let shouldWriteAnnotation =
-      shouldEmitWarning
-      && !isToplevelValueWithSideEffects(decl)
-      && Suppress.filter(decl.pos);
-    if (shouldEmitWarning) {
-      decl.path
-      |> Path.toModuleName(~isValue=decl.declKind |> DeclKind.isValue)
-      |> DeadModules.checkModuleDead(~fileName=decl.pos.pos_fname);
-      emitWarning(~decl, ~message, ~name);
-    };
-    if (shouldWriteAnnotation) {
-      decl |> WriteDeadAnnotations.onDeadDecl(~ppf);
-    };
-  };
-};
-
 let reportDead = (~checkOptionalArg, ppf) => {
   let iterDeclInOrder = (~deadDeclarations, ~orderedFiles, decl) => {
     let refs =
-      decl.declKind |> DeclKind.isValue
+      decl |> Decl.isValue
         ? ValueReferences.find(decl.pos) : TypeReferences.find(decl.pos);
     resolveRecursiveRefs(
       ~checkOptionalArg,

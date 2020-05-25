@@ -1,4 +1,5 @@
 open DeadCommon;
+open Common;
 
 type item = {
   exceptionPath: Path.t,
