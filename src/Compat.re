@@ -128,15 +128,6 @@ module Ident = {
 #endif
 }
 
-let locGetTxt = ({Location.txt}) => switch txt {
-#if OCAML_MINOR >= 10
-  | Some(s) => s
-  | None => "EmptyLocTxt"
-#else
-  | s => s
-#endif
-}
-
 let tstrExceptionGet = (x : Typedtree.structure_item_desc) => switch x {
 #if OCAML_MINOR >= 8
   | Tstr_exception({tyexn_constructor: {ext_id}, tyexn_loc}) =>
