@@ -247,7 +247,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
         loc: mb_loc,
         path: [
           mb_id |> Compat.moduleIdName |> Name.create,
-          ...ModulePath.getCurrent().path,
+          ...oldModulePath.path,
         ],
       });
       if (hasInterface) {
