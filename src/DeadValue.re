@@ -349,6 +349,7 @@ let processValueDependency =
   if (!ghost1 && !ghost2 && posTo != posFrom) {
     let addFileReference = fileIsImplementationOf(fnTo, fnFrom);
     addValueReference(~addFileReference, ~locFrom, ~locTo);
+    OptionalArgs.addFunctionReference(~locFrom, ~locTo);
   };
 
 let processStructure =

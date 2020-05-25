@@ -768,7 +768,9 @@
   addValueReference OptArg.re:5:7 --> OptArg.re:1:4
   addValueReference OptArg.re:7:7 --> OptArg.re:3:4
   addValueReference OptArg.rei:1:0 --> OptArg.re:1:4
+  OptionalArgs.addFunctionReference OptArg.rei:1:0 OptArg.re:1:4
   addValueReference OptArg.rei:2:0 --> OptArg.re:3:4
+  OptionalArgs.addFunctionReference OptArg.rei:2:0 OptArg.re:3:4
   Scanning Shadow.cmt
   addValueDeclaration +test Shadow.re:2:4 path:+Shadow
   addValueDeclaration +test Shadow.re:5:4 path:+Shadow
