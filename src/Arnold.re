@@ -638,7 +638,7 @@ module FindFunctionsCalled = {
       switch (e.exp_desc) {
       | Texp_apply({exp_desc: Texp_ident(callee, _, _)}, _args) =>
         let functionName = Path.name(callee);
-        callees := StringSet.add(functionName, callees^);
+        callees := callees^ |> StringSet.add(functionName);
       | _ => ()
       };
       super.expr(self, e);
