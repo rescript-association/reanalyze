@@ -1,3 +1,5 @@
+  OptionalArgs.addFunctionReference OptArg.rei:1:0 OptArg.re:1:4
+  OptionalArgs.addFunctionReference OptArg.rei:2:0 OptArg.re:3:4
 
   Warning Unused Argument
   File "./ComponentAsProp.re", line 3, characters 0-432

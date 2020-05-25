@@ -9,6 +9,24 @@ type item = {
 };
 
 let delayedItems: ref(list(item)) = ref([]);
+let references: ref(list((Location.t, Location.t))) = ref([]);
+
+let addFunctionReference = (~locFrom: Location.t, ~locTo: Location.t) =>
+  if (active()) {
+    let shouldAdd =
+      switch (PosHash.find_opt(decls, locTo.loc_start)) {
+      | Some({declKind: Value({optionalArgs})}) => optionalArgs != []
+      | _ => false
+      };
+    if (shouldAdd) {
+      Log_.item(
+        "OptionalArgs.addFunctionReference %s %s@.",
+        locFrom.loc_start |> posToString,
+        locTo.loc_start |> posToString,
+      );
+      references := [(locFrom, locTo), ...references^];
+    };
+  };
 
 let rec fromTypeExpr = (texpr: Types.type_expr) =>
   switch (texpr.desc) {
