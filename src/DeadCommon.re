@@ -212,14 +212,7 @@ let declGetLoc = decl => {
   loc_ghost: false,
 };
 
-module ModulePath: {
-  type t = {
-    loc: Location.t,
-    path: Path.t,
-  };
-  let getCurrent: unit => t;
-  let setCurrent: t => unit;
-} = {
+module ModulePath = {
   type t = {
     loc: Location.t,
     path: Path.t,
