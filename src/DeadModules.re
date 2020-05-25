@@ -6,7 +6,7 @@ let markDead = (~isValue, ~loc, path) =>
   if (active()) {
     let moduleName = path |> Common.Path.toModuleName(~isValue);
     switch (Hashtbl.find_opt(table, moduleName)) {
-    | Some((false, _)) => ()
+    | Some(c) => ()
     | _ => Hashtbl.replace(table, moduleName, (false, loc))
     };
   };
@@ -16,9 +16,8 @@ let markLive = (~isValue, ~loc: Location.t, path) =>
     let moduleName = path |> Common.Path.toModuleName(~isValue);
     switch (Hashtbl.find_opt(table, moduleName)) {
     | None => Hashtbl.replace(table, moduleName, (true, loc))
-    | Some(_) =>
-      // Do nothing: if dead it stays dead, if live it stays live
-      ()
+    | Some((false, loc)) => Hashtbl.replace(table, moduleName, (true, loc))
+    | Some((true, _)) => ()
     };
   };
 
