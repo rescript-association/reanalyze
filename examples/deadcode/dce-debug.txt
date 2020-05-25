@@ -29,7 +29,7 @@
   addExceptionDeclaration Json_error Yojson.re:1:10 path:+Yojson
   addValueReference Yojson.re:7:6 --> Yojson.re:1:10
   addTypeReference Yojson.re:7:44 --> Yojson.re:1:10
-  addExceptionDeclaration Type_error Yojson.re:10:14 path:+Yojson
+  addExceptionDeclaration Type_error Yojson.re:10:14 path:+Yojson.Basic.Util
   addValueReference Yojson.re:13:8 --> Yojson.re:10:14
   addTypeReference Yojson.re:14:23 --> Yojson.re:10:14
   addValueReference Yojson.re:13:8 --> Yojson.re:14:11
@@ -636,7 +636,7 @@
   addValueDeclaration +eToplevel DeadExn.re:8:4 path:+DeadExn
   addValueDeclaration +eInside DeadExn.re:10:4 path:+DeadExn
   addExceptionDeclaration Etoplevel DeadExn.re:1:10 path:+DeadExn
-  addExceptionDeclaration Einside DeadExn.re:4:12 path:+DeadExn
+  addExceptionDeclaration Einside DeadExn.re:4:12 path:+DeadExn.Inside
   addExceptionDeclaration DeadE DeadExn.re:7:10 path:+DeadExn
   addValueReference DeadExn.re:8:4 --> DeadExn.re:1:10
   addTypeReference DeadExn.re:8:16 --> DeadExn.re:1:10
@@ -2483,7 +2483,7 @@ File References
   Live Value +DeadExn.+eInside: 1 references (DeadExn.re:12:7) [0]
   Dead Value +DeadExn.+eToplevel: 0 references () [0]
   Dead Exception +DeadExn.DeadE: 0 references () [0]
-  Live Exception +DeadExn.Einside: 1 references (DeadExn.re:10:14) [0]
+  Live Exception +DeadExn.Inside.Einside: 1 references (DeadExn.re:10:14) [0]
   Live Exception +DeadExn.Etoplevel: 1 references (DeadExn.re:8:16) [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
@@ -2609,7 +2609,7 @@ File References
   Dead Value +Yojson.Basic.Util.+to_string: 0 references () [0]
   Dead Value +Yojson.Basic.Util.+to_int: 0 references () [0]
   Dead Value +Yojson.Basic.Util.+member: 0 references () [0]
-  Live Exception +Yojson.Type_error: 1 references (Yojson.re:14:23) [0]
+  Live Exception +Yojson.Basic.Util.Type_error: 1 references (Yojson.re:14:23) [0]
   Dead Value +Yojson.Basic.+from_string: 0 references () [0]
   Live Exception +Yojson.Json_error: 1 references (Yojson.re:7:44) [0]
   Live Value trace.+infok: 1 references (DeadTest.re:175:0) [0]
