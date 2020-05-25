@@ -1,4 +1,6 @@
 # master
+
+# 2.0.0
 - Add -experimental command-line to turn on experimental analyses.
 - New analysis for unused optional named arguments, under the `-experimental` flag.
 - New analysis for dead modules, under the `-experimental` flag.
