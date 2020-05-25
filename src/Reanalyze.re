@@ -199,7 +199,7 @@ let cli = () => {
     (
       "-experimental",
       Arg.Unit(setExperimental),
-      "Turn on experimental analyses (unused optional named argument)",
+      "Turn on experimental analyses (unused optional named argument, dead module)",
     ),
     (
       "-live-names",
