@@ -72,6 +72,14 @@ module Path = {
     | [] => path
     };
 
+  let toModuleName = (~isValue, path) => {
+    switch (path) {
+    | [_, ...tl] when isValue => tl |> toString
+    | [_, _, ...tl] when !isValue => tl |> toString
+    | _ => ""
+    };
+  };
+
   let typeToInterface = path =>
     switch (path) {
     | [typeName, ...rest] => [typeName |> Name.toInterface, ...rest]
@@ -533,24 +541,6 @@ module ProcessDeadAnnotations = {
 
 /********   PROCESSING  ********/
 
-let pathToString = path =>
-  path |> List.rev_map(Name.toString) |> String.concat(".");
-
-let pathWithoutHead = path => {
-  switch (path |> List.rev_map(Name.toString)) {
-  | [_, ...tl] => tl |> String.concat(".")
-  | [] => ""
-  };
-};
-
-let pathToModuleName = (~isValue, path) => {
-  switch (path) {
-  | [_, ...tl] when isValue => tl |> pathToString
-  | [_, _, ...tl] when !isValue => tl |> pathToString
-  | _ => ""
-  };
-};
-
 let annotateAtEnd = (~pos) => !posIsReason(pos);
 
 let getPosAnnotation = decl =>
@@ -908,7 +898,7 @@ let rec resolveRecursiveRefs =
 
       if (isDead) {
         decl.path
-        |> pathToModuleName(~isValue=decl.declKind |> DeclKind.isValue)
+        |> Path.toModuleName(~isValue=decl.declKind |> DeclKind.isValue)
         |> LiveModules.markDead(~loc=decl.moduleLoc);
 
         if (decl.pos |> doReportDead) {
@@ -927,7 +917,7 @@ let rec resolveRecursiveRefs =
           );
         } else {
           decl.path
-          |> pathToModuleName(~isValue=decl.declKind |> DeclKind.isValue)
+          |> Path.toModuleName(~isValue=decl.declKind |> DeclKind.isValue)
           |> LiveModules.markLive(~loc=decl.moduleLoc);
         };
       };
@@ -1097,7 +1087,7 @@ module Decl = {
       && Suppress.filter(decl.pos);
     if (shouldEmitWarning) {
       decl.path
-      |> pathToModuleName(~isValue=decl.declKind |> DeclKind.isValue)
+      |> Path.toModuleName(~isValue=decl.declKind |> DeclKind.isValue)
       |> LiveModules.checkModuleDead(~fileName=decl.pos.pos_fname);
       emitWarning(~decl, ~message, ~name);
     };
