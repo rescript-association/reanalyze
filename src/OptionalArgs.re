@@ -15,7 +15,8 @@ let addFunctionReference = (~locFrom: Location.t, ~locTo: Location.t) =>
   if (active()) {
     let shouldAdd =
       switch (PosHash.find_opt(decls, locTo.loc_start)) {
-      | Some({declKind: Value({optionalArgs})}) => optionalArgs != []
+      | Some({declKind: Value({optionalArgs})}) =>
+        !StringSet.is_empty(optionalArgs)
       | _ => false
       };
     if (shouldAdd) {
@@ -30,12 +31,13 @@ let addFunctionReference = (~locFrom: Location.t, ~locTo: Location.t) =>
 
 let rec fromTypeExpr = (texpr: Types.type_expr) =>
   switch (texpr.desc) {
-  | _ when !active() => []
-  | Tarrow(Optional(s), _tFrom, tTo, _) => [s, ...fromTypeExpr(tTo)]
+  | _ when !active() => StringSet.empty
+  | Tarrow(Optional(s), _tFrom, tTo, _) =>
+    StringSet.add(s, fromTypeExpr(tTo))
   | Tarrow(_, _tFrom, tTo, _) => fromTypeExpr(tTo)
   | Tlink(t)
   | Tsubst(t) => fromTypeExpr(t)
-  | _ => []
+  | _ => StringSet.empty
   };
 
 let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, argName) =>
@@ -57,11 +59,8 @@ let forceDelayedItems = () => {
   items
   |> List.iter(({locTo, argName}) =>
        switch (PosHash.find_opt(decls, locTo.loc_start)) {
-       | Some({declKind: Value({optionalArgs} as r)}) =>
-         let argFound = List.mem(argName, optionalArgs);
-         if (argFound) {
-           r.optionalArgs = r.optionalArgs |> List.filter(a => a != argName);
-         };
+       | Some({declKind: Value(r)}) =>
+         r.optionalArgs = r.optionalArgs |> StringSet.remove(argName)
        | _ => ()
        }
      );
@@ -71,7 +70,7 @@ let check = decl =>
   switch (decl) {
   | {declKind: Value({optionalArgs})} when active() =>
     optionalArgs
-    |> List.iter(s => {
+    |> StringSet.iter(s => {
          Log_.info(
            ~loc=decl |> declGetLoc, ~name="Warning Unused Argument", (ppf, ()) =>
            Format.fprintf(

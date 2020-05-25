@@ -25,6 +25,8 @@ module Cli = {
   let livePaths = ref([]: list(string)); // paths of files where all values are considered live
 };
 
+module StringSet = Set.Make(String);
+
 module LocSet =
   Set.Make({
     include Location;

@@ -82,7 +82,7 @@ module DeclKind = {
     | VariantCase
     | Value({
         isToplevel: bool,
-        mutable optionalArgs: list(string),
+        mutable optionalArgs: StringSet.t,
         sideEffects: bool,
       });
 
@@ -523,7 +523,7 @@ let addValueDeclaration =
       ~isToplevel=true,
       ~loc: Location.t,
       ~moduleLoc,
-      ~optionalArgs=[],
+      ~optionalArgs=StringSet.empty,
       ~path,
       ~sideEffects,
       name,
