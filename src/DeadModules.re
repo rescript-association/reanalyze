@@ -1,13 +1,15 @@
 let table = Hashtbl.create(1);
 
-let markDead = (~loc, moduleName) => {
+let markDead = (~isValue, ~loc, path) => {
+  let moduleName = path |> Common.Path.toModuleName(~isValue);
   switch (Hashtbl.find_opt(table, moduleName)) {
   | Some((false, _)) => ()
   | _ => Hashtbl.replace(table, moduleName, (false, loc))
   };
 };
 
-let markLive = (~loc: Location.t, moduleName) => {
+let markLive = (~isValue, ~loc: Location.t, path) => {
+  let moduleName = path |> Common.Path.toModuleName(~isValue);
   switch (Hashtbl.find_opt(table, moduleName)) {
   | None => Hashtbl.replace(table, moduleName, (true, loc))
   | Some(_) =>

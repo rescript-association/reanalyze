@@ -18,7 +18,7 @@ let whiteTableSideEffects =
 
 let pathIsWhitelistedForSideEffects = path => {
   path
-  |> DeadCommon.Path.onOkPath(~whenContainsApply=false, ~f=s =>
+  |> Common.Path.onOkPath(~whenContainsApply=false, ~f=s =>
        Hashtbl.mem(Lazy.force(whiteTableSideEffects), s)
      );
 };
