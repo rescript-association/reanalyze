@@ -4,28 +4,33 @@ open Common;
 let active = () => Cli.experimental^;
 
 type item = {
-  locTo: Location.t,
+  posTo: Lexing.position,
   argName: string,
 };
 
 let delayedItems: ref(list(item)) = ref([]);
-let references: ref(list((Location.t, Location.t))) = ref([]);
+let functionReferences: ref(list((Lexing.position, Lexing.position))) =
+  ref([]);
 
 let addFunctionReference = (~locFrom: Location.t, ~locTo: Location.t) =>
   if (active()) {
+    let posTo = locTo.loc_start;
+    let posFrom = locFrom.loc_start;
     let shouldAdd =
-      switch (PosHash.find_opt(decls, locTo.loc_start)) {
+      switch (PosHash.find_opt(decls, posTo)) {
       | Some({declKind: Value({optionalArgs})}) =>
         !StringSet.is_empty(optionalArgs)
       | _ => false
       };
     if (shouldAdd) {
-      Log_.item(
-        "OptionalArgs.addFunctionReference %s %s@.",
-        locFrom.loc_start |> posToString,
-        locTo.loc_start |> posToString,
-      );
-      references := [(locFrom, locTo), ...references^];
+      if (Common.debug^) {
+        Log_.item(
+          "OptionalArgs.addFunctionReference %s %s@.",
+          posFrom |> posToString,
+          posTo |> posToString,
+        );
+      };
+      functionReferences := [(posFrom, posTo), ...functionReferences^];
     };
   };
 
@@ -42,13 +47,15 @@ let rec fromTypeExpr = (texpr: Types.type_expr) =>
 
 let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, argName) =>
   if (active()) {
-    delayedItems := [{locTo, argName}, ...delayedItems^];
+    let posTo = locTo.loc_start;
+    let posFrom = locFrom.loc_start;
+    delayedItems := [{posTo, argName}, ...delayedItems^];
     if (Common.debug^) {
       Log_.item(
         "OptionalArgs.addReference %s called with optional arg %s %s@.",
         path |> Path.fromPathT |> Path.toString,
         argName,
-        locFrom.loc_start |> posToString,
+        posFrom |> posToString,
       );
     };
   };
@@ -57,10 +64,26 @@ let forceDelayedItems = () => {
   let items = delayedItems^ |> List.rev;
   delayedItems := [];
   items
-  |> List.iter(({locTo, argName}) =>
-       switch (PosHash.find_opt(decls, locTo.loc_start)) {
+  |> List.iter(({posTo, argName}) =>
+       switch (PosHash.find_opt(decls, posTo)) {
        | Some({declKind: Value(r)}) =>
          r.optionalArgs = r.optionalArgs |> StringSet.remove(argName)
+       | _ => ()
+       }
+     );
+  let fRefs = functionReferences^ |> List.rev;
+  functionReferences := [];
+  fRefs
+  |> List.iter(((posFrom, posTo)) =>
+       switch (
+         PosHash.find_opt(decls, posFrom),
+         PosHash.find_opt(decls, posTo),
+       ) {
+       | (Some({declKind: Value(rFrom)}), Some({declKind: Value(rTo)})) =>
+         let intersection =
+           StringSet.inter(rFrom.optionalArgs, rTo.optionalArgs);
+         rFrom.optionalArgs = intersection;
+         rTo.optionalArgs = intersection;
        | _ => ()
        }
      );

@@ -1,25 +1,7 @@
-  OptionalArgs.addFunctionReference OptArg.rei:1:0 OptArg.re:1:4
-  OptionalArgs.addFunctionReference OptArg.rei:2:0 OptArg.re:3:4
 
   Warning Unused Argument
   File "./ComponentAsProp.re", line 3, characters 0-432
   optional argument button of function +make is never used
-
-  Warning Unused Argument
-  File "./OptArg.re", line 3, characters 0-38
-  optional argument x of function +bar is never used
-
-  Warning Unused Argument
-  File "./OptArg.re", line 3, characters 0-38
-  optional argument z of function +bar is never used
-
-  Warning Unused Argument
-  File "./OptArg.re", line 1, characters 0-48
-  optional argument y of function +foo is never used
-
-  Warning Unused Argument
-  File "./OptArg.re", line 1, characters 0-48
-  optional argument z of function +foo is never used
 
   Warning Dead Module
   File "./AutoAnnotate.re", line 0, characters 0-0
@@ -2004,4 +1986,4 @@
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 357 issues (Warning Dead Exception:1, Warning Dead Module:62, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:5)
+  Analysis reported 353 issues (Warning Dead Exception:1, Warning Dead Module:62, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:1)
