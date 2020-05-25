@@ -147,3 +147,12 @@ let tstrExceptionGet = (x : Typedtree.structure_item_desc) => switch x {
 #endif
   | _ => None
 };
+
+#if OCAML_MINOR >= 10
+let moduleIdName = nameOpt => switch nameOpt {
+  | None => "UnnamedModule"
+  | Some(name) => name |> Ident.name
+};
+#else
+let moduleIdName = name => name |> Ident.name;
+#endif
