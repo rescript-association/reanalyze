@@ -2683,23 +2683,7 @@ File References
   Dead Value +ImmutableArray.+fromTT: 0 references () [0]
   Dead Value +ImmutableArray.+fromTp: 0 references () [0]
   Live Value +ImmutableArray.+fromT: 1 references (ImmutableArray.re:24:6) [0]
-
-  Warning Unused Argument
-  File "./OptArg.re", line 3, characters 0-38
-  optional argument x of function +bar is never used
-
-  Warning Unused Argument
-  File "./OptArg.re", line 3, characters 0-38
-  optional argument z of function +bar is never used
   Live Value +OptArg.+bar: 2 references (OptArg.re:7:7, OptArg.rei:2:0) [0]
-
-  Warning Unused Argument
-  File "./OptArg.re", line 1, characters 0-48
-  optional argument y of function +foo is never used
-
-  Warning Unused Argument
-  File "./OptArg.re", line 1, characters 0-48
-  optional argument z of function +foo is never used
   Live Value +OptArg.+foo: 1 references (OptArg.re:5:7) [0]
   Live Value +trace.+infok: 1 references (trace.mli:5:0) [0]
   Live RecordLabel +trace.pf.pf: 1 references (trace.mli:3:11) [0]
@@ -4687,4 +4671,4 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 357 issues (Warning Dead Exception:1, Warning Dead Module:62, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:5)
+  Analysis reported 353 issues (Warning Dead Exception:1, Warning Dead Module:62, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:1)
