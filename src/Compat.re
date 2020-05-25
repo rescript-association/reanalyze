@@ -33,11 +33,11 @@ let pp_set_formatter_tag_functions =
 
 let getSigValue = si => switch si {
 #if OCAML_MINOR >= 8
-  | Types.Sig_value(id, {Types.val_loc, val_kind}, _) =>
-    (id, val_loc, val_kind)
+  | Types.Sig_value(id, {Types.val_loc, val_kind, val_type}, _) =>
+    (id, val_loc, val_kind, val_type)
 #else
-  | Types.Sig_value(id, {Types.val_loc, val_kind}) =>
-    (id, val_loc, val_kind)
+  | Types.Sig_value(id, {Types.val_loc, val_kind, val_type}) =>
+    (id, val_loc, val_kind, val_type)
 #endif
   | _ => assert false
 }

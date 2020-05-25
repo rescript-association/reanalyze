@@ -6,7 +6,7 @@ let markDead = (~isValue, ~loc, path) =>
   if (active()) {
     let moduleName = path |> Common.Path.toModuleName(~isValue);
     switch (Hashtbl.find_opt(table, moduleName)) {
-    | Some(c) => ()
+    | Some(_) => ()
     | _ => Hashtbl.replace(table, moduleName, (false, loc))
     };
   };

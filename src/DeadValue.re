@@ -187,8 +187,8 @@ let rec processSignatureItem =
     if (Config.analyzeTypes^) {
       DeadType.addDeclaration(~typeId=id, ~typeKind=t.type_kind);
     };
-  | Sig_value(_, vd) when doValues =>
-    let (id, loc, kind) = si |> Compat.getSigValue;
+  | Sig_value(_) when doValues =>
+    let (id, loc, kind, valType) = si |> Compat.getSigValue;
     if (!loc.Location.loc_ghost) {
       let isPrimitive =
         switch (kind) {
@@ -196,7 +196,7 @@ let rec processSignatureItem =
         | _ => false
         };
       if (!isPrimitive || Config.analyzeExternals) {
-        let optionalArgs = vd.val_type |> OptionalArgs.fromTypeExpr;
+        let optionalArgs = valType |> OptionalArgs.fromTypeExpr;
         Ident.name(id)
         |> Name.create(~isInterface=false)
         |> addValueDeclaration(
