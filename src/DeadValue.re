@@ -110,16 +110,15 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
     ) =>
     args
     |> List.iter(((lbl, arg)) => {
-         let argIsSome =
+         let argIsNotNone =
            switch (arg) {
-           | Some({
-               Typedtree.exp_desc: Texp_construct(_, {cstr_name: "Some"}, _),
-             }) =>
-             true
-           | _ => false
+           | Some({Typedtree.exp_desc: Texp_construct(_, {cstr_name}, _)}) =>
+             cstr_name != "None"
+           | Some(_) => true
+           | None => false
            };
          switch (lbl) {
-         | Asttypes.Optional(s) when !locFrom.loc_ghost && argIsSome =>
+         | Asttypes.Optional(s) when !locFrom.loc_ghost && argIsNotNone =>
            s |> OptionalArgs.addReference(~locFrom, ~locTo, ~path)
          | _ => ()
          };

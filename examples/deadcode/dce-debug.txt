@@ -1014,8 +1014,18 @@
   addValueReference TypeParams3.re:2:4 --> TypeParams3.re:2:12
   addValueReference TypeParams3.re:5:4 --> TypeParams3.re:5:13
   Scanning TestOptArg.cmt
+  addValueDeclaration +foo TestOptArg.re:3:4 path:+TestOptArg
+  addValueDeclaration +bar TestOptArg.re:5:4 path:+TestOptArg
   OptionalArgs.addReference OptArg.bar called with optional arg z TestOptArg.re:1:7
   addValueReference TestOptArg.re:1:7 --> OptArg.rei:2:0
+  addValueReference TestOptArg.re:3:4 --> TestOptArg.re:3:14
+  addValueReference TestOptArg.re:3:4 --> TestOptArg.re:3:12
+  addValueReference TestOptArg.re:3:4 --> TestOptArg.re:3:17
+  addValueDeclaration +x TestOptArg.re:6:6 path:+TestOptArg
+  OptionalArgs.addReference foo called with optional arg x TestOptArg.re:7:2
+  addValueReference TestOptArg.re:5:4 --> TestOptArg.re:6:6
+  addValueReference TestOptArg.re:5:4 --> TestOptArg.re:3:4
+  addValueReference TestOptArg.re:10:7 --> TestOptArg.re:5:4
   Scanning IgnoreInterface.cmt
   Scanning DeadValueTest.cmti
   addValueDeclaration +valueAlive DeadValueTest.rei:1:0 path:DeadValueTest
@@ -2323,6 +2333,9 @@ File References
   Live Value +TestModuleAliases.+testInner2: 0 references () [0]
   Live Value +TestModuleAliases.+testInner1Expanded: 0 references () [0]
   Live Value +TestModuleAliases.+testInner1: 0 references () [0]
+  Live Value +TestOptArg.+bar: 1 references (TestOptArg.re:10:7) [1]
+  Live Value +TestOptArg.+x: 1 references (TestOptArg.re:5:4) [0]
+  Live Value +TestOptArg.+foo: 1 references (TestOptArg.re:5:4) [0]
   Live Value +TestPromise.+convert: 0 references () [0]
   Dead RecordLabel +TestPromise.toPayload.result: 0 references () [0]
   Live RecordLabel +TestPromise.fromPayload.s: 1 references (TestPromise.re:14:32) [0]

@@ -1,4 +1,5 @@
 # master
+- Fix issue in experimental analysis for unused optional named arguments where `foo(~x=?)` was not recognized.
 
 # 2.1.0
 - Add -experimental command-line to turn on experimental analyses.
