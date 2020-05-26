@@ -1,4 +1,6 @@
 # master
+
+# 2.2.0
 - Fix issue in experimental analysis for unused optional named arguments where `foo(~x=?)` was not recognized.
 
 # 2.1.0
