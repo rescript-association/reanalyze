@@ -1,4 +1,5 @@
 # master
+- DCE: add check Warning Redundant Optional Argument when an optional named argument is always supplied. Then there is no reason for it to be an optional argument.
 
 # 2.2.0
 - Fix issue in experimental analysis for unused optional named arguments where `foo(~x=?)` was not recognized.
