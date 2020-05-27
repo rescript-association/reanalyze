@@ -38,7 +38,7 @@ let addFunctionReference = (~locFrom: Location.t, ~locTo: Location.t) =>
 let rec hasOptionalArgs = (texpr: Types.type_expr) =>
   switch (texpr.desc) {
   | _ when !active() => false
-  | Tarrow(Optional(s), _tFrom, tTo, _) => true
+  | Tarrow(Optional(_), _tFrom, _tTo, _) => true
   | Tarrow(_, _tFrom, tTo, _) => hasOptionalArgs(tTo)
   | Tlink(t)
   | Tsubst(t) => hasOptionalArgs(t)
