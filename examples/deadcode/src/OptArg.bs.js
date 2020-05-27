@@ -27,6 +27,14 @@ console.log(threeArgs(4, undefined, 7, 1));
 
 console.log(threeArgs(4, undefined, undefined, 1));
 
+function twoArgs(aOpt, bOpt, c) {
+  var a = aOpt !== undefined ? aOpt : 1;
+  var b = bOpt !== undefined ? bOpt : 2;
+  return (a + b | 0) + c | 0;
+}
+
+console.log(twoArgs(undefined, undefined, 1));
+
 export {
   foo ,
   bar ,

@@ -132,6 +132,62 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
       references^ |> DeadOptionalArgs.addReferences(~locFrom, ~locTo, ~path);
     };
 
+  | Texp_let(
+      // generated for functions with optional args
+      Nonrecursive,
+      [
+        {
+          vb_pat: {pat_desc: Tpat_var(idArg, _)},
+          vb_expr: {
+            exp_desc:
+              Texp_ident(
+                path,
+                _,
+                {Types.val_loc: {loc_ghost: false, _} as locTo},
+              ),
+            exp_type,
+          },
+        },
+      ],
+      {
+        exp_desc:
+          Texp_function({
+            cases: [
+              {
+                c_lhs: {pat_desc: Tpat_var(etaArg, _)},
+                c_rhs: {
+                  exp_desc:
+                    Texp_apply({exp_desc: Texp_ident(idArg2, _, _)}, args),
+                },
+              },
+            ],
+          }),
+      },
+    )
+      when
+        Ident.name(idArg) == "arg"
+        && Ident.name(etaArg) == "eta"
+        && Path.name(idArg2) == "arg" =>
+    let references = ref([]);
+    args
+    |> List.iter(((lbl, arg)) => {
+         let argIsNotNone =
+           switch (arg) {
+           | Some({Typedtree.exp_desc: Texp_construct(_, {cstr_name}, _)}) =>
+             cstr_name != "None"
+           | Some(_) => true
+           | None => false
+           };
+         switch (lbl) {
+         | Asttypes.Optional(s) when !locFrom.loc_ghost && argIsNotNone =>
+           references := [s, ...references^]
+         | _ => ()
+         };
+       });
+    if (exp_type |> DeadOptionalArgs.hasOptionalArgs) {
+      references^ |> DeadOptionalArgs.addReferences(~locFrom, ~locTo, ~path);
+    };
+
   | Texp_field(
       _,
       _,
