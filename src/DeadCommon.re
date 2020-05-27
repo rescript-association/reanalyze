@@ -76,18 +76,41 @@ module PosHash = {
 };
 
 module OptionalArgs = {
-  type t = {mutable unused: StringSet.t};
-  let empty = {unused: StringSet.empty};
-  let fromList = l => {unused: StringSet.of_list(l)};
-  let isEmpty = x => StringSet.is_empty(x.unused);
-  let call = (names, x) =>
-    names |> List.iter(name => x.unused = StringSet.remove(name, x.unused));
-  let combine = (x, y) => {
-    let s = StringSet.inter(x.unused, y.unused);
-    x.unused = s;
-    y.unused = s;
+  type t = {
+    mutable count: int,
+    mutable unused: StringSet.t,
+    mutable alwaysUsed: StringSet.t,
   };
-  let iter = (f, x) => StringSet.iter(f, x.unused);
+  let empty = {
+    unused: StringSet.empty,
+    alwaysUsed: StringSet.empty,
+    count: 0,
+  };
+  let fromList = l => {
+    unused: StringSet.of_list(l),
+    alwaysUsed: StringSet.empty,
+    count: 0,
+  };
+  let isEmpty = x => StringSet.is_empty(x.unused);
+  let call = (names, x) => {
+    x.alwaysUsed = {
+      let nameSet = names |> StringSet.of_list;
+      x.count == 0 ? nameSet : StringSet.inter(nameSet, x.alwaysUsed);
+    };
+    names |> List.iter(name => x.unused = StringSet.remove(name, x.unused));
+    x.count = x.count + 1;
+  };
+  let combine = (x, y) => {
+    let unused = StringSet.inter(x.unused, y.unused);
+    x.unused = unused;
+    y.unused = unused;
+    let alwaysUsed = StringSet.inter(x.alwaysUsed, y.alwaysUsed);
+    x.alwaysUsed = alwaysUsed;
+    y.alwaysUsed = alwaysUsed;
+  };
+  let iterUnused = (f, x) => StringSet.iter(f, x.unused);
+  let iterAlwaysUsed = (f, x) =>
+    StringSet.iter(s => f(s, x.count), x.alwaysUsed);
 };
 
 module DeclKind = {

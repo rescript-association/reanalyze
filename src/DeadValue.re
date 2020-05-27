@@ -108,6 +108,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
             _,
             {Types.val_loc: {loc_ghost: false, _} as locTo},
           ),
+        exp_type,
       },
       args,
     ) =>
@@ -127,7 +128,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
          | _ => ()
          };
        });
-    if (references^ != []) {
+    if (exp_type |> DeadOptionalArgs.hasOptionalArgs) {
       references^ |> DeadOptionalArgs.addReferences(~locFrom, ~locTo, ~path);
     };
 

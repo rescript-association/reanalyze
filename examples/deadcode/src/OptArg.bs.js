@@ -25,6 +25,8 @@ function threeArgs(aOpt, bOpt, cOpt, d) {
 
 console.log(threeArgs(4, undefined, 7, 1));
 
+console.log(threeArgs(4, undefined, undefined, 1));
+
 export {
   foo ,
   bar ,
