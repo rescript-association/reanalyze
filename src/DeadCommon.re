@@ -76,12 +76,16 @@ module PosHash = {
 };
 
 module OptionalArgs = {
-  type t = {unused: StringSet.t};
+  type t = {mutable unused: StringSet.t};
   let empty = {unused: StringSet.empty};
   let fromList = l => {unused: StringSet.of_list(l)};
   let isEmpty = x => StringSet.is_empty(x.unused);
   let count = (name, x) => {unused: StringSet.remove(name, x.unused)};
-  let inter = (x, y) => {unused: StringSet.inter(x.unused, y.unused)};
+  let combine = (x, y) => {
+    let s = StringSet.inter(x.unused, y.unused);
+    x.unused = s;
+    y.unused = s;
+  };
   let iter = (f, x) => StringSet.iter(f, x.unused);
 };
 

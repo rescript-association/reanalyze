@@ -79,10 +79,7 @@ let forceDelayedItems = () => {
          PosHash.find_opt(decls, posTo),
        ) {
        | (Some({declKind: Value(rFrom)}), Some({declKind: Value(rTo)})) =>
-         let intersection =
-           OptionalArgs.inter(rFrom.optionalArgs, rTo.optionalArgs);
-         rFrom.optionalArgs = intersection;
-         rTo.optionalArgs = intersection;
+           OptionalArgs.combine(rFrom.optionalArgs, rTo.optionalArgs);
        | _ => ()
        }
      );
