@@ -5,7 +5,7 @@ let active = () => Cli.experimental^;
 
 type item = {
   posTo: Lexing.position,
-  argName: string,
+  argNames: list(string),
 };
 
 let delayedItems: ref(list(item)) = ref([]);
@@ -44,16 +44,17 @@ let rec fromTypeExpr = (texpr: Types.type_expr) =>
   | _ => []
   };
 
-let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, argName) =>
+let addReferences =
+    (~locFrom: Location.t, ~locTo: Location.t, ~path, argNames) =>
   if (active()) {
     let posTo = locTo.loc_start;
     let posFrom = locFrom.loc_start;
-    delayedItems := [{posTo, argName}, ...delayedItems^];
+    delayedItems := [{posTo, argNames}, ...delayedItems^];
     if (Common.debug^) {
       Log_.item(
-        "DeadOptionalArgs.addReference %s called with optional arg %s %s@.",
+        "DeadOptionalArgs.addReferences %s called with optional args %s %s@.",
         path |> Path.fromPathT |> Path.toString,
-        argName,
+        argNames |> String.concat(", "),
         posFrom |> posToString,
       );
     };
@@ -63,10 +64,10 @@ let forceDelayedItems = () => {
   let items = delayedItems^ |> List.rev;
   delayedItems := [];
   items
-  |> List.iter(({posTo, argName}) =>
+  |> List.iter(({posTo, argNames}) =>
        switch (PosHash.find_opt(decls, posTo)) {
        | Some({declKind: Value(r)}) =>
-         r.optionalArgs |> OptionalArgs.count(argName)
+         r.optionalArgs |> OptionalArgs.call(argNames)
        | _ => ()
        }
      );

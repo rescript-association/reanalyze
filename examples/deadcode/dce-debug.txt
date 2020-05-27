@@ -764,7 +764,7 @@
   addValueReference OptArg.re:1:4 --> OptArg.re:1:29
   addValueReference OptArg.re:3:4 --> OptArg.re:3:18
   addValueReference OptArg.re:3:4 --> OptArg.re:3:27
-  DeadOptionalArgs.addReference foo called with optional arg x OptArg.re:5:7
+  DeadOptionalArgs.addReferences foo called with optional args x OptArg.re:5:7
   addValueReference OptArg.re:5:7 --> OptArg.re:1:4
   addValueReference OptArg.re:7:7 --> OptArg.re:3:4
   addValueReference OptArg.rei:1:0 --> OptArg.re:1:4
@@ -1016,13 +1016,13 @@
   Scanning TestOptArg.cmt
   addValueDeclaration +foo TestOptArg.re:3:4 path:+TestOptArg
   addValueDeclaration +bar TestOptArg.re:5:4 path:+TestOptArg
-  DeadOptionalArgs.addReference OptArg.bar called with optional arg z TestOptArg.re:1:7
+  DeadOptionalArgs.addReferences OptArg.bar called with optional args z TestOptArg.re:1:7
   addValueReference TestOptArg.re:1:7 --> OptArg.rei:2:0
   addValueReference TestOptArg.re:3:4 --> TestOptArg.re:3:14
   addValueReference TestOptArg.re:3:4 --> TestOptArg.re:3:12
   addValueReference TestOptArg.re:3:4 --> TestOptArg.re:3:17
   addValueDeclaration +x TestOptArg.re:6:6 path:+TestOptArg
-  DeadOptionalArgs.addReference foo called with optional arg x TestOptArg.re:7:2
+  DeadOptionalArgs.addReferences foo called with optional args x TestOptArg.re:7:2
   addValueReference TestOptArg.re:5:4 --> TestOptArg.re:6:6
   addValueReference TestOptArg.re:5:4 --> TestOptArg.re:3:4
   addValueReference TestOptArg.re:10:7 --> TestOptArg.re:5:4
@@ -1589,7 +1589,7 @@
   addValueReference Hooks.re:13:26 --> Hooks.re:5:7
   addValueReference Hooks.re:9:7 --> React.re:7:0
   addValueReference Hooks.re:8:4 --> ReactDOMRe.re:1125:0
-  DeadOptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props Hooks.re:17:4
+  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional args props Hooks.re:17:4
   addValueReference Hooks.re:17:40 --> Hooks.re:5:7
   addValueReference Hooks.re:17:26 --> Hooks.re:5:14
   addValueReference Hooks.re:18:7 --> React.re:7:0
@@ -1648,7 +1648,7 @@
   addValueReference Hooks.re:89:2 --> React.re:7:0
   addValueReference Hooks.re:88:6 --> Hooks.re:87:33
   addValueReference Hooks.re:88:2 --> Hooks.re:87:47
-  DeadOptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props Hooks.re:97:4
+  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional args props Hooks.re:97:4
   addValueReference Hooks.re:97:39 --> Hooks.re:96:9
   addValueReference Hooks.re:97:17 --> ReactDOMRe.re:120:2
   addTypeReference Hooks.re:98:20 --> Hooks.re:1:16
@@ -1660,7 +1660,7 @@
   addValueReference Hooks.re:105:4 --> Hooks.re:94:4
   addValueReference Hooks.re:105:4 --> React.re:81:0
   addRecordLabelDeclaration x Hooks.re:107:10 path:+Hooks.r
-  DeadOptionalArgs.addReference ReactDOMRe.createDOMElementVariadic called with optional arg props Hooks.re:113:4
+  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional args props Hooks.re:113:4
   addValueReference Hooks.re:113:24 --> Hooks.re:112:28
   addTypeReference Hooks.re:113:45 --> Hooks.re:107:10
   addValueReference Hooks.re:113:45 --> Hooks.re:112:21

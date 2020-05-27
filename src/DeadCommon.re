@@ -80,7 +80,8 @@ module OptionalArgs = {
   let empty = {unused: StringSet.empty};
   let fromList = l => {unused: StringSet.of_list(l)};
   let isEmpty = x => StringSet.is_empty(x.unused);
-  let count = (name, x) => x.unused = StringSet.remove(name, x.unused);
+  let call = (names, x) =>
+    names |> List.iter(name => x.unused = StringSet.remove(name, x.unused));
   let combine = (x, y) => {
     let s = StringSet.inter(x.unused, y.unused);
     x.unused = s;
