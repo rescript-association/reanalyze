@@ -51,7 +51,7 @@ let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, argName) =>
     delayedItems := [{posTo, argName}, ...delayedItems^];
     if (Common.debug^) {
       Log_.item(
-        "OptionalArgs.addReference %s called with optional arg %s %s@.",
+        "DeadOptionalArgs.addReference %s called with optional arg %s %s@.",
         path |> Path.fromPathT |> Path.toString,
         argName,
         posFrom |> posToString,
