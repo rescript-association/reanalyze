@@ -76,13 +76,15 @@ module PosHash = {
 };
 
 module DeclKind = {
+  type optionalArgs = StringSet.t;
+
   type t =
     | Exception
     | RecordLabel
     | VariantCase
     | Value({
         isToplevel: bool,
-        mutable optionalArgs: StringSet.t,
+        mutable optionalArgs,
         sideEffects: bool,
       });
 
