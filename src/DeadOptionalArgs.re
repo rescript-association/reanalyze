@@ -19,7 +19,7 @@ let addFunctionReference = (~locFrom: Location.t, ~locTo: Location.t) =>
     let shouldAdd =
       switch (PosHash.find_opt(decls, posTo)) {
       | Some({declKind: Value({optionalArgs})}) =>
-        !StringSet.is_empty(optionalArgs)
+        !OptionalArgs.isEmpty(optionalArgs)
       | _ => false
       };
     if (shouldAdd) {
@@ -36,13 +36,14 @@ let addFunctionReference = (~locFrom: Location.t, ~locTo: Location.t) =>
 
 let rec fromTypeExpr = (texpr: Types.type_expr) =>
   switch (texpr.desc) {
-  | _ when !active() => StringSet.empty
-  | Tarrow(Optional(s), _tFrom, tTo, _) =>
-    StringSet.add(s, fromTypeExpr(tTo))
+  | _ when !active() => {OptionalArgs.set: StringSet.empty}
+  | Tarrow(Optional(s), _tFrom, tTo, _) => {
+      set: StringSet.add(s, fromTypeExpr(tTo).set),
+    }
   | Tarrow(_, _tFrom, tTo, _) => fromTypeExpr(tTo)
   | Tlink(t)
   | Tsubst(t) => fromTypeExpr(t)
-  | _ => StringSet.empty
+  | _ => {OptionalArgs.set: StringSet.empty}
   };
 
 let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, argName) =>
@@ -67,7 +68,7 @@ let forceDelayedItems = () => {
   |> List.iter(({posTo, argName}) =>
        switch (PosHash.find_opt(decls, posTo)) {
        | Some({declKind: Value(r)}) =>
-         r.optionalArgs = r.optionalArgs |> StringSet.remove(argName)
+         r.optionalArgs = r.optionalArgs |> OptionalArgs.count(argName)
        | _ => ()
        }
      );
@@ -81,7 +82,7 @@ let forceDelayedItems = () => {
        ) {
        | (Some({declKind: Value(rFrom)}), Some({declKind: Value(rTo)})) =>
          let intersection =
-           StringSet.inter(rFrom.optionalArgs, rTo.optionalArgs);
+           OptionalArgs.inter(rFrom.optionalArgs, rTo.optionalArgs);
          rFrom.optionalArgs = intersection;
          rTo.optionalArgs = intersection;
        | _ => ()
@@ -93,7 +94,7 @@ let check = decl =>
   switch (decl) {
   | {declKind: Value({optionalArgs})} when active() =>
     optionalArgs
-    |> StringSet.iter(s => {
+    |> OptionalArgs.iter(s => {
          Log_.info(
            ~loc=decl |> declGetLoc, ~name="Warning Unused Argument", (ppf, ()) =>
            Format.fprintf(

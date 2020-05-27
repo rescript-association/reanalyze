@@ -75,16 +75,23 @@ module PosHash = {
   };
 };
 
-module DeclKind = {
-  type optionalArgs = StringSet.t;
+module OptionalArgs = {
+  type t = {set: StringSet.t};
+  let empty = {set: StringSet.empty};
+  let isEmpty = x => StringSet.is_empty(x.set);
+  let count = (name, x) => {set: StringSet.remove(name, x.set)};
+  let inter = (x, y) => {set: StringSet.inter(x.set, y.set)};
+  let iter = (f, x) => StringSet.iter(f, x.set);
+};
 
+module DeclKind = {
   type t =
     | Exception
     | RecordLabel
     | VariantCase
     | Value({
         isToplevel: bool,
-        mutable optionalArgs,
+        mutable optionalArgs: OptionalArgs.t,
         sideEffects: bool,
       });
 
@@ -525,7 +532,7 @@ let addValueDeclaration =
       ~isToplevel=true,
       ~loc: Location.t,
       ~moduleLoc,
-      ~optionalArgs=StringSet.empty,
+      ~optionalArgs=OptionalArgs.empty,
       ~path,
       ~sideEffects,
       name,
