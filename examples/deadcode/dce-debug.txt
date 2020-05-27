@@ -756,6 +756,7 @@
   addValueDeclaration +foo OptArg.re:1:4 path:+OptArg
   addValueDeclaration +bar OptArg.re:3:4 path:+OptArg
   addValueDeclaration +threeArgs OptArg.re:9:4 path:+OptArg
+  addValueDeclaration +twoArgs OptArg.re:14:4 path:+OptArg
   addValueReference OptArg.re:1:4 --> OptArg.re:1:14
   addValueReference OptArg.re:1:4 --> OptArg.re:1:20
   addValueReference OptArg.re:1:4 --> OptArg.re:1:26
@@ -780,6 +781,13 @@
   addValueReference OptArg.re:11:7 --> OptArg.re:9:4
   DeadOptionalArgs.addReferences threeArgs called with optional args a OptArg.re:12:7
   addValueReference OptArg.re:12:7 --> OptArg.re:9:4
+  addValueReference OptArg.re:14:4 --> OptArg.re:14:18
+  addValueReference OptArg.re:14:4 --> OptArg.re:14:24
+  addValueReference OptArg.re:14:4 --> OptArg.re:14:16
+  addValueReference OptArg.re:14:4 --> OptArg.re:14:22
+  addValueReference OptArg.re:14:4 --> OptArg.re:14:27
+  DeadOptionalArgs.addReferences twoArgs called with optional args  OptArg.re:16:12
+  addValueReference OptArg.re:16:12 --> OptArg.re:14:4
   addValueReference OptArg.rei:1:0 --> OptArg.re:1:4
   OptionalArgs.addFunctionReference OptArg.rei:1:0 OptArg.re:1:4
   addValueReference OptArg.rei:2:0 --> OptArg.re:3:4
@@ -2747,6 +2755,15 @@ File References
   Live Value +ImmutableArray.+fromT: 1 references (ImmutableArray.re:24:6) [0]
 
   Warning Unused Argument
+  File "./OptArg.re", line 14, characters 0-42
+  optional argument a of function +twoArgs is never used
+
+  Warning Unused Argument
+  File "./OptArg.re", line 14, characters 0-42
+  optional argument b of function +twoArgs is never used
+  Live Value +OptArg.+twoArgs: 1 references (OptArg.re:16:12) [0]
+
+  Warning Unused Argument
   File "./OptArg.re", line 9, characters 0-54
   optional argument b of function +threeArgs is never used
 
@@ -4602,4 +4619,4 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 324 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:2, Warning Unused Argument:8)
+  Analysis reported 326 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:2, Warning Unused Argument:10)
