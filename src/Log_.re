@@ -232,6 +232,9 @@ module Stats = {
         );
       let sortedIssues =
         issues |> List.sort(((n1, _), (n2, _)) => String.compare(n1, n2));
+      if (sortedIssues != []) {
+        item("@.");
+      };
       item(
         "Analysis reported %d issues%s@.",
         nIssues,
