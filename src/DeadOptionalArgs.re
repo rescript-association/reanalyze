@@ -66,7 +66,7 @@ let forceDelayedItems = () => {
   |> List.iter(({posTo, argName}) =>
        switch (PosHash.find_opt(decls, posTo)) {
        | Some({declKind: Value(r)}) =>
-         r.optionalArgs = r.optionalArgs |> OptionalArgs.count(argName)
+         r.optionalArgs |> OptionalArgs.count(argName)
        | _ => ()
        }
      );
@@ -79,7 +79,7 @@ let forceDelayedItems = () => {
          PosHash.find_opt(decls, posTo),
        ) {
        | (Some({declKind: Value(rFrom)}), Some({declKind: Value(rTo)})) =>
-           OptionalArgs.combine(rFrom.optionalArgs, rTo.optionalArgs);
+         OptionalArgs.combine(rFrom.optionalArgs, rTo.optionalArgs)
        | _ => ()
        }
      );
