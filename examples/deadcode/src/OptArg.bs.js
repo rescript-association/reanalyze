@@ -16,6 +16,15 @@ console.log(foo(3, undefined, undefined, 4));
 
 console.log(7);
 
+function threeArgs(aOpt, bOpt, cOpt, d) {
+  var a = aOpt !== undefined ? aOpt : 1;
+  var b = bOpt !== undefined ? bOpt : 2;
+  var c = cOpt !== undefined ? cOpt : 3;
+  return ((a + b | 0) + c | 0) + d | 0;
+}
+
+console.log(threeArgs(4, undefined, 7, 1));
+
 export {
   foo ,
   bar ,

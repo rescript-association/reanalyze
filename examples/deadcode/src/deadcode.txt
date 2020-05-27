@@ -16,6 +16,10 @@
   optional argument x of function +bar is never used
 
   Warning Unused Argument
+  File "./OptArg.re", line 9, characters 0-54
+  optional argument b of function +threeArgs is never used
+
+  Warning Unused Argument
   File "./OptArg.re", line 3, characters 0-38
   optional argument x of function +bar is never used
 
@@ -1858,4 +1862,4 @@
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-  Analysis reported 321 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:7)
+  Analysis reported 322 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Unused Argument:8)
