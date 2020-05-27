@@ -30,7 +30,7 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
     | Tpat_var(id, {loc: {loc_start, loc_ghost} as loc})
         when !loc_ghost && !vb.vb_loc.loc_ghost =>
       let name = Ident.name(id) |> Name.create(~isInterface=false);
-      let optionalArgs = vb.vb_expr.exp_type |> OptionalArgs.fromTypeExpr;
+      let optionalArgs = vb.vb_expr.exp_type |> DeadOptionalArgs.fromTypeExpr;
       let exists =
         switch (PosHash.find_opt(decls, loc_start)) {
         | Some({declKind: Value(r)}) =>
@@ -119,7 +119,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
            };
          switch (lbl) {
          | Asttypes.Optional(s) when !locFrom.loc_ghost && argIsNotNone =>
-           s |> OptionalArgs.addReference(~locFrom, ~locTo, ~path)
+           s |> DeadOptionalArgs.addReference(~locFrom, ~locTo, ~path)
          | _ => ()
          };
        })
@@ -195,7 +195,7 @@ let rec processSignatureItem =
         | _ => false
         };
       if (!isPrimitive || Config.analyzeExternals) {
-        let optionalArgs = valType |> OptionalArgs.fromTypeExpr;
+        let optionalArgs = valType |> DeadOptionalArgs.fromTypeExpr;
         Ident.name(id)
         |> Name.create(~isInterface=false)
         |> addValueDeclaration(
@@ -355,7 +355,7 @@ let processValueDependency =
   if (!ghost1 && !ghost2 && posTo != posFrom) {
     let addFileReference = fileIsImplementationOf(fnTo, fnFrom);
     addValueReference(~addFileReference, ~locFrom, ~locTo);
-    OptionalArgs.addFunctionReference(~locFrom, ~locTo);
+    DeadOptionalArgs.addFunctionReference(~locFrom, ~locTo);
   };
 
 let processStructure =
