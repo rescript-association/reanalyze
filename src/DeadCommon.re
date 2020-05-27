@@ -76,12 +76,13 @@ module PosHash = {
 };
 
 module OptionalArgs = {
-  type t = {set: StringSet.t};
-  let empty = {set: StringSet.empty};
-  let isEmpty = x => StringSet.is_empty(x.set);
-  let count = (name, x) => {set: StringSet.remove(name, x.set)};
-  let inter = (x, y) => {set: StringSet.inter(x.set, y.set)};
-  let iter = (f, x) => StringSet.iter(f, x.set);
+  type t = {unused: StringSet.t};
+  let empty = {unused: StringSet.empty};
+  let fromList = l => {unused: StringSet.of_list(l)};
+  let isEmpty = x => StringSet.is_empty(x.unused);
+  let count = (name, x) => {unused: StringSet.remove(name, x.unused)};
+  let inter = (x, y) => {unused: StringSet.inter(x.unused, y.unused)};
+  let iter = (f, x) => StringSet.iter(f, x.unused);
 };
 
 module DeclKind = {

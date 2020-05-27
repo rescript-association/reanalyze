@@ -36,14 +36,12 @@ let addFunctionReference = (~locFrom: Location.t, ~locTo: Location.t) =>
 
 let rec fromTypeExpr = (texpr: Types.type_expr) =>
   switch (texpr.desc) {
-  | _ when !active() => {OptionalArgs.set: StringSet.empty}
-  | Tarrow(Optional(s), _tFrom, tTo, _) => {
-      set: StringSet.add(s, fromTypeExpr(tTo).set),
-    }
+  | _ when !active() => []
+  | Tarrow(Optional(s), _tFrom, tTo, _) => [s, ...fromTypeExpr(tTo)]
   | Tarrow(_, _tFrom, tTo, _) => fromTypeExpr(tTo)
   | Tlink(t)
   | Tsubst(t) => fromTypeExpr(t)
-  | _ => {OptionalArgs.set: StringSet.empty}
+  | _ => []
   };
 
 let addReference = (~locFrom: Location.t, ~locTo: Location.t, ~path, argName) =>
