@@ -111,6 +111,7 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
       },
       args,
     ) =>
+    let references = ref([]);
     args
     |> List.iter(((lbl, arg)) => {
          let argIsNotNone =
@@ -122,10 +123,13 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
            };
          switch (lbl) {
          | Asttypes.Optional(s) when !locFrom.loc_ghost && argIsNotNone =>
-           s |> DeadOptionalArgs.addReference(~locFrom, ~locTo, ~path)
+           references := [s, ...references^]
          | _ => ()
          };
-       })
+       });
+    if (references^ != []) {
+      references^ |> DeadOptionalArgs.addReferences(~locFrom, ~locTo, ~path);
+    };
 
   | Texp_field(
       _,
