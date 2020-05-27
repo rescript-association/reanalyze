@@ -34,6 +34,17 @@ let addFunctionReference = (~locFrom: Location.t, ~locTo: Location.t) =>
     };
   };
 
+
+let rec hasOptionalArgs = (texpr: Types.type_expr) =>
+  switch (texpr.desc) {
+  | _ when !active() => false
+  | Tarrow(Optional(s), _tFrom, tTo, _) => true
+  | Tarrow(_, _tFrom, tTo, _) => hasOptionalArgs(tTo)
+  | Tlink(t)
+  | Tsubst(t) => hasOptionalArgs(t)
+  | _ => false
+  };
+
 let rec fromTypeExpr = (texpr: Types.type_expr) =>
   switch (texpr.desc) {
   | _ when !active() => []
@@ -90,7 +101,7 @@ let check = decl =>
   switch (decl) {
   | {declKind: Value({optionalArgs})} when active() =>
     optionalArgs
-    |> OptionalArgs.iter(s => {
+    |> OptionalArgs.iterUnused(s => {
          Log_.info(
            ~loc=decl |> declGetLoc, ~name="Warning Unused Argument", (ppf, ()) =>
            Format.fprintf(
@@ -100,6 +111,22 @@ let check = decl =>
              decl.path |> Path.withoutHead,
            )
          )
-       })
+       });
+    optionalArgs
+    |> OptionalArgs.iterAlwaysUsed((s, nCalls) => {
+         Log_.info(
+           ~loc=decl |> declGetLoc,
+           ~name="Warning Redundant Optional Argument",
+           (ppf, ()) =>
+           Format.fprintf(
+             ppf,
+             "optional argument @{<info>%s@} of function @{<info>%s@} is always supplied (%d calls)",
+             s,
+             decl.path |> Path.withoutHead,
+             nCalls,
+           )
+         )
+       });
+
   | _ => ()
   };
