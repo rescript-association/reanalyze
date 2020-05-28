@@ -35,6 +35,10 @@ function twoArgs(aOpt, bOpt, c) {
 
 console.log(twoArgs(undefined, undefined, 1));
 
+var a = 3;
+
+console.log(a + 44 | 0);
+
 export {
   foo ,
   bar ,
