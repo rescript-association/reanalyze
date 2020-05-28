@@ -759,6 +759,8 @@
   addValueDeclaration +twoArgs OptArg.re:14:4 path:+OptArg
   addValueDeclaration +oneArg OptArg.re:18:4 path:+OptArg
   addValueDeclaration +wrapOneArg OptArg.re:20:4 path:+OptArg
+  addValueDeclaration +fourArgs OptArg.re:24:4 path:+OptArg
+  addValueDeclaration +wrapfourArgs OptArg.re:26:4 path:+OptArg
   addValueReference OptArg.re:1:4 --> OptArg.re:1:14
   addValueReference OptArg.re:1:4 --> OptArg.re:1:20
   addValueReference OptArg.re:1:4 --> OptArg.re:1:26
@@ -799,6 +801,25 @@
   addValueReference OptArg.re:20:4 --> OptArg.re:18:4
   DeadOptionalArgs.addReferences wrapOneArg called with optional argNames:a argNamesMaybe: OptArg.re:22:7
   addValueReference OptArg.re:22:7 --> OptArg.re:20:4
+  addValueReference OptArg.re:24:4 --> OptArg.re:24:19
+  addValueReference OptArg.re:24:4 --> OptArg.re:24:25
+  addValueReference OptArg.re:24:4 --> OptArg.re:24:31
+  addValueReference OptArg.re:24:4 --> OptArg.re:24:37
+  addValueReference OptArg.re:24:4 --> OptArg.re:24:17
+  addValueReference OptArg.re:24:4 --> OptArg.re:24:23
+  addValueReference OptArg.re:24:4 --> OptArg.re:24:29
+  addValueReference OptArg.re:24:4 --> OptArg.re:24:35
+  addValueReference OptArg.re:24:4 --> OptArg.re:24:40
+  DeadOptionalArgs.addReferences fourArgs called with optional argNames:c, b, a argNamesMaybe:c, b, a OptArg.re:26:44
+  addValueReference OptArg.re:26:4 --> OptArg.re:26:21
+  addValueReference OptArg.re:26:4 --> OptArg.re:26:27
+  addValueReference OptArg.re:26:4 --> OptArg.re:26:33
+  addValueReference OptArg.re:26:4 --> OptArg.re:26:38
+  addValueReference OptArg.re:26:4 --> OptArg.re:24:4
+  DeadOptionalArgs.addReferences wrapfourArgs called with optional argNames:c, a argNamesMaybe: OptArg.re:28:7
+  addValueReference OptArg.re:28:7 --> OptArg.re:26:4
+  DeadOptionalArgs.addReferences wrapfourArgs called with optional argNames:c, b argNamesMaybe: OptArg.re:29:7
+  addValueReference OptArg.re:29:7 --> OptArg.re:26:4
   addValueReference OptArg.rei:1:0 --> OptArg.re:1:4
   OptionalArgs.addFunctionReference OptArg.rei:1:0 OptArg.re:1:4
   addValueReference OptArg.rei:2:0 --> OptArg.re:3:4
@@ -2763,6 +2784,16 @@ File References
   Live Value +ImmutableArray.+fromT: 1 references (ImmutableArray.re:24:6) [0]
 
   Warning Redundant Optional Argument
+  File "./OptArg.re", line 26, characters 0-70
+  optional argument c of function +wrapfourArgs is always supplied (2 calls)
+  Live Value +OptArg.+wrapfourArgs: 2 references (OptArg.re:28:7, OptArg.re:29:7) [0]
+
+  Warning Unused Argument
+  File "./OptArg.re", line 24, characters 0-63
+  optional argument d of function +fourArgs is never used
+  Live Value +OptArg.+fourArgs: 1 references (OptArg.re:26:4) [0]
+
+  Warning Redundant Optional Argument
   File "./OptArg.re", line 20, characters 0-51
   optional argument a of function +wrapOneArg is always supplied (1 calls)
   Live Value +OptArg.+wrapOneArg: 1 references (OptArg.re:22:7) [0]
@@ -4634,4 +4665,4 @@ File References
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
   
-  Analysis reported 327 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:3, Warning Unused Argument:10)
+  Analysis reported 329 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:4, Warning Unused Argument:11)

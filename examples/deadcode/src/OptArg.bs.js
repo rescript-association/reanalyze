@@ -39,6 +39,19 @@ var a = 3;
 
 console.log(a + 44 | 0);
 
+function wrapfourArgs(a, b, c, n) {
+  var dOpt;
+  var a$1 = a !== undefined ? a : 1;
+  var b$1 = b !== undefined ? b : 2;
+  var c$1 = c !== undefined ? c : 3;
+  var d = dOpt !== undefined ? dOpt : 4;
+  return (((a$1 + b$1 | 0) + c$1 | 0) + d | 0) + n | 0;
+}
+
+console.log(wrapfourArgs(3, undefined, 44, 44));
+
+console.log(wrapfourArgs(undefined, 4, 44, 44));
+
 export {
   foo ,
   bar ,
