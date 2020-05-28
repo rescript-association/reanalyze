@@ -6,6 +6,7 @@ let active = () => Cli.experimental^;
 type item = {
   posTo: Lexing.position,
   argNames: list(string),
+  argNamesMaybe: list(string),
 };
 
 let delayedItems: ref(list(item)) = ref([]);
@@ -64,12 +65,13 @@ let addReferences =
   if (active()) {
     let posTo = locTo.loc_start;
     let posFrom = locFrom.loc_start;
-    delayedItems := [{posTo, argNames}, ...delayedItems^];
+    delayedItems := [{posTo, argNames, argNamesMaybe}, ...delayedItems^];
     if (Common.debug^) {
       Log_.item(
-        "DeadOptionalArgs.addReferences %s called with optional args %s %s@.",
+        "DeadOptionalArgs.addReferences %s called with optional argNames:%s argNamesMaybe:%s %s@.",
         path |> Path.fromPathT |> Path.toString,
         argNames |> String.concat(", "),
+        argNamesMaybe |> String.concat(", "),
         posFrom |> posToString,
       );
     };
@@ -79,10 +81,10 @@ let forceDelayedItems = () => {
   let items = delayedItems^ |> List.rev;
   delayedItems := [];
   items
-  |> List.iter(({posTo, argNames}) =>
+  |> List.iter(({posTo, argNames, argNamesMaybe}) =>
        switch (PosHash.find_opt(decls, posTo)) {
        | Some({declKind: Value(r)}) =>
-         r.optionalArgs |> OptionalArgs.call(argNames)
+         r.optionalArgs |> OptionalArgs.call(~argNames, ~argNamesMaybe)
        | _ => ()
        }
      );
