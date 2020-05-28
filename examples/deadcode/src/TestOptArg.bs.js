@@ -10,7 +10,8 @@ function foo(xOpt, y) {
 }
 
 function bar(param) {
-  return foo(12, 3);
+  var x = 12;
+  return x + 3 | 0;
 }
 
 console.log(bar);

@@ -92,12 +92,16 @@ module OptionalArgs = {
     count: 0,
   };
   let isEmpty = x => StringSet.is_empty(x.unused);
-  let call = (names, x) => {
-    x.alwaysUsed = {
-      let nameSet = names |> StringSet.of_list;
-      x.count == 0 ? nameSet : StringSet.inter(nameSet, x.alwaysUsed);
+  let call = (~argNames, ~argNamesMaybe, x) => {
+    let nameSet = argNames |> StringSet.of_list;
+    let nameSetMaybe = argNamesMaybe |> StringSet.of_list;
+    let nameSetAlways = StringSet.diff(nameSet, nameSetMaybe);
+    if (x.count == 0) {
+      x.alwaysUsed = nameSetAlways;
+    } else {
+      x.alwaysUsed = StringSet.inter(nameSetAlways, x.alwaysUsed);
     };
-    names |> List.iter(name => x.unused = StringSet.remove(name, x.unused));
+    argNames |> List.iter(name => x.unused = StringSet.remove(name, x.unused));
     x.count = x.count + 1;
   };
   let combine = (x, y) => {

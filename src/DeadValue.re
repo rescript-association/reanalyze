@@ -94,6 +94,41 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
   r;
 };
 
+let processArgs = (~expType, ~locFrom: Location.t, ~locTo, ~path, args) => {
+  let supplied = ref([]);
+  let suppliedMaybe = ref([]);
+  args
+  |> List.iter(((lbl, arg)) => {
+       let argIsSupplied =
+         switch (arg) {
+         | Some({
+             Typedtree.exp_desc: Texp_construct(_, {cstr_name: "Some"}, _),
+           }) =>
+           Some(true)
+         | Some({
+             Typedtree.exp_desc: Texp_construct(_, {cstr_name: "None"}, _),
+           }) =>
+           Some(false)
+         | Some(_) => None
+         | None => Some(false)
+         };
+       switch (lbl) {
+       | Asttypes.Optional(s) when !locFrom.loc_ghost =>
+         if (argIsSupplied != Some(false)) {
+           supplied := [s, ...supplied^];
+         };
+         if (argIsSupplied == None) {
+           suppliedMaybe := [s, ...suppliedMaybe^];
+         };
+       | _ => ()
+       };
+     });
+  if (expType |> DeadOptionalArgs.hasOptionalArgs) {
+    (supplied^, suppliedMaybe^)
+    |> DeadOptionalArgs.addReferences(~locFrom, ~locTo, ~path);
+  };
+};
+
 let collectExpr = (super, self, e: Typedtree.expression) => {
   let locFrom = e.exp_loc;
   switch (e.exp_desc) {
@@ -112,25 +147,8 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
       },
       args,
     ) =>
-    let references = ref([]);
     args
-    |> List.iter(((lbl, arg)) => {
-         let argIsNotNone =
-           switch (arg) {
-           | Some({Typedtree.exp_desc: Texp_construct(_, {cstr_name}, _)}) =>
-             cstr_name != "None"
-           | Some(_) => true
-           | None => false
-           };
-         switch (lbl) {
-         | Asttypes.Optional(s) when !locFrom.loc_ghost && argIsNotNone =>
-           references := [s, ...references^]
-         | _ => ()
-         };
-       });
-    if (exp_type |> DeadOptionalArgs.hasOptionalArgs) {
-      references^ |> DeadOptionalArgs.addReferences(~locFrom, ~locTo, ~path);
-    };
+    |> processArgs(~expType=exp_type, ~locFrom: Location.t, ~locTo, ~path)
 
   | Texp_let(
       // generated for functions with optional args
@@ -168,25 +186,8 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
         Ident.name(idArg) == "arg"
         && Ident.name(etaArg) == "eta"
         && Path.name(idArg2) == "arg" =>
-    let references = ref([]);
     args
-    |> List.iter(((lbl, arg)) => {
-         let argIsNotNone =
-           switch (arg) {
-           | Some({Typedtree.exp_desc: Texp_construct(_, {cstr_name}, _)}) =>
-             cstr_name != "None"
-           | Some(_) => true
-           | None => false
-           };
-         switch (lbl) {
-         | Asttypes.Optional(s) when !locFrom.loc_ghost && argIsNotNone =>
-           references := [s, ...references^]
-         | _ => ()
-         };
-       });
-    if (exp_type |> DeadOptionalArgs.hasOptionalArgs) {
-      references^ |> DeadOptionalArgs.addReferences(~locFrom, ~locTo, ~path);
-    };
+    |> processArgs(~expType=exp_type, ~locFrom: Location.t, ~locTo, ~path)
 
   | Texp_field(
       _,
