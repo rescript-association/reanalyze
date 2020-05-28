@@ -19,6 +19,14 @@
   File "./OptArg.rei", line 2, characters 0-50
   optional argument x of function +bar is never used
 
+  Warning Redundant Optional Argument
+  File "./OptArg.re", line 20, characters 0-51
+  optional argument a of function +wrapOneArg is always supplied (1 calls)
+
+  Warning Redundant Optional Argument
+  File "./OptArg.re", line 18, characters 0-35
+  optional argument a of function +oneArg is always supplied (1 calls)
+
   Warning Unused Argument
   File "./OptArg.re", line 14, characters 0-42
   optional argument a of function +twoArgs is never used
@@ -1879,4 +1887,4 @@
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
   
-  Analysis reported 326 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:2, Warning Unused Argument:10)
+  Analysis reported 328 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:4, Warning Unused Argument:10)

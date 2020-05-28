@@ -34,7 +34,6 @@ let addFunctionReference = (~locFrom: Location.t, ~locTo: Location.t) =>
     };
   };
 
-
 let rec hasOptionalArgs = (texpr: Types.type_expr) =>
   switch (texpr.desc) {
   | _ when !active() => false
@@ -56,7 +55,12 @@ let rec fromTypeExpr = (texpr: Types.type_expr) =>
   };
 
 let addReferences =
-    (~locFrom: Location.t, ~locTo: Location.t, ~path, argNames) =>
+    (
+      ~locFrom: Location.t,
+      ~locTo: Location.t,
+      ~path,
+      (argNames, argNamesMaybe),
+    ) =>
   if (active()) {
     let posTo = locTo.loc_start;
     let posFrom = locFrom.loc_start;
