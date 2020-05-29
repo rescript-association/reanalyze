@@ -1305,6 +1305,51 @@
   addValueDeclaration +jSResource JSResource.re:3:0 path:+JSResource
   Scanning DeadTestBlacklist.cmt
   addValueDeclaration +x DeadTestBlacklist.re:1:4 path:+DeadTestBlacklist
+  Scanning Unison.cmt
+  addValueDeclaration +group Unison.re:17:4 path:+Unison
+  addValueDeclaration +fits Unison.re:19:8 path:+Unison
+  addValueDeclaration +toString Unison.re:26:8 path:+Unison
+  addVariantCaseDeclaration IfNeed Unison.re:4:4 path:+Unison.break
+  addVariantCaseDeclaration Never Unison.re:5:4 path:+Unison.break
+  addVariantCaseDeclaration Always Unison.re:6:4 path:+Unison.break
+  addRecordLabelDeclaration break Unison.re:9:2 path:+Unison.t
+  addRecordLabelDeclaration doc Unison.re:10:2 path:+Unison.t
+  addVariantCaseDeclaration Empty Unison.re:14:4 path:+Unison.stack
+  addVariantCaseDeclaration Cons Unison.re:15:4 path:+Unison.stack
+  addValueReference Unison.re:17:4 --> Unison.re:17:20
+  addTypeReference Unison.re:17:20 --> Unison.re:4:4
+  addValueReference Unison.re:17:4 --> Unison.re:17:14
+  addValueReference Unison.re:17:4 --> Unison.re:17:28
+  addValueReference Unison.re:19:8 --> Unison.re:19:16
+  addValueReference Unison.re:19:8 --> Unison.re:19:16
+  addValueReference Unison.re:19:8 --> Unison.re:23:10
+  addValueReference Unison.re:19:8 --> Unison.re:23:16
+  addValueReference Unison.re:19:8 --> Unison.re:19:8
+  addTypeReference Unison.re:23:9 --> Unison.re:10:2
+  addValueReference Unison.re:19:8 --> Unison.re:19:19
+  addValueReference Unison.re:26:8 --> Unison.re:26:21
+  addValueReference Unison.re:26:8 --> Unison.re:28:18
+  addValueReference Unison.re:26:8 --> Unison.re:19:8
+  addValueReference Unison.re:26:8 --> Unison.re:28:18
+  addValueReference Unison.re:26:8 --> Unison.re:26:21
+  addValueReference Unison.re:26:8 --> Unison.re:26:8
+  addValueReference Unison.re:26:8 --> Unison.re:28:10
+  addTypeReference Unison.re:28:9 --> Unison.re:9:2
+  addValueReference Unison.re:26:8 --> Unison.re:26:28
+  addTypeReference Unison.re:40:20 --> Unison.re:14:4
+  addValueReference Unison.re:40:0 --> Unison.re:26:8
+  addTypeReference Unison.re:41:20 --> Unison.re:15:4
+  DeadOptionalArgs.addReferences group called with optional argNames:break argNamesMaybe: Unison.re:41:25
+  addTypeReference Unison.re:41:38 --> Unison.re:5:4
+  addValueReference Unison.re:41:25 --> Unison.re:17:4
+  addTypeReference Unison.re:41:53 --> Unison.re:14:4
+  addValueReference Unison.re:41:0 --> Unison.re:26:8
+  addTypeReference Unison.re:42:20 --> Unison.re:15:4
+  DeadOptionalArgs.addReferences group called with optional argNames:break argNamesMaybe: Unison.re:42:25
+  addTypeReference Unison.re:42:38 --> Unison.re:6:4
+  addValueReference Unison.re:42:25 --> Unison.re:17:4
+  addTypeReference Unison.re:42:52 --> Unison.re:14:4
+  addValueReference Unison.re:42:0 --> Unison.re:26:8
   Scanning NestedModulesInSignature.cmti
   addValueDeclaration +theAnswer NestedModulesInSignature.rei:2:2 path:NestedModulesInSignature.Universe
   Scanning CreateErrorHandler2.cmt
@@ -2044,6 +2089,7 @@ File References
   Types.re -->> 
   Unboxed.re -->> 
   Uncurried.re -->> 
+  Unison.re -->> 
   UseImportJsValue.re -->> ImportJsValue.re
   Variants.re -->> 
   VariantsWithPayload.re -->> 
@@ -2486,6 +2532,20 @@ File References
   Live Value +Uncurried.+uncurried2: 0 references () [0]
   Live Value +Uncurried.+uncurried1: 0 references () [0]
   Live Value +Uncurried.+uncurried0: 0 references () [0]
+  Live Value +Unison.+toString: 3 references (Unison.re:40:0, Unison.re:41:0, Unison.re:42:0) [0]
+  Live Value +Unison.+fits: 1 references (Unison.re:26:8) [0]
+
+  Warning Redundant Optional Argument
+  File "./Unison.re", line 17, characters 0-48
+  optional argument break of function +group is always supplied (2 calls)
+  Live Value +Unison.+group: 2 references (Unison.re:41:25, Unison.re:42:25) [0]
+  Live VariantCase +Unison.stack.Cons: 2 references (Unison.re:41:20, Unison.re:42:20) [0]
+  Live VariantCase +Unison.stack.Empty: 3 references (Unison.re:40:20, Unison.re:41:53, Unison.re:42:52) [0]
+  Live RecordLabel +Unison.t.doc: 1 references (Unison.re:23:9) [0]
+  Live RecordLabel +Unison.t.break: 1 references (Unison.re:28:9) [0]
+  Live VariantCase +Unison.break.Always: 1 references (Unison.re:42:38) [0]
+  Live VariantCase +Unison.break.Never: 1 references (Unison.re:41:38) [0]
+  Live VariantCase +Unison.break.IfNeed: 1 references (Unison.re:17:20) [0]
   Live Value +UseImportJsValue.+useTypeImportedInOtherModule: 0 references () [0]
   Live Value +UseImportJsValue.+useGetProp: 0 references () [0]
   Live Value +Variants.+restResult3: 0 references () [0]
@@ -4665,4 +4725,4 @@ File References
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
   
-  Analysis reported 329 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:4, Warning Unused Argument:11)
+  Analysis reported 330 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)

@@ -15,6 +15,10 @@
   File "./TestOptArg.re", line 3, characters 0-28
   optional argument x of function +foo is always supplied (1 calls)
 
+  Warning Redundant Optional Argument
+  File "./Unison.re", line 17, characters 0-48
+  optional argument break of function +group is always supplied (2 calls)
+
   Warning Unused Argument
   File "./OptArg.rei", line 2, characters 0-50
   optional argument x of function +bar is never used
@@ -1891,4 +1895,4 @@
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
   
-  Analysis reported 329 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:4, Warning Unused Argument:11)
+  Analysis reported 330 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
