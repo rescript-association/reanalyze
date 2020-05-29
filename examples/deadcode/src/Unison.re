@@ -30,8 +30,8 @@ let rec toString = (~width, stack) => {
     | IfNeed =>
       (fits(width, stack) ? "fits" : "no")
       ++ (stack |> toString(~width=width - 1))
-    | Never => "never"
-    | Always => "always"
+    | Never => "never" ++ (stack |> toString(~width=width - 1))
+    | Always => "always" ++ (stack |> toString(~width=width - 1))
     }
   | Empty => ""
   };
