@@ -25,13 +25,13 @@ let rec fits = (w, stack) =>
 
 let rec toString = (~width, stack) => {
   switch (stack) {
-  | Cons({break}, stack) =>
+  | Cons({break, doc}, stack) =>
     switch (break) {
     | IfNeed =>
-      (fits(width, stack) ? "fits" : "no")
+      (fits(width, stack) ? "fits " : "no ")
       ++ (stack |> toString(~width=width - 1))
-    | Never => "never" ++ (stack |> toString(~width=width - 1))
-    | Always => "always" ++ (stack |> toString(~width=width - 1))
+    | Never => "never " ++ doc ++ (stack |> toString(~width=width - 1))
+    | Always => "always " ++ doc ++ (stack |> toString(~width=width - 1))
     }
   | Empty => ""
   };

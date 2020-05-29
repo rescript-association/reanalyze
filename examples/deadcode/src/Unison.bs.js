@@ -30,15 +30,17 @@ function toString(width, stack) {
     return "";
   }
   var stack$1 = stack[1];
-  switch (stack[0].break) {
+  var match = stack[0];
+  var doc = match.doc;
+  switch (match.break) {
     case /* IfNeed */0 :
         return (
-                fits(width, stack$1) ? "fits" : "no"
+                fits(width, stack$1) ? "fits " : "no "
               ) + toString(width - 1 | 0, stack$1);
     case /* Never */1 :
-        return "never";
+        return "never " + (doc + toString(width - 1 | 0, stack$1));
     case /* Always */2 :
-        return "always";
+        return "always " + (doc + toString(width - 1 | 0, stack$1));
     
   }
 }
