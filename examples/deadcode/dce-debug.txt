@@ -1328,13 +1328,22 @@
   addTypeReference Unison.re:23:9 --> Unison.re:10:2
   addValueReference Unison.re:19:8 --> Unison.re:19:19
   addValueReference Unison.re:26:8 --> Unison.re:26:21
-  addValueReference Unison.re:26:8 --> Unison.re:28:18
+  addValueReference Unison.re:26:8 --> Unison.re:28:23
   addValueReference Unison.re:26:8 --> Unison.re:19:8
-  addValueReference Unison.re:26:8 --> Unison.re:28:18
+  addValueReference Unison.re:26:8 --> Unison.re:28:23
+  addValueReference Unison.re:26:8 --> Unison.re:26:21
+  addValueReference Unison.re:26:8 --> Unison.re:26:8
+  addValueReference Unison.re:26:8 --> Unison.re:28:17
+  addValueReference Unison.re:26:8 --> Unison.re:28:23
+  addValueReference Unison.re:26:8 --> Unison.re:26:21
+  addValueReference Unison.re:26:8 --> Unison.re:26:8
+  addValueReference Unison.re:26:8 --> Unison.re:28:17
+  addValueReference Unison.re:26:8 --> Unison.re:28:23
   addValueReference Unison.re:26:8 --> Unison.re:26:21
   addValueReference Unison.re:26:8 --> Unison.re:26:8
   addValueReference Unison.re:26:8 --> Unison.re:28:10
   addTypeReference Unison.re:28:9 --> Unison.re:9:2
+  addTypeReference Unison.re:28:9 --> Unison.re:10:2
   addValueReference Unison.re:26:8 --> Unison.re:26:28
   addTypeReference Unison.re:40:20 --> Unison.re:14:4
   addValueReference Unison.re:40:0 --> Unison.re:26:8
@@ -2541,7 +2550,7 @@ File References
   Live Value +Unison.+group: 2 references (Unison.re:41:25, Unison.re:42:25) [0]
   Live VariantCase +Unison.stack.Cons: 2 references (Unison.re:41:20, Unison.re:42:20) [0]
   Live VariantCase +Unison.stack.Empty: 3 references (Unison.re:40:20, Unison.re:41:53, Unison.re:42:52) [0]
-  Live RecordLabel +Unison.t.doc: 1 references (Unison.re:23:9) [0]
+  Live RecordLabel +Unison.t.doc: 2 references (Unison.re:23:9, Unison.re:28:9) [0]
   Live RecordLabel +Unison.t.break: 1 references (Unison.re:28:9) [0]
   Live VariantCase +Unison.break.Always: 1 references (Unison.re:42:38) [0]
   Live VariantCase +Unison.break.Never: 1 references (Unison.re:41:38) [0]
