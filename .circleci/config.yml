@@ -267,7 +267,6 @@ jobs:
              eval $(opam env)
              npm install
              npm run build
-             npm run test
       - run:
           name: Create tar file for executable
           command: |

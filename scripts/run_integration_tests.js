@@ -11,8 +11,6 @@ const exampleDirPaths = exampleDirNames.map((exampleName) =>
 
 const isWindows = /^win/i.test(process.platform);
 
-// To prevent all kinds of cross-platform symlink errors, we decided to always
-// copy the built binary to the examples folder.
 const reanalyzeFile = path.join(__dirname, "../_build/default/src/Reanalyze.exe");
 
 /*
@@ -109,19 +107,6 @@ function checkDiff() {
 }
 
 function checkSetup() {
-  console.log(`Make sure this script is not run with esy...`);
-  if (process.env.ESY__ROOT_PACKAGE_CONFIG_PATH) {
-    throw new Error(
-      "This script cannot be run with `esy`. Use `npm test` instead!"
-    );
-  }
-
-  console.log(`Check existing binary: ${reanalyzeFile}`);
-  if (!fs.existsSync(path.resolve(reanalyzeFile))) {
-    const filepath = path.relative(path.join(__dirname, ".."), reanalyzeFile);
-    throw new Error(`${filepath} does not exist. Use \`esy\` first!`);
-  }
-
   console.log("Checking if --version outputs the right version");
   let output;
 
