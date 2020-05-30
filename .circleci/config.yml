@@ -147,7 +147,7 @@ jobs:
       - run:
           name: Create tar file for executable
           command: |
-            cp _build/default/src/Reanalyze.exe renalyze.exe
+            cp _build/default/src/Reanalyze.exe reanalyze.exe
             tar -czvf artifacts/reanalyze-linux.tar.gz reanalyze.exe
       - store_artifacts:
           path: artifacts/reanalyze-linux.tar.gz
