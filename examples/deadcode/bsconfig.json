@@ -11,8 +11,8 @@
   "name": "sample-typescript-app",
   "bsc-flags": ["-bs-super-errors"],
   "ppx-flags": [
-    "../../_esy/default/build/install/default/bin/deadcodeppx.exe",
-    "../../_esy/default/build/install/default/bin/lazyLoad.exe"
+    "../../_build/default/dead-code-ppx/DeadCodePPX.exe",
+    "../../_build/default/lazyload-ppx/LazyLoad.exe"
   ],
   "reason": { "react-jsx": 3 },
   "bs-dependencies": ["reason-react", "@glennsl/bs-json"],
