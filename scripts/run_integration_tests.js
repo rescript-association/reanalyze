@@ -1,4 +1,3 @@
-const debug = require("debug")("IO");
 const fs = require("fs");
 const child_process = require("child_process");
 const path = require("path");
@@ -148,7 +147,6 @@ async function main() {
   } catch (e) {
     console.error(`Test failed unexpectly: ${e.message}`);
     console.error(e);
-    debug(e);
     process.exit(1);
   }
 }
