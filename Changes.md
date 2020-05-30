@@ -1,4 +1,6 @@
 # master
+
+# 2.5.0
 - Turn on the checks for unused optional arguments, and dead module, in dce. No need for the `-experimental` flag anymore. 
 
 # 2.3.0
