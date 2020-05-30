@@ -16,10 +16,6 @@
     "version": "node scripts/bump_version_module.js && git add -A src/",
     "postversion": "git push && git push --tags"
   },
-  "devDependencies": {
-    "debug": "^4.1.0",
-    "esy": "0.5.8"
-  },
   "author": "Cristiano Calcagno",
   "bugs": {
     "url": "https://github.com/cristianoc/reanalyze/issues"
