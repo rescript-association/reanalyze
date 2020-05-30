@@ -1,9 +1,5 @@
 
   Exception Analysis
-  File "./ExnA.re", line 1, characters 4-7
-  bar might raise Not_found (ExnA.re:1:16) and is not annotated with @raises Not_found
-
-  Exception Analysis
   File "./Exn.re", line 1, characters 4-10
   raises might raise Not_found (Exn.re:1:19) and is not annotated with @raises Not_found
 
@@ -90,5 +86,9 @@
   Exception Analysis
   File "./Exn.re", line 176, characters 10-58
   String.uncapitalize_ascii does not raise and is annotated with redundant @doesNotRaise
+
+  Exception Analysis
+  File "./ExnA.re", line 1, characters 4-7
+  bar might raise Not_found (ExnA.re:1:16) and is not annotated with @raises Not_found
   
   Analysis reported 23 issues (Exception Analysis:23)

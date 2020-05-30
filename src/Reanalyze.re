@@ -65,7 +65,8 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
     Paths.setProjectRoot();
     let lib_bs = Suppress.projectRoot^ +++ "lib" +++ "bs";
 
-    let sourceDirs = Paths.readSourceDirs(~configSources=None);
+    let sourceDirs =
+      Paths.readSourceDirs(~configSources=None) |> List.sort(String.compare);
     sourceDirs
     |> List.iter(sourceDir => {
          let libBsSourceDir = Filename.concat(lib_bs, sourceDir);
@@ -81,6 +82,7 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
                 || Filename.check_suffix(x, ".cmti")
               );
          cmtFiles
+         |> List.sort(String.compare)
          |> List.iter(cmtFile => {
               let cmtFilePath = Filename.concat(libBsSourceDir, cmtFile);
               cmtFilePath |> loadCmtFile(~analysis);
