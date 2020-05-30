@@ -81,14 +81,14 @@ commands:
             #cat .circleci/config.yml >> .circleci/opamcachebreaker
       - restore_cache:
           keys:
-          #- v1-opam-cache-{{ arch }}-{{ checksum ".circleci/opamcachebreaker" }}
-          - v1-opam-cache-{{ arch }}-v0
+          #- v2-opam-cache-{{ arch }}-{{ checksum ".circleci/opamcachebreaker" }}
+          - v2-opam-cache-{{ arch }}-v0
 
   save-opam-cache:
     steps:
       - save_cache:
-          #key: v1-opam-cache-{{ arch }}-{{ checksum ".circleci/opamcachebreaker" }}
-          key: v1-opam-cache-{{ arch }}-v0
+          #key: v2-opam-cache-{{ arch }}-{{ checksum ".circleci/opamcachebreaker" }}
+          key: v2-opam-cache-{{ arch }}-v0
           paths:
             - ~/.opam
             - _opam
@@ -240,8 +240,8 @@ jobs:
             #/usr/bin/cat .circleci/config.yml >> /cygdrive/c/tmp/repo/opamcachebreaker
       - restore_cache:
           keys:
-          #- opam-cache-{{ arch }}-{{ checksum "C:/tmp/repo/opamcachebreaker" }}
-          - v0-opam-cache-{{ arch }}
+          #- v2-opam-cache-{{ arch }}-{{ checksum "C:/tmp/repo/opamcachebreaker" }}
+          - v2-opam-cache-{{ arch }}
       - opam_windows/init
       - opam_windows/create_switch
       - run:
@@ -253,8 +253,8 @@ jobs:
             eval $(opam env)
             opam install reason.3.6.0 dune.1.11.4 --yes | cat
       - save_cache:
-          #key: opam-cache-{{ arch }}-{{ checksum "C:/tmp/repo/opamcachebreaker" }}
-          key: v0-opam-cache-{{ arch }}
+          #key: v2-opam-cache-{{ arch }}-{{ checksum "C:/tmp/repo/opamcachebreaker" }}
+          key: v2-opam-cache-{{ arch }}
           paths:
             - C:/tools/cygwin/home/circleci/.opam
             - _opam
