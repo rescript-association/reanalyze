@@ -131,41 +131,24 @@ There's obviously a level of risk in doing this automatic elimination. The safet
 npm add --save-dev reanalyze
 ```
 
-### Build for OCaml 4.06.1 using esy (for bucklescript and native projects)
+### Build for OCaml 4.06.1 using dune (for bucklescript and native projects)
 
 ```sh
 npm install
-npx esy
-npx esy x which reanalyze.exe
-  /Users/cristianoc/reasonml/reanalyze/_esy/default/store/i/reanalyze-5574f798/bin/reanalyze.exe
-```
-
-### Build for OCaml 4.08.1 using esy (for native projects)
-
-```sh
-npm install
-npx esy @408
-npx esy @408 x which reanalyze.exe
-  /Users/cristianoc/reasonml/reanalyze/_esy/408/store/i/reanalyze-b543bfd4/bin/reanalyze.exe
-```
-
-### Build for OCaml 4.09.0 using esy (for native projects)
-
-```sh
-npm install
-npx esy @409
-npx esy @409 x which reanalyze.exe
-  /Users/cristianoc/reasonml/reanalyze/_esy/409/store/i/reanalyze-b543bfd4/bin/reanalyze.exe
-```
-
-### Build using opam/dune
-
-```sh
-opam switch 4.08.1 # or 4.06.1
-opam install reason # for dune
+opam switch 4.06.1
+eval $(opam env)
+opam install reason dune
 dune build
-./_build/install/default/bin/reanalyze.exe -version
-  reanalyze version 1.1.0
+# _build/default/src/Reanalyze.exe
+```
+
+### Build for other OCaml versions (4.08, 4.09, 4.10) using dune (for native projects)
+
+```sh
+npm install
+opam install reason dune
+dune build
+# _build/default/src/Reanalyze.exe
 ```
 
 ## Try it
@@ -188,8 +171,6 @@ esy
 esy dce
 esy check-exceptions
 ```
-
-
 
 ### Single File Test (native project)
 
