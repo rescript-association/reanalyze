@@ -19,7 +19,6 @@ child_process.spawnSync(
     "-dce",
     "-debug",
     "-ci",
-    "-experimental",
     "-suppress",
     "src/exception",
     "-live-names",

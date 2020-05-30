@@ -1,4 +1,4 @@
-let active = () => Common.Cli.experimental^;
+let active = () => true;
 
 let table = Hashtbl.create(1);
 

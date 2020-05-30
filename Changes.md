@@ -1,4 +1,5 @@
 # master
+- Turn on the checks for unused optional arguments, and dead module, in dce. No need for the `-experimental` flag anymore. 
 
 # 2.3.0
 - DCE: add check Warning Redundant Optional Argument when an optional named argument is always supplied. Then there is no reason for it to be an optional argument.

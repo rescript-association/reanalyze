@@ -1,7 +1,7 @@
 open DeadCommon;
 open Common;
 
-let active = () => Cli.experimental^;
+let active = () => true;
 
 type item = {
   posTo: Lexing.position,
