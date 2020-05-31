@@ -1,7 +1,10 @@
 # reanalyze
 
-Experimental analyses for OCaml/Reason: globally dead values/types, exception analysis, and termination.
-Supports bucklescript projects, as well as native projects (e.g. dune).
+Program analysis for Reason and OCaml projects targeting JS (bucklescript) as well as native code (dune):
+
+- Globally dead values, redundant optional arguments, dead modules, dead types (records and variants).
+- Exception analysis.
+- Termination.
 
 **Status `master (v3.*)`:** [![Build
 Status](https://dev.azure.com/ccrisccris/reanalyze/_apis/build/status/cristianoc.reanalyze?branchName=master)](https://dev.azure.com/ccrisccris/reanalyze/_build/latest?definitionId=1&branchName=master)
@@ -16,8 +19,7 @@ For correct handling of ReasonReact components in the Dead Code Analysis, buckle
 ## Use
 
 The rest of this document describes the dead code analysis.
-For the exception analysis, projects are built in the same way and only the command-line invocation is different.
-Here is [how to use the exception analysis](EXCEPTION.md):
+For the [Exception Analysis](EXCEPTION.md), build instructions are the same, and the command-line invocation is different.
 
 Build and run on existing projects using the Build and Try instructions below. The analysis uses `.cmt[i]` files which are generated during compilation, so should be run _after_ building your project. Remember to rebuild the project before running again.
 
@@ -49,9 +51,13 @@ The requirement is that the _current_ directory is where file paths start from. 
 
 ### DCE reports
 
-The dead code analysis reports on dead values and dead types.
+The dead code analysis reports on globally dead values, redundant optional arguments, dead modules, dead types (records and variants).
 
 A value `x` is dead if it is never used, or if it is used by a value which itself is dead (transitivity). At the top level, function calls such as `Js.log(x)`, or other expressions that might cause side effects, keep value `x` live.
+
+An optional argument `~argName` to a function is redundant if all the calls to the function supply the argument, or if no call does.
+
+A module is considered dead if all the elements defined it in are dead.
 
 The type analysis repots on variant cases, and record labels.
 
