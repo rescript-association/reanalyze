@@ -146,6 +146,23 @@ let raisesLibTable = {
     ("group_end", [notFound, invalidArgument]),
   ];
 
+  let yojsonBasic = [("from_string", [yojsonJsonError])];
+
+  let yojsonBasicUtil = [
+    ("member", [yojsonTypeError]),
+    ("to_assoc", [yojsonTypeError]),
+    ("to_bool", [yojsonTypeError]),
+    ("to_bool_option", [yojsonTypeError]),
+    ("to_float", [yojsonTypeError]),
+    ("to_float_option", [yojsonTypeError]),
+    ("to_int", [yojsonTypeError]),
+    ("to_list", [yojsonTypeError]),
+    ("to_number", [yojsonTypeError]),
+    ("to_number_option", [yojsonTypeError]),
+    ("to_string", [yojsonTypeError]),
+    ("to_string_option", [yojsonTypeError]),
+  ];
+
   [
     ("Array", array),
     ("Buffer", buffer),
@@ -169,24 +186,8 @@ let raisesLibTable = {
     ("Stdlib.String", string),
     ("Str", str),
     ("String", string),
-    ("Yojson.Basic", [("from_string", [yojsonJsonError])]),
-    (
-      "Yojson.Basic.Util",
-      [
-        ("member", [yojsonTypeError]),
-        ("to_assoc", [yojsonTypeError]),
-        ("to_bool", [yojsonTypeError]),
-        ("to_bool_option", [yojsonTypeError]),
-        ("to_float", [yojsonTypeError]),
-        ("to_float_option", [yojsonTypeError]),
-        ("to_int", [yojsonTypeError]),
-        ("to_list", [yojsonTypeError]),
-        ("to_number", [yojsonTypeError]),
-        ("to_number_option", [yojsonTypeError]),
-        ("to_string", [yojsonTypeError]),
-        ("to_string_option", [yojsonTypeError]),
-      ],
-    ),
+    ("Yojson.Basic", yojsonBasic),
+    ("Yojson.Basic.Util", yojsonBasicUtil),
   ]
   |> List.iter(((name, group)) =>
        group
