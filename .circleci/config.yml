@@ -167,7 +167,8 @@ jobs:
             opam remote list -s | grep upstream >/dev/null || \
               opam remote add upstream https://opam.ocaml.org --all-switches --set-default | cat
             opam update | cat
-      - create-opam-switch408
+      - create-opam-switch
+          ocaml: 4.08.1
       - run:
           name: Install opam dev dependencies
           command: |
@@ -225,6 +226,7 @@ jobs:
           command: |
             [ -d ~/.opam ] || opam init --bare --disable-sandboxing
       - create-opam-switch
+          ocaml: 4.06.1
       - run:
           name: Install opam dev dependencies
           command: |
