@@ -90,6 +90,10 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/repo/artifacts
+      - run:
+          name: Install debian deps
+          command: |
+            sudo apt-get --yes install nodejs
       - restore_cache:
           keys:
           - v3-opam-cache-{{ arch }}
@@ -140,6 +144,10 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/repo/artifacts
+      - run:
+          name: Install debian deps
+          command: |
+            sudo apt-get --yes install nodejs
       - restore_cache:
           keys:
           - v2-opam-cache-{{ arch }}-410
