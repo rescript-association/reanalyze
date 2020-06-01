@@ -69,30 +69,6 @@ executors:
     working_directory: ~/repo
 
 commands:
-  restore-opam-cache:
-    steps:
-      #- run:
-          #name: Create cache breaker
-          #command: |
-            #echo "ocaml-4.06.1" > .circleci/opamcachebreaker
-            #opam --version >> .circleci/opamcachebreaker
-            #cat reanalyze.opam >> .circleci/opamcachebreaker
-            #cat package-lock.json >> .circleci/opamcachebreaker
-            #cat .circleci/config.yml >> .circleci/opamcachebreaker
-      - restore_cache:
-          keys:
-          #- v2-opam-cache-{{ arch }}-{{ checksum ".circleci/opamcachebreaker" }}
-          - v2-opam-cache-{{ arch }}-v0
-
-  save-opam-cache:
-    steps:
-      - save_cache:
-          #key: v2-opam-cache-{{ arch }}-{{ checksum ".circleci/opamcachebreaker" }}
-          key: v2-opam-cache-{{ arch }}-v0
-          paths:
-            - ~/.opam
-            - _opam
-
   create-opam-switch:
     steps:
       - run:
@@ -131,7 +107,9 @@ jobs:
             sudo apt-get --yes install zip m4 curl software-properties-common
             curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
             sudo apt-get --yes install nodejs
-      - restore-opam-cache
+      - restore_cache:
+          keys:
+          - v2-opam-cache-{{ arch }}
       - run:
           name: Update opam repo
           command: |
@@ -143,7 +121,11 @@ jobs:
           name: Install opam dev dependencies
           command: |
             opam install reason.3.6.0 dune.1.11.4 --yes | cat
-      - save-opam-cache
+      - save_cache:
+          key: v2-opam-cache-{{ arch }}
+          paths:
+            - ~/.opam
+            - _opam
       - run:
           name: Install npm deps
           command: npm install
@@ -183,7 +165,9 @@ jobs:
             sudo apt-get --yes install zip m4 curl software-properties-common
             curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
             sudo apt-get --yes install nodejs
-      - restore-opam-cache
+      - restore_cache:
+          keys:
+          - v2-opam-cache-{{ arch }}-408
       - run:
           name: Update opam repo
           command: |
@@ -195,7 +179,11 @@ jobs:
           name: Install opam dev dependencies
           command: |
             opam install reason.3.6.0 dune.1.11.4 --yes | cat
-      - save-opam-cache
+      - save_cache:
+          key: v2-opam-cache-{{ arch }}-408
+          paths:
+            - ~/.opam
+            - _opam
       - run:
           name: Install npm deps
           command: npm install
@@ -211,7 +199,7 @@ jobs:
           name: Create tar file for executable
           command: |
             cp _build/default/src/Reanalyze.exe reanalyze.exe
-            tar -czvf artifacts/reanalyze-linux.tar.gz reanalyze.exe
+            tar -czvf artifacts/reanalyze-linux408.tar.gz reanalyze.exe
       - store_artifacts:
           path: artifacts/reanalyze-linux408.tar.gz
           destination: reanalyze-linux408.tar.gz
@@ -236,7 +224,9 @@ jobs:
               install -m 755 "$TMP/opam" "/usr/local/bin/opam"
               rm -f "$TMP/opam"
             fi
-      - restore-opam-cache
+      - restore_cache:
+          keys:
+          - v2-opam-cache-{{ arch }}
       - run:
           name: Init opam
           command: |
@@ -246,7 +236,11 @@ jobs:
           name: Install opam dev dependencies
           command: |
             opam install reason.3.6.0 dune.1.11.4 --yes | cat
-      - save-opam-cache
+      - save_cache:
+          key: v2-opam-cache-{{ arch }}
+          paths:
+            - ~/.opam
+            - _opam
       - run:
           name: Install npm deps
           command: npm install
@@ -294,16 +288,8 @@ jobs:
             echo "Versions"
             node --version
             npm --version
-      #- run:
-          #name: Create cache breaker
-          #shell: C:/tools/cygwin/bin/bash.exe --noprofile --norc -eo pipefail
-          #command: |
-            #/usr/local/bin/opam --version > /cygdrive/c/tmp/repo/opamcachebreaker
-            #echo "ocaml-4.06.1" >> /cygdrive/c/tmp/repo/opamcachebreaker
-            #/usr/bin/cat .circleci/config.yml >> /cygdrive/c/tmp/repo/opamcachebreaker
       - restore_cache:
           keys:
-          #- v2-opam-cache-{{ arch }}-{{ checksum "C:/tmp/repo/opamcachebreaker" }}
           - v2-opam-cache-{{ arch }}
       - opam_windows/init
       - opam_windows/create_switch
@@ -316,7 +302,6 @@ jobs:
             eval $(opam env)
             opam install reason.3.6.0 dune.1.11.4 --yes | cat
       - save_cache:
-          #key: v2-opam-cache-{{ arch }}-{{ checksum "C:/tmp/repo/opamcachebreaker" }}
           key: v2-opam-cache-{{ arch }}
           paths:
             - C:/tools/cygwin/home/circleci/.opam
