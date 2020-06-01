@@ -96,7 +96,7 @@ jobs:
       - run:
           name: Init opam
           command: |
-            [ -d ~/.opam ] || opam init --disable-sandboxing
+            [ -d ~/.opam ] || opam init
       - create-opam-switch:
           ocaml: 4.06.1
       - run:
