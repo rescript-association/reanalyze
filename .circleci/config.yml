@@ -142,7 +142,7 @@ jobs:
           paths:
             - reanalyze-linux.tar.gz
 
-  build_linux411:
+  build_linux410:
     executor: linux-opam
     steps:
       - checkout
@@ -158,7 +158,7 @@ jobs:
             sudo apt-get --yes install nodejs
       - restore_cache:
           keys:
-          - v2-opam-cache-{{ arch }}-411
+          - v2-opam-cache-{{ arch }}-410
       - run:
           name: Update opam repo
           command: |
@@ -172,7 +172,7 @@ jobs:
           command: |
             opam install reason.3.6.0 dune.1.11.4 --yes | cat
       - save_cache:
-          key: v2-opam-cache-{{ arch }}-411
+          key: v2-opam-cache-{{ arch }}-410
           paths:
             - ~/.opam
             - _opam
@@ -191,14 +191,14 @@ jobs:
           name: Create tar file for executable
           command: |
             cp _build/default/src/Reanalyze.exe reanalyze.exe
-            tar -czvf artifacts/reanalyze-linux411.tar.gz reanalyze.exe
+            tar -czvf artifacts/reanalyze-linux410.tar.gz reanalyze.exe
       - store_artifacts:
-          path: artifacts/reanalyze-linux411.tar.gz
-          destination: reanalyze-linux411.tar.gz
+          path: artifacts/reanalyze-linux410.tar.gz
+          destination: reanalyze-linux410.tar.gz
       - persist_to_workspace:
           root: artifacts
           paths:
-            - reanalyze-linux411.tar.gz
+            - reanalyze-linux410.tar.gz
 
   build_macos:
     executor: mac
@@ -382,7 +382,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - build_linux411:
+      - build_linux410:
           filters:
             tags:
               only: /.*/
