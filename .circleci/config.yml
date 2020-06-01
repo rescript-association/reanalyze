@@ -86,7 +86,6 @@ commands:
 jobs:
   build_linux:
     executor: linux-opam
-
     steps:
       - checkout
       - attach_workspace:
@@ -108,7 +107,7 @@ jobs:
             opam remote list -s | grep upstream >/dev/null || \
               opam remote add upstream https://opam.ocaml.org --all-switches --set-default | cat
             opam update | cat
-      - create-opam-switch
+      - create-opam-switch:
           ocaml: 4.06.1
       - run:
           name: Install opam dev dependencies
@@ -145,7 +144,6 @@ jobs:
 
   build_linux408:
     executor: linux-opam
-
     steps:
       - checkout
       - attach_workspace:
@@ -167,7 +165,7 @@ jobs:
             opam remote list -s | grep upstream >/dev/null || \
               opam remote add upstream https://opam.ocaml.org --all-switches --set-default | cat
             opam update | cat
-      - create-opam-switch
+      - create-opam-switch:
           ocaml: 4.08.1
       - run:
           name: Install opam dev dependencies
@@ -204,7 +202,6 @@ jobs:
 
   build_macos:
     executor: mac
-
     steps:
       - checkout
       - attach_workspace:
@@ -225,7 +222,7 @@ jobs:
           name: Init opam
           command: |
             [ -d ~/.opam ] || opam init --bare --disable-sandboxing
-      - create-opam-switch
+      - create-opam-switch:
           ocaml: 4.06.1
       - run:
           name: Install opam dev dependencies
@@ -258,6 +255,7 @@ jobs:
           root: artifacts
           paths:
             - reanalyze-macos.tar.gz
+
   build_win:
     executor: win/default
     environment:
