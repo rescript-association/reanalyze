@@ -92,7 +92,7 @@ jobs:
             sudo apt-get --yes install opam
       - restore_cache:
           keys:
-          - v3-opam-cache-{{ arch }}
+          - vvvv-opam-cache-{{ arch }}
       - run:
           name: Update opam repo
           command: |
@@ -106,7 +106,7 @@ jobs:
           command: |
             opam install reason.3.6.0 dune.1.11.4 --yes | cat
       - save_cache:
-          key: v3-opam-cache-{{ arch }}
+          key: vvvv-opam-cache-{{ arch }}
           paths:
             - ~/.opam
             - _opam
