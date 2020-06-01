@@ -75,6 +75,7 @@ commands:
           command: |
             eval $(opam env)
             if [ ! -d _opam ]; then
+              opam init
               opam switch create . <<parameters.ocaml>> | cat
             fi
             opam env >> $BASH_ENV
