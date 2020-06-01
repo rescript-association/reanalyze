@@ -93,12 +93,6 @@ jobs:
       - restore_cache:
           keys:
           - vvvv-opam-cache-{{ arch }}
-      - run:
-          name: Update opam repo
-          command: |
-            opam remote list -s | grep upstream >/dev/null || \
-              opam remote add upstream https://opam.ocaml.org --all-switches --set-default | cat
-            opam update | cat
       - create-opam-switch:
           ocaml: 4.06.1
       - run:
