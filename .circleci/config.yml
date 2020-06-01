@@ -75,7 +75,6 @@ commands:
           command: |
             eval $(opam env)
             if [ ! -d _opam ]; then
-              opam init
               opam switch create . <<parameters.ocaml>> | cat
             fi
             opam env >> $BASH_ENV
@@ -94,6 +93,10 @@ jobs:
       - restore_cache:
           keys:
           - vvvv-opam-cache-{{ arch }}
+      - run:
+          name: Init opam
+          command: |
+            [ -d ~/.opam ] || opam init --bare --disable-sandboxing
       - create-opam-switch:
           ocaml: 4.06.1
       - run:
