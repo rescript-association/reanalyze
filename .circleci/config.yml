@@ -93,7 +93,7 @@ jobs:
       - run:
           name: Install debian deps
           command: |
-            sudo apt-get --yes install nodejs
+            sudo apt-get --yes install nodejs npm
       - restore_cache:
           keys:
           - v3-opam-cache-{{ arch }}
@@ -147,7 +147,7 @@ jobs:
       - run:
           name: Install debian deps
           command: |
-            sudo apt-get --yes install nodejs
+            sudo apt-get --yes install nodejs npm
       - restore_cache:
           keys:
           - v2-opam-cache-{{ arch }}-410
