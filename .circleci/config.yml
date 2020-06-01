@@ -103,6 +103,17 @@ commands:
               opam switch create . 4.06.1 --deps-only | cat
             fi
             opam env >> $BASH_ENV
+
+  create-opam-switch408:
+    steps:
+      - run:
+          name: Install deps from opam
+          command: |
+            eval $(opam env)
+            if [ ! -d _opam ]; then
+              opam switch create . 4.08.1 --deps-only | cat
+            fi
+            opam env >> $BASH_ENV
             
 jobs:
   build_linux:
@@ -156,6 +167,58 @@ jobs:
           root: artifacts
           paths:
             - reanalyze-linux.tar.gz
+
+  build_linux408:
+    executor: linux-opam
+
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo/artifacts
+      - run:
+          # installs LTS v12 `node`, `npm`, `zip` and `m4` 
+          name: Install debian deps
+          command: |
+            sudo apt-get update
+            sudo apt-get --yes install zip m4 curl software-properties-common
+            curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
+            sudo apt-get --yes install nodejs
+      - restore-opam-cache
+      - run:
+          name: Update opam repo
+          command: |
+            opam remote list -s | grep upstream >/dev/null || \
+              opam remote add upstream https://opam.ocaml.org --all-switches --set-default | cat
+            opam update | cat
+      - create-opam-switch408
+      - run:
+          name: Install opam dev dependencies
+          command: |
+            opam install reason.3.6.0 dune.1.11.4 --yes | cat
+      - save-opam-cache
+      - run:
+          name: Install npm deps
+          command: npm install
+      - run:
+          name: Build reanalyze
+          command: |
+            echo $PATH
+            npm run build
+      # - run:
+      #     name: Test reanalyze
+      #     command: npm test
+      - run:
+          name: Create tar file for executable
+          command: |
+            cp _build/default/src/Reanalyze.exe reanalyze.exe
+            tar -czvf artifacts/reanalyze-linux.tar.gz reanalyze.exe
+      - store_artifacts:
+          path: artifacts/reanalyze-linux408.tar.gz
+          destination: reanalyze-linux408.tar.gz
+      - persist_to_workspace:
+          root: artifacts
+          paths:
+            - reanalyze-linux408.tar.gz
 
   build_macos:
     executor: mac
