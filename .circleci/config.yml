@@ -70,24 +70,16 @@ executors:
 
 commands:
   create-opam-switch:
+    parameters:
+      ocaml:
+        type: string
     steps:
       - run:
           name: Install deps from opam
           command: |
             eval $(opam env)
             if [ ! -d _opam ]; then
-              opam switch create . 4.06.1 --deps-only | cat
-            fi
-            opam env >> $BASH_ENV
-
-  create-opam-switch408:
-    steps:
-      - run:
-          name: Install deps from opam
-          command: |
-            eval $(opam env)
-            if [ ! -d _opam ]; then
-              opam switch create . 4.08.1 --deps-only | cat
+              opam switch create . parameters.ocaml --deps-only | cat
             fi
             opam env >> $BASH_ENV
             
@@ -117,6 +109,7 @@ jobs:
               opam remote add upstream https://opam.ocaml.org --all-switches --set-default | cat
             opam update | cat
       - create-opam-switch
+          ocaml: 4.06.1
       - run:
           name: Install opam dev dependencies
           command: |
