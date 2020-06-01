@@ -79,7 +79,7 @@ commands:
           command: |
             eval $(opam env)
             if [ ! -d _opam ]; then
-              opam switch create . parameters.ocaml --deps-only | cat
+              opam switch create . <<parameters.ocaml>> --deps-only | cat
             fi
             opam env >> $BASH_ENV
             
