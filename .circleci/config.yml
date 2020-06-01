@@ -90,14 +90,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/repo/artifacts
-      - run:
-          # installs LTS v12 `node`, `npm`, `zip` and `m4` 
-          name: Install debian deps
-          command: |
-            sudo apt-get update
-            sudo apt-get --yes install zip m4 curl software-properties-common
-            curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
-            sudo apt-get --yes install nodejs
       - restore_cache:
           keys:
           - v3-opam-cache-{{ arch }}
@@ -148,14 +140,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/repo/artifacts
-      - run:
-          # installs LTS v12 `node`, `npm`, `zip` and `m4` 
-          name: Install debian deps
-          command: |
-            sudo apt-get update
-            sudo apt-get --yes install zip m4 curl software-properties-common
-            curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
-            sudo apt-get --yes install nodejs
       - restore_cache:
           keys:
           - v2-opam-cache-{{ arch }}-410
