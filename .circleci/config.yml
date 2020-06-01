@@ -50,15 +50,11 @@ orbs:
                 [ -d _opam ] || opam switch create . ocaml-variants.4.06.1+mingw64c --deps-only --yes -vvv
 
 executors:
-  linux-opam:
-    docker:
-      - image: ocaml/opam2:debian-9
-        environment:
-          <<: *opam_env
-    working_directory: ~/repo
   linux-node:
     docker:
       - image: circleci/node:8
+        environment:
+          <<: *opam_env
     working_directory: ~/repo
   mac:
     macos:
@@ -85,24 +81,15 @@ commands:
             
 jobs:
   build_linux:
-    executor: linux-opam
+    executor: linux-node
     steps:
       - checkout
       - attach_workspace:
           at: ~/repo/artifacts
       - run:
-          name: Install opam
-          command: |
-            if ! [ -x "$(command -v opamxxxTESTTEST)" ]; then
-              TMP=${TMPDIR:-/tmp}
-              curl -sL -o "$TMP/opam" "https://github.com/ocaml/opam/releases/download/$OPAM_VERSION/opam-$OPAM_VERSION-x86_64-macos"
-              install -m 755 "$TMP/opam" "/usr/local/bin/opam"
-              rm -f "$TMP/opam"
-            fi
-      - run:
           name: Install debian deps
           command: |
-            sudo apt-get --yes install nodejs npm
+            sudo apt-get --yes install opam
       - restore_cache:
           keys:
           - v3-opam-cache-{{ arch }}
@@ -148,7 +135,7 @@ jobs:
             - reanalyze-linux.tar.gz
 
   build_linux410:
-    executor: linux-opam
+    executor: linux-node
     steps:
       - checkout
       - attach_workspace:
