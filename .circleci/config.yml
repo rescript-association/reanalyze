@@ -52,7 +52,7 @@ orbs:
 executors:
   linux-node:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:current
         environment:
           <<: *opam_env
     working_directory: ~/repo
