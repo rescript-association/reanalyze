@@ -192,7 +192,7 @@ let item = x => {
 
 let locToString = (ppf, loc: Location.t) =>
   (
-    Common.ci^
+    Common.Cli.ci^
       ? {
         ...loc,
         loc_start: {

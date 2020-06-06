@@ -13,7 +13,7 @@ module TypeLabels = {
 };
 
 let addTypeReference = (~posFrom, ~posTo) => {
-  if (Common.debug^) {
+  if (Common.Cli.debug^) {
     Log_.item(
       "addTypeReference %s --> %s@.",
       posFrom |> posToString,
@@ -48,7 +48,7 @@ module TypeDependencies = {
 
 let extendTypeDependencies = (loc1: Location.t, loc2: Location.t) =>
   if (loc1.loc_start != loc2.loc_start) {
-    if (Common.debug^) {
+    if (Common.Cli.debug^) {
       Log_.item(
         "extendTypeDependencies %s --> %s@.",
         loc1.loc_start |> posToString,

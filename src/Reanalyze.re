@@ -12,11 +12,13 @@ let loadCmtFile = (~analysis, cmtFilePath) => {
   | None => ()
 
   | Some(sourceFile) =>
-    if (debug^) {
+    if (Cli.debug^) {
       Log_.item(
         "Scanning %s Source:%s@.",
-        ci^ ? Filename.basename(cmtFilePath) : cmtFilePath,
-        sourceFile,
+        Cli.ci^ && !Filename.is_relative(cmtFilePath)
+          ? Filename.basename(cmtFilePath) : cmtFilePath,
+        Cli.ci^ && !Filename.is_relative(sourceFile)
+          ? sourceFile |> Filename.basename : sourceFile,
       );
     };
     FileReferences.addFile(sourceFile);
@@ -138,7 +140,7 @@ let cli = () => {
     DCE(cmtRoot) |> setCliCommand;
   }
   and setDebug = () => {
-    debug := true;
+    Cli.debug := true;
   }
   and setException = cmtRoot => {
     Exception(cmtRoot) |> setCliCommand;
@@ -175,11 +177,7 @@ let cli = () => {
       Arg.String(s => setAll(Some(s))),
       "root_path Run all the analyses for all the .cmt files under the root path",
     ),
-    (
-      "-ci",
-      Arg.Unit(() => Common.ci := true),
-      "Internal flag for use in CI",
-    ),
+    ("-ci", Arg.Unit(() => Cli.ci := true), "Internal flag for use in CI"),
     ("-dce", Arg.Unit(() => setDCE(None)), "Eperimental DCE"),
     ("-debug", Arg.Unit(setDebug), "Print debug information"),
     (

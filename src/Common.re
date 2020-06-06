@@ -2,10 +2,6 @@ let currentSrc = ref("");
 let currentModule = ref("");
 let currentModuleName = ref("" |> Name.create);
 
-let debug = ref(false);
-
-let ci = ref(false);
-
 /* Location printer: `filename:line: ' */
 let posToString = (pos: Lexing.position) => {
   let file = pos.Lexing.pos_fname;
@@ -19,6 +15,9 @@ let posToString = (pos: Lexing.position) => {
 };
 
 module Cli = {
+  let debug = ref(false);
+
+  let ci = ref(false);
   let experimental = ref(false);
   let write = ref(false);
   let liveNames = ref([]: list(string)); // names to be considered live values

@@ -157,7 +157,7 @@ module Stats = {
     if (hit) {
       incr(nCacheHits);
     };
-    if (Common.debug^) {
+    if (Common.Cli.debug^) {
       Log_.info(~count=false, ~loc, ~name="Termination Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
@@ -170,7 +170,7 @@ module Stats = {
   };
 
   let logResult = (~functionCall, ~loc, ~resString) =>
-    if (Common.debug^) {
+    if (Common.Cli.debug^) {
       Log_.info(~count=false, ~loc, ~name="Termination Analysis", (ppf, ()) =>
         Format.fprintf(
           ppf,
@@ -721,7 +721,7 @@ module ExtendFunctionTable = {
             let functionName = Path.name(callee);
             if (!(callee |> FunctionTable.isInFunctionInTable(~functionTable))) {
               functionTable |> FunctionTable.addFunction(~functionName);
-              if (Common.debug^) {
+              if (Common.Cli.debug^) {
                 Log_.info(
                   ~count=false, ~loc, ~name="Termination Analysis", (ppf, ()) =>
                   Format.fprintf(
@@ -747,7 +747,7 @@ module ExtendFunctionTable = {
                    path |> FunctionTable.isInFunctionInTable(~functionTable) =>
                functionTable
                |> FunctionTable.addLabelToKind(~functionName, ~label);
-               if (Common.debug^) {
+               if (Common.Cli.debug^) {
                  Log_.info(
                    ~count=false, ~loc, ~name="Termination Analysis", (ppf, ()) =>
                    Format.fprintf(
@@ -828,7 +828,7 @@ module CheckExpressionWellFormed = {
                      };
                      functionTable
                      |> FunctionTable.addLabelToKind(~functionName, ~label);
-                     if (Common.debug^) {
+                     if (Common.Cli.debug^) {
                        Log_.info(
                          ~count=false,
                          ~loc=body.exp_loc,
@@ -1039,7 +1039,7 @@ module Compile = {
         newFunctionName,
       );
       newFunctionDefinition.body = Some(vb_expr |> expression(~ctx=newCtx));
-      if (Common.debug^) {
+      if (Common.Cli.debug^) {
         Log_.info(
           ~count=false, ~loc=pat_loc, ~name="Termination Analysis", (ppf, ()) =>
           Format.fprintf(
@@ -1534,7 +1534,7 @@ module Eval = {
     };
 
   let analyzeFunction = (~cache, ~functionTable, ~loc, functionName) => {
-    if (Common.debug^) {
+    if (Common.Cli.debug^) {
       Log_.log(
         "@[<v 2>@,@{<warning>Termination Analysis@} for @{<info>%s@}@]@.",
         functionName,
@@ -1735,7 +1735,7 @@ let traverseAst = (~valueBindingsTable) => {
            }
          );
 
-      if (Common.debug^) {
+      if (Common.Cli.debug^) {
         FunctionTable.dump(functionTable);
       };
 
@@ -1775,6 +1775,6 @@ let processCmt = (cmt_infos: Cmt_format.cmt_infos) =>
   };
 
 let reportResults = (~ppf) =>
-  if (Common.debug^) {
+  if (Common.Cli.debug^) {
     Stats.dump(~ppf);
   };
