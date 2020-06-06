@@ -9,7 +9,7 @@ const path = require("path");
 
 const projectRoot = path.join(__dirname, "..");
 
-const filename = `reanalyze-${pjson.version}.tgz`;
+const filename = `reanalyze-v${pjson.version}.tgz`;
 
 const targetLink = (version) =>
   `https://github.com/cristianoc/reanalyze/releases/download/v${version}/${filename}`;
