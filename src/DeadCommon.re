@@ -201,7 +201,7 @@ let addValueReference =
   let lastBinding = Current.lastBinding^;
   let locFrom = lastBinding == Location.none ? locFrom : lastBinding;
   if (!locFrom.loc_ghost) {
-    if (debug^) {
+    if (Cli.debug^) {
       Log_.item(
         "addValueReference %s --> %s@.",
         locFrom.loc_start |> posToString,
@@ -537,7 +537,7 @@ let addDeclaration_ =
      */
   if (!loc.loc_ghost
       && (currentSrc^ == pos.pos_fname || currentModule^ === "*include*")) {
-    if (debug^) {
+    if (Cli.debug^) {
       Log_.item(
         "add%sDeclaration %s %s path:%s@.",
         declKind |> DeclKind.toString,
@@ -1002,7 +1002,7 @@ let rec resolveRecursiveRefs =
         };
       };
 
-      if (debug^) {
+      if (Cli.debug^) {
         let refsString =
           newRefs
           |> PosSet.elements
@@ -1041,7 +1041,7 @@ let reportDead = (~checkOptionalArg, ppf) => {
     |> ignore;
   };
 
-  if (debug^) {
+  if (Cli.debug^) {
     Log_.item("@.File References@.@.");
     let fileList = ref([]);
     FileReferences.iter((file, files) =>

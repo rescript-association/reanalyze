@@ -24,7 +24,7 @@ let addFunctionReference = (~locFrom: Location.t, ~locTo: Location.t) =>
       | _ => false
       };
     if (shouldAdd) {
-      if (Common.debug^) {
+      if (Common.Cli.debug^) {
         Log_.item(
           "OptionalArgs.addFunctionReference %s %s@.",
           posFrom |> posToString,
@@ -66,7 +66,7 @@ let addReferences =
     let posTo = locTo.loc_start;
     let posFrom = locFrom.loc_start;
     delayedItems := [{posTo, argNames, argNamesMaybe}, ...delayedItems^];
-    if (Common.debug^) {
+    if (Common.Cli.debug^) {
       Log_.item(
         "DeadOptionalArgs.addReferences %s called with optional argNames:%s argNamesMaybe:%s %s@.",
         path |> Path.fromPathT |> Path.toString,

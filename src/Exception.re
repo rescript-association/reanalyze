@@ -120,7 +120,7 @@ module Event = {
     };
 
   let combine = (~moduleName, events) => {
-    if (Common.debug^) {
+    if (Common.Cli.debug^) {
       Log_.item("@.");
       Log_.item("Events combine: #events %d@.", events |> List.length);
     };
@@ -135,14 +135,14 @@ module Event = {
     let rec loop = (exnSet, events) =>
       switch (events) {
       | [{kind: Raises, exceptions, loc} as ev, ...rest] =>
-        if (Common.debug^) {
+        if (Common.Cli.debug^) {
           Log_.item("%a@.", print, ev);
         };
         exceptions |> Exceptions.iter(exn => extendExnTable(exn, loc));
         loop(Exceptions.union(exnSet, exceptions), rest);
 
       | [{kind: Call(path), loc} as ev, ...rest] =>
-        if (Common.debug^) {
+        if (Common.Cli.debug^) {
           Log_.item("%a@.", print, ev);
         };
         let exceptions =
@@ -158,7 +158,7 @@ module Event = {
         loop(Exceptions.union(exnSet, exceptions), rest);
 
       | [{kind: DoesNotRaise(nestedEvents), loc} as ev, ...rest] =>
-        if (Common.debug^) {
+        if (Common.Cli.debug^) {
           Log_.item("%a@.", print, ev);
         };
         let nestedExceptions = loop(Exceptions.empty, nestedEvents);
@@ -179,7 +179,7 @@ module Event = {
         loop(exnSet, rest);
 
       | [{kind: Catches(nestedEvents), exceptions} as ev, ...rest] =>
-        if (Common.debug^) {
+        if (Common.Cli.debug^) {
           Log_.item("%a@.", print, ev);
         };
         if (Exceptions.isEmpty(exceptions /* catch-all */)) {
