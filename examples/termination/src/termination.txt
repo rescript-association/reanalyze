@@ -1,4 +1,4 @@
-  Scanning TestCyberTruck.cmt
+  Scanning TestCyberTruck.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/termination/src/TestCyberTruck.re
 
   Function Table
   1 justReturn: _

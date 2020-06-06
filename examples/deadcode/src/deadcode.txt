@@ -1,4 +1,4 @@
-  Scanning AutoAnnotate.cmt
+  Scanning AutoAnnotate.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/AutoAnnotate.re
   addVariantCaseDeclaration R AutoAnnotate.re:2:4 path:+AutoAnnotate.variant
   addRecordLabelDeclaration variant AutoAnnotate.re:5:15 path:+AutoAnnotate.record
   addRecordLabelDeclaration r2 AutoAnnotate.re:7:11 path:+AutoAnnotate.r2
@@ -6,16 +6,16 @@
   addRecordLabelDeclaration r4 AutoAnnotate.re:11:11 path:+AutoAnnotate.r4
   addVariantCaseDeclaration R2 AutoAnnotate.re:15:4 path:+AutoAnnotate.annotatedVariant
   addVariantCaseDeclaration R4 AutoAnnotate.re:16:4 path:+AutoAnnotate.annotatedVariant
-  Scanning BootloaderResource.cmt
+  Scanning BootloaderResource.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/BootloaderResource.re
   addValueDeclaration +read BootloaderResource.re:3:0 path:+BootloaderResource
-  Scanning BucklescriptAnnotations.cmt
+  Scanning BucklescriptAnnotations.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/BucklescriptAnnotations.re
   addValueDeclaration +foo BucklescriptAnnotations.re:19:4 path:+BucklescriptAnnotations
   addValueDeclaration +bar BucklescriptAnnotations.re:21:4 path:+BucklescriptAnnotations
   addValueReference BucklescriptAnnotations.re:19:4 --> BucklescriptAnnotations.re:19:11
   addValueDeclaration +f BucklescriptAnnotations.re:22:6 path:+BucklescriptAnnotations
   addValueReference BucklescriptAnnotations.re:22:6 --> BucklescriptAnnotations.re:21:11
   addValueReference BucklescriptAnnotations.re:21:4 --> BucklescriptAnnotations.re:22:6
-  Scanning ComponentAsProp.cmt
+  Scanning ComponentAsProp.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ComponentAsProp.re
   addValueDeclaration +component ComponentAsProp.re:1:4 path:+ComponentAsProp
   addValueDeclaration +make ComponentAsProp.re:5:4 path:+ComponentAsProp
   addValueReference ComponentAsProp.re:1:4 --> ReasonReact.rei:153:0
@@ -29,21 +29,21 @@
   addValueReference ComponentAsProp.re:5:4 --> ReactDOMRe.re:1125:0
   addValueReference ComponentAsProp.re:5:4 --> ReactDOMRe.re:1125:0
   addValueReference ComponentAsProp.re:5:4 --> ComponentAsProp.re:1:4
-  Scanning CreateErrorHandler1.cmt
+  Scanning CreateErrorHandler1.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/CreateErrorHandler1.re
   addValueDeclaration +notification CreateErrorHandler1.re:3:6 path:+CreateErrorHandler1.Error1
   addValueReference CreateErrorHandler1.re:3:6 --> CreateErrorHandler1.re:3:21
   addValueReference CreateErrorHandler1.re:3:6 --> CreateErrorHandler1.re:3:21
   addValueReference CreateErrorHandler1.re:8:0 --> ErrorHandler.rei:5:32
   addValueReference ErrorHandler.rei:3:2 --> CreateErrorHandler1.re:3:6
-  Scanning CreateErrorHandler2.cmt
+  Scanning CreateErrorHandler2.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/CreateErrorHandler2.re
   addValueDeclaration +notification CreateErrorHandler2.re:3:6 path:+CreateErrorHandler2.Error2
   addValueReference CreateErrorHandler2.re:3:6 --> CreateErrorHandler2.re:3:21
   addValueReference ErrorHandler.rei:3:2 --> CreateErrorHandler2.re:3:6
-  Scanning DeadCodeImplementation.cmt
+  Scanning DeadCodeImplementation.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadCodeImplementation.re
   addValueDeclaration +x DeadCodeImplementation.re:2:6 path:+DeadCodeImplementation.M
   addValueReference DeadCodeInterface.re:1:17 --> DeadCodeImplementation.re:2:6
-  Scanning DeadCodeInterface.cmt
-  Scanning DeadExn.cmt
+  Scanning DeadCodeInterface.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadCodeInterface.re
+  Scanning DeadExn.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadExn.re
   addValueDeclaration +eToplevel DeadExn.re:8:4 path:+DeadExn
   addValueDeclaration +eInside DeadExn.re:10:4 path:+DeadExn
   addExceptionDeclaration Etoplevel DeadExn.re:1:10 path:+DeadExn
@@ -54,8 +54,8 @@
   addValueReference DeadExn.re:10:4 --> DeadExn.re:4:12
   addTypeReference DeadExn.re:10:14 --> DeadExn.re:4:12
   addValueReference DeadExn.re:12:7 --> DeadExn.re:10:4
-  Scanning DeadExn.cmti
-  Scanning DeadMl.cmt
+  Scanning DeadExn.cmti Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadExn.rei
+  Scanning DeadMl.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadMl.ml
   addValueDeclaration +thisSpansSeveralLines DeadMl.ml:3:8 path:+DeadMl.QQ
   addValueDeclaration +thisIsInInterface DeadMl.ml:9:2 path:+DeadMl.AA
   addValueDeclaration +thisHasSemicolons DeadMl.ml:15:4 path:+DeadMl
@@ -121,21 +121,21 @@
   addValueReference DeadMl.ml:96:2 --> DeadMl.ml:107:6
   addValueReference DeadMl.ml:99:2 --> DeadMl.ml:108:6
   addValueReference DeadMl.ml:103:2 --> DeadMl.ml:109:6
-  Scanning DeadRT.cmt
+  Scanning DeadRT.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadRT.re
   addValueDeclaration +emitModuleAccessPath DeadRT.re:5:8 path:+DeadRT
   addVariantCaseDeclaration Root DeadRT.re:2:4 path:+DeadRT.moduleAccessPath
   addVariantCaseDeclaration Kaboom DeadRT.re:3:4 path:+DeadRT.moduleAccessPath
   addValueReference DeadRT.re:5:8 --> DeadRT.re:7:9
   addValueReference DeadRT.re:5:8 --> DeadRT.re:5:31
   addTypeReference DeadRT.re:11:16 --> DeadRT.re:3:4
-  Scanning DeadRT.cmti
+  Scanning DeadRT.cmti Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadRT.rei
   addVariantCaseDeclaration Root DeadRT.rei:2:4 path:DeadRT.moduleAccessPath
   extendTypeDependencies DeadRT.re:2:4 --> DeadRT.rei:2:4
   extendTypeDependencies DeadRT.rei:2:4 --> DeadRT.re:2:4
   addVariantCaseDeclaration Kaboom DeadRT.rei:3:4 path:DeadRT.moduleAccessPath
   extendTypeDependencies DeadRT.re:3:4 --> DeadRT.rei:3:4
   extendTypeDependencies DeadRT.rei:3:4 --> DeadRT.re:3:4
-  Scanning DeadTest.cmt
+  Scanning DeadTest.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTest.re
   addValueDeclaration +fortytwo DeadTest.re:2:4 path:+DeadTest
   addValueDeclaration +fortyTwoButExported DeadTest.re:5:4 path:+DeadTest
   addValueDeclaration +thisIsUsedOnce DeadTest.re:7:4 path:+DeadTest
@@ -278,15 +278,14 @@
   addTypeReference DeadRT.rei:3:4 --> DeadRT.re:3:4
   addTypeReference DeadRT.re:2:4 --> DeadRT.rei:2:4
   addTypeReference DeadRT.rei:2:4 --> DeadRT.re:2:4
-  Scanning DeadTestBlacklist.cmt
+  Scanning DeadTestBlacklist.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTestBlacklist.re
   addValueDeclaration +x DeadTestBlacklist.re:1:4 path:+DeadTestBlacklist
-  Scanning DeadTestWithInterface.cmt
+  Scanning DeadTestWithInterface.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTestWithInterface.re
   addValueDeclaration +x DeadTestWithInterface.re:1:20 path:+DeadTestWithInterface.Ext_buffer
   addValueDeclaration +x DeadTestWithInterface.re:2:6 path:+DeadTestWithInterface.Ext_buffer
   addValueReference DeadTestWithInterface.re:1:20 --> DeadTestWithInterface.re:2:6
-  Scanning DeadTestWithInterface.cmti
   Interface 0
-  Scanning DeadTypeTest.cmt
+  Scanning DeadTypeTest.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.re
   addValueDeclaration +a DeadTypeTest.re:4:4 path:+DeadTypeTest
   addVariantCaseDeclaration A DeadTypeTest.re:2:4 path:+DeadTypeTest.t
   addVariantCaseDeclaration B DeadTypeTest.re:3:4 path:+DeadTypeTest.t
@@ -300,7 +299,7 @@
   addValueDeclaration +_ DeadTypeTest.re:13:0 path:+DeadTypeTest
   addTypeReference DeadTypeTest.re:13:8 --> DeadTypeTest.re:9:4
   addValueReference DeadTypeTest.rei:4:0 --> DeadTypeTest.re:4:4
-  Scanning DeadTypeTest.cmti
+  Scanning DeadTypeTest.cmti Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadTypeTest.rei
   addVariantCaseDeclaration A DeadTypeTest.rei:2:4 path:DeadTypeTest.t
   extendTypeDependencies DeadTypeTest.re:2:4 --> DeadTypeTest.rei:2:4
   extendTypeDependencies DeadTypeTest.rei:2:4 --> DeadTypeTest.re:2:4
@@ -320,7 +319,7 @@
   addVariantCaseDeclaration InNeither DeadTypeTest.rei:10:4 path:DeadTypeTest.deadType
   extendTypeDependencies DeadTypeTest.re:10:4 --> DeadTypeTest.rei:10:4
   extendTypeDependencies DeadTypeTest.rei:10:4 --> DeadTypeTest.re:10:4
-  Scanning DeadValueTest.cmt
+  Scanning DeadValueTest.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadValueTest.re
   addValueDeclaration +valueAlive DeadValueTest.re:1:4 path:+DeadValueTest
   addValueDeclaration +valueDead DeadValueTest.re:2:4 path:+DeadValueTest
   addValueDeclaration +valueOnlyInImplementation DeadValueTest.re:4:4 path:+DeadValueTest
@@ -350,10 +349,10 @@
   addTypeReference DeadTypeTest.rei:3:4 --> DeadTypeTest.re:3:4
   addTypeReference DeadTypeTest.re:2:4 --> DeadTypeTest.rei:2:4
   addTypeReference DeadTypeTest.rei:2:4 --> DeadTypeTest.re:2:4
-  Scanning DeadValueTest.cmti
+  Scanning DeadValueTest.cmti Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DeadValueTest.rei
   addValueDeclaration +valueAlive DeadValueTest.rei:1:0 path:DeadValueTest
   addValueDeclaration +valueDead DeadValueTest.rei:2:0 path:DeadValueTest
-  Scanning Docstrings.cmt
+  Scanning Docstrings.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Docstrings.re
   addValueDeclaration +flat Docstrings.re:3:4 path:+Docstrings
   addValueDeclaration +signMessage Docstrings.re:13:4 path:+Docstrings
   addValueDeclaration +one Docstrings.re:16:4 path:+Docstrings
@@ -399,11 +398,11 @@
   addVariantCaseDeclaration B Docstrings.re:62:4 path:+Docstrings.t
   addTypeReference Docstrings.re:65:34 --> Docstrings.re:61:4
   addTypeReference Docstrings.re:68:36 --> Docstrings.re:61:4
-  Scanning DynamicallyLoadedComponent.cmt
+  Scanning DynamicallyLoadedComponent.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/DynamicallyLoadedComponent.re
   addValueDeclaration +make DynamicallyLoadedComponent.re:2:4 path:+DynamicallyLoadedComponent
   addValueReference DynamicallyLoadedComponent.re:2:32 --> DynamicallyLoadedComponent.re:2:13
   addValueReference DynamicallyLoadedComponent.re:2:19 --> React.re:7:0
-  Scanning ErrorHandler.cmt
+  Scanning ErrorHandler.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ErrorHandler.re
   addValueDeclaration +notify ErrorHandler.re:7:6 path:+ErrorHandler.Make
   addValueDeclaration +x ErrorHandler.re:12:4 path:+ErrorHandler
   addValueReference ErrorHandler.re:7:6 --> ErrorHandler.re:7:15
@@ -412,14 +411,14 @@
   addValueReference ErrorHandler.re:3:2 --> ErrorHandler.rei:3:2
   addValueReference ErrorHandler.rei:5:32 --> ErrorHandler.re:7:6
   addValueReference ErrorHandler.rei:7:0 --> ErrorHandler.re:12:4
-  Scanning ErrorHandler.cmti
+  Scanning ErrorHandler.cmti Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ErrorHandler.rei
   addValueDeclaration +notify ErrorHandler.rei:5:32 path:ErrorHandler.Make
   addValueDeclaration +x ErrorHandler.rei:7:0 path:ErrorHandler
-  Scanning EverythingLiveHere.cmt
+  Scanning EverythingLiveHere.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/EverythingLiveHere.re
   addValueDeclaration +x EverythingLiveHere.re:1:4 path:+EverythingLiveHere
   addValueDeclaration +y EverythingLiveHere.re:3:4 path:+EverythingLiveHere
   addValueDeclaration +z EverythingLiveHere.re:5:4 path:+EverythingLiveHere
-  Scanning FirstClassModules.cmt
+  Scanning FirstClassModules.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModules.re
   addValueDeclaration +y FirstClassModules.re:17:6 path:+FirstClassModules.M
   addValueDeclaration +k FirstClassModules.re:21:8 path:+FirstClassModules.M.InnerModule2
   addValueDeclaration +k3 FirstClassModules.re:25:8 path:+FirstClassModules.M.InnerModule3
@@ -443,14 +442,14 @@
   addValueReference FirstClassModules.re:28:20 --> FirstClassModules.re:30:8
   addValueReference FirstClassModules.re:14:2 --> FirstClassModules.re:17:6
   addValueReference FirstClassModules.re:46:20 --> FirstClassModules.re:49:6
-  Scanning FirstClassModulesInterface.cmt
+  Scanning FirstClassModulesInterface.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.re
   addValueDeclaration +r FirstClassModulesInterface.re:6:4 path:+FirstClassModulesInterface
   addRecordLabelDeclaration x FirstClassModulesInterface.re:2:2 path:+FirstClassModulesInterface.record
   addRecordLabelDeclaration y FirstClassModulesInterface.re:3:2 path:+FirstClassModulesInterface.record
   addValueReference FirstClassModulesInterface.rei:7:0 --> FirstClassModulesInterface.re:6:4
   addValueReference FirstClassModulesInterface.rei:10:18 --> FirstClassModulesInterface.re:8:18
   addValueReference FirstClassModulesInterface.re:8:18 --> FirstClassModulesInterface.rei:10:18
-  Scanning FirstClassModulesInterface.cmti
+  Scanning FirstClassModulesInterface.cmti Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/FirstClassModulesInterface.rei
   addRecordLabelDeclaration x FirstClassModulesInterface.rei:3:2 path:FirstClassModulesInterface.record
   extendTypeDependencies FirstClassModulesInterface.re:2:2 --> FirstClassModulesInterface.rei:3:2
   extendTypeDependencies FirstClassModulesInterface.rei:3:2 --> FirstClassModulesInterface.re:2:2
@@ -458,7 +457,7 @@
   extendTypeDependencies FirstClassModulesInterface.re:3:2 --> FirstClassModulesInterface.rei:4:2
   extendTypeDependencies FirstClassModulesInterface.rei:4:2 --> FirstClassModulesInterface.re:3:2
   addValueDeclaration +r FirstClassModulesInterface.rei:7:0 path:FirstClassModulesInterface
-  Scanning Hooks.cmt
+  Scanning Hooks.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Hooks.re
   addValueDeclaration +make Hooks.re:4:4 path:+Hooks
   addValueDeclaration +default Hooks.re:36:4 path:+Hooks
   addValueDeclaration +anotherComponent Hooks.re:40:4 path:+Hooks
@@ -593,9 +592,9 @@
   addTypeReference FirstClassModulesInterface.rei:4:2 --> FirstClassModulesInterface.re:3:2
   addTypeReference FirstClassModulesInterface.re:2:2 --> FirstClassModulesInterface.rei:3:2
   addTypeReference FirstClassModulesInterface.rei:3:2 --> FirstClassModulesInterface.re:2:2
-  Scanning IgnoreInterface.cmt
-  Scanning IgnoreInterface.cmti
-  Scanning ImmutableArray.cmt
+  Scanning IgnoreInterface.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/IgnoreInterface.re
+  Scanning IgnoreInterface.cmti Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/IgnoreInterface.rei
+  Scanning ImmutableArray.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.re
   addValueDeclaration +fromT ImmutableArray.re:5:2 path:+ImmutableArray.Array
   addValueDeclaration +fromTp ImmutableArray.re:6:2 path:+ImmutableArray.Array
   addValueDeclaration +fromTT ImmutableArray.re:7:2 path:+ImmutableArray.Array
@@ -1013,7 +1012,7 @@
   addValueReference ImmutableArray.rei:106:0 --> ImmutableArray.re:115:6
   addValueReference ImmutableArray.rei:108:0 --> ImmutableArray.re:117:6
   addValueReference ImmutableArray.rei:109:0 --> ImmutableArray.re:118:6
-  Scanning ImmutableArray.cmti
+  Scanning ImmutableArray.cmti Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImmutableArray.rei
   addValueDeclaration +get ImmutableArray.rei:5:15 path:ImmutableArray.Array
   addValueDeclaration +fromArray ImmutableArray.rei:7:0 path:ImmutableArray
   addValueDeclaration +toArray ImmutableArray.rei:10:0 path:ImmutableArray
@@ -1075,23 +1074,23 @@
   addValueDeclaration +cmp ImmutableArray.rei:106:0 path:ImmutableArray
   addValueDeclaration +eqU ImmutableArray.rei:108:0 path:ImmutableArray
   addValueDeclaration +eq ImmutableArray.rei:109:0 path:ImmutableArray
-  Scanning ImportHookDefault.cmt
+  Scanning ImportHookDefault.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportHookDefault.re
   addValueDeclaration +makeProps ImportHookDefault.re:6:0 path:+ImportHookDefault
   addValueDeclaration +make ImportHookDefault.re:6:0 path:+ImportHookDefault
   addValueDeclaration +make2Props ImportHookDefault.re:16:0 path:+ImportHookDefault
   addValueDeclaration +make2 ImportHookDefault.re:16:0 path:+ImportHookDefault
   addRecordLabelDeclaration name ImportHookDefault.re:2:2 path:+ImportHookDefault.person
   addRecordLabelDeclaration age ImportHookDefault.re:3:2 path:+ImportHookDefault.person
-  Scanning ImportHooks.cmt
+  Scanning ImportHooks.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportHooks.re
   addValueDeclaration +makeProps ImportHooks.re:15:0 path:+ImportHooks
   addValueDeclaration +make ImportHooks.re:15:0 path:+ImportHooks
   addValueDeclaration +foo ImportHooks.re:21:0 path:+ImportHooks
   addRecordLabelDeclaration name ImportHooks.re:3:2 path:+ImportHooks.person
   addRecordLabelDeclaration age ImportHooks.re:4:2 path:+ImportHooks.person
-  Scanning ImportIndex.cmt
+  Scanning ImportIndex.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportIndex.re
   addValueDeclaration +makeProps ImportIndex.re:2:0 path:+ImportIndex
   addValueDeclaration +make ImportIndex.re:2:0 path:+ImportIndex
-  Scanning ImportJsValue.cmt
+  Scanning ImportJsValue.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportJsValue.re
   addValueDeclaration +round ImportJsValue.re:1:0 path:+ImportJsValue
   addValueDeclaration +area ImportJsValue.re:14:0 path:+ImportJsValue
   addValueDeclaration +returnMixedArray ImportJsValue.re:21:0 path:+ImportJsValue
@@ -1121,18 +1120,18 @@
   addValueReference ImportJsValue.re:62:4 --> ImportJsValue.re:58:0
   addVariantCaseDeclaration I ImportJsValue.re:65:4 path:+ImportJsValue.variant
   addVariantCaseDeclaration S ImportJsValue.re:66:4 path:+ImportJsValue.variant
-  Scanning ImportMyBanner.cmt
+  Scanning ImportMyBanner.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ImportMyBanner.re
   addValueDeclaration +make ImportMyBanner.re:8:0 path:+ImportMyBanner
   addValueDeclaration +make ImportMyBanner.re:19:4 path:+ImportMyBanner
   addRecordLabelDeclaration text ImportMyBanner.re:6:16 path:+ImportMyBanner.message
   addValueReference ImportMyBanner.re:19:4 --> ImportMyBanner.re:8:0
-  Scanning JSResource.cmt
+  Scanning JSResource.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/JSResource.re
   addValueDeclaration +jSResource JSResource.re:3:0 path:+JSResource
-  Scanning LetPrivate.cmt
+  Scanning LetPrivate.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/LetPrivate.re
   addValueDeclaration +y LetPrivate.re:5:4 path:+LetPrivate
   addValueDeclaration +x LetPrivate.re:2:12 path:+LetPrivate.local_1
   addValueReference LetPrivate.re:5:4 --> LetPrivate.re:2:12
-  Scanning ManyComponents.cmt
+  Scanning ManyComponents.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ManyComponents.re
   addValueDeclaration +someValueSoModuleOffsetsAreShifted ManyComponents.re:4:6 path:+ManyComponents.InnerComponent
   addValueDeclaration +component ManyComponents.re:6:6 path:+ManyComponents.InnerComponent
   addValueDeclaration +make ManyComponents.re:9:6 path:+ManyComponents.InnerComponent
@@ -1160,7 +1159,7 @@
   addValueReference ManyComponents.re:39:4 --> ReasonReact.rei:181:0
   addValueReference ManyComponents.re:39:4 --> ReactDOMRe.re:2136:0
   addValueReference ManyComponents.re:39:4 --> ManyComponents.re:36:4
-  Scanning ModuleAliases.cmt
+  Scanning ModuleAliases.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ModuleAliases.re
   addValueDeclaration +testNested ModuleAliases.re:22:4 path:+ModuleAliases
   addValueDeclaration +testInner ModuleAliases.re:25:4 path:+ModuleAliases
   addValueDeclaration +testInner2 ModuleAliases.re:28:4 path:+ModuleAliases
@@ -1169,13 +1168,13 @@
   addValueReference ModuleAliases.re:22:4 --> ModuleAliases.re:22:18
   addValueReference ModuleAliases.re:25:4 --> ModuleAliases.re:25:17
   addValueReference ModuleAliases.re:28:4 --> ModuleAliases.re:28:18
-  Scanning ModuleAliases2.cmt
+  Scanning ModuleAliases2.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/ModuleAliases2.re
   addValueDeclaration +q ModuleAliases2.re:21:4 path:+ModuleAliases2
   addRecordLabelDeclaration x ModuleAliases2.re:3:2 path:+ModuleAliases2.record
   addRecordLabelDeclaration y ModuleAliases2.re:4:2 path:+ModuleAliases2.record
   addRecordLabelDeclaration outer ModuleAliases2.re:9:16 path:+ModuleAliases2.Outer.outer
   addRecordLabelDeclaration inner ModuleAliases2.re:13:18 path:+ModuleAliases2.Outer.Inner.inner
-  Scanning NestedModules.cmt
+  Scanning NestedModules.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/NestedModules.re
   addValueDeclaration +notNested NestedModules.re:2:4 path:+NestedModules
   addValueDeclaration +theAnswer NestedModules.re:6:6 path:+NestedModules.Universe
   addValueDeclaration +notExported NestedModules.re:8:6 path:+NestedModules.Universe
@@ -1194,12 +1193,12 @@
   addValueReference NestedModules.re:41:8 --> NestedModules.re:41:27
   addVariantCaseDeclaration A NestedModules.re:46:6 path:+NestedModules.Universe.variant
   addVariantCaseDeclaration B NestedModules.re:47:6 path:+NestedModules.Universe.variant
-  Scanning NestedModulesInSignature.cmt
+  Scanning NestedModulesInSignature.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/NestedModulesInSignature.re
   addValueDeclaration +theAnswer NestedModulesInSignature.re:2:6 path:+NestedModulesInSignature.Universe
   addValueReference NestedModulesInSignature.rei:2:2 --> NestedModulesInSignature.re:2:6
-  Scanning NestedModulesInSignature.cmti
+  Scanning NestedModulesInSignature.cmti Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/NestedModulesInSignature.rei
   addValueDeclaration +theAnswer NestedModulesInSignature.rei:2:2 path:NestedModulesInSignature.Universe
-  Scanning Newton.cmt
+  Scanning Newton.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Newton.re
   addValueDeclaration +- Newton.re:1:4 path:+Newton
   addValueDeclaration ++ Newton.re:2:4 path:+Newton
   addValueDeclaration +* Newton.re:3:4 path:+Newton
@@ -1269,13 +1268,13 @@
   addValueReference Newton.re:31:8 --> Newton.re:29:4
   addValueReference Newton.re:31:18 --> Newton.re:29:4
   addValueReference Newton.re:31:16 --> Newton.re:25:4
-  Scanning Opaque.cmt
+  Scanning Opaque.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Opaque.re
   addValueDeclaration +noConversion Opaque.re:6:4 path:+Opaque
   addValueDeclaration +testConvertNestedRecordFromOtherFile Opaque.re:12:4 path:+Opaque
   addVariantCaseDeclaration A Opaque.re:3:4 path:+Opaque.opaqueFromRecords
   addValueReference Opaque.re:6:4 --> Opaque.re:6:20
   addValueReference Opaque.re:12:4 --> Opaque.re:12:44
-  Scanning OptArg.cmt
+  Scanning OptArg.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/OptArg.re
   addValueDeclaration +foo OptArg.re:1:4 path:+OptArg
   addValueDeclaration +bar OptArg.re:3:4 path:+OptArg
   addValueDeclaration +threeArgs OptArg.re:9:4 path:+OptArg
@@ -1347,10 +1346,10 @@
   OptionalArgs.addFunctionReference OptArg.rei:1:0 OptArg.re:1:4
   addValueReference OptArg.rei:2:0 --> OptArg.re:3:4
   OptionalArgs.addFunctionReference OptArg.rei:2:0 OptArg.re:3:4
-  Scanning OptArg.cmti
+  Scanning OptArg.cmti Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/OptArg.rei
   addValueDeclaration +foo OptArg.rei:1:0 path:OptArg
   addValueDeclaration +bar OptArg.rei:2:0 path:OptArg
-  Scanning Records.cmt
+  Scanning Records.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Records.re
   addValueDeclaration +origin Records.re:11:4 path:+Records
   addValueDeclaration +computeArea Records.re:14:4 path:+Records
   addValueDeclaration +coord2d Records.re:18:4 path:+Records
@@ -1448,7 +1447,7 @@
   addTypeReference Records.re:167:38 --> Records.re:162:2
   addValueReference Records.re:167:4 --> Records.re:167:21
   addValueReference Records.re:170:4 --> Records.re:170:22
-  Scanning References.cmt
+  Scanning References.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/References.re
   addValueDeclaration +create References.re:4:4 path:+References
   addValueDeclaration +access References.re:7:4 path:+References
   addValueDeclaration +update References.re:10:4 path:+References
@@ -1479,7 +1478,7 @@
   addValueReference References.re:17:2 --> References.re:22:6
   addValueReference References.re:18:2 --> References.re:23:6
   addValueReference References.re:19:2 --> References.re:24:6
-  Scanning RepeatedLabel.cmt
+  Scanning RepeatedLabel.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/RepeatedLabel.re
   addValueDeclaration +userData RepeatedLabel.re:12:4 path:+RepeatedLabel
   addRecordLabelDeclaration a RepeatedLabel.re:2:2 path:+RepeatedLabel.userData
   addRecordLabelDeclaration b RepeatedLabel.re:3:2 path:+RepeatedLabel.userData
@@ -1491,20 +1490,20 @@
   addTypeReference RepeatedLabel.re:12:16 --> RepeatedLabel.re:7:2
   addTypeReference RepeatedLabel.re:12:16 --> RepeatedLabel.re:8:2
   addValueReference RepeatedLabel.re:14:7 --> RepeatedLabel.re:12:4
-  Scanning RequireCond.cmt
+  Scanning RequireCond.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/RequireCond.re
   addValueDeclaration +make RequireCond.re:1:0 path:+RequireCond
   addValueDeclaration +either RequireCond.re:14:0 path:+RequireCond
-  Scanning Shadow.cmt
+  Scanning Shadow.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Shadow.re
   addValueDeclaration +test Shadow.re:2:4 path:+Shadow
   addValueDeclaration +test Shadow.re:5:4 path:+Shadow
   addValueDeclaration +test Shadow.re:11:6 path:+Shadow.M
   addValueDeclaration +test Shadow.re:9:6 path:+Shadow.M
-  Scanning TestDeadExn.cmt
-  Scanning TestEmitInnerModules.cmt
+  Scanning TestDeadExn.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestDeadExn.re
+  Scanning TestEmitInnerModules.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestEmitInnerModules.re
   addValueDeclaration +x TestEmitInnerModules.re:3:6 path:+TestEmitInnerModules.Inner
   addValueDeclaration +y TestEmitInnerModules.re:5:6 path:+TestEmitInnerModules.Inner
   addValueDeclaration +y TestEmitInnerModules.re:12:10 path:+TestEmitInnerModules.Outer.Medium.Inner
-  Scanning TestFirstClassModules.cmt
+  Scanning TestFirstClassModules.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestFirstClassModules.re
   addValueDeclaration +convert TestFirstClassModules.re:2:4 path:+TestFirstClassModules
   addValueDeclaration +convertInterface TestFirstClassModules.re:5:4 path:+TestFirstClassModules
   addValueDeclaration +convertRecord TestFirstClassModules.re:8:4 path:+TestFirstClassModules
@@ -1513,7 +1512,7 @@
   addValueReference TestFirstClassModules.re:5:4 --> TestFirstClassModules.re:5:24
   addValueReference TestFirstClassModules.re:8:4 --> TestFirstClassModules.re:8:21
   addValueReference TestFirstClassModules.re:26:4 --> TestFirstClassModules.re:30:6
-  Scanning TestImmutableArray.cmt
+  Scanning TestImmutableArray.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestImmutableArray.re
   addValueDeclaration +testImmutableArrayGet TestImmutableArray.re:2:4 path:+TestImmutableArray
   addValueDeclaration +testBeltArrayGet TestImmutableArray.re:9:4 path:+TestImmutableArray
   addValueDeclaration +testBeltArraySet TestImmutableArray.re:11:4 path:+TestImmutableArray
@@ -1521,7 +1520,7 @@
   addValueReference TestImmutableArray.re:2:4 --> ImmutableArray.rei:5:15
   addValueReference TestImmutableArray.re:9:4 --> TestImmutableArray.re:9:23
   addValueReference TestImmutableArray.re:11:4 --> TestImmutableArray.re:11:23
-  Scanning TestImport.cmt
+  Scanning TestImport.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestImport.re
   addValueDeclaration +innerStuffContents TestImport.re:1:0 path:+TestImport
   addValueDeclaration +innerStuffContentsAsEmptyObject TestImport.re:9:0 path:+TestImport
   addValueDeclaration +innerStuffContents TestImport.re:18:4 path:+TestImport
@@ -1533,7 +1532,7 @@
   addValueReference TestImport.re:18:4 --> TestImport.re:1:0
   addRecordLabelDeclaration text TestImport.re:28:16 path:+TestImport.message
   addValueReference TestImport.re:42:4 --> TestImport.re:30:0
-  Scanning TestModuleAliases.cmt
+  Scanning TestModuleAliases.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestModuleAliases.re
   addValueDeclaration +testInner1 TestModuleAliases.re:32:4 path:+TestModuleAliases
   addValueDeclaration +testInner1Expanded TestModuleAliases.re:35:4 path:+TestModuleAliases
   addValueDeclaration +testInner2 TestModuleAliases.re:38:4 path:+TestModuleAliases
@@ -1542,7 +1541,7 @@
   addValueReference TestModuleAliases.re:35:4 --> TestModuleAliases.re:35:26
   addValueReference TestModuleAliases.re:38:4 --> TestModuleAliases.re:38:18
   addValueReference TestModuleAliases.re:41:4 --> TestModuleAliases.re:41:26
-  Scanning TestOptArg.cmt
+  Scanning TestOptArg.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestOptArg.re
   addValueDeclaration +foo TestOptArg.re:3:4 path:+TestOptArg
   addValueDeclaration +bar TestOptArg.re:5:4 path:+TestOptArg
   DeadOptionalArgs.addReferences OptArg.bar called with optional argNames:z argNamesMaybe: TestOptArg.re:1:7
@@ -1553,27 +1552,27 @@
   DeadOptionalArgs.addReferences foo called with optional argNames:x argNamesMaybe: TestOptArg.re:5:16
   addValueReference TestOptArg.re:5:4 --> TestOptArg.re:3:4
   addValueReference TestOptArg.re:9:7 --> TestOptArg.re:5:4
-  Scanning TestPromise.cmt
+  Scanning TestPromise.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TestPromise.re
   addValueDeclaration +convert TestPromise.re:14:4 path:+TestPromise
   addRecordLabelDeclaration x TestPromise.re:6:2 path:+TestPromise.fromPayload
   addRecordLabelDeclaration s TestPromise.re:7:2 path:+TestPromise.fromPayload
   addRecordLabelDeclaration result TestPromise.re:11:18 path:+TestPromise.toPayload
   addValueReference TestPromise.re:14:4 --> TestPromise.re:14:33
   addTypeReference TestPromise.re:14:32 --> TestPromise.re:7:2
-  Scanning TransitiveType1.cmt
+  Scanning TransitiveType1.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TransitiveType1.re
   addValueDeclaration +convert TransitiveType1.re:2:4 path:+TransitiveType1
   addValueDeclaration +convertAlias TransitiveType1.re:5:4 path:+TransitiveType1
   addValueReference TransitiveType1.re:2:4 --> TransitiveType1.re:2:15
   addValueReference TransitiveType1.re:5:4 --> TransitiveType1.re:5:20
-  Scanning TransitiveType2.cmt
+  Scanning TransitiveType2.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TransitiveType2.re
   addValueDeclaration +convertT2 TransitiveType2.re:7:4 path:+TransitiveType2
   addValueReference TransitiveType2.re:7:4 --> TransitiveType2.re:7:17
-  Scanning TransitiveType3.cmt
+  Scanning TransitiveType3.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TransitiveType3.re
   addValueDeclaration +convertT3 TransitiveType3.re:8:4 path:+TransitiveType3
   addRecordLabelDeclaration i TransitiveType3.re:3:2 path:+TransitiveType3.t3
   addRecordLabelDeclaration s TransitiveType3.re:4:2 path:+TransitiveType3.t3
   addValueReference TransitiveType3.re:8:4 --> TransitiveType3.re:8:17
-  Scanning Tuples.cmt
+  Scanning Tuples.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Tuples.re
   addValueDeclaration +testTuple Tuples.re:4:4 path:+Tuples
   addValueDeclaration +origin Tuples.re:10:4 path:+Tuples
   addValueDeclaration +computeArea Tuples.re:13:4 path:+Tuples
@@ -1607,17 +1606,17 @@
   addTypeReference Tuples.re:47:19 --> Tuples.re:32:2
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
   addValueReference Tuples.re:45:4 --> Tuples.re:45:31
-  Scanning TypeParams1.cmt
+  Scanning TypeParams1.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TypeParams1.re
   addValueDeclaration +exportSomething TypeParams1.re:4:4 path:+TypeParams1
-  Scanning TypeParams2.cmt
+  Scanning TypeParams2.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TypeParams2.re
   addValueDeclaration +exportSomething TypeParams2.re:10:4 path:+TypeParams2
   addRecordLabelDeclaration id TypeParams2.re:2:13 path:+TypeParams2.item
-  Scanning TypeParams3.cmt
+  Scanning TypeParams3.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/TypeParams3.re
   addValueDeclaration +test TypeParams3.re:2:4 path:+TypeParams3
   addValueDeclaration +test2 TypeParams3.re:5:4 path:+TypeParams3
   addValueReference TypeParams3.re:2:4 --> TypeParams3.re:2:12
   addValueReference TypeParams3.re:5:4 --> TypeParams3.re:5:13
-  Scanning Types.cmt
+  Scanning Types.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Types.re
   addValueDeclaration +someIntList Types.re:5:4 path:+Types
   addValueDeclaration +map Types.re:8:4 path:+Types
   addValueDeclaration +swap Types.re:28:8 path:+Types
@@ -1664,7 +1663,7 @@
   addRecordLabelDeclaration id Types.re:139:19 path:+Types.someRecord
   addValueReference Types.re:144:4 --> Types.re:144:36
   addValueDeclaration +x Types.re:173:6 path:+Types.ObjectId
-  Scanning Unboxed.cmt
+  Scanning Unboxed.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Unboxed.re
   addValueDeclaration +testV1 Unboxed.re:12:4 path:+Unboxed
   addValueDeclaration +r2Test Unboxed.re:24:4 path:+Unboxed
   addVariantCaseDeclaration A Unboxed.re:4:4 path:+Unboxed.v1
@@ -1673,7 +1672,7 @@
   addRecordLabelDeclaration x Unboxed.re:16:11 path:+Unboxed.r1
   addVariantCaseDeclaration B Unboxed.re:21:4 path:+Unboxed.r2
   addValueReference Unboxed.re:24:4 --> Unboxed.re:24:14
-  Scanning Uncurried.cmt
+  Scanning Uncurried.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Uncurried.re
   addValueDeclaration +uncurried0 Uncurried.re:14:4 path:+Uncurried
   addValueDeclaration +uncurried1 Uncurried.re:17:4 path:+Uncurried
   addValueDeclaration +uncurried2 Uncurried.re:20:4 path:+Uncurried
@@ -1717,7 +1716,7 @@
   addValueReference Uncurried.re:63:4 --> Uncurried.re:65:4
   addValueReference Uncurried.re:63:4 --> Uncurried.re:63:21
   addValueReference Uncurried.re:63:4 --> Uncurried.re:63:33
-  Scanning Unison.cmt
+  Scanning Unison.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Unison.re
   addValueDeclaration +group Unison.re:17:4 path:+Unison
   addValueDeclaration +fits Unison.re:19:8 path:+Unison
   addValueDeclaration +toString Unison.re:26:8 path:+Unison
@@ -1771,13 +1770,13 @@
   addValueReference Unison.re:42:25 --> Unison.re:17:4
   addTypeReference Unison.re:42:52 --> Unison.re:14:4
   addValueReference Unison.re:42:0 --> Unison.re:26:8
-  Scanning UseImportJsValue.cmt
+  Scanning UseImportJsValue.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/UseImportJsValue.re
   addValueDeclaration +useGetProp UseImportJsValue.re:2:4 path:+UseImportJsValue
   addValueDeclaration +useTypeImportedInOtherModule UseImportJsValue.re:6:4 path:+UseImportJsValue
   addValueReference UseImportJsValue.re:2:4 --> UseImportJsValue.re:2:18
   addValueReference UseImportJsValue.re:2:4 --> ImportJsValue.re:35:2
   addValueReference UseImportJsValue.re:6:4 --> UseImportJsValue.re:6:36
-  Scanning Variants.cmt
+  Scanning Variants.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/Variants.re
   addValueDeclaration +isWeekend Variants.re:13:4 path:+Variants
   addValueDeclaration +monday Variants.re:21:4 path:+Variants
   addValueDeclaration +saturday Variants.re:23:4 path:+Variants
@@ -1813,7 +1812,7 @@
   addValueReference Variants.re:115:4 --> Variants.re:115:19
   addValueReference Variants.re:118:4 --> Variants.re:118:19
   addValueReference Variants.re:121:4 --> Variants.re:121:19
-  Scanning VariantsWithPayload.cmt
+  Scanning VariantsWithPayload.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/VariantsWithPayload.re
   addValueDeclaration +testWithPayload VariantsWithPayload.re:16:4 path:+VariantsWithPayload
   addValueDeclaration +printVariantWithPayload VariantsWithPayload.re:19:4 path:+VariantsWithPayload
   addValueDeclaration +testManyPayloads VariantsWithPayload.re:38:4 path:+VariantsWithPayload
@@ -1863,17 +1862,17 @@
   addValueReference VariantsWithPayload.re:103:4 --> VariantsWithPayload.re:103:23
   addVariantCaseDeclaration R VariantsWithPayload.re:107:4 path:+VariantsWithPayload.variant1Object
   addValueReference VariantsWithPayload.re:110:4 --> VariantsWithPayload.re:110:26
-  Scanning trace.cmt
+  Scanning trace.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/trace.ml
   addValueDeclaration +infok trace.ml:5:4 path:+trace
   addRecordLabelDeclaration pf trace.ml:3:11 path:+trace.pf
   addValueReference trace.ml:5:4 --> trace.ml:5:30
   addValueReference trace.mli:5:0 --> trace.ml:5:4
-  Scanning trace.cmti
+  Scanning trace.cmti Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/trace.mli
   addRecordLabelDeclaration pf trace.mli:3:11 path:trace.pf
   extendTypeDependencies trace.ml:3:11 --> trace.mli:3:11
   extendTypeDependencies trace.mli:3:11 --> trace.ml:3:11
   addValueDeclaration +infok trace.mli:5:0 path:trace
-  Scanning BsJson.cmt
+  Scanning BsJson.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/BsJson.re
   addValueDeclaration +testBsJson BsJson.re:2:4 path:+BsJson
   addValueDeclaration +testBsJson2 BsJson.re:5:4 path:+BsJson
   addValueReference BsJson.re:2:4 --> BsJson.re:2:17
@@ -1882,7 +1881,7 @@
   addValueReference BsJson.re:5:4 --> Json_decode.mli:78:0
   addTypeReference trace.ml:3:11 --> trace.mli:3:11
   addTypeReference trace.mli:3:11 --> trace.ml:3:11
-  Scanning Exn.cmt
+  Scanning Exn.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Exn.re
   addValueDeclaration +raises Exn.re:1:4 path:+Exn
   addValueDeclaration +catches1 Exn.re:3:4 path:+Exn
   addValueDeclaration +catches2 Exn.re:8:4 path:+Exn
@@ -1982,16 +1981,16 @@
   addValueReference Exn.re:130:4 --> Exn.re:130:18
   addValueReference Exn.re:156:4 --> Exn.re:156:19
   addValueReference Exn.re:165:4 --> Exn.re:165:33
-  Scanning ExnA.cmt
+  Scanning ExnA.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/ExnA.re
   addValueDeclaration +bar ExnA.re:1:4 path:+ExnA
   addValueReference ExnA.re:1:4 --> ExnB.re:2:4
-  Scanning ExnB.cmt
+  Scanning ExnB.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/ExnB.re
   addValueDeclaration +foo ExnB.re:2:4 path:+ExnB
-  Scanning ExportWithRename.cmt
+  Scanning ExportWithRename.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/ExportWithRename.re
   addValueDeclaration +make ExportWithRename.re:3:4 path:+ExportWithRename
   addValueReference ExportWithRename.re:3:32 --> ExportWithRename.re:3:13
   addValueReference ExportWithRename.re:3:19 --> React.re:7:0
-  Scanning TestYojson.cmt
+  Scanning TestYojson.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/TestYojson.re
   addValueDeclaration +foo TestYojson.re:2:4 path:+TestYojson
   addValueDeclaration +bar TestYojson.re:4:4 path:+TestYojson
   addValueDeclaration +toString TestYojson.re:11:4 path:+TestYojson
@@ -2009,7 +2008,7 @@
   addValueReference TestYojson.re:11:4 --> Yojson.re:19:8
   addValueReference TestYojson.re:14:4 --> TestYojson.re:14:12
   addValueReference TestYojson.re:14:4 --> Yojson.re:17:8
-  Scanning Yojson.cmt
+  Scanning Yojson.cmt Source:/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/exception/Yojson.re
   addValueDeclaration +from_string Yojson.re:7:6 path:+Yojson.Basic
   addValueDeclaration +member Yojson.re:13:8 path:+Yojson.Basic.Util
   addValueDeclaration +to_int Yojson.re:17:8 path:+Yojson.Basic.Util

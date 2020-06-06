@@ -7,19 +7,18 @@ type analysisType =
   | Termination;
 
 let loadCmtFile = (~analysis, cmtFilePath) => {
-  if (debug^) {
-    Log_.item(
-      "Scanning %s@.",
-      ci^ ? Filename.basename(cmtFilePath) : cmtFilePath,
-    );
-  };
-
   let cmt_infos = Cmt_format.read_cmt(cmtFilePath);
-
   switch (cmt_infos.cmt_annots |> FindSourceFile.cmt) {
   | None => ()
 
   | Some(sourceFile) =>
+    if (debug^) {
+      Log_.item(
+        "Scanning %s Source:%s@.",
+        ci^ ? Filename.basename(cmtFilePath) : cmtFilePath,
+        sourceFile,
+      );
+    };
     FileReferences.addFile(sourceFile);
     currentSrc := sourceFile;
     currentModule := Paths.getModuleName(sourceFile);
