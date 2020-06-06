@@ -80,6 +80,12 @@ let structure = (mapper, structure) =>
     @ newStructure;
   };
 
+let nameFromLongident = li =>
+  switch (li |> Longident.flatten) {
+  | [name, ..._] => name
+  | [] => "empty"
+  };
+
 /* TODO */
 let expr = (mapper, expr) =>
   switch (expr) {
@@ -95,7 +101,7 @@ let expr = (mapper, expr) =>
           ]),
         )),
     } as pexp =>
-    let name = txt |> Longident.flatten |> List.hd;
+    let name = txt |> nameFromLongident;
     let _ =
       jsResources := ResourceSet.add({Resource.name, loc}, jsResources^);
     {
@@ -132,7 +138,7 @@ let expr = (mapper, expr) =>
           ]),
         )),
     } =>
-    let name = txt |> Longident.flatten |> List.hd;
+    let name = txt |> nameFromLongident;
     let _ =
       jsResources := ResourceSet.add({Resource.name, loc}, jsResources^);
     let bindingName = "$" ++ name ++ "$Deferred";
@@ -270,8 +276,8 @@ let expr = (mapper, expr) =>
           ]),
         )),
     } =>
-    let thenModule = thenTxt |> Longident.flatten |> List.hd;
-    let elseModule = elseTxt |> Longident.flatten |> List.hd;
+    let thenModule = thenTxt |> nameFromLongident;
+    let elseModule = elseTxt |> nameFromLongident;
 
     jsResources :=
       ResourceSet.add(
@@ -374,7 +380,7 @@ let expr = (mapper, expr) =>
           ]),
         )),
     } =>
-    let name = txt |> Longident.flatten |> List.hd;
+    let name = txt |> nameFromLongident;
     let _ =
       jsResources := ResourceSet.add({Resource.name, loc}, jsResources^);
     let bindingName = "$" ++ name ++ "$RequireCond";
