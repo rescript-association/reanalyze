@@ -1,4 +1,6 @@
 # master
+
+# 2.6.0
 - In `-debug` mode, print `Sourcefile:path/to/File.re` for each `.cmt` loaded. This can be used to decide the current directory to call `renanalyze` from in `dune` projects.
 
 # 2.5.0
