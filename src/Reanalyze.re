@@ -4,6 +4,7 @@ type analysisType =
   | All
   | Dce
   | Exception
+  | Noalloc
   | Termination;
 
 let loadCmtFile = (~analysis, cmtFilePath) => {
@@ -35,6 +36,7 @@ let loadCmtFile = (~analysis, cmtFilePath) => {
       cmt_infos |> Arnold.processCmt;
     | Dce => cmt_infos |> DeadCode.processCmt(~cmtFilePath)
     | Exception => cmt_infos |> Exception.processCmt
+    | Noalloc => cmt_infos |> Noalloc.processCmt
     | Termination => cmt_infos |> Arnold.processCmt
     };
   };
@@ -103,6 +105,7 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
     Arnold.reportResults(~ppf);
   | Dce => dce()
   | Exception => Exception.reportResults(~ppf)
+  | Noalloc => Noalloc.reportResults(~ppf)
   | Termination => Arnold.reportResults(~ppf)
   };
   Log_.Stats.report();
@@ -113,6 +116,7 @@ type cliCommand =
   | All(option(string))
   | Exception(option(string))
   | DCE(option(string))
+  | Noalloc
   | NoOp
   | Termination(option(string));
 
@@ -147,6 +151,9 @@ let cli = () => {
   }
   and setExperimental = () => {
     Common.Cli.experimental := true;
+  }
+  and setNoalloc = () => {
+    Noalloc |> setCliCommand;
   }
   and setSuppress = s => {
     let names = s |> String.split_on_char(',');
@@ -210,6 +217,7 @@ let cli = () => {
       Arg.String(s => setLivePaths(s)),
       "comma-separated-path-prefixes Consider all values whose path has a prefix in the list as live",
     ),
+    ("-noalloc", Arg.Unit(setNoalloc), ""),
     (
       "-suppress",
       Arg.String(setSuppress),
@@ -254,6 +262,7 @@ let cli = () => {
     | All(cmtRoot) => runAnalysis(~analysis=All, ~cmtRoot, ~ppf)
     | DCE(cmtRoot) => runAnalysis(~analysis=Dce, ~cmtRoot, ~ppf)
     | Exception(cmtRoot) => runAnalysis(~analysis=Exception, ~cmtRoot, ~ppf)
+    | Noalloc => runAnalysis(~analysis=Noalloc, ~cmtRoot=None, ~ppf)
     | Termination(cmtRoot) =>
       runAnalysis(~analysis=Termination, ~cmtRoot, ~ppf)
     };
