@@ -1,16 +1,21 @@
-let processNoAllocbinding = (~id, ~expr: Typedtree.expression) => {
-  Log_.item("no-alloc binding for %s@.", id |> Ident.name);
+let processExpr = (~def, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
-  | Texp_constant(Const_int(_)) => ()
+  | Texp_constant(Const_int(n)) =>
+    def |> Il.Def.emit(~instr=Il.Const(Il.I32(n |> Int32.of_int)))
   | _ => assert(false)
   };
+
+let processValueBinding = (~id, ~expr: Typedtree.expression) => {
+  Log_.item("no-alloc binding for %s@.", id |> Ident.name);
+  let def = Il.newDef(~id);
+  expr |> processExpr(~def);
 };
 
 let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
   switch (vb.vb_pat.pat_desc) {
   | Tpat_var(id, _)
       when vb.vb_attributes |> Annotation.hasAttribute((==)("noalloc")) =>
-    processNoAllocbinding(~id, ~expr=vb.Typedtree.vb_expr)
+    processValueBinding(~id, ~expr=vb.Typedtree.vb_expr)
   | _ => ()
   };
   let r = super.Tast_mapper.value_binding(self, vb);
@@ -33,4 +38,4 @@ let processCmt = (cmt_infos: Cmt_format.cmt_infos) =>
   | _ => ()
   };
 
-let reportResults = (~ppf as _) => ();
+let reportResults = (~ppf) => Il.dumpDefs(~ppf);
