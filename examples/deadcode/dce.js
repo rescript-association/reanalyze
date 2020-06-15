@@ -20,7 +20,7 @@ child_process.spawnSync(
     "-debug",
     "-ci",
     "-suppress",
-    "src/exception",
+    "src/exception,src/noalloc",
     "-live-names",
     "globallyLive1",
     "-live-names",

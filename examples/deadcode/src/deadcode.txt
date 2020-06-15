@@ -2020,6 +2020,8 @@
   addValueReference Yojson.re:13:8 --> Yojson.re:10:14
   addTypeReference Yojson.re:14:23 --> Yojson.re:10:14
   addValueReference Yojson.re:13:8 --> Yojson.re:14:11
+  Scanning Noalloc.cmt Source:Noalloc.re
+  addValueDeclaration +x Noalloc.re:2:4 path:+Noalloc
   addValueReference TestDeadExn.re:1:7 --> DeadExn.re:1:10
   
 File References
@@ -2108,6 +2110,7 @@ File References
   ExportWithRename.re -->> React.re
   TestYojson.re -->> Yojson.re
   Yojson.re -->> 
+  Noalloc.re -->> 
   trace.ml -->> 
   trace.mli -->> trace.ml
   Dead VariantCase +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
@@ -2650,6 +2653,7 @@ File References
   Dead Value +TestYojson.+toString: 0 references () [0]
   Dead Value +TestYojson.+bar: 0 references () [0]
   Dead Value +TestYojson.+foo: 0 references () [0]
+  Dead Value +Noalloc.+x: 0 references () [0]
   Live Value +BootloaderResource.+read: 1 references (DeadTest.re:112:40) [0]
   Live Value +DeadExn.+eInside: 1 references (DeadExn.re:12:7) [0]
   Dead Value +DeadExn.+eToplevel: 0 references () [0]
