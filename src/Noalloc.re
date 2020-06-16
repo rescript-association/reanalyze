@@ -2,7 +2,11 @@ let processExpr = (~def, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
   | Texp_constant(Const_int(n)) =>
     def |> Il.Def.emit(~instr=Il.Const(Il.I32(n |> Int32.of_int)))
-  | _ => assert(false)
+  | _ =>
+    Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
+      Format.fprintf(ppf, "Expression not supported")
+    );
+    assert(false);
   };
 
 let processValueBinding = (~id, ~expr: Typedtree.expression) => {
