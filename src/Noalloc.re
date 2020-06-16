@@ -1,7 +1,35 @@
-let processExpr = (~def, expr: Typedtree.expression) =>
+let processCallee = (~def, ~loc, callee) =>
+  switch (callee |> Path.name) {
+  | "Pervasives.+"
+  | "Stdlib.+" => def |> Il.Def.emit(~instr=Il.I32Add)
+  | name =>
+    Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
+      Format.fprintf(ppf, "Callee not recognized: %s", name)
+    );
+    assert(false);
+  };
+
+let rec processExpr = (~def, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
   | Texp_constant(Const_int(n)) =>
     def |> Il.Def.emit(~instr=Il.Const(Il.I32(n |> Int32.of_int)))
+  | Texp_apply(
+      {exp_desc: Texp_ident(callee, _, _), exp_loc: callee_loc},
+      args,
+    ) =>
+    args
+    |> List.iter(((argLabel: Asttypes.arg_label, argOpt)) =>
+         switch (argLabel, argOpt) {
+         | (Nolabel, Some(arg)) => arg |> processExpr(~def)
+         | _ =>
+           Log_.info(
+             ~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
+             Format.fprintf(ppf, "Argument not supported")
+           )
+         }
+       );
+    callee |> processCallee(~def, ~loc=callee_loc);
+
   | _ =>
     Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
       Format.fprintf(ppf, "Expression not supported")
