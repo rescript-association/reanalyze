@@ -1,2 +1,2 @@
 [@noalloc]
-let x = 34;
+let x = 34 + 2;
