@@ -16,14 +16,27 @@ module Env = {
 };
 
 let processCallee = (~def, ~loc, callee) =>
-  switch (callee |> Path.name) {
-  | "Pervasives.+"
-  | "Stdlib.+" => def |> Il.Def.emit(~instr=Il.I32Add)
-  | name =>
-    Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
-      Format.fprintf(ppf, "Callee not recognized: %s", name)
-    );
-    assert(false);
+  switch (callee) {
+  | Path.Pident(id) =>
+    let id = Ident.name(id);
+    switch (Il.findDef(~id)) {
+    | Some(defCallee) => def |> Il.Def.emit(~instr=Il.Call(defCallee.id))
+    | None =>
+      Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
+        Format.fprintf(ppf, "Callee not recognized: %s", id)
+      );
+      assert(false);
+    };
+  | _ =>
+    switch (callee |> Path.name) {
+    | "Pervasives.+"
+    | "Stdlib.+" => def |> Il.Def.emit(~instr=Il.I32Add)
+    | name =>
+      Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
+        Format.fprintf(ppf, "Callee not recognized: %s", name)
+      );
+      assert(false);
+    }
   };
 
 let rec processFunDef =

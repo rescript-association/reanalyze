@@ -5,11 +5,16 @@ function foo(x, y) {
   return x + y | 0;
 }
 
+function bar(x) {
+  return (x + x | 0) + 1 | 0;
+}
+
 var x = 36;
 
 export {
   x ,
   foo ,
+  bar ,
   
 }
 /* No side effect */
