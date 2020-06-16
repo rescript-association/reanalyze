@@ -2,7 +2,8 @@ type const =
   | I32(int32);
 
 type instr =
-  | Const(const);
+  | Const(const)
+  | I32Add;
 
 type id = string;
 
@@ -25,24 +26,27 @@ let newDef = (~id) => {
   def;
 };
 
-let dumpConst = (ppf, const) =>
+let constToString = const =>
   switch (const) {
-  | I32(i) => Format.fprintf(ppf, "i32:%s", Int32.to_string(i))
+  | I32(i) => "i32:" ++ Int32.to_string(i)
   };
 
-let dumpInstr = (ppf, instr) =>
+let instrToString = instr =>
   switch (instr) {
-  | Const(const) => Format.fprintf(ppf, "const %a", dumpConst, const)
+  | Const(const) => "const " ++ constToString(const)
+  | I32Add => "i32.add"
   };
 
 let dumpDefs = (~ppf) => {
   Format.fprintf(ppf, "Noalloc definitions@.");
   Hashtbl.iter(
     (id, def: Def.t) =>
-      def.body
-      |> List.iter(instr =>
-           Format.fprintf(ppf, "%s: %a@.", id, dumpInstr, instr)
-         ),
+      Format.fprintf(
+        ppf,
+        "%s: %s@.",
+        id,
+        def.body |> List.rev_map(instrToString) |> String.concat("; "),
+      ),
     defs,
   );
 };
