@@ -14,7 +14,7 @@ let pair = (x, y) => (x, y);
 let unpair = ((x, y)) => x + y;
 
 [@noalloc]
-let mixed = ((a, b, c), (d, (e, f, (g, h, i)), l)) => (
-  a + b + c,
-  d + e + f + g + h + i + l,
+let mixed = ((p0, p1, p2), (p3, (p4, p5, (p6, p7, p8)), p9)) => (
+  p0 + p1 + p2,
+  p3 + p4 + p5 + p6 + p7 + p8 + p9,
 );
