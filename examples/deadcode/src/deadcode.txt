@@ -2025,6 +2025,8 @@
   addValueDeclaration +foo Noalloc.re:5:4 path:+Noalloc
   addValueDeclaration +bar Noalloc.re:8:4 path:+Noalloc
   addValueDeclaration +pair Noalloc.re:11:4 path:+Noalloc
+  addValueDeclaration +unpair Noalloc.re:14:4 path:+Noalloc
+  addValueDeclaration +mixed Noalloc.re:17:4 path:+Noalloc
   addValueReference Noalloc.re:5:4 --> Noalloc.re:5:11
   addValueReference Noalloc.re:5:4 --> Noalloc.re:5:14
   addValueReference Noalloc.re:8:4 --> Noalloc.re:8:10
@@ -2032,6 +2034,18 @@
   addValueReference Noalloc.re:8:4 --> Noalloc.re:5:4
   addValueReference Noalloc.re:11:4 --> Noalloc.re:11:12
   addValueReference Noalloc.re:11:4 --> Noalloc.re:11:15
+  addValueReference Noalloc.re:14:4 --> Noalloc.re:14:15
+  addValueReference Noalloc.re:14:4 --> Noalloc.re:14:18
+  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:14
+  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:17
+  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:20
+  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:25
+  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:29
+  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:32
+  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:36
+  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:39
+  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:42
+  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:47
   addValueReference TestDeadExn.re:1:7 --> DeadExn.re:1:10
   
 File References
@@ -2663,6 +2677,8 @@ File References
   Dead Value +TestYojson.+toString: 0 references () [0]
   Dead Value +TestYojson.+bar: 0 references () [0]
   Dead Value +TestYojson.+foo: 0 references () [0]
+  Dead Value +Noalloc.+mixed: 0 references () [0]
+  Dead Value +Noalloc.+unpair: 0 references () [0]
   Dead Value +Noalloc.+pair: 0 references () [0]
   Dead Value +Noalloc.+bar: 0 references () [0]
   Dead Value +Noalloc.+foo: 0 references () [0]

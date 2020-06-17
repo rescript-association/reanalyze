@@ -16,6 +16,19 @@ function pair(x, y) {
         ];
 }
 
+function unpair(param) {
+  return param[0] + param[1] | 0;
+}
+
+function mixed(param, param$1) {
+  var match = param$1[1];
+  var match$1 = match[2];
+  return /* tuple */[
+          (param[0] + param[1] | 0) + param[2] | 0,
+          (((((param$1[0] + match[0] | 0) + match[1] | 0) + match$1[0] | 0) + match$1[1] | 0) + match$1[2] | 0) + param$1[2] | 0
+        ];
+}
+
 var x = 36;
 
 export {
@@ -23,6 +36,8 @@ export {
   foo ,
   bar ,
   pair ,
+  unpair ,
+  mixed ,
   
 }
 /* No side effect */
