@@ -39,30 +39,53 @@ let processCallee = (~def, ~loc, callee) =>
     }
   };
 
+let rec processFunPat = (~def, ~env, ~offset, pat: Typedtree.pattern) =>
+  switch (pat.pat_desc) {
+  | Tpat_var(id, _) =>
+    def |> Il.Def.emit(~instr=Il.Param(offset));
+    let newEnv =
+      env |> Env.addFunctionParameter(~id=id |> Ident.name, ~offset);
+    (newEnv, offset + 1, pat.pat_type);
+
+  | Tpat_tuple(pats) =>
+    let (newEnv, newOffset) =
+      pats
+      |> List.fold_left(
+           ((e, o), p) => {
+             let (newEnv, newOffset, _t) =
+               p |> processFunPat(~def, ~env=e, ~offset=o);
+             (newEnv, newOffset);
+           },
+           (env, offset),
+         );
+    (newEnv, newOffset, pat.pat_type);
+
+  | _ =>
+    Log_.info(~count=false, ~loc=pat.pat_loc, ~name="Noalloc", (ppf, ()) =>
+      Format.fprintf(ppf, "Argument pattern not supported")
+    );
+    assert(false);
+  };
+
 let rec processFunDef =
         (~def, ~env, ~offset, ~params, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
   | Texp_function({
       arg_label: Nolabel,
       param,
-      cases: [
-        {
-          c_lhs: {pat_desc: Tpat_var(_id, _), pat_type},
-          c_guard: None,
-          c_rhs,
-        },
-      ],
+      cases: [{c_lhs, c_guard: None, c_rhs}],
       partial: Total,
     }) =>
-    def |> Il.Def.emit(~instr=Il.Param(offset));
+    let (newEnv, newOffset, typ) =
+      c_lhs |> processFunPat(~def, ~env, ~offset);
     c_rhs
     |> processFunDef(
          ~def,
-         ~env=
-           env |> Env.addFunctionParameter(~id=param |> Ident.name, ~offset),
-         ~offset=offset + 1,
-         ~params=[(param, pat_type), ...params],
+         ~env=newEnv,
+         ~offset=newOffset,
+         ~params=[(param, typ), ...params],
        );
+
   | _ => (env, expr, params)
   };
 
@@ -104,6 +127,12 @@ let rec processExpr = (~def, ~env, expr: Typedtree.expression) =>
   | Texp_function(_) =>
     let (env, body, params) =
       expr |> processFunDef(~def, ~env, ~offset=0, ~params=[]);
+    if (params == []) {
+      Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
+        Format.fprintf(ppf, "Cannot decode function parameters")
+      );
+      assert(false);
+    };
     def.params = params;
     body |> processExpr(~def, ~env);
 
