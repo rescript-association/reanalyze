@@ -22,8 +22,12 @@ let processCallee = (~def, ~loc, callee) =>
     }
   };
 
+type instKind =
+  | Param
+  | Decl
+  | Set;
 let rec processFunPatId =
-        (~env, ~def: Il.Def.t, ~idOpt, ~typ: Types.type_expr) => {
+        (~env, ~def: Il.Def.t, ~idOpt, ~instrKind, ~typ: Types.type_expr) => {
   switch (typ.desc) {
   | Ttuple(ts) =>
     let (newEnv, scopesRev) =
@@ -31,7 +35,7 @@ let rec processFunPatId =
       |> List.fold_left(
            ((e, scopes), t) => {
              let (newEnv, newScope) =
-               processFunPatId(~env=e, ~def, ~idOpt=None, ~typ=t);
+               processFunPatId(~env=e, ~def, ~idOpt=None, ~instrKind, ~typ=t);
              (newEnv, [newScope, ...scopes]);
            },
            (env, []),
@@ -45,7 +49,13 @@ let rec processFunPatId =
     (newEnv2, scope);
   | _ =>
     let offset = def.nextOffset;
-    def |> Il.Def.emit(~instr=Il.Param(offset));
+    let instr =
+      switch (instrKind) {
+      | Param => Il.Param(offset)
+      | Decl => Il.LocalDecl(offset)
+      | Set => Il.LocalSet(offset)
+      };
+    def |> Il.Def.emit(~instr);
     def.nextOffset = offset + 1;
     let scope = Il.Env.Local(offset);
     let newEnv =
@@ -65,6 +75,7 @@ let rec processFunPat = (~def, ~env, pat: Typedtree.pattern) =>
       ~env,
       ~def,
       ~idOpt=Some(id |> Ident.name),
+      ~instrKind=Param,
       ~typ=pat.pat_type,
     )
 
@@ -161,16 +172,30 @@ let rec processExpr = (~def, ~env, expr: Typedtree.expression) =>
       inExpr,
     ) =>
     let offset = def.nextOffset;
-    def |> Il.Def.emit(~instr=Il.LocalDecl(offset));
-    def.nextOffset = def.nextOffset + 1;
+    let (newEnv, _scope) =
+      processFunPatId(
+        ~env,
+        ~def,
+        ~idOpt=Some(id |> Ident.name),
+        ~instrKind=Decl,
+        ~typ=vb_expr.exp_type,
+      );
 
     vb_expr |> processExpr(~def, ~env);
-    def |> Il.Def.emit(~instr=Il.LocalSet(offset));
 
-    let scope = Il.Env.Local(offset);
-    let newEnv =
-      env |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
-    inExpr |> processExpr(~def, ~env=newEnv);
+    def.nextOffset = offset; // TODO: resetting as processing twicce
+    let (newEnv2, scope) =
+      processFunPatId(
+        ~env=newEnv,
+        ~def,
+        ~idOpt=Some(id |> Ident.name),
+        ~instrKind=Set,
+        ~typ=vb_expr.exp_type,
+      );
+
+    let newEnv3 =
+      newEnv2 |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
+    inExpr |> processExpr(~def, ~env=newEnv3);
 
   | _ =>
     Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
