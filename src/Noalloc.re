@@ -22,7 +22,8 @@ let processCallee = (~def, ~loc, callee) =>
     }
   };
 
-let rec processFunPatId = (~env, ~def: Il.Def.t, ~id, ~typ: Types.type_expr) => {
+let rec processFunPatId =
+        (~env, ~def: Il.Def.t, ~idOpt, ~typ: Types.type_expr) => {
   switch (typ.desc) {
   | Ttuple(ts) =>
     let (newEnv, scopesRev) =
@@ -30,23 +31,28 @@ let rec processFunPatId = (~env, ~def: Il.Def.t, ~id, ~typ: Types.type_expr) => 
       |> List.fold_left(
            ((e, scopes), t) => {
              let (newEnv, newScope) =
-               processFunPatId(~env=e, ~def, ~id, ~typ=t);
+               processFunPatId(~env=e, ~def, ~idOpt=None, ~typ=t);
              (newEnv, [newScope, ...scopes]);
            },
            (env, []),
          );
     let scope = Il.Env.Tuple(scopesRev |> List.rev);
-    (
-      newEnv |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope),
-      scope,
-    );
+    let newEnv2 =
+      switch (idOpt) {
+      | None => newEnv
+      | Some(id) => newEnv |> Il.Env.addFunctionParameter(~id, ~scope)
+      };
+    (newEnv2, scope);
   | _ =>
     let offset = def.nextOffset;
     def |> Il.Def.emit(~instr=Il.Param(offset));
     def.nextOffset = offset + 1;
     let scope = Il.Env.Local(offset);
     let newEnv =
-      env |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
+      switch (idOpt) {
+      | None => env
+      | Some(id) => env |> Il.Env.addFunctionParameter(~id, ~scope)
+      };
     (newEnv, scope);
   };
 };
@@ -55,7 +61,12 @@ let rec processFunPat = (~def, ~env, pat: Typedtree.pattern) =>
   switch (pat.pat_desc) {
   | Tpat_var(id, _)
   | Tpat_alias({pat_desc: Tpat_any}, id, _) =>
-    processFunPatId(~env, ~def, ~id, ~typ=pat.pat_type)
+    processFunPatId(
+      ~env,
+      ~def,
+      ~idOpt=Some(id |> Ident.name),
+      ~typ=pat.pat_type,
+    )
 
   | Tpat_tuple(pats) =>
     let (newEnv, scopes) =

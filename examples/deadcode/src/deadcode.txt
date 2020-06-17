@@ -2052,7 +2052,7 @@
   addValueReference Noalloc.re:23:4 --> Noalloc.re:23:17
   addValueDeclaration +a Noalloc.re:27:6 path:+Noalloc
   addValueReference Noalloc.re:26:4 --> Noalloc.re:27:6
-  addValueReference Noalloc.re:26:4 --> Noalloc.re:26:13
+  addValueReference Noalloc.re:26:4 --> Noalloc.re:26:12
   addValueReference TestDeadExn.re:1:7 --> DeadExn.re:1:10
   
 File References
