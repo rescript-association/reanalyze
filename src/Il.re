@@ -26,6 +26,8 @@ type instr =
   | Call(string)
   | Const(const)
   | LocalGet(offset)
+  | LocalDecl(offset)
+  | LocalSet(offset)
   | Param(offset)
   | I32Add;
 
@@ -65,7 +67,9 @@ let instrToString = instr =>
   | Call(s) => "call " ++ s
   | Const(const) => "const " ++ constToString(const)
   | I32Add => "i32.add"
+  | LocalDecl(n) => "local " ++ string_of_int(n)
   | LocalGet(n) => "local.get " ++ string_of_int(n)
+  | LocalSet(n) => "local.set " ++ string_of_int(n)
   | Param(n) => "param " ++ string_of_int(n)
   };
 

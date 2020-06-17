@@ -36,6 +36,10 @@ function duplicate(x) {
         ];
 }
 
+function local(n) {
+  return 34 + n | 0;
+}
+
 var x = 36;
 
 export {
@@ -46,6 +50,7 @@ export {
   unpair ,
   mixed ,
   duplicate ,
+  local ,
   
 }
 /* No side effect */
