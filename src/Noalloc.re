@@ -1,20 +1,3 @@
-module StringMap = Map.Make(String);
-
-module Env = {
-  type offset = int;
-  type scope =
-    | Local(offset);
-  type id = string;
-  type t = StringMap.t(scope);
-
-  let addFunctionParameter = (~id, ~offset, env: t) =>
-    env |> StringMap.add(id, Local(offset));
-
-  let find = (~id, env: t) => env |> StringMap.find_opt(id);
-
-  let create = (): t => StringMap.empty;
-};
-
 let processCallee = (~def, ~loc, callee) =>
   switch (callee) {
   | Path.Pident(id) =>
@@ -39,26 +22,52 @@ let processCallee = (~def, ~loc, callee) =>
     }
   };
 
+let rec processFunPatId = (~env, ~def, ~id, ~offset, ~typ: Types.type_expr) => {
+  switch (typ.desc) {
+  | Ttuple(ts) =>
+    let (newEnv, newOffset, scopesRev) =
+      ts
+      |> List.fold_left(
+           ((e, o, scopes), t) => {
+             let (newEnv, newOffset, newScope) =
+               processFunPatId(~env=e, ~def, ~id, ~offset=o, ~typ=t);
+             (newEnv, newOffset, [newScope, ...scopes]);
+           },
+           (env, offset, []),
+         );
+    let scope = Il.Env.Tuple(scopesRev |> List.rev);
+    (
+      newEnv |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope),
+      newOffset,
+      scope,
+    );
+  | _ =>
+    def |> Il.Def.emit(~instr=Il.Param(offset));
+    let scope = Il.Env.Local(offset);
+    let newEnv =
+      env |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
+    (newEnv, offset + 1, scope);
+  };
+};
+
 let rec processFunPat = (~def, ~env, ~offset, pat: Typedtree.pattern) =>
   switch (pat.pat_desc) {
-  | Tpat_var(id, _) =>
-    def |> Il.Def.emit(~instr=Il.Param(offset));
-    let newEnv =
-      env |> Env.addFunctionParameter(~id=id |> Ident.name, ~offset);
-    (newEnv, offset + 1, pat.pat_type);
+  | Tpat_var(id, _)
+  | Tpat_alias({pat_desc: Tpat_any}, id, _) =>
+    processFunPatId(~env, ~def, ~id, ~offset, ~typ=pat.pat_type)
 
   | Tpat_tuple(pats) =>
-    let (newEnv, newOffset) =
+    let (newEnv, newOffset, scopes) =
       pats
       |> List.fold_left(
-           ((e, o), p) => {
-             let (newEnv, newOffset, _t) =
+           ((e, o, scopes), p) => {
+             let (newEnv, newOffset, scope) =
                p |> processFunPat(~def, ~env=e, ~offset=o);
-             (newEnv, newOffset);
+             (newEnv, newOffset, [scope, ...scopes]);
            },
-           (env, offset),
+           (env, offset, []),
          );
-    (newEnv, newOffset, pat.pat_type);
+    (newEnv, newOffset, Il.Env.Tuple(scopes));
 
   | _ =>
     Log_.info(~count=false, ~loc=pat.pat_loc, ~name="Noalloc", (ppf, ()) =>
@@ -96,8 +105,13 @@ let rec processExpr = (~def, ~env, expr: Typedtree.expression) =>
 
   | Texp_ident(id, _, _) =>
     let id = Path.name(id);
-    switch (env |> Env.find(~id)) {
-    | Some(Local(offset)) => def |> Il.Def.emit(~instr=Il.LocalGet(offset))
+    let rec emitScope = (scope: Il.Env.scope) =>
+      switch (scope) {
+      | Local(offset) => def |> Il.Def.emit(~instr=Il.LocalGet(offset))
+      | Tuple(scopes) => scopes |> List.iter(emitScope)
+      };
+    switch (env |> Il.Env.find(~id)) {
+    | Some(scope) => emitScope(scope)
 
     | None =>
       Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
@@ -148,7 +162,7 @@ let rec processExpr = (~def, ~env, expr: Typedtree.expression) =>
 let processValueBinding = (~loc, ~id, ~expr: Typedtree.expression) => {
   Log_.item("no-alloc binding for %s@.", id |> Ident.name);
   let def = Il.createDef(~loc, ~id);
-  let env = Env.create();
+  let env = Il.Env.create();
   expr |> processExpr(~def, ~env);
 };
 
