@@ -22,52 +22,53 @@ let processCallee = (~def, ~loc, callee) =>
     }
   };
 
-let rec processFunPatId = (~env, ~def, ~id, ~offset, ~typ: Types.type_expr) => {
+let rec processFunPatId = (~env, ~def: Il.Def.t, ~id, ~typ: Types.type_expr) => {
   switch (typ.desc) {
   | Ttuple(ts) =>
-    let (newEnv, newOffset, scopesRev) =
+    let (newEnv, scopesRev) =
       ts
       |> List.fold_left(
-           ((e, o, scopes), t) => {
-             let (newEnv, newOffset, newScope) =
-               processFunPatId(~env=e, ~def, ~id, ~offset=o, ~typ=t);
-             (newEnv, newOffset, [newScope, ...scopes]);
+           ((e, scopes), t) => {
+             let (newEnv, newScope) =
+               processFunPatId(~env=e, ~def, ~id, ~typ=t);
+             (newEnv, [newScope, ...scopes]);
            },
-           (env, offset, []),
+           (env, []),
          );
     let scope = Il.Env.Tuple(scopesRev |> List.rev);
     (
       newEnv |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope),
-      newOffset,
       scope,
     );
   | _ =>
+    let offset = def.nextOffset;
     def |> Il.Def.emit(~instr=Il.Param(offset));
+    def.nextOffset = offset + 1;
     let scope = Il.Env.Local(offset);
     let newEnv =
       env |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
-    (newEnv, offset + 1, scope);
+    (newEnv, scope);
   };
 };
 
-let rec processFunPat = (~def, ~env, ~offset, pat: Typedtree.pattern) =>
+let rec processFunPat = (~def, ~env, pat: Typedtree.pattern) =>
   switch (pat.pat_desc) {
   | Tpat_var(id, _)
   | Tpat_alias({pat_desc: Tpat_any}, id, _) =>
-    processFunPatId(~env, ~def, ~id, ~offset, ~typ=pat.pat_type)
+    processFunPatId(~env, ~def, ~id, ~typ=pat.pat_type)
 
   | Tpat_tuple(pats) =>
-    let (newEnv, newOffset, scopes) =
+    let (newEnv, scopes) =
       pats
       |> List.fold_left(
-           ((e, o, scopes), p) => {
-             let (newEnv, newOffset, scope) =
-               p |> processFunPat(~def, ~env=e, ~offset=o);
-             (newEnv, newOffset, [scope, ...scopes]);
+           ((e, scopes), p) => {
+             let (newEnv, scope) =
+               p |> processFunPat(~def, ~env=e);
+             (newEnv, [scope, ...scopes]);
            },
-           (env, offset, []),
+           (env, []),
          );
-    (newEnv, newOffset, Il.Env.Tuple(scopes));
+    (newEnv, Il.Env.Tuple(scopes));
 
   | _ =>
     Log_.info(~count=false, ~loc=pat.pat_loc, ~name="Noalloc", (ppf, ()) =>
@@ -77,7 +78,7 @@ let rec processFunPat = (~def, ~env, ~offset, pat: Typedtree.pattern) =>
   };
 
 let rec processFunDef =
-        (~def, ~env, ~offset, ~params, expr: Typedtree.expression) =>
+        (~def, ~env, ~params, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
   | Texp_function({
       arg_label: Nolabel,
@@ -85,13 +86,12 @@ let rec processFunDef =
       cases: [{c_lhs, c_guard: None, c_rhs}],
       partial: Total,
     }) =>
-    let (newEnv, newOffset, typ) =
-      c_lhs |> processFunPat(~def, ~env, ~offset);
+    let (newEnv, typ) =
+      c_lhs |> processFunPat(~def, ~env);
     c_rhs
     |> processFunDef(
          ~def,
          ~env=newEnv,
-         ~offset=newOffset,
          ~params=[(param, typ), ...params],
        );
 
@@ -140,7 +140,7 @@ let rec processExpr = (~def, ~env, expr: Typedtree.expression) =>
 
   | Texp_function(_) =>
     let (env, body, params) =
-      expr |> processFunDef(~def, ~env, ~offset=0, ~params=[]);
+      expr |> processFunDef(~def, ~env, ~params=[]);
     if (params == []) {
       Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
         Format.fprintf(ppf, "Cannot decode function parameters")
