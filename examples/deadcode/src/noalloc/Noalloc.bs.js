@@ -9,12 +9,20 @@ function bar(x) {
   return (x + x | 0) + 1 | 0;
 }
 
+function pair(x, y) {
+  return /* tuple */[
+          x,
+          y
+        ];
+}
+
 var x = 36;
 
 export {
   x ,
   foo ,
   bar ,
+  pair ,
   
 }
 /* No side effect */

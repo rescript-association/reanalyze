@@ -14,20 +14,21 @@ type id = string;
 
 module Def = {
   type t = {
+    loc: Location.t,
     id,
     mutable body: list(instr),
     mutable params: list((Ident.t, Types.type_expr)),
   };
 
-  let create = id => {id, body: [], params: []};
+  let create = (~loc, ~id) => {loc, id, body: [], params: []};
   let emit = (~instr, def) => def.body = [instr, ...def.body];
 };
 
 let defs: Hashtbl.t(string, Def.t) = Hashtbl.create(1);
 
-let createDef = (~id) => {
+let createDef = (~loc, ~id) => {
   let id = Ident.name(id);
-  let def = Def.create(id);
+  let def = Def.create(~loc, ~id);
   Hashtbl.replace(defs, id, def);
   def;
 };
@@ -50,14 +51,19 @@ let instrToString = instr =>
 
 let dumpDefs = (~ppf) => {
   Format.fprintf(ppf, "Noalloc definitions@.");
-  Hashtbl.iter(
-    (id, def: Def.t) =>
-      Format.fprintf(
-        ppf,
-        "%s: %s@.",
-        id,
-        def.body |> List.rev_map(instrToString) |> String.concat("; "),
-      ),
-    defs,
-  );
+  let sortedDefs =
+    Hashtbl.fold((_id, def, definitions) => [def, ...definitions], defs, [])
+    |> List.sort(({Def.loc: loc1}, {loc: loc2}) =>
+         compare(loc1.loc_start.pos_lnum, loc2.loc_start.pos_lnum)
+       );
+
+  sortedDefs
+  |> List.iter((def: Def.t) =>
+       Format.fprintf(
+         ppf,
+         "%s: %s@.",
+         def.id,
+         def.body |> List.rev_map(instrToString) |> String.concat("; "),
+       )
+     );
 };

@@ -107,6 +107,8 @@ let rec processExpr = (~def, ~env, expr: Typedtree.expression) =>
     def.params = params;
     body |> processExpr(~def, ~env);
 
+  | Texp_tuple(l) => l |> List.iter(processExpr(~def, ~env))
+
   | _ =>
     Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
       Format.fprintf(ppf, "Expression not supported")
@@ -114,9 +116,9 @@ let rec processExpr = (~def, ~env, expr: Typedtree.expression) =>
     assert(false);
   };
 
-let processValueBinding = (~id, ~expr: Typedtree.expression) => {
+let processValueBinding = (~loc, ~id, ~expr: Typedtree.expression) => {
   Log_.item("no-alloc binding for %s@.", id |> Ident.name);
-  let def = Il.createDef(~id);
+  let def = Il.createDef(~loc, ~id);
   let env = Env.create();
   expr |> processExpr(~def, ~env);
 };
@@ -125,7 +127,7 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
   switch (vb.vb_pat.pat_desc) {
   | Tpat_var(id, _)
       when vb.vb_attributes |> Annotation.hasAttribute((==)("noalloc")) =>
-    processValueBinding(~id, ~expr=vb.Typedtree.vb_expr)
+    processValueBinding(~loc=vb.vb_loc, ~id, ~expr=vb.Typedtree.vb_expr)
   | _ => ()
   };
   let r = super.Tast_mapper.value_binding(self, vb);
