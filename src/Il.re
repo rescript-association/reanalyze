@@ -37,9 +37,10 @@ module Def = {
     id,
     mutable body: list(instr),
     mutable params: list((Ident.t, Env.scope)),
+    mutable nextOffset: int,
   };
 
-  let create = (~loc, ~id) => {loc, id, body: [], params: []};
+  let create = (~loc, ~id) => {loc, id, body: [], params: [], nextOffset: 0};
   let emit = (~instr, def) => def.body = [instr, ...def.body];
 };
 
