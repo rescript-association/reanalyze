@@ -29,6 +29,13 @@ function mixed(param, param$1) {
         ];
 }
 
+function duplicate(x) {
+  return /* tuple */[
+          x,
+          x
+        ];
+}
+
 var x = 36;
 
 export {
@@ -38,6 +45,7 @@ export {
   pair ,
   unpair ,
   mixed ,
+  duplicate ,
   
 }
 /* No side effect */

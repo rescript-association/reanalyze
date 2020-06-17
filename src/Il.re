@@ -1,3 +1,22 @@
+module StringMap = Map.Make(String);
+
+module Env = {
+  type offset = int;
+  type scope =
+    | Local(offset)
+    | Tuple(list(scope));
+  type id = string;
+  type t = StringMap.t(scope);
+
+  let addFunctionParameter = (~id, ~scope, env: t) => {
+    env |> StringMap.add(id, scope);
+  };
+
+  let find = (~id, env: t) => env |> StringMap.find_opt(id);
+
+  let create = (): t => StringMap.empty;
+};
+
 type const =
   | I32(int32);
 
@@ -17,7 +36,7 @@ module Def = {
     loc: Location.t,
     id,
     mutable body: list(instr),
-    mutable params: list((Ident.t, Types.type_expr)),
+    mutable params: list((Ident.t, Env.scope)),
   };
 
   let create = (~loc, ~id) => {loc, id, body: [], params: []};
