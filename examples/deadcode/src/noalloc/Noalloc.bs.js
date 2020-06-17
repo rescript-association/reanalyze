@@ -40,6 +40,18 @@ function local(n) {
   return 34 + n | 0;
 }
 
+function quad(x) {
+  var a_001 = x + 1 | 0;
+  var a = /* tuple */[
+    x,
+    a_001
+  ];
+  return /* tuple */[
+          a,
+          a
+        ];
+}
+
 var x = 36;
 
 export {
@@ -51,6 +63,7 @@ export {
   mixed ,
   duplicate ,
   local ,
+  quad ,
   
 }
 /* No side effect */

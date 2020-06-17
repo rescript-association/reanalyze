@@ -27,3 +27,9 @@ let local = n => {
   let a = 34;
   a + n;
 };
+
+[@noalloc]
+let quad = x => {
+  let a = (x, x+1);
+  (a, a);
+};
