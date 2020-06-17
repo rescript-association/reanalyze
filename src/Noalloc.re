@@ -62,8 +62,7 @@ let rec processFunPat = (~def, ~env, pat: Typedtree.pattern) =>
       pats
       |> List.fold_left(
            ((e, scopes), p) => {
-             let (newEnv, scope) =
-               p |> processFunPat(~def, ~env=e);
+             let (newEnv, scope) = p |> processFunPat(~def, ~env=e);
              (newEnv, [scope, ...scopes]);
            },
            (env, []),
@@ -77,8 +76,7 @@ let rec processFunPat = (~def, ~env, pat: Typedtree.pattern) =>
     assert(false);
   };
 
-let rec processFunDef =
-        (~def, ~env, ~params, expr: Typedtree.expression) =>
+let rec processFunDef = (~def, ~env, ~params, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
   | Texp_function({
       arg_label: Nolabel,
@@ -86,14 +84,9 @@ let rec processFunDef =
       cases: [{c_lhs, c_guard: None, c_rhs}],
       partial: Total,
     }) =>
-    let (newEnv, typ) =
-      c_lhs |> processFunPat(~def, ~env);
+    let (newEnv, typ) = c_lhs |> processFunPat(~def, ~env);
     c_rhs
-    |> processFunDef(
-         ~def,
-         ~env=newEnv,
-         ~params=[(param, typ), ...params],
-       );
+    |> processFunDef(~def, ~env=newEnv, ~params=[(param, typ), ...params]);
 
   | _ => (env, expr, params)
   };
@@ -139,8 +132,7 @@ let rec processExpr = (~def, ~env, expr: Typedtree.expression) =>
     callee |> processCallee(~def, ~loc=callee_loc);
 
   | Texp_function(_) =>
-    let (env, body, params) =
-      expr |> processFunDef(~def, ~env, ~params=[]);
+    let (env, body, params) = expr |> processFunDef(~def, ~env, ~params=[]);
     if (params == []) {
       Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
         Format.fprintf(ppf, "Cannot decode function parameters")
@@ -151,6 +143,23 @@ let rec processExpr = (~def, ~env, expr: Typedtree.expression) =>
     body |> processExpr(~def, ~env);
 
   | Texp_tuple(l) => l |> List.iter(processExpr(~def, ~env))
+
+  | Texp_let(
+      Nonrecursive,
+      [{vb_pat: {pat_desc: Tpat_var(id, _)}, vb_expr}],
+      inExpr,
+    ) =>
+    let offset = def.nextOffset;
+    def |> Il.Def.emit(~instr=Il.LocalDecl(offset));
+    def.nextOffset = def.nextOffset + 1;
+
+    vb_expr |> processExpr(~def, ~env);
+    def |> Il.Def.emit(~instr=Il.LocalSet(offset));
+
+    let scope = Il.Env.Local(offset);
+    let newEnv =
+      env |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
+    inExpr |> processExpr(~def, ~env=newEnv);
 
   | _ =>
     Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
