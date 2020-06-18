@@ -112,21 +112,11 @@ let processConst = (~def, ~loc, const: Asttypes.constant) =>
   };
 
 let rec processLocalBinding =
-        (~def: Il.Def.t, ~env, {Typedtree.vb_pat, vb_expr}) =>
-  switch (vb_pat.pat_desc) {
+        (~def: Il.Def.t, ~env, ~expr, ~pat: Typedtree.pattern, ~scope) =>
+  switch (pat.pat_desc) {
   | Tpat_var(id, _) =>
-    let scope = vb_expr.exp_type |> processTyp(~def);
-    processScope(~def, ~instrKind=Decl, ~scope);
-    let newEnv =
-      env |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
-
-    vb_expr |> processExpr(~def, ~env);
-
-    processScope(~def, ~instrKind=Set, ~scope);
-    let newEnv2 =
-      newEnv |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
-
-    newEnv2 |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
+    expr |> processExpr(~def, ~env);
+    env |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
 
   | Tpat_tuple(pats) => assert(false)
   // pats
@@ -188,7 +178,17 @@ and processExpr = (~def, ~env, expr: Typedtree.expression) =>
   | Texp_tuple(l) => l |> List.iter(processExpr(~def, ~env))
 
   | Texp_let(Nonrecursive, [vb], inExpr) =>
-    let newEnv = vb |> processLocalBinding(~def: Il.Def.t, ~env);
+    let scope = vb.vb_expr.exp_type |> processTyp(~def);
+    processScope(~def, ~instrKind=Decl, ~scope);
+    let newEnv =
+      processLocalBinding(
+        ~def: Il.Def.t,
+        ~env,
+        ~expr=vb.vb_expr,
+        ~pat=vb.vb_pat,
+        ~scope,
+      );
+    processScope(~def, ~instrKind=Set, ~scope);
     inExpr |> processExpr(~def, ~env=newEnv);
 
   | _ =>
