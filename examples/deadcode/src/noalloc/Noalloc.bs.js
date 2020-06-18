@@ -65,6 +65,68 @@ function sumVec(v) {
         ];
 }
 
+function scale(s) {
+  return /* tuple */[
+          /* tuple */[
+            s,
+            1.0,
+            1.0
+          ],
+          /* tuple */[
+            1.0,
+            s,
+            1.0
+          ],
+          /* tuple */[
+            1.0,
+            1.0,
+            s
+          ]
+        ];
+}
+
+function rotation(a) {
+  return /* tuple */[
+          /* tuple */[
+            0.0,
+            -1.0 * a,
+            0.0
+          ],
+          /* tuple */[
+            a,
+            0.0,
+            0.0
+          ],
+          /* tuple */[
+            0.0,
+            0.0,
+            a
+          ]
+        ];
+}
+
+function mulVecVec(v1, v2) {
+  var x = v1[0] * v2[0];
+  var y = v1[1] * v2[1];
+  var z = v1[2] * v2[2];
+  return x + y + z;
+}
+
+function mulMatVec(m, v) {
+  var x = mulVecVec(m[0], v);
+  var y = mulVecVec(m[1], v);
+  var z = mulVecVec(m[2], v);
+  return /* tuple */[
+          x,
+          y,
+          z
+        ];
+}
+
+function restMatrix(v) {
+  return mulMatVec(rotation(0.123), mulMatVec(scale(2.0), v));
+}
+
 var x = 36;
 
 var fl = 2;
@@ -82,6 +144,11 @@ export {
   fl ,
   unpair2 ,
   sumVec ,
+  scale ,
+  rotation ,
+  mulVecVec ,
+  mulMatVec ,
+  restMatrix ,
   
 }
 /* No side effect */
