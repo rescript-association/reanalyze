@@ -14,6 +14,11 @@ let processCallee = (~def, ~loc, callee) =>
     switch (callee |> Path.name) {
     | "Pervasives.+"
     | "Stdlib.+" => def |> Il.Def.emit(~instr=Il.I32Add)
+    | "Pervasives.+."
+    | "Stdlib.+." => def |> Il.Def.emit(~instr=Il.F64Add)
+    | "Pervasives.*."
+    | "Stdlib.*." => def |> Il.Def.emit(~instr=Il.F64Mul)
+
     | name =>
       Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
         Format.fprintf(ppf, "Callee not recognized: %s", name)
