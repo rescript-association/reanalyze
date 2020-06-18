@@ -26,29 +26,23 @@ type instKind =
   | Param
   | Decl
   | Set;
-let rec processFunPatId =
-        (~env, ~def: Il.Def.t, ~idOpt, ~instrKind, ~typ: Types.type_expr) => {
+
+let rec processTyp = (~def: Il.Def.t, typ: Types.type_expr) =>
   switch (typ.desc) {
   | Ttuple(ts) =>
-    let (newEnv, scopesRev) =
-      ts
-      |> List.fold_left(
-           ((e, scopes), t) => {
-             let (newEnv, newScope) =
-               processFunPatId(~env=e, ~def, ~idOpt=None, ~instrKind, ~typ=t);
-             (newEnv, [newScope, ...scopes]);
-           },
-           (env, []),
-         );
-    let scope = Il.Env.Tuple(scopesRev |> List.rev);
-    let newEnv2 =
-      switch (idOpt) {
-      | None => newEnv
-      | Some(id) => newEnv |> Il.Env.addFunctionParameter(~id, ~scope)
-      };
-    (newEnv2, scope);
+    let scopes = ts |> List.map(processTyp(~def));
+    Il.Env.Tuple(scopes);
   | _ =>
     let offset = def.nextOffset;
+    def.nextOffset = offset + 1;
+    Il.Env.Local(offset);
+  };
+
+let rec processScope = (~def: Il.Def.t, ~instrKind, ~scope: Il.Env.scope) => {
+  switch (scope) {
+  | Tuple(scopes) =>
+    scopes |> List.iter(s => {processScope(~def, ~instrKind, ~scope=s)})
+  | Local(offset) =>
     let instr =
       switch (instrKind) {
       | Param => Il.Param(offset)
@@ -56,14 +50,6 @@ let rec processFunPatId =
       | Set => Il.LocalSet(offset)
       };
     def |> Il.Def.emit(~instr);
-    def.nextOffset = offset + 1;
-    let scope = Il.Env.Local(offset);
-    let newEnv =
-      switch (idOpt) {
-      | None => env
-      | Some(id) => env |> Il.Env.addFunctionParameter(~id, ~scope)
-      };
-    (newEnv, scope);
   };
 };
 
@@ -71,13 +57,11 @@ let rec processFunPat = (~def, ~env, pat: Typedtree.pattern) =>
   switch (pat.pat_desc) {
   | Tpat_var(id, _)
   | Tpat_alias({pat_desc: Tpat_any}, id, _) =>
-    processFunPatId(
-      ~env,
-      ~def,
-      ~idOpt=Some(id |> Ident.name),
-      ~instrKind=Param,
-      ~typ=pat.pat_type,
-    )
+    let scope = pat.pat_type |> processTyp(~def);
+    processScope(~def, ~instrKind=Param, ~scope);
+    let newEnv =
+      env |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
+    (newEnv, scope);
 
   | Tpat_tuple(pats) =>
     let (newEnv, scopes) =
@@ -127,7 +111,31 @@ let processConst = (~def, ~loc, const: Asttypes.constant) =>
     assert(false);
   };
 
-let rec processExpr = (~def, ~env, expr: Typedtree.expression) =>
+let rec processLocalBinding =
+        (~def: Il.Def.t, ~env, {Typedtree.vb_pat, vb_expr}) =>
+  switch (vb_pat.pat_desc) {
+  | Tpat_var(id, _) =>
+    let scope = vb_expr.exp_type |> processTyp(~def);
+    processScope(~def, ~instrKind=Decl, ~scope);
+    let newEnv =
+      env |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
+
+    vb_expr |> processExpr(~def, ~env);
+
+    processScope(~def, ~instrKind=Set, ~scope);
+    let newEnv2 =
+      newEnv |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
+
+    newEnv2 |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
+
+  | Tpat_tuple(pats) => assert(false)
+  // pats
+  // |> List.fold_right((e, p) => processLocalBinding(~def, ~env=e), env)
+
+  | _ => assert(false)
+  }
+
+and processExpr = (~def, ~env, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
   | Texp_constant(const) => const |> processConst(~def, ~loc=expr.exp_loc)
 
@@ -179,36 +187,9 @@ let rec processExpr = (~def, ~env, expr: Typedtree.expression) =>
 
   | Texp_tuple(l) => l |> List.iter(processExpr(~def, ~env))
 
-  | Texp_let(
-      Nonrecursive,
-      [{vb_pat: {pat_desc: Tpat_var(id, _)}, vb_expr}],
-      inExpr,
-    ) =>
-    let offset = def.nextOffset;
-    let (newEnv, _scope) =
-      processFunPatId(
-        ~env,
-        ~def,
-        ~idOpt=Some(id |> Ident.name),
-        ~instrKind=Decl,
-        ~typ=vb_expr.exp_type,
-      );
-
-    vb_expr |> processExpr(~def, ~env);
-
-    def.nextOffset = offset; // TODO: resetting as processing twicce
-    let (newEnv2, scope) =
-      processFunPatId(
-        ~env=newEnv,
-        ~def,
-        ~idOpt=Some(id |> Ident.name),
-        ~instrKind=Set,
-        ~typ=vb_expr.exp_type,
-      );
-
-    let newEnv3 =
-      newEnv2 |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
-    inExpr |> processExpr(~def, ~env=newEnv3);
+  | Texp_let(Nonrecursive, [vb], inExpr) =>
+    let newEnv = vb |> processLocalBinding(~def: Il.Def.t, ~env);
+    inExpr |> processExpr(~def, ~env=newEnv);
 
   | _ =>
     Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
