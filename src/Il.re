@@ -18,7 +18,8 @@ module Env = {
 };
 
 type const =
-  | I32(int32);
+  | I32(int32)
+  | F64(string);
 
 type offset = int;
 
@@ -59,13 +60,14 @@ let findDef = (~id) => Hashtbl.find_opt(defs, id);
 
 let constToString = const =>
   switch (const) {
-  | I32(i) => "i32:" ++ Int32.to_string(i)
+  | I32(i) => "i32.const " ++ Int32.to_string(i)
+  | F64(s) => "f64.const " ++ s
   };
 
 let instrToString = instr =>
   switch (instr) {
   | Call(s) => "call " ++ s
-  | Const(const) => "const " ++ constToString(const)
+  | Const(const) => constToString(const)
   | I32Add => "i32.add"
   | LocalDecl(n) => "local " ++ string_of_int(n)
   | LocalGet(n) => "local.get " ++ string_of_int(n)

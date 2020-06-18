@@ -113,10 +113,23 @@ let rec processFunDef = (~def, ~env, ~params, expr: Typedtree.expression) =>
   | _ => (env, expr, params)
   };
 
+let processConst = (~def, ~loc, const: Asttypes.constant) =>
+  switch (const) {
+  | Const_int(n) =>
+    def |> Il.Def.emit(~instr=Il.Const(Il.I32(n |> Int32.of_int)))
+  | Const_float(s) =>
+    let sWithDecimal = s.[String.length(s) - 1] == '.' ? s ++ "0" : s;
+    def |> Il.Def.emit(~instr=Il.Const(Il.F64(sWithDecimal)));
+  | _ =>
+    Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
+      Format.fprintf(ppf, "Constant not supported")
+    );
+    assert(false);
+  };
+
 let rec processExpr = (~def, ~env, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
-  | Texp_constant(Const_int(n)) =>
-    def |> Il.Def.emit(~instr=Il.Const(Il.I32(n |> Int32.of_int)))
+  | Texp_constant(const) => const |> processConst(~def, ~loc=expr.exp_loc)
 
   | Texp_ident(id, _, _) =>
     let id = Path.name(id);

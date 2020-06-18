@@ -30,6 +30,9 @@ let local = n => {
 
 [@noalloc]
 let quad = x => {
-  let a = (x, x+1);
+  let a = (x, x + 1);
   (a, a);
 };
+
+[@noalloc]
+let fl = 2.;
