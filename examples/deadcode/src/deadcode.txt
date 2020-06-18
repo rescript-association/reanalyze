@@ -2030,6 +2030,7 @@
   addValueDeclaration +duplicate Noalloc.re:23:4 path:+Noalloc
   addValueDeclaration +local Noalloc.re:26:4 path:+Noalloc
   addValueDeclaration +quad Noalloc.re:32:4 path:+Noalloc
+  addValueDeclaration +fl Noalloc.re:38:4 path:+Noalloc
   addValueReference Noalloc.re:5:4 --> Noalloc.re:5:11
   addValueReference Noalloc.re:5:4 --> Noalloc.re:5:14
   addValueReference Noalloc.re:8:4 --> Noalloc.re:8:10
@@ -2690,6 +2691,7 @@ File References
   Dead Value +TestYojson.+toString: 0 references () [0]
   Dead Value +TestYojson.+bar: 0 references () [0]
   Dead Value +TestYojson.+foo: 0 references () [0]
+  Dead Value +Noalloc.+fl: 0 references () [0]
   Dead Value +Noalloc.+quad: 0 references () [1]
   Dead Value +Noalloc.+a: 0 references () [0]
   Dead Value +Noalloc.+local: 0 references () [1]

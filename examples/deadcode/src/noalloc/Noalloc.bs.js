@@ -54,6 +54,8 @@ function quad(x) {
 
 var x = 36;
 
+var fl = 2;
+
 export {
   x ,
   foo ,
@@ -64,6 +66,7 @@ export {
   duplicate ,
   local ,
   quad ,
+  fl ,
   
 }
 /* No side effect */
