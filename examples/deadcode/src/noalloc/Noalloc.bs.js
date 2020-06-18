@@ -56,6 +56,15 @@ function unpair2(v) {
   return v[0] + v[1] | 0;
 }
 
+function sumVec(v) {
+  var match = v[1];
+  var match$1 = v[0];
+  return /* tuple */[
+          match$1[0] + match[0] | 0,
+          match$1[1] + match[1] | 0
+        ];
+}
+
 var x = 36;
 
 var fl = 2;
@@ -72,6 +81,7 @@ export {
   quad ,
   fl ,
   unpair2 ,
+  sumVec ,
   
 }
 /* No side effect */

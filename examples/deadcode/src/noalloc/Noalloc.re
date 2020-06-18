@@ -42,3 +42,9 @@ let unpair2 = v => {
   let (x, y) = v;
   x + y;
 };
+
+[@noalloc]
+let sumVec = v => {
+  let ((x1, x2), (y1, y2)) = v;
+  (x1 + y1, x2 + y2);
+};
