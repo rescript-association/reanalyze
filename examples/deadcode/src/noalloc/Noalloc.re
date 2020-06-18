@@ -37,8 +37,8 @@ let quad = x => {
 [@noalloc]
 let fl = 2.;
 
-// [@noalloc]
-// let unpair2 = v => {
-//   let (x, y) = v;
-//   x + y;
-// };
+[@noalloc]
+let unpair2 = v => {
+  let (x, y) = v;
+  x + y;
+};
