@@ -52,6 +52,10 @@ function quad(x) {
         ];
 }
 
+function unpair2(v) {
+  return v[0] + v[1] | 0;
+}
+
 var x = 36;
 
 var fl = 2;
@@ -67,6 +71,7 @@ export {
   local ,
   quad ,
   fl ,
+  unpair2 ,
   
 }
 /* No side effect */
