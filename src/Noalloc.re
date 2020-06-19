@@ -232,10 +232,12 @@ and processExpr = (~def, ~env, expr: Typedtree.expression) =>
     assert(false);
   };
 
-let processValueBinding = (~loc, ~id, ~expr: Typedtree.expression) => {
+let processValueBinding = (~id, ~loc, ~expr: Typedtree.expression) => {
   Log_.item("no-alloc binding for %s@.", id |> Ident.name);
-  let def = Il.createDef(~loc, ~id);
+  let kind = Il.Kind.fromType(expr.exp_type);
+  let def = Il.createDef(~id, ~loc, ~kind);
   let env = Il.Env.create();
+
   expr |> processExpr(~def, ~env);
 };
 
