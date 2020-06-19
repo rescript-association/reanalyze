@@ -83,18 +83,23 @@ let constToString = const =>
   | F64(s) => "f64.const " ++ s
   };
 
-let instrToString = instr =>
-  switch (instr) {
-  | Call(s) => "call " ++ s
-  | Const(const) => constToString(const)
-  | F64Add => "f64.add"
-  | F64Mul => "f64.mul"
-  | I32Add => "i32.add"
-  | LocalDecl(n) => "local " ++ string_of_int(n)
-  | LocalGet(n) => "local.get " ++ string_of_int(n)
-  | LocalSet(n) => "local.set " ++ string_of_int(n)
-  | Param(n) => "param " ++ string_of_int(n)
-  };
+let instrToString = instr => {
+  "("
+  ++ (
+    switch (instr) {
+    | Call(s) => "call " ++ s
+    | Const(const) => constToString(const)
+    | F64Add => "f64.add"
+    | F64Mul => "f64.mul"
+    | I32Add => "i32.add"
+    | LocalDecl(n) => "local " ++ string_of_int(n)
+    | LocalGet(n) => "local.get " ++ string_of_int(n)
+    | LocalSet(n) => "local.set " ++ string_of_int(n)
+    | Param(n) => "param " ++ string_of_int(n)
+    }
+  )
+  ++ ")";
+};
 
 module Def = {
   type t = {
@@ -146,7 +151,7 @@ let dumpDefs = (~ppf) => {
          | _ => "global"
          },
          def.id,
-         def.body |> List.rev_map(instrToString) |> String.concat("; "),
+         def.body |> List.rev_map(instrToString) |> String.concat(" "),
        )
      );
 };
