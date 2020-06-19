@@ -98,22 +98,30 @@ let instrToString = instr =>
 
 module Def = {
   type t = {
-    loc: Location.t,
     id,
+    kind: Kind.t,
+    loc: Location.t,
     mutable body: list(instr),
     mutable params: list((Ident.t, Env.scope)),
     mutable nextOffset: int,
   };
 
-  let create = (~loc, ~id) => {loc, id, body: [], params: [], nextOffset: 0};
+  let create = (~id, ~kind, ~loc) => {
+    id,
+    kind,
+    loc,
+    body: [],
+    params: [],
+    nextOffset: 0,
+  };
   let emit = (~instr, def) => def.body = [instr, ...def.body];
 };
 
 let defs: Hashtbl.t(string, Def.t) = Hashtbl.create(1);
 
-let createDef = (~loc, ~id) => {
+let createDef = (~id, ~loc, ~kind) => {
   let id = Ident.name(id);
-  let def = Def.create(~loc, ~id);
+  let def = Def.create(~id, ~loc, ~kind);
   Hashtbl.replace(defs, id, def);
   def;
 };
@@ -132,7 +140,11 @@ let dumpDefs = (~ppf) => {
   |> List.iter((def: Def.t) =>
        Format.fprintf(
          ppf,
-         "%s: %s@.",
+         "%s %s %s@.",
+         switch (def.kind) {
+         | Arrow(_) => "func"
+         | _ => "global"
+         },
          def.id,
          def.body |> List.rev_map(instrToString) |> String.concat("; "),
        )
