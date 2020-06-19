@@ -1,5 +1,46 @@
 module StringMap = Map.Make(String);
 
+module Kind = {
+  type t =
+    | Arrow(array(t), t)
+    | Star
+    | Tuple(list(t));
+
+  let rec toString = k =>
+    switch (k) {
+    | Star => "*"
+    | Tuple(ks) =>
+      "(" ++ (ks |> List.map(toString) |> String.concat(", ")) ++ ")"
+    | Arrow(arr, t) =>
+      (Tuple(arr |> Array.to_list) |> toString) ++ " => " ++ (t |> toString)
+    };
+
+  let extractDeclTypes = typ => {
+    let rec extract = (acc, typ: Types.type_expr) =>
+      switch (typ.desc) {
+      | Tlink(t)
+      | Tsubst(t) => t |> extract(acc)
+      | Tarrow(lbl, t1, t2, _) => t2 |> extract([(lbl, t1), ...acc])
+      | _ => (List.rev(acc), typ)
+      };
+    typ |> extract([]);
+  };
+
+  let rec fromType = (typ: Types.type_expr) =>
+    switch (typ.desc) {
+    | Tlink(t)
+    | Tsubst(t) => t |> fromType
+    | Tarrow(_) =>
+      let (declTypes, retType) = typ |> extractDeclTypes;
+      Arrow(
+        declTypes |> List.map(((_lbl, t)) => t |> fromType) |> Array.of_list,
+        retType |> fromType,
+      );
+    | Ttuple(ts) => Tuple(ts |> List.map(fromType))
+    | _ => Star
+    };
+};
+
 module Env = {
   type offset = int;
   type scope =

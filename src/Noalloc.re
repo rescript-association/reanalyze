@@ -37,7 +37,8 @@ let rec processTyp = (~def: Il.Def.t, ~loc, typ: Types.type_expr) =>
   | Ttuple(ts) =>
     let scopes = ts |> List.map(processTyp(~def, ~loc));
     Il.Env.Tuple(scopes);
-  | Tlink(t) => t |> processTyp(~def, ~loc)
+  | Tlink(t)
+  | Tsubst(t) => t |> processTyp(~def, ~loc)
   | Tconstr(_)
   | Tvar(_) =>
     let offset = def.nextOffset;
@@ -165,13 +166,34 @@ and processExpr = (~def, ~env, expr: Typedtree.expression) =>
     };
 
   | Texp_apply(
-      {exp_desc: Texp_ident(callee, _, _), exp_loc: callee_loc},
+      {exp_desc: Texp_ident(callee, _, vd), exp_loc: callee_loc},
       args,
     ) =>
+    let kind = vd.val_type |> Il.Kind.fromType;
     args
-    |> List.iter(((argLabel: Asttypes.arg_label, argOpt)) =>
+    |> List.iteri((i, (argLabel: Asttypes.arg_label, argOpt)) =>
          switch (argLabel, argOpt) {
-         | (Nolabel, Some(arg)) => arg |> processExpr(~def, ~env)
+         | (Nolabel, Some((arg: Typedtree.expression))) =>
+           switch (kind) {
+           | Arrow(declKinds, _) =>
+             let declKind = declKinds[i];
+             let argKind = arg.exp_type |> Il.Kind.fromType;
+             if (argKind != declKind) {
+               Log_.info(
+                 ~count=true, ~loc=arg.exp_loc, ~name="Noalloc", (ppf, ()) =>
+                 Format.fprintf(
+                   ppf,
+                   "Function call to @{<info>%s@}: parameter %d has kind @{<info>%s@} but the supplied argument has kind @{<info>%s@}",
+                   callee |> Path.name,
+                   i,
+                   declKind |> Il.Kind.toString,
+                   argKind |> Il.Kind.toString,
+                 )
+               );
+             };
+           | _ => assert(false)
+           };
+           arg |> processExpr(~def, ~env);
          | _ =>
            Log_.info(
              ~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
