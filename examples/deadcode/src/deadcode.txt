@@ -2038,6 +2038,8 @@
   addValueDeclaration +mulVecVec Noalloc.re:63:4 path:+Noalloc
   addValueDeclaration +mulMatVec Noalloc.re:73:4 path:+Noalloc
   addValueDeclaration +restMatrix Noalloc.re:82:4 path:+Noalloc
+  addValueDeclaration +id Noalloc.re:85:4 path:+Noalloc
+  addValueDeclaration +id2 Noalloc.re:88:4 path:+Noalloc
   addValueReference Noalloc.re:5:4 --> Noalloc.re:5:11
   addValueReference Noalloc.re:5:4 --> Noalloc.re:5:14
   addValueReference Noalloc.re:8:4 --> Noalloc.re:8:10
@@ -2116,6 +2118,9 @@
   addValueReference Noalloc.re:82:4 --> Noalloc.re:82:17
   addValueReference Noalloc.re:82:4 --> Noalloc.re:73:4
   addValueReference Noalloc.re:82:4 --> Noalloc.re:73:4
+  addValueReference Noalloc.re:85:4 --> Noalloc.re:85:9
+  addValueReference Noalloc.re:88:4 --> Noalloc.re:88:11
+  addValueReference Noalloc.re:88:4 --> Noalloc.re:85:4
   addValueReference TestDeadExn.re:1:7 --> DeadExn.re:1:10
   
 File References
@@ -2747,6 +2752,8 @@ File References
   Dead Value +TestYojson.+toString: 0 references () [0]
   Dead Value +TestYojson.+bar: 0 references () [0]
   Dead Value +TestYojson.+foo: 0 references () [0]
+  Dead Value +Noalloc.+id2: 0 references () [0]
+  Dead Value +Noalloc.+id: 0 references () [0]
   Dead Value +Noalloc.+restMatrix: 0 references () [0]
   Dead Value +Noalloc.+mulMatVec: 0 references () [1]
   Dead Value +Noalloc.+z: 0 references () [0]

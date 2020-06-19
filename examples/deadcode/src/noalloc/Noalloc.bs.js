@@ -127,6 +127,14 @@ function restMatrix(v) {
   return mulMatVec(rotation(0.123), mulMatVec(scale(2.0), v));
 }
 
+function id(x) {
+  return x;
+}
+
+function id2(x) {
+  return x;
+}
+
 var x = 36;
 
 var fl = 2;
@@ -149,6 +157,8 @@ export {
   mulVecVec ,
   mulMatVec ,
   restMatrix ,
+  id ,
+  id2 ,
   
 }
 /* No side effect */

@@ -80,3 +80,9 @@ let mulMatVec = (m, v) => {
 
 [@noalloc]
 let restMatrix = v => mulMatVec(rotation(0.123), mulMatVec(scale(2.0), v));
+
+[@noalloc]
+let id = x => x;
+
+[@noalloc]
+let id2 = (x: (int, int)) => id(x);
