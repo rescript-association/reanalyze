@@ -6,7 +6,11 @@ var Etoplevel = Caml_exceptions.create("DeadExn.Etoplevel");
 
 var Einside = Caml_exceptions.create("DeadExn.Inside.Einside");
 
-console.log(Einside);
+var eInside = {
+  RE_EXN_ID: Einside
+};
+
+console.log(eInside);
 
 export {
   Etoplevel ,

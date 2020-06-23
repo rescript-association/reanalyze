@@ -164,7 +164,7 @@ let deadRef = ref(12);
 let makeSwitch = ComponentSwitch.make;
 
 [@react.component]
-let make = s => React.string(s);
+let make = (~s) => React.string(s);
 
 let () = Js.log(make);
 

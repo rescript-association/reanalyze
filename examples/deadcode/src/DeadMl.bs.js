@@ -28,26 +28,26 @@ var Bs_version = {
 
 function map_split_opt(xs, f) {
   if (!xs) {
-    return /* tuple */[
+    return [
             /* [] */0,
             /* [] */0
           ];
   }
-  var match = Curry._1(f, xs[0]);
+  var match = Curry._1(f, xs.hd);
   var d = match[1];
   var c = match[0];
-  var match$1 = map_split_opt(xs[1], f);
+  var match$1 = map_split_opt(xs.tl, f);
   var ds = match$1[1];
   var cs = match$1[0];
-  return /* tuple */[
-          c !== undefined ? /* :: */[
-              Caml_option.valFromOption(c),
-              cs
-            ] : cs,
-          d !== undefined ? /* :: */[
-              Caml_option.valFromOption(d),
-              ds
-            ] : ds
+  return [
+          c !== undefined ? ({
+                hd: Caml_option.valFromOption(c),
+                tl: cs
+              }) : cs,
+          d !== undefined ? ({
+                hd: Caml_option.valFromOption(d),
+                tl: ds
+              }) : ds
         ];
 }
 

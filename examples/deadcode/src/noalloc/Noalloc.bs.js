@@ -10,7 +10,7 @@ function bar(x) {
 }
 
 function pair(x, y) {
-  return /* tuple */[
+  return [
           x,
           y
         ];
@@ -23,14 +23,14 @@ function unpair(param) {
 function mixed(param, param$1) {
   var match = param$1[1];
   var match$1 = match[2];
-  return /* tuple */[
+  return [
           (param[0] + param[1] | 0) + param[2] | 0,
           (((((param$1[0] + match[0] | 0) + match[1] | 0) + match$1[0] | 0) + match$1[1] | 0) + match$1[2] | 0) + param$1[2] | 0
         ];
 }
 
 function duplicate(x) {
-  return /* tuple */[
+  return [
           x,
           x
         ];
@@ -41,12 +41,12 @@ function local(n) {
 }
 
 function quad(x) {
-  var a_001 = x + 1 | 0;
-  var a = /* tuple */[
+  var a_1 = x + 1 | 0;
+  var a = [
     x,
-    a_001
+    a_1
   ];
-  return /* tuple */[
+  return [
           a,
           a
         ];
@@ -59,25 +59,25 @@ function unpair2(v) {
 function sumVec(v) {
   var match = v[1];
   var match$1 = v[0];
-  return /* tuple */[
+  return [
           match$1[0] + match[0] | 0,
           match$1[1] + match[1] | 0
         ];
 }
 
 function scale(s) {
-  return /* tuple */[
-          /* tuple */[
+  return [
+          [
             s,
             1.0,
             1.0
           ],
-          /* tuple */[
+          [
             1.0,
             s,
             1.0
           ],
-          /* tuple */[
+          [
             1.0,
             1.0,
             s
@@ -86,18 +86,18 @@ function scale(s) {
 }
 
 function rotation(a) {
-  return /* tuple */[
-          /* tuple */[
+  return [
+          [
             0.0,
             -1.0 * a,
             0.0
           ],
-          /* tuple */[
+          [
             a,
             0.0,
             0.0
           ],
-          /* tuple */[
+          [
             0.0,
             0.0,
             a
@@ -116,7 +116,7 @@ function mulMatVec(m, v) {
   var x = mulVecVec(m[0], v);
   var y = mulVecVec(m[1], v);
   var z = mulVecVec(m[2], v);
-  return /* tuple */[
+  return [
           x,
           y,
           z
