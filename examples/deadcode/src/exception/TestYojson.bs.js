@@ -15,9 +15,9 @@ function bar(str, json) {
   }
   catch (raw_exn){
     var exn = Caml_js_exceptions.internalToOCamlException(raw_exn);
-    if (exn[0] === Yojson.Basic.Util.Type_error) {
-      if (exn[1] === "a") {
-        if (Caml_obj.caml_equal(exn[2], json)) {
+    if (exn.RE_EXN_ID === Yojson.Basic.Util.Type_error) {
+      if (exn._1 === "a") {
+        if (Caml_obj.caml_equal(exn._2, json)) {
           return json;
         }
         throw exn;

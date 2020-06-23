@@ -2,7 +2,9 @@
 
 import * as DeadExn from "./DeadExn.bs.js";
 
-console.log(DeadExn.Etoplevel);
+console.log({
+      RE_EXN_ID: DeadExn.Etoplevel
+    });
 
 export {
   

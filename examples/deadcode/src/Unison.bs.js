@@ -19,8 +19,8 @@ function fits(_w, _stack) {
     if (!stack) {
       return true;
     }
-    _stack = stack[1];
-    _w = w - stack[0].doc.length | 0;
+    _stack = stack._1;
+    _w = w - stack._0.doc.length | 0;
     continue ;
   };
 }
@@ -29,8 +29,8 @@ function toString(width, stack) {
   if (!stack) {
     return "";
   }
-  var stack$1 = stack[1];
-  var match = stack[0];
+  var stack$1 = stack._1;
+  var match = stack._0;
   var doc = match.doc;
   switch (match.break) {
     case /* IfNeed */0 :
@@ -49,23 +49,23 @@ toString(80, /* Empty */0);
 
 var $$break = /* Never */1;
 
-toString(80, /* Cons */[
-      {
+toString(80, /* Cons */{
+      _0: {
         break: $$break,
         doc: "abc"
       },
-      /* Empty */0
-    ]);
+      _1: /* Empty */0
+    });
 
 var $$break$1 = /* Always */2;
 
-toString(80, /* Cons */[
-      {
+toString(80, /* Cons */{
+      _0: {
         break: $$break$1,
         doc: "d"
       },
-      /* Empty */0
-    ]);
+      _1: /* Empty */0
+    });
 
 export {
   group ,

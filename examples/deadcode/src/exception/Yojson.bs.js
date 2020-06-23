@@ -5,20 +5,22 @@ import * as Caml_exceptions from "bs-platform/lib/es6/caml_exceptions.js";
 var Json_error = Caml_exceptions.create("Yojson.Json_error");
 
 function from_string(param) {
-  throw [
-        Json_error,
-        "Basic.from_string"
-      ];
+  throw {
+        RE_EXN_ID: Json_error,
+        _1: "Basic.from_string",
+        Error: new Error()
+      };
 }
 
 var Type_error = Caml_exceptions.create("Yojson.Basic.Util.Type_error");
 
 function member(_s, j) {
-  throw [
-        Type_error,
-        "Basic.Util.member",
-        j
-      ];
+  throw {
+        RE_EXN_ID: Type_error,
+        _1: "Basic.Util.member",
+        _2: j,
+        Error: new Error()
+      };
 }
 
 function to_int(param) {

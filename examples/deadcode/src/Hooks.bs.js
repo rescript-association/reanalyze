@@ -7,9 +7,9 @@ import * as ImportHookDefault from "./ImportHookDefault.bs.js";
 
 function Hooks(Props) {
   var vehicle = Props.vehicle;
-  var match = React.useState((function () {
-          return 0;
-        }));
+  var match = React.useState(function () {
+        return 0;
+      });
   var setCount = match[1];
   var count = match[0];
   return React.createElement("div", undefined, React.createElement("p", undefined, "Hooks example " + (vehicle.name + (" clicked " + (String(count) + " times")))), React.createElement("button", {
@@ -98,25 +98,29 @@ function Hooks$componentWithRenamedArgs(Props) {
   return _to.name + _Type.name;
 }
 
-function Hooks$makeWithRef(Props, ref) {
+function Hooks$makeWithRef(Props) {
   var vehicle = Props.vehicle;
-  if (ref == null) {
-    return null;
-  } else {
-    return React.createElement("button", {
-                ref: ref
-              }, vehicle.name);
-  }
+  return function (ref) {
+    if (ref == null) {
+      return null;
+    } else {
+      return React.createElement("button", {
+                  ref: ref
+                }, vehicle.name);
+    }
+  };
 }
 
-var testForwardRef = React.forwardRef(Hooks$makeWithRef);
+var testForwardRef = React.forwardRef(function (param, param$1) {
+      return Hooks$makeWithRef(param)(param$1);
+    });
 
-var input = React.forwardRef((function (Props, param) {
-        var partial_arg = Props.r;
-        return React.createElement("div", {
-                    ref: param
-                  }, partial_arg.x);
-      }));
+var input = React.forwardRef(function (Props, param) {
+      var partial_arg = Props.r;
+      return React.createElement("div", {
+                  ref: param
+                }, partial_arg.x);
+    });
 
 function Hooks$polymorphicComponent(Props) {
   var param = Props.p;

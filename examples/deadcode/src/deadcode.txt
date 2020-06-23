@@ -252,8 +252,8 @@
   addValueReference DeadTest.re:157:17 --> React.re:15:0
   addValueReference DeadTest.re:160:4 --> DeadTest.re:159:4
   addValueReference DeadTest.re:164:4 --> ExportWithRename.re:3:4
-  addValueReference DeadTest.re:167:29 --> DeadTest.re:167:11
-  addValueReference DeadTest.re:167:16 --> React.re:7:0
+  addValueReference DeadTest.re:167:32 --> DeadTest.re:167:13
+  addValueReference DeadTest.re:167:19 --> React.re:7:0
   addValueReference DeadTest.re:169:16 --> DeadTest.re:167:4
   addValueReference DeadTest.re:175:30 --> DeadTest.re:175:22
   addTypeReference DeadTest.re:175:21 --> trace.mli:3:11
@@ -469,12 +469,12 @@
   addValueDeclaration +functionWithRenamedArgs Hooks.re:80:4 path:+Hooks
   addValueDeclaration +componentWithRenamedArgs Hooks.re:87:4 path:+Hooks
   addValueDeclaration +makeWithRef Hooks.re:94:4 path:+Hooks
-  addValueDeclaration +testForwardRef Hooks.re:105:4 path:+Hooks
-  addValueDeclaration +input Hooks.re:111:4 path:+Hooks
-  addValueDeclaration +polymorphicComponent Hooks.re:130:4 path:+Hooks
-  addValueDeclaration +functionReturningReactElement Hooks.re:134:4 path:+Hooks
-  addValueDeclaration +make Hooks.re:139:6 path:+Hooks.RenderPropRequiresConversion
-  addValueDeclaration +aComponentWithChildren Hooks.re:156:4 path:+Hooks
+  addValueDeclaration +testForwardRef Hooks.re:108:4 path:+Hooks
+  addValueDeclaration +input Hooks.re:114:4 path:+Hooks
+  addValueDeclaration +polymorphicComponent Hooks.re:133:4 path:+Hooks
+  addValueDeclaration +functionReturningReactElement Hooks.re:137:4 path:+Hooks
+  addValueDeclaration +make Hooks.re:142:6 path:+Hooks.RenderPropRequiresConversion
+  addValueDeclaration +aComponentWithChildren Hooks.re:159:4 path:+Hooks
   addRecordLabelDeclaration name Hooks.re:1:16 path:+Hooks.vehicle
   addValueReference Hooks.re:5:26 --> React.re:160:0
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.re:7:2
@@ -551,43 +551,44 @@
   addValueReference Hooks.re:89:2 --> React.re:7:0
   addValueReference Hooks.re:88:6 --> Hooks.re:87:33
   addValueReference Hooks.re:88:2 --> Hooks.re:87:47
-  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames:props argNamesMaybe: Hooks.re:97:4
-  addValueReference Hooks.re:97:39 --> Hooks.re:96:9
-  addValueReference Hooks.re:97:17 --> ReactDOMRe.re:120:2
-  addTypeReference Hooks.re:98:20 --> Hooks.re:1:16
-  addValueReference Hooks.re:98:20 --> Hooks.re:94:20
-  addValueReference Hooks.re:98:7 --> React.re:7:0
-  addValueReference Hooks.re:97:4 --> ReactDOMRe.re:1125:0
-  addValueReference Hooks.re:100:12 --> React.re:3:0
-  addValueReference Hooks.re:95:10 --> Hooks.re:94:29
-  addValueReference Hooks.re:105:4 --> Hooks.re:94:4
-  addValueReference Hooks.re:105:4 --> React.re:81:0
-  addRecordLabelDeclaration x Hooks.re:107:10 path:+Hooks.r
-  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames:props argNamesMaybe: Hooks.re:113:4
-  addValueReference Hooks.re:113:24 --> Hooks.re:112:28
-  addTypeReference Hooks.re:113:45 --> Hooks.re:107:10
-  addValueReference Hooks.re:113:45 --> Hooks.re:112:21
-  addValueReference Hooks.re:113:32 --> React.re:7:0
-  addValueReference Hooks.re:113:4 --> ReactDOMRe.re:1125:0
-  addValueReference Hooks.re:111:4 --> React.re:81:0
-  addTypeReference Hooks.re:130:58 --> Hooks.re:1:16
-  addValueReference Hooks.re:130:58 --> Hooks.re:130:35
-  addValueReference Hooks.re:130:45 --> React.re:7:0
-  addValueReference Hooks.re:134:60 --> Hooks.re:134:38
-  addValueReference Hooks.re:134:47 --> React.re:7:0
-  addValueDeclaration +car Hooks.re:149:8 path:+Hooks.RenderPropRequiresConversion
-  addValueReference Hooks.re:150:30 --> Hooks.re:149:8
-  addValueReference Hooks.re:150:18 --> Hooks.re:150:18
-  addValueDeclaration +unsafe_expr Hooks.re:150:18 path:+Hooks.RenderPropRequiresConversion
-  addValueReference Hooks.re:150:4 --> Hooks.re:141:9
-  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.re:157:2
-  addTypeReference Hooks.re:158:37 --> Hooks.re:1:16
-  addValueReference Hooks.re:158:37 --> Hooks.re:156:31
-  addValueReference Hooks.re:158:5 --> React.re:7:0
-  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.re:159:4
-  addValueReference Hooks.re:159:10 --> Hooks.re:156:41
-  addValueReference Hooks.re:159:4 --> ReactDOMRe.re:1125:0
-  addValueReference Hooks.re:157:2 --> ReactDOMRe.re:1125:0
+  addValueDeclaration +_ Hooks.re:95:2 path:+Hooks
+  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames:props argNamesMaybe: Hooks.re:99:6
+  addValueReference Hooks.re:99:41 --> Hooks.re:98:11
+  addValueReference Hooks.re:99:19 --> ReactDOMRe.re:120:2
+  addTypeReference Hooks.re:100:22 --> Hooks.re:1:16
+  addValueReference Hooks.re:100:22 --> Hooks.re:94:20
+  addValueReference Hooks.re:100:9 --> React.re:7:0
+  addValueReference Hooks.re:99:6 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:102:14 --> React.re:3:0
+  addValueReference Hooks.re:97:12 --> Hooks.re:96:2
+  addValueReference Hooks.re:108:4 --> Hooks.re:94:4
+  addValueReference Hooks.re:108:4 --> React.re:81:0
+  addRecordLabelDeclaration x Hooks.re:110:10 path:+Hooks.r
+  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames:props argNamesMaybe: Hooks.re:116:4
+  addValueReference Hooks.re:116:24 --> Hooks.re:115:28
+  addTypeReference Hooks.re:116:45 --> Hooks.re:110:10
+  addValueReference Hooks.re:116:45 --> Hooks.re:115:21
+  addValueReference Hooks.re:116:32 --> React.re:7:0
+  addValueReference Hooks.re:116:4 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:114:4 --> React.re:81:0
+  addTypeReference Hooks.re:133:58 --> Hooks.re:1:16
+  addValueReference Hooks.re:133:58 --> Hooks.re:133:35
+  addValueReference Hooks.re:133:45 --> React.re:7:0
+  addValueReference Hooks.re:137:60 --> Hooks.re:137:38
+  addValueReference Hooks.re:137:47 --> React.re:7:0
+  addValueDeclaration +car Hooks.re:152:8 path:+Hooks.RenderPropRequiresConversion
+  addValueReference Hooks.re:153:30 --> Hooks.re:152:8
+  addValueReference Hooks.re:153:18 --> Hooks.re:153:18
+  addValueDeclaration +unsafe_expr Hooks.re:153:18 path:+Hooks.RenderPropRequiresConversion
+  addValueReference Hooks.re:153:4 --> Hooks.re:144:9
+  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.re:160:2
+  addTypeReference Hooks.re:161:37 --> Hooks.re:1:16
+  addValueReference Hooks.re:161:37 --> Hooks.re:159:31
+  addValueReference Hooks.re:161:5 --> React.re:7:0
+  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.re:162:4
+  addValueReference Hooks.re:162:10 --> Hooks.re:159:41
+  addValueReference Hooks.re:162:4 --> ReactDOMRe.re:1125:0
+  addValueReference Hooks.re:160:2 --> ReactDOMRe.re:1125:0
   addTypeReference FirstClassModulesInterface.re:3:2 --> FirstClassModulesInterface.rei:4:2
   addTypeReference FirstClassModulesInterface.rei:4:2 --> FirstClassModulesInterface.re:3:2
   addTypeReference FirstClassModulesInterface.re:2:2 --> FirstClassModulesInterface.rei:3:2
@@ -1131,34 +1132,6 @@
   addValueDeclaration +y LetPrivate.re:5:4 path:+LetPrivate
   addValueDeclaration +x LetPrivate.re:2:12 path:+LetPrivate.local_1
   addValueReference LetPrivate.re:5:4 --> LetPrivate.re:2:12
-  Scanning ManyComponents.cmt Source:ManyComponents.re
-  addValueDeclaration +someValueSoModuleOffsetsAreShifted ManyComponents.re:4:6 path:+ManyComponents.InnerComponent
-  addValueDeclaration +component ManyComponents.re:6:6 path:+ManyComponents.InnerComponent
-  addValueDeclaration +make ManyComponents.re:9:6 path:+ManyComponents.InnerComponent
-  addValueDeclaration +component ManyComponents.re:16:6 path:+ManyComponents.ManyProps
-  addValueDeclaration +make ManyComponents.re:19:6 path:+ManyComponents.ManyProps
-  addValueDeclaration +component ManyComponents.re:36:4 path:+ManyComponents
-  addValueDeclaration +make ManyComponents.re:39:4 path:+ManyComponents
-  addValueReference ManyComponents.re:6:6 --> ReasonReact.rei:153:0
-  DeadOptionalArgs.addReferences ReactDOMRe.createElement called with optional argNames: argNamesMaybe: ManyComponents.re:11:17
-  addValueReference ManyComponents.re:9:6 --> ReasonReact.rei:17:0
-  addValueReference ManyComponents.re:9:6 --> ReactDOMRe.re:2136:0
-  addValueReference ManyComponents.re:9:6 --> ManyComponents.re:6:6
-  addValueReference ManyComponents.re:16:6 --> ReasonReact.rei:153:0
-  DeadOptionalArgs.addReferences ReactDOMRe.createElement called with optional argNames: argNamesMaybe: ManyComponents.re:32:17
-  addValueReference ManyComponents.re:19:6 --> ReasonReact.rei:17:0
-  addValueReference ManyComponents.re:19:6 --> ReactDOMRe.re:2136:0
-  addValueReference ManyComponents.re:19:6 --> ManyComponents.re:16:6
-  addValueReference ManyComponents.re:36:4 --> ReasonReact.rei:153:0
-  DeadOptionalArgs.addReferences ReactDOMRe.createElement called with optional argNames: argNamesMaybe: ManyComponents.re:42:4
-  addValueReference ManyComponents.re:39:4 --> ReasonReact.rei:17:0
-  DeadOptionalArgs.addReferences ReasonReact.element called with optional argNames: argNamesMaybe: ManyComponents.re:42:49
-  addValueDeclaration +emptyArray ManyComponents.re:42:49 path:+ManyComponents
-  addValueReference ManyComponents.re:39:4 --> ManyComponents.re:42:49
-  addValueReference ManyComponents.re:39:4 --> ManyComponents.re:9:6
-  addValueReference ManyComponents.re:39:4 --> ReasonReact.rei:181:0
-  addValueReference ManyComponents.re:39:4 --> ReactDOMRe.re:2136:0
-  addValueReference ManyComponents.re:39:4 --> ManyComponents.re:36:4
   Scanning ModuleAliases.cmt Source:ModuleAliases.re
   addValueDeclaration +testNested ModuleAliases.re:22:4 path:+ModuleAliases
   addValueDeclaration +testInner ModuleAliases.re:25:4 path:+ModuleAliases
@@ -2165,7 +2138,6 @@ File References
   ImportMyBanner.re -->> 
   JSResource.re -->> 
   LetPrivate.re -->> 
-  ManyComponents.re -->> ReactDOMRe.re, ReasonReact.rei
   ModuleAliases.re -->> 
   ModuleAliases2.re -->> 
   NestedModules.re -->> 
@@ -2385,14 +2357,15 @@ File References
   Dead RecordLabel FirstClassModulesInterface.record.x: 0 references () [0]
   Live Value +Hooks.+aComponentWithChildren: 0 references () [0]
   Live Value +Hooks.RenderPropRequiresConversion.+unsafe_expr: 0 references () [0]
-  Live Value +Hooks.RenderPropRequiresConversion.+car: 1 references (Hooks.re:150:30) [0]
+  Live Value +Hooks.RenderPropRequiresConversion.+car: 1 references (Hooks.re:153:30) [0]
   Live Value +Hooks.RenderPropRequiresConversion.+make: 0 references () [0]
   Live Value +Hooks.+functionReturningReactElement: 0 references () [0]
   Live Value +Hooks.+polymorphicComponent: 0 references () [0]
   Live Value +Hooks.+input: 0 references () [0]
-  Live RecordLabel +Hooks.r.x: 1 references (Hooks.re:113:45) [0]
+  Live RecordLabel +Hooks.r.x: 1 references (Hooks.re:116:45) [0]
   Live Value +Hooks.+testForwardRef: 0 references () [0]
-  Live Value +Hooks.+makeWithRef: 1 references (Hooks.re:105:4) [0]
+  Dead Value +Hooks.+_: 0 references () [0]
+  Live Value +Hooks.+makeWithRef: 1 references (Hooks.re:108:4) [0]
   Live Value +Hooks.+componentWithRenamedArgs: 0 references () [0]
   Live Value +Hooks.+functionWithRenamedArgs: 0 references () [0]
   Live Value +Hooks.NoProps.+make: 0 references () [0]
@@ -2403,7 +2376,7 @@ File References
   Live Value +Hooks.+anotherComponent: 0 references () [0]
   Live Value +Hooks.+default: 0 references () [0]
   Live Value +Hooks.+make: 1 references (Hooks.re:36:4) [0]
-  Live RecordLabel +Hooks.vehicle.name: 13 references (Hooks.re:11:12, Hooks.re:42:41, Hooks.re:49:43, Hooks.re:54:43, Hooks.re:60:45, Hooks.re:65:45, Hooks.re:82:2, Hooks.re:82:14, Hooks.re:89:15, Hooks.re:89:27, Hooks.re:98:20, Hooks.re:130:58, Hooks.re:158:37) [0]
+  Live RecordLabel +Hooks.vehicle.name: 13 references (Hooks.re:11:12, Hooks.re:42:41, Hooks.re:49:43, Hooks.re:54:43, Hooks.re:60:45, Hooks.re:65:45, Hooks.re:82:2, Hooks.re:82:14, Hooks.re:89:15, Hooks.re:89:27, Hooks.re:100:22, Hooks.re:133:58, Hooks.re:161:37) [0]
   Live Value +ImportIndex.+make: 0 references () [0]
   Dead Value +ImportMyBanner.+make: 0 references () [0]
 
@@ -2414,14 +2387,6 @@ File References
   Dead RecordLabel +ImportMyBanner.message.text: 0 references () [0]
   Live Value +LetPrivate.+y: 0 references () [0]
   Live Value +LetPrivate.local_1.+x: 1 references (LetPrivate.re:5:4) [0]
-  Live Value +ManyComponents.+make: 0 references () [1]
-  Live Value +ManyComponents.+emptyArray: 1 references (ManyComponents.re:39:4) [0]
-  Live Value +ManyComponents.+component: 1 references (ManyComponents.re:39:4) [0]
-  Live Value +ManyComponents.ManyProps.+make: 0 references () [0]
-  Live Value +ManyComponents.ManyProps.+component: 1 references (ManyComponents.re:19:6) [0]
-  Live Value +ManyComponents.InnerComponent.+make: 1 references (ManyComponents.re:39:4) [0]
-  Live Value +ManyComponents.InnerComponent.+component: 1 references (ManyComponents.re:9:6) [0]
-  Dead Value +ManyComponents.InnerComponent.+someValueSoModuleOffsetsAreShifted: 0 references () [0]
   Live Value +ModuleAliases.+testInner2: 0 references () [0]
   Live Value +ModuleAliases.+testInner: 0 references () [0]
   Live Value +ModuleAliases.+testNested: 0 references () [0]
@@ -4390,12 +4355,6 @@ File References
   <-- line 19
   [@dead "+make"] let make = make;
 
-  Warning Dead Value
-  File "./ManyComponents.re", line 4, characters 2-45
-  InnerComponent.+someValueSoModuleOffsetsAreShifted is never used
-  <-- line 4
-    [@dead "InnerComponent.+someValueSoModuleOffsetsAreShifted"] let someValueSoModuleOffsetsAreShifted = 77;
-
   Warning Dead Module
   File "./ModuleAliases.re", line 2, characters 2-57
   +ModuleAliases.Outer.Inner is a dead module as all its items are dead.
@@ -4862,4 +4821,4 @@ File References
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
   
-  Analysis reported 330 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:206, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 329 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:205, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
