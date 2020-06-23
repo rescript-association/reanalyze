@@ -12,7 +12,7 @@
     "analyze": "npm run dce && npm run exception"
   },
   "devDependencies": {
-    "bs-platform": "8.0.0",
+    "bs-platform": "8.1.0-dev.1",
     "gentype": "^3.20.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
