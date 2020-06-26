@@ -86,3 +86,6 @@ let id = x => x;
 
 [@noalloc]
 let id2 = (x: (int, int)) => id(x);
+
+[@noalloc]
+let y = x;

@@ -244,10 +244,28 @@ and processExpr = (~funDef, ~env, expr: Typedtree.expression) =>
     assert(false);
   };
 
-let processGlobal = (expr: Typedtree.expression) =>
+let processGlobal = (~env, ~id, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
-  | Texp_constant(const) => const |> translateConst(~loc=expr.exp_loc)
-  | _ => assert(false)
+  | Texp_constant(const_) =>
+    let const = const_ |> translateConst(~loc=expr.exp_loc);
+    {Il.id, const};
+
+  | Texp_ident(id1, _, _) =>
+    let id1 = Path.name(id1);
+    switch (env |> Il.Env.find(~id=id1)) {
+    | Some(GlobalDef(globalDef)) => {...globalDef, id}
+    | _ =>
+      Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
+        Format.fprintf(ppf, "processGlobal Id not found: %s", id)
+      );
+      assert(false);
+    };
+
+  | _ =>
+    Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
+      Format.fprintf(ppf, "processGlobal not supported yet")
+    );
+    assert(false);
   };
 
 let envRef = ref(Il.Env.create());
@@ -262,8 +280,8 @@ let processValueBinding = (~id, ~loc, ~expr: Typedtree.expression) => {
     envRef := envRef^ |> Il.Env.add(~id, ~def=FunDef(funDef));
     expr |> processExpr(~funDef, ~env=envRef^);
   | _ =>
-    let const = expr |> processGlobal;
-    envRef := envRef^ |> Il.Env.add(~id, ~def=GlobalDef({id, const}));
+    let globalDef = expr |> processGlobal(~env=envRef^, ~id);
+    envRef := envRef^ |> Il.Env.add(~id, ~def=GlobalDef(globalDef));
   };
 };
 
