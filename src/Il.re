@@ -60,20 +60,20 @@ type instr =
 
 type id = string;
 
-type scope =
+type funDef = {
+  id,
+  kind: Kind.t,
+  loc: Location.t,
+  mutable body: list(instr),
+  mutable params: list((Ident.t, scope)),
+  mutable nextOffset: int,
+}
+and scope =
+  | Fundef(funDef)
   | Local(offset)
   | Tuple(list(scope));
 
-module Def = {
-  type t = {
-    id,
-    kind: Kind.t,
-    loc: Location.t,
-    mutable body: list(instr),
-    mutable params: list((Ident.t, scope)),
-    mutable nextOffset: int,
-  };
-
+module FunDef = {
   let create = (~id, ~kind, ~loc) => {
     id,
     kind,
@@ -89,8 +89,54 @@ module Env = {
   type id = string;
   type t = StringMap.t(scope);
 
-  let addFunctionParameter = (~id, ~scope, env: t) => {
+  let add = (~id, ~scope, env: t) => {
     env |> StringMap.add(id, scope);
+  };
+
+  let constToString = const =>
+    switch (const) {
+    | I32(i) => "i32.const " ++ Int32.to_string(i)
+    | F64(s) => "f64.const " ++ s
+    };
+
+  let instrToString = instr => {
+    "("
+    ++ (
+      switch (instr) {
+      | Call(s) => "call " ++ s
+      | Const(const) => constToString(const)
+      | F64Add => "f64.add"
+      | F64Mul => "f64.mul"
+      | I32Add => "i32.add"
+      | LocalDecl(n) => "local " ++ string_of_int(n)
+      | LocalGet(n) => "local.get " ++ string_of_int(n)
+      | LocalSet(n) => "local.set " ++ string_of_int(n)
+      | Param(n) => "param " ++ string_of_int(n)
+      }
+    )
+    ++ ")";
+  };
+
+  let dump = (~ppf, env) => {
+    Format.fprintf(ppf, "@.Dump Environment@.");
+    env
+    |> StringMap.iter((_id, scope) => {
+         switch (scope) {
+         | Fundef(funDef) =>
+           Format.fprintf(
+             ppf,
+             "@.%s %s %s@.",
+             switch (funDef.kind) {
+             | Arrow(_) => "func"
+             | _ => "global"
+             },
+             funDef.id,
+             funDef.body |> List.rev_map(instrToString) |> String.concat(" "),
+           )
+
+         | _ => assert(false)
+         }
+       });
   };
 
   let find = (~id, env: t) => env |> StringMap.find_opt(id);
@@ -98,60 +144,11 @@ module Env = {
   let create = (): t => StringMap.empty;
 };
 
-let constToString = const =>
-  switch (const) {
-  | I32(i) => "i32.const " ++ Int32.to_string(i)
-  | F64(s) => "f64.const " ++ s
-  };
 
-let instrToString = instr => {
-  "("
-  ++ (
-    switch (instr) {
-    | Call(s) => "call " ++ s
-    | Const(const) => constToString(const)
-    | F64Add => "f64.add"
-    | F64Mul => "f64.mul"
-    | I32Add => "i32.add"
-    | LocalDecl(n) => "local " ++ string_of_int(n)
-    | LocalGet(n) => "local.get " ++ string_of_int(n)
-    | LocalSet(n) => "local.set " ++ string_of_int(n)
-    | Param(n) => "param " ++ string_of_int(n)
-    }
-  )
-  ++ ")";
-};
-
-let defs: Hashtbl.t(string, Def.t) = Hashtbl.create(1);
-
-let createDef = (~id, ~loc, ~kind) => {
+let createDef = (~envRef, ~id, ~loc, ~kind) => {
   let id = Ident.name(id);
-  let def = Def.create(~id, ~loc, ~kind);
-  Hashtbl.replace(defs, id, def);
-  def;
-};
-
-let findDef = (~id) => Hashtbl.find_opt(defs, id);
-
-let dumpDefs = (~ppf) => {
-  Format.fprintf(ppf, "Noalloc definitions@.");
-  let sortedDefs =
-    Hashtbl.fold((_id, def, definitions) => [def, ...definitions], defs, [])
-    |> List.sort(({Def.loc: loc1}, {loc: loc2}) =>
-         compare(loc1.loc_start.pos_lnum, loc2.loc_start.pos_lnum)
-       );
-
-  sortedDefs
-  |> List.iter((def: Def.t) =>
-       Format.fprintf(
-         ppf,
-         "%s %s %s@.",
-         switch (def.kind) {
-         | Arrow(_) => "func"
-         | _ => "global"
-         },
-         def.id,
-         def.body |> List.rev_map(instrToString) |> String.concat(" "),
-       )
-     );
+  let funDef = FunDef.create(~id, ~loc, ~kind);
+  let newEnv = envRef^ |> Env.add(~id, ~scope=Fundef(funDef));
+  envRef := newEnv;
+  funDef;
 };
