@@ -1,10 +1,11 @@
-let processCallee = (~def, ~loc, callee) =>
+let processCallee = (~env, ~funDef, ~loc, callee) =>
   switch (callee) {
   | Path.Pident(id) =>
     let id = Ident.name(id);
-    switch (Il.findDef(~id)) {
-    | Some(defCallee) => def |> Il.Def.emit(~instr=Il.Call(defCallee.id))
-    | None =>
+    switch (env |> Il.Env.find(~id)) {
+    | Some(Fundef(funDefCallee)) =>
+      funDef |> Il.FunDef.emit(~instr=Il.Call(funDefCallee.id))
+    | _ =>
       Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
         Format.fprintf(ppf, "Callee not recognized: %s", id)
       );
@@ -13,11 +14,11 @@ let processCallee = (~def, ~loc, callee) =>
   | _ =>
     switch (callee |> Path.name) {
     | "Pervasives.+"
-    | "Stdlib.+" => def |> Il.Def.emit(~instr=Il.I32Add)
+    | "Stdlib.+" => funDef |> Il.FunDef.emit(~instr=Il.I32Add)
     | "Pervasives.+."
-    | "Stdlib.+." => def |> Il.Def.emit(~instr=Il.F64Add)
+    | "Stdlib.+." => funDef |> Il.FunDef.emit(~instr=Il.F64Add)
     | "Pervasives.*."
-    | "Stdlib.*." => def |> Il.Def.emit(~instr=Il.F64Mul)
+    | "Stdlib.*." => funDef |> Il.FunDef.emit(~instr=Il.F64Mul)
 
     | name =>
       Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
@@ -32,17 +33,17 @@ type instKind =
   | Decl
   | Set;
 
-let rec processTyp = (~def: Il.Def.t, ~loc, typ: Types.type_expr) =>
+let rec processTyp = (~funDef: Il.funDef, ~loc, typ: Types.type_expr) =>
   switch (typ.desc) {
   | Ttuple(ts) =>
-    let scopes = ts |> List.map(processTyp(~def, ~loc));
+    let scopes = ts |> List.map(processTyp(~funDef, ~loc));
     Il.Tuple(scopes);
   | Tlink(t)
-  | Tsubst(t) => t |> processTyp(~def, ~loc)
+  | Tsubst(t) => t |> processTyp(~funDef, ~loc)
   | Tconstr(_)
   | Tvar(_) =>
-    let offset = def.nextOffset;
-    def.nextOffset = offset + 1;
+    let offset = funDef.nextOffset;
+    funDef.nextOffset = offset + 1;
     Il.Local(offset);
 
   | _ =>
@@ -53,11 +54,11 @@ let rec processTyp = (~def: Il.Def.t, ~loc, typ: Types.type_expr) =>
   };
 
 let rec processScope =
-        (~def: Il.Def.t, ~forward, ~instrKind, ~scope: Il.scope) => {
+        (~funDef: Il.funDef, ~forward, ~instrKind, ~scope: Il.scope) => {
   switch (scope) {
   | Tuple(scopes) =>
     (forward ? scopes : List.rev(scopes))
-    |> List.iter(s => {processScope(~def, ~forward, ~instrKind, ~scope=s)})
+    |> List.iter(s => {processScope(~funDef, ~forward, ~instrKind, ~scope=s)})
   | Local(offset) =>
     let instr =
       switch (instrKind) {
@@ -65,18 +66,18 @@ let rec processScope =
       | Decl => Il.LocalDecl(offset)
       | Set => Il.LocalSet(offset)
       };
-    def |> Il.Def.emit(~instr);
+    funDef |> Il.FunDef.emit(~instr);
+  | Fundef(_) => assert(false)
   };
 };
 
-let rec processFunPat = (~def, ~env, pat: Typedtree.pattern) =>
+let rec processFunPat = (~funDef, ~env, pat: Typedtree.pattern) =>
   switch (pat.pat_desc) {
   | Tpat_var(id, _)
   | Tpat_alias({pat_desc: Tpat_any}, id, _) =>
-    let scope = pat.pat_type |> processTyp(~def, ~loc=pat.pat_loc);
-    processScope(~def, ~forward=true, ~instrKind=Param, ~scope);
-    let newEnv =
-      env |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope);
+    let scope = pat.pat_type |> processTyp(~funDef, ~loc=pat.pat_loc);
+    processScope(~funDef, ~forward=true, ~instrKind=Param, ~scope);
+    let newEnv = env |> Il.Env.add(~id=id |> Ident.name, ~scope);
     (newEnv, scope);
 
   | Tpat_tuple(pats) =>
@@ -84,7 +85,7 @@ let rec processFunPat = (~def, ~env, pat: Typedtree.pattern) =>
       pats
       |> List.fold_left(
            ((e, scopes), p) => {
-             let (newEnv, scope) = p |> processFunPat(~def, ~env=e);
+             let (newEnv, scope) = p |> processFunPat(~funDef, ~env=e);
              (newEnv, [scope, ...scopes]);
            },
            (env, []),
@@ -98,7 +99,7 @@ let rec processFunPat = (~def, ~env, pat: Typedtree.pattern) =>
     assert(false);
   };
 
-let rec processFunDef = (~def, ~env, ~params, expr: Typedtree.expression) =>
+let rec processFunDef = (~funDef, ~env, ~params, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
   | Texp_function({
       arg_label: Nolabel,
@@ -106,20 +107,24 @@ let rec processFunDef = (~def, ~env, ~params, expr: Typedtree.expression) =>
       cases: [{c_lhs, c_guard: None, c_rhs}],
       partial: Total,
     }) =>
-    let (newEnv, typ) = c_lhs |> processFunPat(~def, ~env);
+    let (newEnv, typ) = c_lhs |> processFunPat(~funDef, ~env);
     c_rhs
-    |> processFunDef(~def, ~env=newEnv, ~params=[(param, typ), ...params]);
+    |> processFunDef(
+         ~funDef,
+         ~env=newEnv,
+         ~params=[(param, typ), ...params],
+       );
 
   | _ => (env, expr, params)
   };
 
-let processConst = (~def, ~loc, const: Asttypes.constant) =>
+let processConst = (~funDef, ~loc, const: Asttypes.constant) =>
   switch (const) {
   | Const_int(n) =>
-    def |> Il.Def.emit(~instr=Il.Const(Il.I32(n |> Int32.of_int)))
+    funDef |> Il.FunDef.emit(~instr=Il.Const(Il.I32(n |> Int32.of_int)))
   | Const_float(s) =>
     let sWithDecimal = s.[String.length(s) - 1] == '.' ? s ++ "0" : s;
-    def |> Il.Def.emit(~instr=Il.Const(Il.F64(sWithDecimal)));
+    funDef |> Il.FunDef.emit(~instr=Il.Const(Il.F64(sWithDecimal)));
   | _ =>
     Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
       Format.fprintf(ppf, "Constant not supported")
@@ -130,8 +135,7 @@ let processConst = (~def, ~loc, const: Asttypes.constant) =>
 let rec processLocalBinding =
         (~env, ~pat: Typedtree.pattern, ~scope: Il.scope) =>
   switch (pat.pat_desc, scope) {
-  | (Tpat_var(id, _), _) =>
-    env |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope)
+  | (Tpat_var(id, _), _) => env |> Il.Env.add(~id=id |> Ident.name, ~scope)
 
   | (Tpat_tuple(pats), Tuple(scopes)) =>
     let patsAndScopes = List.combine(pats, scopes);
@@ -143,16 +147,18 @@ let rec processLocalBinding =
   | _ => assert(false)
   }
 
-and processExpr = (~def, ~env, expr: Typedtree.expression) =>
+and processExpr = (~funDef, ~env, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
-  | Texp_constant(const) => const |> processConst(~def, ~loc=expr.exp_loc)
+  | Texp_constant(const) => const |> processConst(~funDef, ~loc=expr.exp_loc)
 
   | Texp_ident(id, _, _) =>
     let id = Path.name(id);
     let rec emitScope = (scope: Il.scope) =>
       switch (scope) {
-      | Local(offset) => def |> Il.Def.emit(~instr=Il.LocalGet(offset))
+      | Local(offset) =>
+        funDef |> Il.FunDef.emit(~instr=Il.LocalGet(offset))
       | Tuple(scopes) => scopes |> List.iter(emitScope)
+      | Fundef(_) => assert(false)
       };
     switch (env |> Il.Env.find(~id)) {
     | Some(scope) => emitScope(scope)
@@ -193,7 +199,7 @@ and processExpr = (~def, ~env, expr: Typedtree.expression) =>
              };
            | _ => assert(false)
            };
-           arg |> processExpr(~def, ~env);
+           arg |> processExpr(~funDef, ~env);
          | _ =>
            Log_.info(
              ~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
@@ -201,29 +207,30 @@ and processExpr = (~def, ~env, expr: Typedtree.expression) =>
            )
          }
        );
-    callee |> processCallee(~def, ~loc=callee_loc);
+    callee |> processCallee(~env, ~funDef, ~loc=callee_loc);
 
   | Texp_function(_) =>
-    let (env, body, params) = expr |> processFunDef(~def, ~env, ~params=[]);
+    let (env, body, params) =
+      expr |> processFunDef(~funDef, ~env, ~params=[]);
     if (params == []) {
       Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
         Format.fprintf(ppf, "Cannot decode function parameters")
       );
       assert(false);
     };
-    def.params = params;
-    body |> processExpr(~def, ~env);
+    funDef.params = params;
+    body |> processExpr(~funDef, ~env);
 
-  | Texp_tuple(l) => l |> List.iter(processExpr(~def, ~env))
+  | Texp_tuple(l) => l |> List.iter(processExpr(~funDef, ~env))
 
   | Texp_let(Nonrecursive, [vb], inExpr) =>
     let scope =
-      vb.vb_expr.exp_type |> processTyp(~def, ~loc=vb.vb_expr.exp_loc);
-    processScope(~def, ~forward=true, ~instrKind=Decl, ~scope);
-    vb.vb_expr |> processExpr(~def, ~env);
-    processScope(~def, ~forward=false, ~instrKind=Set, ~scope);
+      vb.vb_expr.exp_type |> processTyp(~funDef, ~loc=vb.vb_expr.exp_loc);
+    processScope(~funDef, ~forward=true, ~instrKind=Decl, ~scope);
+    vb.vb_expr |> processExpr(~funDef, ~env);
+    processScope(~funDef, ~forward=false, ~instrKind=Set, ~scope);
     let newEnv = processLocalBinding(~env, ~pat=vb.vb_pat, ~scope);
-    inExpr |> processExpr(~def, ~env=newEnv);
+    inExpr |> processExpr(~funDef, ~env=newEnv);
 
   | _ =>
     Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
@@ -232,13 +239,15 @@ and processExpr = (~def, ~env, expr: Typedtree.expression) =>
     assert(false);
   };
 
-let processValueBinding = (~id, ~loc, ~expr: Typedtree.expression) => {
-  Log_.item("no-alloc binding for %s@.", id |> Ident.name);
-  let kind = Il.Kind.fromType(expr.exp_type);
-  let def = Il.createDef(~id, ~loc, ~kind);
-  let env = Il.Env.create();
+let envRef = ref(Il.Env.create());
 
-  expr |> processExpr(~def, ~env);
+let processValueBinding = (~id, ~loc, ~expr: Typedtree.expression) => {
+  let id = Ident.name(id);
+  Log_.item("no-alloc binding for %s@.", id);
+  let kind = Il.Kind.fromType(expr.exp_type);
+  let funDef = Il.FunDef.create(~id, ~loc, ~kind);
+  envRef := envRef^ |> Il.Env.add(~id, ~scope=Fundef(funDef));
+  expr |> processExpr(~funDef, ~env=envRef^);
 };
 
 let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
@@ -268,4 +277,4 @@ let processCmt = (cmt_infos: Cmt_format.cmt_infos) =>
   | _ => ()
   };
 
-let reportResults = (~ppf) => Il.dumpDefs(~ppf);
+let reportResults = (~ppf) => envRef^ |> Il.Env.dump(~ppf);
