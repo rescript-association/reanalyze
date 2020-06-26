@@ -41,23 +41,6 @@ module Kind = {
     };
 };
 
-module Env = {
-  type offset = int;
-  type scope =
-    | Local(offset)
-    | Tuple(list(scope));
-  type id = string;
-  type t = StringMap.t(scope);
-
-  let addFunctionParameter = (~id, ~scope, env: t) => {
-    env |> StringMap.add(id, scope);
-  };
-
-  let find = (~id, env: t) => env |> StringMap.find_opt(id);
-
-  let create = (): t => StringMap.empty;
-};
-
 type const =
   | I32(int32)
   | F64(string);
@@ -76,6 +59,44 @@ type instr =
   | I32Add;
 
 type id = string;
+
+type scope =
+  | Local(offset)
+  | Tuple(list(scope));
+
+module Def = {
+  type t = {
+    id,
+    kind: Kind.t,
+    loc: Location.t,
+    mutable body: list(instr),
+    mutable params: list((Ident.t, scope)),
+    mutable nextOffset: int,
+  };
+
+  let create = (~id, ~kind, ~loc) => {
+    id,
+    kind,
+    loc,
+    body: [],
+    params: [],
+    nextOffset: 0,
+  };
+  let emit = (~instr, def) => def.body = [instr, ...def.body];
+};
+
+module Env = {
+  type id = string;
+  type t = StringMap.t(scope);
+
+  let addFunctionParameter = (~id, ~scope, env: t) => {
+    env |> StringMap.add(id, scope);
+  };
+
+  let find = (~id, env: t) => env |> StringMap.find_opt(id);
+
+  let create = (): t => StringMap.empty;
+};
 
 let constToString = const =>
   switch (const) {
@@ -99,27 +120,6 @@ let instrToString = instr => {
     }
   )
   ++ ")";
-};
-
-module Def = {
-  type t = {
-    id,
-    kind: Kind.t,
-    loc: Location.t,
-    mutable body: list(instr),
-    mutable params: list((Ident.t, Env.scope)),
-    mutable nextOffset: int,
-  };
-
-  let create = (~id, ~kind, ~loc) => {
-    id,
-    kind,
-    loc,
-    body: [],
-    params: [],
-    nextOffset: 0,
-  };
-  let emit = (~instr, def) => def.body = [instr, ...def.body];
 };
 
 let defs: Hashtbl.t(string, Def.t) = Hashtbl.create(1);
