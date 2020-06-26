@@ -122,7 +122,8 @@ let translateConst = (~loc, const: Asttypes.constant) =>
   switch (const) {
   | Const_int(n) => Il.I32(n |> Int32.of_int)
   | Const_float(s) =>
-    let sWithDecimal = s.[String.length(s) - 1] == '.' ? s ++ "0" : s;
+    let sWithDecimal =
+      [@doesNotRaise] s.[String.length(s) - 1] == '.' ? s ++ "0" : s;
     Il.F64(sWithDecimal);
   | _ =>
     Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
