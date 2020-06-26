@@ -1,5 +1,5 @@
 [@noalloc]
-let x = 34 + 2;
+let x = 34;
 
 [@noalloc]
 let foo = (x, y) => x + y;
