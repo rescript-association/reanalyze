@@ -139,6 +139,8 @@ var x = 34;
 
 var fl = 2;
 
+var y = 34;
+
 export {
   x ,
   foo ,
@@ -159,6 +161,7 @@ export {
   restMatrix ,
   id ,
   id2 ,
+  y ,
   
 }
 /* No side effect */
