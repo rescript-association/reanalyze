@@ -73,9 +73,15 @@ type funDef = {
   mutable nextOffset: int,
 };
 
+type globalDef = {
+  id,
+  const,
+};
+
 type def =
-  | Fundef(funDef)
-  | Scope(scope);
+  | FunDef(funDef)
+  | GlobalDef(globalDef)
+  | LocalScope(scope);
 
 module FunDef = {
   let create = (~id, ~kind, ~loc) => {
@@ -126,7 +132,7 @@ module Env = {
     env
     |> StringMap.iter((_id, scope) => {
          switch (scope) {
-         | Fundef(funDef) =>
+         | FunDef(funDef) =>
            Format.fprintf(
              ppf,
              "@.%s %s %s@.",
@@ -137,8 +143,9 @@ module Env = {
              funDef.id,
              funDef.body |> List.rev_map(instrToString) |> String.concat(" "),
            )
-
-         | _ => assert(false)
+         | GlobalDef({id, const}) =>
+           Format.fprintf(ppf, "@.global %s %s@.", id, const |> constToString)
+         | LocalScope(_) => assert(false)
          }
        });
   };
@@ -151,7 +158,7 @@ module Env = {
 let createDef = (~envRef, ~id, ~loc, ~kind) => {
   let id = Ident.name(id);
   let funDef = FunDef.create(~id, ~loc, ~kind);
-  let newEnv = envRef^ |> Env.add(~id, ~def=Fundef(funDef));
+  let newEnv = envRef^ |> Env.add(~id, ~def=FunDef(funDef));
   envRef := newEnv;
   funDef;
 };
