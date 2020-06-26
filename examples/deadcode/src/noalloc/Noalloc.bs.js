@@ -135,6 +135,10 @@ function id2(x) {
   return x;
 }
 
+function retGlobal(param) {
+  return 35;
+}
+
 var x = 34;
 
 var fl = 2;
@@ -162,6 +166,7 @@ export {
   id ,
   id2 ,
   y ,
+  retGlobal ,
   
 }
 /* No side effect */
