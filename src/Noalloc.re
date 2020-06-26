@@ -67,7 +67,6 @@ let rec processScope =
       | Set => Il.LocalSet(offset)
       };
     funDef |> Il.FunDef.emit(~instr);
-  | Fundef(_) => assert(false)
   };
 };
 
@@ -77,7 +76,7 @@ let rec processFunPat = (~funDef, ~env, pat: Typedtree.pattern) =>
   | Tpat_alias({pat_desc: Tpat_any}, id, _) =>
     let scope = pat.pat_type |> processTyp(~funDef, ~loc=pat.pat_loc);
     processScope(~funDef, ~forward=true, ~instrKind=Param, ~scope);
-    let newEnv = env |> Il.Env.add(~id=id |> Ident.name, ~scope);
+    let newEnv = env |> Il.Env.add(~id=id |> Ident.name, ~def=Scope(scope));
     (newEnv, scope);
 
   | Tpat_tuple(pats) =>
@@ -135,7 +134,8 @@ let processConst = (~funDef, ~loc, const: Asttypes.constant) =>
 let rec processLocalBinding =
         (~env, ~pat: Typedtree.pattern, ~scope: Il.scope) =>
   switch (pat.pat_desc, scope) {
-  | (Tpat_var(id, _), _) => env |> Il.Env.add(~id=id |> Ident.name, ~scope)
+  | (Tpat_var(id, _), _) =>
+    env |> Il.Env.add(~id=id |> Ident.name, ~def=Scope(scope))
 
   | (Tpat_tuple(pats), Tuple(scopes)) =>
     let patsAndScopes = List.combine(pats, scopes);
@@ -158,12 +158,11 @@ and processExpr = (~funDef, ~env, expr: Typedtree.expression) =>
       | Local(offset) =>
         funDef |> Il.FunDef.emit(~instr=Il.LocalGet(offset))
       | Tuple(scopes) => scopes |> List.iter(emitScope)
-      | Fundef(_) => assert(false)
       };
     switch (env |> Il.Env.find(~id)) {
-    | Some(scope) => emitScope(scope)
+    | Some(Scope(scope)) => emitScope(scope)
 
-    | None =>
+    | _ =>
       Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
         Format.fprintf(ppf, "Id not found: %s", id)
       );
@@ -245,9 +244,13 @@ let processValueBinding = (~id, ~loc, ~expr: Typedtree.expression) => {
   let id = Ident.name(id);
   Log_.item("no-alloc binding for %s@.", id);
   let kind = Il.Kind.fromType(expr.exp_type);
-  let funDef = Il.FunDef.create(~id, ~loc, ~kind);
-  envRef := envRef^ |> Il.Env.add(~id, ~scope=Fundef(funDef));
-  expr |> processExpr(~funDef, ~env=envRef^);
+  switch (kind) {
+  | Arrow(_) | _ =>
+    let funDef = Il.FunDef.create(~id, ~loc, ~kind);
+    envRef := envRef^ |> Il.Env.add(~id, ~def=Fundef(funDef));
+    expr |> processExpr(~funDef, ~env=envRef^);
+  | _ => assert(false)
+  };
 };
 
 let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
