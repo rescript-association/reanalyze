@@ -36,14 +36,14 @@ let rec processTyp = (~def: Il.Def.t, ~loc, typ: Types.type_expr) =>
   switch (typ.desc) {
   | Ttuple(ts) =>
     let scopes = ts |> List.map(processTyp(~def, ~loc));
-    Il.Env.Tuple(scopes);
+    Il.Tuple(scopes);
   | Tlink(t)
   | Tsubst(t) => t |> processTyp(~def, ~loc)
   | Tconstr(_)
   | Tvar(_) =>
     let offset = def.nextOffset;
     def.nextOffset = offset + 1;
-    Il.Env.Local(offset);
+    Il.Local(offset);
 
   | _ =>
     Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
@@ -53,7 +53,7 @@ let rec processTyp = (~def: Il.Def.t, ~loc, typ: Types.type_expr) =>
   };
 
 let rec processScope =
-        (~def: Il.Def.t, ~forward, ~instrKind, ~scope: Il.Env.scope) => {
+        (~def: Il.Def.t, ~forward, ~instrKind, ~scope: Il.scope) => {
   switch (scope) {
   | Tuple(scopes) =>
     (forward ? scopes : List.rev(scopes))
@@ -89,7 +89,7 @@ let rec processFunPat = (~def, ~env, pat: Typedtree.pattern) =>
            },
            (env, []),
          );
-    (newEnv, Il.Env.Tuple(scopes));
+    (newEnv, Il.Tuple(scopes));
 
   | _ =>
     Log_.info(~count=false, ~loc=pat.pat_loc, ~name="Noalloc", (ppf, ()) =>
@@ -128,7 +128,7 @@ let processConst = (~def, ~loc, const: Asttypes.constant) =>
   };
 
 let rec processLocalBinding =
-        (~env, ~pat: Typedtree.pattern, ~scope: Il.Env.scope) =>
+        (~env, ~pat: Typedtree.pattern, ~scope: Il.scope) =>
   switch (pat.pat_desc, scope) {
   | (Tpat_var(id, _), _) =>
     env |> Il.Env.addFunctionParameter(~id=id |> Ident.name, ~scope)
@@ -149,7 +149,7 @@ and processExpr = (~def, ~env, expr: Typedtree.expression) =>
 
   | Texp_ident(id, _, _) =>
     let id = Path.name(id);
-    let rec emitScope = (scope: Il.Env.scope) =>
+    let rec emitScope = (scope: Il.scope) =>
       switch (scope) {
       | Local(offset) => def |> Il.Def.emit(~instr=Il.LocalGet(offset))
       | Tuple(scopes) => scopes |> List.iter(emitScope)
