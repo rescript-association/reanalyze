@@ -80,6 +80,11 @@ let rec processFunPat = (~funDef, ~env, pat: Typedtree.pattern) =>
       env |> Il.Env.add(~id=id |> Ident.name, ~def=LocalScope(scope));
     (newEnv, scope);
 
+  | Tpat_construct({txt: Longident.Lident("()")}, _, _) => (
+      env,
+      Il.Tuple([]),
+    )
+
   | Tpat_tuple(pats) =>
     let (newEnv, scopes) =
       pats
@@ -167,6 +172,9 @@ and processExpr = (~funDef, ~env, expr: Typedtree.expression) =>
       };
     switch (env |> Il.Env.find(~id)) {
     | Some(LocalScope(scope)) => emitScope(scope)
+
+    | Some(GlobalDef({const})) =>
+      funDef |> Il.FunDef.emit(~instr=Il.Const(const))
 
     | _ =>
       Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>

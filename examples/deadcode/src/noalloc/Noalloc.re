@@ -89,3 +89,8 @@ let id2 = (x: (int, int)) => id(x);
 
 [@noalloc]
 let y = x;
+
+[@noalloc]
+let retGlobal = () => {
+  y + 1;
+};
