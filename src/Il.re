@@ -154,11 +154,3 @@ module Env = {
 
   let create = (): t => StringMap.empty;
 };
-
-let createDef = (~envRef, ~id, ~loc, ~kind) => {
-  let id = Ident.name(id);
-  let funDef = FunDef.create(~id, ~loc, ~kind);
-  let newEnv = envRef^ |> Env.add(~id, ~def=FunDef(funDef));
-  envRef := newEnv;
-  funDef;
-};
