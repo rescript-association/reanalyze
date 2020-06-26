@@ -60,6 +60,10 @@ type instr =
 
 type id = string;
 
+type scope =
+  | Local(offset)
+  | Tuple(list(scope));
+
 type funDef = {
   id,
   kind: Kind.t,
@@ -67,11 +71,11 @@ type funDef = {
   mutable body: list(instr),
   mutable params: list((Ident.t, scope)),
   mutable nextOffset: int,
-}
-and scope =
+};
+
+type def =
   | Fundef(funDef)
-  | Local(offset)
-  | Tuple(list(scope));
+  | Scope(scope);
 
 module FunDef = {
   let create = (~id, ~kind, ~loc) => {
@@ -87,10 +91,10 @@ module FunDef = {
 
 module Env = {
   type id = string;
-  type t = StringMap.t(scope);
+  type t = StringMap.t(def);
 
-  let add = (~id, ~scope, env: t) => {
-    env |> StringMap.add(id, scope);
+  let add = (~id, ~def, env: t) => {
+    env |> StringMap.add(id, def);
   };
 
   let constToString = const =>
@@ -144,11 +148,10 @@ module Env = {
   let create = (): t => StringMap.empty;
 };
 
-
 let createDef = (~envRef, ~id, ~loc, ~kind) => {
   let id = Ident.name(id);
   let funDef = FunDef.create(~id, ~loc, ~kind);
-  let newEnv = envRef^ |> Env.add(~id, ~scope=Fundef(funDef));
+  let newEnv = envRef^ |> Env.add(~id, ~def=Fundef(funDef));
   envRef := newEnv;
   funDef;
 };
