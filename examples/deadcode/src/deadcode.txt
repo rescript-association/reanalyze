@@ -1993,115 +1993,116 @@
   addValueReference Yojson.re:13:8 --> Yojson.re:10:14
   addTypeReference Yojson.re:14:23 --> Yojson.re:10:14
   addValueReference Yojson.re:13:8 --> Yojson.re:14:11
-  Scanning Noalloc.cmt Source:Noalloc.re
-  addValueDeclaration +x Noalloc.re:2:4 path:+Noalloc
-  addValueDeclaration +foo Noalloc.re:5:4 path:+Noalloc
-  addValueDeclaration +bar Noalloc.re:8:4 path:+Noalloc
-  addValueDeclaration +pair Noalloc.re:11:4 path:+Noalloc
-  addValueDeclaration +unpair Noalloc.re:14:4 path:+Noalloc
-  addValueDeclaration +mixed Noalloc.re:17:4 path:+Noalloc
-  addValueDeclaration +duplicate Noalloc.re:23:4 path:+Noalloc
-  addValueDeclaration +local Noalloc.re:26:4 path:+Noalloc
-  addValueDeclaration +quad Noalloc.re:32:4 path:+Noalloc
-  addValueDeclaration +fl Noalloc.re:38:4 path:+Noalloc
-  addValueDeclaration +unpair2 Noalloc.re:41:4 path:+Noalloc
-  addValueDeclaration +sumVec Noalloc.re:47:4 path:+Noalloc
-  addValueDeclaration +scale Noalloc.re:53:4 path:+Noalloc
-  addValueDeclaration +rotation Noalloc.re:56:4 path:+Noalloc
-  addValueDeclaration +mulVecVec Noalloc.re:63:4 path:+Noalloc
-  addValueDeclaration +mulMatVec Noalloc.re:73:4 path:+Noalloc
-  addValueDeclaration +restMatrix Noalloc.re:82:4 path:+Noalloc
-  addValueDeclaration +id Noalloc.re:85:4 path:+Noalloc
-  addValueDeclaration +id2 Noalloc.re:88:4 path:+Noalloc
-  addValueDeclaration +y Noalloc.re:91:4 path:+Noalloc
-  addValueDeclaration +retGlobal Noalloc.re:94:4 path:+Noalloc
-  addValueDeclaration +globalTuple Noalloc.re:99:4 path:+Noalloc
-  addValueDeclaration +extractFromGlobalTuple Noalloc.re:102:4 path:+Noalloc
-  addValueReference Noalloc.re:5:4 --> Noalloc.re:5:11
-  addValueReference Noalloc.re:5:4 --> Noalloc.re:5:14
-  addValueReference Noalloc.re:8:4 --> Noalloc.re:8:10
-  addValueReference Noalloc.re:8:4 --> Noalloc.re:8:10
-  addValueReference Noalloc.re:8:4 --> Noalloc.re:5:4
-  addValueReference Noalloc.re:11:4 --> Noalloc.re:11:12
-  addValueReference Noalloc.re:11:4 --> Noalloc.re:11:15
-  addValueReference Noalloc.re:14:4 --> Noalloc.re:14:15
-  addValueReference Noalloc.re:14:4 --> Noalloc.re:14:18
-  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:14
-  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:18
-  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:22
-  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:28
-  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:33
-  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:37
-  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:42
-  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:46
-  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:50
-  addValueReference Noalloc.re:17:4 --> Noalloc.re:17:56
-  addValueReference Noalloc.re:23:4 --> Noalloc.re:23:17
-  addValueReference Noalloc.re:23:4 --> Noalloc.re:23:17
-  addValueDeclaration +a Noalloc.re:27:6 path:+Noalloc
-  addValueReference Noalloc.re:26:4 --> Noalloc.re:27:6
-  addValueReference Noalloc.re:26:4 --> Noalloc.re:26:12
-  addValueDeclaration +a Noalloc.re:33:6 path:+Noalloc
-  addValueReference Noalloc.re:33:6 --> Noalloc.re:32:11
-  addValueReference Noalloc.re:33:6 --> Noalloc.re:32:11
-  addValueReference Noalloc.re:32:4 --> Noalloc.re:33:6
-  addValueReference Noalloc.re:32:4 --> Noalloc.re:33:6
-  addValueReference Noalloc.re:41:4 --> Noalloc.re:41:14
-  addValueReference Noalloc.re:41:4 --> Noalloc.re:42:7
-  addValueReference Noalloc.re:41:4 --> Noalloc.re:42:10
-  addValueReference Noalloc.re:47:4 --> Noalloc.re:47:13
-  addValueReference Noalloc.re:47:4 --> Noalloc.re:48:8
-  addValueReference Noalloc.re:47:4 --> Noalloc.re:48:18
-  addValueReference Noalloc.re:47:4 --> Noalloc.re:48:12
-  addValueReference Noalloc.re:47:4 --> Noalloc.re:48:22
-  addValueReference Noalloc.re:53:4 --> Noalloc.re:53:12
-  addValueReference Noalloc.re:53:4 --> Noalloc.re:53:12
-  addValueReference Noalloc.re:53:4 --> Noalloc.re:53:12
-  addValueReference Noalloc.re:56:4 --> Noalloc.re:56:15
-  addValueReference Noalloc.re:56:4 --> Noalloc.re:56:15
-  addValueReference Noalloc.re:56:4 --> Noalloc.re:56:15
-  addValueReference Noalloc.re:63:4 --> Noalloc.re:63:17
-  addValueReference Noalloc.re:63:4 --> Noalloc.re:63:21
-  addValueDeclaration +x Noalloc.re:66:6 path:+Noalloc
-  addValueReference Noalloc.re:66:6 --> Noalloc.re:64:7
-  addValueReference Noalloc.re:66:6 --> Noalloc.re:65:7
-  addValueDeclaration +y Noalloc.re:67:6 path:+Noalloc
-  addValueReference Noalloc.re:67:6 --> Noalloc.re:64:11
-  addValueReference Noalloc.re:67:6 --> Noalloc.re:65:11
-  addValueDeclaration +z Noalloc.re:68:6 path:+Noalloc
-  addValueReference Noalloc.re:68:6 --> Noalloc.re:64:15
-  addValueReference Noalloc.re:68:6 --> Noalloc.re:65:15
-  addValueReference Noalloc.re:63:4 --> Noalloc.re:66:6
-  addValueReference Noalloc.re:63:4 --> Noalloc.re:67:6
-  addValueReference Noalloc.re:63:4 --> Noalloc.re:68:6
-  addValueReference Noalloc.re:73:4 --> Noalloc.re:73:17
-  addValueDeclaration +x Noalloc.re:75:6 path:+Noalloc
-  addValueReference Noalloc.re:75:6 --> Noalloc.re:74:7
-  addValueReference Noalloc.re:75:6 --> Noalloc.re:73:20
-  addValueReference Noalloc.re:75:6 --> Noalloc.re:63:4
-  addValueDeclaration +y Noalloc.re:76:6 path:+Noalloc
-  addValueReference Noalloc.re:76:6 --> Noalloc.re:74:13
-  addValueReference Noalloc.re:76:6 --> Noalloc.re:73:20
-  addValueReference Noalloc.re:76:6 --> Noalloc.re:63:4
-  addValueDeclaration +z Noalloc.re:77:6 path:+Noalloc
-  addValueReference Noalloc.re:77:6 --> Noalloc.re:74:19
-  addValueReference Noalloc.re:77:6 --> Noalloc.re:73:20
-  addValueReference Noalloc.re:77:6 --> Noalloc.re:63:4
-  addValueReference Noalloc.re:73:4 --> Noalloc.re:75:6
-  addValueReference Noalloc.re:73:4 --> Noalloc.re:76:6
-  addValueReference Noalloc.re:73:4 --> Noalloc.re:77:6
-  addValueReference Noalloc.re:82:4 --> Noalloc.re:56:4
-  addValueReference Noalloc.re:82:4 --> Noalloc.re:53:4
-  addValueReference Noalloc.re:82:4 --> Noalloc.re:82:17
-  addValueReference Noalloc.re:82:4 --> Noalloc.re:73:4
-  addValueReference Noalloc.re:82:4 --> Noalloc.re:73:4
-  addValueReference Noalloc.re:85:4 --> Noalloc.re:85:9
-  addValueReference Noalloc.re:88:4 --> Noalloc.re:88:11
-  addValueReference Noalloc.re:88:4 --> Noalloc.re:85:4
-  addValueReference Noalloc.re:91:4 --> Noalloc.re:2:4
-  addValueReference Noalloc.re:94:4 --> Noalloc.re:91:4
-  addValueReference Noalloc.re:102:4 --> Noalloc.re:99:4
-  addValueReference Noalloc.re:102:4 --> Noalloc.re:103:7
+  Scanning Matrix.cmt Source:Matrix.re
+  addValueDeclaration +sumVec Matrix.re:2:4 path:+Matrix
+  addValueDeclaration +scale Matrix.re:8:4 path:+Matrix
+  addValueDeclaration +rotation Matrix.re:11:4 path:+Matrix
+  addValueDeclaration +mulVecVec Matrix.re:18:4 path:+Matrix
+  addValueDeclaration +mulMatVec Matrix.re:28:4 path:+Matrix
+  addValueDeclaration +restMatrix Matrix.re:37:4 path:+Matrix
+  addValueReference Matrix.re:2:4 --> Matrix.re:2:13
+  addValueReference Matrix.re:2:4 --> Matrix.re:3:8
+  addValueReference Matrix.re:2:4 --> Matrix.re:3:18
+  addValueReference Matrix.re:2:4 --> Matrix.re:3:12
+  addValueReference Matrix.re:2:4 --> Matrix.re:3:22
+  addValueReference Matrix.re:8:4 --> Matrix.re:8:12
+  addValueReference Matrix.re:8:4 --> Matrix.re:8:12
+  addValueReference Matrix.re:8:4 --> Matrix.re:8:12
+  addValueReference Matrix.re:11:4 --> Matrix.re:11:15
+  addValueReference Matrix.re:11:4 --> Matrix.re:11:15
+  addValueReference Matrix.re:11:4 --> Matrix.re:11:15
+  addValueReference Matrix.re:18:4 --> Matrix.re:18:17
+  addValueReference Matrix.re:18:4 --> Matrix.re:18:21
+  addValueDeclaration +x Matrix.re:21:6 path:+Matrix
+  addValueReference Matrix.re:21:6 --> Matrix.re:19:7
+  addValueReference Matrix.re:21:6 --> Matrix.re:20:7
+  addValueDeclaration +y Matrix.re:22:6 path:+Matrix
+  addValueReference Matrix.re:22:6 --> Matrix.re:19:11
+  addValueReference Matrix.re:22:6 --> Matrix.re:20:11
+  addValueDeclaration +z Matrix.re:23:6 path:+Matrix
+  addValueReference Matrix.re:23:6 --> Matrix.re:19:15
+  addValueReference Matrix.re:23:6 --> Matrix.re:20:15
+  addValueReference Matrix.re:18:4 --> Matrix.re:21:6
+  addValueReference Matrix.re:18:4 --> Matrix.re:22:6
+  addValueReference Matrix.re:18:4 --> Matrix.re:23:6
+  addValueReference Matrix.re:28:4 --> Matrix.re:28:17
+  addValueDeclaration +x Matrix.re:30:6 path:+Matrix
+  addValueReference Matrix.re:30:6 --> Matrix.re:29:7
+  addValueReference Matrix.re:30:6 --> Matrix.re:28:20
+  addValueReference Matrix.re:30:6 --> Matrix.re:18:4
+  addValueDeclaration +y Matrix.re:31:6 path:+Matrix
+  addValueReference Matrix.re:31:6 --> Matrix.re:29:13
+  addValueReference Matrix.re:31:6 --> Matrix.re:28:20
+  addValueReference Matrix.re:31:6 --> Matrix.re:18:4
+  addValueDeclaration +z Matrix.re:32:6 path:+Matrix
+  addValueReference Matrix.re:32:6 --> Matrix.re:29:19
+  addValueReference Matrix.re:32:6 --> Matrix.re:28:20
+  addValueReference Matrix.re:32:6 --> Matrix.re:18:4
+  addValueReference Matrix.re:28:4 --> Matrix.re:30:6
+  addValueReference Matrix.re:28:4 --> Matrix.re:31:6
+  addValueReference Matrix.re:28:4 --> Matrix.re:32:6
+  addValueReference Matrix.re:37:4 --> Matrix.re:11:4
+  addValueReference Matrix.re:37:4 --> Matrix.re:8:4
+  addValueReference Matrix.re:37:4 --> Matrix.re:37:17
+  addValueReference Matrix.re:37:4 --> Matrix.re:28:4
+  addValueReference Matrix.re:37:4 --> Matrix.re:28:4
+  Scanning TestNoalloc.cmt Source:TestNoalloc.re
+  addValueDeclaration +x TestNoalloc.re:2:4 path:+TestNoalloc
+  addValueDeclaration +foo TestNoalloc.re:5:4 path:+TestNoalloc
+  addValueDeclaration +bar TestNoalloc.re:8:4 path:+TestNoalloc
+  addValueDeclaration +pair TestNoalloc.re:11:4 path:+TestNoalloc
+  addValueDeclaration +unpair TestNoalloc.re:14:4 path:+TestNoalloc
+  addValueDeclaration +mixed TestNoalloc.re:17:4 path:+TestNoalloc
+  addValueDeclaration +duplicate TestNoalloc.re:23:4 path:+TestNoalloc
+  addValueDeclaration +local TestNoalloc.re:26:4 path:+TestNoalloc
+  addValueDeclaration +quad TestNoalloc.re:32:4 path:+TestNoalloc
+  addValueDeclaration +fl TestNoalloc.re:38:4 path:+TestNoalloc
+  addValueDeclaration +unpair2 TestNoalloc.re:41:4 path:+TestNoalloc
+  addValueDeclaration +id TestNoalloc.re:47:4 path:+TestNoalloc
+  addValueDeclaration +id2 TestNoalloc.re:50:4 path:+TestNoalloc
+  addValueDeclaration +y TestNoalloc.re:53:4 path:+TestNoalloc
+  addValueDeclaration +retGlobal TestNoalloc.re:56:4 path:+TestNoalloc
+  addValueDeclaration +globalTuple TestNoalloc.re:61:4 path:+TestNoalloc
+  addValueDeclaration +extractFromGlobalTuple TestNoalloc.re:64:4 path:+TestNoalloc
+  addValueReference TestNoalloc.re:5:4 --> TestNoalloc.re:5:11
+  addValueReference TestNoalloc.re:5:4 --> TestNoalloc.re:5:14
+  addValueReference TestNoalloc.re:8:4 --> TestNoalloc.re:8:10
+  addValueReference TestNoalloc.re:8:4 --> TestNoalloc.re:8:10
+  addValueReference TestNoalloc.re:8:4 --> TestNoalloc.re:5:4
+  addValueReference TestNoalloc.re:11:4 --> TestNoalloc.re:11:12
+  addValueReference TestNoalloc.re:11:4 --> TestNoalloc.re:11:15
+  addValueReference TestNoalloc.re:14:4 --> TestNoalloc.re:14:15
+  addValueReference TestNoalloc.re:14:4 --> TestNoalloc.re:14:18
+  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:14
+  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:18
+  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:22
+  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:28
+  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:33
+  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:37
+  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:42
+  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:46
+  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:50
+  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:56
+  addValueReference TestNoalloc.re:23:4 --> TestNoalloc.re:23:17
+  addValueReference TestNoalloc.re:23:4 --> TestNoalloc.re:23:17
+  addValueDeclaration +a TestNoalloc.re:27:6 path:+TestNoalloc
+  addValueReference TestNoalloc.re:26:4 --> TestNoalloc.re:27:6
+  addValueReference TestNoalloc.re:26:4 --> TestNoalloc.re:26:12
+  addValueDeclaration +a TestNoalloc.re:33:6 path:+TestNoalloc
+  addValueReference TestNoalloc.re:33:6 --> TestNoalloc.re:32:11
+  addValueReference TestNoalloc.re:33:6 --> TestNoalloc.re:32:11
+  addValueReference TestNoalloc.re:32:4 --> TestNoalloc.re:33:6
+  addValueReference TestNoalloc.re:32:4 --> TestNoalloc.re:33:6
+  addValueReference TestNoalloc.re:41:4 --> TestNoalloc.re:41:14
+  addValueReference TestNoalloc.re:41:4 --> TestNoalloc.re:42:7
+  addValueReference TestNoalloc.re:41:4 --> TestNoalloc.re:42:10
+  addValueReference TestNoalloc.re:47:4 --> TestNoalloc.re:47:9
+  addValueReference TestNoalloc.re:50:4 --> TestNoalloc.re:50:11
+  addValueReference TestNoalloc.re:50:4 --> TestNoalloc.re:47:4
+  addValueReference TestNoalloc.re:53:4 --> TestNoalloc.re:2:4
+  addValueReference TestNoalloc.re:56:4 --> TestNoalloc.re:53:4
+  addValueReference TestNoalloc.re:64:4 --> TestNoalloc.re:61:4
+  addValueReference TestNoalloc.re:64:4 --> TestNoalloc.re:65:7
   addValueReference TestDeadExn.re:1:7 --> DeadExn.re:1:10
   
 File References
@@ -2189,7 +2190,8 @@ File References
   ExportWithRename.re -->> React.re
   TestYojson.re -->> Yojson.re
   Yojson.re -->> 
-  Noalloc.re -->> 
+  Matrix.re -->> 
+  TestNoalloc.re -->> 
   trace.ml -->> 
   trace.mli -->> trace.ml
   Dead VariantCase +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
@@ -2725,37 +2727,37 @@ File References
   Dead Value +TestYojson.+toString: 0 references () [0]
   Dead Value +TestYojson.+bar: 0 references () [0]
   Dead Value +TestYojson.+foo: 0 references () [0]
-  Dead Value +Noalloc.+extractFromGlobalTuple: 0 references () [0]
-  Dead Value +Noalloc.+globalTuple: 0 references () [0]
-  Dead Value +Noalloc.+retGlobal: 0 references () [0]
-  Dead Value +Noalloc.+y: 0 references () [0]
-  Dead Value +Noalloc.+id2: 0 references () [0]
-  Dead Value +Noalloc.+id: 0 references () [0]
-  Dead Value +Noalloc.+restMatrix: 0 references () [0]
-  Dead Value +Noalloc.+mulMatVec: 0 references () [1]
-  Dead Value +Noalloc.+z: 0 references () [0]
-  Dead Value +Noalloc.+y: 0 references () [0]
-  Dead Value +Noalloc.+x: 0 references () [0]
-  Dead Value +Noalloc.+mulVecVec: 0 references () [1]
-  Dead Value +Noalloc.+z: 0 references () [0]
-  Dead Value +Noalloc.+y: 0 references () [0]
-  Dead Value +Noalloc.+x: 0 references () [0]
-  Dead Value +Noalloc.+rotation: 0 references () [0]
-  Dead Value +Noalloc.+scale: 0 references () [0]
-  Dead Value +Noalloc.+sumVec: 0 references () [0]
-  Dead Value +Noalloc.+unpair2: 0 references () [0]
-  Dead Value +Noalloc.+fl: 0 references () [0]
-  Dead Value +Noalloc.+quad: 0 references () [1]
-  Dead Value +Noalloc.+a: 0 references () [0]
-  Dead Value +Noalloc.+local: 0 references () [1]
-  Dead Value +Noalloc.+a: 0 references () [0]
-  Dead Value +Noalloc.+duplicate: 0 references () [0]
-  Dead Value +Noalloc.+mixed: 0 references () [0]
-  Dead Value +Noalloc.+unpair: 0 references () [0]
-  Dead Value +Noalloc.+pair: 0 references () [0]
-  Dead Value +Noalloc.+bar: 0 references () [0]
-  Dead Value +Noalloc.+foo: 0 references () [0]
-  Dead Value +Noalloc.+x: 0 references () [0]
+  Dead Value +Matrix.+restMatrix: 0 references () [0]
+  Dead Value +Matrix.+mulMatVec: 0 references () [1]
+  Dead Value +Matrix.+z: 0 references () [0]
+  Dead Value +Matrix.+y: 0 references () [0]
+  Dead Value +Matrix.+x: 0 references () [0]
+  Dead Value +Matrix.+mulVecVec: 0 references () [1]
+  Dead Value +Matrix.+z: 0 references () [0]
+  Dead Value +Matrix.+y: 0 references () [0]
+  Dead Value +Matrix.+x: 0 references () [0]
+  Dead Value +Matrix.+rotation: 0 references () [0]
+  Dead Value +Matrix.+scale: 0 references () [0]
+  Dead Value +Matrix.+sumVec: 0 references () [0]
+  Dead Value +TestNoalloc.+extractFromGlobalTuple: 0 references () [0]
+  Dead Value +TestNoalloc.+globalTuple: 0 references () [0]
+  Dead Value +TestNoalloc.+retGlobal: 0 references () [0]
+  Dead Value +TestNoalloc.+y: 0 references () [0]
+  Dead Value +TestNoalloc.+id2: 0 references () [0]
+  Dead Value +TestNoalloc.+id: 0 references () [0]
+  Dead Value +TestNoalloc.+unpair2: 0 references () [0]
+  Dead Value +TestNoalloc.+fl: 0 references () [0]
+  Dead Value +TestNoalloc.+quad: 0 references () [1]
+  Dead Value +TestNoalloc.+a: 0 references () [0]
+  Dead Value +TestNoalloc.+local: 0 references () [1]
+  Dead Value +TestNoalloc.+a: 0 references () [0]
+  Dead Value +TestNoalloc.+duplicate: 0 references () [0]
+  Dead Value +TestNoalloc.+mixed: 0 references () [0]
+  Dead Value +TestNoalloc.+unpair: 0 references () [0]
+  Dead Value +TestNoalloc.+pair: 0 references () [0]
+  Dead Value +TestNoalloc.+bar: 0 references () [0]
+  Dead Value +TestNoalloc.+foo: 0 references () [0]
+  Dead Value +TestNoalloc.+x: 0 references () [0]
   Live Value +BootloaderResource.+read: 1 references (DeadTest.re:112:40) [0]
   Live Value +DeadExn.+eInside: 1 references (DeadExn.re:12:7) [0]
   Dead Value +DeadExn.+eToplevel: 0 references () [0]
