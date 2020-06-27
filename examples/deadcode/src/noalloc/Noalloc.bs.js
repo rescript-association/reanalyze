@@ -145,6 +145,12 @@ var fl = 2;
 
 var y = 34;
 
+var globalTuple = [
+  1,
+  2,
+  3
+];
+
 export {
   x ,
   foo ,
@@ -167,6 +173,7 @@ export {
   id2 ,
   y ,
   retGlobal ,
+  globalTuple ,
   
 }
 /* No side effect */

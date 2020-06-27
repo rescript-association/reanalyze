@@ -2015,6 +2015,7 @@
   addValueDeclaration +id2 Noalloc.re:88:4 path:+Noalloc
   addValueDeclaration +y Noalloc.re:91:4 path:+Noalloc
   addValueDeclaration +retGlobal Noalloc.re:94:4 path:+Noalloc
+  addValueDeclaration +globalTuple Noalloc.re:99:4 path:+Noalloc
   addValueReference Noalloc.re:5:4 --> Noalloc.re:5:11
   addValueReference Noalloc.re:5:4 --> Noalloc.re:5:14
   addValueReference Noalloc.re:8:4 --> Noalloc.re:8:10
@@ -2721,6 +2722,7 @@ File References
   Dead Value +TestYojson.+toString: 0 references () [0]
   Dead Value +TestYojson.+bar: 0 references () [0]
   Dead Value +TestYojson.+foo: 0 references () [0]
+  Dead Value +Noalloc.+globalTuple: 0 references () [0]
   Dead Value +Noalloc.+retGlobal: 0 references () [0]
   Dead Value +Noalloc.+y: 0 references () [0]
   Dead Value +Noalloc.+id2: 0 references () [0]

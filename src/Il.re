@@ -73,9 +73,28 @@ type funDef = {
   mutable nextOffset: int,
 };
 
+let constToString = const =>
+  switch (const) {
+  | I32(i) => "i32.const " ++ Int32.to_string(i)
+  | F64(s) => "f64.const " ++ s
+  };
+
+module Init = {
+  type t =
+    | Const(const)
+    | Tuple(list(t));
+
+  let rec toString = i =>
+    switch (i) {
+    | Const(const) => const |> constToString
+    | Tuple(is) =>
+      "(" ++ (is |> List.map(toString) |> String.concat(", ")) ++ ")"
+    };
+};
+
 type globalDef = {
   id,
-  const,
+  init: Init.t,
 };
 
 type def =
@@ -102,12 +121,6 @@ module Env = {
   let add = (~id, ~def, env: t) => {
     env |> StringMap.add(id, def);
   };
-
-  let constToString = const =>
-    switch (const) {
-    | I32(i) => "i32.const " ++ Int32.to_string(i)
-    | F64(s) => "f64.const " ++ s
-    };
 
   let instrToString = instr => {
     "("
@@ -143,8 +156,8 @@ module Env = {
              funDef.id,
              funDef.body |> List.rev_map(instrToString) |> String.concat(" "),
            )
-         | GlobalDef({id, const}) =>
-           Format.fprintf(ppf, "@.global %s %s@.", id, const |> constToString)
+         | GlobalDef({id, init}) =>
+           Format.fprintf(ppf, "@.global %s %s@.", id, init |> Init.toString)
          | LocalScope(_) => assert(false)
          }
        });

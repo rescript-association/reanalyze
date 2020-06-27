@@ -94,3 +94,6 @@ let y = x;
 let retGlobal = () => {
   y + 1;
 };
+
+[@noalloc]
+let globalTuple = (1,2,3);
