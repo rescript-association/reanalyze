@@ -155,6 +155,8 @@ let rec processLocalBinding =
          (e, (p, s)) => processLocalBinding(~env=e, ~pat=p, ~scope=s),
          env,
        );
+  | (Tpat_any, _) => env
+
   | _ => assert(false)
   }
 
@@ -173,8 +175,13 @@ and processExpr = (~funDef, ~env, expr: Typedtree.expression) =>
     switch (env |> Il.Env.find(~id)) {
     | Some(LocalScope(scope)) => emitScope(scope)
 
-    | Some(GlobalDef({init: Const(const)})) =>
-      funDef |> Il.FunDef.emit(~instr=Il.Const(const))
+    | Some(GlobalDef({init})) =>
+      let rec emitInit = (init: Il.Init.t) =>
+        switch (init) {
+        | Const(const) => funDef |> Il.FunDef.emit(~instr=Il.Const(const))
+        | Tuple(is) => is |> List.iter(emitInit)
+        };
+      emitInit(init);
 
     | _ =>
       Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
