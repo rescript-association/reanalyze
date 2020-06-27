@@ -10,26 +10,6 @@ function sumVec(v) {
         ];
 }
 
-function scale(s) {
-  return [
-          [
-            s,
-            1.0,
-            1.0
-          ],
-          [
-            1.0,
-            s,
-            1.0
-          ],
-          [
-            1.0,
-            1.0,
-            s
-          ]
-        ];
-}
-
 function rotation(a) {
   return [
           [
@@ -68,17 +48,61 @@ function mulMatVec(m, v) {
         ];
 }
 
+function scale(s) {
+  return [
+          [
+            s,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            s,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            s
+          ]
+        ];
+}
+
 function restMatrix(v) {
   return mulMatVec(rotation(0.123), mulMatVec(scale(2.0), v));
 }
 
+var scale2 = [
+  [
+    2.0,
+    1.0,
+    1.0
+  ],
+  [
+    1.0,
+    2.0,
+    1.0
+  ],
+  [
+    1.0,
+    1.0,
+    2.0
+  ]
+];
+
+function restMatrix2(v) {
+  return mulMatVec(rotation(0.123), mulMatVec(scale2, v));
+}
+
 export {
   sumVec ,
-  scale ,
   rotation ,
   mulVecVec ,
   mulMatVec ,
+  scale ,
   restMatrix ,
+  scale2 ,
+  restMatrix2 ,
   
 }
 /* No side effect */

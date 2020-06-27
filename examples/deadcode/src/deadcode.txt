@@ -1995,57 +1995,64 @@
   addValueReference Yojson.re:13:8 --> Yojson.re:14:11
   Scanning Matrix.cmt Source:Matrix.re
   addValueDeclaration +sumVec Matrix.re:2:4 path:+Matrix
-  addValueDeclaration +scale Matrix.re:8:4 path:+Matrix
-  addValueDeclaration +rotation Matrix.re:11:4 path:+Matrix
-  addValueDeclaration +mulVecVec Matrix.re:18:4 path:+Matrix
-  addValueDeclaration +mulMatVec Matrix.re:28:4 path:+Matrix
+  addValueDeclaration +rotation Matrix.re:8:4 path:+Matrix
+  addValueDeclaration +mulVecVec Matrix.re:15:4 path:+Matrix
+  addValueDeclaration +mulMatVec Matrix.re:25:4 path:+Matrix
+  addValueDeclaration +scale Matrix.re:34:4 path:+Matrix
   addValueDeclaration +restMatrix Matrix.re:37:4 path:+Matrix
+  addValueDeclaration +scale2 Matrix.re:40:4 path:+Matrix
+  addValueDeclaration +restMatrix2 Matrix.re:43:4 path:+Matrix
   addValueReference Matrix.re:2:4 --> Matrix.re:2:13
   addValueReference Matrix.re:2:4 --> Matrix.re:3:8
   addValueReference Matrix.re:2:4 --> Matrix.re:3:18
   addValueReference Matrix.re:2:4 --> Matrix.re:3:12
   addValueReference Matrix.re:2:4 --> Matrix.re:3:22
-  addValueReference Matrix.re:8:4 --> Matrix.re:8:12
-  addValueReference Matrix.re:8:4 --> Matrix.re:8:12
-  addValueReference Matrix.re:8:4 --> Matrix.re:8:12
-  addValueReference Matrix.re:11:4 --> Matrix.re:11:15
-  addValueReference Matrix.re:11:4 --> Matrix.re:11:15
-  addValueReference Matrix.re:11:4 --> Matrix.re:11:15
-  addValueReference Matrix.re:18:4 --> Matrix.re:18:17
-  addValueReference Matrix.re:18:4 --> Matrix.re:18:21
-  addValueDeclaration +x Matrix.re:21:6 path:+Matrix
-  addValueReference Matrix.re:21:6 --> Matrix.re:19:7
-  addValueReference Matrix.re:21:6 --> Matrix.re:20:7
-  addValueDeclaration +y Matrix.re:22:6 path:+Matrix
-  addValueReference Matrix.re:22:6 --> Matrix.re:19:11
-  addValueReference Matrix.re:22:6 --> Matrix.re:20:11
-  addValueDeclaration +z Matrix.re:23:6 path:+Matrix
-  addValueReference Matrix.re:23:6 --> Matrix.re:19:15
-  addValueReference Matrix.re:23:6 --> Matrix.re:20:15
-  addValueReference Matrix.re:18:4 --> Matrix.re:21:6
-  addValueReference Matrix.re:18:4 --> Matrix.re:22:6
-  addValueReference Matrix.re:18:4 --> Matrix.re:23:6
-  addValueReference Matrix.re:28:4 --> Matrix.re:28:17
-  addValueDeclaration +x Matrix.re:30:6 path:+Matrix
-  addValueReference Matrix.re:30:6 --> Matrix.re:29:7
-  addValueReference Matrix.re:30:6 --> Matrix.re:28:20
-  addValueReference Matrix.re:30:6 --> Matrix.re:18:4
-  addValueDeclaration +y Matrix.re:31:6 path:+Matrix
-  addValueReference Matrix.re:31:6 --> Matrix.re:29:13
-  addValueReference Matrix.re:31:6 --> Matrix.re:28:20
-  addValueReference Matrix.re:31:6 --> Matrix.re:18:4
-  addValueDeclaration +z Matrix.re:32:6 path:+Matrix
-  addValueReference Matrix.re:32:6 --> Matrix.re:29:19
-  addValueReference Matrix.re:32:6 --> Matrix.re:28:20
-  addValueReference Matrix.re:32:6 --> Matrix.re:18:4
-  addValueReference Matrix.re:28:4 --> Matrix.re:30:6
-  addValueReference Matrix.re:28:4 --> Matrix.re:31:6
-  addValueReference Matrix.re:28:4 --> Matrix.re:32:6
-  addValueReference Matrix.re:37:4 --> Matrix.re:11:4
+  addValueReference Matrix.re:8:4 --> Matrix.re:8:15
+  addValueReference Matrix.re:8:4 --> Matrix.re:8:15
+  addValueReference Matrix.re:8:4 --> Matrix.re:8:15
+  addValueReference Matrix.re:15:4 --> Matrix.re:15:17
+  addValueReference Matrix.re:15:4 --> Matrix.re:15:21
+  addValueDeclaration +x Matrix.re:18:6 path:+Matrix
+  addValueReference Matrix.re:18:6 --> Matrix.re:16:7
+  addValueReference Matrix.re:18:6 --> Matrix.re:17:7
+  addValueDeclaration +y Matrix.re:19:6 path:+Matrix
+  addValueReference Matrix.re:19:6 --> Matrix.re:16:11
+  addValueReference Matrix.re:19:6 --> Matrix.re:17:11
+  addValueDeclaration +z Matrix.re:20:6 path:+Matrix
+  addValueReference Matrix.re:20:6 --> Matrix.re:16:15
+  addValueReference Matrix.re:20:6 --> Matrix.re:17:15
+  addValueReference Matrix.re:15:4 --> Matrix.re:18:6
+  addValueReference Matrix.re:15:4 --> Matrix.re:19:6
+  addValueReference Matrix.re:15:4 --> Matrix.re:20:6
+  addValueReference Matrix.re:25:4 --> Matrix.re:25:17
+  addValueDeclaration +x Matrix.re:27:6 path:+Matrix
+  addValueReference Matrix.re:27:6 --> Matrix.re:26:7
+  addValueReference Matrix.re:27:6 --> Matrix.re:25:20
+  addValueReference Matrix.re:27:6 --> Matrix.re:15:4
+  addValueDeclaration +y Matrix.re:28:6 path:+Matrix
+  addValueReference Matrix.re:28:6 --> Matrix.re:26:13
+  addValueReference Matrix.re:28:6 --> Matrix.re:25:20
+  addValueReference Matrix.re:28:6 --> Matrix.re:15:4
+  addValueDeclaration +z Matrix.re:29:6 path:+Matrix
+  addValueReference Matrix.re:29:6 --> Matrix.re:26:19
+  addValueReference Matrix.re:29:6 --> Matrix.re:25:20
+  addValueReference Matrix.re:29:6 --> Matrix.re:15:4
+  addValueReference Matrix.re:25:4 --> Matrix.re:27:6
+  addValueReference Matrix.re:25:4 --> Matrix.re:28:6
+  addValueReference Matrix.re:25:4 --> Matrix.re:29:6
+  addValueReference Matrix.re:34:4 --> Matrix.re:34:12
+  addValueReference Matrix.re:34:4 --> Matrix.re:34:12
+  addValueReference Matrix.re:34:4 --> Matrix.re:34:12
   addValueReference Matrix.re:37:4 --> Matrix.re:8:4
+  addValueReference Matrix.re:37:4 --> Matrix.re:34:4
   addValueReference Matrix.re:37:4 --> Matrix.re:37:17
-  addValueReference Matrix.re:37:4 --> Matrix.re:28:4
-  addValueReference Matrix.re:37:4 --> Matrix.re:28:4
+  addValueReference Matrix.re:37:4 --> Matrix.re:25:4
+  addValueReference Matrix.re:37:4 --> Matrix.re:25:4
+  addValueReference Matrix.re:43:4 --> Matrix.re:8:4
+  addValueReference Matrix.re:43:4 --> Matrix.re:40:4
+  addValueReference Matrix.re:43:4 --> Matrix.re:43:18
+  addValueReference Matrix.re:43:4 --> Matrix.re:25:4
+  addValueReference Matrix.re:43:4 --> Matrix.re:25:4
   Scanning TestNoalloc.cmt Source:TestNoalloc.re
   addValueDeclaration +x TestNoalloc.re:2:4 path:+TestNoalloc
   addValueDeclaration +foo TestNoalloc.re:5:4 path:+TestNoalloc
@@ -2727,7 +2734,10 @@ File References
   Dead Value +TestYojson.+toString: 0 references () [0]
   Dead Value +TestYojson.+bar: 0 references () [0]
   Dead Value +TestYojson.+foo: 0 references () [0]
+  Dead Value +Matrix.+restMatrix2: 0 references () [0]
+  Dead Value +Matrix.+scale2: 0 references () [0]
   Dead Value +Matrix.+restMatrix: 0 references () [0]
+  Dead Value +Matrix.+scale: 0 references () [0]
   Dead Value +Matrix.+mulMatVec: 0 references () [1]
   Dead Value +Matrix.+z: 0 references () [0]
   Dead Value +Matrix.+y: 0 references () [0]
@@ -2737,7 +2747,6 @@ File References
   Dead Value +Matrix.+y: 0 references () [0]
   Dead Value +Matrix.+x: 0 references () [0]
   Dead Value +Matrix.+rotation: 0 references () [0]
-  Dead Value +Matrix.+scale: 0 references () [0]
   Dead Value +Matrix.+sumVec: 0 references () [0]
   Dead Value +TestNoalloc.+extractFromGlobalTuple: 0 references () [0]
   Dead Value +TestNoalloc.+globalTuple: 0 references () [0]

@@ -5,9 +5,6 @@ let sumVec = v => {
 };
 
 [@noalloc]
-let scale = s => ((s, 1.0, 1.0), (1.0, s, 1.0), (1.0, 1.0, s));
-
-[@noalloc]
 let rotation = a => (
   (0.0, (-1.0) *. a, 0.0),
   (a, 0.0, 0.0),
@@ -34,4 +31,13 @@ let mulMatVec = (m, v) => {
 };
 
 [@noalloc]
+let scale = s => ((s, 1.0, 1.0), (1.0, s, 1.0), (1.0, 1.0, s));
+
+[@noalloc]
 let restMatrix = v => mulMatVec(rotation(0.123), mulMatVec(scale(2.0), v));
+
+[@noalloc]
+let scale2 = ((2.0, 1.0, 1.0), (1.0, 2.0, 1.0), (1.0, 1.0, 2.0));
+
+[@noalloc]
+let restMatrix2 = v => mulMatVec(rotation(0.123), mulMatVec(scale2, v));
