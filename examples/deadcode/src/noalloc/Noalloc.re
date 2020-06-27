@@ -96,4 +96,10 @@ let retGlobal = () => {
 };
 
 [@noalloc]
-let globalTuple = (1,2,3);
+let globalTuple = (1, 2, 3);
+
+[@noalloc]
+let extractFromGlobalTuple = () => {
+  let (x, _, _) = globalTuple;
+  x;
+};

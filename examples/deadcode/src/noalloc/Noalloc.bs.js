@@ -139,6 +139,10 @@ function retGlobal(param) {
   return 35;
 }
 
+function extractFromGlobalTuple(param) {
+  return 1;
+}
+
 var x = 34;
 
 var fl = 2;
@@ -174,6 +178,7 @@ export {
   y ,
   retGlobal ,
   globalTuple ,
+  extractFromGlobalTuple ,
   
 }
 /* No side effect */

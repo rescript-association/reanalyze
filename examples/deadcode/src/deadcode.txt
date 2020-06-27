@@ -2016,6 +2016,7 @@
   addValueDeclaration +y Noalloc.re:91:4 path:+Noalloc
   addValueDeclaration +retGlobal Noalloc.re:94:4 path:+Noalloc
   addValueDeclaration +globalTuple Noalloc.re:99:4 path:+Noalloc
+  addValueDeclaration +extractFromGlobalTuple Noalloc.re:102:4 path:+Noalloc
   addValueReference Noalloc.re:5:4 --> Noalloc.re:5:11
   addValueReference Noalloc.re:5:4 --> Noalloc.re:5:14
   addValueReference Noalloc.re:8:4 --> Noalloc.re:8:10
@@ -2099,6 +2100,8 @@
   addValueReference Noalloc.re:88:4 --> Noalloc.re:85:4
   addValueReference Noalloc.re:91:4 --> Noalloc.re:2:4
   addValueReference Noalloc.re:94:4 --> Noalloc.re:91:4
+  addValueReference Noalloc.re:102:4 --> Noalloc.re:99:4
+  addValueReference Noalloc.re:102:4 --> Noalloc.re:103:7
   addValueReference TestDeadExn.re:1:7 --> DeadExn.re:1:10
   
 File References
@@ -2722,6 +2725,7 @@ File References
   Dead Value +TestYojson.+toString: 0 references () [0]
   Dead Value +TestYojson.+bar: 0 references () [0]
   Dead Value +TestYojson.+foo: 0 references () [0]
+  Dead Value +Noalloc.+extractFromGlobalTuple: 0 references () [0]
   Dead Value +Noalloc.+globalTuple: 0 references () [0]
   Dead Value +Noalloc.+retGlobal: 0 references () [0]
   Dead Value +Noalloc.+y: 0 references () [0]
