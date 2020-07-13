@@ -9,6 +9,6 @@
     "analyze": "node ./termination.js >src/termination.txt"
   },
   "devDependencies": {
-    "bs-platform": "7.3.2"
+    "bs-platform": "8.1.1"
   }
 }
