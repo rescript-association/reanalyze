@@ -13,12 +13,10 @@
   },
   "devDependencies": {
     "bs-platform": "8.1.1",
-    "gentype": "^3.20.0",
-    "react": "^16.8.6",
+    "@glennsl/bs-json": "^3.0.0",
+    "gentype": "^3.27.0",
+    "react": "^16.13.1",
     "react-dom": "^16.8.6",
-    "reason-react": "^0.8.0"
-  },
-  "dependencies": {
-    "@glennsl/bs-json": "^3.0.0"
+    "reason-react": "^0.9.1"
   }
 }
