@@ -2356,9 +2356,9 @@ File References
   Live Value +Docstrings.+one: 0 references () [0]
   Live Value +Docstrings.+signMessage: 0 references () [0]
   Live Value +Docstrings.+flat: 0 references () [0]
-  Live Value +EverythingLiveHere.+z: 0 references () [0]
-  Live Value +EverythingLiveHere.+y: 0 references () [0]
-  Live Value +EverythingLiveHere.+x: 0 references () [0]
+  Dead Value +EverythingLiveHere.+z: 0 references () [0]
+  Dead Value +EverythingLiveHere.+y: 0 references () [0]
+  Dead Value +EverythingLiveHere.+x: 0 references () [0]
   Live Value +FirstClassModules.+someFunctorAsFunction: 0 references () [0]
   Live Value +FirstClassModules.SomeFunctor.+ww: 1 references (FirstClassModules.re:46:20) [0]
   Live Value +FirstClassModules.+testConvert: 0 references () [0]
@@ -2373,7 +2373,7 @@ File References
   Dead RecordLabel FirstClassModulesInterface.record.y: 0 references () [0]
   Dead RecordLabel FirstClassModulesInterface.record.x: 0 references () [0]
   Live Value +Hooks.+aComponentWithChildren: 0 references () [0]
-  Live Value +Hooks.RenderPropRequiresConversion.+unsafe_expr: 0 references () [0]
+  Dead Value +Hooks.RenderPropRequiresConversion.+unsafe_expr: 0 references () [0]
   Live Value +Hooks.RenderPropRequiresConversion.+car: 1 references (Hooks.re:153:30) [0]
   Live Value +Hooks.RenderPropRequiresConversion.+make: 0 references () [0]
   Live Value +Hooks.+functionReturningReactElement: 0 references () [0]
@@ -3549,6 +3549,28 @@ File References
   [@dead "+x"] let x: int;
 
   Warning Dead Module
+  File "./EverythingLiveHere.re", line 0, characters 0-0
+  +EverythingLiveHere is a dead module as all its items are dead.
+
+  Warning Dead Value
+  File "./EverythingLiveHere.re", line 1, characters 0-9
+  +x is never used
+  <-- line 1
+  [@dead "+x"] let x = 1;
+
+  Warning Dead Value
+  File "./EverythingLiveHere.re", line 3, characters 0-9
+  +y is never used
+  <-- line 3
+  [@dead "+y"] let y = 3;
+
+  Warning Dead Value
+  File "./EverythingLiveHere.re", line 5, characters 0-9
+  +z is never used
+  <-- line 5
+  [@dead "+z"] let z = 4;
+
+  Warning Dead Module
   File "./FirstClassModulesInterface.re", line 0, characters 0-0
   +FirstClassModulesInterface is a dead module as all its items are dead.
 
@@ -3591,6 +3613,12 @@ File References
   +r is never used
   <-- line 7
   [@dead "+r"] let r: record;
+
+  Warning Dead Value
+  File "./Hooks.re", line 153, characters 18-48
+  RenderPropRequiresConversion.+unsafe_expr is never used
+  <-- line 153
+      renderVehicle([@dead "RenderPropRequiresConversion.+unsafe_expr"] {"vehicle": car, "number": 42});
 
   Warning Dead Value
   File "./ImmutableArray.re", line 6, characters 2-63
@@ -4844,4 +4872,4 @@ File References
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
   
-  Analysis reported 329 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:81, Warning Dead Value:205, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 334 issues (Warning Dead Exception:1, Warning Dead Module:25, Warning Dead Type:81, Warning Dead Value:209, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)

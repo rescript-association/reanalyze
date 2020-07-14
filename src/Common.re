@@ -18,10 +18,16 @@ module Cli = {
   let debug = ref(false);
 
   let ci = ref(false);
+
   let experimental = ref(false);
+
   let write = ref(false);
+
   let liveNames = ref([]: list(string)); // names to be considered live values
+
   let livePaths = ref([]: list(string)); // paths of files where all values are considered live
+
+  let excludePaths = ref([]: list(string)); // paths of files to exclude from analysis
 };
 
 module StringSet = Set.Make(String);

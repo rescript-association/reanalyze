@@ -371,7 +371,9 @@ module ProcessDeadAnnotations = {
       Cli.liveNames^
       |> List.mem(name)
       || {
-        let fname = pos.pos_fname;
+        let fname =
+          Filename.is_relative(pos.pos_fname)
+            ? pos.pos_fname : Filename.concat(Sys.getcwd(), pos.pos_fname);
         let fnameLen = String.length(fname);
         Cli.livePaths^
         |> List.exists(prefix =>

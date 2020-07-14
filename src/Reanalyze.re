@@ -9,10 +9,22 @@ type analysisType =
 
 let loadCmtFile = (~analysis, cmtFilePath) => {
   let cmt_infos = Cmt_format.read_cmt(cmtFilePath);
-  switch (cmt_infos.cmt_annots |> FindSourceFile.cmt) {
-  | None => ()
 
-  | Some(sourceFile) =>
+  let excludePath = sourceFile =>
+    Cli.excludePaths^
+    |> List.exists(prefix_ => {
+         let prefix =
+           Filename.is_relative(sourceFile)
+             ? prefix_ : Filename.concat(Sys.getcwd(), prefix_);
+         String.length(prefix) <= String.length(sourceFile)
+         && (
+           try(String.sub(sourceFile, 0, String.length(prefix)) == prefix) {
+           | Invalid_argument(_) => false
+           }
+         );
+       });
+  switch (cmt_infos.cmt_annots |> FindSourceFile.cmt) {
+  | Some(sourceFile) when !excludePath(sourceFile) =>
     if (Cli.debug^) {
       Log_.item(
         "Scanning %s Source:%s@.",
@@ -39,6 +51,8 @@ let loadCmtFile = (~analysis, cmtFilePath) => {
     | Noalloc => cmt_infos |> Noalloc.processCmt
     | Termination => cmt_infos |> Arnold.processCmt
     };
+
+  | _ => ()
   };
 };
 
@@ -173,6 +187,10 @@ let cli = () => {
     let names = s |> String.split_on_char(',');
     Common.Cli.liveNames := names @ Common.Cli.liveNames.contents;
   }
+  and setExcludePaths = s => {
+    let paths = s |> String.split_on_char(',');
+    Common.Cli.excludePaths := paths @ Common.Cli.excludePaths.contents;
+  }
   and setLivePaths = s => {
     let paths = s |> String.split_on_char(',');
     Common.Cli.livePaths := paths @ Common.Cli.livePaths.contents;
@@ -201,6 +219,11 @@ let cli = () => {
       "-exception-cmt",
       Arg.String(s => setException(Some(s))),
       "root_path Experimental exception analysis for all the .cmt files under the root path",
+    ),
+    (
+      "-exclude-paths",
+      Arg.String(s => setExcludePaths(s)),
+      "comma-separated-path-prefixes Exclude from analysis files whose path has a prefix in the list",
     ),
     (
       "-experimental",
