@@ -14,9 +14,9 @@ function progress(param) {
     throw {
           RE_EXN_ID: "Assert_failure",
           _1: [
-            "TestCyberTruck.re",
-            5,
-            22
+            "TestCyberTruck.res",
+            6,
+            6
           ],
           Error: new Error()
         };
@@ -288,8 +288,8 @@ function testLoopAfterProgress(param) {
 throw {
       RE_EXN_ID: "Assert_failure",
       _1: [
-        "TestCyberTruck.re",
-        252,
+        "TestCyberTruck.res",
+        248,
         17
       ],
       Error: new Error()
