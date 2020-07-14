@@ -1993,123 +1993,6 @@
   addValueReference Yojson.re:13:8 --> Yojson.re:10:14
   addTypeReference Yojson.re:14:23 --> Yojson.re:10:14
   addValueReference Yojson.re:13:8 --> Yojson.re:14:11
-  Scanning Matrix.cmt Source:Matrix.re
-  addValueDeclaration +sumVec Matrix.re:2:4 path:+Matrix
-  addValueDeclaration +rotation Matrix.re:8:4 path:+Matrix
-  addValueDeclaration +mulVecVec Matrix.re:15:4 path:+Matrix
-  addValueDeclaration +mulMatVec Matrix.re:25:4 path:+Matrix
-  addValueDeclaration +scale Matrix.re:34:4 path:+Matrix
-  addValueDeclaration +restMatrix Matrix.re:37:4 path:+Matrix
-  addValueDeclaration +scale2 Matrix.re:40:4 path:+Matrix
-  addValueDeclaration +restMatrix2 Matrix.re:43:4 path:+Matrix
-  addValueReference Matrix.re:2:4 --> Matrix.re:2:13
-  addValueReference Matrix.re:2:4 --> Matrix.re:3:8
-  addValueReference Matrix.re:2:4 --> Matrix.re:3:18
-  addValueReference Matrix.re:2:4 --> Matrix.re:3:12
-  addValueReference Matrix.re:2:4 --> Matrix.re:3:22
-  addValueReference Matrix.re:8:4 --> Matrix.re:8:15
-  addValueReference Matrix.re:8:4 --> Matrix.re:8:15
-  addValueReference Matrix.re:8:4 --> Matrix.re:8:15
-  addValueReference Matrix.re:15:4 --> Matrix.re:15:17
-  addValueReference Matrix.re:15:4 --> Matrix.re:15:21
-  addValueDeclaration +x Matrix.re:18:6 path:+Matrix
-  addValueReference Matrix.re:18:6 --> Matrix.re:16:7
-  addValueReference Matrix.re:18:6 --> Matrix.re:17:7
-  addValueDeclaration +y Matrix.re:19:6 path:+Matrix
-  addValueReference Matrix.re:19:6 --> Matrix.re:16:11
-  addValueReference Matrix.re:19:6 --> Matrix.re:17:11
-  addValueDeclaration +z Matrix.re:20:6 path:+Matrix
-  addValueReference Matrix.re:20:6 --> Matrix.re:16:15
-  addValueReference Matrix.re:20:6 --> Matrix.re:17:15
-  addValueReference Matrix.re:15:4 --> Matrix.re:18:6
-  addValueReference Matrix.re:15:4 --> Matrix.re:19:6
-  addValueReference Matrix.re:15:4 --> Matrix.re:20:6
-  addValueReference Matrix.re:25:4 --> Matrix.re:25:17
-  addValueDeclaration +x Matrix.re:27:6 path:+Matrix
-  addValueReference Matrix.re:27:6 --> Matrix.re:26:7
-  addValueReference Matrix.re:27:6 --> Matrix.re:25:20
-  addValueReference Matrix.re:27:6 --> Matrix.re:15:4
-  addValueDeclaration +y Matrix.re:28:6 path:+Matrix
-  addValueReference Matrix.re:28:6 --> Matrix.re:26:13
-  addValueReference Matrix.re:28:6 --> Matrix.re:25:20
-  addValueReference Matrix.re:28:6 --> Matrix.re:15:4
-  addValueDeclaration +z Matrix.re:29:6 path:+Matrix
-  addValueReference Matrix.re:29:6 --> Matrix.re:26:19
-  addValueReference Matrix.re:29:6 --> Matrix.re:25:20
-  addValueReference Matrix.re:29:6 --> Matrix.re:15:4
-  addValueReference Matrix.re:25:4 --> Matrix.re:27:6
-  addValueReference Matrix.re:25:4 --> Matrix.re:28:6
-  addValueReference Matrix.re:25:4 --> Matrix.re:29:6
-  addValueReference Matrix.re:34:4 --> Matrix.re:34:12
-  addValueReference Matrix.re:34:4 --> Matrix.re:34:12
-  addValueReference Matrix.re:34:4 --> Matrix.re:34:12
-  addValueReference Matrix.re:37:4 --> Matrix.re:8:4
-  addValueReference Matrix.re:37:4 --> Matrix.re:34:4
-  addValueReference Matrix.re:37:4 --> Matrix.re:37:17
-  addValueReference Matrix.re:37:4 --> Matrix.re:25:4
-  addValueReference Matrix.re:37:4 --> Matrix.re:25:4
-  addValueReference Matrix.re:43:4 --> Matrix.re:8:4
-  addValueReference Matrix.re:43:4 --> Matrix.re:40:4
-  addValueReference Matrix.re:43:4 --> Matrix.re:43:18
-  addValueReference Matrix.re:43:4 --> Matrix.re:25:4
-  addValueReference Matrix.re:43:4 --> Matrix.re:25:4
-  Scanning TestNoalloc.cmt Source:TestNoalloc.re
-  addValueDeclaration +x TestNoalloc.re:2:4 path:+TestNoalloc
-  addValueDeclaration +foo TestNoalloc.re:5:4 path:+TestNoalloc
-  addValueDeclaration +bar TestNoalloc.re:8:4 path:+TestNoalloc
-  addValueDeclaration +pair TestNoalloc.re:11:4 path:+TestNoalloc
-  addValueDeclaration +unpair TestNoalloc.re:14:4 path:+TestNoalloc
-  addValueDeclaration +mixed TestNoalloc.re:17:4 path:+TestNoalloc
-  addValueDeclaration +duplicate TestNoalloc.re:23:4 path:+TestNoalloc
-  addValueDeclaration +local TestNoalloc.re:26:4 path:+TestNoalloc
-  addValueDeclaration +quad TestNoalloc.re:32:4 path:+TestNoalloc
-  addValueDeclaration +fl TestNoalloc.re:38:4 path:+TestNoalloc
-  addValueDeclaration +unpair2 TestNoalloc.re:41:4 path:+TestNoalloc
-  addValueDeclaration +id TestNoalloc.re:47:4 path:+TestNoalloc
-  addValueDeclaration +id2 TestNoalloc.re:50:4 path:+TestNoalloc
-  addValueDeclaration +y TestNoalloc.re:53:4 path:+TestNoalloc
-  addValueDeclaration +retGlobal TestNoalloc.re:56:4 path:+TestNoalloc
-  addValueDeclaration +globalTuple TestNoalloc.re:61:4 path:+TestNoalloc
-  addValueDeclaration +extractFromGlobalTuple TestNoalloc.re:64:4 path:+TestNoalloc
-  addValueReference TestNoalloc.re:5:4 --> TestNoalloc.re:5:11
-  addValueReference TestNoalloc.re:5:4 --> TestNoalloc.re:5:14
-  addValueReference TestNoalloc.re:8:4 --> TestNoalloc.re:8:10
-  addValueReference TestNoalloc.re:8:4 --> TestNoalloc.re:8:10
-  addValueReference TestNoalloc.re:8:4 --> TestNoalloc.re:5:4
-  addValueReference TestNoalloc.re:11:4 --> TestNoalloc.re:11:12
-  addValueReference TestNoalloc.re:11:4 --> TestNoalloc.re:11:15
-  addValueReference TestNoalloc.re:14:4 --> TestNoalloc.re:14:15
-  addValueReference TestNoalloc.re:14:4 --> TestNoalloc.re:14:18
-  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:14
-  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:18
-  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:22
-  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:28
-  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:33
-  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:37
-  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:42
-  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:46
-  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:50
-  addValueReference TestNoalloc.re:17:4 --> TestNoalloc.re:17:56
-  addValueReference TestNoalloc.re:23:4 --> TestNoalloc.re:23:17
-  addValueReference TestNoalloc.re:23:4 --> TestNoalloc.re:23:17
-  addValueDeclaration +a TestNoalloc.re:27:6 path:+TestNoalloc
-  addValueReference TestNoalloc.re:26:4 --> TestNoalloc.re:27:6
-  addValueReference TestNoalloc.re:26:4 --> TestNoalloc.re:26:12
-  addValueDeclaration +a TestNoalloc.re:33:6 path:+TestNoalloc
-  addValueReference TestNoalloc.re:33:6 --> TestNoalloc.re:32:11
-  addValueReference TestNoalloc.re:33:6 --> TestNoalloc.re:32:11
-  addValueReference TestNoalloc.re:32:4 --> TestNoalloc.re:33:6
-  addValueReference TestNoalloc.re:32:4 --> TestNoalloc.re:33:6
-  addValueReference TestNoalloc.re:41:4 --> TestNoalloc.re:41:14
-  addValueReference TestNoalloc.re:41:4 --> TestNoalloc.re:42:7
-  addValueReference TestNoalloc.re:41:4 --> TestNoalloc.re:42:10
-  addValueReference TestNoalloc.re:47:4 --> TestNoalloc.re:47:9
-  addValueReference TestNoalloc.re:50:4 --> TestNoalloc.re:50:11
-  addValueReference TestNoalloc.re:50:4 --> TestNoalloc.re:47:4
-  addValueReference TestNoalloc.re:53:4 --> TestNoalloc.re:2:4
-  addValueReference TestNoalloc.re:56:4 --> TestNoalloc.re:53:4
-  addValueReference TestNoalloc.re:64:4 --> TestNoalloc.re:61:4
-  addValueReference TestNoalloc.re:64:4 --> TestNoalloc.re:65:7
   addValueReference TestDeadExn.re:1:7 --> DeadExn.re:1:10
   
 File References
@@ -2197,8 +2080,6 @@ File References
   ExportWithRename.re -->> React.re
   TestYojson.re -->> Yojson.re
   Yojson.re -->> 
-  Matrix.re -->> 
-  TestNoalloc.re -->> 
   trace.ml -->> 
   trace.mli -->> trace.ml
   Dead VariantCase +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
@@ -2734,39 +2615,6 @@ File References
   Dead Value +TestYojson.+toString: 0 references () [0]
   Dead Value +TestYojson.+bar: 0 references () [0]
   Dead Value +TestYojson.+foo: 0 references () [0]
-  Dead Value +Matrix.+restMatrix2: 0 references () [0]
-  Dead Value +Matrix.+scale2: 0 references () [0]
-  Dead Value +Matrix.+restMatrix: 0 references () [0]
-  Dead Value +Matrix.+scale: 0 references () [0]
-  Dead Value +Matrix.+mulMatVec: 0 references () [1]
-  Dead Value +Matrix.+z: 0 references () [0]
-  Dead Value +Matrix.+y: 0 references () [0]
-  Dead Value +Matrix.+x: 0 references () [0]
-  Dead Value +Matrix.+mulVecVec: 0 references () [1]
-  Dead Value +Matrix.+z: 0 references () [0]
-  Dead Value +Matrix.+y: 0 references () [0]
-  Dead Value +Matrix.+x: 0 references () [0]
-  Dead Value +Matrix.+rotation: 0 references () [0]
-  Dead Value +Matrix.+sumVec: 0 references () [0]
-  Dead Value +TestNoalloc.+extractFromGlobalTuple: 0 references () [0]
-  Dead Value +TestNoalloc.+globalTuple: 0 references () [0]
-  Dead Value +TestNoalloc.+retGlobal: 0 references () [0]
-  Dead Value +TestNoalloc.+y: 0 references () [0]
-  Dead Value +TestNoalloc.+id2: 0 references () [0]
-  Dead Value +TestNoalloc.+id: 0 references () [0]
-  Dead Value +TestNoalloc.+unpair2: 0 references () [0]
-  Dead Value +TestNoalloc.+fl: 0 references () [0]
-  Dead Value +TestNoalloc.+quad: 0 references () [1]
-  Dead Value +TestNoalloc.+a: 0 references () [0]
-  Dead Value +TestNoalloc.+local: 0 references () [1]
-  Dead Value +TestNoalloc.+a: 0 references () [0]
-  Dead Value +TestNoalloc.+duplicate: 0 references () [0]
-  Dead Value +TestNoalloc.+mixed: 0 references () [0]
-  Dead Value +TestNoalloc.+unpair: 0 references () [0]
-  Dead Value +TestNoalloc.+pair: 0 references () [0]
-  Dead Value +TestNoalloc.+bar: 0 references () [0]
-  Dead Value +TestNoalloc.+foo: 0 references () [0]
-  Dead Value +TestNoalloc.+x: 0 references () [0]
   Live Value +BootloaderResource.+read: 1 references (DeadTest.re:112:40) [0]
   Live Value +DeadExn.+eInside: 1 references (DeadExn.re:12:7) [0]
   Dead Value +DeadExn.+eToplevel: 0 references () [0]
