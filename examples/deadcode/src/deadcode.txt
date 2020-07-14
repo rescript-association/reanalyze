@@ -579,7 +579,6 @@
   addValueDeclaration +car Hooks.re:152:8 path:+Hooks.RenderPropRequiresConversion
   addValueReference Hooks.re:153:30 --> Hooks.re:152:8
   addValueReference Hooks.re:153:18 --> Hooks.re:153:18
-  addValueDeclaration +unsafe_expr Hooks.re:153:18 path:+Hooks.RenderPropRequiresConversion
   addValueReference Hooks.re:153:4 --> Hooks.re:144:9
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.re:160:2
   addTypeReference Hooks.re:161:37 --> Hooks.re:1:16
@@ -1615,7 +1614,6 @@
   addValueReference Types.re:28:8 --> Types.re:28:16
   addValueReference Types.re:28:8 --> Types.re:28:8
   addValueReference Types.re:28:8 --> Types.re:28:37
-  addValueDeclaration +unsafe_expr Types.re:28:37 path:+Types
   addRecordLabelDeclaration self Types.re:35:22 path:+Types.selfRecursive
   addRecordLabelDeclaration b Types.re:38:27 path:+Types.mutuallyRecursiveA
   addRecordLabelDeclaration a Types.re:39:26 path:+Types.mutuallyRecursiveB
@@ -1631,7 +1629,6 @@
   addRecordLabelDeclaration s Types.re:92:2 path:+Types.record
   addValueReference Types.re:96:4 --> Types.re:96:23
   addValueReference Types.re:118:4 --> Types.re:118:39
-  addValueDeclaration +unsafe_expr Types.re:118:39 path:+Types
   addValueReference Types.re:134:4 --> Types.re:134:16
   addRecordLabelDeclaration id Types.re:139:19 path:+Types.someRecord
   addValueReference Types.re:144:4 --> Types.re:144:36
@@ -2254,7 +2251,6 @@ File References
   Dead RecordLabel FirstClassModulesInterface.record.y: 0 references () [0]
   Dead RecordLabel FirstClassModulesInterface.record.x: 0 references () [0]
   Live Value +Hooks.+aComponentWithChildren: 0 references () [0]
-  Dead Value +Hooks.RenderPropRequiresConversion.+unsafe_expr: 0 references () [0]
   Live Value +Hooks.RenderPropRequiresConversion.+car: 1 references (Hooks.re:153:30) [0]
   Live Value +Hooks.RenderPropRequiresConversion.+make: 0 references () [0]
   Live Value +Hooks.+functionReturningReactElement: 0 references () [0]
@@ -2462,8 +2458,7 @@ File References
   Live Value +Types.+testInstantiateTypeParameter: 0 references () [0]
   Dead RecordLabel +Types.someRecord.id: 0 references () [0]
   Live Value +Types.+setMatch: 0 references () [0]
-  Live Value +Types.+testMarshalFields: 0 references () [1]
-  Live Value +Types.+unsafe_expr: 1 references (Types.re:118:4) [0]
+  Live Value +Types.+testMarshalFields: 0 references () [0]
   Live Value +Types.+testConvertNull: 0 references () [0]
   Dead RecordLabel +Types.record.s: 0 references () [0]
   Dead RecordLabel +Types.record.i: 0 references () [0]
@@ -2479,8 +2474,7 @@ File References
   Dead RecordLabel +Types.mutuallyRecursiveB.a: 0 references () [0]
   Live RecordLabel +Types.mutuallyRecursiveA.b: 1 references (Types.re:53:34) [0]
   Live RecordLabel +Types.selfRecursive.self: 1 references (Types.re:46:30) [0]
-  Live Value +Types.+swap: 0 references () [1]
-  Live Value +Types.+unsafe_expr: 1 references (Types.re:28:8) [0]
+  Live Value +Types.+swap: 0 references () [0]
   Dead VariantCase +Types.typeWithVars.B: 0 references () [0]
   Dead VariantCase +Types.typeWithVars.A: 0 references () [0]
   Live Value +Types.+map: 0 references () [0]
@@ -3461,12 +3455,6 @@ File References
   +r is never used
   <-- line 7
   [@dead "+r"] let r: record;
-
-  Warning Dead Value
-  File "./Hooks.re", line 153, characters 18-48
-  RenderPropRequiresConversion.+unsafe_expr is never used
-  <-- line 153
-      renderVehicle([@dead "RenderPropRequiresConversion.+unsafe_expr"] {"vehicle": car, "number": 42});
 
   Warning Dead Value
   File "./ImmutableArray.re", line 6, characters 2-63
@@ -4720,4 +4708,4 @@ File References
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
   
-  Analysis reported 334 issues (Warning Dead Exception:1, Warning Dead Module:25, Warning Dead Type:81, Warning Dead Value:209, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 333 issues (Warning Dead Exception:1, Warning Dead Module:25, Warning Dead Type:81, Warning Dead Value:208, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)

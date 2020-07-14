@@ -357,9 +357,11 @@ let traverseStructure = (~doTypes, ~doValues) => {
         | Some({declKind: Value(_)}) => true
         | _ => false
         };
-      if (!exists) {
-        vd.val_id
-        |> Ident.name
+      let id = vd.val_id |> Ident.name;
+      if (!exists
+          && id
+          != "unsafe_expr" /* see https://github.com/BuckleScript/bucklescript/issues/4532 */) {
+        id
         |> Name.create(~isInterface=false)
         |> addValueDeclaration(
              ~path,
