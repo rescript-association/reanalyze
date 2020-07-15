@@ -8,7 +8,7 @@
     "clean": "node ../clean_bsb.js",
     "dce": "node ./dce.js >src/deadcode.txt",
     "exception": "node ./exception.js >src/exception.txt",
-    "noalloc": "../../_build/default/src/Reanalyze.exe -noalloc >src/noalloc.txt",
+    "noalloc": "../../_build/default/src/Reanalyze.exe -ci -noalloc >src/noalloc.txt",
     "analyze": "npm run dce && npm run exception && npm run noalloc"
   },
   "devDependencies": {

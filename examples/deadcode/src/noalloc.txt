@@ -21,7 +21,7 @@
   no-alloc binding for id2
 
   Noalloc
-  File "/Users/cristianoc/reasonml/reanalyze/examples/deadcode/src/noalloc/TestNoalloc.res", line 50, characters 32-33
+  File "./TestNoalloc.res", line 50, characters 32-33
   Function call to id: parameter 0 has kind * but the supplied argument has kind (*, *)
   no-alloc binding for y
   no-alloc binding for retGlobal
