@@ -251,7 +251,7 @@
   addValueReference DeadTest.re:157:17 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DeadTest.re:157:17 --> React.re:18:0
   addValueReference DeadTest.re:160:4 --> DeadTest.re:159:4
-  addValueReference DeadTest.re:164:4 --> ExportWithRename.re:3:4
+  addValueReference DeadTest.re:164:4 --> ExportWithRename.res:2:4
   addValueReference DeadTest.re:167:32 --> DeadTest.re:167:13
   addValueReference DeadTest.re:167:19 --> React.re:7:0
   addValueReference DeadTest.re:169:16 --> DeadTest.re:167:4
@@ -264,8 +264,8 @@
   extendTypeDependencies DeadTest.re:189:8 --> DeadTest.re:185:6
   extendTypeDependencies DeadTest.re:185:6 --> DeadTest.re:189:8
   addTypeReference DeadTest.re:194:7 --> DeadTest.re:185:6
-  addValueReference ExportWithRename.re:3:4 --> DynamicallyLoadedComponent.re:2:4
-  addValueReference DynamicallyLoadedComponent.re:2:4 --> ExportWithRename.re:3:4
+  addValueReference ExportWithRename.res:2:4 --> DynamicallyLoadedComponent.re:2:4
+  addValueReference DynamicallyLoadedComponent.re:2:4 --> ExportWithRename.res:2:4
   addValueReference DeadTest.re:37:2 --> DeadTest.re:41:6
   addValueReference DeadTest.re:62:2 --> DeadTest.re:66:6
   addValueReference DeadTest.re:63:2 --> DeadTest.re:65:6
@@ -1842,154 +1842,6 @@
   extendTypeDependencies trace.ml:3:11 --> trace.mli:3:11
   extendTypeDependencies trace.mli:3:11 --> trace.ml:3:11
   addValueDeclaration +infok trace.mli:5:0 path:trace
-  Scanning BsJson.cmt Source:BsJson.re
-  addValueDeclaration +testBsJson BsJson.re:2:4 path:+BsJson
-  addValueDeclaration +testBsJson2 BsJson.re:5:4 path:+BsJson
-  addValueReference BsJson.re:2:4 --> BsJson.re:2:17
-  addValueReference BsJson.re:2:4 --> Json_decode.mli:78:0
-  addValueReference BsJson.re:5:4 --> BsJson.re:5:18
-  addValueReference BsJson.re:5:4 --> Json_decode.mli:78:0
-  addTypeReference trace.ml:3:11 --> trace.mli:3:11
-  addTypeReference trace.mli:3:11 --> trace.ml:3:11
-  Scanning Exn.cmt Source:Exn.re
-  addValueDeclaration +raises Exn.re:1:4 path:+Exn
-  addValueDeclaration +catches1 Exn.re:3:4 path:+Exn
-  addValueDeclaration +catches2 Exn.re:8:4 path:+Exn
-  addValueDeclaration +raiseAndCatch Exn.re:14:4 path:+Exn
-  addValueDeclaration +raisesWithAnnotaion Exn.re:20:4 path:+Exn
-  addValueDeclaration +callsRaiseWithAnnotation Exn.re:22:4 path:+Exn
-  addValueDeclaration +callsRaiseWithAnnotationAndIsAnnotated Exn.re:25:4 path:+Exn
-  addValueDeclaration +z Exn.re:27:4 path:+Exn
-  addValueDeclaration +incompleteMatch Exn.re:29:4 path:+Exn
-  addValueDeclaration +twoRaises Exn.re:37:4 path:+Exn
-  addValueDeclaration +sequencing Exn.re:46:4 path:+Exn
-  addValueDeclaration +wrongCatch Exn.re:53:4 path:+Exn
-  addValueDeclaration +wrongCatch2 Exn.re:59:4 path:+Exn
-  addValueDeclaration +raise2Annotate3 Exn.re:67:4 path:+Exn
-  addValueDeclaration +parse_json_from_file Exn.re:78:4 path:+Exn
-  addValueDeclaration +reRaise Exn.re:90:4 path:+Exn
-  addValueDeclaration +switchWithCatchAll Exn.re:96:4 path:+Exn
-  addValueDeclaration +raiseInInternalLet Exn.re:102:4 path:+Exn
-  addValueDeclaration +indirectCall Exn.re:107:4 path:+Exn
-  addValueDeclaration +array Exn.re:110:4 path:+Exn
-  addValueDeclaration +id Exn.re:112:4 path:+Exn
-  addValueDeclaration +tryChar Exn.re:114:4 path:+Exn
-  addValueDeclaration +specializedHash Exn.re:127:4 path:+Exn
-  addValueDeclaration +genericHash Exn.re:130:4 path:+Exn
-  addValueDeclaration +raiseAtAt Exn.re:133:4 path:+Exn
-  addValueDeclaration +raisePipe Exn.re:136:4 path:+Exn
-  addValueDeclaration +raiseArrow Exn.re:139:4 path:+Exn
-  addValueDeclaration +bar Exn.re:142:4 path:+Exn
-  addValueDeclaration +foo Exn.re:144:4 path:+Exn
-  addValueDeclaration +stringMake1 Exn.re:150:4 path:+Exn
-  addValueDeclaration +stringMake2 Exn.re:152:4 path:+Exn
-  addValueDeclaration +stringMake3 Exn.re:154:4 path:+Exn
-  addValueDeclaration +severalCases Exn.re:156:4 path:+Exn
-  addValueDeclaration +genericRaiseIsNotSupported Exn.re:165:4 path:+Exn
-  addValueDeclaration +redundant Exn.re:167:4 path:+Exn
-  addValueDeclaration +redundant2 Exn.re:169:4 path:+Exn
-  addValueDeclaration +redundant3 Exn.re:171:4 path:+Exn
-  addValueDeclaration +redundant4 Exn.re:174:4 path:+Exn
-  addValueReference Exn.re:22:4 --> Exn.re:20:4
-  addValueReference Exn.re:25:4 --> Exn.re:20:4
-  addValueReference Exn.re:29:4 --> Exn.re:29:22
-  addExceptionDeclaration A Exn.re:34:10 path:+Exn
-  addExceptionDeclaration B Exn.re:35:10 path:+Exn
-  addValueReference Exn.re:37:4 --> Exn.re:35:10
-  addTypeReference Exn.re:42:10 --> Exn.re:35:10
-  addValueReference Exn.re:37:4 --> Exn.re:37:20
-  addValueReference Exn.re:37:4 --> Exn.re:34:10
-  addTypeReference Exn.re:39:10 --> Exn.re:34:10
-  addValueReference Exn.re:37:4 --> Exn.re:37:17
-  addValueReference Exn.re:46:4 --> Exn.re:35:10
-  addTypeReference Exn.re:48:12 --> Exn.re:35:10
-  addValueReference Exn.re:46:4 --> Exn.re:34:10
-  addTypeReference Exn.re:47:8 --> Exn.re:34:10
-  addValueReference Exn.re:53:4 --> Exn.re:35:10
-  addTypeReference Exn.re:54:12 --> Exn.re:35:10
-  addExceptionDeclaration C Exn.re:58:10 path:+Exn
-  addValueReference Exn.re:59:4 --> Exn.re:58:10
-  addTypeReference Exn.re:60:31 --> Exn.re:58:10
-  addValueReference Exn.re:59:4 --> Exn.re:35:10
-  addTypeReference Exn.re:60:20 --> Exn.re:35:10
-  addValueReference Exn.re:59:4 --> Exn.re:59:18
-  addValueReference Exn.re:67:4 --> Exn.re:35:10
-  addTypeReference Exn.re:72:10 --> Exn.re:35:10
-  addValueReference Exn.re:67:4 --> Exn.re:67:26
-  addValueReference Exn.re:67:4 --> Exn.re:34:10
-  addTypeReference Exn.re:69:10 --> Exn.re:34:10
-  addValueReference Exn.re:67:4 --> Exn.re:67:23
-  addExceptionDeclaration Error Exn.re:76:10 path:+Exn
-  addValueDeclaration +in_chan Exn.re:79:6 path:+Exn
-  addValueReference Exn.re:79:6 --> Exn.re:78:27
-  addValueReference Exn.re:78:4 --> Exn.re:76:10
-  addTypeReference Exn.re:83:10 --> Exn.re:76:10
-  addValueReference Exn.re:78:4 --> Exn.re:81:21
-  addValueReference Exn.re:78:4 --> Exn.re:81:25
-  addValueReference Exn.re:78:4 --> Exn.re:81:29
-  addValueReference Exn.re:78:4 --> Exn.re:79:6
-  addValueReference Exn.re:78:4 --> Exn.re:84:2
-  addValueReference Exn.re:78:4 --> Exn.re:79:6
-  addValueReference Exn.re:90:4 --> Exn.re:35:10
-  addTypeReference Exn.re:92:25 --> Exn.re:35:10
-  addValueReference Exn.re:90:4 --> Exn.re:34:10
-  addTypeReference Exn.re:91:16 --> Exn.re:34:10
-  addValueReference Exn.re:96:4 --> Exn.re:34:10
-  addTypeReference Exn.re:97:16 --> Exn.re:34:10
-  addValueDeclaration +a Exn.re:103:6 path:+Exn
-  addValueReference Exn.re:103:6 --> Exn.re:34:10
-  addTypeReference Exn.re:103:20 --> Exn.re:34:10
-  addValueReference Exn.re:103:6 --> Exn.re:102:25
-  addValueReference Exn.re:102:4 --> Exn.re:103:6
-  addValueReference Exn.re:107:4 --> Exn.re:20:4
-  addValueReference Exn.re:110:4 --> Exn.re:110:12
-  addValueReference Exn.re:112:4 --> Exn.re:112:9
-  addValueReference Exn.re:114:4 --> Exn.re:114:14
-  addValueReference Exn.re:114:4 --> Exn.re:112:4
-  addValueDeclaration +hash Exn.re:124:8 path:+Exn.StringHash
-  addValueReference Exn.re:127:4 --> Exn.re:127:22
-  addValueReference Exn.re:130:4 --> Exn.re:130:18
-  addValueReference Exn.re:156:4 --> Exn.re:156:19
-  addValueReference Exn.re:165:4 --> Exn.re:165:33
-  Scanning ExnA.cmt Source:ExnA.re
-  addValueDeclaration +bar ExnA.re:1:4 path:+ExnA
-  addValueReference ExnA.re:1:4 --> ExnB.re:2:4
-  Scanning ExnB.cmt Source:ExnB.re
-  addValueDeclaration +foo ExnB.re:2:4 path:+ExnB
-  Scanning ExportWithRename.cmt Source:ExportWithRename.re
-  addValueDeclaration +make ExportWithRename.re:3:4 path:+ExportWithRename
-  addValueReference ExportWithRename.re:3:32 --> ExportWithRename.re:3:13
-  addValueReference ExportWithRename.re:3:19 --> React.re:7:0
-  Scanning TestYojson.cmt Source:TestYojson.re
-  addValueDeclaration +foo TestYojson.re:2:4 path:+TestYojson
-  addValueDeclaration +bar TestYojson.re:4:4 path:+TestYojson
-  addValueDeclaration +toString TestYojson.re:11:4 path:+TestYojson
-  addValueDeclaration +toInt TestYojson.re:14:4 path:+TestYojson
-  addValueReference TestYojson.re:2:4 --> TestYojson.re:2:10
-  addValueReference TestYojson.re:2:4 --> Yojson.re:7:6
-  addValueReference TestYojson.re:4:4 --> TestYojson.re:4:16
-  addValueReference TestYojson.re:4:4 --> TestYojson.re:7:49
-  addValueReference TestYojson.re:4:4 --> TestYojson.re:4:16
-  addValueReference TestYojson.re:4:4 --> TestYojson.re:6:2
-  addValueReference TestYojson.re:4:4 --> TestYojson.re:4:16
-  addValueReference TestYojson.re:4:4 --> TestYojson.re:4:11
-  addValueReference TestYojson.re:4:4 --> Yojson.re:13:8
-  addValueReference TestYojson.re:11:4 --> TestYojson.re:11:15
-  addValueReference TestYojson.re:11:4 --> Yojson.re:19:8
-  addValueReference TestYojson.re:14:4 --> TestYojson.re:14:12
-  addValueReference TestYojson.re:14:4 --> Yojson.re:17:8
-  Scanning Yojson.cmt Source:Yojson.re
-  addValueDeclaration +from_string Yojson.re:7:6 path:+Yojson.Basic
-  addValueDeclaration +member Yojson.re:13:8 path:+Yojson.Basic.Util
-  addValueDeclaration +to_int Yojson.re:17:8 path:+Yojson.Basic.Util
-  addValueDeclaration +to_string Yojson.re:19:8 path:+Yojson.Basic.Util
-  addExceptionDeclaration Json_error Yojson.re:1:10 path:+Yojson
-  addValueReference Yojson.re:7:6 --> Yojson.re:1:10
-  addTypeReference Yojson.re:7:44 --> Yojson.re:1:10
-  addExceptionDeclaration Type_error Yojson.re:10:14 path:+Yojson.Basic.Util
-  addValueReference Yojson.re:13:8 --> Yojson.re:10:14
-  addTypeReference Yojson.re:14:23 --> Yojson.re:10:14
-  addValueReference Yojson.re:13:8 --> Yojson.re:14:11
   addValueReference TestDeadExn.re:1:7 --> DeadExn.re:1:10
   
 File References
@@ -2007,7 +1859,7 @@ File References
   DeadMl.ml -->> 
   DeadRT.re -->> 
   DeadRT.rei -->> 
-  DeadTest.re -->> React.re, BootloaderResource.re, DeadValueTest.rei, DynamicallyLoadedComponent.re, ImmutableArray.rei, JSResource.re, ExportWithRename.re, trace.mli
+  DeadTest.re -->> React.re, BootloaderResource.re, DeadValueTest.rei, DynamicallyLoadedComponent.re, ImmutableArray.rei, JSResource.re, ExportWithRename.res, trace.mli
   DeadTestBlacklist.re -->> 
   DeadTestWithInterface.re -->> 
   DeadTypeTest.re -->> 
@@ -2070,13 +1922,6 @@ File References
   UseImportJsValue.re -->> ImportJsValue.re
   Variants.re -->> 
   VariantsWithPayload.re -->> 
-  BsJson.re -->> Json_decode.mli
-  Exn.re -->> 
-  ExnA.re -->> ExnB.re
-  ExnB.re -->> 
-  ExportWithRename.re -->> React.re
-  TestYojson.re -->> Yojson.re
-  Yojson.re -->> 
   trace.ml -->> 
   trace.mli -->> trace.ml
   Dead VariantCase +AutoAnnotate.annotatedVariant.R4: 0 references () [0]
@@ -2557,58 +2402,6 @@ File References
   Live Value +VariantsWithPayload.+testWithPayload: 0 references () [0]
   Live RecordLabel +VariantsWithPayload.payload.y: 2 references (VariantsWithPayload.re:27:59, VariantsWithPayload.re:46:53) [0]
   Live RecordLabel +VariantsWithPayload.payload.x: 2 references (VariantsWithPayload.re:27:42, VariantsWithPayload.re:46:36) [0]
-  Dead Value +BsJson.+testBsJson2: 0 references () [0]
-  Dead Value +BsJson.+testBsJson: 0 references () [0]
-  Dead Value +Exn.+redundant4: 0 references () [0]
-  Dead Value +Exn.+redundant3: 0 references () [0]
-  Dead Value +Exn.+redundant2: 0 references () [0]
-  Dead Value +Exn.+redundant: 0 references () [0]
-  Dead Value +Exn.+genericRaiseIsNotSupported: 0 references () [0]
-  Dead Value +Exn.+severalCases: 0 references () [0]
-  Dead Value +Exn.+stringMake3: 0 references () [0]
-  Dead Value +Exn.+stringMake2: 0 references () [0]
-  Dead Value +Exn.+stringMake1: 0 references () [0]
-  Dead Value +Exn.+foo: 0 references () [0]
-  Dead Value +Exn.+bar: 0 references () [0]
-  Dead Value +Exn.+raiseArrow: 0 references () [0]
-  Dead Value +Exn.+raisePipe: 0 references () [0]
-  Dead Value +Exn.+raiseAtAt: 0 references () [0]
-  Dead Value +Exn.+genericHash: 0 references () [0]
-  Dead Value +Exn.+specializedHash: 0 references () [0]
-  Dead Value +Exn.StringHash.+hash: 0 references () [0]
-  Dead Value +Exn.+tryChar: 0 references () [0]
-  Dead Value +Exn.+id: 0 references () [0]
-  Dead Value +Exn.+array: 0 references () [0]
-  Dead Value +Exn.+indirectCall: 0 references () [0]
-  Dead Value +Exn.+raiseInInternalLet: 0 references () [1]
-  Dead Value +Exn.+a: 0 references () [0]
-  Dead Value +Exn.+switchWithCatchAll: 0 references () [0]
-  Dead Value +Exn.+reRaise: 0 references () [0]
-  Dead Value +Exn.+parse_json_from_file: 0 references () [1]
-  Dead Value +Exn.+in_chan: 0 references () [0]
-  Live Exception +Exn.Error: 1 references (Exn.re:83:10) [0]
-  Dead Value +Exn.+raise2Annotate3: 0 references () [0]
-  Dead Value +Exn.+wrongCatch2: 0 references () [0]
-  Live Exception +Exn.C: 1 references (Exn.re:60:31) [0]
-  Dead Value +Exn.+wrongCatch: 0 references () [0]
-  Dead Value +Exn.+sequencing: 0 references () [0]
-  Dead Value +Exn.+twoRaises: 0 references () [0]
-  Live Exception +Exn.B: 6 references (Exn.re:42:10, Exn.re:48:12, Exn.re:54:12, Exn.re:60:20, Exn.re:72:10, Exn.re:92:25) [0]
-  Live Exception +Exn.A: 6 references (Exn.re:39:10, Exn.re:47:8, Exn.re:69:10, Exn.re:91:16, Exn.re:97:16, Exn.re:103:20) [0]
-  Dead Value +Exn.+incompleteMatch: 0 references () [0]
-  Dead Value +Exn.+z: 0 references () [0]
-  Dead Value +Exn.+callsRaiseWithAnnotationAndIsAnnotated: 0 references () [0]
-  Dead Value +Exn.+callsRaiseWithAnnotation: 0 references () [0]
-  Live Value +Exn.+raisesWithAnnotaion: 2 references (Exn.re:22:4, Exn.re:25:4) [0]
-  Dead Value +Exn.+raiseAndCatch: 0 references () [0]
-  Dead Value +Exn.+catches2: 0 references () [0]
-  Dead Value +Exn.+catches1: 0 references () [0]
-  Dead Value +Exn.+raises: 0 references () [0]
-  Dead Value +ExnA.+bar: 0 references () [0]
-  Dead Value +TestYojson.+toInt: 0 references () [0]
-  Dead Value +TestYojson.+toString: 0 references () [0]
-  Dead Value +TestYojson.+bar: 0 references () [0]
-  Dead Value +TestYojson.+foo: 0 references () [0]
   Live Value +BootloaderResource.+read: 1 references (DeadTest.re:112:40) [0]
   Live Value +DeadExn.+eInside: 1 references (DeadExn.re:12:7) [0]
   Dead Value +DeadExn.+eToplevel: 0 references () [0]
@@ -2623,8 +2416,7 @@ File References
   Dead VariantCase +DeadTypeTest.t.B: 0 references () [0]
   Dead Value DeadValueTest.+valueDead: 0 references () [0]
   Live Value DeadValueTest.+valueAlive: 1 references (DeadTest.re:77:16) [0]
-  Live Value +ExportWithRename.+make: 0 references () [1]
-  Live Value +DynamicallyLoadedComponent.+make: 3 references (DeadTest.re:112:40, DeadTest.re:157:17, ExportWithRename.re:3:4) [0]
+  Live Value +DynamicallyLoadedComponent.+make: 3 references (DeadTest.re:112:40, DeadTest.re:157:17, ExportWithRename.res:2:4) [0]
   Dead Value ErrorHandler.+x: 0 references () [0]
   Live Value ErrorHandler.Make.+notify: 1 references (CreateErrorHandler1.re:8:0) [0]
   Dead Value +FirstClassModulesInterface.+r: 0 references () [0]
@@ -2727,13 +2519,6 @@ File References
   optional argument x of function +bar is never used
   Live Value OptArg.+bar: 1 references (TestOptArg.re:1:7) [0]
   Dead Value OptArg.+foo: 0 references () [0]
-  Dead Value +ExnB.+foo: 0 references () [0]
-  Dead Value +Yojson.Basic.Util.+to_string: 0 references () [0]
-  Dead Value +Yojson.Basic.Util.+to_int: 0 references () [0]
-  Dead Value +Yojson.Basic.Util.+member: 0 references () [0]
-  Live Exception +Yojson.Basic.Util.Type_error: 1 references (Yojson.re:14:23) [0]
-  Dead Value +Yojson.Basic.+from_string: 0 references () [0]
-  Live Exception +Yojson.Json_error: 1 references (Yojson.re:7:44) [0]
   Live Value trace.+infok: 1 references (DeadTest.re:175:0) [0]
   Live RecordLabel trace.pf.pf: 1 references (DeadTest.re:175:21) [0]
   Dead Value +DeadValueTest.+tail: 0 references () [0]
@@ -2858,7 +2643,7 @@ File References
   optional argument z of function +foo is never used
   Live Value +OptArg.+foo: 1 references (OptArg.re:5:7) [0]
   Live Value +trace.+infok: 1 references (trace.mli:5:0) [0]
-  Live RecordLabel +trace.pf.pf: 1 references (trace.mli:3:11) [0]
+  Dead RecordLabel +trace.pf.pf: 0 references () [0]
 
   Warning Dead Module
   File "./AutoAnnotate.re", line 0, characters 0-0
@@ -4707,5 +4492,11 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
+
+  Warning Dead Type
+  File "./trace.ml", line 3, characters 11-28
+  pf.pf is a record label never used to read a value
+  <-- line 3
+  type pf = {pf: 'a. 'a printf [@dead "pf.pf"] }
   
-  Analysis reported 333 issues (Warning Dead Exception:1, Warning Dead Module:25, Warning Dead Type:81, Warning Dead Value:208, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 334 issues (Warning Dead Exception:1, Warning Dead Module:25, Warning Dead Type:82, Warning Dead Value:208, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
