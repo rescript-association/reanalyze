@@ -1184,6 +1184,7 @@
   addRecordLabelDeclaration yyy Newsyntax.res:7:2 path:+Newsyntax.record
   addVariantCaseDeclaration A Newsyntax.res:10:15 path:+Newsyntax.variant
   addVariantCaseDeclaration B Newsyntax.res:10:17 path:+Newsyntax.variant
+  addVariantCaseDeclaration C Newsyntax.res:10:25 path:+Newsyntax.variant
   Scanning Newton.cmt Source:Newton.re
   addValueDeclaration +- Newton.re:1:4 path:+Newton
   addValueDeclaration ++ Newton.re:2:4 path:+Newton
@@ -2183,6 +2184,7 @@ File References
   Live Value +NestedModules.Universe.+theAnswer: 0 references () [0]
   Live Value +NestedModules.+notNested: 0 references () [0]
   Live Value NestedModulesInSignature.Universe.+theAnswer: 0 references () [0]
+  Dead VariantCase +Newsyntax.variant.C: 0 references () [0]
   Dead VariantCase +Newsyntax.variant.B: 0 references () [0]
   Dead VariantCase +Newsyntax.variant.A: 0 references () [0]
   Dead RecordLabel +Newsyntax.record.yyy: 0 references () [0]
@@ -4257,13 +4259,19 @@ File References
   File "./Newsyntax.res", line 10, characters 15-16
   variant.A is a variant case which is never constructed
   <-- line 10
-  type variant = @dead("variant.A") A | B(int)
+  type variant = | @dead("variant.A") A | B(int)|C
 
   Warning Dead Type
   File "./Newsyntax.res", line 10, characters 17-25
   variant.B is a variant case which is never constructed
   <-- line 10
-  type variant = @dead("variant.A") A @dead("variant.B") | B(int)
+  type variant = | @dead("variant.A") A | @dead("variant.B") B(int)|C
+
+  Warning Dead Type
+  File "./Newsyntax.res", line 10, characters 25-27
+  variant.C is a variant case which is never constructed
+  <-- line 10
+  type variant = | @dead("variant.A") A | @dead("variant.B") B(int)|@dead("variant.C") C
 
   Warning Dead Module
   File "./OldSyntax.re", line 0, characters 0-0
@@ -4661,4 +4669,4 @@ File References
   <-- line 3
   type pf = {pf: 'a. 'a printf [@dead "pf.pf"] }
   
-  Analysis reported 355 issues (Warning Dead Exception:1, Warning Dead Module:28, Warning Dead Type:94, Warning Dead Value:214, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 356 issues (Warning Dead Exception:1, Warning Dead Module:28, Warning Dead Type:95, Warning Dead Value:214, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
