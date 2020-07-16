@@ -1170,6 +1170,9 @@
   addValueReference NestedModulesInSignature.rei:2:2 --> NestedModulesInSignature.re:2:6
   Scanning NestedModulesInSignature.cmti Source:NestedModulesInSignature.rei
   addValueDeclaration +theAnswer NestedModulesInSignature.rei:2:2 path:NestedModulesInSignature.Universe
+  Scanning Newsyntax.cmt Source:Newsyntax.res
+  addValueDeclaration +x Newsyntax.res:1:4 path:+Newsyntax
+  addValueDeclaration +y Newsyntax.res:3:4 path:+Newsyntax
   Scanning Newton.cmt Source:Newton.re
   addValueDeclaration +- Newton.re:1:4 path:+Newton
   addValueDeclaration ++ Newton.re:2:4 path:+Newton
@@ -1891,6 +1894,7 @@ File References
   NestedModules.re -->> 
   NestedModulesInSignature.re -->> 
   NestedModulesInSignature.rei -->> NestedModulesInSignature.re
+  Newsyntax.res -->> 
   Newton.re -->> 
   Opaque.re -->> 
   OptArg.re -->> 
@@ -2153,6 +2157,8 @@ File References
   Live Value +NestedModules.Universe.+theAnswer: 0 references () [0]
   Live Value +NestedModules.+notNested: 0 references () [0]
   Live Value NestedModulesInSignature.Universe.+theAnswer: 0 references () [0]
+  Dead Value +Newsyntax.+y: 0 references () [0]
+  Dead Value +Newsyntax.+x: 0 references () [0]
   Live Value +Newton.+result: 2 references (Newton.re:31:8, Newton.re:31:18) [0]
   Live Value +Newton.+fPrimed: 1 references (Newton.re:29:4) [0]
   Live Value +Newton.+f: 2 references (Newton.re:29:4, Newton.re:31:16) [0]
@@ -4143,6 +4149,22 @@ File References
   <-- line 47
       | [@dead "Universe.variant.B"] B(string);
 
+  Warning Dead Module
+  File "./Newsyntax.res", line 0, characters 0-0
+  +Newsyntax is a dead module as all its items are dead.
+
+  Warning Dead Value
+  File "./Newsyntax.res", line 1, characters 0-10
+  +x is never used
+  <-- line 1
+  @dead("+x") let x = 34
+
+  Warning Dead Value
+  File "./Newsyntax.res", line 3, characters 0-10
+  +y is never used
+  <-- line 3
+  @dead("+y") let y = 11
+
   Warning Dead Type
   File "./Opaque.re", line 3, characters 4-20
   opaqueFromRecords.A is a variant case which is never constructed
@@ -4499,4 +4521,4 @@ File References
   <-- line 3
   type pf = {pf: 'a. 'a printf [@dead "pf.pf"] }
   
-  Analysis reported 334 issues (Warning Dead Exception:1, Warning Dead Module:25, Warning Dead Type:82, Warning Dead Value:208, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 337 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:82, Warning Dead Value:210, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)

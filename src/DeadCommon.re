@@ -50,7 +50,7 @@ let liveAnnotation = "live";
 
 let posToString = posToString;
 
-let posIsReason = Log_.posIsReason;
+let posLanguage = Log_.posLanguage;
 
 module PosHash = {
   include Hashtbl.Make({
@@ -505,7 +505,12 @@ module ProcessDeadAnnotations = {
 
 /********   PROCESSING  ********/
 
-let annotateAtEnd = (~pos) => !posIsReason(pos);
+let annotateAtEnd = (~pos) =>
+  switch (posLanguage(pos)) {
+  | Re
+  | Res => false
+  | Ml => true
+  };
 
 let getPosAnnotation = decl =>
   annotateAtEnd(~pos=decl.pos) ? decl.posEnd : decl.posStart;
@@ -603,15 +608,31 @@ module WriteDeadAnnotations = {
     switch (declarations) {
     | [] => original
     | [{declKind, path, pos} as decl, ...nextDeclarations] =>
-      let isReason = posIsReason(pos);
+      let isMl = posLanguage(pos) == Ml;
       let annotationStr =
-        (isReason ? "" : " ")
-        ++ "["
-        ++ (isReason || declKind |> DeclKind.isType ? "@" : "@@")
-        ++ deadAnnotation
-        ++ " \""
-        ++ (path |> Path.withoutHead)
-        ++ "\"] ";
+        switch (posLanguage(pos)) {
+        | Res =>
+          "@"
+          ++ deadAnnotation
+          ++ "(\""
+          ++ (path |> Path.withoutHead)
+          ++ "\") "
+        | Re =>
+          "["
+          ++ "@"
+          ++ deadAnnotation
+          ++ " \""
+          ++ (path |> Path.withoutHead)
+          ++ "\"] "
+        | Ml =>
+          " "
+          ++ "["
+          ++ (declKind |> DeclKind.isType ? "@" : "@@")
+          ++ deadAnnotation
+          ++ " \""
+          ++ (path |> Path.withoutHead)
+          ++ "\"] "
+        };
       let posAnnotation = decl |> getPosAnnotation;
       let col = posAnnotation.pos_cnum - posAnnotation.pos_bol;
       let originalLen = String.length(original);
@@ -627,7 +648,7 @@ module WriteDeadAnnotations = {
               };
             original1 ++ annotationStr ++ original2;
           } else {
-            isReason ? annotationStr ++ original : original ++ annotationStr;
+            isMl ? original ++ annotationStr : annotationStr ++ original;
           },
         declarations: nextDeclarations,
       }

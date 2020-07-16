@@ -1,8 +1,20 @@
 let useOcamlLocations = true;
 
-let posIsReason = (pos: Lexing.position) =>
-  Filename.check_suffix(pos.pos_fname, ".re")
-  || Filename.check_suffix(pos.pos_fname, ".rei");
+type language =
+  | Ml
+  | Re
+  | Res;
+
+let posLanguage = (pos: Lexing.position) =>
+  if (Filename.check_suffix(pos.pos_fname, ".re")
+      || Filename.check_suffix(pos.pos_fname, ".rei")) {
+    Re;
+  } else if (Filename.check_suffix(pos.pos_fname, ".ml")
+             || Filename.check_suffix(pos.pos_fname, ".mli")) {
+    Ml;
+  } else {
+    Res;
+  };
 
 module Color = {
   let color_enabled = lazy(Unix.isatty(Unix.stdout));
