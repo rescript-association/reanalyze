@@ -8,3 +8,5 @@ type record = {
 }
 
 type variant = A | B(int)|C
+
+type record2 = {xx:int,yy:int}
