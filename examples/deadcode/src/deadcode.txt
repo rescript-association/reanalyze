@@ -1131,13 +1131,6 @@
   addValueDeclaration +y LetPrivate.re:5:4 path:+LetPrivate
   addValueDeclaration +x LetPrivate.re:2:12 path:+LetPrivate.local_1
   addValueReference LetPrivate.re:5:4 --> LetPrivate.re:2:12
-  Scanning MlSyntax.cmt Source:MlSyntax.ml
-  addValueDeclaration +x MlSyntax.ml:1:4 path:+MlSyntax
-  addValueDeclaration +y MlSyntax.ml:3:4 path:+MlSyntax
-  addRecordLabelDeclaration xxx MlSyntax.ml:6:2 path:+MlSyntax.record
-  addRecordLabelDeclaration yyy MlSyntax.ml:7:2 path:+MlSyntax.record
-  addVariantCaseDeclaration A MlSyntax.ml:10:15 path:+MlSyntax.variant
-  addVariantCaseDeclaration B MlSyntax.ml:10:17 path:+MlSyntax.variant
   Scanning ModuleAliases.cmt Source:ModuleAliases.re
   addValueDeclaration +testNested ModuleAliases.re:22:4 path:+ModuleAliases
   addValueDeclaration +testInner ModuleAliases.re:25:4 path:+ModuleAliases
@@ -1257,13 +1250,6 @@
   addValueReference Newton.re:31:8 --> Newton.re:29:4
   addValueReference Newton.re:31:18 --> Newton.re:29:4
   addValueReference Newton.re:31:16 --> Newton.re:25:4
-  Scanning OldSyntax.cmt Source:OldSyntax.re
-  addValueDeclaration +x OldSyntax.re:1:4 path:+OldSyntax
-  addValueDeclaration +y OldSyntax.re:3:4 path:+OldSyntax
-  addRecordLabelDeclaration xxx OldSyntax.re:6:2 path:+OldSyntax.record
-  addRecordLabelDeclaration yyy OldSyntax.re:7:2 path:+OldSyntax.record
-  addVariantCaseDeclaration A OldSyntax.re:10:15 path:+OldSyntax.variant
-  addVariantCaseDeclaration B OldSyntax.re:10:19 path:+OldSyntax.variant
   Scanning Opaque.cmt Source:Opaque.re
   addValueDeclaration +noConversion Opaque.re:6:4 path:+Opaque
   addValueDeclaration +testConvertNestedRecordFromOtherFile Opaque.re:12:4 path:+Opaque
@@ -1910,7 +1896,6 @@ File References
   ImportMyBanner.re -->> 
   JSResource.re -->> 
   LetPrivate.re -->> 
-  MlSyntax.ml -->> 
   ModuleAliases.re -->> 
   ModuleAliases2.re -->> 
   NestedModules.re -->> 
@@ -1918,7 +1903,6 @@ File References
   NestedModulesInSignature.rei -->> NestedModulesInSignature.re
   Newsyntax.res -->> 
   Newton.re -->> 
-  OldSyntax.re -->> 
   Opaque.re -->> 
   OptArg.re -->> 
   OptArg.rei -->> OptArg.re
@@ -2153,12 +2137,6 @@ File References
   Dead RecordLabel +ImportMyBanner.message.text: 0 references () [0]
   Live Value +LetPrivate.+y: 0 references () [0]
   Live Value +LetPrivate.local_1.+x: 1 references (LetPrivate.re:5:4) [0]
-  Dead VariantCase +MlSyntax.variant.B: 0 references () [0]
-  Dead VariantCase +MlSyntax.variant.A: 0 references () [0]
-  Dead RecordLabel +MlSyntax.record.yyy: 0 references () [0]
-  Dead RecordLabel +MlSyntax.record.xxx: 0 references () [0]
-  Dead Value +MlSyntax.+y: 0 references () [0]
-  Dead Value +MlSyntax.+x: 0 references () [0]
   Live Value +ModuleAliases.+testInner2: 0 references () [0]
   Live Value +ModuleAliases.+testInner: 0 references () [0]
   Live Value +ModuleAliases.+testNested: 0 references () [0]
@@ -2209,12 +2187,6 @@ File References
   Live Value +Newton.+*: 2 references (Newton.re:25:4, Newton.re:27:4) [0]
   Live Value +Newton.++: 1 references (Newton.re:25:4) [0]
   Live Value +Newton.+-: 4 references (Newton.re:9:8, Newton.re:16:8, Newton.re:25:4, Newton.re:27:4) [0]
-  Dead VariantCase +OldSyntax.variant.B: 0 references () [0]
-  Dead VariantCase +OldSyntax.variant.A: 0 references () [0]
-  Dead RecordLabel +OldSyntax.record.yyy: 0 references () [0]
-  Dead RecordLabel +OldSyntax.record.xxx: 0 references () [0]
-  Dead Value +OldSyntax.+y: 0 references () [0]
-  Dead Value +OldSyntax.+x: 0 references () [0]
   Live Value +Opaque.+testConvertNestedRecordFromOtherFile: 0 references () [0]
   Live Value +Opaque.+noConversion: 0 references () [0]
   Dead VariantCase +Opaque.opaqueFromRecords.A: 0 references () [0]
@@ -4076,46 +4048,6 @@ File References
   [@dead "+make"] let make = make;
 
   Warning Dead Module
-  File "./MlSyntax.ml", line 0, characters 0-0
-  +MlSyntax is a dead module as all its items are dead.
-
-  Warning Dead Value
-  File "./MlSyntax.ml", line 1, characters 0-10
-  +x is never used
-  <-- line 1
-  let x = 34 [@@dead "+x"] 
-
-  Warning Dead Value
-  File "./MlSyntax.ml", line 3, characters 0-10
-  +y is never used
-  <-- line 3
-  let y = 11 [@@dead "+y"] 
-
-  Warning Dead Type
-  File "./MlSyntax.ml", line 6, characters 2-12
-  record.xxx is a record label never used to read a value
-  <-- line 6
-    xxx: int ; [@dead "record.xxx"] 
-
-  Warning Dead Type
-  File "./MlSyntax.ml", line 7, characters 2-10
-  record.yyy is a record label never used to read a value
-  <-- line 7
-    yyy: int [@dead "record.yyy"] 
-
-  Warning Dead Type
-  File "./MlSyntax.ml", line 10, characters 15-16
-  variant.A is a variant case which is never constructed
-  <-- line 10
-  type variant = A [@dead "variant.A"]  | B of int
-
-  Warning Dead Type
-  File "./MlSyntax.ml", line 10, characters 17-27
-  variant.B is a variant case which is never constructed
-  <-- line 10
-  type variant = A [@dead "variant.A"]  | B of int [@dead "variant.B"] 
-
-  Warning Dead Module
   File "./ModuleAliases.re", line 2, characters 2-57
   +ModuleAliases.Outer.Inner is a dead module as all its items are dead.
 
@@ -4288,46 +4220,6 @@ File References
   record2.yy is a record label never used to read a value
   <-- line 12
   type record2 = {@dead("record2.xx") xx:int,@dead("record2.yy") yy:int}
-
-  Warning Dead Module
-  File "./OldSyntax.re", line 0, characters 0-0
-  +OldSyntax is a dead module as all its items are dead.
-
-  Warning Dead Value
-  File "./OldSyntax.re", line 1, characters 0-10
-  +x is never used
-  <-- line 1
-  [@dead "+x"] let x = 34
-
-  Warning Dead Value
-  File "./OldSyntax.re", line 3, characters 0-10
-  +y is never used
-  <-- line 3
-  [@dead "+y"] let y = 11
-
-  Warning Dead Type
-  File "./OldSyntax.re", line 6, characters 2-10
-  record.xxx is a record label never used to read a value
-  <-- line 6
-    [@dead "record.xxx"] xxx: int,
-
-  Warning Dead Type
-  File "./OldSyntax.re", line 7, characters 2-10
-  record.yyy is a record label never used to read a value
-  <-- line 7
-    [@dead "record.yyy"] yyy: int,
-
-  Warning Dead Type
-  File "./OldSyntax.re", line 10, characters 15-16
-  variant.A is a variant case which is never constructed
-  <-- line 10
-  type variant = [@dead "variant.A"] A | B(int)
-
-  Warning Dead Type
-  File "./OldSyntax.re", line 10, characters 19-25
-  variant.B is a variant case which is never constructed
-  <-- line 10
-  type variant = [@dead "variant.A"] A | [@dead "variant.B"] B(int)
 
   Warning Dead Type
   File "./Opaque.re", line 3, characters 4-20
@@ -4685,4 +4577,4 @@ File References
   <-- line 3
   type pf = {pf: 'a. 'a printf [@dead "pf.pf"] }
   
-  Analysis reported 358 issues (Warning Dead Exception:1, Warning Dead Module:28, Warning Dead Type:97, Warning Dead Value:214, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 344 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:89, Warning Dead Value:210, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
