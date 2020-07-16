@@ -1173,6 +1173,10 @@
   Scanning Newsyntax.cmt Source:Newsyntax.res
   addValueDeclaration +x Newsyntax.res:1:4 path:+Newsyntax
   addValueDeclaration +y Newsyntax.res:3:4 path:+Newsyntax
+  addRecordLabelDeclaration xxx Newsyntax.res:6:2 path:+Newsyntax.record
+  addRecordLabelDeclaration yyy Newsyntax.res:7:2 path:+Newsyntax.record
+  addVariantCaseDeclaration A Newsyntax.res:10:15 path:+Newsyntax.variant
+  addVariantCaseDeclaration B Newsyntax.res:10:17 path:+Newsyntax.variant
   Scanning Newton.cmt Source:Newton.re
   addValueDeclaration +- Newton.re:1:4 path:+Newton
   addValueDeclaration ++ Newton.re:2:4 path:+Newton
@@ -1243,6 +1247,13 @@
   addValueReference Newton.re:31:8 --> Newton.re:29:4
   addValueReference Newton.re:31:18 --> Newton.re:29:4
   addValueReference Newton.re:31:16 --> Newton.re:25:4
+  Scanning OldSyntax.cmt Source:OldSyntax.re
+  addValueDeclaration +x OldSyntax.re:1:4 path:+OldSyntax
+  addValueDeclaration +y OldSyntax.re:3:4 path:+OldSyntax
+  addRecordLabelDeclaration xxx OldSyntax.re:6:2 path:+OldSyntax.record
+  addRecordLabelDeclaration yyy OldSyntax.re:7:2 path:+OldSyntax.record
+  addVariantCaseDeclaration A OldSyntax.re:10:15 path:+OldSyntax.variant
+  addVariantCaseDeclaration B OldSyntax.re:10:19 path:+OldSyntax.variant
   Scanning Opaque.cmt Source:Opaque.re
   addValueDeclaration +noConversion Opaque.re:6:4 path:+Opaque
   addValueDeclaration +testConvertNestedRecordFromOtherFile Opaque.re:12:4 path:+Opaque
@@ -1896,6 +1907,7 @@ File References
   NestedModulesInSignature.rei -->> NestedModulesInSignature.re
   Newsyntax.res -->> 
   Newton.re -->> 
+  OldSyntax.re -->> 
   Opaque.re -->> 
   OptArg.re -->> 
   OptArg.rei -->> OptArg.re
@@ -2157,6 +2169,10 @@ File References
   Live Value +NestedModules.Universe.+theAnswer: 0 references () [0]
   Live Value +NestedModules.+notNested: 0 references () [0]
   Live Value NestedModulesInSignature.Universe.+theAnswer: 0 references () [0]
+  Dead VariantCase +Newsyntax.variant.B: 0 references () [0]
+  Dead VariantCase +Newsyntax.variant.A: 0 references () [0]
+  Dead RecordLabel +Newsyntax.record.yyy: 0 references () [0]
+  Dead RecordLabel +Newsyntax.record.xxx: 0 references () [0]
   Dead Value +Newsyntax.+y: 0 references () [0]
   Dead Value +Newsyntax.+x: 0 references () [0]
   Live Value +Newton.+result: 2 references (Newton.re:31:8, Newton.re:31:18) [0]
@@ -2173,6 +2189,12 @@ File References
   Live Value +Newton.+*: 2 references (Newton.re:25:4, Newton.re:27:4) [0]
   Live Value +Newton.++: 1 references (Newton.re:25:4) [0]
   Live Value +Newton.+-: 4 references (Newton.re:9:8, Newton.re:16:8, Newton.re:25:4, Newton.re:27:4) [0]
+  Dead VariantCase +OldSyntax.variant.B: 0 references () [0]
+  Dead VariantCase +OldSyntax.variant.A: 0 references () [0]
+  Dead RecordLabel +OldSyntax.record.yyy: 0 references () [0]
+  Dead RecordLabel +OldSyntax.record.xxx: 0 references () [0]
+  Dead Value +OldSyntax.+y: 0 references () [0]
+  Dead Value +OldSyntax.+x: 0 references () [0]
   Live Value +Opaque.+testConvertNestedRecordFromOtherFile: 0 references () [0]
   Live Value +Opaque.+noConversion: 0 references () [0]
   Dead VariantCase +Opaque.opaqueFromRecords.A: 0 references () [0]
@@ -4166,6 +4188,70 @@ File References
   @dead("+y") let y = 11
 
   Warning Dead Type
+  File "./Newsyntax.res", line 6, characters 2-10
+  record.xxx is a record label never used to read a value
+  <-- line 6
+    @dead("record.xxx") xxx: int,
+
+  Warning Dead Type
+  File "./Newsyntax.res", line 7, characters 2-10
+  record.yyy is a record label never used to read a value
+  <-- line 7
+    @dead("record.yyy") yyy: int,
+
+  Warning Dead Type
+  File "./Newsyntax.res", line 10, characters 15-16
+  variant.A is a variant case which is never constructed
+  <-- line 10
+  type variant = @dead("variant.A") A | B(int)
+
+  Warning Dead Type
+  File "./Newsyntax.res", line 10, characters 17-25
+  variant.B is a variant case which is never constructed
+  <-- line 10
+  type variant = @dead("variant.A") A @dead("variant.B") | B(int)
+
+  Warning Dead Module
+  File "./OldSyntax.re", line 0, characters 0-0
+  +OldSyntax is a dead module as all its items are dead.
+
+  Warning Dead Value
+  File "./OldSyntax.re", line 1, characters 0-10
+  +x is never used
+  <-- line 1
+  [@dead "+x"] let x = 34
+
+  Warning Dead Value
+  File "./OldSyntax.re", line 3, characters 0-10
+  +y is never used
+  <-- line 3
+  [@dead "+y"] let y = 11
+
+  Warning Dead Type
+  File "./OldSyntax.re", line 6, characters 2-10
+  record.xxx is a record label never used to read a value
+  <-- line 6
+    [@dead "record.xxx"] xxx: int,
+
+  Warning Dead Type
+  File "./OldSyntax.re", line 7, characters 2-10
+  record.yyy is a record label never used to read a value
+  <-- line 7
+    [@dead "record.yyy"] yyy: int,
+
+  Warning Dead Type
+  File "./OldSyntax.re", line 10, characters 15-16
+  variant.A is a variant case which is never constructed
+  <-- line 10
+  type variant = [@dead "variant.A"] A | B(int)
+
+  Warning Dead Type
+  File "./OldSyntax.re", line 10, characters 19-25
+  variant.B is a variant case which is never constructed
+  <-- line 10
+  type variant = [@dead "variant.A"] A | [@dead "variant.B"] B(int)
+
+  Warning Dead Type
   File "./Opaque.re", line 3, characters 4-20
   opaqueFromRecords.A is a variant case which is never constructed
   <-- line 3
@@ -4521,4 +4607,4 @@ File References
   <-- line 3
   type pf = {pf: 'a. 'a printf [@dead "pf.pf"] }
   
-  Analysis reported 337 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:82, Warning Dead Value:210, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 348 issues (Warning Dead Exception:1, Warning Dead Module:27, Warning Dead Type:90, Warning Dead Value:212, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
