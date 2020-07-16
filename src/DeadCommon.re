@@ -646,23 +646,25 @@ module WriteDeadAnnotations = {
               )) {
               | Invalid_argument(_) => (original, "")
               };
-            if (String.length(original2) >= 2
-                && String.sub(original2, 0, 2) == "| ") {
-              original1
-              ++ "| "
-              ++ annotationStr
-              ++ String.sub(original2, 2, String.length(original2) - 2);
-            } else if (String.length(original2) >= 1
-                       && String.sub(original2, 0, 1) == "|") {
-              original1
-              ++ "|"
-              ++ annotationStr
-              ++ String.sub(original2, 1, String.length(original2) - 1);
-            } else if (language == Res
-                       && declKind == VariantCase
-                       && String.length(original2) >= 1
-                       && String.sub(original2, 0, 1) != "|") {
-              original1 ++ "| " ++ annotationStr ++ original2;
+            if (language == Res && declKind == VariantCase) {
+              if (String.length(original2) >= 2
+                  && String.sub(original2, 0, 2) == "| ") {
+                // | Case
+                original1
+                ++ "| "
+                ++ annotationStr
+                ++ String.sub(original2, 2, String.length(original2) - 2);
+              } else if (String.length(original2) >= 1
+                         && String.sub(original2, 0, 1) == "|") {
+                // |Case
+                original1
+                ++ "|"
+                ++ annotationStr
+                ++ String.sub(original2, 1, String.length(original2) - 1);
+              } else {
+                // Case
+                original1 ++ "| " ++ annotationStr ++ original2;
+              };
             } else {
               original1 ++ annotationStr ++ original2;
             };
