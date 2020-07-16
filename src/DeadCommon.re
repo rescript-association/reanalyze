@@ -608,9 +608,9 @@ module WriteDeadAnnotations = {
     switch (declarations) {
     | [] => original
     | [{declKind, path, pos} as decl, ...nextDeclarations] =>
-      let isMl = posLanguage(pos) == Ml;
+      let language = posLanguage(pos);
       let annotationStr =
-        switch (posLanguage(pos)) {
+        switch (language) {
         | Res =>
           "@"
           ++ deadAnnotation
@@ -646,9 +646,29 @@ module WriteDeadAnnotations = {
               )) {
               | Invalid_argument(_) => (original, "")
               };
-            original1 ++ annotationStr ++ original2;
+            if (String.length(original2) >= 2
+                && String.sub(original2, 0, 2) == "| ") {
+              original1
+              ++ "| "
+              ++ annotationStr
+              ++ String.sub(original2, 2, String.length(original2) - 2);
+            } else if (String.length(original2) >= 1
+                       && String.sub(original2, 0, 1) == "|") {
+              original1
+              ++ "|"
+              ++ annotationStr
+              ++ String.sub(original2, 1, String.length(original2) - 1);
+            } else if (language == Res
+                       && declKind == VariantCase
+                       && String.length(original2) >= 1
+                       && String.sub(original2, 0, 1) != "|") {
+              original1 ++ "| " ++ annotationStr ++ original2;
+            } else {
+              original1 ++ annotationStr ++ original2;
+            };
           } else {
-            isMl ? original ++ annotationStr : annotationStr ++ original;
+            language == Ml
+              ? original ++ annotationStr : annotationStr ++ original;
           },
         declarations: nextDeclarations,
       }

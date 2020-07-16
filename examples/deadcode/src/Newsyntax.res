@@ -7,4 +7,4 @@ type record = {
   yyy: int,
 }
 
-type variant = A | B(int)
+type variant = A | B(int)|C
