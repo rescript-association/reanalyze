@@ -1131,6 +1131,13 @@
   addValueDeclaration +y LetPrivate.re:5:4 path:+LetPrivate
   addValueDeclaration +x LetPrivate.re:2:12 path:+LetPrivate.local_1
   addValueReference LetPrivate.re:5:4 --> LetPrivate.re:2:12
+  Scanning MlSyntax.cmt Source:MlSyntax.ml
+  addValueDeclaration +x MlSyntax.ml:1:4 path:+MlSyntax
+  addValueDeclaration +y MlSyntax.ml:3:4 path:+MlSyntax
+  addRecordLabelDeclaration xxx MlSyntax.ml:6:2 path:+MlSyntax.record
+  addRecordLabelDeclaration yyy MlSyntax.ml:7:2 path:+MlSyntax.record
+  addVariantCaseDeclaration A MlSyntax.ml:10:15 path:+MlSyntax.variant
+  addVariantCaseDeclaration B MlSyntax.ml:10:17 path:+MlSyntax.variant
   Scanning ModuleAliases.cmt Source:ModuleAliases.re
   addValueDeclaration +testNested ModuleAliases.re:22:4 path:+ModuleAliases
   addValueDeclaration +testInner ModuleAliases.re:25:4 path:+ModuleAliases
@@ -1900,6 +1907,7 @@ File References
   ImportMyBanner.re -->> 
   JSResource.re -->> 
   LetPrivate.re -->> 
+  MlSyntax.ml -->> 
   ModuleAliases.re -->> 
   ModuleAliases2.re -->> 
   NestedModules.re -->> 
@@ -2142,6 +2150,12 @@ File References
   Dead RecordLabel +ImportMyBanner.message.text: 0 references () [0]
   Live Value +LetPrivate.+y: 0 references () [0]
   Live Value +LetPrivate.local_1.+x: 1 references (LetPrivate.re:5:4) [0]
+  Dead VariantCase +MlSyntax.variant.B: 0 references () [0]
+  Dead VariantCase +MlSyntax.variant.A: 0 references () [0]
+  Dead RecordLabel +MlSyntax.record.yyy: 0 references () [0]
+  Dead RecordLabel +MlSyntax.record.xxx: 0 references () [0]
+  Dead Value +MlSyntax.+y: 0 references () [0]
+  Dead Value +MlSyntax.+x: 0 references () [0]
   Live Value +ModuleAliases.+testInner2: 0 references () [0]
   Live Value +ModuleAliases.+testInner: 0 references () [0]
   Live Value +ModuleAliases.+testNested: 0 references () [0]
@@ -4056,6 +4070,46 @@ File References
   [@dead "+make"] let make = make;
 
   Warning Dead Module
+  File "./MlSyntax.ml", line 0, characters 0-0
+  +MlSyntax is a dead module as all its items are dead.
+
+  Warning Dead Value
+  File "./MlSyntax.ml", line 1, characters 0-10
+  +x is never used
+  <-- line 1
+  let x = 34 [@@dead "+x"] 
+
+  Warning Dead Value
+  File "./MlSyntax.ml", line 3, characters 0-10
+  +y is never used
+  <-- line 3
+  let y = 11 [@@dead "+y"] 
+
+  Warning Dead Type
+  File "./MlSyntax.ml", line 6, characters 2-12
+  record.xxx is a record label never used to read a value
+  <-- line 6
+    xxx: int ; [@dead "record.xxx"] 
+
+  Warning Dead Type
+  File "./MlSyntax.ml", line 7, characters 2-10
+  record.yyy is a record label never used to read a value
+  <-- line 7
+    yyy: int [@dead "record.yyy"] 
+
+  Warning Dead Type
+  File "./MlSyntax.ml", line 10, characters 15-16
+  variant.A is a variant case which is never constructed
+  <-- line 10
+  type variant = A [@dead "variant.A"]  | B of int
+
+  Warning Dead Type
+  File "./MlSyntax.ml", line 10, characters 17-27
+  variant.B is a variant case which is never constructed
+  <-- line 10
+  type variant = A [@dead "variant.A"]  | B of int [@dead "variant.B"] 
+
+  Warning Dead Module
   File "./ModuleAliases.re", line 2, characters 2-57
   +ModuleAliases.Outer.Inner is a dead module as all its items are dead.
 
@@ -4607,4 +4661,4 @@ File References
   <-- line 3
   type pf = {pf: 'a. 'a printf [@dead "pf.pf"] }
   
-  Analysis reported 348 issues (Warning Dead Exception:1, Warning Dead Module:27, Warning Dead Type:90, Warning Dead Value:212, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 355 issues (Warning Dead Exception:1, Warning Dead Module:28, Warning Dead Type:94, Warning Dead Value:214, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
