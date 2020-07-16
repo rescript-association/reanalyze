@@ -8,7 +8,6 @@
   addVariantCaseDeclaration R4 AutoAnnotate.res:13:2 path:+AutoAnnotate.annotatedVariant
   Scanning BootloaderResource.cmt Source:BootloaderResource.res
   addValueDeclaration +read BootloaderResource.res:3:0 path:+BootloaderResource
-  addValueDeclaration +read BootloaderResource.res:3:33 path:+BootloaderResource
   Scanning BucklescriptAnnotations.cmt Source:BucklescriptAnnotations.res
   addValueDeclaration +foo BucklescriptAnnotations.res:21:4 path:+BucklescriptAnnotations
   addValueDeclaration +bar BucklescriptAnnotations.res:23:4 path:+BucklescriptAnnotations
@@ -122,170 +121,6 @@
   addValueReference DeadMl.ml:96:2 --> DeadMl.ml:107:6
   addValueReference DeadMl.ml:99:2 --> DeadMl.ml:108:6
   addValueReference DeadMl.ml:103:2 --> DeadMl.ml:109:6
-<<<<<<< HEAD
-  Scanning DeadRT.cmt Source:DeadRT.re
-  addValueDeclaration +emitModuleAccessPath DeadRT.re:5:8 path:+DeadRT
-  addVariantCaseDeclaration Root DeadRT.re:2:4 path:+DeadRT.moduleAccessPath
-  addVariantCaseDeclaration Kaboom DeadRT.re:3:4 path:+DeadRT.moduleAccessPath
-  addValueReference DeadRT.re:5:8 --> DeadRT.re:7:9
-  addValueReference DeadRT.re:5:8 --> DeadRT.re:5:31
-  addTypeReference DeadRT.re:11:16 --> DeadRT.re:3:4
-  Scanning DeadRT.cmti Source:DeadRT.rei
-  addVariantCaseDeclaration Root DeadRT.rei:2:4 path:DeadRT.moduleAccessPath
-  extendTypeDependencies DeadRT.re:2:4 --> DeadRT.rei:2:4
-  extendTypeDependencies DeadRT.rei:2:4 --> DeadRT.re:2:4
-  addVariantCaseDeclaration Kaboom DeadRT.rei:3:4 path:DeadRT.moduleAccessPath
-  extendTypeDependencies DeadRT.re:3:4 --> DeadRT.rei:3:4
-  extendTypeDependencies DeadRT.rei:3:4 --> DeadRT.re:3:4
-  Scanning DeadTest.cmt Source:DeadTest.re
-  addValueDeclaration +fortytwo DeadTest.re:2:4 path:+DeadTest
-  addValueDeclaration +fortyTwoButExported DeadTest.re:5:4 path:+DeadTest
-  addValueDeclaration +thisIsUsedOnce DeadTest.re:7:4 path:+DeadTest
-  addValueDeclaration +thisIsUsedTwice DeadTest.re:10:4 path:+DeadTest
-  addValueDeclaration +thisIsKeptAlive DeadTest.re:17:4 path:+DeadTest
-  addValueDeclaration +thisIsMarkedLive DeadTest.re:20:4 path:+DeadTest
-  addValueDeclaration +a DeadTest.re:37:2 path:+DeadTest.VariantUsedOnlyInImplementation
-  addValueDeclaration +x DeadTest.re:62:2 path:+DeadTest.MM
-  addValueDeclaration +y DeadTest.re:63:2 path:+DeadTest.MM
-  addValueDeclaration +unusedRec DeadTest.re:79:8 path:+DeadTest
-  addValueDeclaration +split_map DeadTest.re:81:8 path:+DeadTest
-  addValueDeclaration +rec1 DeadTest.re:86:8 path:+DeadTest
-  addValueDeclaration +rec2 DeadTest.re:87:4 path:+DeadTest
-  addValueDeclaration +recWithCallback DeadTest.re:89:8 path:+DeadTest
-  addValueDeclaration +foo DeadTest.re:94:8 path:+DeadTest
-  addValueDeclaration +bar DeadTest.re:98:4 path:+DeadTest
-  addValueDeclaration +withDefaultValue DeadTest.re:100:4 path:+DeadTest
-  addValueDeclaration +unsafe_string1 DeadTest.re:102:0 path:+DeadTest
-  addValueDeclaration +unsafe_string2 DeadTest.re:105:2 path:+DeadTest.Ext_buffer
-  addValueDeclaration +reasonResource DeadTest.re:112:40 path:+DeadTest.LazyDynamicallyLoadedComponent
-  addValueDeclaration +makeProps DeadTest.re:112:40 path:+DeadTest.LazyDynamicallyLoadedComponent
-  addValueDeclaration +make DeadTest.re:112:40 path:+DeadTest.LazyDynamicallyLoadedComponent
-  addValueDeclaration +reasonResource DeadTest.re:119:6 path:+DeadTest.LazyDynamicallyLoadedComponent2
-  addValueDeclaration +makeProps DeadTest.re:121:6 path:+DeadTest.LazyDynamicallyLoadedComponent2
-  addValueDeclaration +make DeadTest.re:122:6 path:+DeadTest.LazyDynamicallyLoadedComponent2
-  addValueDeclaration +cmp DeadTest.re:132:4 path:+DeadTest
-  addValueDeclaration +cmp2 DeadTest.re:134:4 path:+DeadTest
-  addValueDeclaration +zzz DeadTest.re:150:4 path:+DeadTest
-  addValueDeclaration +second DeadTest.re:159:4 path:+DeadTest
-  addValueDeclaration +minute DeadTest.re:160:4 path:+DeadTest
-  addValueDeclaration +deadRef DeadTest.re:162:4 path:+DeadTest
-  addValueDeclaration +makeSwitch DeadTest.re:164:4 path:+DeadTest
-  addValueDeclaration +make DeadTest.re:167:4 path:+DeadTest
-  addValueDeclaration +theSideEffectIsLogging DeadTest.re:171:4 path:+DeadTest
-  addValueDeclaration +stringLengthNoSideEffects DeadTest.re:173:4 path:+DeadTest
-  addValueDeclaration +globallyLive1 DeadTest.re:178:6 path:+DeadTest.GloobLive
-  addValueDeclaration +globallyLive2 DeadTest.re:179:6 path:+DeadTest.GloobLive
-  addValueDeclaration +globallyLive3 DeadTest.re:180:6 path:+DeadTest.GloobLive
-  addValueReference DeadTest.re:1:15 --> ImmutableArray.rei:7:0
-  addValueReference DeadTest.re:8:7 --> DeadTest.re:7:4
-  addValueReference DeadTest.re:11:7 --> DeadTest.re:10:4
-  addValueReference DeadTest.re:12:7 --> DeadTest.re:10:4
-  addValueReference DeadTest.re:20:4 --> DeadTest.re:17:4
-  addValueDeclaration +thisSignatureItemIsDead DeadTest.re:31:6 path:+DeadTest.M
-  addVariantCaseDeclaration A DeadTest.re:36:6 path:+DeadTest.VariantUsedOnlyInImplementation.t
-  addVariantCaseDeclaration A DeadTest.re:40:6 path:+DeadTest.VariantUsedOnlyInImplementation.t
-  extendTypeDependencies DeadTest.re:40:6 --> DeadTest.re:36:6
-  extendTypeDependencies DeadTest.re:36:6 --> DeadTest.re:40:6
-  addValueDeclaration +a DeadTest.re:41:6 path:+DeadTest.VariantUsedOnlyInImplementation
-  addTypeReference DeadTest.re:41:10 --> DeadTest.re:40:6
-  addValueReference DeadTest.re:44:17 --> DeadTest.re:37:2
-  addValueReference DeadTest.re:44:14 --> DeadTest.re:44:9
-  addValueDeclaration +_ DeadTest.re:46:0 path:+DeadTest
-  addTypeReference DeadTest.re:46:8 --> DeadTypeTest.rei:8:4
-  addValueDeclaration +_ DeadTest.re:47:0 path:+DeadTest
-  addTypeReference DeadTest.re:47:8 --> DeadTypeTest.rei:9:4
-  addRecordLabelDeclaration xxx DeadTest.re:50:2 path:+DeadTest.record
-  addRecordLabelDeclaration yyy DeadTest.re:51:2 path:+DeadTest.record
-  addValueDeclaration +_ DeadTest.re:54:0 path:+DeadTest
-  addTypeReference DeadTest.re:54:13 --> DeadTest.re:50:2
-  addValueReference DeadTest.re:54:13 --> DeadTest.re:54:8
-  addValueDeclaration +_ DeadTest.re:55:0 path:+DeadTest
-  addValueReference DeadTest.re:55:19 --> DeadTest.re:55:10
-  addTypeReference DeadTest.re:55:9 --> DeadTest.re:51:2
-  addValueDeclaration +_ DeadTest.re:58:2 path:+DeadTest.UnderscoreInside
-  addValueDeclaration +y DeadTest.re:65:6 path:+DeadTest.MM
-  addValueDeclaration +x DeadTest.re:66:6 path:+DeadTest.MM
-  addValueReference DeadTest.re:66:6 --> DeadTest.re:65:6
-  addValueDeclaration +valueOnlyInImplementation DeadTest.re:69:6 path:+DeadTest.MM
-  addValueReference DeadTest.re:73:9 --> DeadTest.re:62:2
-  addValueReference DeadTest.re:77:16 --> DeadValueTest.rei:1:0
-  addValueReference DeadTest.re:79:8 --> DeadTest.re:79:8
-  addValueReference DeadTest.re:81:8 --> DeadTest.re:81:20
-  addValueReference DeadTest.re:81:8 --> DeadTest.re:81:8
-  addValueReference DeadTest.re:86:8 --> DeadTest.re:87:4
-  addValueReference DeadTest.re:87:4 --> DeadTest.re:86:8
-  addValueDeclaration +cb DeadTest.re:90:6 path:+DeadTest
-  addValueReference DeadTest.re:90:6 --> DeadTest.re:89:8
-  addValueReference DeadTest.re:89:8 --> DeadTest.re:90:6
-  addValueDeclaration +cb DeadTest.re:95:6 path:+DeadTest
-  addValueReference DeadTest.re:95:6 --> DeadTest.re:98:4
-  addValueReference DeadTest.re:94:8 --> DeadTest.re:95:6
-  addValueReference DeadTest.re:98:4 --> DeadTest.re:94:8
-  addValueReference DeadTest.re:100:4 --> DeadTest.re:100:42
-  addValueReference DeadTest.re:100:4 --> DeadTest.re:100:25
-  addValueReference DeadTest.re:100:4 --> DeadTest.re:100:45
-  addTypeReference DeadTest.re:110:16 --> DeadRT.rei:2:4
-  addValueReference DeadTest.re:112:40 --> JSResource.re:3:0
-  addValueReference DeadTest.re:112:40 --> DynamicallyLoadedComponent.re:2:4
-  addValueReference DeadTest.re:112:40 --> DeadTest.re:112:40
-  addValueReference DeadTest.re:112:40 --> BootloaderResource.re:3:0
-  addValueReference DeadTest.re:112:40 --> DeadTest.re:112:40
-  addValueReference DeadTest.re:112:40 --> React.re:18:0
-  addValueReference DeadTest.re:119:6 --> JSResource.re:3:0
-  addValueReference DeadTest.re:122:6 --> DynamicallyLoadedComponent.re:2:4
-  addValueReference DeadTest.re:122:6 --> DeadTest.re:119:6
-  addValueReference DeadTest.re:122:6 --> BootloaderResource.re:3:0
-  addValueReference DeadTest.re:122:6 --> DeadTest.re:122:13
-  addValueReference DeadTest.re:122:6 --> React.re:18:0
-  addValueReference DeadTest.re:132:4 --> DeadTest.re:112:40
-  DeadOptionalArgs.addReferences LazyDynamicallyLoadedComponent.makeProps called with optional argNames: argNamesMaybe: DeadTest.re:132:11
-  addValueReference DeadTest.re:132:4 --> DeadTest.re:112:40
-  addValueReference DeadTest.re:132:4 --> React.re:18:0
-  addValueReference DeadTest.re:134:4 --> DeadTest.re:122:6
-  DeadOptionalArgs.addReferences LazyDynamicallyLoadedComponent2.makeProps called with optional argNames: argNamesMaybe: DeadTest.re:134:18
-  addValueReference DeadTest.re:134:4 --> DeadTest.re:121:6
-  addValueReference DeadTest.re:134:4 --> React.re:18:0
-  addValueReference DeadTest.re:136:16 --> DeadTest.re:132:4
-  addValueDeclaration +a1 DeadTest.re:151:6 path:+DeadTest
-  addValueDeclaration +a2 DeadTest.re:152:6 path:+DeadTest
-  addValueDeclaration +a3 DeadTest.re:153:6 path:+DeadTest
-  addValueReference DeadTest.re:157:17 --> DynamicallyLoadedComponent.re:2:4
-  addValueReference DeadTest.re:157:17 --> React.re:18:0
-  addValueReference DeadTest.re:160:4 --> DeadTest.re:159:4
-  addValueReference DeadTest.re:164:4 --> ExportWithRename.res:2:4
-  addValueReference DeadTest.re:167:32 --> DeadTest.re:167:13
-  addValueReference DeadTest.re:167:19 --> React.re:7:0
-  addValueReference DeadTest.re:169:16 --> DeadTest.re:167:4
-  addValueReference DeadTest.re:175:30 --> DeadTest.re:175:22
-  addTypeReference DeadTest.re:175:21 --> trace.mli:3:11
-  addValueReference DeadTest.re:175:0 --> trace.mli:5:0
-  addVariantCaseDeclaration A DeadTest.re:185:6 path:+DeadTest.WithInclude.t
-  addVariantCaseDeclaration A DeadTest.re:189:8 path:+DeadTest.WithInclude.T.t
-  addVariantCaseDeclaration A DeadTest.re:189:8 path:+DeadTest.WithInclude.t
-  extendTypeDependencies DeadTest.re:189:8 --> DeadTest.re:185:6
-  extendTypeDependencies DeadTest.re:185:6 --> DeadTest.re:189:8
-  addTypeReference DeadTest.re:194:7 --> DeadTest.re:185:6
-  addValueReference ExportWithRename.res:2:4 --> DynamicallyLoadedComponent.re:2:4
-  addValueReference DynamicallyLoadedComponent.re:2:4 --> ExportWithRename.res:2:4
-  addValueReference DeadTest.re:37:2 --> DeadTest.re:41:6
-  addValueReference DeadTest.re:62:2 --> DeadTest.re:66:6
-  addValueReference DeadTest.re:63:2 --> DeadTest.re:65:6
-  addValueReference DeadTest.re:105:2 --> DeadTest.re:107:2
-  addTypeReference DeadTest.re:189:8 --> DeadTest.re:185:6
-  addTypeReference DeadTest.re:185:6 --> DeadTest.re:189:8
-  addTypeReference DeadTest.re:40:6 --> DeadTest.re:36:6
-  addTypeReference DeadTest.re:36:6 --> DeadTest.re:40:6
-  addTypeReference DeadRT.re:3:4 --> DeadRT.rei:3:4
-  addTypeReference DeadRT.rei:3:4 --> DeadRT.re:3:4
-  addTypeReference DeadRT.re:2:4 --> DeadRT.rei:2:4
-  addTypeReference DeadRT.rei:2:4 --> DeadRT.re:2:4
-  Scanning DeadTestBlacklist.cmt Source:DeadTestBlacklist.re
-  addValueDeclaration +x DeadTestBlacklist.re:1:4 path:+DeadTestBlacklist
-  Scanning DeadTestWithInterface.cmt Source:DeadTestWithInterface.re
-  addValueDeclaration +x DeadTestWithInterface.re:1:20 path:+DeadTestWithInterface.Ext_buffer
-  addValueDeclaration +x DeadTestWithInterface.re:2:6 path:+DeadTestWithInterface.Ext_buffer
-  addValueReference DeadTestWithInterface.re:1:20 --> DeadTestWithInterface.re:2:6
-=======
   Scanning DeadRT.cmt Source:DeadRT.res
   addValueDeclaration +emitModuleAccessPath DeadRT.res:5:8 path:+DeadRT
   addVariantCaseDeclaration Root DeadRT.res:2:2 path:+DeadRT.moduleAccessPath
@@ -387,7 +222,6 @@
   addValueReference DeadTest.res:95:4 --> DeadTest.res:95:42
   addValueReference DeadTest.res:95:4 --> DeadTest.res:95:24
   addValueReference DeadTest.res:95:4 --> DeadTest.res:95:45
-  addValueDeclaration +unsafe_string2 DeadTest.res:102:2 path:+DeadTest.Ext_buffer
   addTypeReference DeadTest.res:105:16 --> DeadRT.resi:2:2
   addValueReference DeadTest.res:107:40 --> JSResource.res:3:0
   addValueReference DeadTest.res:107:40 --> DynamicallyLoadedComponent.res:2:4
@@ -395,7 +229,7 @@
   addValueReference DeadTest.res:107:40 --> BootloaderResource.res:3:0
   addValueReference DeadTest.res:107:40 --> DeadTest.res:107:40
   addValueReference DeadTest.res:107:40 --> React.re:18:0
-  addValueReference DeadTest.res:114:6 --> JSResource.res:3:0
+  addValueReference DeadTest.res:112:6 --> JSResource.res:3:0
   addValueReference DeadTest.res:116:6 --> DynamicallyLoadedComponent.res:2:4
   addValueReference DeadTest.res:116:6 --> DeadTest.res:112:6
   addValueReference DeadTest.res:116:6 --> BootloaderResource.res:3:0
@@ -449,7 +283,6 @@
   addValueDeclaration +x DeadTestWithInterface.res:2:2 path:+DeadTestWithInterface.Ext_buffer
   addValueDeclaration +x DeadTestWithInterface.res:4:6 path:+DeadTestWithInterface.Ext_buffer
   addValueReference DeadTestWithInterface.res:2:2 --> DeadTestWithInterface.res:4:6
->>>>>>> Check differences in DCE analysis after conversion.
   Interface 0
   Scanning DeadTypeTest.cmt Source:DeadTypeTest.res
   addValueDeclaration +a DeadTypeTest.res:4:4 path:+DeadTypeTest
@@ -595,7 +428,6 @@
   addValueDeclaration +testConvert FirstClassModules.res:55:7 path:+FirstClassModules
   addValueDeclaration +someFunctorAsFunction FirstClassModules.res:65:7 path:+FirstClassModules
   addValueReference FirstClassModules.res:37:8 --> FirstClassModules.res:37:13
-  addValueDeclaration +f FirstClassModules.res:47:20 path:+FirstClassModules.M
   addValueReference FirstClassModules.res:55:7 --> FirstClassModules.res:55:22
   addValueDeclaration +ww FirstClassModules.res:62:6 path:+FirstClassModules.SomeFunctor
   addValueReference FirstClassModules.res:62:6 --> FirstClassModules.res:22:2
@@ -1284,7 +1116,6 @@
   addRecordLabelDeclaration y ImportJsValue.res:10:2 path:+ImportJsValue.point
   addValueReference ImportJsValue.res:24:7 --> ImportJsValue.res:4:0
   addValueReference ImportJsValue.res:26:7 --> ImportJsValue.res:14:0
-  addValueDeclaration +getProp ImportJsValue.res:33:11 path:+ImportJsValue.AbsoluteValue
   addValueDeclaration +getAbs ImportJsValue.res:37:8 path:+ImportJsValue.AbsoluteValue
   addValueReference ImportJsValue.res:37:8 --> ImportJsValue.res:36:16
   addValueReference ImportJsValue.res:36:6 --> ImportJsValue.res:37:8
@@ -1311,7 +1142,6 @@
   addValueReference ImportMyBanner.res:7:0 --> ImportMyBanner.res:6:0
   Scanning JSResource.cmt Source:JSResource.res
   addValueDeclaration +jSResource JSResource.res:3:0 path:+JSResource
-  addValueDeclaration +jSResource JSResource.res:3:11 path:+JSResource
   Scanning LetPrivate.cmt Source:LetPrivate.res
   addValueDeclaration +y LetPrivate.res:5:7 path:+LetPrivate
   addValueDeclaration +x LetPrivate.res:2:9 path:+LetPrivate.local_1
@@ -1660,8 +1490,6 @@
   Scanning RequireCond.cmt Source:RequireCond.res
   addValueDeclaration +make RequireCond.res:1:0 path:+RequireCond
   addValueDeclaration +either RequireCond.res:11:0 path:+RequireCond
-  addValueDeclaration +make RequireCond.res:5:0 path:+RequireCond
-  addValueDeclaration +either RequireCond.res:15:0 path:+RequireCond
   Scanning Shadow.cmt Source:Shadow.res
   addValueDeclaration +test Shadow.res:1:7 path:+Shadow
   addValueDeclaration +test Shadow.res:3:7 path:+Shadow
@@ -1831,7 +1659,7 @@
   addRecordLabelDeclaration i Types.res:68:2 path:+Types.record
   addRecordLabelDeclaration s Types.res:69:2 path:+Types.record
   addValueReference Types.res:72:7 --> Types.res:72:26
-  addValueReference Types.res:89:42 --> Types.res:89:42
+  addValueReference Types.res:89:7 --> Types.res:89:42
   addValueReference Types.res:103:7 --> Types.res:103:19
   addRecordLabelDeclaration id Types.res:108:19 path:+Types.someRecord
   addValueReference Types.res:112:7 --> Types.res:112:39
@@ -2212,12 +2040,7 @@ File References
   Dead Value +DeadTest.LazyDynamicallyLoadedComponent2.+make: 0 references () [0]
   Dead Value +DeadTest.LazyDynamicallyLoadedComponent2.+makeProps: 0 references () [0]
   Dead Value +DeadTest.LazyDynamicallyLoadedComponent2.+reasonResource: 0 references () [0]
-<<<<<<< HEAD
-  Live Value +DeadTest.LazyDynamicallyLoadedComponent.+make: 1 references (DeadTest.re:132:4) [0]
-=======
   Live Value +DeadTest.LazyDynamicallyLoadedComponent.+make: 1 references (DeadTest.res:126:4) [0]
-  Dead Value +DeadTest.Ext_buffer.+unsafe_string2: 0 references () [1]
->>>>>>> Check differences in DCE analysis after conversion.
   Dead Value +DeadTest.Ext_buffer.+unsafe_string2: 0 references () [0]
   Dead Value +DeadTest.+unsafe_string1: 0 references () [0]
   Dead Value +DeadTest.+withDefaultValue: 0 references () [0]
@@ -2293,9 +2116,8 @@ File References
   Live Value +FirstClassModules.+someFunctorAsFunction: 0 references () [0]
   Live Value +FirstClassModules.SomeFunctor.+ww: 1 references (FirstClassModules.res:58:2) [0]
   Live Value +FirstClassModules.+testConvert: 0 references () [0]
-  Dead Value +FirstClassModules.+firstClassModule: 0 references () [0]
+  Live Value +FirstClassModules.+firstClassModule: 0 references () [0]
   Live Value +FirstClassModules.M.+x: 1 references (FirstClassModules.res:2:2) [0]
-  Dead Value +FirstClassModules.M.+f: 0 references () [0]
   Live Value +FirstClassModules.M.+f: 1 references (FirstClassModules.res:4:2) [0]
   Live Value +FirstClassModules.M.Z.+u: 1 references (FirstClassModules.res:41:4) [0]
   Live Value +FirstClassModules.M.InnerModule3.+k3: 1 references (FirstClassModules.res:16:4) [0]
@@ -2451,8 +2273,6 @@ File References
   Dead RecordLabel +RepeatedLabel.userData.b: 0 references () [0]
   Dead RecordLabel +RepeatedLabel.userData.a: 0 references () [0]
   Dead Value +RequireCond.+either: 0 references () [0]
-  Dead Value +RequireCond.+either: 0 references () [0]
-  Dead Value +RequireCond.+make: 0 references () [0]
   Dead Value +RequireCond.+make: 0 references () [0]
   Dead Value +Shadow.M.+test: 0 references () [0]
   Live Value +Shadow.M.+test: 0 references () [0]
@@ -2519,19 +2339,19 @@ File References
   Live Value +TypeParams3.+test: 0 references () [0]
   Dead Value +Types.ObjectId.+x: 0 references () [0]
   Live Value +Types.+optFunction: 0 references () [0]
-  Dead Value +Types.+i64Const: 0 references () [0]
+  Live Value +Types.+i64Const: 0 references () [0]
   Live Value +Types.+currentTime: 0 references () [0]
   Live Value +Types.+testInstantiateTypeParameter: 0 references () [0]
   Dead RecordLabel +Types.someRecord.id: 0 references () [0]
   Live Value +Types.+setMatch: 0 references () [0]
-  Dead Value +Types.+testMarshalFields: 0 references () [0]
+  Live Value +Types.+testMarshalFields: 0 references () [0]
   Live Value +Types.+testConvertNull: 0 references () [0]
   Dead RecordLabel +Types.record.s: 0 references () [0]
   Dead RecordLabel +Types.record.i: 0 references () [0]
   Live Value +Types.+jsonStringify: 0 references () [0]
-  Dead Value +Types.+jsString2T: 0 references () [0]
-  Dead Value +Types.+jsStringT: 0 references () [0]
-  Dead Value +Types.+stringT: 0 references () [0]
+  Live Value +Types.+jsString2T: 0 references () [0]
+  Live Value +Types.+jsStringT: 0 references () [0]
+  Live Value +Types.+stringT: 0 references () [0]
   Dead VariantCase +Types.opaqueVariant.B: 0 references () [0]
   Dead VariantCase +Types.opaqueVariant.A: 0 references () [0]
   Live Value +Types.+testFunctionOnOptionsAsArgument: 0 references () [0]
@@ -2594,7 +2414,7 @@ File References
   Live Value +Variants.+testConvert3: 0 references () [0]
   Live Value +Variants.+testConvert2: 0 references () [0]
   Live Value +Variants.+fortytwoBAD: 0 references () [0]
-  Dead Value +Variants.+fortytwoOK: 0 references () [0]
+  Live Value +Variants.+fortytwoOK: 0 references () [0]
   Live Value +Variants.+testConvert: 0 references () [0]
   Live Value +Variants.+swap: 0 references () [0]
   Live Value +Variants.+onlySunday: 0 references () [0]
@@ -2623,7 +2443,6 @@ File References
   Live Value +VariantsWithPayload.+testWithPayload: 0 references () [0]
   Live RecordLabel +VariantsWithPayload.payload.y: 2 references (VariantsWithPayload.res:28:74, VariantsWithPayload.res:43:72) [0]
   Live RecordLabel +VariantsWithPayload.payload.x: 2 references (VariantsWithPayload.res:28:57, VariantsWithPayload.res:43:55) [0]
-  Dead Value +BootloaderResource.+read: 0 references () [0]
   Live Value +BootloaderResource.+read: 1 references (DeadTest.res:107:40) [0]
   Live Value +DeadExn.+eInside: 1 references (DeadExn.res:12:7) [0]
   Dead Value +DeadExn.+eToplevel: 0 references () [0]
@@ -2728,7 +2547,6 @@ File References
   Live Value +ImportJsValue.+useGetProp: 0 references () [0]
   Live Value +ImportJsValue.AbsoluteValue.+getAbs: 1 references (ImportJsValue.res:44:7) [1]
   Live Value +ImportJsValue.AbsoluteValue.+getAbs: 1 references (ImportJsValue.res:36:6) [0]
-  Dead Value +ImportJsValue.AbsoluteValue.+getProp: 0 references () [0]
   Live Value +ImportJsValue.AbsoluteValue.+getProp: 2 references (ImportJsValue.res:42:7, UseImportJsValue.res:1:7) [0]
   Live Value +ImportJsValue.+areaValue: 0 references () [0]
   Live Value +ImportJsValue.+roundedNumber: 0 references () [0]
@@ -2737,8 +2555,7 @@ File References
   Dead RecordLabel +ImportJsValue.point.y: 0 references () [0]
   Dead RecordLabel +ImportJsValue.point.x: 0 references () [0]
   Live Value +ImportJsValue.+round: 1 references (ImportJsValue.res:24:7) [0]
-  Dead Value +JSResource.+jSResource: 0 references () [0]
-  Live Value +JSResource.+jSResource: 2 references (DeadTest.res:107:40, DeadTest.res:114:6) [0]
+  Live Value +JSResource.+jSResource: 2 references (DeadTest.res:107:40, DeadTest.res:112:6) [0]
   Live Value +NestedModulesInSignature.Universe.+theAnswer: 1 references (NestedModulesInSignature.resi:2:2) [0]
 
   Warning Unused Argument
@@ -2917,12 +2734,6 @@ File References
   annotatedVariant.R4 is a variant case which is never constructed
   <-- line 13
     | @dead("annotatedVariant.R4") R4(r4)
-
-  Warning Dead Value
-  File "./BootloaderResource.res", line 3, characters 33-79
-  +read is never used
-  <-- line 3
-  @bs.module("BootloaderResource") @dead("+read") external read: JSResource.t<'a> => 'a = "read"
 
   Warning Dead Module
   File "./BucklescriptAnnotations.res", line 0, characters 0-0
@@ -3224,24 +3035,13 @@ File References
   <-- line 100
     @dead("Ext_buffer.+unsafe_string2") external unsafe_string2: (bytes, int, int) => Digest.t = "caml_md5_string"
 
-<<<<<<< HEAD
-=======
-  Warning Dead Value
-  File "./DeadTest.res", line 102, characters 2-76
-  Ext_buffer.+unsafe_string2 is never used
-  <-- line 102
-    @dead("Ext_buffer.+unsafe_string2") external unsafe_string2: (bytes, int, int) => Digest.t = "caml_md5_string"
-
->>>>>>> Check differences in DCE analysis after conversion.
   Warning Dead Module
   File "./DeadTest.res", line 111, characters 7-413
   +DeadTest.LazyDynamicallyLoadedComponent2 is a dead module as all its items are dead.
 
-  Warning Dead Value
-  File "./DeadTest.res", line 112, characters 6-20
-  LazyDynamicallyLoadedComponent2.+reasonResource is never used
-  <-- line 112
-    let @dead("LazyDynamicallyLoadedComponent2.+reasonResource") reasonResource: JSResource.t<
+  Warning Dead Value With Side Effects
+  File "./DeadTest.res", line 112, characters 2-142
+  LazyDynamicallyLoadedComponent2.+reasonResource is never used and could have side effects
 
   Warning Dead Value
   File "./DeadTest.res", line 115, characters 2-54
@@ -3434,18 +3234,6 @@ File References
   +z is never used
   <-- line 5
   @dead("+z") let z = 4
-
-  Warning Dead Value
-  File "./FirstClassModules.res", line 47, characters 20-48
-  M.+f is never used
-  <-- line 47
-    @bs.module("foo") @dead("M.+f") external f: int => int = "f"
-
-  Warning Dead Value
-  File "./FirstClassModules.res", line 53, characters 7-23
-  +firstClassModule is never used
-  <-- line 53
-  export @dead("+firstClassModule") firstClassModule: firstClassModule = module(M)
 
   Warning Dead Module
   File "./FirstClassModulesInterface.res", line 0, characters 0-0
@@ -4253,12 +4041,6 @@ File References
   <-- line 10
     @dead("point.y") y: option<int>,
 
-  Warning Dead Value
-  File "./ImportJsValue.res", line 33, characters 11-49
-  AbsoluteValue.+getProp is never used
-  <-- line 33
-    @bs.send @dead("AbsoluteValue.+getProp") external getProp: t => int = "getProp"
-
   Warning Dead Type
   File "./ImportJsValue.res", line 58, characters 2-10
   variant.I is a variant case which is never constructed
@@ -4282,12 +4064,6 @@ File References
   +make is never used
   <-- line 19
   @dead("+make") let make = make
-
-  Warning Dead Value
-  File "./JSResource.res", line 3, characters 11-62
-  +jSResource is never used
-  <-- line 3
-  @bs.module @dead("+jSResource") external jSResource: string => t<'a> = "JSResource"
 
   Warning Dead Module
   File "./ModuleAliases.res", line 2, characters 9-56
@@ -4683,24 +4459,6 @@ File References
   <-- line 46
     | @dead("opaqueVariant.B") B
 
-  Warning Dead Value
-  File "./Types.res", line 48, characters 7-14
-  +stringT is never used
-  <-- line 48
-  export @dead("+stringT") stringT: String.t = "a"
-
-  Warning Dead Value
-  File "./Types.res", line 50, characters 7-16
-  +jsStringT is never used
-  <-- line 50
-  export @dead("+jsStringT") jsStringT: Js.String.t = "a"
-
-  Warning Dead Value
-  File "./Types.res", line 52, characters 7-17
-  +jsString2T is never used
-  <-- line 52
-  export @dead("+jsString2T") jsString2T: Js.String2.t = "a"
-
   Warning Dead Type
   File "./Types.res", line 68, characters 2-8
   record.i is a record label never used to read a value
@@ -4713,23 +4471,11 @@ File References
   <-- line 69
     @dead("record.s") s: string,
 
-  Warning Dead Value
-  File "./Types.res", line 89, characters 7-24
-  +testMarshalFields is never used
-  <-- line 89
-  export @dead("+testMarshalFields") testMarshalFields: marshalFields = {
-
   Warning Dead Type
   File "./Types.res", line 108, characters 19-26
   someRecord.id is a record label never used to read a value
   <-- line 108
   type someRecord = {@dead("someRecord.id") id: int}
-
-  Warning Dead Value
-  File "./Types.res", line 125, characters 7-15
-  +i64Const is never used
-  <-- line 125
-  export @dead("+i64Const") i64Const: i64B = 34L
 
   Warning Dead Module
   File "./Types.res", line 129, characters 7-75
@@ -4764,12 +4510,6 @@ File References
   r2.B is a variant case which is never constructed
   <-- line 13
   export type r2 = | @dead("r2.B") B({g: string})
-
-  Warning Dead Value
-  File "./Variants.res", line 40, characters 7-17
-  +fortytwoOK is never used
-  <-- line 40
-  export @dead("+fortytwoOK") fortytwoOK: testGenTypeAs = #fortytwo
 
   Warning Dead Type
   File "./Variants.res", line 83, characters 20-46
@@ -4855,8 +4595,4 @@ File References
   <-- line 3
   type pf = {pf: 'a. 'a printf [@dead "pf.pf"] }
   
-<<<<<<< HEAD
   Analysis reported 343 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:89, Warning Dead Value:209, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
-=======
-  Analysis reported 355 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:89, Warning Dead Value:222, Warning Dead Value With Side Effects:1, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
->>>>>>> Check differences in DCE analysis after conversion.

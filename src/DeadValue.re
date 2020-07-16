@@ -28,6 +28,11 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
   let loc =
     switch (vb.vb_pat.pat_desc) {
     | Tpat_var(id, {loc: {loc_start, loc_ghost} as loc})
+    | Tpat_alias(
+        {pat_desc: Tpat_any},
+        id,
+        {loc: {loc_start, loc_ghost} as loc},
+      )
         when !loc_ghost && !vb.vb_loc.loc_ghost =>
       let name = Ident.name(id) |> Name.create(~isInterface=false);
       let optionalArgs =

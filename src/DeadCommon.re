@@ -404,7 +404,8 @@ module ProcessDeadAnnotations = {
           {vb_attributes, vb_pat} as value_binding: Typedtree.value_binding,
         ) => {
       switch (vb_pat.pat_desc) {
-      | Tpat_var(id, {loc: {loc_start: pos}}) =>
+      | Tpat_var(id, {loc: {loc_start: pos}})
+      | Tpat_alias({pat_desc: Tpat_any}, id, {loc: {loc_start: pos}}) =>
         if (currentlyDisableWarnings^) {
           pos |> annotateLive;
         };
