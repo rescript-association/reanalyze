@@ -1,5 +1,5 @@
 # master
-- Adapt DCE to new bucklescript syntax.
+- Add DCE support for `.res` and `.resi` files with new bucklescript syntax.
 
 # 2.7.0
 - Fix `-live-paths` in bucklescript projects where absolute paths are used internally.
