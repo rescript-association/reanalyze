@@ -25,7 +25,7 @@ let processCmt = (~cmtFilePath, cmt_infos: Cmt_format.cmt_infos) =>
     processSignature(~doValues=true, ~doTypes=false, structure.str_type);
     DeadValue.processStructure(
       ~doTypes=true,
-      ~doValues=true,
+      ~doExternals=true,
       ~cmt_value_dependencies=cmt_infos.cmt_value_dependencies,
       structure,
     );

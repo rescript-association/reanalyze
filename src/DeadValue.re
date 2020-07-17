@@ -309,7 +309,7 @@ let rec processSignatureItem =
   };
 
 /* Traverse the AST */
-let traverseStructure = (~doTypes, ~doValues) => {
+let traverseStructure = (~doTypes, ~doExternals) => {
   /* Tast_mapper */
   let super = Tast_mapper.default;
 
@@ -349,7 +349,7 @@ let traverseStructure = (~doTypes, ~doValues) => {
         };
       };
 
-    | Tstr_primitive(vd) when doValues && Config.analyzeExternals =>
+    | Tstr_primitive(vd) when doExternals && Config.analyzeExternals =>
       let currentModulePath = ModulePath.getCurrent();
       let path = currentModulePath.path @ [Common.currentModuleName^];
       let exists =
@@ -440,10 +440,10 @@ let processStructure =
     (
       ~cmt_value_dependencies,
       ~doTypes,
-      ~doValues,
+      ~doExternals,
       structure: Typedtree.structure,
     ) => {
-  let traverseStructure = traverseStructure(~doTypes, ~doValues);
+  let traverseStructure = traverseStructure(~doTypes, ~doExternals);
   structure |> traverseStructure.structure(traverseStructure) |> ignore;
 
   let valueDependencies = cmt_value_dependencies |> List.rev;
