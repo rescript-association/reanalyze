@@ -1,4 +1,4 @@
-/* TypeScript file generated from TransitiveType3.res by genType. */
+/* TypeScript file generated from TransitiveType3.re by genType. */
 /* eslint-disable import/first */
 
 

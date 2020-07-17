@@ -1,4 +1,4 @@
-/* TypeScript file generated from TestFirstClassModules.res by genType. */
+/* TypeScript file generated from TestFirstClassModules.re by genType. */
 /* eslint-disable import/first */
 
 

@@ -1,4 +1,4 @@
-/* TypeScript file generated from ImportJsValue.res by genType. */
+/* TypeScript file generated from ImportJsValue.re by genType. */
 /* eslint-disable import/first */
 
 

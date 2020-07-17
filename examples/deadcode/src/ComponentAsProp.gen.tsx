@@ -1,4 +1,4 @@
-/* TypeScript file generated from ComponentAsProp.res by genType. */
+/* TypeScript file generated from ComponentAsProp.re by genType. */
 /* eslint-disable import/first */
 
 

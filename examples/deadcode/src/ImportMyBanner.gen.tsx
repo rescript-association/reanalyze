@@ -1,4 +1,4 @@
-/* TypeScript file generated from ImportMyBanner.res by genType. */
+/* TypeScript file generated from ImportMyBanner.re by genType. */
 /* eslint-disable import/first */
 
 

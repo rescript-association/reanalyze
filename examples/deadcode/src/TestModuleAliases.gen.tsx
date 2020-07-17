@@ -1,4 +1,4 @@
-/* TypeScript file generated from TestModuleAliases.res by genType. */
+/* TypeScript file generated from TestModuleAliases.re by genType. */
 /* eslint-disable import/first */
 
 

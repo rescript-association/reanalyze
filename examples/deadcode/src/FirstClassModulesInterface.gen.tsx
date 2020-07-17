@@ -1,4 +1,4 @@
-/* TypeScript file generated from FirstClassModulesInterface.resi by genType. */
+/* TypeScript file generated from FirstClassModulesInterface.rei by genType. */
 /* eslint-disable import/first */
 
 

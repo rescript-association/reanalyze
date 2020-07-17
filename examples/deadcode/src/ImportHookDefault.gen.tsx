@@ -1,4 +1,4 @@
-/* TypeScript file generated from ImportHookDefault.res by genType. */
+/* TypeScript file generated from ImportHookDefault.re by genType. */
 /* eslint-disable import/first */
 
 
