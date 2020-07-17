@@ -1,4 +1,6 @@
 # master
+
+# 2.8.0
 - Add DCE support for `.res` and `.resi` files with new bucklescript syntax.
 
 # 2.7.0
