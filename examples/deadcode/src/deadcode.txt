@@ -222,7 +222,6 @@
   addValueReference DeadTest.re:100:4 --> DeadTest.re:100:42
   addValueReference DeadTest.re:100:4 --> DeadTest.re:100:25
   addValueReference DeadTest.re:100:4 --> DeadTest.re:100:45
-  addValueDeclaration +unsafe_string2 DeadTest.re:107:2 path:+DeadTest.Ext_buffer
   addTypeReference DeadTest.re:110:16 --> DeadRT.rei:2:4
   addValueReference DeadTest.re:112:40 --> JSResource.re:3:0
   addValueReference DeadTest.re:112:40 --> DynamicallyLoadedComponent.re:2:4
@@ -2020,7 +2019,6 @@ File References
   Dead Value +DeadTest.LazyDynamicallyLoadedComponent2.+makeProps: 0 references () [0]
   Dead Value +DeadTest.LazyDynamicallyLoadedComponent2.+reasonResource: 0 references () [0]
   Live Value +DeadTest.LazyDynamicallyLoadedComponent.+make: 1 references (DeadTest.re:132:4) [0]
-  Dead Value +DeadTest.Ext_buffer.+unsafe_string2: 0 references () [1]
   Dead Value +DeadTest.Ext_buffer.+unsafe_string2: 0 references () [0]
   Dead Value +DeadTest.+unsafe_string1: 0 references () [0]
   Dead Value +DeadTest.+withDefaultValue: 0 references () [0]
@@ -3009,12 +3007,6 @@ File References
   File "./DeadTest.re", line 105, characters 2-76
   Ext_buffer.+unsafe_string2 is never used
   <-- line 105
-    [@dead "Ext_buffer.+unsafe_string2"] external unsafe_string2: (bytes, int, int) => Digest.t = "caml_md5_string";
-
-  Warning Dead Value
-  File "./DeadTest.re", line 107, characters 2-76
-  Ext_buffer.+unsafe_string2 is never used
-  <-- line 107
     [@dead "Ext_buffer.+unsafe_string2"] external unsafe_string2: (bytes, int, int) => Digest.t = "caml_md5_string";
 
   Warning Dead Module
@@ -4577,4 +4569,4 @@ File References
   <-- line 3
   type pf = {pf: 'a. 'a printf [@dead "pf.pf"] }
   
-  Analysis reported 344 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:89, Warning Dead Value:210, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 343 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:89, Warning Dead Value:209, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
