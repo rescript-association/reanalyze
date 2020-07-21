@@ -63,3 +63,11 @@ let extractFromGlobalTuple = () => {
   let (x, _, _) = globalTuple
   x
 }
+
+type r = {x: int, y: int, name: string}
+
+@noalloc
+let recordCreation = () => {
+  let r = {x: 3, y: 4, name: "abc"}
+  34
+}

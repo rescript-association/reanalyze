@@ -27,7 +27,8 @@
   no-alloc binding for retGlobal
   no-alloc binding for globalTuple
   no-alloc binding for extractFromGlobalTuple
-
+  no-alloc binding for recordCreation
+  TODO: record creation
 Dump Environment
 
 func bar (param 0) (local.get 0) (local.get 0) (call foo) (i32.const 1) (i32.add)
@@ -57,6 +58,8 @@ func mulVecVec (param 0) (param 1) (param 2) (param 3) (param 4) (param 5) (loca
 func pair (param 0) (param 1) (local.get 0) (local.get 1)
 
 func quad (param 0) (local 1) (local 2) (local.get 0) (local.get 0) (i32.const 1) (i32.add) (local.set 2) (local.set 1) (local.get 1) (local.get 2) (local.get 1) (local.get 2)
+
+func recordCreation (local 0) (local.set 0) (i32.const 34)
 
 func restMatrix (param 0) (param 1) (param 2) (f64.const 0.123) (call rotation) (f64.const 2.0) (call scale) (local.get 0) (local.get 1) (local.get 2) (call mulMatVec) (call mulMatVec)
 
