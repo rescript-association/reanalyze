@@ -252,6 +252,9 @@ and processExpr = (~funDef, ~env, expr: Typedtree.expression) =>
     let newEnv = processLocalBinding(~env, ~pat=vb.vb_pat, ~scope);
     inExpr |> processExpr(~funDef, ~env=newEnv);
 
+  | Texp_record(_) =>
+    Log_.item("TODO: record creation")
+
   | _ =>
     Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
       Format.fprintf(ppf, "Expression not supported")

@@ -72,6 +72,10 @@ function extractFromGlobalTuple(param) {
   return 1;
 }
 
+function recordCreation(param) {
+  return 34;
+}
+
 var x = 34;
 
 var fl = 2;
@@ -102,6 +106,7 @@ export {
   retGlobal ,
   globalTuple ,
   extractFromGlobalTuple ,
+  recordCreation ,
   
 }
 /* No side effect */
