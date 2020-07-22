@@ -57,6 +57,7 @@ type instr =
   | F64Add
   | F64Mul
   | I32Add
+  | I32Load(offset)
   | I32Store(offset);
 
 type id = string;
@@ -195,6 +196,7 @@ module Env = {
       | F64Add => "f64.add"
       | F64Mul => "f64.mul"
       | I32Add => "i32.add"
+      | I32Load(n) => "i32.load " ++ "offset=" ++ string_of_int(n)
       | I32Store(n) => "i32.store " ++ "offset=" ++ string_of_int(n)
       | LocalDecl(n) => "local " ++ string_of_int(n)
       | LocalGet(n) => "local.get " ++ string_of_int(n)
