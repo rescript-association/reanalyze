@@ -73,7 +73,10 @@ function extractFromGlobalTuple(param) {
 }
 
 function recordCreation(param) {
-  return 34;
+  return [
+          3,
+          "abcd"
+        ];
 }
 
 var x = 34;

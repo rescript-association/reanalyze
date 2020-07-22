@@ -299,6 +299,24 @@ and processExpr = (~funDef, ~env, ~mem, expr: Typedtree.expression) =>
     funDef
     |> Il.FunDef.emit(~instr=Il.Const(I32(firstIndex^ |> Int32.of_int)));
 
+  | Texp_field(e, {loc}, {lbl_name, lbl_all}) =>
+    let offset = ref(0);
+    lbl_all
+    |> Array.exists((ld: Types.label_description) =>
+         if (ld.lbl_name == lbl_name) {
+           true;
+         } else {
+           let size = ld.lbl_arg |> sizeOfTyp(~loc);
+           offset := offset^ + size;
+           false;
+         }
+       )
+    |> ignore;
+    let index = offset^;
+    funDef |> Il.FunDef.emit(~instr=Il.Const(I32(0l)));
+    e |> processExpr(~funDef, ~env, ~mem);
+    funDef |> Il.FunDef.emit(~instr=Il.I32Load(index));
+
   | _ =>
     Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
       Format.fprintf(ppf, "Expression not supported")

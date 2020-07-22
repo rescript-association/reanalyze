@@ -69,5 +69,5 @@ type r = {x: int, y: int, name: string}
 @noalloc
 let recordCreation = () => {
   let r = {x: 3, y: 4, name: "abcd"}
-  34
+  (r.x, r.name)
 }
