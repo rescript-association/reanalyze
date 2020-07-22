@@ -56,7 +56,8 @@ type instr =
   | Param(offset)
   | F64Add
   | F64Mul
-  | I32Add;
+  | I32Add
+  | I32Store(offset);
 
 type id = string;
 
@@ -114,6 +115,69 @@ module FunDef = {
   let emit = (~instr, def) => def.body = [instr, ...def.body];
 };
 
+module Mem = {
+  type index = int;
+  type data =
+    | String({
+        index,
+        string,
+      });
+  type t = {
+    mutable nextIndex: index,
+    mutable dataSegments: list(data),
+    strings: Hashtbl.t(string, index),
+  };
+
+  let stringAlignment = 4;
+
+  let align = (~alignment, size) =>
+    size mod alignment == 0 ? size : 4 + size / 4 * 4;
+
+  let create = () => {
+    nextIndex: 0,
+    dataSegments: [],
+    strings: Hashtbl.create(1),
+  };
+
+  let alloc = (mem, ~size): index => {
+    let index = mem.nextIndex;
+    mem.nextIndex = mem.nextIndex + size;
+    index;
+  };
+
+  let allocString = (mem, ~string): index => {
+    switch (Hashtbl.find_opt(mem.strings, string)) {
+    | None =>
+      let size =
+        1 + String.length(string) |> align(~alignment=stringAlignment);
+      let index = mem |> alloc(~size);
+      let data = String({index, string});
+      mem.dataSegments = [data, ...mem.dataSegments];
+      Hashtbl.replace(mem.strings, string, index);
+      index;
+    | Some(index) => index
+    };
+  };
+
+  let dump = (~ppf, mem) => {
+    Format.fprintf(ppf, "@.Dump Memory@.");
+    Format.fprintf(ppf, "(memory $0 %d)@.", mem.nextIndex);
+    mem.dataSegments
+    |> List.rev
+    |> List.iter(data =>
+         switch (data) {
+         | String({index, string}) =>
+           Format.fprintf(
+             ppf,
+             "(data (i32.const %d) \"%s\\00\")@.",
+             index,
+             string,
+           )
+         }
+       );
+  };
+};
+
 module Env = {
   type id = string;
   type t = StringMap.t(def);
@@ -131,6 +195,7 @@ module Env = {
       | F64Add => "f64.add"
       | F64Mul => "f64.mul"
       | I32Add => "i32.add"
+      | I32Store(n) => "i32.store " ++ "offset=" ++ string_of_int(n)
       | LocalDecl(n) => "local " ++ string_of_int(n)
       | LocalGet(n) => "local.get " ++ string_of_int(n)
       | LocalSet(n) => "local.set " ++ string_of_int(n)
