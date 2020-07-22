@@ -57,8 +57,16 @@ let rec sizeOfTyp = (~loc, typ: Types.type_expr) =>
   switch (typ.desc) {
   | Tlink(t)
   | Tsubst(t) => t |> sizeOfTyp(~loc)
-  | Tconstr(Pident({name: "int"}), [], _) => 4
-  | Tconstr(Pident({name: "string"}), [], _) => 4
+  | Tconstr(Pident(id), [], _) =>
+    switch (Ident.name(id)) {
+    | "int" => 4
+    | "string" => 4
+    | name =>
+      Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
+        Format.fprintf(ppf, "Size of type %s not supported", name)
+      );
+      assert(false);
+    }
   | _ =>
     Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
       Format.fprintf(ppf, "Size of type not supported")
