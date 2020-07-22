@@ -53,6 +53,19 @@ let rec processTyp = (~funDef: Il.funDef, ~loc, typ: Types.type_expr) =>
     assert(false);
   };
 
+let rec sizeOfTyp = (~loc, typ: Types.type_expr) =>
+  switch (typ.desc) {
+  | Tlink(t)
+  | Tsubst(t) => t |> sizeOfTyp(~loc)
+  | Tconstr(Pident({name: "int"}), [], _) => 4
+  | Tconstr(Pident({name: "string"}), [], _) => 4
+  | _ =>
+    Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
+      Format.fprintf(ppf, "Size of type not supported")
+    );
+    assert(false);
+  };
+
 let rec processScope =
         (~funDef: Il.funDef, ~forward, ~instrKind, ~scope: Il.scope) => {
   switch (scope) {
@@ -70,7 +83,7 @@ let rec processScope =
   };
 };
 
-let rec processFunPat = (~funDef, ~env, pat: Typedtree.pattern) =>
+let rec processFunPat = (~funDef, ~env, ~mem, pat: Typedtree.pattern) =>
   switch (pat.pat_desc) {
   | Tpat_var(id, _)
   | Tpat_alias({pat_desc: Tpat_any}, id, _) =>
@@ -90,7 +103,7 @@ let rec processFunPat = (~funDef, ~env, pat: Typedtree.pattern) =>
       pats
       |> List.fold_left(
            ((e, scopes), p) => {
-             let (newEnv, scope) = p |> processFunPat(~funDef, ~env=e);
+             let (newEnv, scope) = p |> processFunPat(~funDef, ~env=e, ~mem);
              (newEnv, [scope, ...scopes]);
            },
            (env, []),
@@ -104,7 +117,8 @@ let rec processFunPat = (~funDef, ~env, pat: Typedtree.pattern) =>
     assert(false);
   };
 
-let rec processFunDef = (~funDef, ~env, ~params, expr: Typedtree.expression) =>
+let rec processFunDef =
+        (~funDef, ~env, ~mem, ~params, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
   | Texp_function({
       arg_label: Nolabel,
@@ -112,24 +126,28 @@ let rec processFunDef = (~funDef, ~env, ~params, expr: Typedtree.expression) =>
       cases: [{c_lhs, c_guard: None, c_rhs}],
       partial: Total,
     }) =>
-    let (newEnv, typ) = c_lhs |> processFunPat(~funDef, ~env);
+    let (newEnv, typ) = c_lhs |> processFunPat(~funDef, ~env, ~mem);
     c_rhs
     |> processFunDef(
          ~funDef,
          ~env=newEnv,
+         ~mem,
          ~params=[(param, typ), ...params],
        );
 
   | _ => (env, expr, params)
   };
 
-let translateConst = (~loc, const: Asttypes.constant) =>
+let translateConst = (~loc, ~mem, const: Asttypes.constant) =>
   switch (const) {
   | Const_int(n) => Il.I32(n |> Int32.of_int)
   | Const_float(s) =>
     let sWithDecimal =
       [@doesNotRaise] s.[String.length(s) - 1] == '.' ? s ++ "0" : s;
     Il.F64(sWithDecimal);
+  | Const_string(string, _) =>
+    let index = mem |> Il.Mem.allocString(~string);
+    Il.I32(index |> Int32.of_int);
   | _ =>
     Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
       Format.fprintf(ppf, "Constant not supported")
@@ -137,8 +155,8 @@ let translateConst = (~loc, const: Asttypes.constant) =>
     assert(false);
   };
 
-let processConst = (~funDef, ~loc, const_: Asttypes.constant) => {
-  let const = const_ |> translateConst(~loc);
+let processConst = (~funDef, ~loc, ~mem, const_: Asttypes.constant) => {
+  let const = const_ |> translateConst(~loc, ~mem);
   funDef |> Il.FunDef.emit(~instr=Il.Const(const));
 };
 
@@ -160,9 +178,10 @@ let rec processLocalBinding =
   | _ => assert(false)
   }
 
-and processExpr = (~funDef, ~env, expr: Typedtree.expression) =>
+and processExpr = (~funDef, ~env, ~mem, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
-  | Texp_constant(const) => const |> processConst(~funDef, ~loc=expr.exp_loc)
+  | Texp_constant(const) =>
+    const |> processConst(~funDef, ~loc=expr.exp_loc, ~mem)
 
   | Texp_ident(id, _, _) =>
     let id = Path.name(id);
@@ -219,7 +238,7 @@ and processExpr = (~funDef, ~env, expr: Typedtree.expression) =>
              };
            | _ => assert(false)
            };
-           arg |> processExpr(~funDef, ~env);
+           arg |> processExpr(~funDef, ~env, ~mem);
          | _ =>
            Log_.info(
              ~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
@@ -231,7 +250,7 @@ and processExpr = (~funDef, ~env, expr: Typedtree.expression) =>
 
   | Texp_function(_) =>
     let (env, body, params) =
-      expr |> processFunDef(~funDef, ~env, ~params=[]);
+      expr |> processFunDef(~funDef, ~env, ~mem, ~params=[]);
     if (params == []) {
       Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
         Format.fprintf(ppf, "Cannot decode function parameters")
@@ -239,21 +258,38 @@ and processExpr = (~funDef, ~env, expr: Typedtree.expression) =>
       assert(false);
     };
     funDef.params = params;
-    body |> processExpr(~funDef, ~env);
+    body |> processExpr(~funDef, ~env, ~mem);
 
-  | Texp_tuple(l) => l |> List.iter(processExpr(~funDef, ~env))
+  | Texp_tuple(l) => l |> List.iter(processExpr(~funDef, ~env, ~mem))
 
   | Texp_let(Nonrecursive, [vb], inExpr) =>
     let scope =
       vb.vb_expr.exp_type |> processTyp(~funDef, ~loc=vb.vb_expr.exp_loc);
     processScope(~funDef, ~forward=true, ~instrKind=Decl, ~scope);
-    vb.vb_expr |> processExpr(~funDef, ~env);
+    vb.vb_expr |> processExpr(~funDef, ~env, ~mem);
     processScope(~funDef, ~forward=false, ~instrKind=Set, ~scope);
     let newEnv = processLocalBinding(~env, ~pat=vb.vb_pat, ~scope);
-    inExpr |> processExpr(~funDef, ~env=newEnv);
+    inExpr |> processExpr(~funDef, ~env=newEnv, ~mem);
 
-  | Texp_record(_) =>
-    Log_.item("TODO: record creation")
+  | Texp_record({fields, extended_expression: None}) =>
+    let firstIndex = ref(0);
+    fields
+    |> Array.iteri((i, (_ld, rld: Typedtree.record_label_definition)) =>
+         switch (rld) {
+         | Kept(_) => assert(false)
+         | Overridden({loc}, e) =>
+           let size = e.exp_type |> sizeOfTyp(~loc);
+           let index = mem |> Il.Mem.alloc(~size);
+           if (i == 0) {
+             firstIndex := index;
+           };
+           funDef |> Il.FunDef.emit(~instr=Il.Const(I32(0l)));
+           e |> processExpr(~funDef, ~env, ~mem);
+           funDef |> Il.FunDef.emit(~instr=Il.I32Store(index));
+         }
+       );
+    funDef
+    |> Il.FunDef.emit(~instr=Il.Const(I32(firstIndex^ |> Int32.of_int)));
 
   | _ =>
     Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
@@ -262,10 +298,10 @@ and processExpr = (~funDef, ~env, expr: Typedtree.expression) =>
     assert(false);
   };
 
-let rec processGlobal = (~env, ~id, expr: Typedtree.expression) =>
+let rec processGlobal = (~env, ~id, ~mem, expr: Typedtree.expression) =>
   switch (expr.exp_desc) {
   | Texp_constant(const_) =>
-    let const = const_ |> translateConst(~loc=expr.exp_loc);
+    let const = const_ |> translateConst(~loc=expr.exp_loc, ~mem);
     Il.Init.Const(const);
 
   | Texp_ident(id1, _, _) =>
@@ -279,7 +315,7 @@ let rec processGlobal = (~env, ~id, expr: Typedtree.expression) =>
       assert(false);
     };
 
-  | Texp_tuple(es) => Tuple(es |> List.map(processGlobal(~env, ~id)))
+  | Texp_tuple(es) => Tuple(es |> List.map(processGlobal(~env, ~id, ~mem)))
 
   | _ =>
     Log_.info(~count=false, ~loc=expr.exp_loc, ~name="Noalloc", (ppf, ()) =>
@@ -289,6 +325,7 @@ let rec processGlobal = (~env, ~id, expr: Typedtree.expression) =>
   };
 
 let envRef = ref(Il.Env.create());
+let memRef = ref(Il.Mem.create());
 
 let processValueBinding = (~id, ~loc, ~expr: Typedtree.expression) => {
   let id = Ident.name(id);
@@ -298,9 +335,9 @@ let processValueBinding = (~id, ~loc, ~expr: Typedtree.expression) => {
   | Arrow(_) =>
     let funDef = Il.FunDef.create(~id, ~loc, ~kind);
     envRef := envRef^ |> Il.Env.add(~id, ~def=FunDef(funDef));
-    expr |> processExpr(~funDef, ~env=envRef^);
+    expr |> processExpr(~funDef, ~env=envRef^, ~mem=memRef^);
   | _ =>
-    let init = expr |> processGlobal(~env=envRef^, ~id);
+    let init = expr |> processGlobal(~env=envRef^, ~id, ~mem=memRef^);
     envRef := envRef^ |> Il.Env.add(~id, ~def=GlobalDef({id, init}));
   };
 };
@@ -332,4 +369,7 @@ let processCmt = (cmt_infos: Cmt_format.cmt_infos) =>
   | _ => ()
   };
 
-let reportResults = (~ppf) => envRef^ |> Il.Env.dump(~ppf);
+let reportResults = (~ppf) => {
+  memRef^ |> Il.Mem.dump(~ppf);
+  envRef^ |> Il.Env.dump(~ppf);
+};
