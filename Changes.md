@@ -1,4 +1,6 @@
 # master
+
+# 2.9.0
 - Model `exit(...)` as raising a fictional exception called `exit`.
 - Fix wording of error message for redundant exception annotation when the function raises nothing.
 
