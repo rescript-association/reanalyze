@@ -1,6 +1,6 @@
 # master
-- Model `exit(...)` as raising exception `exit`.
-- Fix wording of error message for redundant exceptin annotation when the function raises nothing.
+- Model `exit(...)` as raising a fictional exception called `exit`.
+- Fix wording of error message for redundant exception annotation when the function raises nothing.
 
 # 2.8.0
 - Add DCE support for `.res` and `.resi` files with new bucklescript syntax.
