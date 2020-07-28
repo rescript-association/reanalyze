@@ -136,6 +136,7 @@ let raisesLibTable = {
     ("input_byte", [endOfFile]),
     ("input_binary_int", [endOfFile]),
     ("close_in", [sysError]),
+    ("exit", [exit]),
   ];
 
   let str = [

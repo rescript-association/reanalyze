@@ -134,38 +134,47 @@ type cliCommand =
   | NoOp
   | Termination(option(string));
 
+
+[@raises exit]
 let cli = () => {
   let cliCommand = ref(NoOp);
   let usage = "reanalyze version " ++ Version.version;
+  [@raises exit]
   let versionAndExit = () => {
     print_endline(usage);
     exit(0);
   };
+  [@raises exit]
   let rec printUsageAndExit = () => {
     Arg.usage(speclist, usage);
     exit(0);
   }
+  [@raises exit]
   and setCliCommand = command => {
     if (cliCommand^ != NoOp) {
       printUsageAndExit();
     };
     cliCommand := command;
   }
+  [@raises exit]
   and setAll = cmtRoot => {
     All(cmtRoot) |> setCliCommand;
   }
+  [@raises exit]
   and setDCE = cmtRoot => {
     DCE(cmtRoot) |> setCliCommand;
   }
   and setDebug = () => {
     Cli.debug := true;
   }
+  [@raises exit]
   and setException = cmtRoot => {
     Exception(cmtRoot) |> setCliCommand;
   }
   and setExperimental = () => {
     Common.Cli.experimental := true;
   }
+  [@raises exit]
   and setNoalloc = () => {
     Noalloc |> setCliCommand;
   }
@@ -180,6 +189,7 @@ let cli = () => {
   and setWrite = () => {
     Common.Cli.write := true;
   }
+  [@raises exit]
   and setTermination = cmtRoot => {
     Termination(cmtRoot) |> setCliCommand;
   }
@@ -279,6 +289,7 @@ let cli = () => {
   ];
 
   let ppf = Format.std_formatter;
+  [@raises exit]
   let executeCliCommand = cliCommand =>
     switch (cliCommand) {
     | NoOp => printUsageAndExit()

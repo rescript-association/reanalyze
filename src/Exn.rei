@@ -8,6 +8,8 @@ let divisionByZero: t;
 
 let endOfFile: t;
 
+let exit: t;
+
 let failure: t;
 
 let fromLid: Asttypes.loc(Longident.t) => t;

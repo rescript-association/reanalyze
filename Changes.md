@@ -1,4 +1,5 @@
 # master
+- Model `exit(...)` as raising exception `exit`.
 
 # 2.8.0
 - Add DCE support for `.res` and `.resi` files with new bucklescript syntax.

@@ -10,6 +10,8 @@ let divisionByZero = "Division_by_zero";
 
 let endOfFile = "End_of_file";
 
+let exit = "exit";
+
 let failure = "Failure";
 
 let invalidArgument = "Invalid_argument";

@@ -171,3 +171,6 @@ let redundant4 = () => {
   let _ = String.uncapitalize_ascii("abc")
   let _ = String.uncapitalize_ascii(@doesNotRaise "abc")
 }
+
+@raises(exit)
+let exits = () => exit(1);
