@@ -230,16 +230,31 @@ module Checks = {
       );
     };
     if (!Exceptions.isEmpty(redundantAnnotations)) {
-      Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
-        Format.fprintf(
-          ppf,
-          "@{<info>%s@} might raise%a and is annotated with redundant @raises%a",
-          id |> Ident.name,
-          Exceptions.pp(~exnTable=Some(exnTable)),
-          raiseSet,
-          Exceptions.pp(~exnTable=None),
-          redundantAnnotations,
-        )
+      Log_.info(
+        ~loc,
+        ~name="Exception Analysis",
+        (ppf, ()) => {
+          let raisesDescription = (ppf, ()) =>
+            if (raiseSet |> Exceptions.isEmpty) {
+              Format.fprintf(ppf, "raises nothing");
+            } else {
+              Format.fprintf(
+                ppf,
+                "might raise%a",
+                Exceptions.pp(~exnTable=Some(exnTable)),
+                raiseSet,
+              );
+            };
+          Format.fprintf(
+            ppf,
+            "@{<info>%s@} %a and is annotated with redundant @raises%a",
+            id |> Ident.name,
+            raisesDescription,
+            (),
+            Exceptions.pp(~exnTable=None),
+            redundantAnnotations,
+          );
+        },
       );
     };
   };

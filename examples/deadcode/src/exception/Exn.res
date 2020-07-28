@@ -174,3 +174,6 @@ let redundant4 = () => {
 
 @raises(exit)
 let exits = () => exit(1);
+
+@raises(Invalid_argument)
+let redundantAnnotation = () => ()

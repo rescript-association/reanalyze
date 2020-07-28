@@ -88,7 +88,11 @@
   String.uncapitalize_ascii does not raise and is annotated with redundant @doesNotRaise
 
   Exception Analysis
+  File "./Exn.res", line 179, characters 4-23
+  redundantAnnotation raises nothing and is annotated with redundant @raises Invalid_argument
+
+  Exception Analysis
   File "./ExnA.res", line 1, characters 4-7
   bar might raise Not_found (ExnA.res:1:16) and is not annotated with @raises Not_found
   
-  Analysis reported 23 issues (Exception Analysis:23)
+  Analysis reported 24 issues (Exception Analysis:24)
