@@ -7,10 +7,18 @@ module Values = {
     Hashtbl.create(15);
   let currentFileTable = ref(Hashtbl.create(1));
 
-  let add = (~id, exceptions) =>
-    Hashtbl.replace(currentFileTable^, Ident.name(id), exceptions);
+  let add = (~id, exceptions) => {
+    let name = Ident.name(id);
+    let path = [name |> Name.create, ...ModulePath.getCurrent().path];
+    Hashtbl.replace(
+      currentFileTable^,
+      path |> Common.Path.toString,
+      exceptions,
+    );
+  };
 
-  let getFromModule = (~moduleName, name) => {
+  let getFromModule = (~moduleName, ~modulePath, path_: Common.Path.t) => {
+    let name = path_ @ modulePath |> Common.Path.toString;
     switch (
       Hashtbl.find_opt(
         valueBindingsTable,
@@ -31,25 +39,34 @@ module Values = {
     };
   };
 
-  let findId = (~moduleName, id) =>
-    id |> Ident.name |> getFromModule(~moduleName);
-
-  let findPath = (~moduleName, path) => {
-    switch (path |> Path.name |> getFromModule(~moduleName)) {
+  let rec findLocal = (~moduleName, ~modulePath, path) => {
+    switch (path |> getFromModule(~moduleName, ~modulePath)) {
     | Some(exceptions) => Some(exceptions)
     | None =>
-      switch (path) {
-      | Pdot(_) =>
-        let (moduleName, valuePath) =
-          switch (path |> Path.flatten) {
-          | `Ok(id, mods) => (Ident.name(id), mods |> String.concat("."))
-          | `Contains_apply => ("", "")
-          };
-        valuePath |> getFromModule(~moduleName);
-      | _ => None
+      switch (modulePath) {
+      | [] => None
+      | [_, ...restModulePath] =>
+        path |> findLocal(~moduleName, ~modulePath=restModulePath)
       }
     };
   };
+
+  let findPath = (~moduleName, ~modulePath, path) =>
+    switch (path |> findLocal(~moduleName, ~modulePath)) {
+    | None =>
+      // Search in another file
+      switch (path |> List.rev) {
+      | [externalModuleName, ...pathRev] =>
+        pathRev
+        |> List.rev
+        |> getFromModule(
+             ~moduleName=externalModuleName |> Name.toString,
+             ~modulePath=[],
+           )
+      | [] => None
+      }
+    | Some(exceptions) => Some(exceptions)
+    };
 
   let newCmt = () => {
     currentFileTable := Hashtbl.create(15);
@@ -64,7 +81,10 @@ module Values = {
 module Event = {
   type kind =
     | Catches(list(t)) // with | E => ...
-    | Call(Path.t) // foo()
+    | Call({
+        callee: Common.Path.t,
+        modulePath: Common.Path.t,
+      }) // foo()
     | DoesNotRaise(list(t)) // DoesNotRaise(events) where events come from an expression
     | Raises // raise E
 
@@ -76,12 +96,13 @@ module Event = {
 
   let rec print = (ppf, event) =>
     switch (event) {
-    | {kind: Call(path), exceptions, loc} =>
+    | {kind: Call({callee, modulePath}), exceptions, loc} =>
       Format.fprintf(
         ppf,
-        "%s Call(%s) %a@.",
+        "%s Call(%s, modulePath:%s) %a@.",
         loc.loc_start |> posToString,
-        path |> Path.name,
+        callee |> Common.Path.toString,
+        modulePath |> Common.Path.toString,
         Exceptions.pp(~exnTable=None),
         exceptions,
       )
@@ -141,15 +162,15 @@ module Event = {
         exceptions |> Exceptions.iter(exn => extendExnTable(exn, loc));
         loop(Exceptions.union(exnSet, exceptions), rest);
 
-      | [{kind: Call(path), loc} as ev, ...rest] =>
+      | [{kind: Call({callee, modulePath}), loc} as ev, ...rest] =>
         if (Common.Cli.debug^) {
           Log_.item("%a@.", print, ev);
         };
         let exceptions =
-          switch (path |> Values.findPath(~moduleName)) {
+          switch (callee |> Values.findPath(~moduleName, ~modulePath)) {
           | Some(exceptions) => exceptions
           | _ =>
-            switch (ExnLib.find(path)) {
+            switch (ExnLib.find(callee)) {
             | Some(exceptions) => exceptions
             | None => Exceptions.empty
             }
@@ -165,7 +186,8 @@ module Event = {
         if (Exceptions.isEmpty(nestedExceptions)) {
           let name =
             switch (nestedEvents) {
-            | [{kind: Call(path)}, ..._] => path |> Path.name
+            | [{kind: Call({callee})}, ..._] =>
+              callee |> Common.Path.toString
             | _ => "expression"
             };
           Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
@@ -336,8 +358,9 @@ let traverseAst = {
     };
 
     switch (expr.exp_desc) {
-    | Texp_ident(callee, _, _) =>
-      let calleeName = callee |> Path.name;
+    | Texp_ident(callee_, _, _) =>
+      let callee = callee_ |> Common.Path.fromPathT;
+      let calleeName = callee |> Common.Path.toString;
       if (calleeName |> isRaise) {
         Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
           Format.fprintf(
@@ -349,7 +372,11 @@ let traverseAst = {
       };
       currentEvents :=
         [
-          {Event.exceptions: Exceptions.empty, loc, kind: Call(callee)},
+          {
+            Event.exceptions: Exceptions.empty,
+            loc,
+            kind: Call({callee, modulePath: ModulePath.getCurrent().path}),
+          },
           ...currentEvents^,
         ];
 
@@ -460,6 +487,25 @@ let traverseAst = {
     expr;
   };
 
+  let structure_item =
+      (self: Tast_mapper.mapper, structureItem: Typedtree.structure_item) => {
+    let oldModulePath = ModulePath.getCurrent();
+    switch (structureItem.str_desc) {
+    | Tstr_module({mb_id, mb_loc}) =>
+      ModulePath.setCurrent({
+        loc: mb_loc,
+        path: [
+          mb_id |> Compat.moduleIdName |> Name.create,
+          ...oldModulePath.path,
+        ],
+      })
+    | _ => ()
+    };
+    let result = super.structure_item(self, structureItem);
+    ModulePath.setCurrent(oldModulePath);
+    result;
+  };
+
   let value_binding = (self: Tast_mapper.mapper, vb: Typedtree.value_binding) => {
     let oldId = currentId^;
     let oldEvents = currentEvents^;
@@ -507,8 +553,16 @@ let traverseAst = {
       let res = super.value_binding(self, vb);
 
       let moduleName = Common.currentModule^;
+
+      let path = [id |> Ident.name |> Name.create];
       let exceptions =
-        switch (id |> Values.findId(~moduleName)) {
+        switch (
+          path
+          |> Values.findPath(
+               ~moduleName,
+               ~modulePath=ModulePath.getCurrent().path,
+             )
+        ) {
         | Some(exceptions) => exceptions
         | _ => Exceptions.empty
         };
@@ -529,7 +583,7 @@ let traverseAst = {
     };
   };
 
-  Tast_mapper.{...super, expr, value_binding};
+  Tast_mapper.{...super, expr, value_binding, structure_item};
 };
 
 let processStructure = (structure: Typedtree.structure) => {

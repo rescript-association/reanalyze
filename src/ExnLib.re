@@ -200,4 +200,5 @@ let raisesLibTable = {
   table;
 };
 
-let find = path => Hashtbl.find_opt(raisesLibTable, path |> Path.name);
+let find = (path: Common.Path.t) =>
+  Hashtbl.find_opt(raisesLibTable, path |> Common.Path.toString);
