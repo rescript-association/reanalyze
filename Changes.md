@@ -1,5 +1,6 @@
 # master
 - Exception analysis: add support for inner modules.
+- Exception analysis: correctly hide location of caught exceptions when other instances of the same exception are reported.
 
 # 2.9.0
 - Model `exit(...)` as raising a fictional exception called `exit`.

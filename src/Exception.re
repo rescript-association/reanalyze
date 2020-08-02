@@ -152,6 +152,12 @@ module Event = {
         Hashtbl.replace(exnTable, exn, LocSet.add(loc, locSet))
       | None => Hashtbl.replace(exnTable, exn, LocSet.add(loc, LocSet.empty))
       };
+    let shrinkExnTable = (exn, loc) =>
+      switch (Hashtbl.find_opt(exnTable, exn)) {
+      | Some(locSet) =>
+        Hashtbl.replace(exnTable, exn, LocSet.remove(loc, locSet))
+      | None => ()
+      };
 
     let rec loop = (exnSet, events) =>
       switch (events) {
@@ -209,6 +215,11 @@ module Event = {
         } else {
           let nestedExceptions = loop(Exceptions.empty, nestedEvents);
           let newRaises = Exceptions.diff(nestedExceptions, exceptions);
+          exceptions
+          |> Exceptions.iter(exn =>
+               nestedEvents
+               |> List.iter(event => shrinkExnTable(exn, event.loc))
+             );
           loop(Exceptions.union(exnSet, newRaises), rest);
         };
 
