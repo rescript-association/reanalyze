@@ -7,8 +7,7 @@ module Values = {
     Hashtbl.create(15);
   let currentFileTable = ref(Hashtbl.create(1));
 
-  let add = (~id, exceptions) => {
-    let name = Ident.name(id);
+  let add = (~name, exceptions) => {
     let path = [name |> Name.create, ...ModulePath.getCurrent().path];
     Hashtbl.replace(
       currentFileTable^,
@@ -233,19 +232,19 @@ module Event = {
 module Checks = {
   type check = {
     events: list(Event.t),
-    id: Ident.t,
     loc: Location.t,
     moduleName: string,
+    name: string,
     exceptions: Exceptions.t,
   };
   type t = list(check);
 
   let checks: ref(t) = ref([]);
 
-  let add = (~events, ~exceptions, ~id, ~loc, ~moduleName) =>
-    checks := [{events, exceptions, id, loc, moduleName}, ...checks^];
+  let add = (~events, ~exceptions, ~loc, ~moduleName, ~name) =>
+    checks := [{events, exceptions, loc, moduleName, name}, ...checks^];
 
-  let doCheck = ({events, exceptions, id, loc, moduleName}) => {
+  let doCheck = ({events, exceptions, loc, moduleName, name}) => {
     let (raiseSet, exnTable) = events |> Event.combine(~moduleName);
     let missingAnnotations = Exceptions.diff(raiseSet, exceptions);
     let redundantAnnotations = Exceptions.diff(exceptions, raiseSet);
@@ -254,7 +253,7 @@ module Checks = {
         Format.fprintf(
           ppf,
           "@{<info>%s@} might raise%a and is not annotated with @raises%a",
-          id |> Ident.name,
+          name,
           Exceptions.pp(~exnTable=Some(exnTable)),
           raiseSet,
           Exceptions.pp(~exnTable=None),
@@ -281,7 +280,7 @@ module Checks = {
           Format.fprintf(
             ppf,
             "@{<info>%s@} %a and is annotated with redundant @raises%a",
-            id |> Ident.name,
+            name,
             raisesDescription,
             (),
             Exceptions.pp(~exnTable=None),
@@ -526,11 +525,7 @@ let traverseAst = {
       | _ => false
       };
     let isToplevel = currentId^ == "";
-    switch (vb.vb_pat.pat_desc) {
-    | Tpat_var(id, {loc: {loc_ghost}})
-        when (isFunction || isToplevel) && !loc_ghost && !vb.vb_loc.loc_ghost =>
-      let name = Ident.name(id);
-
+    let processBinding = name => {
       currentId := name;
       currentEvents := [];
 
@@ -560,12 +555,12 @@ let traverseAst = {
         | None => Exceptions.empty
         | Some(payload) => payload |> getExceptions
         };
-      exceptionsFromAnnotations |> Values.add(~id);
+      exceptionsFromAnnotations |> Values.add(~name);
       let res = super.value_binding(self, vb);
 
       let moduleName = Common.currentModule^;
 
-      let path = [id |> Ident.name |> Name.create];
+      let path = [name |> Name.create];
       let exceptions =
         switch (
           path
@@ -580,16 +575,20 @@ let traverseAst = {
       Checks.add(
         ~events=currentEvents^,
         ~exceptions,
-        ~id,
         ~loc=vb.vb_pat.pat_loc,
         ~moduleName,
+        ~name,
       );
 
       currentId := oldId;
       currentEvents := oldEvents;
 
       res;
-
+    };
+    switch (vb.vb_pat.pat_desc) {
+    | Tpat_var(id, {loc: {loc_ghost}})
+        when (isFunction || isToplevel) && !loc_ghost && !vb.vb_loc.loc_ghost =>
+      processBinding(id |> Ident.name)
     | _ => super.value_binding(self, vb)
     };
   };
