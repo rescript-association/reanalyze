@@ -92,7 +92,19 @@
   redundantAnnotation raises nothing and is annotated with redundant @raises Invalid_argument
 
   Exception Analysis
+  File "./Exn.res", line 181, characters 4-6
+  _x might raise A (Exn.res:181:9) and is not annotated with @raises A
+
+  Exception Analysis
+  File "./Exn.res", line 183, characters 4-5
+  _ might raise A (Exn.res:183:8) and is not annotated with @raises A
+
+  Exception Analysis
+  File "./Exn.res", line 185, characters 4-6
+  () might raise A (Exn.res:185:9) and is not annotated with @raises A
+
+  Exception Analysis
   File "./ExnA.res", line 1, characters 4-7
   bar might raise Not_found (ExnA.res:1:16) and is not annotated with @raises Not_found
   
-  Analysis reported 24 issues (Exception Analysis:24)
+  Analysis reported 27 issues (Exception Analysis:27)

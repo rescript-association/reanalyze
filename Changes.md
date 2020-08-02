@@ -1,6 +1,7 @@
 # master
 - Exception analysis: add support for inner modules.
 - Exception analysis: correctly hide location of caught exceptions when other instances of the same exception are reported.
+- Exception analysis: report on toplevel bindings of the form `let () = ...` and `let _ = ...`.
 
 # 2.9.0
 - Model `exit(...)` as raising a fictional exception called `exit`.

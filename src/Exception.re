@@ -586,6 +586,10 @@ let traverseAst = {
       res;
     };
     switch (vb.vb_pat.pat_desc) {
+    | Tpat_any when isToplevel && !vb.vb_loc.loc_ghost => processBinding("_")
+    | Tpat_construct({txt: Longident.Lident("()")}, _, _)
+        when isToplevel && !vb.vb_loc.loc_ghost =>
+      processBinding("()")
     | Tpat_var(id, {loc: {loc_ghost}})
         when (isFunction || isToplevel) && !loc_ghost && !vb.vb_loc.loc_ghost =>
       processBinding(id |> Ident.name)
