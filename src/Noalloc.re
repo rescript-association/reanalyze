@@ -28,9 +28,6 @@ let processCallee = (~env, ~funDef, ~loc, callee) =>
     }
   };
 
-type instKind =
-  | Set;
-
 let rec processTyp = (~funDef: Il.funDef, ~loc, typ: Types.type_expr) =>
   switch (typ.desc) {
   | Ttuple(ts) =>
@@ -72,17 +69,12 @@ let rec sizeOfTyp = (~loc, typ: Types.type_expr) =>
     assert(false);
   };
 
-let rec processScope =
-        (~funDef: Il.funDef, ~forward, ~instrKind, ~scope: Il.scope) => {
+let rec emitLocalSet = (~funDef: Il.funDef, ~scope: Il.scope) => {
   switch (scope) {
   | Tuple(scopes) =>
-    (forward ? scopes : List.rev(scopes))
-    |> List.iter(s => {processScope(~funDef, ~forward, ~instrKind, ~scope=s)})
+    List.rev(scopes) |> List.iter(s => {emitLocalSet(~funDef, ~scope=s)})
   | Local(offset) =>
-    let instr =
-      switch (instrKind) {
-      | Set => Il.LocalSet(offset)
-      };
+    let instr = Il.LocalSet(offset);
     funDef |> Il.FunDef.emit(~instr);
   };
 };
@@ -272,7 +264,7 @@ and processExpr = (~funDef, ~env, ~mem, expr: Typedtree.expression) =>
     let scope =
       vb.vb_expr.exp_type |> processTyp(~funDef, ~loc=vb.vb_expr.exp_loc);
     vb.vb_expr |> processExpr(~funDef, ~env, ~mem);
-    processScope(~funDef, ~forward=false, ~instrKind=Set, ~scope);
+    emitLocalSet(~funDef, ~scope);
     let newEnv = processLocalBinding(~env, ~pat=vb.vb_pat, ~scope);
     inExpr |> processExpr(~funDef, ~env=newEnv, ~mem);
 
