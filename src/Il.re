@@ -53,7 +53,6 @@ type instr =
   | LocalGet(offset)
   | LocalDecl(offset)
   | LocalSet(offset)
-  | Param(offset)
   | F64Add
   | F64Mul
   | I32Add
@@ -73,6 +72,7 @@ type funDef = {
   mutable body: list(instr),
   mutable params: list((Ident.t, scope)),
   mutable nextOffset: int,
+  mutable numParams: int,
 };
 
 let constToString = const =>
@@ -112,8 +112,21 @@ module FunDef = {
     body: [],
     params: [],
     nextOffset: 0,
+    numParams: 0,
   };
   let emit = (~instr, def) => def.body = [instr, ...def.body];
+
+  let dumpParams = (ppf, def) => {
+    for (i in 0 to def.numParams - 1) {
+      Format.fprintf(ppf, "(param %d) ", i);
+    };
+  };
+
+  let dumpLocalDecls = (ppf, def) => {
+    for (i in def.numParams to def.nextOffset - 1) {
+      Format.fprintf(ppf, "(local %d) ", i);
+    };
+  };
 };
 
 module Mem = {
@@ -201,7 +214,6 @@ module Env = {
       | LocalDecl(n) => "local " ++ string_of_int(n)
       | LocalGet(n) => "local.get " ++ string_of_int(n)
       | LocalSet(n) => "local.set " ++ string_of_int(n)
-      | Param(n) => "param " ++ string_of_int(n)
       }
     )
     ++ ")";
@@ -215,12 +227,16 @@ module Env = {
          | FunDef(funDef) =>
            Format.fprintf(
              ppf,
-             "@.%s %s %s@.",
+             "@.%s %s %a%a%s@.",
              switch (funDef.kind) {
              | Arrow(_) => "func"
              | _ => "global"
              },
              funDef.id,
+             FunDef.dumpParams,
+             funDef,
+             FunDef.dumpLocalDecls,
+             funDef,
              funDef.body |> List.rev_map(instrToString) |> String.concat(" "),
            )
          | GlobalDef({id, init}) =>

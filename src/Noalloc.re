@@ -29,7 +29,6 @@ let processCallee = (~env, ~funDef, ~loc, callee) =>
   };
 
 type instKind =
-  | Param
   | Decl
   | Set;
 
@@ -83,7 +82,6 @@ let rec processScope =
   | Local(offset) =>
     let instr =
       switch (instrKind) {
-      | Param => Il.Param(offset)
       | Decl => Il.LocalDecl(offset)
       | Set => Il.LocalSet(offset)
       };
@@ -91,12 +89,11 @@ let rec processScope =
   };
 };
 
-let rec processFunPat = (~funDef, ~env, ~mem, pat: Typedtree.pattern) =>
+let rec processFunDefPat = (~funDef, ~env, ~mem, pat: Typedtree.pattern) =>
   switch (pat.pat_desc) {
   | Tpat_var(id, _)
   | Tpat_alias({pat_desc: Tpat_any}, id, _) =>
     let scope = pat.pat_type |> processTyp(~funDef, ~loc=pat.pat_loc);
-    processScope(~funDef, ~forward=true, ~instrKind=Param, ~scope);
     let newEnv =
       env |> Il.Env.add(~id=id |> Ident.name, ~def=LocalScope(scope));
     (newEnv, scope);
@@ -111,7 +108,8 @@ let rec processFunPat = (~funDef, ~env, ~mem, pat: Typedtree.pattern) =>
       pats
       |> List.fold_left(
            ((e, scopes), p) => {
-             let (newEnv, scope) = p |> processFunPat(~funDef, ~env=e, ~mem);
+             let (newEnv, scope) =
+               p |> processFunDefPat(~funDef, ~env=e, ~mem);
              (newEnv, [scope, ...scopes]);
            },
            (env, []),
@@ -134,7 +132,7 @@ let rec processFunDef =
       cases: [{c_lhs, c_guard: None, c_rhs}],
       partial: Total,
     }) =>
-    let (newEnv, typ) = c_lhs |> processFunPat(~funDef, ~env, ~mem);
+    let (newEnv, typ) = c_lhs |> processFunDefPat(~funDef, ~env, ~mem);
     c_rhs
     |> processFunDef(
          ~funDef,
@@ -143,7 +141,9 @@ let rec processFunDef =
          ~params=[(param, typ), ...params],
        );
 
-  | _ => (env, expr, params)
+  | _ =>
+    funDef.numParams = funDef.nextOffset;
+    (env, expr, params);
   };
 
 let translateConst = (~loc, ~mem, const: Asttypes.constant) =>
@@ -273,7 +273,6 @@ and processExpr = (~funDef, ~env, ~mem, expr: Typedtree.expression) =>
   | Texp_let(Nonrecursive, [vb], inExpr) =>
     let scope =
       vb.vb_expr.exp_type |> processTyp(~funDef, ~loc=vb.vb_expr.exp_loc);
-    processScope(~funDef, ~forward=true, ~instrKind=Decl, ~scope);
     vb.vb_expr |> processExpr(~funDef, ~env, ~mem);
     processScope(~funDef, ~forward=false, ~instrKind=Set, ~scope);
     let newEnv = processLocalBinding(~env, ~pat=vb.vb_pat, ~scope);
