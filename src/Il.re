@@ -51,7 +51,6 @@ type instr =
   | Call(string)
   | Const(const)
   | LocalGet(offset)
-  | LocalDecl(offset)
   | LocalSet(offset)
   | F64Add
   | F64Mul
@@ -211,7 +210,6 @@ module Env = {
       | I32Add => "i32.add"
       | I32Load(n) => "i32.load " ++ "offset=" ++ string_of_int(n)
       | I32Store(n) => "i32.store " ++ "offset=" ++ string_of_int(n)
-      | LocalDecl(n) => "local " ++ string_of_int(n)
       | LocalGet(n) => "local.get " ++ string_of_int(n)
       | LocalSet(n) => "local.set " ++ string_of_int(n)
       }
