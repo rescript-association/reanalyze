@@ -29,7 +29,6 @@ let processCallee = (~env, ~funDef, ~loc, callee) =>
   };
 
 type instKind =
-  | Decl
   | Set;
 
 let rec processTyp = (~funDef: Il.funDef, ~loc, typ: Types.type_expr) =>
@@ -82,7 +81,6 @@ let rec processScope =
   | Local(offset) =>
     let instr =
       switch (instrKind) {
-      | Decl => Il.LocalDecl(offset)
       | Set => Il.LocalSet(offset)
       };
     funDef |> Il.FunDef.emit(~instr);
