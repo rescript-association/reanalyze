@@ -331,6 +331,7 @@ let traverseStructure = (~doTypes, ~doExternals) => {
         | _ => false
         };
       ModulePath.setCurrent({
+        ...oldModulePath,
         loc: mb_loc,
         path: [
           mb_id |> Compat.moduleIdName |> Name.create,

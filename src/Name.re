@@ -1,4 +1,7 @@
 type t = string;
+
+let compare = String.compare;
+
 let create = (~isInterface=true, s) => isInterface ? s : "+" ++ s;
 let isInterface = s =>
   try(s.[0] != '+') {
