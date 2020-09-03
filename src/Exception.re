@@ -296,7 +296,8 @@ module Checks = {
   };
 };
 
-let traverseAst = {
+let traverseAst = () => {
+  ModulePath.init();
   let super = Tast_mapper.default;
 
   let currentId = ref("");
@@ -369,7 +370,7 @@ let traverseAst = {
 
     switch (expr.exp_desc) {
     | Texp_ident(callee_, _, _) =>
-      let callee = callee_ |> Common.Path.fromPathT;
+      let callee = callee_ |> Common.Path.fromPathT |> ModulePath.resolveAlias;
       let calleeName = callee |> Common.Path.toString;
       if (calleeName |> isRaise) {
         Log_.info(~loc, ~name="Exception Analysis", (ppf, ()) =>
@@ -503,6 +504,7 @@ let traverseAst = {
     switch (structureItem.str_desc) {
     | Tstr_module({mb_id, mb_loc}) =>
       ModulePath.setCurrent({
+        ...oldModulePath,
         loc: mb_loc,
         path: [
           mb_id |> Compat.moduleIdName |> Name.create,
@@ -513,6 +515,14 @@ let traverseAst = {
     };
     let result = super.structure_item(self, structureItem);
     ModulePath.setCurrent(oldModulePath);
+    switch (structureItem.str_desc) {
+    | Tstr_module({mb_id, mb_expr: {mod_desc: Tmod_ident(path_, _lid)}}) =>
+      ModulePath.addAlias(
+        ~name=mb_id |> Compat.moduleIdName |> Name.create,
+        ~path=path_ |> Common.Path.fromPathT,
+      )
+    | _ => ()
+    };
     result;
   };
 
@@ -601,6 +611,7 @@ let traverseAst = {
 };
 
 let processStructure = (structure: Typedtree.structure) => {
+  let traverseAst = traverseAst();
   structure |> traverseAst.structure(traverseAst) |> ignore;
 };
 
