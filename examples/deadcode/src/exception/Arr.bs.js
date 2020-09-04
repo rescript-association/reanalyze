@@ -7,6 +7,10 @@ function ff(a) {
   return 11;
 }
 
+var MM = {
+  ff: ff
+};
+
 var B;
 
 var $$Array;
@@ -14,7 +18,7 @@ var $$Array;
 export {
   B ,
   $$Array ,
-  ff ,
+  MM ,
   
 }
 /* No side effect */
