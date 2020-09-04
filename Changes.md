@@ -1,6 +1,8 @@
 # master
-- Exception Analisis: add basic support for module aliases.
- 
+
+# 2.11.0
+- Exception Analisis: add basic support for module aliases (e.g. `module Array = Belt.Array`).
+
 # 2.10.0
 - Exception analysis: add support for inner modules.
 - Exception analysis: correctly hide location of caught exceptions when other instances of the same exception are reported.
