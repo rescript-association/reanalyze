@@ -1090,37 +1090,30 @@ module Compile = {
       let (e, cases, _) = expr.exp_desc |> Compat.getTexpMatch;
       let cE = e |> expression(~ctx);
       let cCases = cases |> List.map(case(~ctx));
+      let fail = () => Command.(cE +++ nondet(cCases));
       switch (cE, cases) {
       | (
           Call(FunctionCall(functionCall), loc),
-          [
-            {
-              c_lhs: {
-                pat_desc:
-                  Tpat_construct(
-                    _,
-                    {cstr_name: ("Some" | "None") as name1},
-                    _,
-                  ),
-              },
-            },
-            {
-              c_lhs: {
-                pat_desc: Tpat_construct(_, {cstr_name: "Some" | "None"}, _),
-              },
-            },
-          ],
+          [{c_lhs: {pat_desc: pattern1}}, {c_lhs: {pat_desc: pattern2}}],
         ) =>
-        let casesArr = Array.of_list(cCases);
-        let (some, none) =
-          try(
-            name1 == "Some"
-              ? (casesArr[0], casesArr[1]) : (casesArr[1], casesArr[0])
-          ) {
-          | Invalid_argument(_) => (Nothing, Nothing)
-          };
-        SwitchOption({functionCall, loc, some, none});
-      | _ => Command.(cE +++ nondet(cCases))
+        switch (
+          pattern1 |> Compat.unboxPatCstrName,
+          pattern2 |> Compat.unboxPatCstrName,
+        ) {
+        | (Some(("Some" | "None") as name1), Some("Some" | "None")) =>
+          let casesArr = Array.of_list(cCases);
+          let (some, none) =
+            try(
+              name1 == "Some"
+                ? (casesArr[0], casesArr[1]) : (casesArr[1], casesArr[0])
+            ) {
+            | Invalid_argument(_) => (Nothing, Nothing)
+            };
+          Command.SwitchOption({functionCall, loc, some, none});
+        | _ => fail()
+        }
+
+      | _ => fail()
       };
 
     | Texp_match(_) => assert(false) /* exceptions */
@@ -1189,11 +1182,12 @@ module Compile = {
       args |> List.map(((_, eOpt)) => eOpt |> expressionOpt(~ctx));
     Command.(unorderedSequence(commands) +++ command);
   }
-  and case = (~ctx, {c_guard, c_rhs}: Typedtree.case) =>
-    switch (c_guard) {
-    | None => c_rhs |> expression(~ctx)
-    | Some(e) => Command.(expression(~ctx, e) +++ expression(~ctx, c_rhs))
-    };
+  and case: type k. (~ctx: ctx, Compat.typedtreeCase(k)) => _ =
+    (~ctx, {c_guard, c_rhs}) =>
+      switch (c_guard) {
+      | None => c_rhs |> expression(~ctx)
+      | Some(e) => Command.(expression(~ctx, e) +++ expression(~ctx, c_rhs))
+      };
 };
 
 module CallStack = {

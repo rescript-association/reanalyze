@@ -20,8 +20,8 @@ let tagIsOneOfTheGenTypeAnnotations = s =>
 let rec getAttributePayload = (checkText, attributes: Typedtree.attributes) => {
   let rec fromExpr = (expr: Parsetree.expression) =>
     switch (expr) {
-    | {pexp_desc: Pexp_constant(Pconst_string(s, _))} =>
-      Some(StringPayload(s))
+    | {pexp_desc: Pexp_constant(Pconst_string(_) as cs)} =>
+      Some(StringPayload(cs |> Compat.getStringValue))
     | {pexp_desc: Pexp_constant(Pconst_integer(n, _))} =>
       Some(IntPayload(n))
     | {pexp_desc: Pexp_constant(Pconst_float(s, _))} =>
