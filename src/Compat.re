@@ -7,6 +7,23 @@ let getStringTag = s => switch (s) {
 let getStringTag = s => s
 #endif
 
+#if OCAML_MINOR >= 8
+let filter_map = List.filter_map
+#else
+/* https://github.com/ocaml/ocaml/blob/9a31c888b177f3aa603bbbe17852cbb57f047df4/stdlib/list.ml#L254-L262 passed though refmt */
+let filter_map = f => {
+  let rec aux = accu =>
+    fun
+    | [] => List.rev(accu)
+    | [x, ...l] =>
+      switch (f(x)) {
+      | None => aux(accu, l)
+      | Some(v) => aux([v, ...accu], l)
+      };
+
+  aux([]);
+};
+#endif
 
 let getStringValue = constSring => switch constSring {
 #if OCAML_MINOR >= 11
@@ -131,14 +148,10 @@ let texpMatchGetExceptions = desc => switch desc {
 #if OCAML_MINOR >= 8
   | Typedtree.Texp_match(_, cases, _) =>
     cases
-    |> List.filter(({Typedtree.c_lhs: pat}) =>
+    |> List.filter_map(({Typedtree.c_lhs: pat}) =>
           switch (pat.pat_desc) {
-          | Tpat_exception(_) => true
-          | _ => false
-          }) |> List.map (({Typedtree.c_lhs: pat}) =>
-          switch (pat.pat_desc) {
-          | Tpat_exception({pat_desc}) => pat_desc
-          | _ => assert(false)
+          | Tpat_exception({pat_desc}) => Some(pat_desc)
+          | _ => None
           })
 #else
   | Typedtree.Texp_match(_, _, casesExn, _) =>

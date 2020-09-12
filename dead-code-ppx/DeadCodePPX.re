@@ -69,14 +69,18 @@ let structure = (mapper, structure) => {
 
 let signature = (mapper, signature) => {
   signature
-  |> List.filter((signature_item: Parsetree.signature_item) =>
-       switch (signature_item.psig_desc) {
+  |> filter_map(~f=(signature_item: Parsetree.signature_item) => {
+       let test = switch (signature_item.psig_desc) {
        | Psig_value({pval_attributes}) =>
          !(pval_attributes |> hasDeadAnnotation)
        | _ => true
+       };
+       if (test) {
+         Some(Ast_mapper.default_mapper.signature_item(mapper, signature_item))
+       } else {
+         None
        }
-     )
-  |> List.map(Ast_mapper.default_mapper.signature_item(mapper));
+     })
 };
 
 let () =
