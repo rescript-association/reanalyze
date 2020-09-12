@@ -1593,15 +1593,10 @@ let progressFunctionsFromAttributes = attributes => {
       | Some(IdentPayload(lid)) => [lidToString(lid)]
       | Some(TuplePayload(l)) =>
         l
-        |> List.filter(
+        |> Compat.filter_map(
              fun
-             | Annotation.IdentPayload(_) => true
-             | _ => false,
-           )
-        |> List.map(
-             fun
-             | Annotation.IdentPayload(lid) => lidToString(lid)
-             | _ => assert(false),
+             | Annotation.IdentPayload(lid) => Some(lidToString(lid))
+             | _ => None
            )
       | _ => []
       },
