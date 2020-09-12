@@ -232,20 +232,22 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
   super.Tast_mapper.expr(self, e);
 };
 
-let collectPattern = (super, self, pat: Typedtree.pattern) => {
-  let posFrom = pat.pat_loc.loc_start;
-  switch (pat.pat_desc) {
-  | Tpat_record(cases, _clodsedFlag) =>
-    cases
-    |> List.iter(((_loc, {Types.lbl_loc: {loc_start: posTo}}, _pat)) =>
-         if (Config.analyzeTypes^) {
-           DeadType.addTypeReference(~posFrom, ~posTo);
-         }
-       )
-  | _ => ()
+let collectPattern:
+  type k. (_, _, Compat.generalPattern(k)) => Compat.generalPattern(k) =
+  (super, self, pat) => {
+    let posFrom = pat.Typedtree.pat_loc.loc_start;
+    switch (pat.pat_desc) {
+    | Typedtree.Tpat_record(cases, _clodsedFlag) =>
+      cases
+      |> List.iter(((_loc, {Types.lbl_loc: {loc_start: posTo}}, _pat)) =>
+           if (Config.analyzeTypes^) {
+             DeadType.addTypeReference(~posFrom, ~posTo);
+           }
+         )
+    | _ => ()
+    };
+    super.Tast_mapper.pat(self, pat);
   };
-  super.Tast_mapper.pat(self, pat);
-};
 
 let rec getSignature = (moduleType: Types.module_type) =>
   switch (moduleType) {

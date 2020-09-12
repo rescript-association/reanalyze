@@ -8,6 +8,46 @@ let getStringTag = s => s
 #endif
 
 
+let getStringValue = constSring => switch constSring {
+#if OCAML_MINOR >= 11
+  | Parsetree.Pconst_string(s, _, _) => s
+#else
+  | Parsetree.Pconst_string(s, _) => s
+#endif
+  | _ => assert false
+};
+
+#if OCAML_MINOR >= 11
+type typedtreeCase('a) = Typedtree.case('a)
+#else
+type typedtreeCase('a) = Typedtree.case
+#endif
+
+#if OCAML_MINOR >= 11
+type generalPattern('a) = Typedtree.general_pattern('a)
+#else
+type generalPattern('a) = Typedtree.pattern
+#endif
+
+let unboxPatCstrName = (pat) => {
+#if OCAML_MINOR >= 11
+  switch (pat) {
+    | Typedtree.Tpat_value(v) =>
+      switch ((v :> Typedtree.pattern_data(Typedtree.pattern_desc(Typedtree.value))).pat_desc) {
+        | Tpat_construct(_, {cstr_name}, _) => Some(cstr_name)
+        | _ => None
+      }
+    | _ => None
+  }
+#else
+  switch pat {
+    | Typedtree.Tpat_construct(_, {cstr_name}, _) => Some(cstr_name)
+    | _ => None
+  }
+#endif
+}
+
+
 #if OCAML_MINOR >= 8
 let setOpenCloseTag = (openTag, closeTag) => {
   Format.mark_open_stag: openTag,
@@ -91,11 +131,11 @@ let texpMatchGetExceptions = desc => switch desc {
 #if OCAML_MINOR >= 8
   | Typedtree.Texp_match(_, cases, _) =>
     cases
-    |> List.filter(({c_lhs: pat}: Typedtree.case) =>
+    |> List.filter(({Typedtree.c_lhs: pat}) =>
           switch (pat.pat_desc) {
           | Tpat_exception(_) => true
           | _ => false
-          }) |> List.map (({c_lhs: pat}: Typedtree.case) =>
+          }) |> List.map (({Typedtree.c_lhs: pat}) =>
           switch (pat.pat_desc) {
           | Tpat_exception({pat_desc}) => pat_desc
           | _ => assert(false)

@@ -324,8 +324,8 @@ let traverseAst = () => {
   let iterPat = (self, p) => self.Tast_mapper.pat(self, p) |> ignore;
   let iterCases = (self, cases) =>
     cases
-    |> List.iter((case: Typedtree.case) => {
-         case.c_lhs |> iterPat(self);
+    |> List.iter(case => {
+         case.Typedtree.c_lhs |> iterPat(self);
          case.c_guard |> iterExprOpt(self);
          case.c_rhs |> iterExpr(self);
        });
@@ -467,7 +467,7 @@ let traverseAst = () => {
     | Texp_try(e, cases) =>
       let exceptions =
         cases
-        |> List.map((case: Typedtree.case) => case.c_lhs.pat_desc)
+        |> List.map(case => case.Typedtree.c_lhs.pat_desc)
         |> exceptionsOfPatterns;
       let oldEvents = currentEvents^;
       currentEvents := [];
