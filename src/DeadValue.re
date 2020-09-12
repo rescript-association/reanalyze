@@ -232,10 +232,10 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
   super.Tast_mapper.expr(self, e);
 };
 
-let collectPattern = (super, self, pat: Typedtree.pattern) => {
-  let posFrom = pat.pat_loc.loc_start;
+let collectPattern: type k. Compat.collectPattern(k) = (super, self, pat) => {
+  let posFrom = pat.Typedtree.pat_loc.loc_start;
   switch (pat.pat_desc) {
-  | Tpat_record(cases, _clodsedFlag) =>
+  | Typedtree.Tpat_record(cases, _clodsedFlag) =>
     cases
     |> List.iter(((_loc, {Types.lbl_loc: {loc_start: posTo}}, _pat)) =>
          if (Config.analyzeTypes^) {

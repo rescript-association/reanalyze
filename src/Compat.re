@@ -8,6 +8,47 @@ let getStringTag = s => s
 #endif
 
 
+let getStringValue = constSring => switch constSring {
+#if OCAML_MINOR >= 11
+  | Parsetree.Pconst_string(s, _, _) => s
+#else
+  | Parsetree.Pconst_string(s, _) => s
+#endif
+  | _ => assert false
+};
+
+#if OCAML_MINOR >= 11
+let typedCaseCont: type k. Typedtree.case(k) => (Typedtree.expression => 'a) => ('a => 'a => 'a) => 'a =
+#else
+let typedCaseCont: Typedtree.case => (Typedtree.expression => 'a) => ('a => 'a => 'a) => 'a =
+#endif
+({c_guard, c_rhs}, f, merge) => {
+  switch (c_guard) {
+  | None => f(c_rhs)
+  | Some(e) => merge(f(e), f(c_rhs))
+  }
+}
+
+#if OCAML_MINOR >= 11
+type collectPattern('a) = (Tast_mapper.mapper, Tast_mapper.mapper, Typedtree.general_pattern('a)) => Typedtree.general_pattern('a)
+#else
+type collectPattern('a) = (Tast_mapper.mapper, Tast_mapper.mapper, Typedtree.pattern) => Typedtree.pattern
+#endif
+
+let unboxCaseValue = (pattern1, pattern2, fail, success) => {
+#if OCAML_MINOR >= 11
+  switch (pattern1, pattern2) {
+    | (Typedtree.Tpat_value(v1), Typedtree.Tpat_value(v2)) => success((v1 :> Typedtree.pattern_data(Typedtree.pattern_desc(Typedtree.value))).pat_desc, (v2 :> Typedtree.pattern_data(Typedtree.pattern_desc(Typedtree.value))).pat_desc)
+    | _ => fail()
+  }
+#else
+  let _: unit => 'a = fail;
+  switch (pattern1, pattern2) {
+    | (v1, v2) => success(v1, v2)
+  }
+#endif
+}
+
 #if OCAML_MINOR >= 8
 let setOpenCloseTag = (openTag, closeTag) => {
   Format.mark_open_stag: openTag,
@@ -76,7 +117,12 @@ let getMtyFunctorModuleType = (moduleType: Types.module_type) => switch moduleTy
   | _ => None
 }
 
-let getTexpMatch = desc => switch desc {
+#if OCAML_MINOR >= 11
+let getTexpMatch: type a. 'd => ('c, list(Typedtree.case(Typedtree.computation)), 'b) =
+#else
+let getTexpMatch =
+#endif
+desc => switch desc {
 #if OCAML_MINOR >= 8
   | Typedtree.Texp_match(e, cases, partial) =>
     (e, cases, partial)
@@ -88,7 +134,19 @@ let getTexpMatch = desc => switch desc {
 }
 
 let texpMatchGetExceptions = desc => switch desc {
-#if OCAML_MINOR >= 8
+#if OCAML_MINOR >= 11
+  | Typedtree.Texp_match(_, cases, _) =>
+    cases
+    |> List.filter(({c_lhs: pat}: Typedtree.case('a)) =>
+          switch (pat.pat_desc) {
+          | Tpat_exception(_) => true
+          | _ => false
+          }) |> List.map (({c_lhs: pat}: Typedtree.case('a)) =>
+          switch (pat.pat_desc) {
+          | Tpat_exception({pat_desc}) => pat_desc
+          | _ => assert(false)
+          })
+#elif OCAML_MINOR >= 8
   | Typedtree.Texp_match(_, cases, _) =>
     cases
     |> List.filter(({c_lhs: pat}: Typedtree.case) =>

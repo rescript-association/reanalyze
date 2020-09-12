@@ -54,11 +54,12 @@ let rec exprNoSideEffects = (expr: Typedtree.expression) =>
     && e
     |> exprNoSideEffects
     && cases
-    |> List.for_all(caseNoSideEffects);
+    |> List.for_all(Compat.typedCaseCont(_, exprNoSideEffects, (&&)))
   | Texp_letmodule(_) => false
   | Texp_lazy(e) => e |> exprNoSideEffects
   | Texp_try(e, cases) =>
-    e |> exprNoSideEffects && cases |> List.for_all(caseNoSideEffects)
+    e |> exprNoSideEffects &&
+    cases |> List.for_all(Compat.typedCaseCont(_, exprNoSideEffects, (&&)))
   | Texp_tuple(el) => el |> List.for_all(exprNoSideEffects)
   | Texp_variant(_lbl, eo) => eo |> exprOptNoSideEffects
   | Texp_field(e, _lid, _ld) => e |> exprNoSideEffects
@@ -101,9 +102,6 @@ and fieldNoSideEffects =
   switch (rld) {
   | Kept(_typeExpr) => true
   | Overridden(_lid, e) => e |> exprNoSideEffects
-  }
-and caseNoSideEffects = ({c_guard, c_rhs}: Typedtree.case) => {
-  c_guard |> exprOptNoSideEffects && c_rhs |> exprNoSideEffects;
 };
 
 let checkExpr = e => !exprNoSideEffects(e);

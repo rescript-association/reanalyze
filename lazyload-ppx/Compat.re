@@ -4,7 +4,13 @@ let attributeTxt = (x: Parsetree.attribute) => x.attr_name.txt;
 let attributeTxt = (x: Parsetree.attribute) => fst(x).txt;
 #endif
 
-#if OCAML_MINOR >= 8
+#if OCAML_MINOR >= 11
+let mkAttribute = (~loc, ~txt) => {
+  Parsetree.attr_loc: loc,
+  attr_name: Location.{loc, txt},
+  attr_payload: Parsetree.PStr([Ast_helper.Str.eval(Ast_helper.Exp.constant(Pconst_string("-3", loc, None)))]),
+};
+#elif OCAML_MINOR >= 8
 let mkAttribute = (~loc, ~txt) => {
   Parsetree.attr_loc: loc,
   attr_name: Location.{loc, txt},
