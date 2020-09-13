@@ -1,8 +1,21 @@
+#if OCAML_MINOR <= 6
+
 open Ast_helper;
 open Ast_mapper;
 open Asttypes;
 open Parsetree;
 open Longident;
+
+let attributeTxt = (x: Parsetree.attribute) => fst(x).txt;
+
+let mkAttribute = (~loc, ~txt) => (
+  Location.{loc, txt},
+  Parsetree.PStr([Ast_helper.Str.eval(Ast_helper.Exp.constant(Pconst_string("-3", None)))]),
+);
+
+let makeLoc = (~loc, ~txt) => {
+  {Location.loc, txt};
+};
 
 let hasMappedStructure = ref(false);
 
@@ -32,7 +45,7 @@ let addTopLevelExpr = (bindingName, expr) => {
   bindingName;
 };
 
-let depIgnore = [Compat.mkAttribute(~loc=default_loc^, ~txt="warning")];
+let depIgnore = [mkAttribute(~loc=default_loc^, ~txt="warning")];
 
 let localModulePrefix = "$Local$";
 
@@ -60,7 +73,7 @@ let structure = (mapper, structure) =>
         str =>
           switch (str) {
           | {pstr_desc: Pstr_attribute(attr)} =>
-            Compat.attributeTxt(attr) == "bs.config"
+            attributeTxt(attr) == "bs.config"
           | {pstr_desc: Pstr_extension(({txt: "bs.config"}, _), _)} => true
           | _ => false
           },
@@ -497,7 +510,7 @@ let module_expr = (mapper, module_expr) =>
                         (
                           Nolabel,
                           Exp.letmodule(
-                            Compat.makeLoc(~loc=default_loc^, ~txt="Comp"),
+                            makeLoc(~loc=default_loc^, ~txt="Comp"),
                             Mod.unpack(
                               Exp.apply(
                                 Exp.ident({
@@ -548,3 +561,6 @@ let () =
   Ast_mapper.register("lazyLoad", _argv =>
     {...default_mapper, structure, expr, module_expr}
   );
+
+#else
+#endif
