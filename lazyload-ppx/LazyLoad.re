@@ -113,11 +113,7 @@ let expr = (mapper, expr) =>
               loc: default_loc^,
               txt: Ldot(Lident("JSResource"), "jSResource"),
             }),
-#if OCAML_MINOR >= 11
-            [(Nolabel, Exp.constant(Pconst_string(name ++ ".bs", default_loc^, None)))],
-#else
             [(Nolabel, Exp.constant(Pconst_string(name ++ ".bs", None)))],
-#endif
           ),
           Typ.constr(
             {loc: default_loc^, txt: Ldot(Lident("JSResource"), "t")},
@@ -153,11 +149,7 @@ let expr = (mapper, expr) =>
             loc: default_loc^,
             txt: Ldot(Lident("RequireDeferred"), "make"),
           }),
-#if OCAML_MINOR >= 11
-          [(Nolabel, Exp.constant(Pconst_string(name ++ ".bs", default_loc^, None)))],
-#else
           [(Nolabel, Exp.constant(Pconst_string(name ++ ".bs", None)))],
-#endif
         ),
         Typ.constr(
           {loc: default_loc^, txt: Ldot(Lident("RequireDeferred"), "t")},
@@ -330,11 +322,7 @@ let expr = (mapper, expr) =>
                               default_loc^,
                             ),
                             Exp.constant(
-#if OCAML_MINOR >= 11
-                              Pconst_string(thenModule ++ ".bs", default_loc^, None),
-#else
                               Pconst_string(thenModule ++ ".bs", None),
-#endif
                             ),
                           ),
                           (
@@ -343,11 +331,7 @@ let expr = (mapper, expr) =>
                               default_loc^,
                             ),
                             Exp.constant(
-#if OCAML_MINOR >= 11
-                              Pconst_string(elseModule ++ ".bs", default_loc^, None),
-#else
                               Pconst_string(elseModule ++ ".bs", None),
-#endif
                             ),
                           ),
                         ],
@@ -410,11 +394,7 @@ let expr = (mapper, expr) =>
           [
             (Nolabel, conditionType),
             (Nolabel, condition),
-#if OCAML_MINOR >= 11
-            (Nolabel, Exp.constant(Pconst_string(name ++ ".bs", default_loc^, None))),
-#else
             (Nolabel, Exp.constant(Pconst_string(name ++ ".bs", None))),
-#endif
           ],
         ),
         Typ.constr(

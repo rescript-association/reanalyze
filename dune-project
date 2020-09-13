@@ -1,2 +1,2 @@
-(lang dune 1.7)
+(lang dune 2.3)
 (name reanalyze)
