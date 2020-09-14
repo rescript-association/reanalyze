@@ -14,7 +14,7 @@ let filter_map = List.filter_map
 let filter_map = f => {
   let rec aux = accu =>
     fun
-    | [] => rev(accu)
+    | [] => List.rev(accu)
     | [x, ...l] =>
       switch (f(x)) {
       | None => aux(accu, l)
