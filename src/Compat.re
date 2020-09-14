@@ -133,12 +133,7 @@ let getMtyFunctorModuleType = (moduleType: Types.module_type) => switch moduleTy
   | _ => None
 }
 
-#if OCAML_MINOR >= 11
-let getTexpMatch: type a. 'd => ('c, list(Typedtree.case(Typedtree.computation)), 'b) =
-#else
-let getTexpMatch =
-#endif
-desc => switch desc {
+let getTexpMatch = desc => switch desc {
 #if OCAML_MINOR >= 8
   | Typedtree.Texp_match(e, cases, partial) =>
     (e, cases, partial)
@@ -150,18 +145,10 @@ desc => switch desc {
 }
 
 let texpMatchGetExceptions = desc => switch desc {
-#if OCAML_MINOR >= 11
+#if OCAML_MINOR >= 8
   | Typedtree.Texp_match(_, cases, _) =>
     cases
-    |> List.filter_map(({c_lhs: pat}: Typedtree.case('a)) =>
-          switch (pat.pat_desc) {
-          | Tpat_exception({pat_desc}) => Some(pat_desc)
-          | _ => None
-          })
-#elif OCAML_MINOR >= 8
-  | Typedtree.Texp_match(_, cases, _) =>
-    cases
-    |> List.filter_map(({c_lhs: pat}: Typedtree.case) =>
+    |> List.filter_map(({Typedtree.c_lhs: pat}) =>
           switch (pat.pat_desc) {
           | Tpat_exception({pat_desc}) => Some(pat_desc)
           | _ => None
