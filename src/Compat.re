@@ -46,17 +46,24 @@ type generalPattern('a) = Typedtree.general_pattern('a)
 type generalPattern('a) = Typedtree.pattern
 #endif
 
-let unboxGeneralPattern = (pat) => {
+let unboxPatCstrName = (pat) => {
 #if OCAML_MINOR >= 11
   switch (pat) {
     | Typedtree.Tpat_value(v) =>
-      Some ((v :> Typedtree.pattern_data(Typedtree.pattern_desc(Typedtree.value))).pat_desc)
+      switch ((v :> Typedtree.pattern_data(Typedtree.pattern_desc(Typedtree.value))).pat_desc) {
+        | Tpat_construct(_, {cstr_name}, _) => Some(cstr_name)
+        | _ => None
+      }
     | _ => None
   }
 #else
-  Some(pat)
+  switch pat {
+    | Typedtree.Tpat_construct(_, {cstr_name}, _) => Some(cstr_name)
+    | _ => None
+  }
 #endif
 }
+
 
 #if OCAML_MINOR >= 8
 let setOpenCloseTag = (openTag, closeTag) => {

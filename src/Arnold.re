@@ -1097,15 +1097,10 @@ module Compile = {
           [{c_lhs: {pat_desc: pattern1}}, {c_lhs: {pat_desc: pattern2}}],
         ) =>
         switch (
-          pattern1 |> Compat.unboxGeneralPattern,
-          pattern2 |> Compat.unboxGeneralPattern,
+          pattern1 |> Compat.unboxPatCstrName,
+          pattern2 |> Compat.unboxPatCstrName,
         ) {
-        | (
-            Some(
-              Tpat_construct(_, {cstr_name: ("Some" | "None") as name1}, _),
-            ),
-            Some(Tpat_construct(_, {cstr_name: "Some" | "None"}, _)),
-          ) =>
+        | (Some(("Some" | "None") as name1), Some("Some" | "None")) =>
           let casesArr = Array.of_list(cCases);
           let (some, none) =
             try(
