@@ -233,29 +233,31 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
 };
 
 /*
-type k. is a locally abstract type
-https://caml.inria.fr/pub/docs/manual-ocaml/locallyabstract.html
-it is required because in ocaml >= 4.11 Typedtree.pattern and ADT is converted
-in a GADT
-https://github.com/ocaml/ocaml/commit/312253ce822c32740349e572498575cf2a82ee96
-in short: all branches of pattern matches aren't the same type.
-With this annotation we declare a new type for each branch to allow the
-function to be typed.
-*/
-let collectPattern: type k. Compat.collectPattern(k) = (super, self, pat) => {
-  let posFrom = pat.Typedtree.pat_loc.loc_start;
-  switch (pat.pat_desc) {
-  | Typedtree.Tpat_record(cases, _clodsedFlag) =>
-    cases
-    |> List.iter(((_loc, {Types.lbl_loc: {loc_start: posTo}}, _pat)) =>
-         if (Config.analyzeTypes^) {
-           DeadType.addTypeReference(~posFrom, ~posTo);
-         }
-       )
-  | _ => ()
+ type k. is a locally abstract type
+ https://caml.inria.fr/pub/docs/manual-ocaml/locallyabstract.html
+ it is required because in ocaml >= 4.11 Typedtree.pattern and ADT is converted
+ in a GADT
+ https://github.com/ocaml/ocaml/commit/312253ce822c32740349e572498575cf2a82ee96
+ in short: all branches of pattern matches aren't the same type.
+ With this annotation we declare a new type for each branch to allow the
+ function to be typed.
+ */
+let collectPattern:
+  type k. (_, _, Compat.generalPattern(k)) => Compat.generalPattern(k) =
+  (super, self, pat) => {
+    let posFrom = pat.Typedtree.pat_loc.loc_start;
+    switch (pat.pat_desc) {
+    | Typedtree.Tpat_record(cases, _clodsedFlag) =>
+      cases
+      |> List.iter(((_loc, {Types.lbl_loc: {loc_start: posTo}}, _pat)) =>
+           if (Config.analyzeTypes^) {
+             DeadType.addTypeReference(~posFrom, ~posTo);
+           }
+         )
+    | _ => ()
+    };
+    super.Tast_mapper.pat(self, pat);
   };
-  super.Tast_mapper.pat(self, pat);
-};
 
 let rec getSignature = (moduleType: Types.module_type) =>
   switch (moduleType) {

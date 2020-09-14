@@ -35,15 +35,15 @@ let getStringValue = constSring => switch constSring {
 };
 
 #if OCAML_MINOR >= 11
-type typedtreeCase('k) = Typedtree.case('k)
+type typedtreeCase('a) = Typedtree.case('a)
 #else
-type typedtreeCase('k) = Typedtree.case
+type typedtreeCase('a) = Typedtree.case
 #endif
 
 #if OCAML_MINOR >= 11
-type collectPattern('a) = (Tast_mapper.mapper, Tast_mapper.mapper, Typedtree.general_pattern('a)) => Typedtree.general_pattern('a)
+type generalPattern('a) = Typedtree.general_pattern('a)
 #else
-type collectPattern('a) = (Tast_mapper.mapper, Tast_mapper.mapper, Typedtree.pattern) => Typedtree.pattern
+type generalPattern('a) = Typedtree.pattern
 #endif
 
 let unboxCaseValue = (pattern1, pattern2, fail, success) => {
