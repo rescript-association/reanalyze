@@ -4,9 +4,13 @@ description:
 maintainer: ["Cristiano Calcagno"]
 authors: ["Cristiano Calcagno"]
 license: "MIT"
-homepage: "https://github.com/cristianoc/reanalyze"
-bug-reports: "https://github.com/cristianoc/reanalyze/issues"
-depends: ["dune" "ocaml" "reason"]
+homepage: "https://github.com/reason-association/reanalyze"
+bug-reports: "https://github.com/reason-association/reanalyze/issues"
+depends: [
+  "dune" {>= "1.7"}
+  "ocaml" {< "4.12" & >= "4.06.1"}
+  "reason" {>= "3.6.0"}
+]
 build: [
   ["dune" "subst"] {pinned}
   [
@@ -21,4 +25,4 @@ build: [
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "git+https://github.com/cristianoc/reanalyze.git"
+dev-repo: "git+https://github.com/reason-association/reanalyze.git"
