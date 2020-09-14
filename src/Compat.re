@@ -35,16 +35,10 @@ let getStringValue = constSring => switch constSring {
 };
 
 #if OCAML_MINOR >= 11
-let typedCaseCont: type k. Typedtree.case(k) => (Typedtree.expression => 'a) => ('a => 'a => 'a) => 'a =
+type typedtreeCase('k) = Typedtree.case('k)
 #else
-let typedCaseCont: Typedtree.case => (Typedtree.expression => 'a) => ('a => 'a => 'a) => 'a =
+type typedtreeCase('k) = Typedtree.case
 #endif
-({c_guard, c_rhs}, f, merge) => {
-  switch (c_guard) {
-  | None => f(c_rhs)
-  | Some(e) => merge(f(e), f(c_rhs))
-  }
-}
 
 #if OCAML_MINOR >= 11
 type collectPattern('a) = (Tast_mapper.mapper, Tast_mapper.mapper, Typedtree.general_pattern('a)) => Typedtree.general_pattern('a)

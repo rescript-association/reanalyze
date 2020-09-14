@@ -1089,9 +1089,7 @@ module Compile = {
       /* No exceptions */
       let (e, cases, _) = expr.exp_desc |> Compat.getTexpMatch;
       let cE = e |> expression(~ctx);
-      let cCases: list(Command.t) =
-        cases
-        |> List.map(Compat.typedCaseCont(_, expression(~ctx), Command.(+++)));
+      let cCases = cases |> List.map(case(~ctx));
       let fail = () => Command.(cE +++ nondet(cCases));
       switch (cE, cases) {
       | (
@@ -1202,7 +1200,7 @@ module Compile = {
       args |> List.map(((_, eOpt)) => eOpt |> expressionOpt(~ctx));
     Command.(unorderedSequence(commands) +++ command);
   }
-  and case = (~ctx, {Typedtree.c_guard, c_rhs}) =>
+  and case : type k. (~ctx:ctx, Compat.typedtreeCase(k)) => _ = (~ctx, {c_guard, c_rhs}) =>
     switch (c_guard) {
     | None => c_rhs |> expression(~ctx)
     | Some(e) => Command.(expression(~ctx, e) +++ expression(~ctx, c_rhs))
