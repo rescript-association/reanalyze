@@ -46,17 +46,15 @@ type generalPattern('a) = Typedtree.general_pattern('a)
 type generalPattern('a) = Typedtree.pattern
 #endif
 
-let unboxCaseValue = (pattern1, pattern2, fail, success) => {
+let unboxGeneralPattern = (pat) => {
 #if OCAML_MINOR >= 11
-  switch (pattern1, pattern2) {
-    | (Typedtree.Tpat_value(v1), Typedtree.Tpat_value(v2)) => success((v1 :> Typedtree.pattern_data(Typedtree.pattern_desc(Typedtree.value))).pat_desc, (v2 :> Typedtree.pattern_data(Typedtree.pattern_desc(Typedtree.value))).pat_desc)
-    | _ => fail()
+  switch (pat) {
+    | Typedtree.Tpat_value(v) =>
+      Some ((v :> Typedtree.pattern_data(Typedtree.pattern_desc(Typedtree.value))).pat_desc)
+    | _ => None
   }
 #else
-  let _: unit => 'a = fail;
-  switch (pattern1, pattern2) {
-    | (v1, v2) => success(v1, v2)
-  }
+  Some(pat)
 #endif
 }
 

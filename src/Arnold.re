@@ -1094,43 +1094,30 @@ module Compile = {
       switch (cE, cases) {
       | (
           Call(FunctionCall(functionCall), loc),
-          [
-            {
-              c_lhs: {
-                pat_desc: pattern1
-              },
-            },
-            {
-              c_lhs: {
-                pat_desc: pattern2
-              },
-            },
-          ],
+          [{c_lhs: {pat_desc: pattern1}}, {c_lhs: {pat_desc: pattern2}}],
         ) =>
-        Compat.unboxCaseValue(pattern1, pattern2, fail, (v1, v2) => {
-          switch (v1, v2) {
-          | (
-              Tpat_construct(
-                _,
-                {cstr_name: ("Some" | "None") as name1},
-                _,
-              ),
-              Tpat_construct(_, {cstr_name: "Some" | "None"}, _)
-            )
-            => {
-              let casesArr = Array.of_list(cCases);
-              let (some, none) =
-                try(
-                  name1 == "Some"
-                    ? (casesArr[0], casesArr[1]) : (casesArr[1], casesArr[0])
-                ) {
-                | Invalid_argument(_) => (Nothing, Nothing)
-                };
-              Command.SwitchOption({functionCall, loc, some, none});
-          }
-          | _ => fail()
-          }
-        });
+        switch (
+          pattern1 |> Compat.unboxGeneralPattern,
+          pattern2 |> Compat.unboxGeneralPattern,
+        ) {
+        | (
+            Some(
+              Tpat_construct(_, {cstr_name: ("Some" | "None") as name1}, _),
+            ),
+            Some(Tpat_construct(_, {cstr_name: "Some" | "None"}, _)),
+          ) =>
+          let casesArr = Array.of_list(cCases);
+          let (some, none) =
+            try(
+              name1 == "Some"
+                ? (casesArr[0], casesArr[1]) : (casesArr[1], casesArr[0])
+            ) {
+            | Invalid_argument(_) => (Nothing, Nothing)
+            };
+          Command.SwitchOption({functionCall, loc, some, none});
+        | _ => fail()
+        }
+
       | _ => fail()
       };
 
@@ -1200,11 +1187,12 @@ module Compile = {
       args |> List.map(((_, eOpt)) => eOpt |> expressionOpt(~ctx));
     Command.(unorderedSequence(commands) +++ command);
   }
-  and case : type k. (~ctx:ctx, Compat.typedtreeCase(k)) => _ = (~ctx, {c_guard, c_rhs}) =>
-    switch (c_guard) {
-    | None => c_rhs |> expression(~ctx)
-    | Some(e) => Command.(expression(~ctx, e) +++ expression(~ctx, c_rhs))
-    };
+  and case: type k. (~ctx: ctx, Compat.typedtreeCase(k)) => _ =
+    (~ctx, {c_guard, c_rhs}) =>
+      switch (c_guard) {
+      | None => c_rhs |> expression(~ctx)
+      | Some(e) => Command.(expression(~ctx, e) +++ expression(~ctx, c_rhs))
+      };
 };
 
 module CallStack = {
@@ -1594,7 +1582,7 @@ let progressFunctionsFromAttributes = attributes => {
         |> Compat.filter_map(
              fun
              | Annotation.IdentPayload(lid) => Some(lidToString(lid))
-             | _ => None
+             | _ => None,
            )
       | _ => []
       },
