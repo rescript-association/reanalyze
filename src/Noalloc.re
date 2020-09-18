@@ -144,8 +144,8 @@ let translateConst = (~loc, ~mem, const: Asttypes.constant) =>
     let sWithDecimal =
       [@doesNotRaise] s.[String.length(s) - 1] == '.' ? s ++ "0" : s;
     Il.F64(sWithDecimal);
-  | Const_string(string, _) =>
-    let index = mem |> Il.Mem.allocString(~string);
+  | Const_string(_) =>
+    let index = mem |> Il.Mem.allocString(~string=const |> Compat.getConstString);
     Il.I32(index |> Int32.of_int);
   | _ =>
     Log_.info(~count=false, ~loc, ~name="Noalloc", (ppf, ()) =>
