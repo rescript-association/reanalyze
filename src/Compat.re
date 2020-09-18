@@ -48,7 +48,7 @@ type generalPattern('a) = Typedtree.pattern
 
 let unboxPatCstrName = (pat) => {
 #if OCAML_MINOR >= 11
-  switch (pat) {
+  switch (pat.Typedtree.pat_desc) {
     | Typedtree.Tpat_value(v) =>
       switch ((v :> Typedtree.pattern_data(Typedtree.pattern_desc(Typedtree.value))).pat_desc) {
         | Tpat_construct(_, {cstr_name}, _) => Some(cstr_name)
@@ -57,8 +57,8 @@ let unboxPatCstrName = (pat) => {
     | _ => None
   }
 #else
-  switch pat {
-    | Typedtree.Tpat_construct(_, {cstr_name}, _) => Some(cstr_name)
+  switch (pat.Typedtree.pat_desc) {
+    | Tpat_construct(_, {cstr_name}, _) => Some(cstr_name)
     | _ => None
   }
 #endif

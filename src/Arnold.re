@@ -1094,7 +1094,7 @@ module Compile = {
       switch (cE, cases) {
       | (
           Call(FunctionCall(functionCall), loc),
-          [{c_lhs: {pat_desc: pattern1}}, {c_lhs: {pat_desc: pattern2}}],
+          [{c_lhs: pattern1}, {c_lhs: pattern2}],
         ) =>
         switch (
           pattern1 |> Compat.unboxPatCstrName,
