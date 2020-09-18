@@ -25,11 +25,20 @@ let filter_map = f => {
 };
 #endif
 
-let getStringValue = constSring => switch constSring {
+let getStringValue = const => switch const {
 #if OCAML_MINOR >= 11
   | Parsetree.Pconst_string(s, _, _) => s
 #else
   | Parsetree.Pconst_string(s, _) => s
+#endif
+  | _ => assert false
+};
+
+let getConstString = const => switch const {
+#if OCAML_MINOR >= 11
+  | Asttypes.Const_string(s, _, _) => s
+#else
+  | Asttypes.Const_string(s, _) => s
 #endif
   | _ => assert false
 };
