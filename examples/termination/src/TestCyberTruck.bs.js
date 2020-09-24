@@ -15,7 +15,7 @@ function progress(param) {
           RE_EXN_ID: "Assert_failure",
           _1: [
             "TestCyberTruck.res",
-            6,
+            8,
             6
           ],
           Error: new Error()
@@ -289,7 +289,7 @@ throw {
       RE_EXN_ID: "Assert_failure",
       _1: [
         "TestCyberTruck.res",
-        248,
+        250,
         17
       ],
       Error: new Error()
