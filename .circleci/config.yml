@@ -100,7 +100,7 @@ jobs:
             sudo apt-get --yes install nodejs
       - restore_cache:
           keys:
-          - v5-opam-cache-{{ arch }}
+          - v6-opam-cache-{{ arch }}
       - run:
           name: Update opam repo
           command: |
@@ -114,7 +114,7 @@ jobs:
           command: |
             opam install reason.3.6.0 dune.1.11.4 --yes | cat
       - save_cache:
-          key: v5-opam-cache-{{ arch }}
+          key: v6-opam-cache-{{ arch }}
           paths:
             - ~/.opam
             - _opam
@@ -158,7 +158,7 @@ jobs:
             sudo apt-get --yes install nodejs
       - restore_cache:
           keys:
-          - v5-opam-cache-{{ arch }}-410
+          - v6-opam-cache-{{ arch }}-410
       - run:
           name: Update opam repo
           command: |
@@ -172,7 +172,7 @@ jobs:
           command: |
             opam install reason.3.6.0 dune.1.11.4 --yes | cat
       - save_cache:
-          key: v5-opam-cache-{{ arch }}-410
+          key: v6-opam-cache-{{ arch }}-410
           paths:
             - ~/.opam
             - _opam
@@ -217,7 +217,7 @@ jobs:
             fi
       - restore_cache:
           keys:
-          - v5-opam-cache-{{ arch }}
+          - v6-opam-cache-{{ arch }}
       - run:
           name: Init opam
           command: |
@@ -229,7 +229,7 @@ jobs:
           command: |
             opam install reason.3.6.0 dune.1.11.4 --yes | cat
       - save_cache:
-          key: v5-opam-cache-{{ arch }}
+          key: v6-opam-cache-{{ arch }}
           paths:
             - ~/.opam
             - _opam
@@ -283,7 +283,7 @@ jobs:
             npm --version
       - restore_cache:
           keys:
-          - v5-opam-cache-{{ arch }}
+          - v6-opam-cache-{{ arch }}
       - opam_windows/init
       - opam_windows/create_switch
       - run:
@@ -295,7 +295,7 @@ jobs:
             eval $(opam env)
             opam install reason.3.6.0 dune.1.11.4 --yes | cat
       - save_cache:
-          key: v5-opam-cache-{{ arch }}
+          key: v6-opam-cache-{{ arch }}
           paths:
             - C:/tools/cygwin/home/circleci/.opam
             - _opam
