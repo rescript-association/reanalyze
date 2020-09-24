@@ -1,3 +1,5 @@
+@@warning("-39-48-27")
+
 // A progress function will eventually terminate
 let progress = {
   let counter = ref(Random.int(100))

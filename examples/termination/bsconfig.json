@@ -1,6 +1,6 @@
 {
   "name": "arnold",
-  "bsc-flags": ["-bs-super-errors -w a"],
+  "bsc-flags": ["-bs-super-errors"],
   "reason": { "react-jsx": 3 },
   "bs-dependencies": [],
   "sources": [
