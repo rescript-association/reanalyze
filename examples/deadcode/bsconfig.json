@@ -9,7 +9,7 @@
     "exportInterfaces": false
   },
   "name": "sample-typescript-app",
-  "bsc-flags": ["-bs-super-errors"],
+  "bsc-flags": ["-bs-super-errors -w a"],
   "ppx-flags": [
     "../../_build/default/dead-code-ppx/DeadCodePPX.exe",
     "../../_build/default/lazyload-ppx/LazyLoad.exe"
