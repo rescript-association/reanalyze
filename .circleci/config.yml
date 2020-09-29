@@ -100,7 +100,7 @@ jobs:
             sudo apt-get --yes install nodejs
       - restore_cache:
           keys:
-          - v7-opam-cache-{{ arch }}
+          - v8-opam-cache-{{ arch }}
       - run:
           name: Update opam repo
           command: |
@@ -114,7 +114,7 @@ jobs:
           command: |
             opam install reason.3.6.0 dune.1.11.4 --yes | cat
       - save_cache:
-          key: v7-opam-cache-{{ arch }}
+          key: v8-opam-cache-{{ arch }}
           paths:
             - ~/.opam
             - _opam
@@ -125,6 +125,7 @@ jobs:
           name: Build reanalyze
           command: |
             echo $PATH
+            ocaml --version
             npm run build
       - run:
           name: Test reanalyze
