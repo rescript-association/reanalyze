@@ -140,8 +140,11 @@
   addValueDeclaration +fortyTwoButExported DeadTest.re:5:4 path:+DeadTest
   addValueDeclaration +thisIsUsedOnce DeadTest.re:7:4 path:+DeadTest
   addValueDeclaration +thisIsUsedTwice DeadTest.re:10:4 path:+DeadTest
+  addValueDeclaration +thisIsMarkedDead DeadTest.re:15:4 path:+DeadTest
   addValueDeclaration +thisIsKeptAlive DeadTest.re:17:4 path:+DeadTest
   addValueDeclaration +thisIsMarkedLive DeadTest.re:20:4 path:+DeadTest
+  addValueDeclaration +thisIsAlsoMarkedDead DeadTest.re:24:6 path:+DeadTest.Inner
+  addValueDeclaration +thisSignatureItemIsDead DeadTest.re:28:2 path:+DeadTest.M
   addValueDeclaration +a DeadTest.re:37:2 path:+DeadTest.VariantUsedOnlyInImplementation
   addValueDeclaration +x DeadTest.re:62:2 path:+DeadTest.MM
   addValueDeclaration +y DeadTest.re:63:2 path:+DeadTest.MM
@@ -265,6 +268,7 @@
   addTypeReference DeadTest.re:194:7 --> DeadTest.re:185:6
   addValueReference ExportWithRename.res:2:4 --> DynamicallyLoadedComponent.re:2:4
   addValueReference DynamicallyLoadedComponent.re:2:4 --> ExportWithRename.res:2:4
+  addValueReference DeadTest.re:28:2 --> DeadTest.re:31:6
   addValueReference DeadTest.re:37:2 --> DeadTest.re:41:6
   addValueReference DeadTest.re:62:2 --> DeadTest.re:66:6
   addValueReference DeadTest.re:63:2 --> DeadTest.re:65:6
@@ -2047,9 +2051,12 @@ File References
   Live Value +DeadTest.VariantUsedOnlyInImplementation.+a: 1 references (DeadTest.re:37:2) [0]
   Live VariantCase +DeadTest.VariantUsedOnlyInImplementation.t.A: 1 references (DeadTest.re:41:10) [0]
   Live VariantCase +DeadTest.VariantUsedOnlyInImplementation.t.A: 1 references (DeadTest.re:40:6) [0]
+  Dead Value +DeadTest.M.+thisSignatureItemIsDead: 0 references () [1]
   Dead Value +DeadTest.M.+thisSignatureItemIsDead: 0 references () [0]
+  Dead Value +DeadTest.Inner.+thisIsAlsoMarkedDead: 0 references () [0]
   Live Value +DeadTest.+thisIsMarkedLive: 0 references () [0]
   Live Value +DeadTest.+thisIsKeptAlive: 1 references (DeadTest.re:20:4) [0]
+  Dead Value +DeadTest.+thisIsMarkedDead: 0 references () [0]
   Live Value +DeadTest.+thisIsUsedTwice: 2 references (DeadTest.re:11:7, DeadTest.re:12:7) [0]
   Live Value +DeadTest.+thisIsUsedOnce: 1 references (DeadTest.re:8:7) [0]
   Live Value +DeadTest.+fortyTwoButExported: 0 references () [0]
