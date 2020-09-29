@@ -125,6 +125,7 @@ jobs:
           name: Build reanalyze
           command: |
             echo $PATH
+            rm -r _build
             npm run build
       - run:
           name: Test reanalyze
