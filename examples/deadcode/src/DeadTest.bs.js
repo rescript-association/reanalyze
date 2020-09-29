@@ -4,18 +4,9 @@ import * as Curry from "bs-platform/lib/es6/curry.js";
 import * as Trace from "./trace.bs.js";
 import * as React from "react";
 import * as Caml_int64 from "bs-platform/lib/es6/caml_int64.js";
-import * as JSResource from "JSResource";
-import * as Caml_option from "bs-platform/lib/es6/caml_option.js";
-import * as RequireCond from "requireCond";
 import * as DeadValueTest from "./DeadValueTest.bs.js";
 import * as ImmutableArray from "./ImmutableArray.bs.js";
-import * as BootloaderResource from "BootloaderResource";
 import * as DynamicallyLoadedComponent from "./DynamicallyLoadedComponent.bs.js";
-
-var $ExportWithRename$OR$DynamicallyLoadedComponent$RequireCond = RequireCond("gk", "chat", {
-      true: "ExportWithRename.bs",
-      false: "DynamicallyLoadedComponent.bs"
-    });
 
 console.log(ImmutableArray.fromArray);
 
@@ -97,62 +88,6 @@ console.log(/* Root */{
       _0: "xzz"
     });
 
-var reasonResource = JSResource("DynamicallyLoadedComponent.bs");
-
-function makeProps(prim, prim$1, prim$2) {
-  var tmp = {
-    s: prim
-  };
-  if (prim$1 !== undefined) {
-    tmp.key = Caml_option.valFromOption(prim$1);
-  }
-  return tmp;
-}
-
-function make(props) {
-  return React.createElement(BootloaderResource.read(reasonResource).make, props);
-}
-
-var LazyDynamicallyLoadedComponent = {
-  reasonResource: reasonResource,
-  makeProps: makeProps,
-  make: make
-};
-
-var reasonResource$1 = JSResource("DynamicallyLoadedComponent.bs");
-
-function makeProps$1(prim, prim$1, prim$2) {
-  var tmp = {
-    s: prim
-  };
-  if (prim$1 !== undefined) {
-    tmp.key = Caml_option.valFromOption(prim$1);
-  }
-  return tmp;
-}
-
-function make$1(props) {
-  return React.createElement(BootloaderResource.read(reasonResource$1).make, props);
-}
-
-var LazyDynamicallyLoadedComponent2 = {
-  reasonResource: reasonResource$1,
-  makeProps: makeProps$1,
-  make: make$1
-};
-
-var cmp = React.createElement(make, {
-      s: "hello"
-    });
-
-function cmp2(param) {
-  return React.createElement(make$1, {
-              s: "hello"
-            });
-}
-
-console.log(cmp);
-
 var Chat = {};
 
 console.log(React.createElement(DynamicallyLoadedComponent.make, {
@@ -210,20 +145,15 @@ var thisIsKeptAlive = 42;
 
 var thisIsMarkedLive = 42;
 
-var ComponentSwitch = $ExportWithRename$OR$DynamicallyLoadedComponent$RequireCond;
-
 var zzz;
 
-var makeSwitch = $ExportWithRename$OR$DynamicallyLoadedComponent$RequireCond.make;
-
-var make$2 = DeadTest;
+var make = DeadTest;
 
 var theSideEffectIsLogging;
 
 var stringLengthNoSideEffects = 5;
 
 export {
-  $ExportWithRename$OR$DynamicallyLoadedComponent$RequireCond ,
   fortytwo ,
   fortyTwoButExported ,
   thisIsUsedOnce ,
@@ -245,22 +175,16 @@ export {
   bar ,
   withDefaultValue ,
   Ext_buffer ,
-  LazyDynamicallyLoadedComponent ,
-  LazyDynamicallyLoadedComponent2 ,
-  cmp ,
-  cmp2 ,
   Chat ,
-  ComponentSwitch ,
   zzz ,
   second ,
   minute ,
   deadRef ,
-  makeSwitch ,
-  make$2 as make,
+  make ,
   theSideEffectIsLogging ,
   stringLengthNoSideEffects ,
   GloobLive ,
   WithInclude ,
   
 }
-/* $ExportWithRename$OR$DynamicallyLoadedComponent$RequireCond Not a pure module */
+/*  Not a pure module */
