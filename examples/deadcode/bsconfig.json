@@ -10,6 +10,10 @@
   },
   "name": "sample-typescript-app",
   "bsc-flags": ["-bs-super-errors -w a"],
+  "ppx-flags": [
+    "../../_build/default/dead-code-ppx/DeadCodePPX.exe",
+    "../../_build/default/lazyload-ppx/LazyLoad.exe"
+  ],
   "reason": { "react-jsx": 3 },
   "bs-dependencies": ["reason-react", "@glennsl/bs-json"],
   "sources": [
