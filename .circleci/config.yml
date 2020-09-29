@@ -125,7 +125,7 @@ jobs:
           name: Build reanalyze
           command: |
             echo $PATH
-            ocaml -version
+            ocaml --version
             npm run build
       - run:
           name: Test reanalyze
