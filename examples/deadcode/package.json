@@ -12,7 +12,7 @@
     "analyze": "npm run dce && npm run exception && npm run noalloc"
   },
   "devDependencies": {
-    "bs-platform": "8.3.0",
+    "bs-platform": "8.3.1",
     "@glennsl/bs-json": "^3.0.0",
     "gentype": "^3.27.0",
     "react": "^16.13.1",
