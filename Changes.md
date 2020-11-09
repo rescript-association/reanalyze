@@ -1,5 +1,7 @@
 # master
-- Support OCaml 4.11.
+
+# 2.12.0
+- Support OCaml 4.11 and 4.12.
 
 # 2.11.0
 - Exception Analysis: add basic support for module aliases (e.g. `module Array = Belt.Array`).
