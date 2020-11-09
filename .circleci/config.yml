@@ -171,7 +171,7 @@ jobs:
       - run:
           name: Install opam dev dependencies
           command: |
-            opam install reason.3.6.0 dune.1.11.4 --yes | cat
+            opam install reason.3.6.2 dune.1.11.4 --yes | cat
       - save_cache:
           key: v7-opam-cache-{{ arch }}-411
           paths:
