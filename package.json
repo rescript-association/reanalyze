@@ -17,6 +17,10 @@
     "postversion": "git push && git push --tags"
   },
   "author": "Cristiano Calcagno",
+  "keywords": [
+    "rescript",
+    "tooling"
+  ],
   "bugs": {
     "url": "https://github.com/cristianoc/reanalyze/issues"
   },
