@@ -1,4 +1,6 @@
 # master
+
+# 2.13.0
 - Don't report on module bindings coming from the type of first-class modules (see https://github.com/reason-association/reanalyze/issues/107).
 - Fix issue where `emptyArray` was reported unused for lowercase components without children. (See https://github.com/reason-association/reanalyze/issues/85).
 
