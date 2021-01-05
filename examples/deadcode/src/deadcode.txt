@@ -425,6 +425,12 @@
   addValueDeclaration +x EverythingLiveHere.re:1:4 path:+EverythingLiveHere
   addValueDeclaration +y EverythingLiveHere.re:3:4 path:+EverythingLiveHere
   addValueDeclaration +z EverythingLiveHere.re:5:4 path:+EverythingLiveHere
+  Scanning FC.cmt Source:FC.re
+  addValueDeclaration +foo FC.re:6:4 path:+FC
+  addValueReference FC.re:7:14 --> FC.re:6:12
+  addValueReference FC.re:6:4 --> FC.re:2:2
+  addValueReference FC.re:6:4 --> FC.re:7:6
+  addValueReference FC.re:11:7 --> FC.re:6:4
   Scanning FirstClassModules.cmt Source:FirstClassModules.re
   addValueDeclaration +y FirstClassModules.re:17:6 path:+FirstClassModules.M
   addValueDeclaration +k FirstClassModules.re:21:8 path:+FirstClassModules.M.InnerModule2
@@ -1889,6 +1895,7 @@ File References
   ErrorHandler.re -->> 
   ErrorHandler.rei -->> ErrorHandler.re
   EverythingLiveHere.re -->> 
+  FC.re -->> 
   FirstClassModules.re -->> 
   FirstClassModulesInterface.re -->> 
   FirstClassModulesInterface.rei -->> FirstClassModulesInterface.re
@@ -2102,6 +2109,7 @@ File References
   Dead Value +EverythingLiveHere.+z: 0 references () [0]
   Dead Value +EverythingLiveHere.+y: 0 references () [0]
   Dead Value +EverythingLiveHere.+x: 0 references () [0]
+  Live Value +FC.+foo: 1 references (FC.re:11:7) [0]
   Live Value +FirstClassModules.+someFunctorAsFunction: 0 references () [0]
   Live Value +FirstClassModules.SomeFunctor.+ww: 1 references (FirstClassModules.re:46:20) [0]
   Live Value +FirstClassModules.+testConvert: 0 references () [0]

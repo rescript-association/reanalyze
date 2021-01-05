@@ -48,7 +48,13 @@ let collectValueBinding = (super, self, vb: Typedtree.value_binding) => {
         };
       let currentModulePath = ModulePath.getCurrent();
       let path = currentModulePath.path @ [Common.currentModuleName^];
-      if (!exists) {
+
+      let isFirstClassModule =
+        switch (vb.vb_expr.exp_type.desc) {
+        | Tpackage(_) => true
+        | _ => false
+        };
+      if (!exists && !isFirstClassModule) {
         // This is never toplevel currently
         let isToplevel = oldLastBinding == Location.none;
         let sideEffects = SideEffects.checkExpr(vb.vb_expr);
