@@ -1,4 +1,5 @@
 # master
+- Fix issue where `emptyArray` was reported unused for lowercase components without children. (See https://github.com/reason-association/reanalyze/issues/85).
 
 # 2.12.0
 - Support OCaml 4.11 and 4.12.
