@@ -401,6 +401,14 @@
   addValueDeclaration +make DynamicallyLoadedComponent.re:2:4 path:+DynamicallyLoadedComponent
   addValueReference DynamicallyLoadedComponent.re:2:32 --> DynamicallyLoadedComponent.re:2:13
   addValueReference DynamicallyLoadedComponent.re:2:19 --> React.re:7:0
+  Scanning EmptyArray.cmt Source:EmptyArray.res
+  addValueDeclaration +make EmptyArray.res:5:6 path:+EmptyArray.Z
+  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: EmptyArray.res:6:5
+  addValueDeclaration +emptyArray EmptyArray.res:6:5 path:+EmptyArray.Z
+  addDummyReference _none_:1:-1 --> EmptyArray.res:6:5
+  addValueReference EmptyArray.res:6:5 --> ReactDOMRe.re:114:0
+  addValueReference EmptyArray.res:10:9 --> EmptyArray.res:5:6
+  addValueReference EmptyArray.res:10:9 --> React.re:18:0
   Scanning ErrorHandler.cmt Source:ErrorHandler.re
   addValueDeclaration +notify ErrorHandler.re:7:6 path:+ErrorHandler.Make
   addValueDeclaration +x ErrorHandler.re:12:4 path:+ErrorHandler
@@ -1877,6 +1885,7 @@ File References
   DeadValueTest.rei -->> DeadValueTest.re
   Docstrings.re -->> 
   DynamicallyLoadedComponent.re -->> React.re
+  EmptyArray.res -->> React.re, ReactDOMRe.re
   ErrorHandler.re -->> 
   ErrorHandler.rei -->> ErrorHandler.re
   EverythingLiveHere.re -->> 
@@ -2088,6 +2097,8 @@ File References
   Live Value +Docstrings.+one: 0 references () [0]
   Live Value +Docstrings.+signMessage: 0 references () [0]
   Live Value +Docstrings.+flat: 0 references () [0]
+  Live Value +EmptyArray.Z.+emptyArray: 1 references (_none_:1:-1) [0]
+  Live Value +EmptyArray.Z.+make: 1 references (EmptyArray.res:10:9) [0]
   Dead Value +EverythingLiveHere.+z: 0 references () [0]
   Dead Value +EverythingLiveHere.+y: 0 references () [0]
   Dead Value +EverythingLiveHere.+x: 0 references () [0]

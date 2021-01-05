@@ -138,7 +138,20 @@ let collectExpr = (super, self, e: Typedtree.expression) => {
   let locFrom = e.exp_loc;
   switch (e.exp_desc) {
   | Texp_ident(_path, _, {Types.val_loc: {loc_ghost: false, _} as locTo}) =>
-    addValueReference(~addFileReference=true, ~locFrom, ~locTo)
+    if (locFrom == locTo && _path |> Path.name == "emptyArray") {
+      // Work around lowercase jsx with no children producing an artifact `emptyArray`
+      // which is called from its own location as many things are generated on the same location.
+      if (Common.Cli.debug^) {
+        Log_.item(
+          "addDummyReference %s --> %s@.",
+          Location.none.loc_start |> posToString,
+          locTo.loc_start |> posToString,
+        );
+      };
+      ValueReferences.add(locTo.loc_start, Location.none.loc_start);
+    } else {
+      addValueReference(~addFileReference=true, ~locFrom, ~locTo);
+    }
 
   | Texp_apply(
       {
