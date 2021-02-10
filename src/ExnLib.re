@@ -14,6 +14,14 @@ let raisesLibTable = {
     ("map2", [invalidArgument]),
   ];
 
+  let beltList = [
+    ("getExn", [notFound]),
+    ("headExn", [notFound]),
+    ("tailExn", [notFound]),
+  ];
+
+  let beltMap = [("getExn", [notFound])];
+
   let bsJson =
     // bs-json
     [
@@ -167,6 +175,16 @@ let raisesLibTable = {
 
   [
     ("Array", array),
+    ("Belt.List", beltList),
+    ("Belt_List", beltList),
+    ("Belt.Map", beltMap),
+    ("Belt.Map.Int", beltMap),
+    ("Belt.Map.String", beltMap),
+    ("Belt_Map", beltMap),
+    ("Belt_Map.Int", beltMap),
+    ("Belt_Map.String", beltMap),
+    ("Belt_MapInt", beltMap),
+    ("Belt_MapString", beltMap),
     ("Buffer", buffer),
     ("Bytes", bytes),
     ("Char", [("chr", [invalidArgument])]),
