@@ -140,7 +140,6 @@ npm add --save-dev reanalyze
 ### Build for OCaml 4.06.1 using dune (for bucklescript and native projects)
 
 ```sh
-npm install
 opam switch 4.06.1
 eval $(opam env)
 opam install reason dune
@@ -151,7 +150,6 @@ dune build
 ### Build for other OCaml versions (4.08, 4.09, 4.10) using dune (for native projects)
 
 ```sh
-npm install
 opam install reason dune
 dune build
 # _build/default/src/Reanalyze.exe
