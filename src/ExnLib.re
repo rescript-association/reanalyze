@@ -54,6 +54,7 @@ let raisesLibTable = {
     ("make", [invalidArgument]),
     ("init", [invalidArgument]),
     ("sub", [invalidArgument]),
+    ("sub_string", [invalidArgument]),
     ("extend", [invalidArgument]),
     ("fill", [invalidArgument]),
     ("blit", [invalidArgument]),
