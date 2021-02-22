@@ -13,7 +13,7 @@ let processSignature = (~doValues, ~doTypes, signature: Types.signature) => {
      );
 };
 
-let processCmt = (~cmtFilePath, cmt_infos: Cmt_format.cmt_infos) =>
+let processCmt = (~cmtFilePath, cmt_infos: Cmt_format.cmt_infos) => {
   switch (cmt_infos.cmt_annots) {
   | Interface(signature) =>
     ProcessDeadAnnotations.signature(signature);
@@ -36,3 +36,7 @@ let processCmt = (~cmtFilePath, cmt_infos: Cmt_format.cmt_infos) =>
     );
   | _ => ()
   };
+
+  DeadType.TypeDependencies.forceDelayedItems();
+  DeadType.TypeDependencies.clear();
+};

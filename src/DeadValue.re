@@ -486,7 +486,4 @@ let processStructure =
   let valueDependencies = cmt_value_dependencies |> List.rev;
 
   valueDependencies |> List.iter(processValueDependency);
-
-  DeadType.TypeDependencies.forceDelayedItems();
-  DeadType.TypeDependencies.clear();
 };

@@ -135,6 +135,10 @@
   addVariantCaseDeclaration Kaboom DeadRT.rei:3:4 path:DeadRT.moduleAccessPath
   extendTypeDependencies DeadRT.re:3:4 --> DeadRT.rei:3:4
   extendTypeDependencies DeadRT.rei:3:4 --> DeadRT.re:3:4
+  addTypeReference DeadRT.re:3:4 --> DeadRT.rei:3:4
+  addTypeReference DeadRT.rei:3:4 --> DeadRT.re:3:4
+  addTypeReference DeadRT.re:2:4 --> DeadRT.rei:2:4
+  addTypeReference DeadRT.rei:2:4 --> DeadRT.re:2:4
   Scanning DeadTest.cmt Source:DeadTest.re
   addValueDeclaration +fortytwo DeadTest.re:2:4 path:+DeadTest
   addValueDeclaration +fortyTwoButExported DeadTest.re:5:4 path:+DeadTest
@@ -273,10 +277,6 @@
   addTypeReference DeadTest.re:185:6 --> DeadTest.re:189:8
   addTypeReference DeadTest.re:40:6 --> DeadTest.re:36:6
   addTypeReference DeadTest.re:36:6 --> DeadTest.re:40:6
-  addTypeReference DeadRT.re:3:4 --> DeadRT.rei:3:4
-  addTypeReference DeadRT.rei:3:4 --> DeadRT.re:3:4
-  addTypeReference DeadRT.re:2:4 --> DeadRT.rei:2:4
-  addTypeReference DeadRT.rei:2:4 --> DeadRT.re:2:4
   Scanning DeadTestBlacklist.cmt Source:DeadTestBlacklist.re
   addValueDeclaration +x DeadTestBlacklist.re:1:4 path:+DeadTestBlacklist
   Scanning DeadTestWithInterface.cmt Source:DeadTestWithInterface.re
@@ -318,6 +318,18 @@
   addVariantCaseDeclaration InNeither DeadTypeTest.rei:10:4 path:DeadTypeTest.deadType
   extendTypeDependencies DeadTypeTest.re:10:4 --> DeadTypeTest.rei:10:4
   extendTypeDependencies DeadTypeTest.rei:10:4 --> DeadTypeTest.re:10:4
+  addTypeReference DeadTypeTest.re:10:4 --> DeadTypeTest.rei:10:4
+  addTypeReference DeadTypeTest.rei:10:4 --> DeadTypeTest.re:10:4
+  addTypeReference DeadTypeTest.re:9:4 --> DeadTypeTest.rei:9:4
+  addTypeReference DeadTypeTest.rei:9:4 --> DeadTypeTest.re:9:4
+  addTypeReference DeadTypeTest.re:8:4 --> DeadTypeTest.rei:8:4
+  addTypeReference DeadTypeTest.rei:8:4 --> DeadTypeTest.re:8:4
+  addTypeReference DeadTypeTest.re:7:4 --> DeadTypeTest.rei:7:4
+  addTypeReference DeadTypeTest.rei:7:4 --> DeadTypeTest.re:7:4
+  addTypeReference DeadTypeTest.re:3:4 --> DeadTypeTest.rei:3:4
+  addTypeReference DeadTypeTest.rei:3:4 --> DeadTypeTest.re:3:4
+  addTypeReference DeadTypeTest.re:2:4 --> DeadTypeTest.rei:2:4
+  addTypeReference DeadTypeTest.rei:2:4 --> DeadTypeTest.re:2:4
   Scanning DeadValueTest.cmt Source:DeadValueTest.re
   addValueDeclaration +valueAlive DeadValueTest.re:1:4 path:+DeadValueTest
   addValueDeclaration +valueDead DeadValueTest.re:2:4 path:+DeadValueTest
@@ -336,18 +348,6 @@
   addValueReference DeadValueTest.re:6:8 --> DeadValueTest.re:6:25
   addValueReference DeadValueTest.rei:1:0 --> DeadValueTest.re:1:4
   addValueReference DeadValueTest.rei:2:0 --> DeadValueTest.re:2:4
-  addTypeReference DeadTypeTest.re:10:4 --> DeadTypeTest.rei:10:4
-  addTypeReference DeadTypeTest.rei:10:4 --> DeadTypeTest.re:10:4
-  addTypeReference DeadTypeTest.re:9:4 --> DeadTypeTest.rei:9:4
-  addTypeReference DeadTypeTest.rei:9:4 --> DeadTypeTest.re:9:4
-  addTypeReference DeadTypeTest.re:8:4 --> DeadTypeTest.rei:8:4
-  addTypeReference DeadTypeTest.rei:8:4 --> DeadTypeTest.re:8:4
-  addTypeReference DeadTypeTest.re:7:4 --> DeadTypeTest.rei:7:4
-  addTypeReference DeadTypeTest.rei:7:4 --> DeadTypeTest.re:7:4
-  addTypeReference DeadTypeTest.re:3:4 --> DeadTypeTest.rei:3:4
-  addTypeReference DeadTypeTest.rei:3:4 --> DeadTypeTest.re:3:4
-  addTypeReference DeadTypeTest.re:2:4 --> DeadTypeTest.rei:2:4
-  addTypeReference DeadTypeTest.rei:2:4 --> DeadTypeTest.re:2:4
   Scanning DeadValueTest.cmti Source:DeadValueTest.rei
   addValueDeclaration +valueAlive DeadValueTest.rei:1:0 path:DeadValueTest
   addValueDeclaration +valueDead DeadValueTest.rei:2:0 path:DeadValueTest
@@ -470,6 +470,10 @@
   extendTypeDependencies FirstClassModulesInterface.re:3:2 --> FirstClassModulesInterface.rei:4:2
   extendTypeDependencies FirstClassModulesInterface.rei:4:2 --> FirstClassModulesInterface.re:3:2
   addValueDeclaration +r FirstClassModulesInterface.rei:7:0 path:FirstClassModulesInterface
+  addTypeReference FirstClassModulesInterface.re:3:2 --> FirstClassModulesInterface.rei:4:2
+  addTypeReference FirstClassModulesInterface.rei:4:2 --> FirstClassModulesInterface.re:3:2
+  addTypeReference FirstClassModulesInterface.re:2:2 --> FirstClassModulesInterface.rei:3:2
+  addTypeReference FirstClassModulesInterface.rei:3:2 --> FirstClassModulesInterface.re:2:2
   Scanning Hooks.cmt Source:Hooks.re
   addValueDeclaration +make Hooks.re:4:4 path:+Hooks
   addValueDeclaration +default Hooks.re:36:4 path:+Hooks
@@ -601,10 +605,6 @@
   addValueReference Hooks.re:162:10 --> Hooks.re:159:41
   addValueReference Hooks.re:162:4 --> ReactDOMRe.re:114:0
   addValueReference Hooks.re:160:2 --> ReactDOMRe.re:114:0
-  addTypeReference FirstClassModulesInterface.re:3:2 --> FirstClassModulesInterface.rei:4:2
-  addTypeReference FirstClassModulesInterface.rei:4:2 --> FirstClassModulesInterface.re:3:2
-  addTypeReference FirstClassModulesInterface.re:2:2 --> FirstClassModulesInterface.rei:3:2
-  addTypeReference FirstClassModulesInterface.rei:3:2 --> FirstClassModulesInterface.re:2:2
   Scanning IgnoreInterface.cmt Source:IgnoreInterface.re
   Scanning IgnoreInterface.cmti Source:IgnoreInterface.rei
   Scanning ImmutableArray.cmt Source:ImmutableArray.re
@@ -1865,6 +1865,8 @@
   extendTypeDependencies trace.ml:3:11 --> trace.mli:3:11
   extendTypeDependencies trace.mli:3:11 --> trace.ml:3:11
   addValueDeclaration +infok trace.mli:5:0 path:trace
+  addTypeReference trace.ml:3:11 --> trace.mli:3:11
+  addTypeReference trace.mli:3:11 --> trace.ml:3:11
   addValueReference TestDeadExn.re:1:7 --> DeadExn.re:1:10
   
 File References
@@ -2680,7 +2682,7 @@ File References
   optional argument z of function +foo is never used
   Live Value +OptArg.+foo: 1 references (OptArg.re:5:7) [0]
   Live Value +trace.+infok: 1 references (trace.mli:5:0) [0]
-  Dead RecordLabel +trace.pf.pf: 0 references () [0]
+  Live RecordLabel +trace.pf.pf: 1 references (trace.mli:3:11) [0]
 
   Warning Dead Module
   File "./AutoAnnotate.re", line 0, characters 0-0
@@ -4581,11 +4583,5 @@ File References
   variant1Object.R is a variant case which is never constructed
   <-- line 107
     | [@dead "variant1Object.R"] R(payload);
-
-  Warning Dead Type
-  File "./trace.ml", line 3, characters 11-28
-  pf.pf is a record label never used to read a value
-  <-- line 3
-  type pf = {pf: 'a. 'a printf [@dead "pf.pf"] }
   
-  Analysis reported 343 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:89, Warning Dead Value:209, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 342 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:88, Warning Dead Value:209, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
