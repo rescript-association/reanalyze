@@ -1,5 +1,8 @@
 # master
+
+# 2.14.0
 - Fix issue where type dependencies could get lost if the last file processed is an interface file.
+- Exception analysis: Bytes.sub_string throws.
 
 # 2.13.0
 - Don't report on module bindings coming from the type of first-class modules (see https://github.com/reason-association/reanalyze/issues/107).
