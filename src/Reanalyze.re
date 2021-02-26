@@ -306,4 +306,5 @@ let cli = () => {
   executeCliCommand(cliCommand^);
 };
 
+[@raises exit]
 cli();

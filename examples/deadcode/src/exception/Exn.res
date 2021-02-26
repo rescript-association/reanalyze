@@ -183,3 +183,7 @@ let _x = raise(A)
 let _ = raise(A)
 
 let () = raise(A)
+
+raise(Not_found)
+
+true ? exits() : ()
