@@ -14,6 +14,11 @@ let raisesLibTable = {
     ("map2", [invalidArgument]),
   ];
 
+  let beltArray = [
+    ("getExn", [assertFailure]),
+    ("setExn", [assertFailure]),
+  ];
+
   let beltList = [
     ("getExn", [notFound]),
     ("headExn", [notFound]),
@@ -21,6 +26,20 @@ let raisesLibTable = {
   ];
 
   let beltMap = [("getExn", [notFound])];
+  let beltMutableMap = beltMap;
+
+  let beltMutableQueue = [
+    ("peekExn", [notFound]),
+    ("popExn", [notFound]),
+  ];
+
+  let beltMutableSet = [("getExn", [notFound])];
+
+  let beltOption = [("getExn", [notFound])];
+
+  let beltResult = [("getExn", [notFound])];
+
+  let beltSet = [("getExn", [notFound])];
 
   let bsJson =
     // bs-json
@@ -175,6 +194,8 @@ let raisesLibTable = {
 
   [
     ("Array", array),
+    ("Belt.Array", beltArray),
+    ("Belt_Array", beltArray),
     ("Belt.List", beltList),
     ("Belt_List", beltList),
     ("Belt.Map", beltMap),
@@ -185,6 +206,36 @@ let raisesLibTable = {
     ("Belt_Map.String", beltMap),
     ("Belt_MapInt", beltMap),
     ("Belt_MapString", beltMap),
+    ("Belt.MutableMap", beltMutableMap),
+    ("Belt.MutableMap.Int", beltMutableMap),
+    ("Belt.MutableMap.String", beltMutableMap),
+    ("Belt_MutableMap", beltMutableMap),
+    ("Belt_MutableMap.Int", beltMutableMap),
+    ("Belt_MutableMap.String", beltMutableMap),
+    ("Belt_MutableMapInt", beltMutableMap),
+    ("Belt_MutableMapString", beltMutableMap),
+    ("Belt.MutableQueue", beltMutableQueue),
+    ("Belt_MutableQueue", beltMutableQueue),
+    ("Belt.Option", beltOption),
+    ("Belt_Option", beltOption),
+    ("Belt.Result", beltResult),
+    ("Belt_Result", beltResult),
+    ("Belt.Set", beltSet),
+    ("Belt.Set.Int", beltSet),
+    ("Belt.Set.String", beltSet),
+    ("Belt_Set", beltSet),
+    ("Belt_Set.Int", beltSet),
+    ("Belt_Set.String", beltSet),
+    ("Belt_SetInt", beltSet),
+    ("Belt_SetString", beltSet),
+    ("Belt.MutableSet", beltMutableSet),
+    ("Belt.MutableSet.Int", beltMutableSet),
+    ("Belt.MutableSet.String", beltMutableSet),
+    ("MutableSet", beltMutableSet),
+    ("MutableSet.Int", beltMutableSet),
+    ("MutableSet.String", beltMutableSet),
+    ("Belt_MutableSetInt", beltMutableSet),
+    ("Belt_MutableSetString", beltMutableSet),
     ("Buffer", buffer),
     ("Bytes", bytes),
     ("Char", [("chr", [invalidArgument])]),
