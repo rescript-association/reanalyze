@@ -536,7 +536,7 @@ let traverseAst = () => {
 
     let moduleName = Common.currentModule^;
 
-    let _res = self.expr(self, expr);
+    self.expr(self, expr) |> ignore;
 
     Checks.add(
       ~events=currentEvents^,

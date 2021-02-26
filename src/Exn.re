@@ -6,6 +6,8 @@ let decodeError = {
   "DecodeError";
 };
 
+let assertFailure = "Assert_failure";
+
 let divisionByZero = "Division_by_zero";
 
 let endOfFile = "End_of_file";

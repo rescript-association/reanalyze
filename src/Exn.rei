@@ -2,6 +2,8 @@ type t;
 
 let compare: (t, t) => int;
 
+let assertFailure: t;
+
 let decodeError: t;
 
 let divisionByZero: t;
