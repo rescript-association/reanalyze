@@ -1,4 +1,5 @@
 # master
+- Exception analysis: also report on exceptions in toplevel expressions, not just variable bindings.
 
 # 2.14.0
 - Fix issue where type dependencies could get lost if the last file processed is an interface file.

@@ -104,7 +104,15 @@
   () might raise A (Exn.res:185:9) and is not annotated with @raises A
 
   Exception Analysis
+  File "./Exn.res", line 187, characters 0-16
+  Toplevel expression might raise Not_found (Exn.res:187:0) and is not annotated with @raises Not_found
+
+  Exception Analysis
+  File "./Exn.res", line 189, characters 0-19
+  Toplevel expression might raise exit (Exn.res:189:7) and is not annotated with @raises exit
+
+  Exception Analysis
   File "./ExnA.res", line 1, characters 4-7
   bar might raise Not_found (ExnA.res:1:16) and is not annotated with @raises Not_found
   
-  Analysis reported 27 issues (Exception Analysis:27)
+  Analysis reported 29 issues (Exception Analysis:29)

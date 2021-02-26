@@ -498,10 +498,63 @@ let traverseAst = () => {
     expr;
   };
 
+  let getExceptionsFromAnnotations = attributes => {
+    let raisesAnnotationPayload =
+      attributes
+      |> Annotation.getAttributePayload(s => s == "raises" || s == "raise");
+    let rec getExceptions = payload =>
+      switch (payload) {
+      | Annotation.StringPayload(s) =>
+        [Exn.fromString(s)] |> Exceptions.fromList
+      | Annotation.ConstructPayload(s) =>
+        [Exn.fromString(s)] |> Exceptions.fromList
+      | Annotation.IdentPayload(s) =>
+        [Exn.fromString(s |> Longident.flatten |> String.concat("."))]
+        |> Exceptions.fromList
+      | Annotation.TuplePayload(tuple) =>
+        tuple
+        |> List.map(payload => payload |> getExceptions |> Exceptions.toList)
+        |> List.concat
+        |> Exceptions.fromList
+      | _ => Exceptions.empty
+      };
+    switch (raisesAnnotationPayload) {
+    | None => Exceptions.empty
+    | Some(payload) => payload |> getExceptions
+    };
+  };
+
+  let toplevelEval =
+      (self: Tast_mapper.mapper, expr: Typedtree.expression, attributes) => {
+    let oldId = currentId^;
+    let oldEvents = currentEvents^;
+
+    let name = "Toplevel expression";
+
+    currentId := name;
+    currentEvents := [];
+
+    let moduleName = Common.currentModule^;
+
+    let _res = self.expr(self, expr);
+
+    Checks.add(
+      ~events=currentEvents^,
+      ~exceptions=getExceptionsFromAnnotations(attributes),
+      ~loc=expr.exp_loc,
+      ~moduleName,
+      ~name,
+    );
+
+    currentId := oldId;
+    currentEvents := oldEvents;
+  };
+
   let structure_item =
       (self: Tast_mapper.mapper, structureItem: Typedtree.structure_item) => {
     let oldModulePath = ModulePath.getCurrent();
     switch (structureItem.str_desc) {
+    | Tstr_eval(expr, attributes) => toplevelEval(self, expr, attributes)
     | Tstr_module({mb_id, mb_loc}) =>
       ModulePath.setCurrent({
         ...oldModulePath,
@@ -539,32 +592,8 @@ let traverseAst = () => {
       currentId := name;
       currentEvents := [];
 
-      let raisesAnnotationPayload =
-        vb.vb_attributes
-        |> Annotation.getAttributePayload(s => s == "raises" || s == "raise");
-      let rec getExceptions = payload =>
-        switch (payload) {
-        | Annotation.StringPayload(s) =>
-          [Exn.fromString(s)] |> Exceptions.fromList
-        | Annotation.ConstructPayload(s) =>
-          [Exn.fromString(s)] |> Exceptions.fromList
-        | Annotation.IdentPayload(s) =>
-          [Exn.fromString(s |> Longident.flatten |> String.concat("."))]
-          |> Exceptions.fromList
-        | Annotation.TuplePayload(tuple) =>
-          tuple
-          |> List.map(payload =>
-               payload |> getExceptions |> Exceptions.toList
-             )
-          |> List.concat
-          |> Exceptions.fromList
-        | _ => Exceptions.empty
-        };
       let exceptionsFromAnnotations =
-        switch (raisesAnnotationPayload) {
-        | None => Exceptions.empty
-        | Some(payload) => payload |> getExceptions
-        };
+        getExceptionsFromAnnotations(vb.vb_attributes);
       exceptionsFromAnnotations |> Values.add(~name);
       let res = super.value_binding(self, vb);
 
