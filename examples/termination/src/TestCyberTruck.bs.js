@@ -331,6 +331,7 @@ export {
   ParserWihtOptionals ,
   Riddle ,
   TerminationTypes ,
+  testTry ,
   
 }
 /* counter Not a pure module */

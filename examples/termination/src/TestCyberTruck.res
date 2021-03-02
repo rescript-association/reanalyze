@@ -435,3 +435,15 @@ module TerminationTypes = {
   @progress(Parser.next)
   and oneTwoStar /* _=>N */ = p => kleene(~f=oneTwo, p)
 }
+
+@progress(progress)
+let rec testTry = () => {
+  try raise(Not_found) catch {
+  | Not_found =>
+    progress()
+    testTry()
+  | _ =>
+    progress()
+    testTry()
+  }
+}
