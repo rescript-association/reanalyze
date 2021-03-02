@@ -1149,7 +1149,10 @@ module Compile = {
 
     | Texp_assert(_) => Command.nothing
 
-    | Texp_try(_) => assert(false)
+    | Texp_try(e, cases) =>
+      let cE = e |> expression(~ctx);
+      let cCases = cases |> List.map(case(~ctx)) |> Command.nondet;
+      Command.(cE +++ cCases);
     | Texp_variant(_) => assert(false)
     | Texp_array(_) => assert(false)
     | Texp_while(_) => assert(false)

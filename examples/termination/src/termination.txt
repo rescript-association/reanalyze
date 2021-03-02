@@ -592,10 +592,19 @@
   File "./TestCyberTruck.res", line 436, characters 30-55
   oneTwoStar returns NoProgress with trace kleene<f:oneTwo>:NoProgress
 
+  Function Table
+  1 testTry: [+progress; testTry || +progress; testTry]
+
+  Termination Analysis for testTry
+
+  Termination Analysis
+  File "./TestCyberTruck.res", line 440, characters 18-146
+  testTry returns Progress with trace [progress:Progress; testTry:Progress || progress:Progress; testTry:Progress]
+
   Termination Analysis Stats
   Files:1
-  Recursive Blocks:20
-  Functions:48
+  Recursive Blocks:21
+  Functions:49
   Infinite Loops:10
   Hygiene Errors:1
   Cache Hits:8/31

@@ -1,6 +1,7 @@
 # master
 - Exception analysis: also report on exceptions in toplevel expressions, not just variable bindings.
 - Exception analysis: add support for Belt modules.
+- Termination analysis: add support for try blocks.
 
 # 2.14.0
 - Fix issue where type dependencies could get lost if the last file processed is an interface file.
