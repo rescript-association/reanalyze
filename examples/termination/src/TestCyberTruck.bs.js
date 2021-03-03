@@ -4,6 +4,8 @@ import * as List from "bs-platform/lib/es6/list.js";
 import * as Curry from "bs-platform/lib/es6/curry.js";
 import * as Random from "bs-platform/lib/es6/random.js";
 import * as Caml_obj from "bs-platform/lib/es6/caml_obj.js";
+import * as Caml_option from "bs-platform/lib/es6/caml_option.js";
+import * as Caml_js_exceptions from "bs-platform/lib/es6/caml_js_exceptions.js";
 
 var counter = {
   contents: Random.$$int(100)
@@ -285,15 +287,305 @@ function testLoopAfterProgress(param) {
   return loopAfterProgress(undefined);
 }
 
-throw {
-      RE_EXN_ID: "Assert_failure",
-      _1: [
-        "TestCyberTruck.res",
-        250,
-        17
-      ],
-      Error: new Error()
+function nothing(param) {
+  
+}
+
+function div(text, onClick) {
+  throw {
+        RE_EXN_ID: "Assert_failure",
+        _1: [
+          "TestCyberTruck.res",
+          250,
+          38
+        ],
+        Error: new Error()
+      };
+}
+
+function initState(n) {
+  if (n === 0) {
+    return 42;
+  }
+  
+}
+
+function increment(n) {
+  return n + 1 | 0;
+}
+
+function incrementOnClick(setState, param) {
+  return Curry._1(setState, increment);
+}
+
+function counter$1(state, setState) {
+  Curry._1(setState, initState);
+  return div(String(state), (function (param) {
+                return Curry._1(setState, increment);
+              }));
+}
+
+function counterCompiled(state) {
+  var newState = initState(state);
+  if (newState !== undefined) {
+    counterCompiled(newState);
+  }
+  String(state);
+  
+}
+
+function onClick1(state) {
+  return counterCompiled(state + 1 | 0);
+}
+
+function countRenders(state, setState) {
+  Curry._1(setState, increment);
+  return div("I have been rendered " + (String(state) + " times"), nothing);
+}
+
+function countRendersCompiled(state) {
+  var newState = state + 1 | 0;
+  countRendersCompiled(newState);
+  "I have been rendered " + (String(state) + " times");
+  
+}
+
+var UITermination = {
+  nothing: nothing,
+  div: div,
+  initState: initState,
+  increment: increment,
+  incrementOnClick: incrementOnClick,
+  counter: counter$1,
+  counterCompiled: counterCompiled,
+  onClick1: onClick1,
+  countRenders: countRenders,
+  countRendersCompiled: countRendersCompiled
+};
+
+function parseListO(p, f) {
+  var _nodes = /* [] */0;
+  while(true) {
+    var nodes = _nodes;
+    if (p.token === /* Asterisk */0) {
+      next(p);
+      return /* [] */0;
+    }
+    var item = Curry._1(f, p);
+    if (item === undefined) {
+      return List.rev(nodes);
+    }
+    _nodes = {
+      hd: Caml_option.valFromOption(item),
+      tl: nodes
     };
+    continue ;
+  };
+}
+
+function parseIntO(p) {
+  var n = p.token;
+  if (typeof n === "number") {
+    err(p, "integer expected");
+    return ;
+  } else {
+    next(p);
+    return n._0;
+  }
+}
+
+function alwaysReturnNone(p) {
+  while(true) {
+    var match = p.token;
+    if (typeof match === "number") {
+      return ;
+    }
+    next(p);
+    continue ;
+  };
+}
+
+function parseListIntO(p) {
+  return parseListO(p, parseIntO);
+}
+
+var testAlwaysReturnNone = alwaysReturnNone;
+
+var parseIntOWrapper = parseIntO;
+
+function thisMakesNoProgress(p, y) {
+  if (y !== undefined) {
+    return ;
+  } else {
+    next(p);
+    return 10;
+  }
+}
+
+var ParserWihtOptionals = {
+  parseListO: parseListO,
+  parseIntO: parseIntO,
+  parseListIntO: parseListIntO,
+  alwaysReturnNone: alwaysReturnNone,
+  testAlwaysReturnNone: testAlwaysReturnNone,
+  parseIntOWrapper: parseIntOWrapper,
+  thisMakesNoProgress: thisMakesNoProgress
+};
+
+function f(p) {
+  while(true) {
+    var i = p.token;
+    if (typeof i !== "number") {
+      return g(p) + i._0 | 0;
+    }
+    if (i === 1) {
+      return 0;
+    }
+    next(p);
+    continue ;
+  };
+}
+
+function gParam(p, g) {
+  var i = p.token;
+  if (typeof i === "number") {
+    return f(p);
+  } else {
+    return Curry._1(g, p) + i._0 | 0;
+  }
+}
+
+function g(p) {
+  next(p);
+  return gParam(p, g);
+}
+
+var Riddle = {
+  f: f,
+  gParam: gParam,
+  g: g
+};
+
+function f$1(p) {
+  while(true) {
+    next(p);
+    next(p);
+    continue ;
+  };
+}
+
+function g$1(p) {
+  while(true) {
+    next(p);
+    next(p);
+    continue ;
+  };
+}
+
+function kleene0(f, p) {
+  while(true) {
+    Curry._1(f, p);
+    continue ;
+  };
+}
+
+function union(f, g, p) {
+  var x = Curry._1(f, p);
+  if (x !== undefined) {
+    return Caml_option.valFromOption(x);
+  } else {
+    return Curry._1(g, p);
+  }
+}
+
+function concat(f, g, p) {
+  var x = Curry._1(f, p);
+  if (x === undefined) {
+    return ;
+  }
+  var y = Curry._1(g, p);
+  if (y !== undefined) {
+    return x + y;
+  }
+  
+}
+
+function kleene(f, p) {
+  var x = Curry._1(f, p);
+  if (x !== undefined) {
+    return {
+            hd: x,
+            tl: kleene(f, p)
+          };
+  } else {
+    return /* [] */0;
+  }
+}
+
+function one(p) {
+  var match = p.token;
+  if (typeof match === "number" || match._0 !== 1) {
+    return ;
+  } else {
+    next(p);
+    return "1";
+  }
+}
+
+function two(p) {
+  var match = p.token;
+  if (typeof match === "number" || match._0 !== 2) {
+    return ;
+  } else {
+    next(p);
+    return "2";
+  }
+}
+
+function oneTwo(p) {
+  return concat(one, two, p);
+}
+
+function oneTwoStar(p) {
+  return kleene(oneTwo, p);
+}
+
+var TerminationTypes = {
+  f: f$1,
+  g: g$1,
+  kleene0: kleene0,
+  union: union,
+  concat: concat,
+  kleene: kleene,
+  one: one,
+  two: two,
+  oneTwo: oneTwo,
+  oneTwoStar: oneTwoStar
+};
+
+function testTry(_param) {
+  while(true) {
+    try {
+      throw {
+            RE_EXN_ID: "Not_found",
+            Error: new Error()
+          };
+    }
+    catch (raw_exn){
+      var exn = Caml_js_exceptions.internalToOCamlException(raw_exn);
+      if (exn.RE_EXN_ID === "Not_found") {
+        progress(undefined);
+        _param = undefined;
+        continue ;
+      }
+      progress(undefined);
+      _param = undefined;
+      continue ;
+    }
+  };
+}
+
+var progress2 = progress;
 
 export {
   progress ,
