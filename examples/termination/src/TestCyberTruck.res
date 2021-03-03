@@ -247,7 +247,7 @@ module UITermination = {
   let nothing: onClick = () => ()
 
   type div = (~text: string, ~onClick: onClick) => dom
-  let div: div = assert false
+  let div: div = (~text, ~onClick) => assert false
 
   let initState = n => n == 0 ? Some(42) : None
   let increment = n => Some(n + 1)
