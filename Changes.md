@@ -3,6 +3,7 @@
 - Exception analysis: add support for Belt modules.
 - Termination analysis: add support for try blocks.
 - Termination analysis: add support for array creation.
+- Termination analysis: add support for polymorphic variant creation.
 
 # 2.14.0
 - Fix issue where type dependencies could get lost if the last file processed is an interface file.

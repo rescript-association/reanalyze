@@ -440,7 +440,7 @@ module TerminationTypes = {
 let rec testTry = () => {
   try raise(Not_found) catch {
   | Not_found =>
-    progress()
+    let _ = #abc(progress())
     testTry()
   | _ =>
     let _ = [(), progress(), ()]

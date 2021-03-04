@@ -1154,7 +1154,7 @@ module Compile = {
       let cE = e |> expression(~ctx);
       let cCases = cases |> List.map(case(~ctx)) |> Command.nondet;
       Command.(cE +++ cCases);
-    | Texp_variant(_) => assert(false)
+    | Texp_variant(_label, eOpt) => eOpt |> expressionOpt(~ctx)
     | Texp_while(_) => assert(false)
     | Texp_for(_) => assert(false)
     | Texp_send(_) => assert(false)

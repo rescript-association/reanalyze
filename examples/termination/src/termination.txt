@@ -598,7 +598,7 @@
   Termination Analysis for testTry
 
   Termination Analysis
-  File "./TestCyberTruck.res", line 440, characters 18-164
+  File "./TestCyberTruck.res", line 440, characters 18-178
   testTry returns Progress with trace [progress:Progress; testTry:Progress || progress:Progress; testTry:Progress]
 
   Termination Analysis Stats
