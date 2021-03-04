@@ -578,7 +578,11 @@ function testTry(_param) {
         _param = undefined;
         continue ;
       }
-      progress(undefined);
+      [
+        undefined,
+        progress(undefined),
+        undefined
+      ];
       _param = undefined;
       continue ;
     }
