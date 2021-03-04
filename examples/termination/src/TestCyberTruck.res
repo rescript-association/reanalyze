@@ -443,7 +443,7 @@ let rec testTry = () => {
     progress()
     testTry()
   | _ =>
-    progress()
+    let _ = [(), progress(), ()]
     testTry()
   }
 }

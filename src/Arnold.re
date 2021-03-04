@@ -1144,7 +1144,8 @@ module Compile = {
     | Texp_setfield(e1, _loc, _desc, e2) =>
       [e1, e2] |> List.map(expression(~ctx)) |> Command.unorderedSequence
 
-    | Texp_tuple(expressions) =>
+    | Texp_tuple(expressions)
+    | Texp_array(expressions) =>
       expressions |> List.map(expression(~ctx)) |> Command.unorderedSequence
 
     | Texp_assert(_) => Command.nothing
@@ -1154,7 +1155,6 @@ module Compile = {
       let cCases = cases |> List.map(case(~ctx)) |> Command.nondet;
       Command.(cE +++ cCases);
     | Texp_variant(_) => assert(false)
-    | Texp_array(_) => assert(false)
     | Texp_while(_) => assert(false)
     | Texp_for(_) => assert(false)
     | Texp_send(_) => assert(false)
