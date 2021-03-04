@@ -1,4 +1,6 @@
 # master
+
+# 2.15.0
 - Exception analysis: also report on exceptions in toplevel expressions, not just variable bindings.
 - Exception analysis: add support for Belt modules.
 - Termination analysis: add support for try blocks.
