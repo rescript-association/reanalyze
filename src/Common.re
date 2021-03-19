@@ -19,6 +19,8 @@ module Cli = {
 
   let ci = ref(false);
 
+  let cmtCommand = ref(false); // The command was a -cmt variant (e.g. -exception-cmt)
+
   let experimental = ref(false);
 
   let write = ref(false);

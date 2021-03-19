@@ -61,6 +61,7 @@ let runAnalysis = (~analysis, ~cmtRoot, ~ppf) => {
   let (+++) = Filename.concat;
   switch (cmtRoot) {
   | Some(root) =>
+    Cli.cmtCommand := true;
     let rec walkSubDirs = dir => {
       let absDir = dir == "" ? root : root +++ dir;
       let skipDir = {

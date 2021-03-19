@@ -50,22 +50,36 @@ module Values = {
     };
   };
 
-  let findPath = (~moduleName, ~modulePath, path) =>
+  let findPath = (~moduleName, ~modulePath, path) => {
+    let findExternal = (~externalModuleName, ~pathRev) => {
+      pathRev
+      |> List.rev
+      |> getFromModule(
+           ~moduleName=externalModuleName |> Name.toString,
+           ~modulePath=[],
+         );
+    };
     switch (path |> findLocal(~moduleName, ~modulePath)) {
     | None =>
       // Search in another file
       switch (path |> List.rev) {
       | [externalModuleName, ...pathRev] =>
-        pathRev
-        |> List.rev
-        |> getFromModule(
-             ~moduleName=externalModuleName |> Name.toString,
-             ~modulePath=[],
-           )
+        switch (findExternal(~externalModuleName, ~pathRev), pathRev) {
+        | (Some(_) as found, _) => found
+        | (None, [externalModuleName2, ...pathRev2])
+            when Common.Cli.cmtCommand^ && pathRev2 != [] =>
+          // Simplistic namespace resolution for dune namespace: skip the root of the path
+          findExternal(
+            ~externalModuleName=externalModuleName2,
+            ~pathRev=pathRev2,
+          )
+        | (None, _) => None
+        }
       | [] => None
       }
     | Some(exceptions) => Some(exceptions)
     };
+  };
 
   let newCmt = () => {
     currentFileTable := Hashtbl.create(15);
