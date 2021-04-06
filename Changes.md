@@ -1,5 +1,6 @@
 # master
 - Limited support for project with dune namespaces: when `Mylib.Foo` is not found try `Foo`.
+- Exception analysis: only report `Division_by_zero` for compilation to binary, not JS.
 
 # 2.15.0
 - Exception analysis: also report on exceptions in toplevel expressions, not just variable bindings.
