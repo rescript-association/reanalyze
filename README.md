@@ -1,6 +1,6 @@
 # reanalyze
 
-Program analysis for Reason and OCaml projects targeting JS (bucklescript) as well as native code (dune):
+Program analysis for ReScript and OCaml projects targeting JS (ReScript) as well as native code (dune):
 
 - Globally dead values, redundant optional arguments, dead modules, dead types (records and variants).
 - Exception analysis.
@@ -142,7 +142,7 @@ npm add --save-dev reanalyze
 ```sh
 opam switch 4.06.1
 eval $(opam env)
-opam install reason dune
+opam install dune
 dune build
 # _build/default/src/Reanalyze.exe
 ```
@@ -150,7 +150,7 @@ dune build
 ### Build for other OCaml versions (4.08, 4.09, 4.10) using dune (for native projects)
 
 ```sh
-opam install reason dune
+opam install dune
 dune build
 # _build/default/src/Reanalyze.exe
 ```
