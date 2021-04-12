@@ -1,17 +1,16 @@
 opam-version: "2.0"
-synopsis: "Dead values/types, exception, and termination analysis for OCaml/Reason"
+synopsis: "Dead values/types, exception, and termination analysis for OCaml/ReScript"
 description: """
 Experimental analyses for OCaml/Reason: for globally dead values/types, exception analysis, and termination analysis.
 """
 maintainer: ["Cristiano Calcagno"]
 authors: ["Cristiano Calcagno"]
 license: "MIT"
-homepage: "https://github.com/reason-association/reanalyze"
-bug-reports: "https://github.com/reason-association/reanalyze/issues"
+homepage: "https://github.com/rescript-association/reanalyze"
+bug-reports: "https://github.com/rescript-association/reanalyze/issues"
 depends: [
   "dune" {>= "1.7"}
   "ocaml" {>= "4.06.1" & < "4.13"}
-  "reason" {>= "3.6.0"}
 ]
 build: [
   ["dune" "subst"] {dev}
@@ -27,4 +26,4 @@ build: [
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "git+https://github.com/reason-association/reanalyze.git"
+dev-repo: "git+https://github.com/rescript-association/reanalyze.git"
