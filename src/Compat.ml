@@ -55,12 +55,14 @@ type 'a generalPattern = Typedtree.pattern
 let unboxPatCstrName pat =
 #if OCAML_MINOR >= 11
   match pat.Typedtree.pat_desc with
-    | Typedtree.Tpat_value(v) ->
-      match (v :> (Typedtree.pattern_data(Typedtree.pattern_desc(Typedtree.value)))).pat_desc with
-        | Tpat_construct(_, {cstr_name}, _) -> Some(cstr_name)
-        | _ -> None
-    | _ -> None
-  }
+  | Typedtree.Tpat_value v -> (
+    match
+      (v :> Typedtree.value Typedtree.pattern_desc Typedtree.pattern_data)
+        .pat_desc
+    with
+    | Tpat_construct (_, {cstr_name}, _) -> Some cstr_name
+    | _ -> None)
+  | _ -> None
 #else
   match pat.Typedtree.pat_desc with
     | Tpat_construct(_, {cstr_name}, _) -> Some(cstr_name)
@@ -194,7 +196,6 @@ let tstrExceptionGet (x : Typedtree.structure_item_desc) = match x with
 let moduleIdName nameOpt = match nameOpt with
   | None -> "UnnamedModule"
   | Some(name) -> name |> Ident.name
-end
 #else
 let moduleIdName name = name |> Ident.name
 #endif
