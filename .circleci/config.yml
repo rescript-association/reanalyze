@@ -100,7 +100,7 @@ jobs:
             sudo apt-get --yes install nodejs
       - restore_cache:
           keys:
-          - v10-opam-cache-{{ arch }}
+          - v11-opam-cache-{{ arch }}
       - run:
           name: Update opam repo
           command: |
@@ -114,7 +114,7 @@ jobs:
           command: |
             opam install dune cppo --yes | cat
       - save_cache:
-          key: v10-opam-cache-{{ arch }}
+          key: v11-opam-cache-{{ arch }}
           paths:
             - ~/.opam
             - _opam
@@ -159,7 +159,7 @@ jobs:
             sudo apt-get --yes install nodejs
       - restore_cache:
           keys:
-          - v10-opam-cache-{{ arch }}-411
+          - v11-opam-cache-{{ arch }}-411
       - run:
           name: Update opam repo
           command: |
@@ -173,7 +173,7 @@ jobs:
           command: |
             opam install dune cppo --yes | cat
       - save_cache:
-          key: v10-opam-cache-{{ arch }}-411
+          key: v11-opam-cache-{{ arch }}-411
           paths:
             - ~/.opam
             - _opam
@@ -218,7 +218,7 @@ jobs:
             fi
       - restore_cache:
           keys:
-          - v10-opam-cache-{{ arch }}
+          - v11-opam-cache-{{ arch }}
       - run:
           name: Init opam
           command: |
@@ -230,7 +230,7 @@ jobs:
           command: |
             opam install dune cppo --yes | cat
       - save_cache:
-          key: v10-opam-cache-{{ arch }}
+          key: v11-opam-cache-{{ arch }}
           paths:
             - ~/.opam
             - _opam
@@ -285,7 +285,7 @@ jobs:
             npm --version
       - restore_cache:
           keys:
-          - v10-opam-cache-{{ arch }}
+          - v11-opam-cache-{{ arch }}
       - opam_windows/init
       - opam_windows/create_switch
       - run:
@@ -298,7 +298,7 @@ jobs:
             eval $(opam env)
             opam install dune cppo --yes | cat
       - save_cache:
-          key: v10-opam-cache-{{ arch }}
+          key: v11-opam-cache-{{ arch }}
           paths:
             - C:/tools/cygwin/home/circleci/.opam
             - _opam
