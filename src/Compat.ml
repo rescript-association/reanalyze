@@ -56,7 +56,7 @@ let unboxPatCstrName pat =
 #if OCAML_MINOR >= 11
   match pat.Typedtree.pat_desc with
     | Typedtree.Tpat_value(v) ->
-      match ((v :> Typedtree.pattern_data(Typedtree.pattern_desc(Typedtree.value))).pat_desc) with
+      match (v :> (Typedtree.pattern_data(Typedtree.pattern_desc(Typedtree.value)))).pat_desc with
         | Tpat_construct(_, {cstr_name}, _) -> Some(cstr_name)
         | _ -> None
     | _ -> None
