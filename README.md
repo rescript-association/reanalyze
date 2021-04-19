@@ -79,7 +79,7 @@ The dead code analysis supports 2 annotations:
 The main difference between `@dead` and `@live` is the transitive behaviour: `@dead` values don't keep alive values they use, while `@live` values do.
 
 Several examples can be found in
-[`examples/deadcode/src/DeadTest.re`](examples/deadcode/src/DeadTest.re)
+[`examples/deadcode/src/DeadTest.res`](examples/deadcode/src/DeadTest.res)
 
 ## Unstable features
 
@@ -95,10 +95,10 @@ This automatically annotates `@live` all the items called `foo` or `bar`:
 
 ### CLI -live-paths
 
-This automatically annotates `@live` all the items in file `Hello.re`:
+This automatically annotates `@live` all the items in file `Hello.res`:
 
 ```sh
--live-paths Hello.re
+-live-paths Hello.res
 ```
 
 This automatically annotates `@live` all the items in the `src/test` and `tmp` folders:

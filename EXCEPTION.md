@@ -7,8 +7,8 @@ Instructions on how to run the exception analysis using the `-exception` and `-e
 
 Here's an example, where the analysis reports a warning any time an exception is raised, and not caught:
 
-```reason
-let raises = () => raise(Not_found);
+```rescript
+let raises = () => raise(Not_found)
 ```
 
 reports:
@@ -16,52 +16,52 @@ reports:
 ```sh
 
   Exception Analysis
-  File "A.re", line 1, characters 4-10
-  raises might raise Not_found (A.re:1:19) and is not annotated with @raises Not_found
+  File "A.res", line 1, characters 4-10
+  raises might raise Not_found (A.res:1:19) and is not annotated with @raises Not_found
 ```
 
 No warning is reporteed when a `@raises` annotation is added:
 
-```reason
-[@raises Not_found]
-let raises = () => raise(Not_found);
+```rescript
+@raises Not_found
+let raises = () => raise(Not_found)
 ```
 
 When a function raises multiple exceptions, a tuple annotation is used:
 
 
-```reason
-exception A;
-exception B;
+```rescript
+exception A
+exception B
 
-[@raises (A, B)]
-let twExceptions = (x, y) => {
+@raises((A, B))
+let twoExceptions = (x, y) => {
   if (x) {
-    raise(A);
-  };
+    raise(A)
+  }
   if (y) {
-    raise(B);
-  };
-};
+    raise(B)
+  }
+}
 ```
 
-It is possible to silence the analysis by adding a `[@doesNotRaise]` annotaion:
+It is possible to silence the analysis by adding a `@doesNotRaise` annotaion:
 
-```reason
-[@raises Invalid_argument]
-let stringMake1 = String.make(12, ' ');
+```rescript
+@raises(Invalid_argument)
+let stringMake1 = String.make(12, ' ')
 
 // Silence only the make function
-let stringMake2 = ([@doesNotRaise] String.make)(12, ' ');
+let stringMake2 = (@doesNotRaise String.make)(12, ' ')
 
 // Silence the entire call (including arguments to make)
-let stringMake3 = [@doesNotRaise] String.make(12, ' ');
+let stringMake3 = @doesNotRaise String.make(12, ' ')
 
 ```
 
 ## Limitations
 
-- The libraries currently modeled are limited to `Array`, `Buffer`, `Bytes`, `Char`, `Filename`, `Hashtbl`, `List`, `Pervasives`, `Str`, `String` from the standard library, and `bs-json`, and `Json` from `Js`. Models are currently vendored in the analysis, and are easy to add (see [`src/ExnLib.re`](src/ExnLib.re))
+- The libraries currently modeled are limited to `Array`, `Buffer`, `Bytes`, `Char`, `Filename`, `Hashtbl`, `List`, `Pervasives`, `Str`, `String` from the standard library, and `bs-json`, and `Json` from `Js`. Models are currently vendored in the analysis, and are easy to add (see [`src/ExnLib.res`](src/ExnLib.res))
 - Generic exceptions are not understood by the analysis. For example `exn` is not recognized below (only concrete exceptions are):
 
 ```reason
@@ -72,11 +72,11 @@ try (foo()) { | exn => raise(exn) }
 
 - There is no special support for functors. So with `Hashtbl.Make(...)` the builtin model will not apply. So the analysis won't report that the following can raise `Not_found`:
 
-```reason
+```rescript
 module StringHash =
   Hashtbl.Make({
-    include String;
-    let hash = Hashtbl.hash;
-  });
-let specializedHash = tbl => StringHash.find(tbl, "abc");
+    include String
+    let hash = Hashtbl.hash
+  })
+let specializedHash = tbl => StringHash.find(tbl, "abc")
 ```
