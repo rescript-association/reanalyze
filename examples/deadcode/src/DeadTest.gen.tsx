@@ -1,4 +1,4 @@
-/* TypeScript file generated from DeadTest.re by genType. */
+/* TypeScript file generated from DeadTest.res by genType. */
 /* eslint-disable import/first */
 
 

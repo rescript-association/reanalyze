@@ -1,4 +1,4 @@
-/* TypeScript file generated from Records.re by genType. */
+/* TypeScript file generated from Records.res by genType. */
 /* eslint-disable import/first */
 
 
@@ -61,7 +61,7 @@ export type myRec = { readonly type: string };
 export type myObj = { readonly type_: string };
 
 // tslint:disable-next-line:interface-over-type-literal
-export type myRecBsAs = { readonly type: string };
+export type myRecBsAs = { readonly type_: string };
 
 export const origin: coord = RecordsBS.origin;
 
