@@ -20,16 +20,16 @@ import * as React from 'react';
 const ReasonReact = require('reason-react/src/ReasonReact.js');
 
 // In case of type error, check the type of 'innerStuffContents' in 'TestImport.re' and './exportNestedValues'.
-export const innerStuffContentsTypeChecked: { readonly x: number } = innerStuffContentsNotChecked.MiddleLevelElements.stuff.InnerStuff.innerStuffContents;
+export const innerStuffContentsTypeChecked: unknown = innerStuffContentsNotChecked.MiddleLevelElements.stuff.InnerStuff.innerStuffContents;
 
 // Export 'innerStuffContents' early to allow circular import from the '.bs.js' file.
-export const innerStuffContents: unknown = innerStuffContentsTypeChecked as { readonly x: number };
+export const innerStuffContents: unknown = innerStuffContentsTypeChecked as unknown;
 
 // In case of type error, check the type of 'innerStuffContentsAsEmptyObject' in 'TestImport.re' and './exportNestedValues'.
-export const innerStuffContentsAsEmptyObjectTypeChecked: {} = innerStuffContentsAsEmptyObjectNotChecked.MiddleLevelElements.stuff.InnerStuff.innerStuffContents;
+export const innerStuffContentsAsEmptyObjectTypeChecked: unknown = innerStuffContentsAsEmptyObjectNotChecked.MiddleLevelElements.stuff.InnerStuff.innerStuffContents;
 
 // Export 'innerStuffContentsAsEmptyObject' early to allow circular import from the '.bs.js' file.
-export const innerStuffContentsAsEmptyObject: unknown = innerStuffContentsAsEmptyObjectTypeChecked as {};
+export const innerStuffContentsAsEmptyObject: unknown = innerStuffContentsAsEmptyObjectTypeChecked as unknown;
 
 // In case of type error, check the type of 'valueStartingWithUpperCaseLetter' in 'TestImport.re' and './exportNestedValues'.
 export const valueStartingWithUpperCaseLetterTypeChecked: string = valueStartingWithUpperCaseLetterNotChecked;

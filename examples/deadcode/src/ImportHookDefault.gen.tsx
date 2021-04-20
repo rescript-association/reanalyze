@@ -7,36 +7,15 @@ import {default as makeNotChecked} from './hookExample';
 import {default as defaultNotChecked} from './hookExample';
 
 // In case of type error, check the type of 'make' in 'ImportHookDefault.re' and './hookExample'.
-export const makeTypeChecked: React.ComponentType<{
-  readonly person: person; 
-  readonly children: JSX.Element; 
-  readonly renderMe: ImportHooks_renderMe<string>
-}> = makeNotChecked;
+export const makeTypeChecked: (_1:unknown) => JSX.Element = makeNotChecked;
 
 // Export 'make' early to allow circular import from the '.bs.js' file.
-export const make: unknown = makeTypeChecked as React.ComponentType<{
-  readonly person: person; 
-  readonly children: JSX.Element; 
-  readonly renderMe: ImportHooks_renderMe<string>
-}>;
+export const make: unknown = makeTypeChecked as (_1:unknown) => JSX.Element;
 
 // In case of type error, check the type of 'default' in 'ImportHookDefault.re' and './hookExample'.
-export const defaultTypeChecked: React.ComponentType<{
-  readonly person: person; 
-  readonly children: JSX.Element; 
-  readonly renderMe: ImportHooks_renderMe<string>
-}> = defaultNotChecked;
+export const defaultTypeChecked: (_1:unknown) => JSX.Element = defaultNotChecked;
 
 // Export '$$default' early to allow circular import from the '.bs.js' file.
-export const $$default: unknown = defaultTypeChecked as React.ComponentType<{
-  readonly person: person; 
-  readonly children: JSX.Element; 
-  readonly renderMe: ImportHooks_renderMe<string>
-}>;
-
-import {renderMe as ImportHooks_renderMe} from './ImportHooks.gen';
-
-// tslint:disable-next-line:interface-over-type-literal
-export type person = { readonly name: string; readonly age: number };
+export const $$default: unknown = defaultTypeChecked as (_1:unknown) => JSX.Element;
 
 export default $$default;

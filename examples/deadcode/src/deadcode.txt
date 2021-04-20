@@ -9,9 +9,7 @@
   Scanning BootloaderResource.cmt Source:BootloaderResource.res
   addValueDeclaration +read BootloaderResource.res:3:0 path:+BootloaderResource
   Scanning BucklescriptAnnotations.cmt Source:BucklescriptAnnotations.res
-  addValueDeclaration +foo BucklescriptAnnotations.res:23:4 path:+BucklescriptAnnotations
   addValueDeclaration +bar BucklescriptAnnotations.res:25:4 path:+BucklescriptAnnotations
-  addValueReference BucklescriptAnnotations.res:23:4 --> BucklescriptAnnotations.res:23:11
   addValueDeclaration +f BucklescriptAnnotations.res:26:6 path:+BucklescriptAnnotations
   addValueReference BucklescriptAnnotations.res:26:6 --> BucklescriptAnnotations.res:25:11
   addValueReference BucklescriptAnnotations.res:25:4 --> BucklescriptAnnotations.res:26:6
@@ -404,8 +402,6 @@
   Scanning EmptyArray.cmt Source:EmptyArray.res
   addValueDeclaration +make EmptyArray.res:5:6 path:+EmptyArray.Z
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: EmptyArray.res:6:5
-  addValueDeclaration +emptyArray EmptyArray.res:6:5 path:+EmptyArray.Z
-  addDummyReference _none_:1:-1 --> EmptyArray.res:6:5
   addValueReference EmptyArray.res:6:5 --> ReactDOMRe.re:114:0
   addValueReference EmptyArray.res:10:9 --> EmptyArray.res:5:6
   addValueReference EmptyArray.res:10:9 --> React.re:18:0
@@ -1959,7 +1955,6 @@ File References
   Dead VariantCase +AutoAnnotate.variant.R: 0 references () [0]
   Dead Value +BucklescriptAnnotations.+bar: 0 references () [1]
   Dead Value +BucklescriptAnnotations.+f: 0 references () [0]
-  Dead Value +BucklescriptAnnotations.+foo: 0 references () [0]
 
   Warning Unused Argument
   File "./ComponentAsProp.res", line 7, characters 0-282
@@ -2104,7 +2099,6 @@ File References
   Live Value +Docstrings.+one: 0 references () [0]
   Live Value +Docstrings.+signMessage: 0 references () [0]
   Live Value +Docstrings.+flat: 0 references () [0]
-  Live Value +EmptyArray.Z.+emptyArray: 1 references (_none_:1:-1) [0]
   Live Value +EmptyArray.Z.+make: 1 references (EmptyArray.res:10:9) [0]
   Dead Value +EverythingLiveHere.+z: 0 references () [0]
   Dead Value +EverythingLiveHere.+y: 0 references () [0]
@@ -2731,12 +2725,6 @@ File References
   Warning Dead Module
   File "./BucklescriptAnnotations.res", line 0, characters 0-0
   +BucklescriptAnnotations is a dead module as all its items are dead.
-
-  Warning Dead Value
-  File "./BucklescriptAnnotations.res", line 23, characters 0-55
-  +foo is never used
-  <-- line 23
-  @dead("+foo") let foo = (x: someMethods) => x["threeargs"](3, "a", 4)
 
   Warning Dead Value
   File "./BucklescriptAnnotations.res", line 25, characters 0-70
@@ -4582,4 +4570,4 @@ File References
   <-- line 96
   type variant1Object = | @dead("variant1Object.R") R(payload)
   
-  Analysis reported 342 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:88, Warning Dead Value:209, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 341 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:88, Warning Dead Value:208, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)

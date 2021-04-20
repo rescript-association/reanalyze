@@ -23,11 +23,7 @@ export type typeWithVars<x,y,z> =
   | { tag: "B"; value: z };
 
 // tslint:disable-next-line:interface-over-type-literal
-export type tree = {
-  readonly label: string; 
-  readonly left?: tree; 
-  readonly right?: tree
-};
+export type tree = unknown;
 
 // tslint:disable-next-line:interface-over-type-literal
 export type selfRecursive = { readonly self: selfRecursive };
@@ -64,20 +60,10 @@ export type record = { readonly i: number; readonly s: string };
 export type decorator<a,b> = (_1:a) => b;
 
 // tslint:disable-next-line:interface-over-type-literal
-export type marshalFields = {
-  readonly rec: string; 
-  readonly _switch: string; 
-  readonly switch: string; 
-  readonly __: string; 
-  readonly _: string; 
-  readonly foo: string; 
-  readonly _foo: string; 
-  readonly Uppercase: string; 
-  readonly _Uppercase: string
-};
+export type marshalFields = unknown;
 
 // tslint:disable-next-line:interface-over-type-literal
-export type marshalMutableField = { match: number };
+export type marshalMutableField = unknown;
 
 // tslint:disable-next-line:interface-over-type-literal
 export type ocaml_array<a> = a[];

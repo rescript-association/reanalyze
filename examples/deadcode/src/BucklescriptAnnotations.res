@@ -20,7 +20,7 @@ type someMethods = {
   "twoArgs": (. int, string) => int,
 }
 
-let foo = (x: someMethods) => x["threeargs"](3, "a", 4)
+// let foo = (x: someMethods) => x["threeargs"](3, "a", 4)
 
 let bar = (x: someMethods) => {
   let f = x["twoArgs"]

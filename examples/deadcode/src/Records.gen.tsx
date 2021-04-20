@@ -45,20 +45,13 @@ export type business2 = {
 };
 
 // tslint:disable-next-line:interface-over-type-literal
-export type mix = {
-  readonly a: number; 
-  readonly b: number; 
-  readonly c?: {
-    readonly name: string; 
-    readonly surname: string
-  }
-};
+export type mix = unknown;
 
 // tslint:disable-next-line:interface-over-type-literal
 export type myRec = { readonly type: string };
 
 // tslint:disable-next-line:interface-over-type-literal
-export type myObj = { readonly type_: string };
+export type myObj = unknown;
 
 // tslint:disable-next-line:interface-over-type-literal
 export type myRecBsAs = { readonly type_: string };
@@ -92,17 +85,9 @@ export const findAddress2: (business:business2) => list<string> = RecordsBS.find
 
 export const someBusiness2: business2 = RecordsBS.someBusiness2;
 
-export const computeArea3: (o:{
-  readonly x: number; 
-  readonly y: number; 
-  readonly z: (null | undefined | number)
-}) => number = RecordsBS.computeArea3;
+export const computeArea3: (o:unknown) => number = RecordsBS.computeArea3;
 
-export const computeArea4: (o:{
-  readonly x: number; 
-  readonly y: number; 
-  readonly z?: number
-}) => number = RecordsBS.computeArea4;
+export const computeArea4: (o:unknown) => number = RecordsBS.computeArea4;
 
 export const testMyRec: (x:myRec) => string = function (Arg1: any) {
   const result = RecordsBS.testMyRec({type_:Arg1.type});

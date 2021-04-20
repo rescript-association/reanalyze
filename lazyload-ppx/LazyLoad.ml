@@ -170,7 +170,7 @@ let expr mapper expr =
                              {
                                pexp_desc =
                                  Pexp_extension
-                                   ( {txt = "bs.obj"},
+                                   ( {txt = "obj"},
                                      PStr
                                        [
                                          {
@@ -292,7 +292,7 @@ let expr mapper expr =
                 (Nolabel, condition);
                 ( Nolabel,
                   Exp.extension
-                    ( Location.mkloc "bs.obj" !default_loc,
+                    ( Location.mkloc "obj" !default_loc,
                       Parsetree.PStr
                         [
                           Str.eval
