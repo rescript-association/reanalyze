@@ -1,4 +1,6 @@
 # master
+
+# 2.16.0
 - Limited support for project with dune namespaces: when `Mylib.Foo` is not found try `Foo`.
 
 # 2.15.0
