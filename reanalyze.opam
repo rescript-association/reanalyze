@@ -1,7 +1,7 @@
 opam-version: "2.0"
 synopsis: "Dead values/types, exception, and termination analysis for OCaml/ReScript"
 description: """
-Experimental analyses for OCaml/Reason: for globally dead values/types, exception analysis, and termination analysis.
+Experimental analyses for ReScript/OCaml/Reason: for globally dead values/types, exception analysis, and termination analysis.
 """
 maintainer: ["Cristiano Calcagno"]
 authors: ["Cristiano Calcagno"]
