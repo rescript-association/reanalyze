@@ -689,6 +689,10 @@ module Compile = struct
   let rec expression ~ctx (expr : Typedtree.expression) =
     let {currentFunctionName; functionTable; isProgressFunction} = ctx in
     let loc = expr.exp_loc in
+    let notImplemented case =
+      Log_.error ~loc ~name:"Error Not Implemented" (fun ppf () ->
+          Format.fprintf ppf case)
+    in
     match expr.exp_desc with
     | Texp_ident _ -> Command.nothing
     | Texp_apply
@@ -911,22 +915,51 @@ module Compile = struct
       let open Command in
       cE +++ cCases
     | Texp_variant (_label, eOpt) -> eOpt |> expressionOpt ~ctx
-    | Texp_while _ -> assert false
-    | Texp_for _ -> assert false
-    | Texp_send _ -> assert false
-    | Texp_new _ -> assert false
-    | Texp_instvar _ -> assert false
-    | Texp_setinstvar _ -> assert false
-    | Texp_override _ -> assert false
-    | Texp_letmodule _ -> assert false
-    | Texp_letexception _ -> assert false
-    | Texp_lazy _ -> assert false
-    | Texp_object _ -> assert false
-    | Texp_pack _ -> assert false
-    | Texp_unreachable -> assert false
-    | Texp_extension_constructor _ when true -> assert false
+    | Texp_while _ ->
+      notImplemented "Texp_while";
+      assert false
+    | Texp_for _ ->
+      notImplemented "Texp_for";
+      assert false
+    | Texp_send _ ->
+      notImplemented "Texp_send";
+      assert false
+    | Texp_new _ ->
+      notImplemented "Texp_new";
+      assert false
+    | Texp_instvar _ ->
+      notImplemented "Texp_instvar";
+      assert false
+    | Texp_setinstvar _ ->
+      notImplemented "Texp_setinstvar";
+      assert false
+    | Texp_override _ ->
+      notImplemented "Texp_override";
+      assert false
+    | Texp_letmodule _ ->
+      notImplemented "Texp_letmodule";
+      assert false
+    | Texp_letexception _ ->
+      notImplemented "Texp_letexception";
+      assert false
+    | Texp_lazy _ ->
+      notImplemented "Texp_lazy";
+      assert false
+    | Texp_object _ ->
+      notImplemented "Texp_letmodule";
+      assert false
+    | Texp_pack _ ->
+      notImplemented "Texp_pack";
+      assert false
+    | Texp_unreachable ->
+      notImplemented "Texp_unreachable";
+      assert false
+    | Texp_extension_constructor _ when true ->
+      notImplemented "Texp_extension_constructor";
+      assert false
     | _ ->
       (* ocaml 4.08: Texp_letop(_) | Texp_open(_) *)
+      notImplemented "Texp_letop(_) | Texp_open(_)";
       assert false
 
   and expressionOpt ~ctx eOpt =

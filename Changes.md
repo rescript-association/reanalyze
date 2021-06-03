@@ -1,4 +1,5 @@
 # master
+- Give explicit error message for ast cases not implemented.
 
 # 2.16.0
 - Limited support for project with dune namespaces: when `Mylib.Foo` is not found try `Foo`.
