@@ -54,7 +54,7 @@ jobs:
 
     - run: npm ci
 
-    - run: opam install dune
+    - run: opam install dune cppo
 
     - name: Build and test
       run: ${{matrix.build}}
