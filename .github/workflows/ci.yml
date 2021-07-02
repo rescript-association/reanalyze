@@ -11,19 +11,26 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-18.04, windows-latest]
+        os: [macos-latest, ubuntu-18.04, ubuntu-20.04, windows-latest]
         # syntax explanation:
         # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#example-including-additional-values-into-combinations
         include:
           - os: macos-latest
             build: eval $(opam env) && dune build && npm test
             artifact-folder: darwin
+            ocaml-version: 4.06.1
           - os: ubuntu-18.04
             build: eval $(opam env) && dune build && npm test
             artifact-folder: linux
+            ocaml-version: 4.06.1
+          - os: ubuntu-20.04
+            build: eval $(opam env) && dune build && npm test
+            artifact-folder: linux
+            ocaml-version: 4.11.1
           - os: windows-latest
             build: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
             artifact-folder: win32
+            ocaml-version: 4.06.1
 
     runs-on: ${{matrix.os}}
 
@@ -45,7 +52,7 @@ jobs:
     - name: Use OCaml
       uses: ocaml/setup-ocaml@v1.1.11
       with:
-        ocaml-version: 4.06.1
+        ocaml-version: ${{matrix.ocaml-version}}
 
     - name: Use Node.js
       uses: actions/setup-node@v2.1.5
