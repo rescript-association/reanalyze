@@ -6,9 +6,6 @@ Program analysis for ReScript and OCaml projects targeting JS (ReScript) as well
 - Exception analysis.
 - Termination.
 
-**Status `master (v3.*)`:** [![Build
-Status](https://dev.azure.com/ccrisccris/reanalyze/_apis/build/status/cristianoc.reanalyze?branchName=master)](https://dev.azure.com/ccrisccris/reanalyze/_build/latest?definitionId=1&branchName=master)
-
 ## Expectations
 
 Early release. While the core functionality is reasonably stable, the CLI and annotations are subject to change. However, this is a tiny surface at the moment.
