@@ -17,13 +17,15 @@ longer to give you feedback).
 npm test
 ```
 
-## Automated Releases (for Maintainers)
+## Releases (for Maintainers)
 
 The project is compatible with the [`npm
 version`](https://docs.npmjs.com/cli/version) workflow. After using the `npm
 version [major|minor|patch|...]` command, npm will automatically tag the
 current commit, bump all the necessary version numbers (also the number in
-`src/Version.re`) and push it to the current remote branch.
+`src/Version.ml`) and push it to the current remote branch.
+
+When a tag is pushed, proceed to manually create a release from that tag using the GitHub website. (To be automated later).
 
 **Here are the concrete commands to run:**
 
@@ -47,30 +49,17 @@ npm version major
 
 ## Releasing to npm (Maintainers only)
 
-The releasing mechanism downloads the platform dependent artifacts stored on
-the Github releases tab, so make sure to first do an automated release as
-stated above (`npm version ...`).
-
-After the CIs are done releasing the built binaries, do following command on a
-unix-like system (no Windows supported):
-
-```
-node scripts/download_dist.js
-```
-
-This will download the prepared npm package from the reanalyze Github releases
-tab to the root of your project with the name `reanalyze-$version.tgz`. This is
-a `tgz` file ready to be released to npm!
+Use the GitHub web iterface to download the artifact `reanalyze-npm.tar`.
 
 ```
 # Dry run for testing
-npm publish reanalyze-*.tgz --dry-run
+npm publish reanalyze-npm.tar --dry-run
 
 # Publish package as @latest
-npm publish reanalyze-*.tgz
+npm publish reanalyze-npm.tar
 
 # Publish package with @beta tag
-npm publish reanalyze-*.tgz --tag beta
+npm publish reanalyze-npm.tar --tag beta
 ```
 
 Consult the [npm publish](https://docs.npmjs.com/cli/publish) documentation for more options.
