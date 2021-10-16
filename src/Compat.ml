@@ -52,6 +52,12 @@ type 'a generalPattern = 'a Typedtree.general_pattern
 type 'a generalPattern = Typedtree.pattern
 #endif
 
+#if OCAML_MINOR >= 13
+type ('a, 'b) type_kind = ('a, 'b) Types.type_kind
+#else
+type ('a, 'b) type_kind = Types.type_kind
+#endif
+
 let unboxPatCstrName pat =
 #if OCAML_MINOR >= 11
   match pat.Typedtree.pat_desc with
@@ -60,7 +66,11 @@ let unboxPatCstrName pat =
       (v :> Typedtree.value Typedtree.pattern_desc Typedtree.pattern_data)
         .pat_desc
     with
+#if OCAML_MINOR >= 13
+    | Tpat_construct (_, {cstr_name}, _, _) -> Some cstr_name
+#else
     | Tpat_construct (_, {cstr_name}, _) -> Some cstr_name
+#endif
     | _ -> None)
   | _ -> None
 #else
@@ -68,6 +78,14 @@ let unboxPatCstrName pat =
     | Tpat_construct(_, {cstr_name}, _) -> Some(cstr_name)
     | _ -> None
 #endif
+
+let unboxPatCstrTxt pat = match pat with
+#if OCAML_MINOR >= 13
+  | Typedtree.Tpat_construct ({txt}, _, _, _) -> txt
+#else
+  | Typedtree.Tpat_construct ({txt}, _, _) -> txt
+#endif
+  | _ -> assert false
 
 
 #if OCAML_MINOR >= 8
@@ -112,6 +130,22 @@ let getSigType si = match si with
 #else
   | Types.Sig_type(id, t, _) ->
     (id, t)
+#endif
+  | _ -> assert false
+
+let getTSubst td = match td with
+#if OCAML_MINOR >= 13
+  | Types.Tsubst (t, _) -> t
+#else
+  | Types.Tsubst t -> t
+#endif
+  | _ -> assert false
+
+let getTypeVariant (tk: ('a, 'b) type_kind) = match tk with
+#if OCAML_MINOR >= 13
+  | Type_variant (l, _) -> l
+#else
+  | Type_variant l -> l
 #endif
   | _ -> assert false
 

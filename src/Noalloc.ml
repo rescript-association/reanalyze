@@ -24,7 +24,8 @@ let rec processTyp ~(funDef : Il.funDef) ~loc (typ : Types.type_expr) =
   | Ttuple ts ->
     let scopes = ts |> List.map (processTyp ~funDef ~loc) in
     Il.Tuple scopes
-  | Tlink t | Tsubst t -> t |> processTyp ~funDef ~loc
+  | Tlink t -> t |> processTyp ~funDef ~loc
+  | Tsubst _ -> Compat.getTSubst typ.desc |> processTyp ~funDef ~loc
   | Tconstr _ | Tvar _ ->
     let offset = funDef.nextOffset in
     funDef.nextOffset <- offset + 1;
@@ -36,7 +37,8 @@ let rec processTyp ~(funDef : Il.funDef) ~loc (typ : Types.type_expr) =
 
 let rec sizeOfTyp ~loc (typ : Types.type_expr) =
   match typ.desc with
-  | Tlink t | Tsubst t -> t |> sizeOfTyp ~loc
+  | Tlink t -> t |> sizeOfTyp ~loc
+  | Tsubst _ -> Compat.getTSubst typ.desc |> sizeOfTyp ~loc
   | Tconstr (Pident id, [], _) -> (
     match Ident.name id with
     | "int" -> 4
@@ -67,7 +69,9 @@ let rec processFunDefPat ~funDef ~env ~mem (pat : Typedtree.pattern) =
       env |> Il.Env.add ~id:(id |> Ident.name) ~def:(LocalScope scope)
     in
     (newEnv, scope)
-  | Tpat_construct ({txt = Longident.Lident "()"}, _, _) -> (env, Il.Tuple [])
+  | Tpat_construct _
+    when Compat.unboxPatCstrTxt pat.pat_desc = Longident.Lident "()" ->
+    (env, Il.Tuple [])
   | Tpat_tuple pats ->
     let newEnv, scopes =
       pats
