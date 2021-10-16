@@ -83,7 +83,7 @@ let addTypeDependenciesInnerModule ~pathToType ~loc ~typeLabelName =
       extendTypeDependencies loc2 loc
   | None -> TypeLabels.add path loc
 
-let addDeclaration ~(typeId : Ident.t) ~(typeKind : Types.type_kind) =
+let addDeclaration ~(typeId : Ident.t) ~(typeKind : ('a, 'b) Compat.type_kind) =
   let currentModulePath = ModulePath.getCurrent () in
   let pathToType =
     (typeId |> Ident.name |> Name.create)
@@ -103,10 +103,10 @@ let addDeclaration ~(typeId : Ident.t) ~(typeKind : Types.type_kind) =
         Ident.name ld_id |> Name.create
         |> processTypeLabel ~declKind:RecordLabel ~loc:ld_loc)
       l
-  | Type_variant l ->
+  | Type_variant _ ->
     List.iter
       (fun {Types.cd_id; cd_loc} ->
         Ident.name cd_id |> Name.create
         |> processTypeLabel ~declKind:VariantCase ~loc:cd_loc)
-      l
+      (Compat.getTypeVariant typeKind)
   | _ -> ()

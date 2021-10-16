@@ -223,8 +223,8 @@ let traverseAst () =
     |> List.fold_left
          (fun acc desc ->
            match desc with
-           | Typedtree.Tpat_construct (lid, _, _) ->
-             Exceptions.add (Exn.fromLid lid) acc
+           | Typedtree.Tpat_construct _ ->
+             Exceptions.add (Exn.fromLid (Compat.unboxPatCstrTxt desc)) acc
            | _ -> acc)
          Exceptions.empty
   in
@@ -248,8 +248,8 @@ let traverseAst () =
   in
   let raiseArgs args =
     match args with
-    | [(_, Some {Typedtree.exp_desc = Texp_construct (lid, _, _)})] ->
-      [Exn.fromLid lid] |> Exceptions.fromList
+    | [(_, Some {Typedtree.exp_desc = Texp_construct ({txt}, _, _)})] ->
+      [Exn.fromLid txt] |> Exceptions.fromList
     | [(_, Some {Typedtree.exp_desc = Texp_ident _})] ->
       [Exn.fromString "genericException"] |> Exceptions.fromList
     | _ -> [Exn.fromString "TODO_from_raise1"] |> Exceptions.fromList
@@ -451,8 +451,10 @@ let traverseAst () =
     in
     match vb.vb_pat.pat_desc with
     | Tpat_any when isToplevel && not vb.vb_loc.loc_ghost -> processBinding "_"
-    | Tpat_construct ({txt = Longident.Lident "()"}, _, _)
-      when isToplevel && not vb.vb_loc.loc_ghost ->
+    | Tpat_construct _
+      when isToplevel && (not vb.vb_loc.loc_ghost)
+           && Compat.unboxPatCstrTxt vb.vb_pat.pat_desc = Longident.Lident "()"
+      ->
       processBinding "()"
     | Tpat_var (id, {loc = {loc_ghost}})
       when (isFunction || isToplevel) && (not loc_ghost)

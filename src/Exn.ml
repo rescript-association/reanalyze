@@ -11,8 +11,7 @@ let jsExnError = "Js.Exn.Error"
 let matchFailure = "Match_failure"
 let notFound = "Not_found"
 let sysError = "Sys_error"
-let fromLid lid =
-  (lid.Asttypes.txt |> Longident.flatten) |> (String.concat ".")
+let fromLid lid = lid |> Longident.flatten |> String.concat "."
 let fromString s = s
 let toString s = s
 let yojsonJsonError = "Yojson.Json_error"

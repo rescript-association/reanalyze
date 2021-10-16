@@ -13,7 +13,8 @@ module Kind = struct
   let extractDeclTypes typ =
     let rec extract acc (typ : Types.type_expr) =
       match typ.desc with
-      | Tlink t | Tsubst t -> t |> extract acc
+      | Tlink t -> t |> extract acc
+      | Tsubst _ -> typ.desc |> Compat.getTSubst |> extract acc
       | Tarrow (lbl, t1, t2, _) -> t2 |> extract ((lbl, t1) :: acc)
       | _ -> (List.rev acc, typ)
     in
@@ -21,7 +22,8 @@ module Kind = struct
 
   let rec fromType (typ : Types.type_expr) =
     match typ.desc with
-    | Tlink t | Tsubst t -> t |> fromType
+    | Tlink t -> t |> fromType
+    | Tsubst _ -> typ.desc |> Compat.getTSubst |> fromType
     | Tarrow _ ->
       let declTypes, retType = typ |> extractDeclTypes in
       Arrow
