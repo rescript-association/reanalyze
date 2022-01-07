@@ -328,23 +328,28 @@ module ProcessDeadAnnotations = struct
       | _ -> ());
       super.value_binding self value_binding
     in
-    let type_kind self (typeKind : Typedtree.type_kind) =
+    let type_kind toplevelAttrs self (typeKind : Typedtree.type_kind) =
       (match typeKind with
       | Ttype_record labelDeclarations ->
         labelDeclarations
         |> List.iter
              (fun ({ld_attributes; ld_loc} : Typedtree.label_declaration) ->
-               ld_attributes
+               toplevelAttrs @ ld_attributes
                |> processAttributes ~doGenType ~name:"" ~pos:ld_loc.loc_start)
       | Ttype_variant constructorDeclarations ->
         constructorDeclarations
         |> List.iter
              (fun ({cd_attributes; cd_loc} : Typedtree.constructor_declaration)
              ->
-               cd_attributes
+               toplevelAttrs @ cd_attributes
                |> processAttributes ~doGenType ~name:"" ~pos:cd_loc.loc_start)
       | _ -> ());
       super.type_kind self typeKind
+    in
+    let type_declaration self (typeDeclaration : Typedtree.type_declaration) =
+      let attributes = typeDeclaration.typ_attributes in
+      let _ = type_kind attributes self typeDeclaration.typ_kind in
+      typeDeclaration
     in
     let value_description self
         ({val_attributes; val_id; val_val = {val_loc = {loc_start = pos}}} as
@@ -389,7 +394,7 @@ module ProcessDeadAnnotations = struct
       signature_item;
       structure;
       structure_item;
-      type_kind;
+      type_declaration;
       value_binding;
       value_description;
     }
