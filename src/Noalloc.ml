@@ -199,7 +199,6 @@ and processExpr ~funDef ~env ~mem (expr : Typedtree.expression) =
       Log_.info ~count:false ~loc:expr.exp_loc ~name:"Noalloc" (fun ppf () ->
           Format.fprintf ppf "Cannot decode function parameters");
       assert false);
-    funDef.params <- params;
     body |> processExpr ~funDef ~env ~mem
   | Texp_tuple l -> l |> List.iter (processExpr ~funDef ~env ~mem)
   | Texp_let (Nonrecursive, [vb], inExpr) ->
@@ -267,13 +266,13 @@ let envRef = ref (Il.Env.create ())
 
 let memRef = ref (Il.Mem.create ())
 
-let processValueBinding ~id ~loc ~(expr : Typedtree.expression) =
+let processValueBinding ~id ~(expr : Typedtree.expression) =
   let id = Ident.name id in
   Log_.item "no-alloc binding for %s@." id;
   let kind = Il.Kind.fromType expr.exp_type in
   match kind with
   | Arrow _ ->
-    let funDef = Il.FunDef.create ~id ~loc ~kind in
+    let funDef = Il.FunDef.create ~id ~kind in
     envRef := !envRef |> Il.Env.add ~id ~def:(FunDef funDef);
     expr |> processExpr ~funDef ~env:!envRef ~mem:!memRef
   | _ ->
@@ -284,7 +283,7 @@ let collectValueBinding super self (vb : Typedtree.value_binding) =
   (match vb.vb_pat.pat_desc with
   | Tpat_var (id, _)
     when vb.vb_attributes |> Annotation.hasAttribute (( = ) "noalloc") ->
-    processValueBinding ~loc:vb.vb_loc ~id ~expr:vb.Typedtree.vb_expr
+    processValueBinding ~id ~expr:vb.Typedtree.vb_expr
   | _ -> ());
   let r = super.Tast_mapper.value_binding self vb in
   r

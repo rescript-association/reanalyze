@@ -55,9 +55,7 @@ type scope = Local of offset | Tuple of scope list
 type funDef = {
   id : id;
   kind : Kind.t;
-  loc : Location.t;
   mutable body : instr list;
-  mutable params : (Ident.t * scope) list;
   mutable nextOffset : int;
   mutable numParams : int;
 }
@@ -81,8 +79,8 @@ type globalDef = {id : id; init : Init.t}
 type def = FunDef of funDef | GlobalDef of globalDef | LocalScope of scope
 
 module FunDef = struct
-  let create ~id ~kind ~loc =
-    {id; kind; loc; body = []; params = []; nextOffset = 0; numParams = 0}
+  let create ~id ~kind =
+    {id; kind; body = []; nextOffset = 0; numParams = 0}
 
   let emit ~instr def = def.body <- instr :: def.body
 
