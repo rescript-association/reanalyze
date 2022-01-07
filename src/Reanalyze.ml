@@ -230,7 +230,13 @@ let cli () =
   Arg.parse speclist print_endline usage;
   executeCliCommand !cliCommand
   [@@raises exit]
-
 ;;
-cli ()
-[@@raises exit]
+
+cli () [@@raises exit]
+
+type r = {
+  x : int;
+  y : string;
+  z : string;
+} [@@live]
+
