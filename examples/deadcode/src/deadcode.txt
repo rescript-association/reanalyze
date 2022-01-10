@@ -1955,10 +1955,6 @@ File References
   Dead VariantCase +AutoAnnotate.variant.R: 0 references () [0]
   Dead Value +BucklescriptAnnotations.+bar: 0 references () [1]
   Dead Value +BucklescriptAnnotations.+f: 0 references () [0]
-
-  Warning Unused Argument
-  File "./ComponentAsProp.res", line 7, characters 0-282
-  optional argument button of function +make is never used
   Live Value +ComponentAsProp.+make: 0 references () [0]
   Live Value +ComponentAsProp.+component: 1 references (ComponentAsProp.res:7:4) [0]
   Live Value +CreateErrorHandler1.Error1.+notification: 1 references (ErrorHandler.resi:3:2) [0]
@@ -2140,10 +2136,6 @@ File References
   Live RecordLabel +Hooks.vehicle.name: 13 references (Hooks.res:10:29, Hooks.res:30:41, Hooks.res:35:66, Hooks.res:38:78, Hooks.res:42:68, Hooks.res:46:45, Hooks.res:60:2, Hooks.res:60:14, Hooks.res:66:15, Hooks.res:66:27, Hooks.res:74:75, Hooks.res:100:58, Hooks.res:115:41) [0]
   Live Value +ImportIndex.+make: 0 references () [0]
   Dead Value +ImportMyBanner.+make: 0 references () [0]
-
-  Warning Unused Argument
-  File "./ImportMyBanner.res", line 7, characters 0-347
-  optional argument message of function +make is never used
   Live Value +ImportMyBanner.+make: 0 references () [0]
   Dead RecordLabel +ImportMyBanner.message.text: 0 references () [0]
   Live Value +LetPrivate.+y: 0 references () [0]
@@ -2280,10 +2272,6 @@ File References
   Live Value +TestImmutableArray.+testImmutableArrayGet: 0 references () [0]
   Live Value +TestImport.+defaultValue2: 0 references () [0]
   Dead Value +TestImport.+make: 0 references () [0]
-
-  Warning Unused Argument
-  File "./TestImport.res", line 24, characters 0-275
-  optional argument message of function +make is never used
   Live Value +TestImport.+make: 0 references () [0]
   Dead RecordLabel +TestImport.message.text: 0 references () [0]
   Live Value +TestImport.+defaultValue: 0 references () [0]
@@ -4570,4 +4558,4 @@ File References
   <-- line 96
   type variant1Object = | @dead("variant1Object.R") R(payload)
   
-  Analysis reported 341 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:88, Warning Dead Value:208, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 338 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:88, Warning Dead Value:208, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:8)
