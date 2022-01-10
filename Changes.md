@@ -1,4 +1,5 @@
 # master
+- Don't report unused optional arguments for functiona annotated `@live` or `@genType`.
 
 # 2.17.0
 - Give explicit error message for ast cases not implemented.

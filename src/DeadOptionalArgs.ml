@@ -85,15 +85,16 @@ let forceDelayedItems () =
 let check decl =
   match decl with
   | {declKind = Value {optionalArgs}} when active () ->
-    optionalArgs
-    |> OptionalArgs.iterUnused (fun s ->
-           Log_.info ~loc:(decl |> declGetLoc) ~name:"Warning Unused Argument"
-             (fun ppf () ->
-               Format.fprintf ppf
-                 "optional argument @{<info>%s@} of function @{<info>%s@} is \
-                  never used"
-                 s
-                 (decl.path |> Path.withoutHead)));
+    if not (ProcessDeadAnnotations.isAnnotatedGenTypeOrLive decl.pos) then
+      optionalArgs
+      |> OptionalArgs.iterUnused (fun s ->
+             Log_.info ~loc:(decl |> declGetLoc) ~name:"Warning Unused Argument"
+               (fun ppf () ->
+                 Format.fprintf ppf
+                   "optional argument @{<info>%s@} of function @{<info>%s@} is \
+                    never used"
+                   s
+                   (decl.path |> Path.withoutHead)));
     optionalArgs
     |> OptionalArgs.iterAlwaysUsed (fun s nCalls ->
            Log_.info ~loc:(decl |> declGetLoc)
