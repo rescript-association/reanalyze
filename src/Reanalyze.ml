@@ -233,10 +233,3 @@ let cli () =
 ;;
 
 cli () [@@raises exit]
-
-type r = {
-  x : int;
-  y : string;
-  z : string;
-} [@@live]
-
