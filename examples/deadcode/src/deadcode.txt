@@ -1536,6 +1536,8 @@
   Scanning TestOptArg.cmt Source:TestOptArg.res
   addValueDeclaration +foo TestOptArg.res:3:4 path:+TestOptArg
   addValueDeclaration +bar TestOptArg.res:5:4 path:+TestOptArg
+  addValueDeclaration +notSuppressesOptArgs TestOptArg.res:9:4 path:+TestOptArg
+  addValueDeclaration +liveSuppressesOptArgs TestOptArg.res:14:4 path:+TestOptArg
   DeadOptionalArgs.addReferences OptArg.bar called with optional argNames:z argNamesMaybe: TestOptArg.res:1:7
   addValueReference TestOptArg.res:1:7 --> OptArg.resi:2:0
   addValueReference TestOptArg.res:3:4 --> TestOptArg.res:3:14
@@ -1544,6 +1546,24 @@
   DeadOptionalArgs.addReferences foo called with optional argNames:x argNamesMaybe: TestOptArg.res:5:16
   addValueReference TestOptArg.res:5:4 --> TestOptArg.res:3:4
   addValueReference TestOptArg.res:7:7 --> TestOptArg.res:5:4
+  addValueReference TestOptArg.res:9:4 --> TestOptArg.res:9:31
+  addValueReference TestOptArg.res:9:4 --> TestOptArg.res:9:37
+  addValueReference TestOptArg.res:9:4 --> TestOptArg.res:9:43
+  addValueReference TestOptArg.res:9:4 --> TestOptArg.res:9:28
+  addValueReference TestOptArg.res:9:4 --> TestOptArg.res:9:34
+  addValueReference TestOptArg.res:9:4 --> TestOptArg.res:9:40
+  addValueReference TestOptArg.res:9:4 --> TestOptArg.res:9:46
+  DeadOptionalArgs.addReferences notSuppressesOptArgs called with optional argNames: argNamesMaybe: TestOptArg.res:11:8
+  addValueReference TestOptArg.res:11:8 --> TestOptArg.res:9:4
+  addValueReference TestOptArg.res:14:4 --> TestOptArg.res:14:32
+  addValueReference TestOptArg.res:14:4 --> TestOptArg.res:14:38
+  addValueReference TestOptArg.res:14:4 --> TestOptArg.res:14:44
+  addValueReference TestOptArg.res:14:4 --> TestOptArg.res:14:29
+  addValueReference TestOptArg.res:14:4 --> TestOptArg.res:14:35
+  addValueReference TestOptArg.res:14:4 --> TestOptArg.res:14:41
+  addValueReference TestOptArg.res:14:4 --> TestOptArg.res:14:47
+  DeadOptionalArgs.addReferences liveSuppressesOptArgs called with optional argNames: argNamesMaybe: TestOptArg.res:16:8
+  addValueReference TestOptArg.res:16:8 --> TestOptArg.res:14:4
   Scanning TestPromise.cmt Source:TestPromise.res
   addValueDeclaration +convert TestPromise.res:14:4 path:+TestPromise
   addRecordLabelDeclaration x TestPromise.res:6:2 path:+TestPromise.fromPayload
@@ -2286,6 +2306,20 @@ File References
   Live Value +TestModuleAliases.+testInner2: 0 references () [0]
   Live Value +TestModuleAliases.+testInner1Expanded: 0 references () [0]
   Live Value +TestModuleAliases.+testInner1: 0 references () [0]
+  Live Value +TestOptArg.+liveSuppressesOptArgs: 1 references (TestOptArg.res:16:8) [0]
+
+  Warning Unused Argument
+  File "./TestOptArg.res", line 9, characters 0-65
+  optional argument x of function +notSuppressesOptArgs is never used
+
+  Warning Unused Argument
+  File "./TestOptArg.res", line 9, characters 0-65
+  optional argument y of function +notSuppressesOptArgs is never used
+
+  Warning Unused Argument
+  File "./TestOptArg.res", line 9, characters 0-65
+  optional argument z of function +notSuppressesOptArgs is never used
+  Live Value +TestOptArg.+notSuppressesOptArgs: 1 references (TestOptArg.res:11:8) [0]
   Live Value +TestOptArg.+bar: 1 references (TestOptArg.res:7:7) [0]
 
   Warning Redundant Optional Argument
@@ -4564,4 +4598,4 @@ File References
   <-- line 96
   type variant1Object = | @dead("variant1Object.R") R(payload)
   
-  Analysis reported 338 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:88, Warning Dead Value:208, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:8)
+  Analysis reported 341 issues (Warning Dead Exception:1, Warning Dead Module:26, Warning Dead Type:88, Warning Dead Value:208, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
