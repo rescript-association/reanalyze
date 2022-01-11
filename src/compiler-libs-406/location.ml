@@ -126,7 +126,7 @@ let print_loc ppf loc =
   end else begin
     fprintf ppf "%s@{<loc>%a%s%i" msg_file print_filename file msg_line line;
     if startchar >= 0 then
-      fprintf ppf "%s%i%s%i" msg_chars startchar msg_to endchar;
+      fprintf ppf "%s%i%s%i" msg_chars (startchar-1) msg_to (endchar-1);
     fprintf ppf "@}"
   end
 ;;
