@@ -16,9 +16,29 @@ function bar(param) {
 
 console.log(bar);
 
+function notSuppressesOptArgs(xOpt, yOpt, zOpt, w) {
+  var x = xOpt !== undefined ? xOpt : 1;
+  var y = yOpt !== undefined ? yOpt : 2;
+  var z = zOpt !== undefined ? zOpt : 3;
+  return ((x + y | 0) + z | 0) + w | 0;
+}
+
+notSuppressesOptArgs(undefined, undefined, undefined, 3);
+
+function liveSuppressesOptArgs(xOpt, yOpt, zOpt, w) {
+  var x = xOpt !== undefined ? xOpt : 1;
+  var y = yOpt !== undefined ? yOpt : 2;
+  var z = zOpt !== undefined ? zOpt : 3;
+  return ((x + y | 0) + z | 0) + w | 0;
+}
+
+liveSuppressesOptArgs(undefined, undefined, undefined, 3);
+
 export {
   foo ,
   bar ,
+  notSuppressesOptArgs ,
+  liveSuppressesOptArgs ,
   
 }
 /*  Not a pure module */
