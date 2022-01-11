@@ -335,14 +335,16 @@ module ProcessDeadAnnotations = struct
         |> List.iter
              (fun ({ld_attributes; ld_loc} : Typedtree.label_declaration) ->
                toplevelAttrs @ ld_attributes
-               |> processAttributes ~doGenType ~name:"" ~pos:ld_loc.loc_start)
+               |> processAttributes ~doGenType:false ~name:""
+                    ~pos:ld_loc.loc_start)
       | Ttype_variant constructorDeclarations ->
         constructorDeclarations
         |> List.iter
              (fun ({cd_attributes; cd_loc} : Typedtree.constructor_declaration)
              ->
                toplevelAttrs @ cd_attributes
-               |> processAttributes ~doGenType ~name:"" ~pos:cd_loc.loc_start)
+               |> processAttributes ~doGenType:false ~name:""
+                    ~pos:cd_loc.loc_start)
       | _ -> ());
       super.type_kind self typeKind
     in
