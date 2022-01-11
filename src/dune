@@ -1,4 +1,5 @@
 (copy_files# ext/*.{ml,mli})
+(copy_files# compiler-libs-406/*.{ml,mli})
 
 (executable
  (public_name reanalyze.exe)
@@ -9,4 +10,6 @@
  (name Reanalyze)
  (flags "-w" "+6+26+27+32+33+39")
  ; Depends on:
- (libraries unix str compiler-libs.common))
+ (libraries unix str)
+ (modules_without_implementation asttypes outcometree parsetree)
+)

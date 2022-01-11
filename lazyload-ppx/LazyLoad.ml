@@ -1,4 +1,4 @@
-#if OCAML_MINOR <= 6
+#if OCAML_MINOR <= 60
 open Ast_helper
 open Ast_mapper
 open Asttypes
