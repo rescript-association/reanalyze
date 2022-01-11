@@ -1,6 +1,7 @@
 # master
 - Don't report unused optional arguments for functions annotated `@live` or `@genType`.
 - Add support for `@live` or `dead` at toplevel in a type declaration. Equivalent to annotating all the record fields / variant cases.
+- Turn off dead code reporting on externals by default. Add option `-externals` to turn back on.
 
 # 2.17.0
 - Give explicit error message for ast cases not implemented.

@@ -184,6 +184,9 @@ let cli () =
       ( "-experimental",
         Arg.Unit setExperimental,
         "Turn on experimental analyses (this option is currently unused)" );
+      ( "-externals",
+        Arg.Unit (fun () -> DeadCommon.Config.analyzeExternals := true),
+        "Report on externals in dead code analysis" );
       ( "-live-names",
         Arg.String (fun s -> setLiveNames s),
         "comma-separated-names Consider all values with the give names as live"

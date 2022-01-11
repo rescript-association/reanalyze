@@ -234,10 +234,13 @@ let rec processSignatureItem ~doTypes ~doValues ~moduleLoc ~path
     let id, loc, kind, valType = si |> Compat.getSigValue in
     if not loc.Location.loc_ghost then
       let isPrimitive = match kind with Val_prim _ -> true | _ -> false in
-      if (not isPrimitive) || Config.analyzeExternals then
+      if (not isPrimitive) || !Config.analyzeExternals then
         let optionalArgs =
           valType |> DeadOptionalArgs.fromTypeExpr |> OptionalArgs.fromList
         in
+
+        (* if Ident.name id = "someValue" then
+           Printf.printf "XXX %s\n" (Ident.name id); *)
         Ident.name id
         |> Name.create ~isInterface:false
         |> addValueDeclaration ~loc ~moduleLoc ~optionalArgs ~path
@@ -285,7 +288,7 @@ let traverseStructure ~doTypes ~doExternals =
                     ((ModulePath.getCurrent ()).path
                     @ [!Common.currentModuleName]))
         | _ -> ())
-    | Tstr_primitive vd when doExternals && Config.analyzeExternals ->
+    | Tstr_primitive vd when doExternals && !Config.analyzeExternals ->
       let currentModulePath = ModulePath.getCurrent () in
       let path = currentModulePath.path @ [!Common.currentModuleName] in
       let exists =
@@ -294,6 +297,7 @@ let traverseStructure ~doTypes ~doExternals =
         | _ -> false
       in
       let id = vd.val_id |> Ident.name in
+      Printf.printf "Primitive %s\n" id;
       if
         (not exists) && id <> "unsafe_expr"
         (* see https://github.com/BuckleScript/bucklescript/issues/4532 *)
@@ -329,6 +333,30 @@ let traverseStructure ~doTypes ~doExternals =
         let name = id |> Ident.name |> Name.create in
         name |> DeadException.add ~path ~loc ~strLoc:structureItem.str_loc
       | None -> ())
+    (* | Tstr_primitive vd ->
+       let id = vd.val_id |> Ident.name in
+       let loc = vd.val_val.val_loc in
+       let pos = loc.loc_start in
+       let attrs = vd.val_val.val_attributes |> List.length in
+       let kind = vd.val_val.val_kind in
+       let name =
+         match kind with Val_reg -> "Val_reg" | Val_prim _ -> "Val_prim"
+       in
+       let is_bs_primitive s =
+         String.length s >= 20
+         (* Marshal.header_size*) && String.unsafe_get s 0 = '\132'
+         && String.unsafe_get s 1 = '\149'
+       in
+       let bs_prim =
+         let one s = if is_bs_primitive s then "yes" else "no" in
+         vd.val_prim |> List.map one |> String.concat "+"
+       in
+       (* let () =
+            Printf.printf "Primitive %s %s attrs:%d val_prim:%s bs_prim:%s\n" id
+              (posToString pos) attrs name bs_prim
+          in *)
+       (* ProcessDeadAnnotations.annotateLive pos; *)
+       () *)
     | _ -> ());
     let result = super.structure_item self structureItem in
     ModulePath.setCurrent oldModulePath;

@@ -12,7 +12,7 @@ module Config = struct
   (* Turn on type analysis *)
   let analyzeTypes = ref true
 
-  let analyzeExternals = true
+  let analyzeExternals = ref false
 
   let reportUnderscore = false
 
