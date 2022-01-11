@@ -12,3 +12,5 @@ type deadType =
 let _ = OnlyInImplementation
 let _ = InBoth
 
+@live
+type record = {x: int, y: string, z: float}

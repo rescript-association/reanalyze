@@ -295,6 +295,9 @@
   addTypeReference DeadTypeTest.res:12:8 --> DeadTypeTest.res:7:2
   addValueDeclaration +_ DeadTypeTest.res:13:0 path:+DeadTypeTest
   addTypeReference DeadTypeTest.res:13:8 --> DeadTypeTest.res:9:2
+  addRecordLabelDeclaration x DeadTypeTest.res:16:15 path:+DeadTypeTest.record
+  addRecordLabelDeclaration y DeadTypeTest.res:16:23 path:+DeadTypeTest.record
+  addRecordLabelDeclaration z DeadTypeTest.res:16:34 path:+DeadTypeTest.record
   addValueReference DeadTypeTest.resi:4:0 --> DeadTypeTest.res:4:4
   Scanning DeadTypeTest.cmti Source:DeadTypeTest.resi
   addVariantCaseDeclaration A DeadTypeTest.resi:2:2 path:DeadTypeTest.t
@@ -2427,6 +2430,9 @@ File References
   Dead Exception +DeadExn.DeadE: 0 references () [0]
   Live Exception +DeadExn.Inside.Einside: 1 references (DeadExn.res:10:14) [0]
   Live Exception +DeadExn.Etoplevel: 1 references (DeadExn.res:8:16) [0]
+  Live RecordLabel +DeadTypeTest.record.z: 0 references () [0]
+  Live RecordLabel +DeadTypeTest.record.y: 0 references () [0]
+  Live RecordLabel +DeadTypeTest.record.x: 0 references () [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
   Dead Value +DeadTypeTest.+_: 0 references () [0]
   Dead VariantCase +DeadTypeTest.deadType.InNeither: 0 references () [0]
