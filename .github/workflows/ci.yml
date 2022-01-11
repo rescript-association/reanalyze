@@ -86,7 +86,7 @@ jobs:
       - uses: actions/checkout@v2.3.4
       - name: download binaries
         uses: actions/download-artifact@v2
-      - name: Pack genType
+      - name: Pack reanalyze
         run: |
           # Put the built artifacts in the appropriate package folder
           tar xf macos-latest/binary.tar -C dist/vendor-darwin
