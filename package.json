@@ -1,13 +1,13 @@
 {
   "name": "reanalyze",
-  "version": "2.17.0",
+  "version": "2.18.0",
   "private": true,
   "description": "Analyzers for Dead Code/Types and termination",
   "license": "MIT",
   "scripts": {
     "build": "dune build @check @all -p reanalyze",
     "clean": "dune clean -p reanalyze",
-    "test": "node ./scripts/run_integration_tests.js",
+    "test": "",
     "install:examples": "(cd examples/deadcode && npm install) & (cd examples/termination && npm install)",
     "build:examples": "(cd examples/deadcode && npm run clean && npm run build && npm run analyze) & (cd examples/termination && npm run clean && npm run build && npm run analyze)",
     "dce": "./_build/default/src/Reanalyze.exe -suppress dead-code-ppx -unsuppress doesnotexist -dce-cmt _build",
