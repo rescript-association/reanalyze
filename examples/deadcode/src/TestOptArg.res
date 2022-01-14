@@ -13,4 +13,4 @@ let _ = notSuppressesOptArgs(3)
 @live
 let liveSuppressesOptArgs = (~x=1, ~y=2, ~z=3, w) => x + y + z + w
 
-let _ = liveSuppressesOptArgs(3)
+let _ = liveSuppressesOptArgs(~x=3, 3)

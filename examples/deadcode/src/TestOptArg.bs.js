@@ -32,7 +32,7 @@ function liveSuppressesOptArgs(xOpt, yOpt, zOpt, w) {
   return ((x + y | 0) + z | 0) + w | 0;
 }
 
-liveSuppressesOptArgs(undefined, undefined, undefined, 3);
+liveSuppressesOptArgs(3, undefined, undefined, 3);
 
 export {
   foo ,
