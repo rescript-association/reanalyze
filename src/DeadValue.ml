@@ -333,30 +333,6 @@ let traverseStructure ~doTypes ~doExternals =
         let name = id |> Ident.name |> Name.create in
         name |> DeadException.add ~path ~loc ~strLoc:structureItem.str_loc
       | None -> ())
-    (* | Tstr_primitive vd ->
-       let id = vd.val_id |> Ident.name in
-       let loc = vd.val_val.val_loc in
-       let pos = loc.loc_start in
-       let attrs = vd.val_val.val_attributes |> List.length in
-       let kind = vd.val_val.val_kind in
-       let name =
-         match kind with Val_reg -> "Val_reg" | Val_prim _ -> "Val_prim"
-       in
-       let is_bs_primitive s =
-         String.length s >= 20
-         (* Marshal.header_size*) && String.unsafe_get s 0 = '\132'
-         && String.unsafe_get s 1 = '\149'
-       in
-       let bs_prim =
-         let one s = if is_bs_primitive s then "yes" else "no" in
-         vd.val_prim |> List.map one |> String.concat "+"
-       in
-       (* let () =
-            Printf.printf "Primitive %s %s attrs:%d val_prim:%s bs_prim:%s\n" id
-              (posToString pos) attrs name bs_prim
-          in *)
-       (* ProcessDeadAnnotations.annotateLive pos; *)
-       () *)
     | _ -> ());
     let result = super.structure_item self structureItem in
     ModulePath.setCurrent oldModulePath;
