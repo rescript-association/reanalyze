@@ -1,4 +1,5 @@
 # master
+- Don't report redundant optional arguments on functions annotated `@live`.
 
 # 2.18.0
 - Don't report unused optional arguments for functions annotated `@live` or `@genType`.

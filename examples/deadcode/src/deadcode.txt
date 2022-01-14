@@ -2277,10 +2277,6 @@ File References
   Live Value +TestModuleAliases.+testInner2: 0 references () [0]
   Live Value +TestModuleAliases.+testInner1Expanded: 0 references () [0]
   Live Value +TestModuleAliases.+testInner1: 0 references () [0]
-
-  Warning Redundant Optional Argument
-  File "./TestOptArg.res", line 14, characters 0-66
-  optional argument x of function +liveSuppressesOptArgs is always supplied (1 calls)
   Live Value +TestOptArg.+liveSuppressesOptArgs: 1 references (TestOptArg.res:16:8) [0]
 
   Warning Unused Argument
@@ -4508,4 +4504,4 @@ File References
   <-- line 96
   type variant1Object = | @dead("variant1Object.R") R(payload)
   
-  Analysis reported 332 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:88, Warning Dead Value:200, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:6, Warning Unused Argument:11)
+  Analysis reported 331 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:88, Warning Dead Value:200, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
