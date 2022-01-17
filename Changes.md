@@ -1,4 +1,6 @@
 # master
+
+# 2.19.0
 - Don't report redundant optional arguments on functions annotated `@live`.
 
 # 2.18.0
