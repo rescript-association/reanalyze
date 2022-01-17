@@ -49,17 +49,17 @@ npm version major
 
 ## Releasing to npm (Maintainers only)
 
-Use the GitHub web iterface to download the artifact `reanalyze-npm.tar`.
+Use the GitHub web iterface to download the artifact `reanalyze-npm.tar` and zip it.
 
 ```
 # Dry run for testing
-npm publish reanalyze-npm.tar --dry-run
+npm publish reanalyze-npm.tar.gz --dry-run
 
 # Publish package as @latest
-npm publish reanalyze-npm.tar
+npm publish reanalyze-npm.tar.gz
 
 # Publish package with @beta tag
-npm publish reanalyze-npm.tar --tag beta
+npm publish reanalyze-npm.tar.gz --tag beta
 ```
 
 Consult the [npm publish](https://docs.npmjs.com/cli/publish) documentation for more options.
