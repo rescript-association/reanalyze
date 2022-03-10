@@ -1,4 +1,4 @@
-#if OCAML_MINOR >= 8
+#if OCAML_VERSION >= (4, 08, 0)
 let getStringTag s = match s with
   | Format.String_tag(s) -> s
   | _ -> ""
@@ -6,7 +6,7 @@ let getStringTag s = match s with
 let getStringTag s = s
 #endif
 
-#if OCAML_MINOR >= 8
+#if OCAML_VERSION >= (4, 08, 0)
 let filter_map = List.filter_map
 #else
 (* https://github.com/ocaml/ocaml/blob/9a31c888b177f3aa603bbbe17852cbb57f047df4/stdlib/list.ml#L254-L262 passed though refmt *)
@@ -23,7 +23,7 @@ let filter_map f =
 #endif
 
 let getStringValue const = match const with
-#if OCAML_MINOR >= 11
+#if OCAML_VERSION >= (4, 11, 0)
   | Parsetree.Pconst_string(s, _, _) -> s
 #else
   | Parsetree.Pconst_string(s, _) -> s
@@ -32,7 +32,7 @@ let getStringValue const = match const with
 
 
 let getConstString const = match const with
-#if OCAML_MINOR >= 11
+#if OCAML_VERSION >= (4, 11, 0)
   | Asttypes.Const_string(s, _, _) -> s
 #else
   | Asttypes.Const_string(s, _) -> s
@@ -40,33 +40,33 @@ let getConstString const = match const with
   | _ -> assert false
 
 
-#if OCAML_MINOR >= 11
+#if OCAML_VERSION >= (4, 11, 0)
 type 'a typedtreeCase = 'a Typedtree.case
 #else
 type 'a typedtreeCase = Typedtree.case
 #endif
 
-#if OCAML_MINOR >= 11
+#if OCAML_VERSION >= (4, 11, 0)
 type 'a generalPattern = 'a Typedtree.general_pattern
 #else
 type 'a generalPattern = Typedtree.pattern
 #endif
 
-#if OCAML_MINOR >= 13
+#if OCAML_VERSION >= (4, 13, 0)
 type ('a, 'b) type_kind = ('a, 'b) Types.type_kind
 #else
 type ('a, 'b) type_kind = Types.type_kind
 #endif
 
 let unboxPatCstrName pat =
-#if OCAML_MINOR >= 11
+#if OCAML_VERSION >= (4, 11, 0)
   match pat.Typedtree.pat_desc with
   | Typedtree.Tpat_value v -> (
     match
       (v :> Typedtree.value Typedtree.pattern_desc Typedtree.pattern_data)
         .pat_desc
     with
-#if OCAML_MINOR >= 13
+#if OCAML_VERSION >= (4, 13, 0)
     | Tpat_construct (_, {cstr_name}, _, _) -> Some cstr_name
 #else
     | Tpat_construct (_, {cstr_name}, _) -> Some cstr_name
@@ -80,7 +80,7 @@ let unboxPatCstrName pat =
 #endif
 
 let unboxPatCstrTxt pat = match pat with
-#if OCAML_MINOR >= 13
+#if OCAML_VERSION >= (4, 13, 0)
   | Typedtree.Tpat_construct ({txt}, _, _, _) -> txt
 #else
   | Typedtree.Tpat_construct ({txt}, _, _) -> txt
@@ -88,7 +88,7 @@ let unboxPatCstrTxt pat = match pat with
   | _ -> assert false
 
 
-#if OCAML_MINOR >= 8
+#if OCAML_VERSION >= (4, 08, 0)
 let setOpenCloseTag openTag closeTag =
   {
     Format.mark_open_stag = openTag;
@@ -107,14 +107,14 @@ let setOpenCloseTag openTag closeTag =
 #endif
 
 let pp_set_formatter_tag_functions =
-#if OCAML_MINOR >= 8
+#if OCAML_VERSION >= (4, 08, 0)
     Format.pp_set_formatter_stag_functions
 #else
     Format.pp_set_formatter_tag_functions
 #endif
 
 let getSigValue si = match si with
-#if OCAML_MINOR >= 8
+#if OCAML_VERSION >= (4, 08, 0)
   | Types.Sig_value(id, {Types.val_loc; val_kind; val_type}, _) ->
     (id, val_loc, val_kind, val_type)
 #else
@@ -124,7 +124,7 @@ let getSigValue si = match si with
   | _ -> assert false
 
 let getSigType si = match si with
-#if OCAML_MINOR >= 8
+#if OCAML_VERSION >= (4, 08, 0)
   | Types.Sig_type(id, t, _, _) ->
     (id, t)
 #else
@@ -134,7 +134,7 @@ let getSigType si = match si with
   | _ -> assert false
 
 let getTSubst td = match td with
-#if OCAML_MINOR >= 13
+#if OCAML_VERSION >= (4, 13, 0)
   | Types.Tsubst (t, _) -> t
 #else
   | Types.Tsubst t -> t
@@ -142,7 +142,7 @@ let getTSubst td = match td with
   | _ -> assert false
 
 let getTypeVariant (tk: ('a, 'b) type_kind) = match tk with
-#if OCAML_MINOR >= 13
+#if OCAML_VERSION >= (4, 13, 0)
   | Type_variant (l, _) -> l
 #else
   | Type_variant l -> l
@@ -150,7 +150,7 @@ let getTypeVariant (tk: ('a, 'b) type_kind) = match tk with
   | _ -> assert false
 
 let getSigModuleModtype si = match si with
-#if OCAML_MINOR >= 8
+#if OCAML_VERSION >= (4, 08, 0)
   | Types.Sig_module(id, _, {Types.md_type=moduleType; md_loc=loc}, _, _)
   | Types.Sig_modtype(id, {Types.mtd_type=Some(moduleType); mtd_loc=loc}, _) ->
     Some((id, moduleType, loc))
@@ -163,7 +163,7 @@ let getSigModuleModtype si = match si with
 
 
 let getMtyFunctorModuleType  (moduleType: Types.module_type) = match moduleType with
-#if OCAML_MINOR >= 10
+#if OCAML_VERSION >= (4, 10, 0)
   | Mty_functor(Named(_, mtParam), mt) -> Some((Some(mtParam), mt))
   | Mty_functor(Unit, mt) -> Some((None, mt))
 #else
@@ -172,7 +172,7 @@ let getMtyFunctorModuleType  (moduleType: Types.module_type) = match moduleType 
   | _ -> None
 
 let getTexpMatch desc = match desc with
-#if OCAML_MINOR >= 8
+#if OCAML_VERSION >= (4, 08, 0)
   | Typedtree.Texp_match(e, cases, partial) ->
     (e, cases, partial)
 #else
@@ -182,7 +182,7 @@ let getTexpMatch desc = match desc with
   | _ -> assert false
 
 let texpMatchGetExceptions desc = match desc with
-#if OCAML_MINOR >= 8
+#if OCAML_VERSION >= (4, 08, 0)
   | Typedtree.Texp_match(_, cases, _) ->
     cases
     |> List.filter_map(fun ({Typedtree.c_lhs= pat}) ->
@@ -202,7 +202,7 @@ let texpMatchHasExceptions desc = texpMatchGetExceptions(desc) != []
 
 
 let getPayload x = 
-#if OCAML_MINOR >= 8
+#if OCAML_VERSION >= (4, 08, 0)
  let {Parsetree.attr_name= {txt}; attr_payload= payload} = x in
 #else
  let ({Asttypes.txt}, payload) = x in
@@ -211,13 +211,13 @@ let getPayload x =
 
 module Ident = struct
   include Ident
-#if OCAML_MINOR >= 8
+#if OCAML_VERSION >= (4, 08, 0)
   let create = Ident.create_local
 #endif
 end
 
 let tstrExceptionGet (x : Typedtree.structure_item_desc) = match x with
-#if OCAML_MINOR >= 8
+#if OCAML_VERSION >= (4, 08, 0)
   | Tstr_exception({tyexn_constructor= {ext_id}; tyexn_loc}) ->
     Some((ext_id, tyexn_loc))
 #else
@@ -226,7 +226,7 @@ let tstrExceptionGet (x : Typedtree.structure_item_desc) = match x with
 #endif
   | _ -> None
 
-#if OCAML_MINOR >= 10
+#if OCAML_VERSION >= (4, 10, 0)
 let moduleIdName nameOpt = match nameOpt with
   | None -> "UnnamedModule"
   | Some(name) -> name |> Ident.name
@@ -234,7 +234,7 @@ let moduleIdName nameOpt = match nameOpt with
 let moduleIdName name = name |> Ident.name
 #endif
 
-#if OCAML_MINOR >= 14
+#if OCAML_VERSION >= (4, 14, 0)
 let get_desc = Types.get_desc
 #else
 let get_desc x = x.Types.desc
