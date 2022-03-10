@@ -40,7 +40,7 @@ let collectValueBinding super self (vb : Typedtree.value_binding) =
       let currentModulePath = ModulePath.getCurrent () in
       let path = currentModulePath.path @ [!Common.currentModuleName] in
       let isFirstClassModule =
-        match vb.vb_expr.exp_type.desc with Tpackage _ -> true | _ -> false
+        match Compat.get_desc vb.vb_expr.exp_type with Tpackage _ -> true | _ -> false
       in
       (if (not exists) && not isFirstClassModule then
        (* This is never toplevel currently *)

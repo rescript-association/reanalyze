@@ -233,3 +233,9 @@ let moduleIdName nameOpt = match nameOpt with
 #else
 let moduleIdName name = name |> Ident.name
 #endif
+
+#if OCAML_MINOR >= 14
+let get_desc = Types.get_desc
+#else
+let get_desc x = x.Types.desc
+#endif

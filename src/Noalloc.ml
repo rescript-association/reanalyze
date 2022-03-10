@@ -20,12 +20,12 @@ let processCallee ~env ~funDef ~loc callee =
       assert false)
 
 let rec processTyp ~(funDef : Il.funDef) ~loc (typ : Types.type_expr) =
-  match typ.desc with
+  match Compat.get_desc typ with
   | Ttuple ts ->
     let scopes = ts |> List.map (processTyp ~funDef ~loc) in
     Il.Tuple scopes
   | Tlink t -> t |> processTyp ~funDef ~loc
-  | Tsubst _ -> Compat.getTSubst typ.desc |> processTyp ~funDef ~loc
+  | Tsubst _ -> Compat.getTSubst (Compat.get_desc typ) |> processTyp ~funDef ~loc
   | Tconstr _ | Tvar _ ->
     let offset = funDef.nextOffset in
     funDef.nextOffset <- offset + 1;
@@ -36,9 +36,9 @@ let rec processTyp ~(funDef : Il.funDef) ~loc (typ : Types.type_expr) =
     assert false
 
 let rec sizeOfTyp ~loc (typ : Types.type_expr) =
-  match typ.desc with
+  match Compat.get_desc typ with
   | Tlink t -> t |> sizeOfTyp ~loc
-  | Tsubst _ -> Compat.getTSubst typ.desc |> sizeOfTyp ~loc
+  | Tsubst _ -> Compat.getTSubst (Compat.get_desc typ) |> sizeOfTyp ~loc
   | Tconstr (Pident id, [], _) -> (
     match Ident.name id with
     | "int" -> 4
