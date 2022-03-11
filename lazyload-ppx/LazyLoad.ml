@@ -1,4 +1,4 @@
-#if OCAML_VERSION <= (4, 06, 0)
+#if OCAML_VERSION <= (4, 06, 1)
 open Ast_helper
 open Ast_mapper
 open Asttypes
