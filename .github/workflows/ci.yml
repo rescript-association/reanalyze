@@ -19,22 +19,18 @@ jobs:
             prebuild: 
             build: eval $(opam env) && npm run build406 && npm test
             artifact-folder: darwin
-            ocaml-version: 4.13.0
           - os: ubuntu-18.04
             prebuild: 
             build: eval $(opam env) && npm run build406 && npm test
             artifact-folder: linux
-            ocaml-version: 4.13.0
           - os: ubuntu-20.04
             prebuild: 
             build: eval $(opam env) && dune build
             artifact-folder: linuxNotForReScript
-            ocaml-version: 4.13.0
           - os: windows-latest
             prebuild: cp src/dune.406 src/dune
             build: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
             artifact-folder: win32
-            ocaml-version: 4.13.0
 
     runs-on: ${{matrix.os}}
 
@@ -54,9 +50,9 @@ jobs:
         key: ${{matrix.os}}-rescript-vscode-v1
 
     - name: Use OCaml
-      uses: ocaml/setup-ocaml@v1.1.12
+      uses: ocaml/setup-ocaml@v2
       with:
-        ocaml-version: ${{matrix.ocaml-version}}
+        ocaml-compiler: 4.14.x
 
     - name: Use Node.js
       uses: actions/setup-node@v2.1.5
