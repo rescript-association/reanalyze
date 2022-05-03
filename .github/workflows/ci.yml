@@ -16,19 +16,23 @@ jobs:
         # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#example-including-additional-values-into-combinations
         include:
           - os: macos-latest
+            prebuild: 
             build: eval $(opam env) && npm run build406 && npm test
             artifact-folder: darwin
             ocaml-version: 4.13.0
           - os: ubuntu-18.04
+            prebuild: 
             build: eval $(opam env) && npm run build406 && npm test
             artifact-folder: linux
             ocaml-version: 4.13.0
           - os: ubuntu-20.04
+            prebuild: 
             build: eval $(opam env) && dune build
             artifact-folder: linux
             ocaml-version: 4.13.0
           - os: windows-latest
-            build: cp src/dune.406 src/dune && "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
+            prebuild: cp src/dune.406 src/dune
+            build: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
             artifact-folder: win32
             ocaml-version: 4.13.0
 
@@ -62,6 +66,9 @@ jobs:
     - run: npm ci
 
     - run: opam install dune cppo
+
+    - name: Pre-build
+      run: ${{matrix.prebuild}}
 
     - name: Build and test
       run: ${{matrix.build}}
