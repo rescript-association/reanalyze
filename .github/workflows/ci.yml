@@ -28,7 +28,7 @@ jobs:
           - os: ubuntu-20.04
             prebuild: 
             build: eval $(opam env) && dune build
-            artifact-folder: linux
+            artifact-folder: linuxNotForReScript
             ocaml-version: 4.13.0
           - os: windows-latest
             prebuild: cp src/dune.406 src/dune
