@@ -1,7 +1,7 @@
 (* Adapted from https://github.com/LexiFi/dead_code_analyzer *)
 
-open DeadCommon
 open Common
+open DeadCommon
 
 module TypeLabels = struct
   (* map from type path (for record/variant label) to its location *)

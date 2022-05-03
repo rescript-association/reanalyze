@@ -1,3 +1,5 @@
+open! CompilerLibs
+
 let whiteListSideEffects =
   [
     "Pervasives./.";

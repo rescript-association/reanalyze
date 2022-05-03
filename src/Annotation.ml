@@ -1,3 +1,5 @@
+open! CompilerLibs
+
 type attributePayload =
   | BoolPayload of bool
   | ConstructPayload of string

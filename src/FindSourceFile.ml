@@ -1,3 +1,5 @@
+open! CompilerLibs
+
 let rec interface items =
   match items with
   | {Typedtree.sig_loc} :: rest -> (

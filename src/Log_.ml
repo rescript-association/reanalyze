@@ -1,3 +1,5 @@
+open! CompilerLibs
+
 let useOcamlLocations = true
 
 type language = Ml | Re | Res

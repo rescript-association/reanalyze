@@ -1,3 +1,5 @@
+open! CompilerLibs
+
 let processCallee ~env ~funDef ~loc callee =
   match callee with
   | Path.Pident id -> (

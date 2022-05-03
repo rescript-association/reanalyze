@@ -11,21 +11,15 @@ end)
 module Config = struct
   (* Turn on type analysis *)
   let analyzeTypes = ref true
-
   let analyzeExternals = ref false
-
   let reportUnderscore = false
-
   let reportTypesDeadOnlyInInterface = false
-
   let recursiveDebug = false
-
   let warnOnCircularDependencies = false
 end
 
 module Current = struct
   let bindings = ref PosSet.empty
-
   let lastBinding = ref Location.none
 
   (** max end position of a value reported dead *)
@@ -42,11 +36,8 @@ let fileIsImplementationOf s1 s2 =
   n2 = n1 + 1 && checkSub s1 s2 (n1 - 1)
 
 let deadAnnotation = "dead"
-
 let liveAnnotation = "live"
-
 let posToString = posToString
-
 let posLanguage = Log_.posLanguage
 
 module PosHash = struct
@@ -101,7 +92,6 @@ module OptionalArgs = struct
     y.alwaysUsed <- alwaysUsed
 
   let iterUnused f x = StringSet.iter f x.unused
-
   let iterAlwaysUsed f x = StringSet.iter (fun s -> f s x.count) x.alwaysUsed
 end
 
@@ -149,7 +139,6 @@ module ValueReferences = struct
   let table = (PosHash.create 256 : PosSet.t PosHash.t)
 
   let add posTo posFrom = PosHash.addSet table posTo posFrom
-
   let find pos = PosHash.findSet table pos
 end
 
@@ -158,7 +147,6 @@ module TypeReferences = struct
   let table = (PosHash.create 256 : PosSet.t PosHash.t)
 
   let add posTo posFrom = PosHash.addSet table posTo posFrom
-
   let find pos = PosHash.findSet table pos
 end
 
@@ -261,7 +249,6 @@ module ProcessDeadAnnotations = struct
   type annotatedAs = GenType | Dead | Live
 
   let positionsAnnotated = PosHash.create 1
-
   let isAnnotatedDead pos = PosHash.find_opt positionsAnnotated pos = Some Dead
 
   let isAnnotatedGenTypeOrLive pos =
@@ -539,7 +526,6 @@ module WriteDeadAnnotations = struct
     lineToString_ {original; declarations}
 
   let currentFile = ref ""
-
   let currentFileLines = (ref [||] : line array ref)
 
   let readFile fileName =
