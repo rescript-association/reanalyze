@@ -2,11 +2,20 @@
 
 ## Build reanalyze
 
+Assumes opam with OCaml 4.08 or later.
+
 ```
 # Installs all dependencies (if needed) and builds reanalyze
 npm install
-dune build
+npm run build
 ```
+
+To build targeting 4.06 compiler libs (needed for ReScript projects) whatever the compiler version used:
+
+```
+npm run build406
+```
+
 
 ## Test reanalyze
 
@@ -14,6 +23,7 @@ Make sure to always run the tests before submitting any changes (CI usually take
 longer to give you feedback).
 
 ```
+npm run build406
 npm test
 ```
 
