@@ -1,3 +1,5 @@
+open! CompilerLibs
+
 let active () = true
 
 let table = Hashtbl.create 1

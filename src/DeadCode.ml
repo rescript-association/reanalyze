@@ -1,3 +1,4 @@
+open! CompilerLibs
 open DeadCommon
 
 let processSignature ~doValues ~doTypes (signature : Types.signature) =

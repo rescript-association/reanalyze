@@ -1,3 +1,5 @@
+open! CompilerLibs
+
 #if OCAML_VERSION >= (4, 08, 0)
 let getStringTag s = match s with
   | Format.String_tag(s) -> s
@@ -110,7 +112,7 @@ let pp_set_formatter_tag_functions =
 #if OCAML_VERSION >= (4, 08, 0)
     Format.pp_set_formatter_stag_functions
 #else
-    Format.pp_set_formatter_tag_functions
+    Format.pp_set_formatter_tag_functions [@warning "-3"]
 #endif
 
 let getSigValue si = match si with

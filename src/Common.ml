@@ -1,3 +1,5 @@
+include CompilerLibs
+
 let currentSrc = ref ""
 
 let currentModule = ref ""

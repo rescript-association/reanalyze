@@ -1,3 +1,5 @@
+open! CompilerLibs
+
 (* Adapted from https://github.com/LexiFi/dead_code_analyzer *)
 
 open DeadCommon

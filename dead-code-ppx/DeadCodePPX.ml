@@ -1,7 +1,10 @@
+open Compilerlibs406
+
 (* Remove code annotated with @dead *)
 
 let hasDeadAnnotation attributes =
-  attributes |> List.exists (fun attr -> Compat.attributeTxt attr = "dead")
+  attributes
+  |> List.exists (fun (({txt}, _) : Parsetree.attribute) -> txt = "dead")
 
 let rec filter_map l ~f =
   match l with
@@ -37,7 +40,7 @@ let structure mapper structure =
              Some
                (Ast_mapper.default_mapper.structure_item mapper structure_item)
          | Pstr_exception x ->
-           if x |> Compat.exceptionAttributes |> hasDeadAnnotation then None
+           if x.pext_attributes |> hasDeadAnnotation then None
            else
              Some
                (Ast_mapper.default_mapper.structure_item mapper structure_item)

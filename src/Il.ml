@@ -1,3 +1,5 @@
+open! CompilerLibs
+
 module StringMap = Map.Make (String)
 
 module Kind = struct

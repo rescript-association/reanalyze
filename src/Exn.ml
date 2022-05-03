@@ -1,4 +1,7 @@
+open! CompilerLibs
+
 type t = string
+
 let compare = String.compare
 let decodeError = "DecodeError"
 let assertFailure = "Assert_failure"

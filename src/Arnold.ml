@@ -1,3 +1,5 @@
+open! CompilerLibs
+
 let printPos ppf (pos : Lexing.position) =
   let file = pos.Lexing.pos_fname in
   let line = pos.Lexing.pos_lnum in

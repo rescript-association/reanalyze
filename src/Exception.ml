@@ -1,3 +1,5 @@
+open! CompilerLibs
+
 let posToString = Common.posToString
 
 module LocSet = Common.LocSet
