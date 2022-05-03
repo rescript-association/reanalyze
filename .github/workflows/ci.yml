@@ -28,7 +28,7 @@ jobs:
             artifact-folder: linux
             ocaml-version: 4.13.0
           - os: windows-latest
-            build: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- npm run build406"
+            build: cp src/dune.406 src/dune && "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
             artifact-folder: win32
             ocaml-version: 4.13.0
 
