@@ -4,7 +4,7 @@
  (public_name reanalyze.exe)
  (preprocess
   (action
-   (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
+   (run %{bin:cppo} -V OCAML:4.06.1 %{input-file})))
  ; The main module that will become the binary.
  (name Reanalyze)
  (flags "-w" "+6+26+27+32+33+39")
