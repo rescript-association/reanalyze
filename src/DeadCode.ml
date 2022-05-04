@@ -1,15 +1,14 @@
-open! CompilerLibs
 open DeadCommon
 
-let processSignature ~doValues ~doTypes (signature : Types.signature) =
+let processSignature ~doValues ~doTypes (signature : CL.Types.signature) =
   signature
   |> List.iter (fun sig_item ->
          DeadValue.processSignatureItem ~doValues ~doTypes
-           ~moduleLoc:Location.none
+           ~moduleLoc:CL.Location.none
            ~path:[!Common.currentModuleName]
            sig_item)
 
-let processCmt ~cmtFilePath (cmt_infos : Cmt_format.cmt_infos) =
+let processCmt ~cmtFilePath (cmt_infos : CL.Cmt_format.cmt_infos) =
   (match cmt_infos.cmt_annots with
   | Interface signature ->
     ProcessDeadAnnotations.signature signature;

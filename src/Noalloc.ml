@@ -1,9 +1,7 @@
-open! CompilerLibs
-
 let processCallee ~env ~funDef ~loc callee =
   match callee with
-  | Path.Pident id -> (
-    let id = Ident.name id in
+  | CL.Path.Pident id -> (
+    let id = CL.Ident.name id in
     match env |> Il.Env.find ~id with
     | Some (FunDef funDefCallee) ->
       funDef |> Il.FunDef.emit ~instr:(Il.Call funDefCallee.id)
@@ -12,7 +10,7 @@ let processCallee ~env ~funDef ~loc callee =
           Format.fprintf ppf "Callee not recognized: %s" id);
       assert false)
   | _ -> (
-    match callee |> Path.name with
+    match callee |> CL.Path.name with
     | "Pervasives.+" | "Stdlib.+" -> funDef |> Il.FunDef.emit ~instr:Il.I32Add
     | "Pervasives.+." | "Stdlib.+." -> funDef |> Il.FunDef.emit ~instr:Il.F64Add
     | "Pervasives.*." | "Stdlib.*." -> funDef |> Il.FunDef.emit ~instr:Il.F64Mul
@@ -21,13 +19,14 @@ let processCallee ~env ~funDef ~loc callee =
           Format.fprintf ppf "Callee not recognized: %s" name);
       assert false)
 
-let rec processTyp ~(funDef : Il.funDef) ~loc (typ : Types.type_expr) =
+let rec processTyp ~(funDef : Il.funDef) ~loc (typ : CL.Types.type_expr) =
   match Compat.get_desc typ with
   | Ttuple ts ->
     let scopes = ts |> List.map (processTyp ~funDef ~loc) in
     Il.Tuple scopes
   | Tlink t -> t |> processTyp ~funDef ~loc
-  | Tsubst _ -> Compat.getTSubst (Compat.get_desc typ) |> processTyp ~funDef ~loc
+  | Tsubst _ ->
+    Compat.getTSubst (Compat.get_desc typ) |> processTyp ~funDef ~loc
   | Tconstr _ | Tvar _ ->
     let offset = funDef.nextOffset in
     funDef.nextOffset <- offset + 1;
@@ -37,12 +36,12 @@ let rec processTyp ~(funDef : Il.funDef) ~loc (typ : Types.type_expr) =
         Format.fprintf ppf "Type not supported");
     assert false
 
-let rec sizeOfTyp ~loc (typ : Types.type_expr) =
+let rec sizeOfTyp ~loc (typ : CL.Types.type_expr) =
   match Compat.get_desc typ with
   | Tlink t -> t |> sizeOfTyp ~loc
   | Tsubst _ -> Compat.getTSubst (Compat.get_desc typ) |> sizeOfTyp ~loc
   | Tconstr (Pident id, [], _) -> (
-    match Ident.name id with
+    match CL.Ident.name id with
     | "int" -> 4
     | "string" -> 4
     | name ->
@@ -63,16 +62,16 @@ let rec emitLocalSetBackwards ~(funDef : Il.funDef) ~(scope : Il.scope) =
     let instr = Il.LocalSet offset in
     funDef |> Il.FunDef.emit ~instr
 
-let rec processFunDefPat ~funDef ~env ~mem (pat : Typedtree.pattern) =
+let rec processFunDefPat ~funDef ~env ~mem (pat : CL.Typedtree.pattern) =
   match pat.pat_desc with
   | Tpat_var (id, _) | Tpat_alias ({pat_desc = Tpat_any}, id, _) ->
     let scope = pat.pat_type |> processTyp ~funDef ~loc:pat.pat_loc in
     let newEnv =
-      env |> Il.Env.add ~id:(id |> Ident.name) ~def:(LocalScope scope)
+      env |> Il.Env.add ~id:(id |> CL.Ident.name) ~def:(LocalScope scope)
     in
     (newEnv, scope)
   | Tpat_construct _
-    when Compat.unboxPatCstrTxt pat.pat_desc = Longident.Lident "()" ->
+    when Compat.unboxPatCstrTxt pat.pat_desc = CL.Longident.Lident "()" ->
     (env, Il.Tuple [])
   | Tpat_tuple pats ->
     let newEnv, scopes =
@@ -89,7 +88,8 @@ let rec processFunDefPat ~funDef ~env ~mem (pat : Typedtree.pattern) =
         Format.fprintf ppf "Argument pattern not supported");
     assert false
 
-let rec processFunDef ~funDef ~env ~mem ~params (expr : Typedtree.expression) =
+let rec processFunDef ~funDef ~env ~mem ~params (expr : CL.Typedtree.expression)
+    =
   match expr.exp_desc with
   | Texp_function
       {
@@ -105,7 +105,7 @@ let rec processFunDef ~funDef ~env ~mem ~params (expr : Typedtree.expression) =
     funDef.numParams <- funDef.nextOffset;
     (env, expr, params)
 
-let translateConst ~loc ~mem (const : Asttypes.constant) =
+let translateConst ~loc ~mem (const : CL.Asttypes.constant) =
   match const with
   | Const_int n -> Il.I32 (n |> Int32.of_int)
   | Const_float s ->
@@ -125,15 +125,15 @@ let translateConst ~loc ~mem (const : Asttypes.constant) =
         Format.fprintf ppf "Constant not supported");
     assert false
 
-let processConst ~funDef ~loc ~mem (const_ : Asttypes.constant) =
+let processConst ~funDef ~loc ~mem (const_ : CL.Asttypes.constant) =
   let const = const_ |> translateConst ~loc ~mem in
   funDef |> Il.FunDef.emit ~instr:(Il.Const const)
 
-let rec processLocalBinding ~env ~(pat : Typedtree.pattern) ~(scope : Il.scope)
-    =
+let rec processLocalBinding ~env ~(pat : CL.Typedtree.pattern)
+    ~(scope : Il.scope) =
   match (pat.pat_desc, scope) with
   | Tpat_var (id, _), _ ->
-    env |> Il.Env.add ~id:(id |> Ident.name) ~def:(LocalScope scope)
+    env |> Il.Env.add ~id:(id |> CL.Ident.name) ~def:(LocalScope scope)
   | Tpat_tuple pats, Tuple scopes ->
     let patsAndScopes = List.combine pats scopes in
     patsAndScopes
@@ -143,11 +143,11 @@ let rec processLocalBinding ~env ~(pat : Typedtree.pattern) ~(scope : Il.scope)
   | Tpat_any, _ -> env
   | _ -> assert false
 
-and processExpr ~funDef ~env ~mem (expr : Typedtree.expression) =
+and processExpr ~funDef ~env ~mem (expr : CL.Typedtree.expression) =
   match expr.exp_desc with
   | Texp_constant const -> const |> processConst ~funDef ~loc:expr.exp_loc ~mem
   | Texp_ident (id, _, _) -> (
-    let id = Path.name id in
+    let id = CL.Path.name id in
     let rec emitScope (scope : Il.scope) =
       match scope with
       | Local offset -> funDef |> Il.FunDef.emit ~instr:(Il.LocalGet offset)
@@ -170,9 +170,9 @@ and processExpr ~funDef ~env ~mem (expr : Typedtree.expression) =
       ({exp_desc = Texp_ident (callee, _, vd); exp_loc = callee_loc}, args) ->
     let kind = vd.val_type |> Il.Kind.fromType in
     args
-    |> List.iteri (fun i ((argLabel : Asttypes.arg_label), argOpt) ->
+    |> List.iteri (fun i ((argLabel : CL.Asttypes.arg_label), argOpt) ->
            match (argLabel, argOpt) with
-           | Nolabel, Some (arg : Typedtree.expression) ->
+           | Nolabel, Some (arg : CL.Typedtree.expression) ->
              (match kind with
              | Arrow (declKinds, _) ->
                let declKind = declKinds.(i) in
@@ -184,7 +184,7 @@ and processExpr ~funDef ~env ~mem (expr : Typedtree.expression) =
                        "Function call to @{<info>%s@}: parameter %d has kind \
                         @{<info>%s@} but the supplied argument has kind \
                         @{<info>%s@}"
-                       (callee |> Path.name) i
+                       (callee |> CL.Path.name) i
                        (declKind |> Il.Kind.toString)
                        (argKind |> Il.Kind.toString))
              | _ -> assert false);
@@ -214,7 +214,7 @@ and processExpr ~funDef ~env ~mem (expr : Typedtree.expression) =
   | Texp_record {fields; extended_expression = None} ->
     let firstIndex = ref 0 in
     fields
-    |> Array.iteri (fun i (_ld, (rld : Typedtree.record_label_definition)) ->
+    |> Array.iteri (fun i (_ld, (rld : CL.Typedtree.record_label_definition)) ->
            match rld with
            | Kept _ -> assert false
            | Overridden ({loc}, e) ->
@@ -229,7 +229,7 @@ and processExpr ~funDef ~env ~mem (expr : Typedtree.expression) =
   | Texp_field (e, {loc}, {lbl_name; lbl_all}) ->
     let offset = ref 0 in
     lbl_all
-    |> Array.exists (fun (ld : Types.label_description) ->
+    |> Array.exists (fun (ld : CL.Types.label_description) ->
            if ld.lbl_name = lbl_name then true
            else
              let size = ld.lbl_arg |> sizeOfTyp ~loc in
@@ -245,13 +245,13 @@ and processExpr ~funDef ~env ~mem (expr : Typedtree.expression) =
         Format.fprintf ppf "Expression not supported");
     assert false
 
-let rec processGlobal ~env ~id ~mem (expr : Typedtree.expression) =
+let rec processGlobal ~env ~id ~mem (expr : CL.Typedtree.expression) =
   match expr.exp_desc with
   | Texp_constant const_ ->
     let const = const_ |> translateConst ~loc:expr.exp_loc ~mem in
     Il.Init.Const const
   | Texp_ident (id1, _, _) -> (
-    let id1 = Path.name id1 in
+    let id1 = CL.Path.name id1 in
     match env |> Il.Env.find ~id:id1 with
     | Some (GlobalDef globalDef) -> globalDef.init
     | _ ->
@@ -265,11 +265,10 @@ let rec processGlobal ~env ~id ~mem (expr : Typedtree.expression) =
     assert false
 
 let envRef = ref (Il.Env.create ())
-
 let memRef = ref (Il.Mem.create ())
 
-let processValueBinding ~id ~(expr : Typedtree.expression) =
-  let id = Ident.name id in
+let processValueBinding ~id ~(expr : CL.Typedtree.expression) =
+  let id = CL.Ident.name id in
   Log_.item "no-alloc binding for %s@." id;
   let kind = Il.Kind.fromType expr.exp_type in
   match kind with
@@ -281,22 +280,21 @@ let processValueBinding ~id ~(expr : Typedtree.expression) =
     let init = expr |> processGlobal ~env:!envRef ~id ~mem:!memRef in
     envRef := !envRef |> Il.Env.add ~id ~def:(GlobalDef {id; init})
 
-let collectValueBinding super self (vb : Typedtree.value_binding) =
+let collectValueBinding super self (vb : CL.Typedtree.value_binding) =
   (match vb.vb_pat.pat_desc with
   | Tpat_var (id, _)
     when vb.vb_attributes |> Annotation.hasAttribute (( = ) "noalloc") ->
-    processValueBinding ~id ~expr:vb.Typedtree.vb_expr
+    processValueBinding ~id ~expr:vb.CL.Typedtree.vb_expr
   | _ -> ());
-  let r = super.Tast_mapper.value_binding self vb in
+  let r = super.CL.Tast_mapper.value_binding self vb in
   r
 
 let traverseStructure =
-  let super = Tast_mapper.default in
+  let super = CL.Tast_mapper.default in
   let value_binding self vb = vb |> collectValueBinding super self in
-  let open Tast_mapper in
   {super with value_binding}
 
-let processCmt (cmt_infos : Cmt_format.cmt_infos) =
+let processCmt (cmt_infos : CL.Cmt_format.cmt_infos) =
   match cmt_infos.cmt_annots with
   | Interface _ -> ()
   | Implementation structure ->

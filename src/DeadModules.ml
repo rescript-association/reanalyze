@@ -1,7 +1,4 @@
-open! CompilerLibs
-
 let active () = true
-
 let table = Hashtbl.create 1
 
 let markDead ~isValue ~loc path =
@@ -11,7 +8,7 @@ let markDead ~isValue ~loc path =
     | Some _ -> ()
     | _ -> Hashtbl.replace table moduleName (false, loc)
 
-let markLive ~isValue ~(loc : Location.t) path =
+let markLive ~isValue ~(loc : CL.Location.t) path =
   if active () then
     let moduleName = path |> Common.Path.toModuleName ~isValue in
     match Hashtbl.find_opt table moduleName with
@@ -30,7 +27,7 @@ let checkModuleDead ~fileName:pos_fname moduleName =
           let pos =
             {Lexing.pos_fname; pos_lnum = 0; pos_bol = 0; pos_cnum = 0}
           in
-          {Location.loc_start = pos; loc_end = pos; loc_ghost = false}
+          {CL.Location.loc_start = pos; loc_end = pos; loc_ghost = false}
         else loc
       in
       Log_.info ~loc ~name:"Warning Dead Module" (fun ppf () ->

@@ -1,8 +1,6 @@
-open! CompilerLibs
-
 let rec interface items =
   match items with
-  | {Typedtree.sig_loc} :: rest -> (
+  | {CL.Typedtree.sig_loc} :: rest -> (
     match not (Sys.file_exists sig_loc.loc_start.pos_fname) with
     | true -> interface rest
     | false -> Some sig_loc.loc_start.pos_fname)
@@ -10,7 +8,7 @@ let rec interface items =
 
 let rec implementation items =
   match items with
-  | {Typedtree.str_loc} :: rest -> (
+  | {CL.Typedtree.str_loc} :: rest -> (
     match not (Sys.file_exists str_loc.loc_start.pos_fname) with
     | true -> implementation rest
     | false -> Some str_loc.loc_start.pos_fname)
@@ -18,7 +16,7 @@ let rec implementation items =
 
 let cmt cmt_annots =
   match cmt_annots with
-  | Cmt_format.Interface signature ->
+  | CL.Cmt_format.Interface signature ->
     if !Common.Cli.debug && signature.sig_items = [] then
       Log_.item "Interface %d@." (signature.sig_items |> List.length);
     interface signature.sig_items

@@ -1,5 +1,3 @@
-open! CompilerLibs
-
 let whiteListSideEffects =
   [
     "Pervasives./.";
@@ -23,7 +21,7 @@ let pathIsWhitelistedForSideEffects path =
   |> Common.Path.onOkPath ~whenContainsApply:false ~f:(fun s ->
          Hashtbl.mem (Lazy.force whiteTableSideEffects) s)
 
-let rec exprNoSideEffects (expr : Typedtree.expression) =
+let rec exprNoSideEffects (expr : CL.Typedtree.expression) =
   match expr.exp_desc with
   | Texp_ident _ | Texp_constant _ -> true
   | Texp_construct (_, _, el) -> el |> List.for_all exprNoSideEffects
@@ -35,7 +33,7 @@ let rec exprNoSideEffects (expr : Typedtree.expression) =
   | Texp_sequence (e1, e2) -> e1 |> exprNoSideEffects && e2 |> exprNoSideEffects
   | Texp_let (_, vbs, e) ->
     vbs
-    |> List.for_all (fun (vb : Typedtree.value_binding) ->
+    |> List.for_all (fun (vb : CL.Typedtree.value_binding) ->
            vb.vb_expr |> exprNoSideEffects)
     && e |> exprNoSideEffects
   | Texp_record {fields; extended_expression} ->
@@ -77,7 +75,7 @@ let rec exprNoSideEffects (expr : Typedtree.expression) =
 and exprOptNoSideEffects eo =
   match eo with None -> true | Some e -> e |> exprNoSideEffects
 
-and fieldNoSideEffects ((_ld, rld) : _ * Typedtree.record_label_definition) =
+and fieldNoSideEffects ((_ld, rld) : _ * CL.Typedtree.record_label_definition) =
   match rld with
   | Kept _typeExpr -> true
   | Overridden (_lid, e) -> e |> exprNoSideEffects
