@@ -39,12 +39,6 @@ jobs:
     runs-on: ${{matrix.os}}
 
     steps:
-    # needed for Windows testing
-    - name: Set git to use LF
-      run: |
-        git config --global core.autocrlf false
-        git config --global core.eol lf
-
     - uses: actions/checkout@v2.3.4
 
     - name: Cache OCaml's opam
