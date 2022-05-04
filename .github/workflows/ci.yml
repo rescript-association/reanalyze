@@ -33,12 +33,18 @@ jobs:
           - os: windows-latest
             prebuild: cp src/dune.406 src/dune
             build: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
-            test: npm test
+            test: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- node ./scripts/run_integration_tests.js"
             artifact-folder: win32
 
     runs-on: ${{matrix.os}}
 
     steps:
+    # needed for Windows testing
+    - name: Set git to use LF
+      run: |
+        git config --global core.autocrlf false
+        git config --global core.eol lf
+
     - uses: actions/checkout@v2.3.4
 
     - name: Cache OCaml's opam
