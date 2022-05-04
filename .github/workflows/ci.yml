@@ -33,7 +33,7 @@ jobs:
           - os: windows-latest
             prebuild: cp src/dune.406 src/dune
             build: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
-            test: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- node ./scripts/run_integration_tests.js"
+            test:
             artifact-folder: win32
 
     runs-on: ${{matrix.os}}
