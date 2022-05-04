@@ -1,5 +1,3 @@
-open! CompilerLibs
-
 let useOcamlLocations = true
 
 type language = Ml | Re | Res
@@ -17,13 +15,10 @@ let posLanguage (pos : Lexing.position) =
 
 module Color = struct
   let color_enabled = lazy (Unix.isatty Unix.stdout)
-
   let forceColor = ref false
-
   let get_color_enabled () = !forceColor || Lazy.force color_enabled
 
   type color = Red | Yellow | Magenta | Cyan
-
   type style = FG of color | Bold | Dim
 
   let code_of_style = function
@@ -58,12 +53,11 @@ module Color = struct
   let setup () =
     Format.pp_set_mark_tags Format.std_formatter true;
     Compat.pp_set_formatter_tag_functions Format.std_formatter color_functions;
-    if not (get_color_enabled ()) then Misc.Color.setup (Some Never);
+    if not (get_color_enabled ()) then CL.Misc.Color.setup (Some Never);
     if useOcamlLocations then
-      Location.print_loc Format.str_formatter Location.none
+      CL.Location.print_loc Format.str_formatter CL.Location.none
 
   let error ppf s = Format.fprintf ppf "@{<error>%s@}" s
-
   let info ppf s = Format.fprintf ppf "@{<info>%s@}" s
 end
 
@@ -72,10 +66,10 @@ module Loc = struct
     match file with
     (* modified *)
     | "_none_" | "" -> Format.fprintf ppf "(No file name)"
-    | real_file -> Format.fprintf ppf "%s" (Location.show_filename real_file)
+    | real_file -> Format.fprintf ppf "%s" (CL.Location.show_filename real_file)
 
-  let print_loc ~normalizedRange ppf (loc : Location.t) =
-    let file, _, _ = Location.get_pos_info loc.loc_start in
+  let print_loc ~normalizedRange ppf (loc : CL.Location.t) =
+    let file, _, _ = CL.Location.get_pos_info loc.loc_start in
     if useOcamlLocations then
       (* do on extra dummy print, as the first time print_loc is used, flushing is incorrect *)
       let mkPosRelative (pos : Lexing.position) =
@@ -88,7 +82,7 @@ module Loc = struct
             | false -> pos.pos_fname);
         }
       in
-      Location.print_loc ppf
+      CL.Location.print_loc ppf
         {
           loc with
           loc_start = loc.loc_start |> mkPosRelative;
@@ -114,9 +108,11 @@ module Loc = struct
       Format.fprintf ppf "File \"%a\", line %a" print_filename file dim_loc
         normalizedRange
 
-  let print ppf (loc : Location.t) =
-    let _file, start_line, start_char = Location.get_pos_info loc.loc_start in
-    let _, end_line, end_char = Location.get_pos_info loc.loc_end in
+  let print ppf (loc : CL.Location.t) =
+    let _file, start_line, start_char =
+      CL.Location.get_pos_info loc.loc_start
+    in
+    let _, end_line, end_char = CL.Location.get_pos_info loc.loc_end in
     let normalizedRange =
       if start_char == -1 || end_char == -1 then None
       else if start_line = end_line && start_char >= end_char then
@@ -134,7 +130,7 @@ let item x =
   Format.fprintf Format.std_formatter "  ";
   Format.fprintf Format.std_formatter x
 
-let locToString ppf (loc : Location.t) =
+let locToString ppf (loc : CL.Location.t) =
   (match !Common.Cli.ci with
   | true ->
     {
@@ -155,7 +151,6 @@ let locToString ppf (loc : Location.t) =
 
 module Stats = struct
   let counters = Hashtbl.create 1
-
   let active = ref true
 
   let count name =
@@ -189,7 +184,7 @@ module Stats = struct
           ^ ")"))
 end
 
-let logKind body ~count ~color ~(loc : Location.t) ~name =
+let logKind body ~count ~color ~(loc : CL.Location.t) ~name =
   if Suppress.filter loc.loc_start then (
     if count then Stats.count name;
     Format.fprintf Format.std_formatter "@[<v 2>@,%a@,%a@,%a@]@." color name

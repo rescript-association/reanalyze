@@ -1,4 +1,4 @@
-open! CompilerLibs
+open CL
 
 #if OCAML_VERSION >= (4, 08, 0)
 let getStringTag s = match s with

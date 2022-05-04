@@ -1,26 +1,22 @@
-open! CompilerLibs
-
 type attributePayload =
   | BoolPayload of bool
   | ConstructPayload of string
   | FloatPayload of string
-  | IdentPayload of Longident.t
+  | IdentPayload of CL.Longident.t
   | IntPayload of string
   | StringPayload of string
   | TuplePayload of attributePayload list
   | UnrecognizedPayload
 
 let tagIsGenType s = s = "genType" || s = "gentype"
-
 let tagIsGenTypeImport s = s = "genType.import" || s = "gentype.import"
-
 let tagIsGenTypeOpaque s = s = "genType.opaque" || s = "gentype.opaque"
 
 let tagIsOneOfTheGenTypeAnnotations s =
   tagIsGenType s || tagIsGenTypeImport s || tagIsGenTypeOpaque s
 
-let rec getAttributePayload checkText (attributes : Typedtree.attributes) =
-  let rec fromExpr (expr : Parsetree.expression) =
+let rec getAttributePayload checkText (attributes : CL.Typedtree.attributes) =
+  let rec fromExpr (expr : CL.Parsetree.expression) =
     match expr with
     | {pexp_desc = Pexp_constant (Pconst_string _ as cs)} ->
       Some (StringPayload (cs |> Compat.getStringValue))
@@ -32,7 +28,7 @@ let rec getAttributePayload checkText (attributes : Typedtree.attributes) =
     } ->
       Some (BoolPayload (s = "true"))
     | {pexp_desc = Pexp_construct ({txt}, _); _} ->
-      Some (ConstructPayload (txt |> Longident.flatten |> String.concat "."))
+      Some (ConstructPayload (txt |> CL.Longident.flatten |> String.concat "."))
     | {pexp_desc = Pexp_tuple exprs} ->
       let payloads =
         exprs |> List.rev
@@ -74,7 +70,7 @@ let rec getAttributePayload checkText (attributes : Typedtree.attributes) =
       | PTyp _ -> Some UnrecognizedPayload
     else getAttributePayload checkText tl
 
-let hasAttribute checkText (attributes : Typedtree.attributes) =
+let hasAttribute checkText (attributes : CL.Typedtree.attributes) =
   getAttributePayload checkText attributes <> None
 
 let isOcamlSuppressDeadWarning attributes =

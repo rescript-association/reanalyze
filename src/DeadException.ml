@@ -1,13 +1,12 @@
 open DeadCommon
 open Common
 
-type item = {exceptionPath : Path.t; locFrom : Location.t}
+type item = {exceptionPath : Path.t; locFrom : CL.Location.t}
 
 let delayedItems = ref []
-
 let declarations = Hashtbl.create 1
 
-let add ~path ~loc ~(strLoc : Location.t) name =
+let add ~path ~loc ~(strLoc : CL.Location.t) name =
   let exceptionPath = name :: path in
   Hashtbl.add declarations exceptionPath loc;
   name
@@ -24,7 +23,7 @@ let forceDelayedItems () =
          | Some locTo ->
            addValueReference ~addFileReference:true ~locFrom ~locTo)
 
-let markAsUsed ~(locFrom : Location.t) ~(locTo : Location.t) path_ =
+let markAsUsed ~(locFrom : CL.Location.t) ~(locTo : CL.Location.t) path_ =
   if locTo.loc_ghost then
     (* Probably defined in another file, delay processing and check at the end *)
     let exceptionPath =

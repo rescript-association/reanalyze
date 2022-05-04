@@ -1,9 +1,5 @@
-include CompilerLibs
-
 let currentSrc = ref ""
-
 let currentModule = ref ""
-
 let currentModuleName = ref ("" |> Name.create)
 
 (* Location printer: `filename:line: ' *)
@@ -16,14 +12,12 @@ let posToString (pos : Lexing.position) =
 
 module Cli = struct
   let debug = ref false
-
   let ci = ref false
 
   (** The command was a -cmt variant (e.g. -exception-cmt) *)
   let cmtCommand = ref false
 
   let experimental = ref false
-
   let write = ref false
 
   (* names to be considered live values *)
@@ -40,7 +34,7 @@ end
 module StringSet = Set.Make (String)
 
 module LocSet = Set.Make (struct
-  include Location
+  include CL.Location
 
   let compare = compare
 end)
@@ -52,7 +46,6 @@ module FileHash = struct
     type t = string
 
     let hash (x : t) = Hashtbl.hash x
-
     let equal (x : t) y = x = y
   end)
 end
@@ -64,7 +57,7 @@ module FileReferences = struct
   let findSet table key =
     try FileHash.find table key with Not_found -> FileSet.empty
 
-  let add (locFrom : Location.t) (locTo : Location.t) =
+  let add (locFrom : CL.Location.t) (locTo : CL.Location.t) =
     let key = locFrom.loc_start.pos_fname in
     let set = findSet table key in
     FileHash.replace table key (FileSet.add locTo.loc_start.pos_fname set)
@@ -95,13 +88,13 @@ module Path = struct
     | [] -> ""
 
   let onOkPath ~whenContainsApply ~f path =
-    match path |> Path.flatten with
-    | `Ok (id, mods) -> f (Ident.name id :: mods |> String.concat ".")
+    match path |> CL.Path.flatten with
+    | `Ok (id, mods) -> f (CL.Ident.name id :: mods |> String.concat ".")
     | `Contains_apply -> whenContainsApply
 
   let fromPathT path =
-    match path |> Path.flatten with
-    | `Ok (id, mods) -> Ident.name id :: mods |> List.rev_map Name.create
+    match path |> CL.Path.flatten with
+    | `Ok (id, mods) -> CL.Ident.name id :: mods |> List.rev_map Name.create
     | `Contains_apply -> []
 
   let moduleToImplementation path =
