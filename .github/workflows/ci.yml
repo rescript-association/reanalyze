@@ -17,19 +17,23 @@ jobs:
         include:
           - os: macos-latest
             prebuild: 
-            build: eval $(opam env) && npm run build406 && npm test
+            build: eval $(opam env) && npm run build406
+            test: npm test
             artifact-folder: darwin
           - os: ubuntu-18.04
             prebuild: 
-            build: eval $(opam env) && npm run build406 && npm test
+            build: eval $(opam env) && npm run build406
+            test: npm test
             artifact-folder: linux
           - os: ubuntu-20.04
             prebuild: 
             build: eval $(opam env) && dune build
+            test:
             artifact-folder: linuxNotForReScript
           - os: windows-latest
             prebuild: cp src/dune.406 src/dune
             build: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
+            test:
             artifact-folder: win32
 
     runs-on: ${{matrix.os}}
@@ -66,8 +70,11 @@ jobs:
     - name: Pre-build
       run: ${{matrix.prebuild}}
 
-    - name: Build and test
+    - name: Build
       run: ${{matrix.build}}
+
+    - name: Test
+      run: ${{matrix.test}}
 
     # Also avoids artifacts upload permission loss:
     # https://github.com/actions/upload-artifact/tree/ee69f02b3dfdecd58bb31b4d133da38ba6fe3700#permission-loss
