@@ -11,30 +11,34 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-18.04, ubuntu-20.04, windows-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        target: [rescript]
         # syntax explanation:
         # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#example-including-additional-values-into-combinations
         include:
           - os: macos-latest
-            prebuild: 
+            ocaml-compiler: 4.14.x
             build: eval $(opam env) && npm run build406
             test: npm test
             artifact-folder: darwin
-          - os: ubuntu-18.04
-            prebuild: 
+          - os: ubuntu-latest
+            ocaml-compiler: 4.14.x
             build: eval $(opam env) && npm run build406
             test: npm test
             artifact-folder: linux
-          - os: ubuntu-20.04
-            prebuild: 
-            build: eval $(opam env) && dune build
-            test:
-            artifact-folder: linuxNotForReScript
           - os: windows-latest
+            ocaml-compiler: 4.14.x
             prebuild: cp src/dune.406 src/dune
             build: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
-            test:
             artifact-folder: win32
+          - os: ubuntu-latest
+            target: ocaml.4.08
+            ocaml-compiler: 4.08.x
+            build: eval $(opam env) && dune build
+          - os: ubuntu-latest
+            target: ocaml.4.14
+            ocaml-compiler: 4.14.x
+            build: eval $(opam env) && dune build
 
     runs-on: ${{matrix.os}}
 
@@ -51,12 +55,12 @@ jobs:
       uses: actions/cache@v2.1.5
       with:
         path: ~/.opam
-        key: ${{matrix.os}}-reanalyze-v1
+        key: ${{matrix.os}}-reanalyze-v2
 
     - name: Use OCaml
       uses: ocaml/setup-ocaml@v2
       with:
-        ocaml-compiler: 4.14.x
+        ocaml-compiler: ${{matrix.ocaml-compiler}}
 
     - name: Use Node.js
       uses: actions/setup-node@v2.1.5
@@ -68,23 +72,27 @@ jobs:
     - run: opam install dune cppo
 
     - name: Pre-build
+      if: matrix.os == 'windows-latest'
       run: ${{matrix.prebuild}}
 
     - name: Build
       run: ${{matrix.build}}
 
     - name: Test
+      if: matrix.target == 'rescript'
       run: ${{matrix.test}}
 
     # Also avoids artifacts upload permission loss:
     # https://github.com/actions/upload-artifact/tree/ee69f02b3dfdecd58bb31b4d133da38ba6fe3700#permission-loss
     - name: Compress files
+      if: matrix.target == 'rescript'
       run: |
         mkdir ${{matrix.artifact-folder}}
         cp _build/default/src/Reanalyze.exe reanalyze.exe
         tar -cvf binary.tar reanalyze.exe
 
     - uses: actions/upload-artifact@v2
+      if: matrix.target == 'rescript'
       with:
         name: ${{matrix.os}}
         path: binary.tar
@@ -100,7 +108,7 @@ jobs:
         run: |
           # Put the built artifacts in the appropriate package folder
           tar xf macos-latest/binary.tar -C dist/vendor-darwin
-          tar xf ubuntu-18.04/binary.tar -C dist/vendor-linux
+          tar xf ubuntu-latest/binary.tar -C dist/vendor-linux
           tar xf windows-latest/binary.tar -C dist/vendor-win32
           
           # Add the correct package.json / README / etc to dist
