@@ -1,5 +1,7 @@
 # master
 Add support for `[@warning "-unused-value-declaration"]`.
+Don't report on dead values inside a function annotated `@dead`.
+
 # 2.19.0
 - Don't report redundant optional arguments on functions annotated `@live`.
 

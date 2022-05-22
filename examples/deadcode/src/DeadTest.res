@@ -179,3 +179,9 @@ module WithInclude: {
 
 Js.log(WithInclude.A)
 
+@dead
+let funWithInnerVars = () => {
+  let x = 34
+  let y = 36
+  x + y
+}
