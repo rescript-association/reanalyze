@@ -35,12 +35,12 @@ jobs:
             test:
             artifact-folder: win32
           - os: ubuntu-latest
-            target: ocaml.4.14
-            ocaml-compiler: 4.14.x
+            target: ocaml.4.06
+            ocaml-compiler: 4.06.x
             prebuild: 
             build: eval $(opam env) && dune build
             test:
-            artifact-folder: ocaml.4.14
+            artifact-folder: ocaml.4.06
           - os: ubuntu-latest
             target: ocaml.5.0
             ocaml-compiler: 5.0.x
@@ -64,7 +64,7 @@ jobs:
       uses: actions/cache@v2.1.5
       with:
         path: ~/.opam
-        key: ${{matrix.os}}-reanalyze-v1
+        key: ${{matrix.os}}-reanalyze-v2
 
     - name: Use OCaml
       uses: ocaml/setup-ocaml@v2
