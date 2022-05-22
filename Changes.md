@@ -1,5 +1,5 @@
 # master
-
+Add support for `[@warning "-unused-value-declaration"]`.
 # 2.19.0
 - Don't report redundant optional arguments on functions annotated `@live`.
 

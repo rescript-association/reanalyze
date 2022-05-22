@@ -79,6 +79,8 @@ var WithSignature = {
 
 var foo = Pervasives.print_int;
 
+var bar = Pervasives.print_int;
+
 var thisHasSemicolons = 3;
 
 var dead4 = 4;
@@ -106,6 +108,7 @@ export {
   dead7 ,
   WithSignature ,
   foo ,
+  bar ,
   
 }
 /* No side effect */

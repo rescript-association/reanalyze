@@ -77,6 +77,7 @@
   addValueDeclaration +dead10 DeadMl.ml:99:2 path:+DeadMl.WithSignature
   addValueDeclaration +live11 DeadMl.ml:103:2 path:+DeadMl.WithSignature
   addValueDeclaration +foo DeadMl.ml:112:21 path:+DeadMl
+  addValueDeclaration +bar DeadMl.ml:114:43 path:+DeadMl
   addValueReference DeadMl.ml:3:8 --> DeadMl.ml:4:11
   addValueReference DeadMl.ml:3:8 --> DeadMl.ml:4:20
   addValueDeclaration +thisIsInInterface DeadMl.ml:12:6 path:+DeadMl.AA
@@ -110,6 +111,7 @@
   addValueDeclaration +dead10 DeadMl.ml:108:6 path:+DeadMl.WithSignature
   addValueDeclaration +live11 DeadMl.ml:109:6 path:+DeadMl.WithSignature
   addValueReference DeadMl.ml:112:21 --> DeadMl.ml:112:25
+  addValueReference DeadMl.ml:114:43 --> DeadMl.ml:114:47
   addValueReference DeadMl.ml:9:2 --> DeadMl.ml:12:6
   addValueReference DeadMl.ml:26:6 --> DeadMl.ml:29:8
   addValueReference DeadMl.ml:26:27 --> DeadMl.ml:30:8
@@ -1959,6 +1961,7 @@ File References
   Live Value +CreateErrorHandler1.Error1.+notification: 1 references (ErrorHandler.resi:3:2) [0]
   Live Value +CreateErrorHandler2.Error2.+notification: 1 references (ErrorHandler.resi:3:2) [0]
   Live Value +DeadCodeImplementation.M.+x: 1 references (DeadCodeInterface.res:2:2) [0]
+  Live Value +DeadMl.+bar: 0 references () [0]
   Live Value +DeadMl.+foo: 0 references () [0]
   Live Value +DeadMl.WithSignature.+live11: 0 references () [1]
   Live Value +DeadMl.WithSignature.+live11: 1 references (DeadMl.ml:103:2) [0]

@@ -9,7 +9,9 @@ type attributePayload =
   | UnrecognizedPayload
 
 let tagIsGenType s = s = "genType" || s = "gentype"
+
 let tagIsGenTypeImport s = s = "genType.import" || s = "gentype.import"
+
 let tagIsGenTypeOpaque s = s = "genType.opaque" || s = "gentype.opaque"
 
 let tagIsOneOfTheGenTypeAnnotations s =
@@ -78,8 +80,20 @@ let isOcamlSuppressDeadWarning attributes =
     attributes
     |> getAttributePayload (fun x -> x = "ocaml.warning" || x = "warning")
   with
-  | Some (StringPayload s) -> (
-    match Str.search_forward (Str.regexp (Str.quote "-32")) s 0 with
-    | _ -> true
-    | exception Not_found -> false)
+  | Some (StringPayload s) ->
+    let numeric =
+      match Str.search_forward (Str.regexp (Str.quote "-32")) s 0 with
+      | _ -> true
+      | exception Not_found -> false
+    in
+    let textual =
+      match
+        Str.search_forward
+          (Str.regexp (Str.quote "-unused-value-declaration"))
+          s 0
+      with
+      | _ -> true
+      | exception Not_found -> false
+    in
+    numeric || textual
   | _ -> false

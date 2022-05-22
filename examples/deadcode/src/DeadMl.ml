@@ -110,3 +110,5 @@ struct
 end
 
 let [@warning "-32"] foo x = print_int x
+
+let [@warning "-unused-value-declaration"] bar x = print_int x
