@@ -42,12 +42,19 @@ jobs:
             test:
             artifact-folder: ocaml.4.06
           - os: ubuntu-latest
-            target: ocaml.5.0
-            ocaml-compiler: 5.0.x
+            target: ocaml.4.08
+            ocaml-compiler: 4.08.x
             prebuild: 
             build: eval $(opam env) && dune build
             test:
-            artifact-folder: ocaml.5.0
+            artifact-folder: ocaml.4.08
+          - os: ubuntu-latest
+            target: ocaml.4.14
+            ocaml-compiler: 4.14.x
+            prebuild: 
+            build: eval $(opam env) && dune build
+            test:
+            artifact-folder: ocaml.4.14
 
     runs-on: ${{matrix.os}}
 
