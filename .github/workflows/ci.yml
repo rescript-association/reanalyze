@@ -12,31 +12,35 @@ jobs:
       fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        ocaml: [4.06]
+        target: [rescript]
         # syntax explanation:
         # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#example-including-additional-values-into-combinations
         include:
           - os: macos-latest
+            ocaml-compiler: 4.14.x
             prebuild: 
             build: eval $(opam env) && npm run build406
             test: npm test
             artifact-folder: darwin
           - os: ubuntu-latest
+            ocaml-compiler: 4.14.x
             prebuild: 
             build: eval $(opam env) && npm run build406
             test: npm test
             artifact-folder: linux
-          - os: ubuntu-latest
-            ocaml: 4.14
-            prebuild: 
-            build: eval $(opam env) && dune build
-            test:
-            artifact-folder: linuxNotForReScript
           - os: windows-latest
+            ocaml-compiler: 4.14.x
             prebuild: cp src/dune.406 src/dune
             build: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
             test:
             artifact-folder: win32
+          - os: ubuntu-latest
+            target: ocaml.4.14
+            ocaml-compiler: 4.14.x
+            prebuild: 
+            build: eval $(opam env) && dune build
+            test:
+            artifact-folder: linuxNotForReScript
 
     runs-on: ${{matrix.os}}
 
@@ -58,7 +62,7 @@ jobs:
     - name: Use OCaml
       uses: ocaml/setup-ocaml@v2
       with:
-        ocaml-compiler: 4.14.x
+        ocaml-compiler: matrix.ocaml-compiler
 
     - name: Use Node.js
       uses: actions/setup-node@v2.1.5
@@ -70,27 +74,27 @@ jobs:
     - run: opam install dune cppo
 
     - name: Pre-build
-      if: matrix.ocaml == '4.06'
+      if: matrix.target == 'rescript'
       run: ${{matrix.prebuild}}
 
     - name: Build
       run: ${{matrix.build}}
 
     - name: Test
-      if: matrix.ocaml == '4.06'
+      if: matrix.target == 'rescript'
       run: ${{matrix.test}}
 
     # Also avoids artifacts upload permission loss:
     # https://github.com/actions/upload-artifact/tree/ee69f02b3dfdecd58bb31b4d133da38ba6fe3700#permission-loss
     - name: Compress files
-      if: matrix.ocaml == '4.06'
+      if: matrix.target == 'rescript'
       run: |
         mkdir ${{matrix.artifact-folder}}
         cp _build/default/src/Reanalyze.exe reanalyze.exe
         tar -cvf binary.tar reanalyze.exe
 
     - uses: actions/upload-artifact@v2
-      if: matrix.ocaml == '4.06'
+      if: matrix.target == 'rescript'
       with:
         name: ${{matrix.os}}
         path: binary.tar
