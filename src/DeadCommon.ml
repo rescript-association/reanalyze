@@ -11,15 +11,21 @@ end)
 module Config = struct
   (* Turn on type analysis *)
   let analyzeTypes = ref true
+
   let analyzeExternals = ref false
+
   let reportUnderscore = false
+
   let reportTypesDeadOnlyInInterface = false
+
   let recursiveDebug = false
+
   let warnOnCircularDependencies = false
 end
 
 module Current = struct
   let bindings = ref PosSet.empty
+
   let lastBinding = ref CL.Location.none
 
   (** max end position of a value reported dead *)
@@ -36,8 +42,11 @@ let fileIsImplementationOf s1 s2 =
   n2 = n1 + 1 && checkSub s1 s2 (n1 - 1)
 
 let deadAnnotation = "dead"
+
 let liveAnnotation = "live"
+
 let posToString = posToString
+
 let posLanguage = Log_.posLanguage
 
 module PosHash = struct
@@ -92,6 +101,7 @@ module OptionalArgs = struct
     y.alwaysUsed <- alwaysUsed
 
   let iterUnused f x = StringSet.iter f x.unused
+
   let iterAlwaysUsed f x = StringSet.iter (fun s -> f s x.count) x.alwaysUsed
 end
 
@@ -127,6 +137,7 @@ type decl = {
   posEnd : Lexing.position;
   posStart : Lexing.position;
   mutable resolved : bool;
+  mutable report : bool;
 }
 
 type decls = decl PosHash.t
@@ -139,6 +150,7 @@ module ValueReferences = struct
   let table = (PosHash.create 256 : PosSet.t PosHash.t)
 
   let add posTo posFrom = PosHash.addSet table posTo posFrom
+
   let find pos = PosHash.findSet table pos
 end
 
@@ -147,6 +159,7 @@ module TypeReferences = struct
   let table = (PosHash.create 256 : PosSet.t PosHash.t)
 
   let add posTo posFrom = PosHash.addSet table posTo posFrom
+
   let find pos = PosHash.findSet table pos
 end
 
@@ -253,6 +266,7 @@ module ProcessDeadAnnotations = struct
   type annotatedAs = GenType | Dead | Live
 
   let positionsAnnotated = PosHash.create 1
+
   let isAnnotatedDead pos = PosHash.find_opt positionsAnnotated pos = Some Dead
 
   let isAnnotatedGenTypeOrLive pos =
@@ -447,6 +461,7 @@ let addDeclaration_ ?posEnd ?posStart ~declKind ~path ~(loc : CL.Location.t)
         posEnd;
         posStart;
         resolved = false;
+        report = true;
       }
     in
     PosHash.replace decls pos decl)
@@ -533,6 +548,7 @@ module WriteDeadAnnotations = struct
     lineToString_ {original; declarations}
 
   let currentFile = ref ""
+
   let currentFileLines = (ref [||] : line array ref)
 
   let readFile fileName =
@@ -663,56 +679,57 @@ module Decl = struct
     insideReportedValue
 
   let report ~ppf decl =
-    let name, message =
-      match decl.declKind with
-      | Exception ->
-        ("Warning Dead Exception", "is never raised or passed as value")
-      | Value {sideEffects} -> (
-        let noSideEffectsOrUnderscore =
-          (not sideEffects)
-          ||
-          match decl.path with
-          | hd :: _ -> hd |> Name.startsWithUnderscore
-          | [] -> false
-        in
-        ( ("Warning Dead Value"
-          ^
-          match not noSideEffectsOrUnderscore with
-          | true -> " With Side Effects"
-          | false -> ""),
-          match decl.path with
-          | name :: _ when name |> Name.isUnderscore ->
-            "has no side effects and can be removed"
-          | _ -> (
-            "is never used"
+    let insideReportedValue = decl |> isInsideReportedValue in
+    if decl.report then (
+      let name, message =
+        match decl.declKind with
+        | Exception ->
+          ("Warning Dead Exception", "is never raised or passed as value")
+        | Value {sideEffects} -> (
+          let noSideEffectsOrUnderscore =
+            (not sideEffects)
+            ||
+            match decl.path with
+            | hd :: _ -> hd |> Name.startsWithUnderscore
+            | [] -> false
+          in
+          ( ("Warning Dead Value"
             ^
             match not noSideEffectsOrUnderscore with
-            | true -> " and could have side effects"
-            | false -> "") ))
-      | RecordLabel ->
-        ("Warning Dead Type", "is a record label never used to read a value")
-      | VariantCase ->
-        ("Warning Dead Type", "is a variant case which is never constructed")
-    in
-    let insideReportedValue = decl |> isInsideReportedValue in
-    let shouldEmitWarning =
-      (not insideReportedValue)
-      &&
-      match decl.path with
-      | name :: _ when name |> Name.isUnderscore -> Config.reportUnderscore
-      | _ -> true
-    in
-    let shouldWriteAnnotation =
-      shouldEmitWarning
-      && (not (isToplevelValueWithSideEffects decl))
-      && Suppress.filter decl.pos
-    in
-    if shouldEmitWarning then (
-      decl.path
-      |> Path.toModuleName ~isValue:(decl |> isValue)
-      |> DeadModules.checkModuleDead ~fileName:decl.pos.pos_fname;
-      emitWarning ~decl ~message ~name);
-    if shouldWriteAnnotation then decl |> WriteDeadAnnotations.onDeadDecl ~ppf
+            | true -> " With Side Effects"
+            | false -> ""),
+            match decl.path with
+            | name :: _ when name |> Name.isUnderscore ->
+              "has no side effects and can be removed"
+            | _ -> (
+              "is never used"
+              ^
+              match not noSideEffectsOrUnderscore with
+              | true -> " and could have side effects"
+              | false -> "") ))
+        | RecordLabel ->
+          ("Warning Dead Type", "is a record label never used to read a value")
+        | VariantCase ->
+          ("Warning Dead Type", "is a variant case which is never constructed")
+      in
+      let shouldEmitWarning =
+        (not insideReportedValue)
+        &&
+        match decl.path with
+        | name :: _ when name |> Name.isUnderscore -> Config.reportUnderscore
+        | _ -> true
+      in
+      let shouldWriteAnnotation =
+        shouldEmitWarning
+        && (not (isToplevelValueWithSideEffects decl))
+        && Suppress.filter decl.pos
+      in
+      if shouldEmitWarning then (
+        decl.path
+        |> Path.toModuleName ~isValue:(decl |> isValue)
+        |> DeadModules.checkModuleDead ~fileName:decl.pos.pos_fname;
+        emitWarning ~decl ~message ~name);
+      if shouldWriteAnnotation then decl |> WriteDeadAnnotations.onDeadDecl ~ppf)
 end
 
 let declIsDead ~refs decl =
@@ -785,8 +802,8 @@ let rec resolveRecursiveRefs ~checkOptionalArg ~deadDeclarations ~level
         decl.path
         |> DeadModules.markDead ~isValue:(decl |> Decl.isValue)
              ~loc:decl.moduleLoc;
-        if decl.pos |> doReportDead then
-          deadDeclarations := decl :: !deadDeclarations;
+        if not (decl.pos |> doReportDead) then decl.report <- false;
+        deadDeclarations := decl :: !deadDeclarations;
         if not (Decl.isToplevelValueWithSideEffects decl) then
           decl.pos |> ProcessDeadAnnotations.annotateDead)
       else (
