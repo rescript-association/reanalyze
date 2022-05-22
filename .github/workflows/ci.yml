@@ -11,36 +11,34 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        name: [macos-4.06, ubuntu-4.06, ubuntu-4.14, windows-4.06]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        ocaml: [4.06]
         # syntax explanation:
         # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#example-including-additional-values-into-combinations
         include:
-          - name: macos-4.06
-            os: macos-latest 
+          - os: macos-latest
             prebuild: 
             build: eval $(opam env) && npm run build406
             test: npm test
             artifact-folder: darwin
-          - name: ubuntu-4.06
-            os: ubuntu-latest
+          - os: ubuntu-latest
             prebuild: 
             build: eval $(opam env) && npm run build406
             test: npm test
             artifact-folder: linux
-          - name: ubuntu-4.14
-            os: ubuntu-latest
+          - os: ubuntu-latest
+            ocaml: 4.14
             prebuild: 
             build: eval $(opam env) && dune build
             test:
             artifact-folder: linuxNotForReScript
-          - name: windows-4.06
-            os: windows-latest
+          - os: windows-latest
             prebuild: cp src/dune.406 src/dune
             build: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
             test:
             artifact-folder: win32
 
-    runs-on: ${{matrix.name}}
+    runs-on: ${{matrix.os}}
 
     steps:
     # needed for Windows testing
