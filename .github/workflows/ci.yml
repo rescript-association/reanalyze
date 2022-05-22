@@ -18,13 +18,11 @@ jobs:
         include:
           - os: macos-latest
             ocaml-compiler: 4.14.x
-            prebuild: 
             build: eval $(opam env) && npm run build406
             test: npm test
             artifact-folder: darwin
           - os: ubuntu-latest
             ocaml-compiler: 4.14.x
-            prebuild: 
             build: eval $(opam env) && npm run build406
             test: npm test
             artifact-folder: linux
@@ -32,29 +30,15 @@ jobs:
             ocaml-compiler: 4.14.x
             prebuild: cp src/dune.406 src/dune
             build: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
-            test:
             artifact-folder: win32
-          - os: ubuntu-latest
-            target: ocaml.4.06
-            ocaml-compiler: 4.06.x
-            prebuild: 
-            build: eval $(opam env) && dune build
-            test:
-            artifact-folder: ocaml.4.06
           - os: ubuntu-latest
             target: ocaml.4.08
             ocaml-compiler: 4.08.x
-            prebuild: 
             build: eval $(opam env) && dune build
-            test:
-            artifact-folder: ocaml.4.08
           - os: ubuntu-latest
             target: ocaml.4.14
             ocaml-compiler: 4.14.x
-            prebuild: 
             build: eval $(opam env) && dune build
-            test:
-            artifact-folder: ocaml.4.14
 
     runs-on: ${{matrix.os}}
 
@@ -88,7 +72,7 @@ jobs:
     - run: opam install dune cppo
 
     - name: Pre-build
-      if: matrix.target == 'rescript'
+      if: matrix.os == 'windows-latest'
       run: ${{matrix.prebuild}}
 
     - name: Build
