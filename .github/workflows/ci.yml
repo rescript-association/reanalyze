@@ -40,7 +40,14 @@ jobs:
             prebuild: 
             build: eval $(opam env) && dune build
             test:
-            artifact-folder: linuxNotForReScript
+            artifact-folder: ocaml.4.14
+          - os: ubuntu-latest
+            target: ocaml.5.0
+            ocaml-compiler: 5.0.x
+            prebuild: 
+            build: eval $(opam env) && dune build
+            test:
+            artifact-folder: ocaml.5.0
 
     runs-on: ${{matrix.os}}
 
