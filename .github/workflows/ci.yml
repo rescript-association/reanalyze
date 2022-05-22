@@ -17,13 +17,11 @@ jobs:
         # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#example-including-additional-values-into-combinations
         include:
           - os: macos-latest
-            ocaml: 4.06
             prebuild: 
             build: eval $(opam env) && npm run build406
             test: npm test
             artifact-folder: darwin
           - os: ubuntu-latest
-            ocaml: 4.06
             prebuild: 
             build: eval $(opam env) && npm run build406
             test: npm test
@@ -35,7 +33,6 @@ jobs:
             test:
             artifact-folder: linuxNotForReScript
           - os: windows-latest
-            ocaml: 4.06
             prebuild: cp src/dune.406 src/dune
             build: "& $env:CYGWIN_ROOT\\bin\\ocaml-env exec -- dune build"
             test:
@@ -73,27 +70,27 @@ jobs:
     - run: opam install dune cppo
 
     - name: Pre-build
-      if: runner.ocaml == '4.06'
+      if: matrix.ocaml == '4.06'
       run: ${{matrix.prebuild}}
 
     - name: Build
       run: ${{matrix.build}}
 
     - name: Test
-      if: runner.ocaml == '4.06'
+      if: matrix.ocaml == '4.06'
       run: ${{matrix.test}}
 
     # Also avoids artifacts upload permission loss:
     # https://github.com/actions/upload-artifact/tree/ee69f02b3dfdecd58bb31b4d133da38ba6fe3700#permission-loss
     - name: Compress files
-      if: runner.ocaml == '4.06'
+      if: matrix.ocaml == '4.06'
       run: |
         mkdir ${{matrix.artifact-folder}}
         cp _build/default/src/Reanalyze.exe reanalyze.exe
         tar -cvf binary.tar reanalyze.exe
 
     - uses: actions/upload-artifact@v2
-      if: runner.ocaml == '4.06'
+      if: matrix.ocaml == '4.06'
       with:
         name: ${{matrix.os}}
         path: binary.tar
