@@ -20,7 +20,7 @@ module Config = struct
         |> List.filter_map (fun (x : Json.t) ->
                match x with String s -> Some s | _ -> None)
       in
-      Suppress.suppress := !Suppress.suppress @ suppress
+      Suppress.suppress := suppress @ !Suppress.suppress
     | _ -> ()
 
   let readUnsuppress conf =
@@ -31,7 +31,7 @@ module Config = struct
         |> List.filter_map (fun (x : Json.t) ->
                match x with String s -> Some s | _ -> None)
       in
-      Suppress.unsuppress := !Suppress.unsuppress @ unsuppress
+      Suppress.unsuppress := unsuppress @ !Suppress.unsuppress
     | _ -> ()
 
   let process bsconfigFile =
