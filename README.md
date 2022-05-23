@@ -78,9 +78,7 @@ The main difference between `@dead` and `@live` is the transitive behaviour: `@d
 Several examples can be found in
 [`examples/deadcode/src/DeadTest.res`](examples/deadcode/src/DeadTest.res)
 
-## Unstable features
-
-Here are several unstable features, which could change substantially over time. Ask for more information.
+## Command-line Interface
 
 ### CLI -suppress
 Takes a comma-separated list of path-prefixes. Don't report on files whose path has a prefix in the list (but still use them for analysis).
@@ -140,6 +138,19 @@ This automatically annotates `@live` all the items in the `src/test` and `tmp` f
 ```sh
 -live-paths src/test,tmp
 ```
+
+## Configuration via `bsconfig.json`
+
+The CLI options `-suppress` and `-unsuppress` can also be set in `bsconfig.json` as follows:
+```json
+{
+  "reanalyze": {
+    "suppress": ["src/ToSuppress.res"],
+    "unsuppress": []
+  }
+}
+```
+
 
 ## Build
 
