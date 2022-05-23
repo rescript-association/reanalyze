@@ -111,11 +111,12 @@ let processOptionalArgs ~expType ~(locFrom : CL.Location.t) ~locTo ~path args =
     (!supplied, !suppliedMaybe)
     |> DeadOptionalArgs.addReferences ~locFrom ~locTo ~path)
 
-let collectExpr super self (e : CL.Typedtree.expression) =
+let rec collectExpr super self (e : CL.Typedtree.expression) =
   let locFrom = e.exp_loc in
   (match e.exp_desc with
   | Texp_ident (_path, _, {CL.Types.val_loc = {loc_ghost = false; _} as locTo})
     ->
+    (* if CL.Path.name _path = "rc" then assert false; *)
     if locFrom = locTo && _path |> CL.Path.name = "emptyArray" then (
       (* Work around lowercase jsx with no children producing an artifact `emptyArray`
          which is called from its own location as many things are generated on the same location. *)
@@ -139,7 +140,7 @@ let collectExpr super self (e : CL.Typedtree.expression) =
          ~locTo ~path
   | Texp_let
       ( (* generated for functions with optional args *)
-        Nonrecursive,
+      Nonrecursive,
         [
           {
             vb_pat = {pat_desc = Tpat_var (idArg, _)};
@@ -197,6 +198,16 @@ let collectExpr super self (e : CL.Typedtree.expression) =
     | _ -> ());
     if !Config.analyzeTypes && not loc_ghost then
       DeadType.addTypeReference ~posTo ~posFrom:locFrom.loc_start
+  | Texp_record {fields} ->
+    fields
+    |> Array.iter (fun (_, record_label_definition) ->
+           match record_label_definition with
+           | CL.Typedtree.Overridden (_, ({exp_loc} as e))
+             when exp_loc.loc_ghost ->
+             (* Punned field in OCaml projects has ghost location in expression *)
+             let e = {e with exp_loc = {exp_loc with loc_ghost = false}} in
+             collectExpr super self e |> ignore
+           | _ -> ())
   | _ -> ());
   super.CL.Tast_mapper.expr self e
 
