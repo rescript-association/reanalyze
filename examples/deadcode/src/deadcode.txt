@@ -1547,6 +1547,8 @@
   addRecordLabelDeclaration result TestPromise.res:11:18 path:+TestPromise.toPayload
   addValueReference TestPromise.res:14:4 --> TestPromise.res:14:33
   addTypeReference TestPromise.res:14:32 --> TestPromise.res:7:2
+  Scanning ToSuppress.cmt Source:ToSuppress.res
+  addValueDeclaration +toSuppress ToSuppress.res:1:4 path:+ToSuppress
   Scanning TransitiveType1.cmt Source:TransitiveType1.res
   addValueDeclaration +convert TransitiveType1.res:2:4 path:+TransitiveType1
   addValueDeclaration +convertAlias TransitiveType1.res:5:4 path:+TransitiveType1
@@ -1929,6 +1931,7 @@ File References
   TestModuleAliases.res -->> 
   TestOptArg.res -->> OptArg.resi
   TestPromise.res -->> 
+  ToSuppress.res -->> 
   TransitiveType1.res -->> 
   TransitiveType2.res -->> 
   TransitiveType3.res -->> 
@@ -2302,6 +2305,7 @@ File References
   Dead RecordLabel +TestPromise.toPayload.result: 0 references () [0]
   Live RecordLabel +TestPromise.fromPayload.s: 1 references (TestPromise.res:14:32) [0]
   Dead RecordLabel +TestPromise.fromPayload.x: 0 references () [0]
+  Dead Value +ToSuppress.+toSuppress: 0 references () [0]
   Live Value +TransitiveType1.+convertAlias: 0 references () [0]
   Live Value +TransitiveType1.+convert: 0 references () [0]
   Dead Value +TransitiveType2.+convertT2: 0 references () [0]

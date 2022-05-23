@@ -2,8 +2,54 @@ module StringMap = Map.Make (String)
 
 let bsconfig = "bsconfig.json"
 
+let readFile filename =
+  try
+    (* windows can't use open_in *)
+    let chan = open_in_bin filename in
+    let content = really_input_string chan (in_channel_length chan) in
+    close_in_noerr chan;
+    Some content
+  with _ -> None
+
+module Config = struct
+  let readSuppress conf =
+    match Json.get "suppress" conf with
+    | Some (Array elements) ->
+      let suppress =
+        elements
+        |> List.filter_map (fun (x : Json.t) ->
+               match x with String s -> Some s | _ -> None)
+      in
+      Suppress.suppress := !Suppress.suppress @ suppress
+    | _ -> ()
+
+  let readUnsuppress conf =
+    match Json.get "unsuppress" conf with
+    | Some (Array elements) ->
+      let unsuppress =
+        elements
+        |> List.filter_map (fun (x : Json.t) ->
+               match x with String s -> Some s | _ -> None)
+      in
+      Suppress.unsuppress := !Suppress.unsuppress @ unsuppress
+    | _ -> ()
+
+  let process bsconfigFile =
+    match readFile bsconfigFile with
+    | None -> ()
+    | Some text -> (
+      match Json.get "reanalyze" (Json.parse text) with
+      | None -> ()
+      | Some conf ->
+        readSuppress conf;
+        readUnsuppress conf)
+end
+
 let rec findProjectRoot ~dir =
-  if Sys.file_exists (Filename.concat dir bsconfig) then dir
+  let bsconfigFile = Filename.concat dir bsconfig in
+  if Sys.file_exists bsconfigFile then (
+    Config.process bsconfigFile;
+    dir)
   else
     let parent = dir |> Filename.dirname in
     if parent = dir then (

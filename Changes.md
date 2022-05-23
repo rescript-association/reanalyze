@@ -1,6 +1,15 @@
 # master
-Add support for `[@warning "-unused-value-declaration"]`.
-Don't report on dead values inside a function annotated `@dead`.
+- Add support for `[@warning "-unused-value-declaration"]`.
+- Don't report on dead values inside a function annotated `@dead`.
+- Add support for configuration settings under `"reanalyze"` in `bsconfig.json`.
+Example:
+```
+  "reanalyze": {
+    "suppress": ["src/ToSuppress.res"],
+    "unsuppress": []
+  },
+```
+
 
 # 2.19.0
 - Don't report redundant optional arguments on functions annotated `@live`.

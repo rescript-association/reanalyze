@@ -1,4 +1,8 @@
 {
+  "reanalyze": {
+    "suppress": ["src/ToSuppress.res"],
+    "unsuppress": []
+  },
   "gentypeconfig": {
     "language": "typescript",
     "module": "es6",
