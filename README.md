@@ -82,26 +82,19 @@ Several examples can be found in
 
 Here are several unstable features, which could change substantially over time. Ask for more information.
 
-### CLI -live-names
-
-This automatically annotates `@live` all the items called `foo` or `bar`:
+### CLI -suppress
+Takes a comma-separated list of path-prefixes. Don't report on files whose path has a prefix in the list (but still use them for analysis).
 
 ```sh
--live-names foo,bar
+-suppress one/path,another/path
 ```
 
-### CLI -live-paths
+### CLI -unsuppress
 
-This automatically annotates `@live` all the items in file `Hello.res`:
-
-```sh
--live-paths Hello.res
-```
-
-This automatically annotates `@live` all the items in the `src/test` and `tmp` folders:
+Takes a comma-separated list of path-prefixes. Report on files whose path a prefix in the list, overriding -suppress (no-op if -suppress is not specified).
 
 ```sh
--live-paths src/test,tmp
+-unsuppress one/path,another/path/File.res
 ```
 
 ### CLI -debug
@@ -125,6 +118,28 @@ reanalyze.exe -write ...
 There's a dead code ppx (values only, not types) in this repository. It can be used to automatically remove code annotated `@dead`, as if it had been commented out.
 Can be used after adding annotations automatically. The combination of automatic annotation and automatic elimination is a form of automatic dead code elimination. For projects that use a library, or that in general have code which is dead only temporarily.
 There's obviously a level of risk in doing this automatic elimination. The safety net you can rely on is that the code must still compile.
+
+### CLI -live-names
+
+This automatically annotates `@live` all the items called `foo` or `bar`:
+
+```sh
+-live-names foo,bar
+```
+
+### CLI -live-paths
+
+This automatically annotates `@live` all the items in file `Hello.res`:
+
+```sh
+-live-paths Hello.res
+```
+
+This automatically annotates `@live` all the items in the `src/test` and `tmp` folders:
+
+```sh
+-live-paths src/test,tmp
+```
 
 ## Build
 
