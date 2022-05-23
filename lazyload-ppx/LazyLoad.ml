@@ -17,6 +17,7 @@ let mkAttribute ~loc ~txt =
       ] )
 
 let makeLoc ~loc ~txt = {Location.loc; txt}
+
 let hasMappedStructure = ref false
 
 module Resource = struct
@@ -29,6 +30,7 @@ module ResourceSet = Set.Make (Resource)
 module SM = Map.Make (String)
 
 let jsResources = ref ResourceSet.empty
+
 let topLevelExprs = ref SM.empty
 
 let addTopLevelExpr bindingName expr =
@@ -46,6 +48,7 @@ let addTopLevelExpr bindingName expr =
   bindingName
 
 let depIgnore = [mkAttribute ~loc:!default_loc ~txt:"warning"]
+
 let localModulePrefix = "$Local$"
 
 let genLocal {Resource.name; loc} =
