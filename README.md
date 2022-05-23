@@ -151,6 +151,7 @@ The CLI options `-suppress` and `-unsuppress` can also be set in `bsconfig.json`
 }
 ```
 
+This is equivalent to adding `--suppress` and `--unsuppress` options at the end of the command-line. Note that the options are additive, so it's possible to suppress partially on the command line and partially in the config.
 
 ## Build
 
