@@ -2,7 +2,8 @@
 /* eslint-disable import/first */
 
 
-// tslint:disable-next-line:no-var-requires
-const DeadTestBS = require('./DeadTest.bs');
+// @ts-ignore: Implicit any on import
+import * as DeadTestBS__Es6Import from './DeadTest.bs';
+const DeadTestBS: any = DeadTestBS__Es6Import;
 
 export const fortyTwoButExported: number = DeadTestBS.fortyTwoButExported;

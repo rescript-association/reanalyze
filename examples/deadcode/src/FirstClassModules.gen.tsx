@@ -2,8 +2,9 @@
 /* eslint-disable import/first */
 
 
-// tslint:disable-next-line:no-var-requires
-const FirstClassModulesBS = require('./FirstClassModules.bs');
+// @ts-ignore: Implicit any on import
+import * as FirstClassModulesBS__Es6Import from './FirstClassModules.bs';
+const FirstClassModulesBS: any = FirstClassModulesBS__Es6Import;
 
 // tslint:disable-next-line:interface-over-type-literal
 export type MT_t = number;

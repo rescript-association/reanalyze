@@ -7,10 +7,18 @@ import {makeRenamed as makeRenamedNotChecked} from './hookExample';
 import {foo as fooNotChecked} from './hookExample';
 
 // In case of type error, check the type of 'makeRenamed' in 'ImportHooks.re' and './hookExample'.
-export const makeRenamedTypeChecked: (_1:unknown) => JSX.Element = makeRenamedNotChecked;
+export const makeRenamedTypeChecked: React.ComponentType<{
+  readonly person: person; 
+  readonly children: React.ReactNode; 
+  readonly renderMe: renderMe<any>
+}> = makeRenamedNotChecked;
 
 // Export 'makeRenamed' early to allow circular import from the '.bs.js' file.
-export const makeRenamed: unknown = makeRenamedTypeChecked as (_1:unknown) => JSX.Element;
+export const makeRenamed: unknown = makeRenamedTypeChecked as React.ComponentType<{
+  readonly person: person; 
+  readonly children: React.ReactNode; 
+  readonly renderMe: renderMe<any>
+}>;
 
 // In case of type error, check the type of 'foo' in 'ImportHooks.re' and './hookExample'.
 export const fooTypeChecked: (_1:{ readonly person: person }) => string = fooNotChecked;
@@ -25,4 +33,4 @@ export const foo: unknown = function (Argperson: any) {
 export type person = { readonly name: string; readonly age: number };
 
 // tslint:disable-next-line:interface-over-type-literal
-export type renderMe<a> = (_1:unknown) => JSX.Element;
+export type renderMe<a> = React.ComponentType<{ readonly randomString: string; readonly poly: a }>;

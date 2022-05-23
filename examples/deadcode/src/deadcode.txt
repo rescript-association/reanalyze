@@ -13,19 +13,16 @@
   addValueReference BucklescriptAnnotations.res:26:6 --> BucklescriptAnnotations.res:25:11
   addValueReference BucklescriptAnnotations.res:25:4 --> BucklescriptAnnotations.res:26:6
   Scanning ComponentAsProp.cmt Source:ComponentAsProp.res
-  addValueDeclaration +component ComponentAsProp.res:1:4 path:+ComponentAsProp
-  addValueDeclaration +make ComponentAsProp.res:7:4 path:+ComponentAsProp
-  addValueReference ComponentAsProp.res:1:4 --> ReasonReact.rei:153:0
-  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: ComponentAsProp.res:10:5
-  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: ComponentAsProp.res:11:7
-  addValueReference ComponentAsProp.res:7:4 --> ComponentAsProp.res:7:12
-  addValueReference ComponentAsProp.res:7:4 --> ComponentAsProp.res:7:20
-  addValueReference ComponentAsProp.res:7:4 --> ComponentAsProp.res:15:15
-  addValueReference ComponentAsProp.res:7:4 --> ReasonReact.rei:15:0
-  addValueReference ComponentAsProp.res:7:4 --> ComponentAsProp.res:7:34
-  addValueReference ComponentAsProp.res:7:4 --> ReactDOMRe.re:114:0
-  addValueReference ComponentAsProp.res:7:4 --> ReactDOMRe.re:114:0
-  addValueReference ComponentAsProp.res:7:4 --> ComponentAsProp.res:1:4
+  addValueDeclaration +make ComponentAsProp.res:6:4 path:+ComponentAsProp
+  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: ComponentAsProp.res:7:3
+  DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: ComponentAsProp.res:8:5
+  addValueReference ComponentAsProp.res:9:6 --> ComponentAsProp.res:6:12
+  addValueReference ComponentAsProp.res:10:6 --> ComponentAsProp.res:6:20
+  addValueReference ComponentAsProp.res:12:24 --> ComponentAsProp.res:12:13
+  addValueReference ComponentAsProp.res:13:16 --> React.res:3:0
+  addValueReference ComponentAsProp.res:11:14 --> ComponentAsProp.res:6:34
+  addValueReference ComponentAsProp.res:8:5 --> ReactDOMRe.res:8:0
+  addValueReference ComponentAsProp.res:7:3 --> ReactDOMRe.res:8:0
   Scanning CreateErrorHandler1.cmt Source:CreateErrorHandler1.res
   addValueDeclaration +notification CreateErrorHandler1.res:3:6 path:+CreateErrorHandler1.Error1
   addValueReference CreateErrorHandler1.res:3:6 --> CreateErrorHandler1.res:3:21
@@ -229,31 +226,31 @@
   addValueReference DeadTest.res:108:40 --> DeadTest.res:108:40
   addValueReference DeadTest.res:108:40 --> BootloaderResource.res:3:0
   addValueReference DeadTest.res:108:40 --> DeadTest.res:108:40
-  addValueReference DeadTest.res:108:40 --> React.re:18:0
+  addValueReference DeadTest.res:108:40 --> React.res:18:0
   addValueReference DeadTest.res:113:6 --> JSResource.res:3:0
   addValueReference DeadTest.res:117:6 --> DynamicallyLoadedComponent.res:2:4
   addValueReference DeadTest.res:117:6 --> DeadTest.res:113:6
   addValueReference DeadTest.res:117:6 --> BootloaderResource.res:3:0
   addValueReference DeadTest.res:117:6 --> DeadTest.res:117:13
-  addValueReference DeadTest.res:117:6 --> React.re:18:0
+  addValueReference DeadTest.res:117:6 --> React.res:18:0
   addValueReference DeadTest.res:127:4 --> DeadTest.res:108:40
   DeadOptionalArgs.addReferences LazyDynamicallyLoadedComponent.makeProps called with optional argNames: argNamesMaybe: DeadTest.res:127:11
   addValueReference DeadTest.res:127:4 --> DeadTest.res:108:40
-  addValueReference DeadTest.res:127:4 --> React.re:18:0
+  addValueReference DeadTest.res:127:4 --> React.res:18:0
   addValueReference DeadTest.res:129:4 --> DeadTest.res:117:6
   DeadOptionalArgs.addReferences LazyDynamicallyLoadedComponent2.makeProps called with optional argNames: argNamesMaybe: DeadTest.res:129:18
   addValueReference DeadTest.res:129:4 --> DeadTest.res:116:6
-  addValueReference DeadTest.res:129:4 --> React.re:18:0
+  addValueReference DeadTest.res:129:4 --> React.res:18:0
   addValueReference DeadTest.res:131:16 --> DeadTest.res:127:4
   addValueDeclaration +a1 DeadTest.res:140:6 path:+DeadTest
   addValueDeclaration +a2 DeadTest.res:141:6 path:+DeadTest
   addValueDeclaration +a3 DeadTest.res:142:6 path:+DeadTest
   addValueReference DeadTest.res:145:17 --> DynamicallyLoadedComponent.res:2:4
-  addValueReference DeadTest.res:145:17 --> React.re:18:0
+  addValueReference DeadTest.res:145:17 --> React.res:18:0
   addValueReference DeadTest.res:148:4 --> DeadTest.res:147:4
   addValueReference DeadTest.res:152:4 --> ExportWithRename.res:2:4
   addValueReference DeadTest.res:155:32 --> DeadTest.res:155:12
-  addValueReference DeadTest.res:155:19 --> React.re:7:0
+  addValueReference DeadTest.res:155:19 --> React.res:7:0
   addValueReference DeadTest.res:157:16 --> DeadTest.res:155:4
   addValueReference DeadTest.res:163:30 --> DeadTest.res:163:22
   addTypeReference DeadTest.res:163:21 --> trace.mli:3:11
@@ -264,6 +261,7 @@
   extendTypeDependencies DeadTest.res:175:13 --> DeadTest.res:172:11
   extendTypeDependencies DeadTest.res:172:11 --> DeadTest.res:175:13
   addTypeReference DeadTest.res:180:7 --> DeadTest.res:172:11
+  addRecordLabelDeclaration a DeadTest.res:189:11 path:+DeadTest.rc
   addValueReference ExportWithRename.res:2:4 --> DynamicallyLoadedComponent.res:2:4
   addValueReference DynamicallyLoadedComponent.res:2:4 --> ExportWithRename.res:2:4
   addValueReference DeadTest.res:36:2 --> DeadTest.res:39:6
@@ -400,13 +398,13 @@
   Scanning DynamicallyLoadedComponent.cmt Source:DynamicallyLoadedComponent.res
   addValueDeclaration +make DynamicallyLoadedComponent.res:2:4 path:+DynamicallyLoadedComponent
   addValueReference DynamicallyLoadedComponent.res:2:32 --> DynamicallyLoadedComponent.res:2:12
-  addValueReference DynamicallyLoadedComponent.res:2:19 --> React.re:7:0
+  addValueReference DynamicallyLoadedComponent.res:2:19 --> React.res:7:0
   Scanning EmptyArray.cmt Source:EmptyArray.res
   addValueDeclaration +make EmptyArray.res:5:6 path:+EmptyArray.Z
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: EmptyArray.res:6:5
-  addValueReference EmptyArray.res:6:5 --> ReactDOMRe.re:114:0
+  addValueReference EmptyArray.res:6:5 --> ReactDOMRe.res:8:0
   addValueReference EmptyArray.res:10:9 --> EmptyArray.res:5:6
-  addValueReference EmptyArray.res:10:9 --> React.re:18:0
+  addValueReference EmptyArray.res:10:9 --> React.res:18:0
   Scanning ErrorHandler.cmt Source:ErrorHandler.res
   addValueDeclaration +notify ErrorHandler.res:7:6 path:+ErrorHandler.Make
   addValueDeclaration +x ErrorHandler.res:12:4 path:+ErrorHandler
@@ -490,66 +488,66 @@
   addValueDeclaration +make Hooks.res:107:6 path:+Hooks.RenderPropRequiresConversion
   addValueDeclaration +aComponentWithChildren Hooks.res:114:4 path:+Hooks
   addRecordLabelDeclaration name Hooks.res:1:16 path:+Hooks.vehicle
-  addValueReference Hooks.res:5:26 --> React.re:183:0
+  addValueReference Hooks.res:5:26 --> React.res:167:0
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.res:7:3
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.res:8:5
   addTypeReference Hooks.res:10:29 --> Hooks.res:1:16
   addValueReference Hooks.res:10:29 --> Hooks.res:4:12
   addValueReference Hooks.res:10:76 --> Hooks.res:5:7
-  addValueReference Hooks.res:9:7 --> React.re:7:0
-  addValueReference Hooks.res:8:5 --> ReactDOMRe.re:114:0
+  addValueReference Hooks.res:9:7 --> React.res:7:0
+  addValueReference Hooks.res:8:5 --> ReactDOMRe.res:8:0
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames:props argNamesMaybe: Hooks.res:13:5
   addValueReference Hooks.res:13:40 --> Hooks.res:5:7
   addValueReference Hooks.res:13:26 --> Hooks.res:5:14
-  addValueReference Hooks.res:13:54 --> React.re:7:0
-  addValueReference Hooks.res:13:5 --> ReactDOMRe.re:114:0
+  addValueReference Hooks.res:13:54 --> React.res:7:0
+  addValueReference Hooks.res:13:5 --> ReactDOMRe.res:8:0
   addValueReference Hooks.res:14:5 --> ImportHooks.res:13:0
   DeadOptionalArgs.addReferences ImportHooks.makeProps called with optional argNames: argNamesMaybe: Hooks.res:14:5
-  addValueReference Hooks.res:14:5 --> React.re:3:0
-  addValueReference Hooks.res:14:63 --> React.re:7:0
+  addValueReference Hooks.res:14:5 --> React.res:3:0
+  addValueReference Hooks.res:14:63 --> React.res:7:0
   addValueReference Hooks.res:14:5 --> ImportHooks.res:13:0
-  addValueReference Hooks.res:15:7 --> React.re:7:0
-  addValueReference Hooks.res:15:32 --> React.re:7:0
-  addValueReference Hooks.res:14:5 --> React.re:25:0
+  addValueReference Hooks.res:15:7 --> React.res:7:0
+  addValueReference Hooks.res:15:32 --> React.res:7:0
+  addValueReference Hooks.res:14:5 --> React.res:24:0
   addValueReference Hooks.res:17:5 --> ImportHookDefault.res:6:0
   DeadOptionalArgs.addReferences ImportHookDefault.makeProps called with optional argNames: argNamesMaybe: Hooks.res:17:5
-  addValueReference Hooks.res:17:5 --> React.re:3:0
-  addValueReference Hooks.res:18:61 --> React.re:7:0
+  addValueReference Hooks.res:17:5 --> React.res:3:0
+  addValueReference Hooks.res:18:61 --> React.res:7:0
   addValueReference Hooks.res:17:5 --> ImportHookDefault.res:6:0
-  addValueReference Hooks.res:19:7 --> React.re:7:0
-  addValueReference Hooks.res:19:32 --> React.re:7:0
-  addValueReference Hooks.res:17:5 --> React.re:25:0
-  addValueReference Hooks.res:7:3 --> ReactDOMRe.re:114:0
+  addValueReference Hooks.res:19:7 --> React.res:7:0
+  addValueReference Hooks.res:19:32 --> React.res:7:0
+  addValueReference Hooks.res:17:5 --> React.res:24:0
+  addValueReference Hooks.res:7:3 --> ReactDOMRe.res:8:0
   addValueReference Hooks.res:25:4 --> Hooks.res:4:4
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.res:30:3
   addTypeReference Hooks.res:30:41 --> Hooks.res:1:16
   addValueReference Hooks.res:30:41 --> Hooks.res:28:24
-  addValueReference Hooks.res:30:9 --> React.re:7:0
-  addValueReference Hooks.res:30:3 --> ReactDOMRe.re:114:0
+  addValueReference Hooks.res:30:9 --> React.res:7:0
+  addValueReference Hooks.res:30:3 --> ReactDOMRe.res:8:0
   addValueReference Hooks.res:29:2 --> Hooks.res:28:34
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.res:35:28
   addTypeReference Hooks.res:35:66 --> Hooks.res:1:16
   addValueReference Hooks.res:35:66 --> Hooks.res:35:14
-  addValueReference Hooks.res:35:34 --> React.re:7:0
-  addValueReference Hooks.res:35:28 --> ReactDOMRe.re:114:0
+  addValueReference Hooks.res:35:34 --> React.res:7:0
+  addValueReference Hooks.res:35:28 --> ReactDOMRe.res:8:0
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.res:38:40
   addTypeReference Hooks.res:38:78 --> Hooks.res:1:16
   addValueReference Hooks.res:38:78 --> Hooks.res:38:26
-  addValueReference Hooks.res:38:46 --> React.re:7:0
-  addValueReference Hooks.res:38:40 --> ReactDOMRe.re:114:0
+  addValueReference Hooks.res:38:46 --> React.res:7:0
+  addValueReference Hooks.res:38:40 --> ReactDOMRe.res:8:0
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.res:42:30
   addTypeReference Hooks.res:42:68 --> Hooks.res:1:16
   addValueReference Hooks.res:42:68 --> Hooks.res:42:16
-  addValueReference Hooks.res:42:36 --> React.re:7:0
-  addValueReference Hooks.res:42:30 --> ReactDOMRe.re:114:0
+  addValueReference Hooks.res:42:36 --> React.res:7:0
+  addValueReference Hooks.res:42:30 --> ReactDOMRe.res:8:0
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.res:46:7
   addTypeReference Hooks.res:46:45 --> Hooks.res:1:16
   addValueReference Hooks.res:46:45 --> Hooks.res:45:28
-  addValueReference Hooks.res:46:13 --> React.re:7:0
-  addValueReference Hooks.res:46:7 --> ReactDOMRe.re:114:0
+  addValueReference Hooks.res:46:13 --> React.res:7:0
+  addValueReference Hooks.res:46:7 --> ReactDOMRe.res:8:0
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.res:52:20
-  addValueReference Hooks.res:52:25 --> ReasonReact.rei:15:0
-  addValueReference Hooks.res:52:20 --> ReactDOMRe.re:114:0
+  addValueReference Hooks.res:52:25 --> React.res:3:0
+  addValueReference Hooks.res:52:20 --> ReactDOMRe.res:8:0
   addTypeReference Hooks.res:60:2 --> Hooks.res:1:16
   addValueReference Hooks.res:58:4 --> Hooks.res:58:31
   addTypeReference Hooks.res:60:14 --> Hooks.res:1:16
@@ -560,34 +558,34 @@
   addValueReference Hooks.res:66:15 --> Hooks.res:64:32
   addTypeReference Hooks.res:66:27 --> Hooks.res:1:16
   addValueReference Hooks.res:66:27 --> Hooks.res:64:38
-  addValueReference Hooks.res:66:2 --> React.re:7:0
+  addValueReference Hooks.res:66:2 --> React.res:7:0
   addValueReference Hooks.res:65:6 --> Hooks.res:64:32
   addValueReference Hooks.res:65:2 --> Hooks.res:64:46
   addValueDeclaration +_ Hooks.res:71:2 path:+Hooks
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames:props argNamesMaybe: Hooks.res:74:20
-  addValueReference Hooks.res:74:54 --> Hooks.res:74:11
-  addValueReference Hooks.res:74:32 --> ReactDOMRe.re:108:2
-  addTypeReference Hooks.res:74:75 --> Hooks.res:1:16
-  addValueReference Hooks.res:74:75 --> Hooks.res:70:19
-  addValueReference Hooks.res:74:62 --> React.re:7:0
-  addValueReference Hooks.res:74:20 --> ReactDOMRe.re:114:0
-  addValueReference Hooks.res:75:14 --> React.re:3:0
+  addValueReference Hooks.res:74:52 --> Hooks.res:74:11
+  addValueReference Hooks.res:74:32 --> ReactDOM.res:47:2
+  addTypeReference Hooks.res:74:73 --> Hooks.res:1:16
+  addValueReference Hooks.res:74:73 --> Hooks.res:70:19
+  addValueReference Hooks.res:74:60 --> React.res:7:0
+  addValueReference Hooks.res:74:20 --> ReactDOMRe.res:8:0
+  addValueReference Hooks.res:75:14 --> React.res:3:0
   addValueReference Hooks.res:73:11 --> Hooks.res:72:2
   addValueReference Hooks.res:80:4 --> Hooks.res:70:4
-  addValueReference Hooks.res:80:4 --> React.re:96:0
+  addValueReference Hooks.res:80:4 --> React.res:90:0
   addRecordLabelDeclaration x Hooks.res:82:10 path:+Hooks.r
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames:props argNamesMaybe: Hooks.res:85:47
   addValueReference Hooks.res:85:66 --> Hooks.res:85:38
   addTypeReference Hooks.res:85:87 --> Hooks.res:82:10
   addValueReference Hooks.res:85:87 --> Hooks.res:85:30
-  addValueReference Hooks.res:85:74 --> React.re:7:0
-  addValueReference Hooks.res:85:47 --> ReactDOMRe.re:114:0
-  addValueReference Hooks.res:85:4 --> React.re:96:0
+  addValueReference Hooks.res:85:74 --> React.res:7:0
+  addValueReference Hooks.res:85:47 --> ReactDOMRe.res:8:0
+  addValueReference Hooks.res:85:4 --> React.res:90:0
   addTypeReference Hooks.res:100:58 --> Hooks.res:1:16
   addValueReference Hooks.res:100:58 --> Hooks.res:100:35
-  addValueReference Hooks.res:100:45 --> React.re:7:0
+  addValueReference Hooks.res:100:45 --> React.res:7:0
   addValueReference Hooks.res:103:60 --> Hooks.res:103:37
-  addValueReference Hooks.res:103:47 --> React.re:7:0
+  addValueReference Hooks.res:103:47 --> React.res:7:0
   addValueDeclaration +car Hooks.res:108:8 path:+Hooks.RenderPropRequiresConversion
   addValueReference Hooks.res:109:30 --> Hooks.res:108:8
   addValueReference Hooks.res:109:18 --> Hooks.res:109:18
@@ -595,11 +593,11 @@
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.res:115:3
   addTypeReference Hooks.res:115:41 --> Hooks.res:1:16
   addValueReference Hooks.res:115:41 --> Hooks.res:114:30
-  addValueReference Hooks.res:115:9 --> React.re:7:0
+  addValueReference Hooks.res:115:9 --> React.res:7:0
   DeadOptionalArgs.addReferences ReactDOMRe.createDOMElementVariadic called with optional argNames: argNamesMaybe: Hooks.res:115:57
   addValueReference Hooks.res:115:62 --> Hooks.res:114:40
-  addValueReference Hooks.res:115:57 --> ReactDOMRe.re:114:0
-  addValueReference Hooks.res:115:3 --> ReactDOMRe.re:114:0
+  addValueReference Hooks.res:115:57 --> ReactDOMRe.res:8:0
+  addValueReference Hooks.res:115:3 --> ReactDOMRe.res:8:0
   Scanning IgnoreInterface.cmt Source:IgnoreInterface.res
   Scanning IgnoreInterface.cmti Source:IgnoreInterface.resi
   Scanning ImmutableArray.cmt Source:ImmutableArray.res
@@ -1113,9 +1111,9 @@
   addVariantCaseDeclaration S ImportJsValue.res:68:2 path:+ImportJsValue.variant
   Scanning ImportMyBanner.cmt Source:ImportMyBanner.res
   addValueDeclaration +make ImportMyBanner.res:7:0 path:+ImportMyBanner
-  addValueDeclaration +make ImportMyBanner.res:20:4 path:+ImportMyBanner
+  addValueDeclaration +make ImportMyBanner.res:12:4 path:+ImportMyBanner
   addRecordLabelDeclaration text ImportMyBanner.res:5:16 path:+ImportMyBanner.message
-  addValueReference ImportMyBanner.res:20:4 --> ImportMyBanner.res:7:0
+  addValueReference ImportMyBanner.res:12:4 --> ImportMyBanner.res:7:0
   Scanning JSResource.cmt Source:JSResource.res
   Scanning LetPrivate.cmt Source:LetPrivate.res
   addValueDeclaration +y LetPrivate.res:7:4 path:+LetPrivate
@@ -1497,11 +1495,11 @@
   addValueDeclaration +valueStartingWithUpperCaseLetter TestImport.res:15:0 path:+TestImport
   addValueDeclaration +defaultValue TestImport.res:18:0 path:+TestImport
   addValueDeclaration +make TestImport.res:24:0 path:+TestImport
-  addValueDeclaration +make TestImport.res:35:4 path:+TestImport
-  addValueDeclaration +defaultValue2 TestImport.res:37:0 path:+TestImport
+  addValueDeclaration +make TestImport.res:27:4 path:+TestImport
+  addValueDeclaration +defaultValue2 TestImport.res:29:0 path:+TestImport
   addValueReference TestImport.res:13:4 --> TestImport.res:1:0
   addRecordLabelDeclaration text TestImport.res:22:16 path:+TestImport.message
-  addValueReference TestImport.res:35:4 --> TestImport.res:24:0
+  addValueReference TestImport.res:27:4 --> TestImport.res:24:0
   Scanning TestModuleAliases.cmt Source:TestModuleAliases.res
   addValueDeclaration +testInner1 TestModuleAliases.res:32:4 path:+TestModuleAliases
   addValueDeclaration +testInner1Expanded TestModuleAliases.res:35:4 path:+TestModuleAliases
@@ -1869,7 +1867,7 @@ File References
   AutoAnnotate.res -->> 
   BootloaderResource.res -->> 
   BucklescriptAnnotations.res -->> 
-  ComponentAsProp.res -->> ReactDOMRe.re, ReasonReact.rei
+  ComponentAsProp.res -->> React.res, ReactDOMRe.res
   CreateErrorHandler1.res -->> ErrorHandler.resi
   CreateErrorHandler2.res -->> 
   DeadCodeImplementation.res -->> 
@@ -1879,7 +1877,7 @@ File References
   DeadMl.ml -->> 
   DeadRT.res -->> 
   DeadRT.resi -->> 
-  DeadTest.res -->> React.re, BootloaderResource.res, DeadValueTest.resi, DynamicallyLoadedComponent.res, ImmutableArray.resi, JSResource.res, ExportWithRename.res, trace.mli
+  DeadTest.res -->> React.res, BootloaderResource.res, DeadValueTest.resi, DynamicallyLoadedComponent.res, ImmutableArray.resi, JSResource.res, ExportWithRename.res, trace.mli
   DeadTestBlacklist.res -->> 
   DeadTestWithInterface.res -->> 
   DeadTypeTest.res -->> 
@@ -1887,8 +1885,8 @@ File References
   DeadValueTest.res -->> 
   DeadValueTest.resi -->> DeadValueTest.res
   Docstrings.res -->> 
-  DynamicallyLoadedComponent.res -->> React.re
-  EmptyArray.res -->> React.re, ReactDOMRe.re
+  DynamicallyLoadedComponent.res -->> React.res
+  EmptyArray.res -->> React.res, ReactDOMRe.res
   ErrorHandler.res -->> 
   ErrorHandler.resi -->> ErrorHandler.res
   EverythingLiveHere.res -->> 
@@ -1896,7 +1894,7 @@ File References
   FirstClassModules.res -->> 
   FirstClassModulesInterface.res -->> 
   FirstClassModulesInterface.resi -->> FirstClassModulesInterface.res
-  Hooks.res -->> React.re, ReactDOMRe.re, ReasonReact.rei, ImportHookDefault.res, ImportHooks.res
+  Hooks.res -->> React.res, ReactDOM.res, ReactDOMRe.res, ImportHookDefault.res, ImportHooks.res
   IgnoreInterface.res -->> 
   IgnoreInterface.resi -->> 
   ImmutableArray.res -->> 
@@ -1957,7 +1955,6 @@ File References
   Dead Value +BucklescriptAnnotations.+bar: 0 references () [1]
   Dead Value +BucklescriptAnnotations.+f: 0 references () [0]
   Live Value +ComponentAsProp.+make: 0 references () [0]
-  Live Value +ComponentAsProp.+component: 1 references (ComponentAsProp.res:7:4) [0]
   Live Value +CreateErrorHandler1.Error1.+notification: 1 references (ErrorHandler.resi:3:2) [0]
   Live Value +CreateErrorHandler2.Error2.+notification: 1 references (ErrorHandler.resi:3:2) [0]
   Live Value +DeadCodeImplementation.M.+x: 1 references (DeadCodeInterface.res:2:2) [0]
@@ -2006,6 +2003,7 @@ File References
   Live VariantCase DeadRT.moduleAccessPath.Root: 1 references (DeadTest.res:106:16) [1]
   Live VariantCase +DeadRT.moduleAccessPath.Root: 1 references (DeadRT.resi:2:2) [0]
   Live VariantCase DeadRT.moduleAccessPath.Kaboom: 1 references (DeadRT.res:3:2) [0]
+  Dead RecordLabel +DeadTest.rc.a: 0 references () [0]
   Live VariantCase +DeadTest.WithInclude.t.A: 1 references (DeadTest.res:180:7) [1]
   Live VariantCase +DeadTest.WithInclude.t.A: 1 references (DeadTest.res:172:11) [0]
   Live Value +DeadTest.GloobLive.+globallyLive3: 0 references () [0]
@@ -2132,7 +2130,7 @@ File References
   Live Value +Hooks.+anotherComponent: 0 references () [0]
   Live Value +Hooks.+default: 0 references () [0]
   Live Value +Hooks.+make: 1 references (Hooks.res:25:4) [0]
-  Live RecordLabel +Hooks.vehicle.name: 13 references (Hooks.res:10:29, Hooks.res:30:41, Hooks.res:35:66, Hooks.res:38:78, Hooks.res:42:68, Hooks.res:46:45, Hooks.res:60:2, Hooks.res:60:14, Hooks.res:66:15, Hooks.res:66:27, Hooks.res:74:75, Hooks.res:100:58, Hooks.res:115:41) [0]
+  Live RecordLabel +Hooks.vehicle.name: 13 references (Hooks.res:10:29, Hooks.res:30:41, Hooks.res:35:66, Hooks.res:38:78, Hooks.res:42:68, Hooks.res:46:45, Hooks.res:60:2, Hooks.res:60:14, Hooks.res:66:15, Hooks.res:66:27, Hooks.res:74:73, Hooks.res:100:58, Hooks.res:115:41) [0]
   Live Value +ImportIndex.+make: 0 references () [0]
   Dead Value +ImportMyBanner.+make: 0 references () [0]
   Live Value +ImportMyBanner.+make: 0 references () [0]
@@ -3058,6 +3056,12 @@ File References
   +stringLengthNoSideEffects is never used
   <-- line 161
   @dead("+stringLengthNoSideEffects") let stringLengthNoSideEffects = String.length("sdkdl")
+
+  Warning Dead Type
+  File "./DeadTest.res", line 189, characters 11-16
+  rc.a is a record label never used to read a value
+  <-- line 189
+  type rc = {@dead("rc.a") a:int}
 
   Warning Dead Module
   File "./DeadTestBlacklist.res", line 0, characters 0-0
@@ -3994,9 +3998,9 @@ File References
   type message = {@dead("message.text") text: string}
 
   Warning Dead Value
-  File "./ImportMyBanner.res", line 20, characters 0-15
+  File "./ImportMyBanner.res", line 12, characters 0-15
   +make is never used
-  <-- line 20
+  <-- line 12
   @dead("+make") let make = make
 
   Warning Dead Module
@@ -4282,9 +4286,9 @@ File References
   type message = {@dead("message.text") text: string}
 
   Warning Dead Value
-  File "./TestImport.res", line 35, characters 0-15
+  File "./TestImport.res", line 27, characters 0-15
   +make is never used
-  <-- line 35
+  <-- line 27
   @dead("+make") let make = make
 
   Warning Dead Type
@@ -4507,4 +4511,4 @@ File References
   <-- line 96
   type variant1Object = | @dead("variant1Object.R") R(payload)
   
-  Analysis reported 331 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:88, Warning Dead Value:200, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)
+  Analysis reported 332 issues (Warning Dead Exception:1, Warning Dead Module:24, Warning Dead Type:89, Warning Dead Value:200, Warning Dead Value With Side Effects:2, Warning Redundant Optional Argument:5, Warning Unused Argument:11)

@@ -2,23 +2,16 @@
 /* eslint-disable import/first */
 
 
-import MyBanner from './MyBanner';
+import {make as makeNotChecked} from './MyBanner';
 
-import * as React from 'react';
-
-// tslint:disable-next-line:no-var-requires
-const ReasonReact = require('reason-react/src/ReasonReact.js');
-
-// tslint:disable-next-line:interface-over-type-literal
-export type Props = { readonly show: boolean; readonly message?: message };
-
-// In case of type error, check the type of 'make' in 'ImportMyBanner.re' and the props of './MyBanner'.
-export function MyBannerTypeChecked(props: Props): JSX.Element {
-  return <MyBanner {...props}/>;
-}
+// In case of type error, check the type of 'make' in 'ImportMyBanner.re' and './MyBanner'.
+export const makeTypeChecked: <a>(_1:{ readonly show: boolean; readonly message?: message }, _2:a) => JSX.Element = makeNotChecked;
 
 // Export 'make' early to allow circular import from the '.bs.js' file.
-export const make: unknown = function (show: any, message: any, children: any) { return ReasonReact.wrapJsForReason(MyBanner, {show: show, message: message}, children); };
+export const make: unknown = function <a>(Argshow: any, Argmessage: any, Arg2: any) {
+  const result = makeTypeChecked({show:Argshow, message:Argmessage}, Arg2);
+  return result
+} as <a>(_1:{ readonly show: boolean; readonly message?: message }, _2:a) => JSX.Element;
 
 // tslint:disable-next-line:interface-over-type-literal
 export type message = { readonly text: string };

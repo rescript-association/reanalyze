@@ -15,7 +15,7 @@
     "../../_build/default/lazyload-ppx/LazyLoad.exe"
   ],
   "reason": { "react-jsx": 3 },
-  "bs-dependencies": ["reason-react", "@glennsl/bs-json"],
+  "bs-dependencies": ["@rescript/react", "@glennsl/bs-json"],
   "sources": [
     {
       "dir": "src",

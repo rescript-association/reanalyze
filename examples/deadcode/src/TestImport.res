@@ -22,18 +22,9 @@ external defaultValue: int = "defaultValue"
 type message = {text: string}
 
 @genType.import(("./MyBanner", "TopLevelClass.MiddleLevelElements.MyBannerInternal"))
-external make: (
-  ~show: bool,
-  ~message: option<message>=?,
-  'a,
-) => ReasonReact.component<
-  ReasonReact.stateless,
-  ReasonReact.noRetainedProps,
-  ReasonReact.actionless,
-> = "make"
+external make: (~show: bool, ~message: option<message>=?, 'a) => React.element = "make"
 
 let make = make
 
 @genType.import(("./exportNestedValues", "default"))
 external defaultValue2: int = "defaultValue2"
-
