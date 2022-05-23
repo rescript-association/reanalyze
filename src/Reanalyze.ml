@@ -209,7 +209,7 @@ let cli () =
          under the root path" );
       ( "-unsuppress",
         Arg.String setUnsuppress,
-        "comma-separated-path-prefixes Report on files whose path a prefix in \
+        "comma-separated-path-prefixes Report on files whose path has a prefix in \
          the list, overriding -suppress (no-op if -suppress is not specified)"
       );
       ("-version", Arg.Unit versionAndExit, "Show version information and exit");
