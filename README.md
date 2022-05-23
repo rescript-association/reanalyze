@@ -91,7 +91,7 @@ Takes a comma-separated list of path-prefixes. Don't report on files whose path 
 
 ### CLI -unsuppress
 
-Takes a comma-separated list of path-prefixes. Report on files whose path has a prefix in the list, overriding -suppress (no-op if -suppress is not specified).
+Takes a comma-separated list of path-prefixes. Report on files whose path has a prefix in the list, overriding `-suppress` (no-op if `-suppress` is not specified).
 
 ```sh
 -unsuppress one/path,another/path/File.res
