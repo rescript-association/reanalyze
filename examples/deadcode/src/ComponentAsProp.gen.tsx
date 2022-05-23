@@ -2,27 +2,22 @@
 /* eslint-disable import/first */
 
 
-// tslint:disable-next-line:no-var-requires
-const Curry = require('bs-platform/lib/es6/curry.js');
+import * as React from 'react';
 
-// tslint:disable-next-line:no-var-requires
-const ComponentAsPropBS = require('./ComponentAsProp.bs');
-
-// tslint:disable-next-line:no-var-requires
-const ReasonReact = require('reason-react/src/ReasonReact.js');
+// @ts-ignore: Implicit any on import
+import * as ComponentAsPropBS__Es6Import from './ComponentAsProp.bs';
+const ComponentAsPropBS: any = ComponentAsPropBS__Es6Import;
 
 // tslint:disable-next-line:interface-over-type-literal
 export type Props = {
-  readonly title: JSX.Element; 
-  readonly description: JSX.Element; 
   readonly button?: JSX.Element; 
-  readonly children?: unknown
+  readonly description: JSX.Element; 
+  readonly title: JSX.Element
 };
 
-export const ComponentAsProp: React.ComponentType<Props> = ReasonReact.wrapReasonForJs(
-  ComponentAsPropBS.component,
-  (function _(jsProps: Props) {
-     return Curry._4(ComponentAsPropBS.make, jsProps.title, jsProps.description, jsProps.button, jsProps.children);
-  }));
-
-export default ComponentAsProp;
+/**  This is like declaring a normal ReasonReact component's `make` function, except the body is a the interop hook wrapJsForReason  */
+export const make: React.ComponentType<{
+  readonly button?: JSX.Element; 
+  readonly description: JSX.Element; 
+  readonly title: JSX.Element
+}> = ComponentAsPropBS.make;

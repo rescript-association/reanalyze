@@ -2,8 +2,9 @@
 /* eslint-disable import/first */
 
 
-// tslint:disable-next-line:no-var-requires
-const TransitiveType3BS = require('./TransitiveType3.bs');
+// @ts-ignore: Implicit any on import
+import * as TransitiveType3BS__Es6Import from './TransitiveType3.bs';
+const TransitiveType3BS: any = TransitiveType3BS__Es6Import;
 
 // tslint:disable-next-line:interface-over-type-literal
 export type t3 = { readonly i: number; readonly s: string };

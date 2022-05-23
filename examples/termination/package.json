@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node ../run_bsb.js -make-world -w",
-    "build": "node ../run_bsb.js -make-world",
-    "clean": "node ../clean_bsb.js",
+    "start": "rescript build -w",
+    "build": "rescript build",
+    "clean": "rescript clean -with-deps",
     "analyze": "node ./termination.js >src/termination.txt"
   },
   "devDependencies": {

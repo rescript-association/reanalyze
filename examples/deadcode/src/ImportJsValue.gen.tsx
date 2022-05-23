@@ -18,10 +18,9 @@ import {polymorphic as polymorphicNotChecked} from './MyMath';
 
 import {default as defaultNotChecked} from './MyMath';
 
-const $$toJS580645844: { [key: string]: any } = {"322339018": "tomato", "-999567389": "gray"};
-
-// tslint:disable-next-line:no-var-requires
-const Curry = require('bs-platform/lib/es6/curry.js');
+// @ts-ignore: Implicit any on import
+import * as Curry__Es6Import from 'rescript/lib/es6/curry.js';
+const Curry: any = Curry__Es6Import;
 
 // In case of type error, check the type of 'round' in 'ImportJsValue.re' and './MyMath'.
 export const roundTypeChecked: (_1:number) => number = roundNotChecked;
@@ -45,10 +44,7 @@ export const returnMixedArray: unknown = returnMixedArrayTypeChecked as () => nu
 export const useColorTypeChecked: (_1:color) => number = useColorNotChecked;
 
 // Export 'useColor' early to allow circular import from the '.bs.js' file.
-export const useColor: unknown = function (Arg1: any) {
-  const result = useColorTypeChecked($$toJS580645844[Arg1]);
-  return result
-} as (_1:color) => number;
+export const useColor: unknown = useColorTypeChecked as (_1:color) => number;
 
 // In case of type error, check the type of 'higherOrder' in 'ImportJsValue.re' and './MyMath'.
 export const higherOrderTypeChecked: (_1:((_1:number, _2:number) => number)) => number = higherOrderNotChecked;
@@ -90,17 +86,17 @@ export const $$default: unknown = defaultTypeChecked as number;
 // tslint:disable-next-line:no-var-requires
 const ImportJsValueBS = require('./ImportJsValue.bs');
 
-import {AbsoluteValue as $$AbsoluteValue_t} from './MyMath';
+import type {AbsoluteValue as $$AbsoluteValue_t} from './MyMath';
 
-import {num as $$myNum} from './MyMath';
+import type {num as $$myNum} from './MyMath';
 
-import {num as $$num} from './MyMath';
+import type {num as $$num} from './MyMath';
 
-import {numberOrString as $$numberOrString} from './MyMath';
+import type {numberOrString as $$numberOrString} from './MyMath';
 
-import {polyType as $$polyType} from './MyMath';
+import type {polyType as $$polyType} from './MyMath';
 
-import {stringFunction as $$stringFunction} from './MyMath';
+import type {stringFunction as $$stringFunction} from './MyMath';
 
 // tslint:disable-next-line:interface-over-type-literal
 export type point = { readonly x: number; readonly y?: number };

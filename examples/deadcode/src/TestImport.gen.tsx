@@ -10,26 +10,21 @@ import {ValueStartingWithUpperCaseLetter as valueStartingWithUpperCaseLetterNotC
 
 import {default as defaultValueNotChecked} from './exportNestedValues';
 
-import {TopLevelClass as TopLevelClass} from './MyBanner';
+import {TopLevelClass as makeNotChecked} from './MyBanner';
 
 import {default as defaultValue2NotChecked} from './exportNestedValues';
 
-import * as React from 'react';
-
-// tslint:disable-next-line:no-var-requires
-const ReasonReact = require('reason-react/src/ReasonReact.js');
-
 // In case of type error, check the type of 'innerStuffContents' in 'TestImport.re' and './exportNestedValues'.
-export const innerStuffContentsTypeChecked: unknown = innerStuffContentsNotChecked.MiddleLevelElements.stuff.InnerStuff.innerStuffContents;
+export const innerStuffContentsTypeChecked: { readonly x: number } = innerStuffContentsNotChecked.MiddleLevelElements.stuff.InnerStuff.innerStuffContents;
 
 // Export 'innerStuffContents' early to allow circular import from the '.bs.js' file.
-export const innerStuffContents: unknown = innerStuffContentsTypeChecked as unknown;
+export const innerStuffContents: unknown = innerStuffContentsTypeChecked as { readonly x: number };
 
 // In case of type error, check the type of 'innerStuffContentsAsEmptyObject' in 'TestImport.re' and './exportNestedValues'.
-export const innerStuffContentsAsEmptyObjectTypeChecked: unknown = innerStuffContentsAsEmptyObjectNotChecked.MiddleLevelElements.stuff.InnerStuff.innerStuffContents;
+export const innerStuffContentsAsEmptyObjectTypeChecked: {} = innerStuffContentsAsEmptyObjectNotChecked.MiddleLevelElements.stuff.InnerStuff.innerStuffContents;
 
 // Export 'innerStuffContentsAsEmptyObject' early to allow circular import from the '.bs.js' file.
-export const innerStuffContentsAsEmptyObject: unknown = innerStuffContentsAsEmptyObjectTypeChecked as unknown;
+export const innerStuffContentsAsEmptyObject: unknown = innerStuffContentsAsEmptyObjectTypeChecked as {};
 
 // In case of type error, check the type of 'valueStartingWithUpperCaseLetter' in 'TestImport.re' and './exportNestedValues'.
 export const valueStartingWithUpperCaseLetterTypeChecked: string = valueStartingWithUpperCaseLetterNotChecked;
@@ -43,16 +38,14 @@ export const defaultValueTypeChecked: number = defaultValueNotChecked;
 // Export 'defaultValue' early to allow circular import from the '.bs.js' file.
 export const defaultValue: unknown = defaultValueTypeChecked as number;
 
-// tslint:disable-next-line:interface-over-type-literal
-export type Props = { readonly show: boolean; readonly message?: message };
-
-// In case of type error, check the type of 'make' in 'TestImport.re' and the props of './MyBanner'.
-export function MyBannerInternalTypeChecked(props: Props): JSX.Element {
-  return <TopLevelClass.MiddleLevelElements.MyBannerInternal {...props}/>;
-}
+// In case of type error, check the type of 'make' in 'TestImport.re' and './MyBanner'.
+export const makeTypeChecked: <a>(_1:{ readonly show: boolean; readonly message?: message }, _2:a) => JSX.Element = makeNotChecked.MiddleLevelElements.MyBannerInternal;
 
 // Export 'make' early to allow circular import from the '.bs.js' file.
-export const make: unknown = function (show: any, message: any, children: any) { return ReasonReact.wrapJsForReason(TopLevelClass.MiddleLevelElements.MyBannerInternal, {show: show, message: message}, children); };
+export const make: unknown = function <a>(Argshow: any, Argmessage: any, Arg2: any) {
+  const result = makeTypeChecked({show:Argshow, message:Argmessage}, Arg2);
+  return result
+} as <a>(_1:{ readonly show: boolean; readonly message?: message }, _2:a) => JSX.Element;
 
 // In case of type error, check the type of 'defaultValue2' in 'TestImport.re' and './exportNestedValues'.
 export const defaultValue2TypeChecked: number = defaultValue2NotChecked;

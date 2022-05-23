@@ -185,3 +185,5 @@ let funWithInnerVars = () => {
   let y = 36
   x + y
 }
+
+type rc = {a:int}

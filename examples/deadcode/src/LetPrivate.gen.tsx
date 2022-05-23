@@ -2,7 +2,8 @@
 /* eslint-disable import/first */
 
 
-// tslint:disable-next-line:no-var-requires
-const LetPrivateBS = require('./LetPrivate.bs');
+// @ts-ignore: Implicit any on import
+import * as LetPrivateBS__Es6Import from './LetPrivate.bs';
+const LetPrivateBS: any = LetPrivateBS__Es6Import;
 
 export const y: number = LetPrivateBS.y;

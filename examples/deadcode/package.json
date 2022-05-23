@@ -3,20 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node ../run_bsb.js -make-world -w",
-    "build": "node ../run_bsb.js -make-world",
-    "clean": "node ../clean_bsb.js",
+    "start": "rescript build -w",
+    "build": "rescript build",
+    "clean": "rescript clean -with-deps",
     "dce": "node ./dce.js >src/deadcode.txt",
     "exception": "node ./exception.js >src/exception.txt",
     "noalloc": "node ./noalloc.js >src/noalloc.txt",
     "analyze": "npm run dce && npm run exception && npm run noalloc"
   },
   "devDependencies": {
-    "rescript": "9.1.1",
-    "@glennsl/bs-json": "^3.0.0",
-    "gentype": "^3.27.0",
     "react": "^16.13.1",
-    "react-dom": "^16.8.6",
-    "reason-react": "^0.9.1"
+    "react-dom": "^16.8.6"
+  },
+  "dependencies": {
+    "@glennsl/bs-json": "^5.0.4",
+    "@rescript/react": "^0.10.3",
+    "gentype": "^4.3.0",
+    "rescript": "^9.1.4"
   }
 }

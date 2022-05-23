@@ -2,8 +2,9 @@
 /* eslint-disable import/first */
 
 
-// tslint:disable-next-line:no-var-requires
-const TestPromiseBS = require('./TestPromise.bs');
+// @ts-ignore: Implicit any on import
+import * as TestPromiseBS__Es6Import from './TestPromise.bs';
+const TestPromiseBS: any = TestPromiseBS__Es6Import;
 
 // tslint:disable-next-line:interface-over-type-literal
 export type promise<a> = Promise<a>;

@@ -2,7 +2,8 @@
 /* eslint-disable import/first */
 
 
-// tslint:disable-next-line:no-var-requires
-const ShadowBS = require('./Shadow.bs');
+// @ts-ignore: Implicit any on import
+import * as ShadowBS__Es6Import from './Shadow.bs';
+const ShadowBS: any = ShadowBS__Es6Import;
 
 export const test: () => string = ShadowBS.test;

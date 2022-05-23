@@ -49,7 +49,7 @@ module Inner = {
 
 module NoProps = {
   @genType @react.component
-  let make = () => <div> ReasonReact.null </div>
+  let make = () => <div> React.null </div>
 }
 
 type cb = (~_to: vehicle) => unit
@@ -71,7 +71,7 @@ let makeWithRef = (~vehicle) => {
   let _ = 34
   ref =>
     switch ref->Js.Nullable.toOption {
-    | Some(ref) => <button ref={ReactDOMRe.Ref.domRef(ref)}> {React.string(vehicle.name)} </button>
+    | Some(ref) => <button ref={ReactDOM.Ref.domRef(ref)}> {React.string(vehicle.name)} </button>
     | None => React.null
     }
 }
@@ -94,7 +94,7 @@ type testReactContext = React.Context.t<int>
 type testReactRef = React.Ref.t<int>
 
 @genType
-type testDomRef = ReactDOMRe.domRef
+type testDomRef = ReactDOM.domRef
 
 @genType @react.component
 let polymorphicComponent = (~p as (x, _)) => React.string(x.name)
@@ -113,4 +113,3 @@ module RenderPropRequiresConversion = {
 @genType @react.component
 let aComponentWithChildren = (~vehicle, ~children) =>
   <div> {React.string("Another Hook " ++ vehicle.name)} <div> children </div> </div>
-

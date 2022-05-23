@@ -2,17 +2,19 @@
 /* eslint-disable import/first */
 
 
-// tslint:disable-next-line:no-var-requires
-const Curry = require('bs-platform/lib/es6/curry.js');
+// @ts-ignore: Implicit any on import
+import * as Curry__Es6Import from 'rescript/lib/es6/curry.js';
+const Curry: any = Curry__Es6Import;
 
-// tslint:disable-next-line:no-var-requires
-const TypesBS = require('./Types.bs');
+// @ts-ignore: Implicit any on import
+import * as TypesBS__Es6Import from './Types.bs';
+const TypesBS: any = TypesBS__Es6Import;
 
-import {Dict_t as Js_Dict_t} from './Js.gen';
+import type {Dict_t as Js_Dict_t} from './Js.gen';
 
-import {Json_t as Js_Json_t} from './Js.gen';
+import type {Json_t as Js_Json_t} from './Js.gen';
 
-import {list} from './ReasonPervasives.gen';
+import type {list} from './ReasonPervasives.gen';
 
 // tslint:disable-next-line:interface-over-type-literal
 export type t = number;
@@ -23,7 +25,11 @@ export type typeWithVars<x,y,z> =
   | { tag: "B"; value: z };
 
 // tslint:disable-next-line:interface-over-type-literal
-export type tree = unknown;
+export type tree = {
+  readonly label: string; 
+  readonly left?: tree; 
+  readonly right?: tree
+};
 
 // tslint:disable-next-line:interface-over-type-literal
 export type selfRecursive = { readonly self: selfRecursive };
@@ -60,10 +66,20 @@ export type record = { readonly i: number; readonly s: string };
 export type decorator<a,b> = (_1:a) => b;
 
 // tslint:disable-next-line:interface-over-type-literal
-export type marshalFields = unknown;
+export type marshalFields = {
+  readonly rec: string; 
+  readonly _switch: string; 
+  readonly switch: string; 
+  readonly __: string; 
+  readonly _: string; 
+  readonly foo: string; 
+  readonly _foo: string; 
+  readonly Uppercase: string; 
+  readonly _Uppercase: string
+};
 
 // tslint:disable-next-line:interface-over-type-literal
-export type marshalMutableField = unknown;
+export type marshalMutableField = { match: number };
 
 // tslint:disable-next-line:interface-over-type-literal
 export type ocaml_array<a> = a[];

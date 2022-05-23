@@ -2,8 +2,9 @@
 /* eslint-disable import/first */
 
 
-// tslint:disable-next-line:no-var-requires
-const ModuleAliasesBS = require('./ModuleAliases.bs');
+// @ts-ignore: Implicit any on import
+import * as ModuleAliasesBS__Es6Import from './ModuleAliases.bs';
+const ModuleAliasesBS: any = ModuleAliasesBS__Es6Import;
 
 // tslint:disable-next-line:interface-over-type-literal
 export type Outer_Inner_innerT = { readonly inner: string };

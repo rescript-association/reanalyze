@@ -2,11 +2,13 @@
 /* eslint-disable import/first */
 
 
-// tslint:disable-next-line:no-var-requires
-const Curry = require('bs-platform/lib/es6/curry.js');
+// @ts-ignore: Implicit any on import
+import * as Curry__Es6Import from 'rescript/lib/es6/curry.js';
+const Curry: any = Curry__Es6Import;
 
-// tslint:disable-next-line:no-var-requires
-const TuplesBS = require('./Tuples.bs');
+// @ts-ignore: Implicit any on import
+import * as TuplesBS__Es6Import from './Tuples.bs';
+const TuplesBS: any = TuplesBS__Es6Import;
 
 // tslint:disable-next-line:interface-over-type-literal
 export type coord = [number, number, (null | undefined | number)];
