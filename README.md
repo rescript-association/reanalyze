@@ -86,7 +86,7 @@ Here are several unstable features, which could change substantially over time. 
 Takes a comma-separated list of path-prefixes. Don't report on files whose path has a prefix in the list (but still use them for analysis).
 
 ```sh
--suppress one/path,another/path
+reanalyze.exe -suppress one/path,another/path
 ```
 
 ### CLI -unsuppress
@@ -94,7 +94,7 @@ Takes a comma-separated list of path-prefixes. Don't report on files whose path 
 Takes a comma-separated list of path-prefixes. Report on files whose path has a prefix in the list, overriding `-suppress` (no-op if `-suppress` is not specified).
 
 ```sh
--unsuppress one/path,another/path/File.res
+reanalyze.exe -unsuppress one/path,another/path/File.res
 ```
 
 ### CLI -debug
