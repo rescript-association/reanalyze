@@ -189,7 +189,7 @@ let cli () =
         "Report on externals in dead code analysis" );
       ( "-live-names",
         Arg.String (fun s -> setLiveNames s),
-        "comma-separated-names Consider all values with the give names as live"
+        "comma-separated-names Consider all values with the given names as live"
       );
       ( "-live-paths",
         Arg.String (fun s -> setLivePaths s),
