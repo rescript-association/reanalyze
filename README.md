@@ -138,17 +138,21 @@ This automatically annotates `@live` all the items in the `src/test` and `tmp` f
 
 ## Configuration via `bsconfig.json`
 
-The CLI options `-suppress` and `-unsuppress` can also be set in `bsconfig.json` as follows:
+The `-config` option can be used to read the configuration from `bsconfig.json`: to
+set what analyses should be run, as well as `suppress` and `unsuppress` configuration.
+
+Example configuration inside `bsconfig.json`:
 ```json
 {
   "reanalyze": {
+    "analysis": ["dce", "exception"],
     "suppress": ["src/ToSuppress.res"],
-    "unsuppress": []
+    "unsuppress": ["this", "that"]
   }
 }
 ```
 
-This is equivalent to adding `--suppress` and `--unsuppress` options at the beginning of the command-line. Note that the options are additive, so it's possible to suppress partially in the config and partially on the command line.
+This is equivalent to adding `-dce -exception -suppress src/ToSuppress.res -unsuppress this,that` to the command line in place of `-config`. Note that the options are additive, so it's possible to use e.g. `-config -exception` to add exception analysis on top of what the configuration does.
 
 ## Install with npm for ReScript projects
 
