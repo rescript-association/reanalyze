@@ -50,7 +50,9 @@ module Config = struct
                RunConfig.fromBsconfig.termination <- true
              | String "noalloc" -> RunConfig.fromBsconfig.noalloc <- true
              | _ -> ())
-    | _ -> ()
+    | _ ->
+      (* if no "analysis" specified, default to dce *)
+      RunConfig.fromBsconfig.dce <- true
 
   let process bsconfigFile =
     match readFile bsconfigFile with
