@@ -37,18 +37,17 @@ module Config = struct
   let readRunConfig conf =
     match Json.get "analysis" conf with
     | Some (Array elements) ->
+      let runConfig = RunConfig.fromBsconfig in
       elements
       |> List.iter (fun (x : Json.t) ->
              match x with
              | String "all" ->
-               RunConfig.fromBsconfig.dce <- true;
-               RunConfig.fromBsconfig.exception_ <- true;
-               RunConfig.fromBsconfig.termination <- true
-             | String "dce" -> RunConfig.fromBsconfig.dce <- true
-             | String "exception" -> RunConfig.fromBsconfig.exception_ <- true
+               RunConfig.all runConfig
+             | String "dce" -> RunConfig.dce runConfig
+             | String "exception" -> RunConfig.exception_ runConfig
              | String "termination" ->
-               RunConfig.fromBsconfig.termination <- true
-             | String "noalloc" -> RunConfig.fromBsconfig.noalloc <- true
+               RunConfig.termination runConfig
+             | String "noalloc" -> RunConfig.noalloc runConfig
              | _ -> ())
     | _ ->
       (* if no "analysis" specified, default to dce *)
@@ -79,12 +78,13 @@ let rec findProjectRoot ~dir =
       assert false)
     else findProjectRoot ~dir:parent
 
-let setProjectRoot () =
-  Suppress.projectRoot := findProjectRoot ~dir:(Sys.getcwd ());
-  Suppress.bsbProjectRoot :=
-    match Sys.getenv_opt "BSB_PROJECT_ROOT" with
-    | None -> !Suppress.projectRoot
-    | Some s -> s
+let setProjectRoot =
+  lazy
+    (Suppress.projectRoot := findProjectRoot ~dir:(Sys.getcwd ());
+     Suppress.bsbProjectRoot :=
+       match Sys.getenv_opt "BSB_PROJECT_ROOT" with
+       | None -> !Suppress.projectRoot
+       | Some s -> s)
 
 (**
   * Handle namespaces in cmt files.

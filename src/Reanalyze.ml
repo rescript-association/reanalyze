@@ -58,7 +58,7 @@ let processCmtFiles ~cmtRoot ~runConfig =
     in
     walkSubDirs ""
   | None ->
-    Paths.setProjectRoot ();
+    Lazy.force Paths.setProjectRoot;
     let lib_bs = !Suppress.projectRoot +++ ("lib" +++ "bs") in
     let sourceDirs =
       Paths.readSourceDirs ~configSources:None |> List.sort String.compare
@@ -96,57 +96,62 @@ let runAnalysis ~runConfig ~cmtRoot ~ppf =
   Log_.Stats.report ();
   Log_.Stats.clear ()
 
-type cliCommand =
-  | All of string option
-  | Config
-  | Exception of string option
-  | DCE of string option
-  | Noalloc
-  | NoOp
-  | Termination of string option
-
 let cli () =
-  let cliCommand = ref NoOp in
+  let analysisKindSet = ref false in
+  let cmtRootRef = ref None in
   let usage = "reanalyze version " ^ Version.version in
   let versionAndExit () =
     print_endline usage;
     exit 0
     [@@raises exit]
   in
+  let runConfig = RunConfig.default () in
   let rec printUsageAndExit () =
+    Printf.eprintf "Error: No analysis set\n\n";
     Arg.usage speclist usage;
     exit 0
     [@@raises exit]
-  and setCliCommand command =
-    if !cliCommand <> NoOp then printUsageAndExit ();
-    cliCommand := command
-    [@@raises exit]
-  and setAll cmtRoot = All cmtRoot |> setCliCommand [@@raises exit]
-  and setConfig () = Config |> setCliCommand
-  and setDCE cmtRoot = DCE cmtRoot |> setCliCommand [@@raises exit]
+  and setAll cmtRoot =
+    RunConfig.all runConfig;
+    cmtRootRef := cmtRoot;
+    analysisKindSet := true
+  and setConfig () =
+    Lazy.force Paths.setProjectRoot;
+    RunConfig.applyFromBsconfig runConfig;
+    analysisKindSet := true
+  and setDCE cmtRoot =
+    RunConfig.dce runConfig;
+    cmtRootRef := cmtRoot;
+    analysisKindSet := true
   and setDebug () = Cli.debug := true
-  and setException cmtRoot = Exception cmtRoot |> setCliCommand [@@raises exit]
+  and setException cmtRoot =
+    RunConfig.exception_ runConfig;
+    cmtRootRef := cmtRoot;
+    analysisKindSet := true
+  and setExcludePaths s =
+    let paths = s |> String.split_on_char ',' in
+    Common.Cli.excludePaths := paths @ Common.Cli.excludePaths.contents
   and setExperimental () = Common.Cli.experimental := true
-  and setNoalloc () = Noalloc |> setCliCommand [@@raises exit]
+  and setLiveNames s =
+    let names = s |> String.split_on_char ',' in
+    Common.Cli.liveNames := names @ Common.Cli.liveNames.contents
+  and setLivePaths s =
+    let paths = s |> String.split_on_char ',' in
+    Common.Cli.livePaths := paths @ Common.Cli.livePaths.contents
+  and setNoalloc () =
+    RunConfig.noalloc runConfig;
+    analysisKindSet := true
   and setSuppress s =
     let names = s |> String.split_on_char ',' in
     Suppress.suppress := names @ !Suppress.suppress
+  and setTermination cmtRoot =
+    RunConfig.termination runConfig;
+    cmtRootRef := cmtRoot;
+    analysisKindSet := true
   and setUnsuppress s =
     let names = s |> String.split_on_char ',' in
     Suppress.unsuppress := names @ !Suppress.unsuppress
   and setWrite () = Common.Cli.write := true
-  and setTermination cmtRoot =
-    Termination cmtRoot |> setCliCommand
-    [@@raises exit]
-  and setLiveNames s =
-    let names = s |> String.split_on_char ',' in
-    Common.Cli.liveNames := names @ Common.Cli.liveNames.contents
-  and setExcludePaths s =
-    let paths = s |> String.split_on_char ',' in
-    Common.Cli.excludePaths := paths @ Common.Cli.excludePaths.contents
-  and setLivePaths s =
-    let paths = s |> String.split_on_char ',' in
-    Common.Cli.livePaths := paths @ Common.Cli.livePaths.contents
   and speclist =
     [
       ("-all", Arg.Unit (fun () -> setAll None), "Run all the analyses.");
@@ -155,7 +160,9 @@ let cli () =
         "root_path Run all the analyses for all the .cmt files under the root \
          path" );
       ("-ci", Arg.Unit (fun () -> Cli.ci := true), "Internal flag for use in CI");
-      ("-config", Arg.Unit setConfig, "Read the analysis mode from bsconfig.json");
+      ( "-config",
+        Arg.Unit setConfig,
+        "Read the analysis mode from bsconfig.json" );
       ("-dce", Arg.Unit (fun () -> setDCE None), "Eperimental DCE");
       ("-debug", Arg.Unit setDebug, "Print debug information");
       ( "-dce-cmt",
@@ -212,22 +219,10 @@ let cli () =
     ]
   in
   let ppf = Format.std_formatter in
-  let executeCliCommand cliCommand =
-    match cliCommand with
-    | NoOp -> printUsageAndExit ()
-    | All cmtRoot -> runAnalysis ~runConfig:RunConfig.all ~cmtRoot ~ppf
-    | Config ->
-      runAnalysis ~runConfig:RunConfig.fromBsconfig ~cmtRoot:None ~ppf
-    | DCE cmtRoot -> runAnalysis ~runConfig:RunConfig.dce ~cmtRoot ~ppf
-    | Exception cmtRoot ->
-      runAnalysis ~runConfig:RunConfig.exception_ ~cmtRoot ~ppf
-    | Noalloc -> runAnalysis ~runConfig:RunConfig.noalloc ~cmtRoot:None ~ppf
-    | Termination cmtRoot ->
-      runAnalysis ~runConfig:RunConfig.termination ~cmtRoot ~ppf
-    [@@raises exit]
-  in
   Arg.parse speclist print_endline usage;
-  executeCliCommand !cliCommand
+  if !analysisKindSet = false then printUsageAndExit ();
+  let cmtRoot = !cmtRootRef in
+  runAnalysis ~runConfig ~cmtRoot ~ppf
   [@@raises exit]
 ;;
 

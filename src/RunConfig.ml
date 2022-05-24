@@ -10,12 +10,21 @@ let default () =
 
 let fromBsconfig = default ()
 
-let all = {(default ()) with dce = true; exception_ = true; termination = true}
+let applyFromBsconfig x =
+  if fromBsconfig.dce then x.dce <- true;
+  if fromBsconfig.exception_ then x.exception_ <- true;
+  if fromBsconfig.termination then x.termination <- true;
+  if fromBsconfig.noalloc then x.noalloc <- true
 
-let dce = {(default ()) with dce = true}
+let all x =
+  x.dce <- true;
+  x.exception_ <- true;
+  x.termination <- true
 
-let exception_ = {(default ()) with exception_ = true}
+let dce x = x.dce <- true
 
-let noalloc = {(default ()) with noalloc = true}
+let exception_ x = x.exception_ <- true
 
-let termination = {(default ()) with termination = true}
+let noalloc x = x.noalloc <- true
+
+let termination x = x.termination <- true
