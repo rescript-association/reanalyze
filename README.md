@@ -186,7 +186,7 @@ npx reanalyze -dce
 
 ### Native Projects (OCaml)
 
-- Make sure that `dune` builds both `.cmt` and `.cmti` files (see https://github.com/ocaml/dune/issues/3182 as to why):
+Make sure that `dune` builds both `.cmt` and `.cmti` files (see https://github.com/ocaml/dune/issues/3182 as to why):
 
 This project is itself written in OCaml and can be analyzed as follows.
 ```sh
