@@ -1,4 +1,9 @@
 {
+  "reanalyze": {
+    "analysis": ["termination"],
+    "suppress": [],
+    "unsuppress": []
+  },
   "name": "arnold",
   "bsc-flags": ["-bs-super-errors"],
   "reason": { "react-jsx": 3 },
@@ -13,6 +18,5 @@
     "module": "es6",
     "in-source": true
   },
-  "suffix": ".bs.js",
-  "refmt": 3
+  "suffix": ".bs.js"
 }

@@ -1,22 +1,5 @@
 open Common
 
-module RunConfig = struct
-  type t = {dce : bool; exception_ : bool; termination : bool; noalloc : bool}
-
-  let default =
-    {dce = false; exception_ = false; noalloc = false; termination = false}
-
-  let all = {default with dce = true; exception_ = true; termination = true}
-
-  let dce = {default with dce = true}
-
-  let exception_ = {default with exception_ = true}
-
-  let noalloc = {default with noalloc = true}
-
-  let termination = {default with termination = true}
-end
-
 let loadCmtFile ~(runConfig : RunConfig.t) cmtFilePath =
   let cmt_infos = CL.Cmt_format.read_cmt cmtFilePath in
   let excludePath sourceFile =
@@ -115,6 +98,7 @@ let runAnalysis ~runConfig ~cmtRoot ~ppf =
 
 type cliCommand =
   | All of string option
+  | Config
   | Exception of string option
   | DCE of string option
   | Noalloc
@@ -138,6 +122,7 @@ let cli () =
     cliCommand := command
     [@@raises exit]
   and setAll cmtRoot = All cmtRoot |> setCliCommand [@@raises exit]
+  and setConfig () = Config |> setCliCommand
   and setDCE cmtRoot = DCE cmtRoot |> setCliCommand [@@raises exit]
   and setDebug () = Cli.debug := true
   and setException cmtRoot = Exception cmtRoot |> setCliCommand [@@raises exit]
@@ -170,6 +155,7 @@ let cli () =
         "root_path Run all the analyses for all the .cmt files under the root \
          path" );
       ("-ci", Arg.Unit (fun () -> Cli.ci := true), "Internal flag for use in CI");
+      ("-config", Arg.Unit setConfig, "Read the analysis mode from bsconfig.json");
       ("-dce", Arg.Unit (fun () -> setDCE None), "Eperimental DCE");
       ("-debug", Arg.Unit setDebug, "Print debug information");
       ( "-dce-cmt",
@@ -230,6 +216,8 @@ let cli () =
     match cliCommand with
     | NoOp -> printUsageAndExit ()
     | All cmtRoot -> runAnalysis ~runConfig:RunConfig.all ~cmtRoot ~ppf
+    | Config ->
+      runAnalysis ~runConfig:RunConfig.fromBsconfig ~cmtRoot:None ~ppf
     | DCE cmtRoot -> runAnalysis ~runConfig:RunConfig.dce ~cmtRoot ~ppf
     | Exception cmtRoot ->
       runAnalysis ~runConfig:RunConfig.exception_ ~cmtRoot ~ppf
