@@ -150,13 +150,14 @@ The CLI options `-suppress` and `-unsuppress` can also be set in `bsconfig.json`
 
 This is equivalent to adding `--suppress` and `--unsuppress` options at the beginning of the command-line. Note that the options are additive, so it's possible to suppress partially in the config and partially on the command line.
 
-## Build
-
-## No build required for ReScript projects
+## Install with npm for ReScript projects
 
 ```
 npm add --save-dev reanalyze
 ```
+
+## Build From Sources
+
 
 ### Build for ReScript
 
