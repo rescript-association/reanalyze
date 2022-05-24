@@ -1,8 +1,10 @@
+open Common
+
 let checkPrefix prefix_ =
   let prefix =
-    match RunConfig.runConfig.projectRoot = "" with
+    match runConfig.projectRoot = "" with
     | true -> prefix_
-    | false -> Filename.concat RunConfig.runConfig.projectRoot prefix_
+    | false -> Filename.concat runConfig.projectRoot prefix_
   in
   let prefixLen = prefix |> String.length in
   fun sourceDir ->
@@ -12,13 +14,13 @@ let checkPrefix prefix_ =
 let suppressSourceDir =
   lazy
     (fun sourceDir ->
-      RunConfig.runConfig.suppress
+      runConfig.suppress
       |> List.exists (fun prefix -> checkPrefix prefix sourceDir))
 
 let unsuppressSourceDir =
   lazy
     (fun sourceDir ->
-      RunConfig.runConfig.unsuppress
+      runConfig.unsuppress
       |> List.exists (fun prefix -> checkPrefix prefix sourceDir))
 
 let posInSuppress (pos : Lexing.position) =
