@@ -1,6 +1,6 @@
 open Common
 
-let loadCmtFile ~(runConfig : RunConfig.t) cmtFilePath =
+let loadCmtFile cmtFilePath =
   let cmt_infos = CL.Cmt_format.read_cmt cmtFilePath in
   let excludePath sourceFile =
     !Cli.excludePaths
@@ -31,13 +31,14 @@ let loadCmtFile ~(runConfig : RunConfig.t) cmtFilePath =
     currentModuleName :=
       !currentModule
       |> Name.create ~isInterface:(Filename.check_suffix !currentSrc "i");
-    if runConfig.dce then cmt_infos |> DeadCode.processCmt ~cmtFilePath;
-    if runConfig.exception_ then cmt_infos |> Exception.processCmt;
-    if runConfig.noalloc then cmt_infos |> Noalloc.processCmt;
-    if runConfig.termination then cmt_infos |> Arnold.processCmt
+    if RunConfig.runConfig.dce then
+      cmt_infos |> DeadCode.processCmt ~cmtFilePath;
+    if RunConfig.runConfig.exception_ then cmt_infos |> Exception.processCmt;
+    if RunConfig.runConfig.noalloc then cmt_infos |> Noalloc.processCmt;
+    if RunConfig.runConfig.termination then cmt_infos |> Arnold.processCmt
   | _ -> ()
 
-let processCmtFiles ~cmtRoot ~runConfig =
+let processCmtFiles ~cmtRoot =
   let ( +++ ) = Filename.concat in
   match cmtRoot with
   | Some root ->
@@ -54,7 +55,7 @@ let processCmtFiles ~cmtRoot ~runConfig =
         else if
           Filename.check_suffix absDir ".cmt"
           || Filename.check_suffix absDir ".cmti"
-        then absDir |> loadCmtFile ~runConfig
+        then absDir |> loadCmtFile
     in
     walkSubDirs ""
   | None ->
@@ -80,19 +81,19 @@ let processCmtFiles ~cmtRoot ~runConfig =
            cmtFiles |> List.sort String.compare
            |> List.iter (fun cmtFile ->
                   let cmtFilePath = Filename.concat libBsSourceDir cmtFile in
-                  cmtFilePath |> loadCmtFile ~runConfig))
+                  cmtFilePath |> loadCmtFile))
 
-let runAnalysis ~runConfig ~cmtRoot ~ppf =
+let runAnalysis ~cmtRoot ~ppf =
   Log_.Color.setup ();
-  processCmtFiles ~cmtRoot ~runConfig;
-  if runConfig.dce then (
+  processCmtFiles ~cmtRoot;
+  if RunConfig.runConfig.dce then (
     DeadException.forceDelayedItems ();
     DeadOptionalArgs.forceDelayedItems ();
     DeadCommon.reportDead ~checkOptionalArg:DeadOptionalArgs.check ppf;
     DeadCommon.WriteDeadAnnotations.write ());
-  if runConfig.exception_ then Exception.reportResults ~ppf;
-  if runConfig.noalloc then Noalloc.reportResults ~ppf;
-  if runConfig.termination then Arnold.reportResults ~ppf;
+  if RunConfig.runConfig.exception_ then Exception.reportResults ~ppf;
+  if RunConfig.runConfig.noalloc then Noalloc.reportResults ~ppf;
+  if RunConfig.runConfig.termination then Arnold.reportResults ~ppf;
   Log_.Stats.report ();
   Log_.Stats.clear ()
 
@@ -105,26 +106,25 @@ let cli () =
     exit 0
     [@@raises exit]
   in
-  let runConfig = RunConfig.default () in
   let rec printUsageAndExit () =
     Printf.eprintf "Error: No analysis set\n\n";
     Arg.usage speclist usage;
     exit 0
     [@@raises exit]
   and setAll cmtRoot =
-    RunConfig.all runConfig;
+    RunConfig.all ();
     cmtRootRef := cmtRoot;
     analysisKindSet := true
   and setConfig () =
-    Paths.Config.processBsconfig runConfig;
+    Paths.Config.processBsconfig ();
     analysisKindSet := true
   and setDCE cmtRoot =
-    RunConfig.dce runConfig;
+    RunConfig.dce ();
     cmtRootRef := cmtRoot;
     analysisKindSet := true
   and setDebug () = Cli.debug := true
   and setException cmtRoot =
-    RunConfig.exception_ runConfig;
+    RunConfig.exception_ ();
     cmtRootRef := cmtRoot;
     analysisKindSet := true
   and setExcludePaths s =
@@ -138,13 +138,13 @@ let cli () =
     let paths = s |> String.split_on_char ',' in
     Common.Cli.livePaths := paths @ Common.Cli.livePaths.contents
   and setNoalloc () =
-    RunConfig.noalloc runConfig;
+    RunConfig.noalloc ();
     analysisKindSet := true
   and setSuppress s =
     let names = s |> String.split_on_char ',' in
     Suppress.suppress := names @ !Suppress.suppress
   and setTermination cmtRoot =
-    RunConfig.termination runConfig;
+    RunConfig.termination ();
     cmtRootRef := cmtRoot;
     analysisKindSet := true
   and setUnsuppress s =
@@ -221,7 +221,7 @@ let cli () =
   Arg.parse speclist print_endline usage;
   if !analysisKindSet = false then printUsageAndExit ();
   let cmtRoot = !cmtRootRef in
-  runAnalysis ~runConfig ~cmtRoot ~ppf
+  runAnalysis ~cmtRoot ~ppf
   [@@raises exit]
 ;;
 
