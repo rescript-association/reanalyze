@@ -1,12 +1,8 @@
-let projectRoot = ref ""
-
-let bsbProjectRoot = ref ""
-
 let checkPrefix prefix_ =
   let prefix =
-    match !projectRoot = "" with
+    match RunConfig.runConfig.projectRoot = "" with
     | true -> prefix_
-    | false -> Filename.concat !projectRoot prefix_
+    | false -> Filename.concat RunConfig.runConfig.projectRoot prefix_
   in
   let prefixLen = prefix |> String.length in
   fun sourceDir ->

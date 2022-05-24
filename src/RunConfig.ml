@@ -1,7 +1,9 @@
 type t = {
-  mutable noalloc : bool;
+  mutable bsbProjectRoot : string;
   mutable dce : bool;
   mutable exception_ : bool;
+  mutable noalloc : bool;
+  mutable projectRoot : string;
   mutable suppress : string list;
   mutable termination : bool;
   mutable unsuppress : string list;
@@ -9,9 +11,11 @@ type t = {
 
 let runConfig =
   {
+    bsbProjectRoot = "";
     dce = false;
     exception_ = false;
     noalloc = false;
+    projectRoot = "";
     suppress = [];
     termination = false;
     unsuppress = [];
