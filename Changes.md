@@ -1,13 +1,14 @@
 # master
 - Add support for `[@warning "-unused-value-declaration"]`.
 - Don't report on dead values inside a function annotated `@dead`.
-- Add support for configuration settings under `"reanalyze"` in `bsconfig.json`.
+- Add command-line `-config` to read configuration settings under `"reanalyze"` in `bsconfig.json`.
 Example:
-```
+```json
   "reanalyze": {
-    "suppress": ["src/ToSuppress.res"],
+    "analysis": ["dce", "exception"],
+    "suppress": [],
     "unsuppress": []
-  },
+  }
 ```
 - Fix issue with punned record expressions in OCaml projects.
 
