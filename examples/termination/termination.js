@@ -13,7 +13,7 @@ const reanalyzeNativePath = path.join(
 
 const shell = isWindows ? true : false;
 
-child_process.spawnSync(reanalyzeNativePath, ["-termination", "-ci", "-debug"], {
+child_process.spawnSync(reanalyzeNativePath, ["-config", "-ci", "-debug"], {
   stdio: ["inherit", "inherit"],
   shell,
 });

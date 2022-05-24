@@ -34,6 +34,24 @@ module Config = struct
       Suppress.unsuppress := unsuppress @ !Suppress.unsuppress
     | _ -> ()
 
+  let readRunConfig conf =
+    match Json.get "analysis" conf with
+    | Some (Array elements) ->
+      elements
+      |> List.iter (fun (x : Json.t) ->
+             match x with
+             | String "all" ->
+               RunConfig.fromBsconfig.dce <- true;
+               RunConfig.fromBsconfig.exception_ <- true;
+               RunConfig.fromBsconfig.termination <- true
+             | String "dce" -> RunConfig.fromBsconfig.dce <- true
+             | String "exception" -> RunConfig.fromBsconfig.exception_ <- true
+             | String "termination" ->
+               RunConfig.fromBsconfig.termination <- true
+             | String "noalloc" -> RunConfig.fromBsconfig.noalloc <- true
+             | _ -> ())
+    | _ -> ()
+
   let process bsconfigFile =
     match readFile bsconfigFile with
     | None -> ()
@@ -42,7 +60,8 @@ module Config = struct
       | None -> ()
       | Some conf ->
         readSuppress conf;
-        readUnsuppress conf)
+        readUnsuppress conf;
+        readRunConfig conf)
 end
 
 let rec findProjectRoot ~dir =

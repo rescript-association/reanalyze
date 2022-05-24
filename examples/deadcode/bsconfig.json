@@ -1,5 +1,6 @@
 {
   "reanalyze": {
+    "analysis": ["dce"],
     "suppress": ["src/ToSuppress.res"],
     "unsuppress": []
   },
