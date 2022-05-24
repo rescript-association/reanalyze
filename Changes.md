@@ -4,11 +4,13 @@
 - Add command-line `-config` to read configuration settings under `"reanalyze"` in `bsconfig.json`.
 Example:
 ```json
+{
   "reanalyze": {
     "analysis": ["dce", "exception"],
     "suppress": [],
     "unsuppress": []
   }
+}
 ```
 - Fix issue with punned record expressions in OCaml projects.
 
