@@ -53,25 +53,23 @@ module Config = struct
       Suppress.unsuppress := unsuppress @ !Suppress.unsuppress
     | _ -> ()
 
-  let fromBsconfig = RunConfig.default ()
-
-  let readAnalysis conf =
+  let readAnalysis conf runConfig =
     match Json.get "analysis" conf with
     | Some (Array elements) ->
       elements
       |> List.iter (fun (x : Json.t) ->
              match x with
-             | String "all" -> RunConfig.all fromBsconfig
-             | String "dce" -> RunConfig.dce fromBsconfig
-             | String "exception" -> RunConfig.exception_ fromBsconfig
-             | String "termination" -> RunConfig.termination fromBsconfig
-             | String "noalloc" -> RunConfig.noalloc fromBsconfig
+             | String "all" -> RunConfig.all runConfig
+             | String "dce" -> RunConfig.dce runConfig
+             | String "exception" -> RunConfig.exception_ runConfig
+             | String "termination" -> RunConfig.termination runConfig
+             | String "noalloc" -> RunConfig.noalloc runConfig
              | _ -> ())
     | _ ->
       (* if no "analysis" specified, default to dce *)
-      fromBsconfig.dce <- true
+      runConfig.dce <- true
 
-  (* Read the config from bsconfig.json and apply it to runConfig *)
+  (* Read the config from bsconfig.json and apply it to runConfig and suppress and unsuppress *)
   let processBsconfig runConfig =
     Lazy.force setReScriptProjectRoot;
     let bsconfigFile = Filename.concat !Suppress.projectRoot bsconfig in
@@ -83,8 +81,7 @@ module Config = struct
       | Some conf ->
         readSuppress conf;
         readUnsuppress conf;
-        readAnalysis conf;
-        RunConfig.addConfig runConfig fromBsconfig)
+        readAnalysis conf runConfig)
 end
 
 (**
