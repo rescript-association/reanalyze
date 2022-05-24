@@ -187,3 +187,13 @@ let () = raise(A)
 raise(Not_found)
 
 true ? exits() : ()
+
+// Examples with pipe
+
+let onFunction = () => (@doesNotRaise Belt.Array.getExn)([], 0)
+
+let onResult = () => @doesNotRaise Belt.Array.getExn([], 0)
+
+let onFunctionPipe = () => []->(@doesNotRaise Belt.Array.getExn)(0)
+
+let onResultPipeWrong = () => @doesNotRaise []->Belt.Array.getExn(0)

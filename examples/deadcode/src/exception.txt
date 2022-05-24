@@ -112,7 +112,15 @@
   Toplevel expression might raise exit (Exn.res:189:7) and is not annotated with @raises(exit)
 
   Exception Analysis
+  File "./Exn.res", line 199, characters 44-46
+  expression does not raise and is annotated with redundant @doesNotRaise
+
+  Exception Analysis
+  File "./Exn.res", line 199, characters 4-21
+  onResultPipeWrong might raise Assert_failure (Exn.res:199:48) and is not annotated with @raises Assert_failure
+
+  Exception Analysis
   File "./ExnA.res", line 1, characters 4-7
   bar might raise Not_found (ExnA.res:1:16) and is not annotated with @raises(Not_found)
   
-  Analysis reported 29 issues (Exception Analysis:29)
+  Analysis reported 31 issues (Exception Analysis:31)

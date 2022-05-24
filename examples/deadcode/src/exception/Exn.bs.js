@@ -108,6 +108,10 @@ export {
   exits ,
   redundantAnnotation ,
   _x ,
+  onFunction ,
+  onResult ,
+  onFunctionPipe ,
+  onResultPipeWrong ,
   
 }
 /* catches1 Not a pure module */
