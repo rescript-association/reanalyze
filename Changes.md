@@ -7,8 +7,8 @@ Example:
 {
   "reanalyze": {
     "analysis": ["dce", "exception"],
-    "suppress": [],
-    "unsuppress": []
+    "suppress": ["src/ToSuppress.res"],
+    "unsuppress": ["this", "that"]
   }
 }
 ```
