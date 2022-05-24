@@ -4,16 +4,26 @@ module ExnSet = Set.Make (Exn)
 type t = ExnSet.t
 
 let add = ExnSet.add
+
 let diff = ExnSet.diff
+
 let empty = ExnSet.empty
+
 let fromList = ExnSet.of_list
+
 let toList = ExnSet.elements
+
 let isEmpty = ExnSet.is_empty
+
 let iter = ExnSet.iter
+
 let union = ExnSet.union
 
 let pp ~exnTable ppf exceptions =
+  let isFirst = ref true in
   let ppExn exn =
+    let separator = if !isFirst then "" else " " in
+    isFirst := false;
     let name = Exn.toString exn in
     match exnTable with
     | Some exnTable -> (
@@ -23,9 +33,9 @@ let pp ~exnTable ppf exceptions =
           locSet |> Common.LocSet.elements
           |> List.map (fun loc -> loc.CL.Location.loc_start)
         in
-        Format.fprintf ppf " @{<info>%s@} (@{<filename>%s@})" name
+        Format.fprintf ppf "%s@{<info>%s@} (@{<filename>%s@})" separator name
           (positions |> List.map posToString |> String.concat " ")
-      | None -> Format.fprintf ppf " @{<info>%s@}" name)
-    | None -> Format.fprintf ppf " @{<info>%s@}" name
+      | None -> Format.fprintf ppf "%s@{<info>%s@}" separator name)
+    | None -> Format.fprintf ppf "%s@{<info>%s@}" separator name
   in
   exceptions |> ExnSet.iter ppExn

@@ -188,7 +188,7 @@ module Checks = struct
     if not (Exceptions.isEmpty missingAnnotations) then
       Log_.info ~loc ~name:"Exception Analysis" (fun ppf () ->
           Format.fprintf ppf
-            "@{<info>%s@} might raise%a and is not annotated with @raises%a"
+            "@{<info>%s@} might raise %a and is not annotated with @raises(%a)"
             name
             (Exceptions.pp ~exnTable:(Some exnTable))
             raiseSet
@@ -200,12 +200,12 @@ module Checks = struct
             if raiseSet |> Exceptions.isEmpty then
               Format.fprintf ppf "raises nothing"
             else
-              Format.fprintf ppf "might raise%a"
+              Format.fprintf ppf "might raise %a"
                 (Exceptions.pp ~exnTable:(Some exnTable))
                 raiseSet
           in
           Format.fprintf ppf
-            "@{<info>%s@} %a and is annotated with redundant @raises%a" name
+            "@{<info>%s@} %a and is annotated with redundant @raises(%a)" name
             raisesDescription ()
             (Exceptions.pp ~exnTable:None)
             redundantAnnotations)
