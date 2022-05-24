@@ -1,8 +1,23 @@
 open Common
 
-type analysisType = All | Dce | Exception | Noalloc | Termination
+module RunConfig = struct
+  type t = {dce : bool; exception_ : bool; termination : bool; noalloc : bool}
 
-let loadCmtFile ~analysis cmtFilePath =
+  let default =
+    {dce = false; exception_ = false; noalloc = false; termination = false}
+
+  let all = {default with dce = true; exception_ = true; termination = true}
+
+  let dce = {default with dce = true}
+
+  let exception_ = {default with exception_ = true}
+
+  let noalloc = {default with noalloc = true}
+
+  let termination = {default with termination = true}
+end
+
+let loadCmtFile ~(runConfig : RunConfig.t) cmtFilePath =
   let cmt_infos = CL.Cmt_format.read_cmt cmtFilePath in
   let excludePath sourceFile =
     !Cli.excludePaths
@@ -18,7 +33,7 @@ let loadCmtFile ~analysis cmtFilePath =
            with Invalid_argument _ -> false)
   in
   match cmt_infos.cmt_annots |> FindSourceFile.cmt with
-  | Some sourceFile when not (excludePath sourceFile) -> (
+  | Some sourceFile when not (excludePath sourceFile) ->
     if !Cli.debug then
       Log_.item "Scanning %s Source:%s@."
         (match !Cli.ci && not (Filename.is_relative cmtFilePath) with
@@ -33,21 +48,15 @@ let loadCmtFile ~analysis cmtFilePath =
     currentModuleName :=
       !currentModule
       |> Name.create ~isInterface:(Filename.check_suffix !currentSrc "i");
-    match analysis with
-    | All ->
-      cmt_infos |> DeadCode.processCmt ~cmtFilePath;
-      cmt_infos |> Exception.processCmt;
-      cmt_infos |> Arnold.processCmt
-    | Dce -> cmt_infos |> DeadCode.processCmt ~cmtFilePath
-    | Exception -> cmt_infos |> Exception.processCmt
-    | Noalloc -> cmt_infos |> Noalloc.processCmt
-    | Termination -> cmt_infos |> Arnold.processCmt)
+    if runConfig.dce then cmt_infos |> DeadCode.processCmt ~cmtFilePath;
+    if runConfig.exception_ then cmt_infos |> Exception.processCmt;
+    if runConfig.noalloc then cmt_infos |> Noalloc.processCmt;
+    if runConfig.termination then cmt_infos |> Arnold.processCmt
   | _ -> ()
 
-let runAnalysis ~analysis ~cmtRoot ~ppf =
-  Log_.Color.setup ();
+let processCmtFiles ~cmtRoot ~runConfig =
   let ( +++ ) = Filename.concat in
-  (match cmtRoot with
+  match cmtRoot with
   | Some root ->
     Cli.cmtCommand := true;
     let rec walkSubDirs dir =
@@ -62,7 +71,7 @@ let runAnalysis ~analysis ~cmtRoot ~ppf =
         else if
           Filename.check_suffix absDir ".cmt"
           || Filename.check_suffix absDir ".cmti"
-        then absDir |> loadCmtFile ~analysis
+        then absDir |> loadCmtFile ~runConfig
     in
     walkSubDirs ""
   | None ->
@@ -88,22 +97,19 @@ let runAnalysis ~analysis ~cmtRoot ~ppf =
            cmtFiles |> List.sort String.compare
            |> List.iter (fun cmtFile ->
                   let cmtFilePath = Filename.concat libBsSourceDir cmtFile in
-                  cmtFilePath |> loadCmtFile ~analysis)));
-  let dce () =
+                  cmtFilePath |> loadCmtFile ~runConfig))
+
+let runAnalysis ~runConfig ~cmtRoot ~ppf =
+  Log_.Color.setup ();
+  processCmtFiles ~cmtRoot ~runConfig;
+  if runConfig.dce then (
     DeadException.forceDelayedItems ();
     DeadOptionalArgs.forceDelayedItems ();
     DeadCommon.reportDead ~checkOptionalArg:DeadOptionalArgs.check ppf;
-    DeadCommon.WriteDeadAnnotations.write ()
-  in
-  (match analysis with
-  | All ->
-    dce ();
-    Exception.reportResults ~ppf;
-    Arnold.reportResults ~ppf
-  | Dce -> dce ()
-  | Exception -> Exception.reportResults ~ppf
-  | Noalloc -> Noalloc.reportResults ~ppf
-  | Termination -> Arnold.reportResults ~ppf);
+    DeadCommon.WriteDeadAnnotations.write ());
+  if runConfig.exception_ then Exception.reportResults ~ppf;
+  if runConfig.noalloc then Noalloc.reportResults ~ppf;
+  if runConfig.termination then Arnold.reportResults ~ppf;
   Log_.Stats.report ();
   Log_.Stats.clear ()
 
@@ -209,9 +215,9 @@ let cli () =
          under the root path" );
       ( "-unsuppress",
         Arg.String setUnsuppress,
-        "comma-separated-path-prefixes Report on files whose path has a prefix in \
-         the list, overriding -suppress (no-op if -suppress is not specified)"
-      );
+        "comma-separated-path-prefixes Report on files whose path has a prefix \
+         in the list, overriding -suppress (no-op if -suppress is not \
+         specified)" );
       ("-version", Arg.Unit versionAndExit, "Show version information and exit");
       ("--version", Arg.Unit versionAndExit, "Show version information and exit");
       ( "-write",
@@ -223,11 +229,13 @@ let cli () =
   let executeCliCommand cliCommand =
     match cliCommand with
     | NoOp -> printUsageAndExit ()
-    | All cmtRoot -> runAnalysis ~analysis:All ~cmtRoot ~ppf
-    | DCE cmtRoot -> runAnalysis ~analysis:Dce ~cmtRoot ~ppf
-    | Exception cmtRoot -> runAnalysis ~analysis:Exception ~cmtRoot ~ppf
-    | Noalloc -> runAnalysis ~analysis:Noalloc ~cmtRoot:None ~ppf
-    | Termination cmtRoot -> runAnalysis ~analysis:Termination ~cmtRoot ~ppf
+    | All cmtRoot -> runAnalysis ~runConfig:RunConfig.all ~cmtRoot ~ppf
+    | DCE cmtRoot -> runAnalysis ~runConfig:RunConfig.dce ~cmtRoot ~ppf
+    | Exception cmtRoot ->
+      runAnalysis ~runConfig:RunConfig.exception_ ~cmtRoot ~ppf
+    | Noalloc -> runAnalysis ~runConfig:RunConfig.noalloc ~cmtRoot:None ~ppf
+    | Termination cmtRoot ->
+      runAnalysis ~runConfig:RunConfig.termination ~cmtRoot ~ppf
     [@@raises exit]
   in
   Arg.parse speclist print_endline usage;
