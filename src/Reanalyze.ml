@@ -58,7 +58,7 @@ let processCmtFiles ~cmtRoot ~runConfig =
     in
     walkSubDirs ""
   | None ->
-    Lazy.force Paths.setProjectRoot;
+    Lazy.force Paths.setReScriptProjectRoot;
     let lib_bs = !Suppress.projectRoot +++ ("lib" +++ "bs") in
     let sourceDirs =
       Paths.readSourceDirs ~configSources:None |> List.sort String.compare
@@ -116,7 +116,8 @@ let cli () =
     cmtRootRef := cmtRoot;
     analysisKindSet := true
   and setConfig () =
-    Lazy.force Paths.setProjectRoot;
+    Lazy.force Paths.setReScriptProjectRoot;
+    Paths.Config.process ();
     RunConfig.applyFromBsconfig runConfig;
     analysisKindSet := true
   and setDCE cmtRoot =

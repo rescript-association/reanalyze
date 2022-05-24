@@ -16,7 +16,7 @@ const shell = isWindows ? true : false;
 child_process.spawnSync(
   reanalyzeNativePath,
   [
-    "-dce",
+    "-config",
     "-debug",
     "-ci",
     "-exclude-paths",

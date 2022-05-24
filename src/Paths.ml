@@ -37,23 +37,22 @@ module Config = struct
   let readRunConfig conf =
     match Json.get "analysis" conf with
     | Some (Array elements) ->
-      let runConfig = RunConfig.fromBsconfig in
       elements
       |> List.iter (fun (x : Json.t) ->
              match x with
-             | String "all" ->
-               RunConfig.all runConfig
-             | String "dce" -> RunConfig.dce runConfig
-             | String "exception" -> RunConfig.exception_ runConfig
+             | String "all" -> RunConfig.all RunConfig.fromBsconfig
+             | String "dce" -> RunConfig.dce RunConfig.fromBsconfig
+             | String "exception" -> RunConfig.exception_ RunConfig.fromBsconfig
              | String "termination" ->
-               RunConfig.termination runConfig
-             | String "noalloc" -> RunConfig.noalloc runConfig
+               RunConfig.termination RunConfig.fromBsconfig
+             | String "noalloc" -> RunConfig.noalloc RunConfig.fromBsconfig
              | _ -> ())
     | _ ->
       (* if no "analysis" specified, default to dce *)
       RunConfig.fromBsconfig.dce <- true
 
-  let process bsconfigFile =
+  let process () =
+    let bsconfigFile = Filename.concat !Suppress.projectRoot bsconfig in
     match readFile bsconfigFile with
     | None -> ()
     | Some text -> (
@@ -67,9 +66,7 @@ end
 
 let rec findProjectRoot ~dir =
   let bsconfigFile = Filename.concat dir bsconfig in
-  if Sys.file_exists bsconfigFile then (
-    Config.process bsconfigFile;
-    dir)
+  if Sys.file_exists bsconfigFile then dir
   else
     let parent = dir |> Filename.dirname in
     if parent = dir then (
@@ -78,7 +75,7 @@ let rec findProjectRoot ~dir =
       assert false)
     else findProjectRoot ~dir:parent
 
-let setProjectRoot =
+let setReScriptProjectRoot =
   lazy
     (Suppress.projectRoot := findProjectRoot ~dir:(Sys.getcwd ());
      Suppress.bsbProjectRoot :=
