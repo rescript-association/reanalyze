@@ -1,3 +1,4 @@
+open Common
 module StringMap = Map.Make (String)
 
 let bsconfig = "bsconfig.json"
@@ -24,10 +25,10 @@ let rec findProjectRoot ~dir =
 
 let setReScriptProjectRoot =
   lazy
-    (RunConfig.runConfig.projectRoot <- findProjectRoot ~dir:(Sys.getcwd ());
-     RunConfig.runConfig.bsbProjectRoot <-
+    (runConfig.projectRoot <- findProjectRoot ~dir:(Sys.getcwd ());
+     runConfig.bsbProjectRoot <-
        (match Sys.getenv_opt "BSB_PROJECT_ROOT" with
-       | None -> RunConfig.runConfig.projectRoot
+       | None -> runConfig.projectRoot
        | Some s -> s))
 
 module Config = struct
@@ -39,7 +40,7 @@ module Config = struct
         |> List.filter_map (fun (x : Json.t) ->
                match x with String s -> Some s | _ -> None)
       in
-      RunConfig.runConfig.suppress <- names @ RunConfig.runConfig.suppress
+      runConfig.suppress <- names @ runConfig.suppress
     | _ -> ()
 
   let readUnsuppress conf =
@@ -50,7 +51,7 @@ module Config = struct
         |> List.filter_map (fun (x : Json.t) ->
                match x with String s -> Some s | _ -> None)
       in
-      RunConfig.runConfig.unsuppress <- names @ RunConfig.runConfig.unsuppress
+      runConfig.unsuppress <- names @ runConfig.unsuppress
     | _ -> ()
 
   let readAnalysis conf =
@@ -72,9 +73,7 @@ module Config = struct
   (* Read the config from bsconfig.json and apply it to runConfig and suppress and unsuppress *)
   let processBsconfig () =
     Lazy.force setReScriptProjectRoot;
-    let bsconfigFile =
-      Filename.concat RunConfig.runConfig.projectRoot bsconfig
-    in
+    let bsconfigFile = Filename.concat runConfig.projectRoot bsconfig in
     match readFile bsconfigFile with
     | None -> ()
     | Some text -> (
@@ -109,7 +108,7 @@ let getModuleName cmt = cmt |> handleNamespace |> Filename.basename
 
 let readDirsFromConfig ~configSources =
   let dirs = ref [] in
-  let root = RunConfig.runConfig.projectRoot in
+  let root = runConfig.projectRoot in
   let rec processDir ~subdirs dir =
     let absDir =
       match dir = "" with true -> root | false -> Filename.concat root dir
@@ -145,7 +144,7 @@ let readDirsFromConfig ~configSources =
 let readSourceDirs ~configSources =
   let sourceDirs =
     ["lib"; "bs"; ".sourcedirs.json"]
-    |> List.fold_left Filename.concat RunConfig.runConfig.bsbProjectRoot
+    |> List.fold_left Filename.concat runConfig.bsbProjectRoot
   in
   let dirs = ref [] in
   let readDirs json =
@@ -166,8 +165,7 @@ let readSourceDirs ~configSources =
     let jsonOpt = sourceDirs |> Ext_json_parse.parse_json_from_file in
     match jsonOpt with
     | Some json ->
-      if RunConfig.runConfig.bsbProjectRoot <> RunConfig.runConfig.projectRoot
-      then (
+      if runConfig.bsbProjectRoot <> runConfig.projectRoot then (
         readDirs json;
         dirs := readDirsFromConfig ~configSources)
       else readDirs json

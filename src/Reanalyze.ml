@@ -31,11 +31,10 @@ let loadCmtFile cmtFilePath =
     currentModuleName :=
       !currentModule
       |> Name.create ~isInterface:(Filename.check_suffix !currentSrc "i");
-    if RunConfig.runConfig.dce then
-      cmt_infos |> DeadCode.processCmt ~cmtFilePath;
-    if RunConfig.runConfig.exception_ then cmt_infos |> Exception.processCmt;
-    if RunConfig.runConfig.noalloc then cmt_infos |> Noalloc.processCmt;
-    if RunConfig.runConfig.termination then cmt_infos |> Arnold.processCmt
+    if runConfig.dce then cmt_infos |> DeadCode.processCmt ~cmtFilePath;
+    if runConfig.exception_ then cmt_infos |> Exception.processCmt;
+    if runConfig.noalloc then cmt_infos |> Noalloc.processCmt;
+    if runConfig.termination then cmt_infos |> Arnold.processCmt
   | _ -> ()
 
 let processCmtFiles ~cmtRoot =
@@ -60,7 +59,7 @@ let processCmtFiles ~cmtRoot =
     walkSubDirs ""
   | None ->
     Lazy.force Paths.setReScriptProjectRoot;
-    let lib_bs = RunConfig.runConfig.projectRoot +++ ("lib" +++ "bs") in
+    let lib_bs = runConfig.projectRoot +++ ("lib" +++ "bs") in
     let sourceDirs =
       Paths.readSourceDirs ~configSources:None |> List.sort String.compare
     in
@@ -86,14 +85,14 @@ let processCmtFiles ~cmtRoot =
 let runAnalysis ~cmtRoot ~ppf =
   Log_.Color.setup ();
   processCmtFiles ~cmtRoot;
-  if RunConfig.runConfig.dce then (
+  if runConfig.dce then (
     DeadException.forceDelayedItems ();
     DeadOptionalArgs.forceDelayedItems ();
     DeadCommon.reportDead ~checkOptionalArg:DeadOptionalArgs.check ppf;
     DeadCommon.WriteDeadAnnotations.write ());
-  if RunConfig.runConfig.exception_ then Exception.reportResults ~ppf;
-  if RunConfig.runConfig.noalloc then Noalloc.reportResults ~ppf;
-  if RunConfig.runConfig.termination then Arnold.reportResults ~ppf;
+  if runConfig.exception_ then Exception.reportResults ~ppf;
+  if runConfig.noalloc then Noalloc.reportResults ~ppf;
+  if runConfig.termination then Arnold.reportResults ~ppf;
   Log_.Stats.report ();
   Log_.Stats.clear ()
 
@@ -142,14 +141,14 @@ let cli () =
     analysisKindSet := true
   and setSuppress s =
     let names = s |> String.split_on_char ',' in
-    RunConfig.runConfig.suppress <- names @ RunConfig.runConfig.suppress
+    runConfig.suppress <- names @ runConfig.suppress
   and setTermination cmtRoot =
     RunConfig.termination ();
     cmtRootRef := cmtRoot;
     analysisKindSet := true
   and setUnsuppress s =
     let names = s |> String.split_on_char ',' in
-    RunConfig.runConfig.unsuppress <- names @ RunConfig.runConfig.unsuppress
+    runConfig.unsuppress <- names @ runConfig.unsuppress
   and setWrite () = Common.Cli.write := true
   and speclist =
     [
