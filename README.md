@@ -10,9 +10,6 @@ Program analysis for ReScript and OCaml projects targeting JS (ReScript) as well
 
 Early release. While the core functionality is reasonably stable, the CLI and annotations are subject to change. However, this is a tiny surface at the moment.
 
-# Requirements
-For correct handling of ReasonReact components in the Dead Code Analysis, bucklescript version 7.3.2 is required (fixes the location in the JSX PPX).
-
 ## Use
 
 The rest of this document describes the dead code analysis.
@@ -20,7 +17,7 @@ For the [Exception Analysis](EXCEPTION.md), build instructions are the same, and
 
 Build and run on existing projects using the Build and Try instructions below. The analysis uses `.cmt[i]` files which are generated during compilation, so should be run _after_ building your project. Remember to rebuild the project before running again.
 
-### CLI for bucklescript projects
+### CLI for ReScript projects
 
 ```sh
 # dead code analysis
@@ -155,23 +152,21 @@ This is equivalent to adding `--suppress` and `--unsuppress` options at the begi
 
 ## Build
 
-## No build required for bucklescript projects
+## No build required for ReScript projects
 
 ```
 npm add --save-dev reanalyze
 ```
 
-### Build for OCaml 4.06.1 using dune (for bucklescript and native projects)
+### Build for ReScript
 
 ```sh
-opam switch 4.06.1
-eval $(opam env)
 opam install dune
-dune build
+npm run build406
 # _build/default/src/Reanalyze.exe
 ```
 
-### Build for other OCaml versions (4.08, 4.09, 4.10) using dune (for native projects)
+### Build for OCaml native projects using dune
 
 ```sh
 opam install dune
@@ -181,7 +176,7 @@ dune build
 
 ## Try it
 
-### Bucklescript Projects (JS output)
+### ReScript Projects (JS output)
 
 ```sh
 npm run build # or whatever command to build the project
@@ -189,80 +184,12 @@ npm add --save-dev reanalyze
 npx reanalyze -dce
 ```
 
-### esy Projects (native)
-See for example project [reanalyze-esy-example](https://github.com/cristianoc/reanalyze-esy-example):
-
-```sh
-git clone https://github.com/cristianoc/reanalyze-esy-example
-cd reanalyze-esy-example
-esy
-esy dce
-esy check-exceptions
-```
-
-### Single File Test (native project)
-
-```sh
-echo "let unused = 34" > test.ml
-ocamlc -c -bin-annot test.ml
-reanalyze.exe -dce-cmt ./test.cmt
-  Warning Dead Value
-  test.ml 1:1-15
-  unused is never used
-  <-- line 1
-  let unused = 34 [@@dead "unused"]
-```
-
-### Single Directory Test (native project)
-
-```sh
-mkdir test
-echo "let unused = 34 let used = 42" > test/test.ml
-echo "let _ = Test.used" > test/use.ml
-cd test
-ocamlc -c -bin-annot *.ml
-reanalyze.exe -dce-cmt .
-  Warning Dead Value
-  test.ml 1:1-15
-  unused is never used
-  <-- line 1
-  let unused = 34 [@@dead "unused"]  let used = 42
-  Warning Dead Value
-  use.ml 1:1-17
-  _ has no side effects and can be removed
-  <-- line 1
-  let _ = Test.used [@@dead "_"]
-```
-
-### Full Project Test: Infer (native project)
-
-How to test on [Infer](https://github.com/facebook/infer) :
+### Native Projects (OCaml)
 
 - Make sure that `dune` builds both `.cmt` and `.cmti` files (see https://github.com/ocaml/dune/issues/3182 as to why):
 
+This project is itself written in OCaml and can be analyzed as follows.
+```sh
+dune build @check @all -p reanalyze # makes sure that both .cmi and .cmti files are created
+./_build/default/src/Reanalyze.exe -suppress src/compiler-libs-406 -dce-cmt _build
 ```
---- a/infer/src/Makefile
-+++ b/infer/src/Makefile
--DUNE_BUILD = dune build --profile=$(BUILD_MODE)
-+DUNE_BUILD = dune build @check @all --profile=$(BUILD_MODE)
-```
-
-- Build normally
-
-```
-make -j BUILD_MODE=dev
-```
-
-- Go to the right directory from which file paths start:
-
-```
-% cd infer/infer
-```
-
-- Run the analysis
-
-```
-% path/to/reanalyze.exe -dce-cmt _build/default/src/.InferModules.objs/byte/
-```
-
-<img width="1362" alt="Screen Shot 2020-04-14 at 9 28 24 AM" src="https://user-images.githubusercontent.com/7965335/79213744-fb2d8c00-7e49-11ea-9417-3c42bd6a3a79.png">
