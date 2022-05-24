@@ -24,11 +24,11 @@ let rec findProjectRoot ~dir =
 
 let setReScriptProjectRoot =
   lazy
-    (Suppress.projectRoot := findProjectRoot ~dir:(Sys.getcwd ());
-     Suppress.bsbProjectRoot :=
-       match Sys.getenv_opt "BSB_PROJECT_ROOT" with
-       | None -> !Suppress.projectRoot
-       | Some s -> s)
+    (RunConfig.runConfig.projectRoot <- findProjectRoot ~dir:(Sys.getcwd ());
+     RunConfig.runConfig.bsbProjectRoot <-
+       (match Sys.getenv_opt "BSB_PROJECT_ROOT" with
+       | None -> RunConfig.runConfig.projectRoot
+       | Some s -> s))
 
 module Config = struct
   let readSuppress conf =
@@ -72,7 +72,9 @@ module Config = struct
   (* Read the config from bsconfig.json and apply it to runConfig and suppress and unsuppress *)
   let processBsconfig () =
     Lazy.force setReScriptProjectRoot;
-    let bsconfigFile = Filename.concat !Suppress.projectRoot bsconfig in
+    let bsconfigFile =
+      Filename.concat RunConfig.runConfig.projectRoot bsconfig
+    in
     match readFile bsconfigFile with
     | None -> ()
     | Some text -> (
@@ -107,7 +109,7 @@ let getModuleName cmt = cmt |> handleNamespace |> Filename.basename
 
 let readDirsFromConfig ~configSources =
   let dirs = ref [] in
-  let root = !Suppress.projectRoot in
+  let root = RunConfig.runConfig.projectRoot in
   let rec processDir ~subdirs dir =
     let absDir =
       match dir = "" with true -> root | false -> Filename.concat root dir
@@ -143,7 +145,7 @@ let readDirsFromConfig ~configSources =
 let readSourceDirs ~configSources =
   let sourceDirs =
     ["lib"; "bs"; ".sourcedirs.json"]
-    |> List.fold_left Filename.concat !Suppress.bsbProjectRoot
+    |> List.fold_left Filename.concat RunConfig.runConfig.bsbProjectRoot
   in
   let dirs = ref [] in
   let readDirs json =
@@ -164,7 +166,8 @@ let readSourceDirs ~configSources =
     let jsonOpt = sourceDirs |> Ext_json_parse.parse_json_from_file in
     match jsonOpt with
     | Some json ->
-      if !Suppress.bsbProjectRoot <> !Suppress.projectRoot then (
+      if RunConfig.runConfig.bsbProjectRoot <> RunConfig.runConfig.projectRoot
+      then (
         readDirs json;
         dirs := readDirsFromConfig ~configSources)
       else readDirs json

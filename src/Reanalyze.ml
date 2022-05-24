@@ -60,7 +60,7 @@ let processCmtFiles ~cmtRoot =
     walkSubDirs ""
   | None ->
     Lazy.force Paths.setReScriptProjectRoot;
-    let lib_bs = !Suppress.projectRoot +++ ("lib" +++ "bs") in
+    let lib_bs = RunConfig.runConfig.projectRoot +++ ("lib" +++ "bs") in
     let sourceDirs =
       Paths.readSourceDirs ~configSources:None |> List.sort String.compare
     in
