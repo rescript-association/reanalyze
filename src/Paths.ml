@@ -11,6 +11,25 @@ let readFile filename =
     Some content
   with _ -> None
 
+let rec findProjectRoot ~dir =
+  let bsconfigFile = Filename.concat dir bsconfig in
+  if Sys.file_exists bsconfigFile then dir
+  else
+    let parent = dir |> Filename.dirname in
+    if parent = dir then (
+      prerr_endline
+        ("Error: cannot find project root containing " ^ bsconfig ^ ".");
+      assert false)
+    else findProjectRoot ~dir:parent
+
+let setReScriptProjectRoot =
+  lazy
+    (Suppress.projectRoot := findProjectRoot ~dir:(Sys.getcwd ());
+     Suppress.bsbProjectRoot :=
+       match Sys.getenv_opt "BSB_PROJECT_ROOT" with
+       | None -> !Suppress.projectRoot
+       | Some s -> s)
+
 module Config = struct
   let readSuppress conf =
     match Json.get "suppress" conf with
@@ -34,24 +53,27 @@ module Config = struct
       Suppress.unsuppress := unsuppress @ !Suppress.unsuppress
     | _ -> ()
 
-  let readRunConfig conf =
+  let fromBsconfig = RunConfig.default ()
+
+  let readAnalysis conf =
     match Json.get "analysis" conf with
     | Some (Array elements) ->
       elements
       |> List.iter (fun (x : Json.t) ->
              match x with
-             | String "all" -> RunConfig.all RunConfig.fromBsconfig
-             | String "dce" -> RunConfig.dce RunConfig.fromBsconfig
-             | String "exception" -> RunConfig.exception_ RunConfig.fromBsconfig
-             | String "termination" ->
-               RunConfig.termination RunConfig.fromBsconfig
-             | String "noalloc" -> RunConfig.noalloc RunConfig.fromBsconfig
+             | String "all" -> RunConfig.all fromBsconfig
+             | String "dce" -> RunConfig.dce fromBsconfig
+             | String "exception" -> RunConfig.exception_ fromBsconfig
+             | String "termination" -> RunConfig.termination fromBsconfig
+             | String "noalloc" -> RunConfig.noalloc fromBsconfig
              | _ -> ())
     | _ ->
       (* if no "analysis" specified, default to dce *)
-      RunConfig.fromBsconfig.dce <- true
+      fromBsconfig.dce <- true
 
-  let process () =
+  (* Read the config from bsconfig.json and apply it to runConfig *)
+  let processBsconfig runConfig =
+    Lazy.force setReScriptProjectRoot;
     let bsconfigFile = Filename.concat !Suppress.projectRoot bsconfig in
     match readFile bsconfigFile with
     | None -> ()
@@ -61,27 +83,9 @@ module Config = struct
       | Some conf ->
         readSuppress conf;
         readUnsuppress conf;
-        readRunConfig conf)
+        readAnalysis conf;
+        RunConfig.addConfig runConfig fromBsconfig)
 end
-
-let rec findProjectRoot ~dir =
-  let bsconfigFile = Filename.concat dir bsconfig in
-  if Sys.file_exists bsconfigFile then dir
-  else
-    let parent = dir |> Filename.dirname in
-    if parent = dir then (
-      prerr_endline
-        ("Error: cannot find project root containing " ^ bsconfig ^ ".");
-      assert false)
-    else findProjectRoot ~dir:parent
-
-let setReScriptProjectRoot =
-  lazy
-    (Suppress.projectRoot := findProjectRoot ~dir:(Sys.getcwd ());
-     Suppress.bsbProjectRoot :=
-       match Sys.getenv_opt "BSB_PROJECT_ROOT" with
-       | None -> !Suppress.projectRoot
-       | Some s -> s)
 
 (**
   * Handle namespaces in cmt files.

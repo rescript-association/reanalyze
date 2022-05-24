@@ -8,13 +8,11 @@ type t = {
 let default () =
   {dce = false; exception_ = false; noalloc = false; termination = false}
 
-let fromBsconfig = default ()
-
-let applyFromBsconfig x =
-  if fromBsconfig.dce then x.dce <- true;
-  if fromBsconfig.exception_ then x.exception_ <- true;
-  if fromBsconfig.termination then x.termination <- true;
-  if fromBsconfig.noalloc then x.noalloc <- true
+let addConfig x newConfig =
+  if newConfig.dce then x.dce <- true;
+  if newConfig.exception_ then x.exception_ <- true;
+  if newConfig.termination then x.termination <- true;
+  if newConfig.noalloc then x.noalloc <- true
 
 let all x =
   x.dce <- true;

@@ -116,9 +116,7 @@ let cli () =
     cmtRootRef := cmtRoot;
     analysisKindSet := true
   and setConfig () =
-    Lazy.force Paths.setReScriptProjectRoot;
-    Paths.Config.process ();
-    RunConfig.applyFromBsconfig runConfig;
+    Paths.Config.processBsconfig runConfig;
     analysisKindSet := true
   and setDCE cmtRoot =
     RunConfig.dce runConfig;
