@@ -34,23 +34,23 @@ module Config = struct
   let readSuppress conf =
     match Json.get "suppress" conf with
     | Some (Array elements) ->
-      let suppress =
+      let names =
         elements
         |> List.filter_map (fun (x : Json.t) ->
                match x with String s -> Some s | _ -> None)
       in
-      Suppress.suppress := suppress @ !Suppress.suppress
+      RunConfig.runConfig.suppress <- names @ RunConfig.runConfig.suppress
     | _ -> ()
 
   let readUnsuppress conf =
     match Json.get "unsuppress" conf with
     | Some (Array elements) ->
-      let unsuppress =
+      let names =
         elements
         |> List.filter_map (fun (x : Json.t) ->
                match x with String s -> Some s | _ -> None)
       in
-      Suppress.unsuppress := unsuppress @ !Suppress.unsuppress
+      RunConfig.runConfig.unsuppress <- names @ RunConfig.runConfig.unsuppress
     | _ -> ()
 
   let readAnalysis conf =
