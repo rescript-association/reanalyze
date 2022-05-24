@@ -135,7 +135,7 @@ let rec processLocalBinding ~env ~(pat : CL.Typedtree.pattern)
   | Tpat_var (id, _), _ ->
     env |> Il.Env.add ~id:(id |> CL.Ident.name) ~def:(LocalScope scope)
   | Tpat_tuple pats, Tuple scopes ->
-    let patsAndScopes = List.combine pats scopes in
+    let patsAndScopes = (List.combine pats scopes [@doesNotRaise]) in
     patsAndScopes
     |> List.fold_left
          (fun e (p, s) -> processLocalBinding ~env:e ~pat:p ~scope:s)
@@ -175,7 +175,7 @@ and processExpr ~funDef ~env ~mem (expr : CL.Typedtree.expression) =
            | Nolabel, Some (arg : CL.Typedtree.expression) ->
              (match kind with
              | Arrow (declKinds, _) ->
-               let declKind = declKinds.(i) in
+               let declKind = (declKinds.(i) [@doesNotRaise]) in
                let argKind = arg.exp_type |> Il.Kind.fromType in
                if argKind <> declKind then
                  Log_.info ~count:true ~loc:arg.exp_loc ~name:"Noalloc"
@@ -265,6 +265,7 @@ let rec processGlobal ~env ~id ~mem (expr : CL.Typedtree.expression) =
     assert false
 
 let envRef = ref (Il.Env.create ())
+
 let memRef = ref (Il.Mem.create ())
 
 let processValueBinding ~id ~(expr : CL.Typedtree.expression) =
