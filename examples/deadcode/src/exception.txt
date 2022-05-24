@@ -117,7 +117,7 @@
 
   Exception Analysis
   File "./Exn.res", line 199, characters 4-21
-  onResultPipeWrong might raise Assert_failure (Exn.res:199:48) and is not annotated with @raises Assert_failure
+  onResultPipeWrong might raise Assert_failure (Exn.res:199:48) and is not annotated with @raises(Assert_failure)
 
   Exception Analysis
   File "./ExnA.res", line 1, characters 4-7
