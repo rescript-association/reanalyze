@@ -142,14 +142,14 @@ let cli () =
     analysisKindSet := true
   and setSuppress s =
     let names = s |> String.split_on_char ',' in
-    Suppress.suppress := names @ !Suppress.suppress
+    RunConfig.runConfig.suppress <- names @ RunConfig.runConfig.suppress
   and setTermination cmtRoot =
     RunConfig.termination ();
     cmtRootRef := cmtRoot;
     analysisKindSet := true
   and setUnsuppress s =
     let names = s |> String.split_on_char ',' in
-    Suppress.unsuppress := names @ !Suppress.unsuppress
+    RunConfig.runConfig.unsuppress <- names @ RunConfig.runConfig.unsuppress
   and setWrite () = Common.Cli.write := true
   and speclist =
     [

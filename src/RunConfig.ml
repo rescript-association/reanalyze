@@ -1,12 +1,21 @@
 type t = {
+  mutable noalloc : bool;
   mutable dce : bool;
   mutable exception_ : bool;
+  mutable suppress : string list;
   mutable termination : bool;
-  mutable noalloc : bool;
+  mutable unsuppress : string list;
 }
 
 let runConfig =
-  {dce = false; exception_ = false; noalloc = false; termination = false}
+  {
+    dce = false;
+    exception_ = false;
+    noalloc = false;
+    suppress = [];
+    termination = false;
+    unsuppress = [];
+  }
 
 let all () =
   runConfig.dce <- true;

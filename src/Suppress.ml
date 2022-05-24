@@ -1,7 +1,3 @@
-let suppress = (ref [] : string list ref)
-
-let unsuppress = (ref [] : string list ref)
-
 let projectRoot = ref ""
 
 let bsbProjectRoot = ref ""
@@ -20,12 +16,14 @@ let checkPrefix prefix_ =
 let suppressSourceDir =
   lazy
     (fun sourceDir ->
-      !suppress |> List.exists (fun prefix -> checkPrefix prefix sourceDir))
+      RunConfig.runConfig.suppress
+      |> List.exists (fun prefix -> checkPrefix prefix sourceDir))
 
 let unsuppressSourceDir =
   lazy
     (fun sourceDir ->
-      !unsuppress |> List.exists (fun prefix -> checkPrefix prefix sourceDir))
+      RunConfig.runConfig.unsuppress
+      |> List.exists (fun prefix -> checkPrefix prefix sourceDir))
 
 let posInSuppress (pos : Lexing.position) =
   pos.pos_fname |> Lazy.force suppressSourceDir
