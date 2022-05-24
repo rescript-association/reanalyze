@@ -34,6 +34,7 @@ module Kind = struct
 end
 
 type const = I32 of int32 | F64 of string
+
 type offset = int
 
 type instr =
@@ -48,6 +49,7 @@ type instr =
   | I32Store of offset
 
 type id = string
+
 type scope = Local of offset | Tuple of scope list
 
 type funDef = {
@@ -73,10 +75,12 @@ module Init = struct
 end
 
 type globalDef = {id : id; init : Init.t}
+
 type def = FunDef of funDef | GlobalDef of globalDef | LocalScope of scope
 
 module FunDef = struct
   let create ~id ~kind = {id; kind; body = []; nextOffset = 0; numParams = 0}
+
   let emit ~instr def = def.body <- instr :: def.body
 
   let dumpParams ppf def =
@@ -92,6 +96,7 @@ end
 
 module Mem = struct
   type index = int
+
   type data = String of {index : index; string : string}
 
   type t = {
@@ -103,9 +108,9 @@ module Mem = struct
   let stringAlignment = 4
 
   let align ~alignment size =
-    match size mod alignment = 0 with
+    match (size mod alignment) [@doesNotRaise] = 0 with
     | true -> size
-    | false -> 4 + (size / 4 * 4)
+    | false -> ( ((4 + (size / 4 * 4)) [@doesNotRaise]))
 
   let create () = {nextIndex = 0; dataSegments = []; strings = Hashtbl.create 1}
 
@@ -138,6 +143,7 @@ end
 
 module Env = struct
   type id = string
+
   type t = def StringMap.t
 
   let add ~id ~def (env : t) = env |> StringMap.add id def
@@ -171,5 +177,6 @@ module Env = struct
            | LocalScope _ -> assert false)
 
   let find ~id (env : t) = env |> StringMap.find_opt id
+
   let create () : t = StringMap.empty
 end

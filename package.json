@@ -12,7 +12,7 @@
     "install:examples": "(cd examples/deadcode && npm install) & (cd examples/termination && npm install)",
     "build:examples": "(cd examples/deadcode && npm run clean && npm run build && npm run analyze) & (cd examples/termination && npm run clean && npm run build && npm run analyze)",
     "dce": "npm run build && ./_build/default/src/Reanalyze.exe -suppress dead-code-ppx,src/compiler-libs-406,src/vendor -unsuppress doesnotexist -dce-cmt _build",
-    "exception": "./_build/default/src/Reanalyze.exe -exclude-paths dead-code-ppx,src/compiler-libs-406,src/vendor -exception-cmt _build",
+    "exception": "npm run build && ./_build/default/src/Reanalyze.exe -exclude-paths dead-code-ppx,src/compiler-libs-406,src/vendor -exception-cmt _build",
     "preversion": "npm test",
     "version": "node scripts/bump_version_module.js && git add -A src/",
     "postversion": "git push && git push --tags"
