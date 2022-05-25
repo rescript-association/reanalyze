@@ -362,7 +362,7 @@ let traverseAst () =
     let rec getExceptions payload =
       match payload with
       | Annotation.StringPayload s -> [Exn.fromString s] |> Exceptions.fromList
-      | Annotation.ConstructPayload s ->
+      | Annotation.ConstructPayload s when s <> "::" ->
         [Exn.fromString s] |> Exceptions.fromList
       | Annotation.IdentPayload s ->
         [Exn.fromString (s |> CL.Longident.flatten |> String.concat ".")]
