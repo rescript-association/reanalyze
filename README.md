@@ -189,12 +189,12 @@ npm add --save-dev reanalyze
 npx reanalyze -dce
 ```
 
-### Native Projects (OCaml)
+### Native Projects (OCaml using dune)
 
-Make sure that `dune` builds both `.cmt` and `.cmti` files (see https://github.com/ocaml/dune/issues/3182 as to why):
+Make sure that `dune` builds both `.cmt` and `.cmti` files by enabling bytecode compilation. This is normally done by adding `(modes byte exe)` to the `executable` stanza in your dune file (see https://github.com/ocaml/dune/issues/3182):
 
 This project is itself written in OCaml and can be analyzed as follows.
 ```sh
-dune build @check @all -p reanalyze # makes sure that both .cmi and .cmti files are created
+dune build # makes sure that both .cmi and .cmti files are created
 ./_build/default/src/Reanalyze.exe -suppress src/compiler-libs-406 -dce-cmt _build
 ```
