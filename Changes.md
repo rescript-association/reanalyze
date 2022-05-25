@@ -1,6 +1,7 @@
 # master
 - Add support for `[@warning "-unused-value-declaration"]`.
 - Don't report on dead values inside a function annotated `@dead`.
+- Fix issue with punned record expressions in OCaml projects.
 - Add command-line `-config` to read configuration settings under `"reanalyze"` in `bsconfig.json`.
 Example:
 ```json
@@ -12,7 +13,8 @@ Example:
   }
 }
 ```
-- Fix issue with punned record expressions in OCaml projects.
+- Allow lists and arrays as payloads e.g. for `@raises([A,B])`.
+- Improve printing of exception annotations in error messages.
 
 # 2.19.0
 - Don't report redundant optional arguments on functions annotated `@live`.
