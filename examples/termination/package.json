@@ -6,7 +6,7 @@
     "start": "rescript build -w",
     "build": "rescript build",
     "clean": "rescript clean -with-deps",
-    "analyze": "npx reanalyze -config -ci -debug >src/termination.txt"
+    "analyze": "npx reanalyze.exe -config -ci -debug >src/termination.txt"
   },
   "devDependencies": {
     "rescript": "9.1.1"
