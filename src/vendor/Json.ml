@@ -20,7 +20,7 @@ module Parser = struct
           loop (v :: acc) pos (pos - 1)
         else loop acc pos (pos - 1)
       else loop acc last_pos (pos - 1)
-      [@@raise Invalid_argument]
+      [@@raises Invalid_argument]
     in
     loop [] len (len - 1)
     [@@raises Invalid_argument]
@@ -38,7 +38,7 @@ module Parser = struct
       Printf.sprintf "Error \"%s\" at %d:%d -> %s\n" message line col last
     in
     failwith string
-    [@@raise Failure, Invalid_argument]
+    [@@raises [Failure, Invalid_argument]]
 
   let rec skipToNewline text pos =
     if pos >= String.length text then pos

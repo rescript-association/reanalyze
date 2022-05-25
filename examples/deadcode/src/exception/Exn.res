@@ -60,7 +60,7 @@ let wrongCatch2 = b =>
   | list{} => ()
   }
 
-@raises((A, B, C))
+@raises([A, B, C])
 let raise2Annotate3 = (x, y) => {
   if x {
     raise(A)
