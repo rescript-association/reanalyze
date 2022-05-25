@@ -75,10 +75,16 @@ module Loc = struct
   let print_loc ~normalizedRange ppf (loc : CL.Location.t) =
     let file, _, _ = CL.Location.get_pos_info loc.loc_start in
     if useOcamlLocations then
-      (* do on extra dummy print, as the first time print_loc is used, flushing is incorrect *)
-      let mkPosRelative (pos : Lexing.position) =
+      (* Change the range so it's on a single line.
+         In this way, the line number is clickable in vscode. *)
+      let startChar = loc.loc_start.pos_cnum - loc.loc_start.pos_bol in
+      let endChar = startChar + loc.loc_end.pos_cnum - loc.loc_start.pos_cnum in
+      let line = loc.loc_start.pos_lnum in
+      let processPos char (pos : Lexing.position) : Lexing.position =
         {
-          pos with
+          pos_lnum = line;
+          pos_bol = 0;
+          pos_cnum = char;
           pos_fname =
             (let open Filename in
             match is_implicit pos.pos_fname with
@@ -90,8 +96,8 @@ module Loc = struct
       CL.Location.print_loc ppf
         {
           loc with
-          loc_start = loc.loc_start |> mkPosRelative;
-          loc_end = loc.loc_end |> mkPosRelative;
+          loc_start = loc.loc_start |> processPos startChar;
+          loc_end = loc.loc_end |> processPos endChar;
         }
     else
       let dim_loc ppf = function
