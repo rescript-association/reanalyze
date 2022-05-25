@@ -29,9 +29,13 @@ let rec getAttributePayload checkText (attributes : CL.Typedtree.attributes) =
      _;
     } ->
       Some (BoolPayload (s = "true"))
+    | {pexp_desc = Pexp_construct ({txt = CL.Longident.Lident "[]"}, None)} ->
+      None
+    | {pexp_desc = Pexp_construct ({txt = CL.Longident.Lident "::"}, Some e)} ->
+      fromExpr e
     | {pexp_desc = Pexp_construct ({txt}, _); _} ->
       Some (ConstructPayload (txt |> CL.Longident.flatten |> String.concat "."))
-    | {pexp_desc = Pexp_tuple exprs} ->
+    | {pexp_desc = Pexp_tuple exprs | Pexp_array exprs} ->
       let payloads =
         exprs |> List.rev
         |> List.fold_left
