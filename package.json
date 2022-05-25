@@ -5,7 +5,7 @@
   "description": "Analyzers for Dead Code/Types and termination",
   "license": "MIT",
   "scripts": {
-    "build": "dune build @check @all -p reanalyze",
+    "build": "dune build",
     "build406": "cp src/dune src/dune.saved && cp src/dune.406 src/dune && npm run build && mv src/dune.saved src/dune",
     "clean": "dune clean -p reanalyze",
     "test": "node ./scripts/run_integration_tests.js",

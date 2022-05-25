@@ -3,6 +3,7 @@
 
 (executable
  (public_name reanalyze.exe)
+ (modes byte exe)
  (preprocess
   (action
    (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file})))
