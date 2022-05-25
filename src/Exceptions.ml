@@ -22,7 +22,7 @@ let union = ExnSet.union
 let pp ~exnTable ppf exceptions =
   let isFirst = ref true in
   let ppExn exn =
-    let separator = if !isFirst then "" else " " in
+    let separator = if !isFirst then "" else ", " in
     isFirst := false;
     let name = Exn.toString exn in
     match exnTable with
@@ -38,4 +38,7 @@ let pp ~exnTable ppf exceptions =
       | None -> Format.fprintf ppf "%s@{<info>%s@}" separator name)
     | None -> Format.fprintf ppf "%s@{<info>%s@}" separator name
   in
-  exceptions |> ExnSet.iter ppExn
+  let isList = exceptions |> ExnSet.cardinal > 1 in
+  if isList then Format.fprintf ppf "[";
+  exceptions |> ExnSet.iter ppExn;
+  if isList then Format.fprintf ppf "]"
