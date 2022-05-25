@@ -25,7 +25,7 @@
 
   Exception Analysis
   File "./Exn.res", line 34, characters 4-13
-  twoRaises might raise A (Exn.res:36:4) B (Exn.res:39:4) and is not annotated with @raises(A B)
+  twoRaises might raise [A (Exn.res:36:4), B (Exn.res:39:4)] and is not annotated with @raises([A, B])
 
   Exception Analysis
   File "./Exn.res", line 43, characters 4-14
@@ -37,15 +37,15 @@
 
   Exception Analysis
   File "./Exn.res", line 56, characters 4-15
-  wrongCatch2 might raise C (Exn.res:57:24) Match_failure (Exn.res:57:2) and is not annotated with @raises(C Match_failure)
+  wrongCatch2 might raise [C (Exn.res:57:24), Match_failure (Exn.res:57:2)] and is not annotated with @raises([C, Match_failure])
 
   Exception Analysis
   File "./Exn.res", line 64, characters 4-19
-  raise2Annotate3 might raise A (Exn.res:66:4) B (Exn.res:69:4) and is annotated with redundant @raises(C)
+  raise2Annotate3 might raise [A (Exn.res:66:4), B (Exn.res:69:4)] and is annotated with redundant @raises(C)
 
   Exception Analysis
   File "./Exn.res", line 75, characters 4-24
-  parse_json_from_file might raise Error (Exn.res:80:4) Sys_error (Exn.res:79:4 Exn.res:82:4) and is not annotated with @raises(Error Sys_error)
+  parse_json_from_file might raise [Error (Exn.res:80:4), Sys_error (Exn.res:79:4 Exn.res:82:4)] and is not annotated with @raises([Error, Sys_error])
 
   Exception Analysis
   File "./Exn.res", line 87, characters 4-11
