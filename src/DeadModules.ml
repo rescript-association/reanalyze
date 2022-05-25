@@ -1,16 +1,17 @@
 let active () = true
+
 let table = Hashtbl.create 1
 
-let markDead ~isValue ~loc path =
+let markDead ~isType ~loc path =
   if active () then
-    let moduleName = path |> Common.Path.toModuleName ~isValue in
+    let moduleName = path |> Common.Path.toModuleName ~isType in
     match Hashtbl.find_opt table moduleName with
     | Some _ -> ()
     | _ -> Hashtbl.replace table moduleName (false, loc)
 
-let markLive ~isValue ~(loc : CL.Location.t) path =
+let markLive ~isType ~(loc : CL.Location.t) path =
   if active () then
-    let moduleName = path |> Common.Path.toModuleName ~isValue in
+    let moduleName = path |> Common.Path.toModuleName ~isType in
     match Hashtbl.find_opt table moduleName with
     | None -> Hashtbl.replace table moduleName (true, loc)
     | Some (false, loc) -> Hashtbl.replace table moduleName (true, loc)
