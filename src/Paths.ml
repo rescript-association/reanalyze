@@ -77,12 +77,15 @@ module Config = struct
     match readFile bsconfigFile with
     | None -> ()
     | Some text -> (
-      match Json.get "reanalyze" (Json.parse text) with
+      match Json.parse text with
       | None -> ()
-      | Some conf ->
-        readSuppress conf;
-        readUnsuppress conf;
-        readAnalysis conf)
+      | Some json -> (
+        match Json.get "reanalyze" json with
+        | None -> ()
+        | Some conf ->
+          readSuppress conf;
+          readUnsuppress conf;
+          readAnalysis conf))
 end
 
 (**
