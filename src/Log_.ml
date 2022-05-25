@@ -1,5 +1,3 @@
-let useOcamlLocations = true
-
 type language = Ml | Re | Res
 
 let posLanguage (pos : Lexing.position) =
@@ -57,8 +55,8 @@ module Color = struct
     Format.pp_set_mark_tags Format.std_formatter true;
     Compat.pp_set_formatter_tag_functions Format.std_formatter color_functions;
     if not (get_color_enabled ()) then CL.Misc.Color.setup (Some Never);
-    if useOcamlLocations then
-      CL.Location.print_loc Format.str_formatter CL.Location.none
+    (* Print a dummy thing once in the beginning, as otherwise flushing does not work. *)
+    CL.Location.print_loc Format.str_formatter CL.Location.none
 
   let error ppf s = Format.fprintf ppf "@{<error>%s@}" s
 
@@ -72,67 +70,34 @@ module Loc = struct
     | "_none_" | "" -> Format.fprintf ppf "(No file name)"
     | real_file -> Format.fprintf ppf "%s" (CL.Location.show_filename real_file)
 
-  let print_loc ~normalizedRange ppf (loc : CL.Location.t) =
-    let file, _, _ = CL.Location.get_pos_info loc.loc_start in
-    if useOcamlLocations then
-      (* Change the range so it's on a single line.
-         In this way, the line number is clickable in vscode. *)
-      let startChar = loc.loc_start.pos_cnum - loc.loc_start.pos_bol in
-      let endChar = startChar + loc.loc_end.pos_cnum - loc.loc_start.pos_cnum in
-      let line = loc.loc_start.pos_lnum in
-      let processPos char (pos : Lexing.position) : Lexing.position =
-        {
-          pos_lnum = line;
-          pos_bol = 0;
-          pos_cnum = char;
-          pos_fname =
-            (let open Filename in
-            match is_implicit pos.pos_fname with
-            | _ when !Common.Cli.ci -> basename pos.pos_fname
-            | true -> concat (Sys.getcwd ()) pos.pos_fname
-            | false -> pos.pos_fname);
-        }
-      in
-      CL.Location.print_loc ppf
-        {
-          loc with
-          loc_start = loc.loc_start |> processPos startChar;
-          loc_end = loc.loc_end |> processPos endChar;
-        }
-    else
-      let dim_loc ppf = function
-        | None -> ()
-        | Some
-            ((start_line, start_line_start_char), (end_line, end_line_end_char))
-          ->
-          if start_line = end_line then
-            if start_line_start_char = end_line_end_char then
-              Format.fprintf ppf " @{<dim>%i:%i@}" start_line
-                start_line_start_char
-            else
-              Format.fprintf ppf " @{<dim>%i:%i-%i@}" start_line
-                start_line_start_char end_line_end_char
-          else
-            Format.fprintf ppf " @{<dim>%i:%i-%i:%i@}" start_line
-              start_line_start_char end_line end_line_end_char
-      in
-      Format.fprintf ppf "File \"%a\", line %a" print_filename file dim_loc
-        normalizedRange
+  let print_loc ppf (loc : CL.Location.t) =
+    (* Change the range so it's on a single line.
+       In this way, the line number is clickable in vscode. *)
+    let startChar = loc.loc_start.pos_cnum - loc.loc_start.pos_bol in
+    let endChar = startChar + loc.loc_end.pos_cnum - loc.loc_start.pos_cnum in
+    let line = loc.loc_start.pos_lnum in
+    let processPos char (pos : Lexing.position) : Lexing.position =
+      {
+        pos_lnum = line;
+        pos_bol = 0;
+        pos_cnum = char;
+        pos_fname =
+          (let open Filename in
+          match is_implicit pos.pos_fname with
+          | _ when !Common.Cli.ci -> basename pos.pos_fname
+          | true -> concat (Sys.getcwd ()) pos.pos_fname
+          | false -> pos.pos_fname);
+      }
+    in
+    CL.Location.print_loc ppf
+      {
+        loc with
+        loc_start = loc.loc_start |> processPos startChar;
+        loc_end = loc.loc_end |> processPos endChar;
+      }
 
   let print ppf (loc : CL.Location.t) =
-    let _file, start_line, start_char =
-      CL.Location.get_pos_info loc.loc_start
-    in
-    let _, end_line, end_char = CL.Location.get_pos_info loc.loc_end in
-    let normalizedRange =
-      if start_char == -1 || end_char == -1 then None
-      else if start_line = end_line && start_char >= end_char then
-        let same_char = start_char + 1 in
-        Some ((start_line, same_char), (end_line, same_char))
-      else Some ((start_line, start_char + 1), (end_line, end_char))
-    in
-
-    Format.fprintf ppf "@[%a@]" (print_loc ~normalizedRange) loc
+    Format.fprintf ppf "@[%a@]" print_loc loc
 end
 
 let log x = Format.fprintf Format.std_formatter x
