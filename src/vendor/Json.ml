@@ -22,7 +22,8 @@ module Parser = struct
       else loop acc last_pos (pos - 1)
       [@@raise Invalid_argument]
     in
-    loop [] len (len - 1)[@@raises Invalid_argument]
+    loop [] len (len - 1)
+    [@@raises Invalid_argument]
 
   let fail text pos message =
     let pre = String.sub text 0 pos in
@@ -59,7 +60,8 @@ module Parser = struct
          || text.[pos] = '\n'
          || text.[pos] = '\r')
     then skipWhite text (pos + 1)
-    else pos [@@raises Invalid_argument]
+    else pos
+    [@@raises Invalid_argument]
 
   (* from https://stackoverflow.com/a/42431362 *)
   let utf8encode s =
@@ -264,14 +266,16 @@ end
 
 (** Turns some text into a json object. throws on failure *)
 let parse text =
-  let item, pos = Parser.parse text 0 in
-  let pos = Parser.skip text pos in
-  if pos < String.length text then
-    failwith
-      ("Extra data after parse finished: "
-      ^ String.sub text pos (String.length text - pos))
-  else item
-  [@@raises Failure, Invalid_argument]
+  try
+    let item, pos = Parser.parse text 0 in
+    let pos = Parser.skip text pos in
+    if pos < String.length text then
+      (* failwith
+         ("Extra data after parse finished: "
+         ^ String.sub text pos (String.length text - pos)) *)
+      None
+    else Some item
+  with Invalid_argument _ | Failure _ -> None
 
 (** If `t` is an object, get the value associated with the given string key *)
 let get key t =
