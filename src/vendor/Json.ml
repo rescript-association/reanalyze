@@ -20,8 +20,9 @@ module Parser = struct
           loop (v :: acc) pos (pos - 1)
         else loop acc pos (pos - 1)
       else loop acc last_pos (pos - 1)
+      [@@raise Invalid_argument]
     in
-    loop [] len (len - 1)
+    loop [] len (len - 1)[@@raises Invalid_argument]
 
   let fail text pos message =
     let pre = String.sub text 0 pos in
@@ -36,16 +37,19 @@ module Parser = struct
       Printf.sprintf "Error \"%s\" at %d:%d -> %s\n" message line col last
     in
     failwith string
+    [@@raise Failure, Invalid_argument]
 
   let rec skipToNewline text pos =
     if pos >= String.length text then pos
     else if text.[pos] = '\n' then pos + 1
     else skipToNewline text (pos + 1)
+    [@@raises Invalid_argument]
 
   let rec skipToCloseMultilineComment text pos =
     if pos + 1 >= String.length text then failwith "Unterminated comment"
     else if text.[pos] = '*' && text.[pos + 1] = '/' then pos + 2
     else skipToCloseMultilineComment text (pos + 1)
+    [@@raises Failure, Invalid_argument]
 
   let rec skipWhite text pos =
     if
@@ -55,18 +59,23 @@ module Parser = struct
          || text.[pos] = '\n'
          || text.[pos] = '\r')
     then skipWhite text (pos + 1)
-    else pos
+    else pos [@@raises Invalid_argument]
 
   (* from https://stackoverflow.com/a/42431362 *)
   let utf8encode s =
     let prefs = [|0; 192; 224|] in
-    let s1 n = String.make 1 (Char.chr n) in
+    let s1 n = String.make 1 (Char.chr n) [@@raises Invalid_argument] in
     let rec ienc k sofar resid =
       let bct = if k = 0 then 7 else 6 - k in
       if resid < 1 lsl bct then s1 (prefs.(k) + resid) ^ sofar
-      else ienc (k + 1) (s1 (128 + (resid mod 64)) ^ sofar) (resid / 64)
+      else
+        ienc (k + 1)
+          (s1 (128 + (resid mod 64)) ^ sofar)
+          (resid / 64) [@doesNotRaise]
+      [@@raises Invalid_argument]
     in
     ienc 0 "" (int_of_string ("0x" ^ s))
+    [@@raises Failure, Invalid_argument]
 
   let parseString text pos =
     (* let i = ref(pos); *)
@@ -98,17 +107,21 @@ module Parser = struct
         | c ->
           Buffer.add_char buffer c;
           loop (i + 1))
+      [@@raises Failure, Invalid_argument]
     in
     let final = loop pos in
     (Buffer.contents buffer, final)
+    [@@raises Invalid_argument]
 
   let parseDigits text pos =
     let len = String.length text in
     let rec loop i =
       if i >= len then i
       else match text.[i] with '0' .. '9' -> loop (i + 1) | _ -> i
+      [@@raises Invalid_argument]
     in
     loop (pos + 1)
+    [@@raises Invalid_argument]
 
   let parseWithDecimal text pos =
     let pos = parseDigits text pos in
@@ -116,6 +129,7 @@ module Parser = struct
       let pos = parseDigits text (pos + 1) in
       pos
     else pos
+    [@@raises Invalid_argument]
 
   let parseNumber text pos =
     let pos = parseWithDecimal text pos in
@@ -126,6 +140,7 @@ module Parser = struct
       in
       parseDigits text pos
     else pos
+    [@@raises Invalid_argument]
 
   let parseNegativeNumber text pos =
     let final =
@@ -133,10 +148,12 @@ module Parser = struct
       else parseNumber text pos
     in
     (Number (float_of_string (String.sub text pos (final - pos))), final)
+    [@@raises Failure, Invalid_argument]
 
   let expect char text pos message =
     if text.[pos] <> char then fail text pos ("Expected: " ^ message)
     else pos + 1
+    [@@raises Failure, Invalid_argument]
 
   let parseComment : 'a. string -> int -> (string -> int -> 'a) -> 'a =
    fun text pos next ->
@@ -145,6 +162,7 @@ module Parser = struct
         next text (skipToCloseMultilineComment text (pos + 1))
       else failwith "Invalid syntax"
     else next text (skipToNewline text (pos + 1))
+   [@@raises Failure, Invalid_argument]
 
   let maybeSkipComment text pos =
     if pos < String.length text && text.[pos] = '/' then
@@ -154,12 +172,14 @@ module Parser = struct
         skipToCloseMultilineComment text (pos + 1)
       else fail text pos "Invalid synatx"
     else pos
+    [@@raises Failure, Invalid_argument]
 
   let rec skip text pos =
     if pos = String.length text then pos
     else
       let n = skipWhite text pos |> maybeSkipComment text in
       if n > pos then skip text n else n
+    [@@raises Failure, Invalid_argument]
 
   let rec parse text pos =
     if pos >= String.length text then
@@ -184,6 +204,7 @@ module Parser = struct
         (String s, pos)
       | '-' | '0' .. '9' -> parseNegativeNumber text pos
       | _ -> fail text pos "unexpected character"
+    [@@raises Failure, Invalid_argument]
 
   and parseArrayValue text pos =
     let pos = skip text pos in
@@ -198,6 +219,7 @@ module Parser = struct
         (value :: rest, pos)
     | ']' -> ([value], pos + 1)
     | _ -> fail text pos "unexpected character"
+    [@@raises Failure, Invalid_argument]
 
   and parseArray text pos =
     let pos = skip text pos in
@@ -206,6 +228,7 @@ module Parser = struct
     | _ ->
       let items, pos = parseArrayValue text pos in
       (Array items, pos)
+    [@@raises Failure, Invalid_argument]
 
   and parseObjectValue text pos =
     let pos = skip text pos in
@@ -227,6 +250,7 @@ module Parser = struct
       | _ ->
         let rest, pos = parseObjectValue text pos in
         ((key, value) :: rest, pos)
+    [@@raises Failure, Invalid_argument]
 
   and parseObject text pos =
     let pos = skip text pos in
@@ -234,6 +258,7 @@ module Parser = struct
     else
       let pairs, pos = parseObjectValue text pos in
       (Object pairs, pos)
+    [@@raises Failure, Invalid_argument]
 end
 [@@nodoc]
 
@@ -246,6 +271,7 @@ let parse text =
       ("Extra data after parse finished: "
       ^ String.sub text pos (String.length text - pos))
   else item
+  [@@raises Failure, Invalid_argument]
 
 (** If `t` is an object, get the value associated with the given string key *)
 let get key t =
