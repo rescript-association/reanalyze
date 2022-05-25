@@ -15,6 +15,7 @@ Example:
 ```
 - Allow lists and arrays as payloads e.g. for `@raises([A,B])`.
 - Improve printing of exception annotations in error messages.
+- Fix issue where the current file would be mistakenly reported dead and with empty name, when it contains an inner module which is dead and a toplevel exception.
 
 # 2.19.0
 - Don't report redundant optional arguments on functions annotated `@live`.
