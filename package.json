@@ -17,6 +17,9 @@
     "version": "node scripts/bump_version_module.js && git add -A src/",
     "postversion": "git push && git push --tags"
   },
+  "bin": {
+    "reanalyze.exe": "./_build/install/default/bin/reanalyze.exe"
+  },
   "author": "Cristiano Calcagno",
   "keywords": [
     "rescript",
