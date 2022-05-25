@@ -596,7 +596,8 @@ module WriteDeadAnnotations = struct
 end
 
 module Decl = struct
-  let isValue decl = match decl.declKind with Value _ -> true | _ -> false
+  let isValue decl =
+    match decl.declKind with Value _ (* | Exception *) -> true | _ -> false
 
   let isToplevelValueWithSideEffects decl =
     match decl.declKind with
@@ -726,7 +727,7 @@ module Decl = struct
       in
       if shouldEmitWarning then (
         decl.path
-        |> Path.toModuleName ~isValue:(decl |> isValue)
+        |> Path.toModuleName ~isType:(decl.declKind |> DeclKind.isType)
         |> DeadModules.checkModuleDead ~fileName:decl.pos.pos_fname;
         emitWarning ~decl ~message ~name);
       if shouldWriteAnnotation then decl |> WriteDeadAnnotations.onDeadDecl ~ppf)
@@ -800,7 +801,8 @@ let rec resolveRecursiveRefs ~checkOptionalArg ~deadDeclarations ~level
       decl.resolved <- true;
       if isDead then (
         decl.path
-        |> DeadModules.markDead ~isValue:(decl |> Decl.isValue)
+        |> DeadModules.markDead
+             ~isType:(decl.declKind |> DeclKind.isType)
              ~loc:decl.moduleLoc;
         if not (decl.pos |> doReportDead) then decl.report <- false;
         deadDeclarations := decl :: !deadDeclarations;
@@ -813,7 +815,8 @@ let rec resolveRecursiveRefs ~checkOptionalArg ~deadDeclarations ~level
             ~name:"Warning Incorrect Annotation"
         else
           decl.path
-          |> DeadModules.markLive ~isValue:(decl |> Decl.isValue)
+          |> DeadModules.markLive
+               ~isType:(decl.declKind |> DeclKind.isType)
                ~loc:decl.moduleLoc);
       if !Cli.debug then
         let refsString =

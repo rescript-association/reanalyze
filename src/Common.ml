@@ -115,10 +115,10 @@ module Path = struct
     | moduleName :: rest -> (moduleName |> Name.toInterface) :: rest |> List.rev
     | [] -> path
 
-  let toModuleName ~isValue path =
+  let toModuleName ~isType path =
     match path with
-    | _ :: tl when isValue -> tl |> toString
-    | _ :: _ :: tl when not isValue -> tl |> toString
+    | _ :: tl when not isType -> tl |> toString
+    | _ :: _ :: tl when isType -> tl |> toString
     | _ -> ""
 
   let typeToInterface path =
