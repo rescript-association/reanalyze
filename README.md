@@ -195,6 +195,6 @@ Make sure that `dune` builds both `.cmt` and `.cmti` files by enabling bytecode 
 
 This project is itself written in OCaml and can be analyzed as follows.
 ```sh
-dune build # makes sure that both .cmi and .cmti files are created
+dune build
 ./_build/default/src/Reanalyze.exe -suppress src/compiler-libs-406 -dce-cmt _build
 ```
