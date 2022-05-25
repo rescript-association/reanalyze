@@ -6,9 +6,12 @@
     "start": "rescript build -w",
     "build": "rescript build",
     "clean": "rescript clean -with-deps",
-    "analyze": "node ./termination.js >src/termination.txt"
+    "analyze": "npx reanalyze -config -ci -debug >src/termination.txt"
   },
   "devDependencies": {
     "rescript": "9.1.1"
+  },
+  "dependencies": {
+    "reanalyze": "file:../.."
   }
 }
