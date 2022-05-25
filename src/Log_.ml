@@ -15,10 +15,13 @@ let posLanguage (pos : Lexing.position) =
 
 module Color = struct
   let color_enabled = lazy (Unix.isatty Unix.stdout)
+
   let forceColor = ref false
+
   let get_color_enabled () = !forceColor || Lazy.force color_enabled
 
   type color = Red | Yellow | Magenta | Cyan
+
   type style = FG of color | Bold | Dim
 
   let code_of_style = function
@@ -58,6 +61,7 @@ module Color = struct
       CL.Location.print_loc Format.str_formatter CL.Location.none
 
   let error ppf s = Format.fprintf ppf "@{<error>%s@}" s
+
   let info ppf s = Format.fprintf ppf "@{<info>%s@}" s
 end
 
@@ -78,7 +82,9 @@ module Loc = struct
           pos_fname =
             (let open Filename in
             match is_implicit pos.pos_fname with
-            | true -> concat current_dir_name pos.pos_fname
+            | _ when !Common.Cli.ci ->
+              concat current_dir_name (basename pos.pos_fname)
+            | true -> concat (Sys.getcwd ()) pos.pos_fname
             | false -> pos.pos_fname);
         }
       in
@@ -130,27 +136,9 @@ let item x =
   Format.fprintf Format.std_formatter "  ";
   Format.fprintf Format.std_formatter x
 
-let locToString ppf (loc : CL.Location.t) =
-  (match !Common.Cli.ci with
-  | true ->
-    {
-      loc with
-      loc_start =
-        {
-          loc.loc_start with
-          pos_fname = loc.loc_start.pos_fname |> Filename.basename;
-        };
-      loc_end =
-        {
-          loc.loc_end with
-          pos_fname = loc.loc_end.pos_fname |> Filename.basename;
-        };
-    }
-  | false -> loc)
-  |> Loc.print ppf
-
 module Stats = struct
   let counters = Hashtbl.create 1
+
   let active = ref true
 
   let count name =
@@ -188,7 +176,7 @@ let logKind body ~count ~color ~(loc : CL.Location.t) ~name =
   if Suppress.filter loc.loc_start then (
     if count then Stats.count name;
     Format.fprintf Format.std_formatter "@[<v 2>@,%a@,%a@,%a@]@." color name
-      locToString loc body ())
+      Loc.print loc body ())
 
 let info ?(count = true) ~loc ~name body =
   body |> logKind ~color:Color.info ~count ~loc ~name
