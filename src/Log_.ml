@@ -82,8 +82,7 @@ module Loc = struct
           pos_fname =
             (let open Filename in
             match is_implicit pos.pos_fname with
-            | _ when !Common.Cli.ci ->
-              concat current_dir_name (basename pos.pos_fname)
+            | _ when !Common.Cli.ci -> basename pos.pos_fname
             | true -> concat (Sys.getcwd ()) pos.pos_fname
             | false -> pos.pos_fname);
         }
