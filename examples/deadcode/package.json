@@ -12,13 +12,13 @@
     "analyze": "npm run dce && npm run exception && npm run noalloc"
   },
   "devDependencies": {
+    "gentype": "^4.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.8.6"
   },
   "dependencies": {
     "@glennsl/bs-json": "^5.0.4",
     "@rescript/react": "^0.10.3",
-    "gentype": "^4.3.0",
     "reanalyze": "file:../..",
     "rescript": "^9.1.4"
   }

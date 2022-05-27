@@ -14,7 +14,7 @@ import type {Dict_t as Js_Dict_t} from './Js.gen';
 
 import type {Json_t as Js_Json_t} from './Js.gen';
 
-import type {list} from './ReasonPervasives.gen';
+import type {list} from './RescriptPervasives.gen';
 
 // tslint:disable-next-line:interface-over-type-literal
 export type t = number;

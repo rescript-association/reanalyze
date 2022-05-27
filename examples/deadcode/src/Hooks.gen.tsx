@@ -12,10 +12,6 @@ const Curry: any = Curry__Es6Import;
 import * as HooksBS__Es6Import from './Hooks.bs';
 const HooksBS: any = HooksBS__Es6Import;
 
-import type {Ref_currentDomRef as ReactDOM_Ref_currentDomRef} from '@rescript/react/src/ReactDOM.gen';
-
-import type {domRef as ReactDOM_domRef} from '@rescript/react/src/ReactDOM.gen';
-
 // tslint:disable-next-line:interface-over-type-literal
 export type vehicle = { readonly name: string };
 
@@ -35,7 +31,7 @@ export type testReactContext = React.Context<number>;
 export type testReactRef = { current: (null | number) };
 
 // tslint:disable-next-line:interface-over-type-literal
-export type testDomRef = ReactDOM_domRef;
+export type testDomRef = React.Ref<unknown>;
 
 // tslint:disable-next-line:interface-over-type-literal
 export type Props = { readonly vehicle: vehicle };
@@ -106,7 +102,7 @@ export const componentWithRenamedArgs: React.ComponentType<{
   return result
 };
 
-export const makeWithRef: (_1:{ readonly vehicle: vehicle }, _2:(null | undefined | ReactDOM_Ref_currentDomRef)) => JSX.Element = function (Arg1: any, Arg2: any) {
+export const makeWithRef: (_1:{ readonly vehicle: vehicle }, _2:(null | undefined | any)) => JSX.Element = function (Arg1: any, Arg2: any) {
   const result = Curry._2(HooksBS.makeWithRef, Arg1, Arg2);
   return result
 };
