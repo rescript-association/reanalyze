@@ -1,4 +1,6 @@
 # master
+
+# 2.21.0
 - Add support for `[@warning "-unused-value-declaration"]`.
 - Don't report on dead values inside a function annotated `@dead`.
 - Fix issue with punned record expressions in OCaml projects.
