@@ -116,98 +116,94 @@ let cli () =
     RunConfig.dce ();
     cmtRootRef := cmtRoot;
     analysisKindSet := true
-  and setDebug () = Cli.debug := true
   and setException cmtRoot =
     RunConfig.exception_ ();
     cmtRootRef := cmtRoot;
     analysisKindSet := true
-  and setExcludePaths s =
-    let paths = s |> String.split_on_char ',' in
-    Common.Cli.excludePaths := paths @ Common.Cli.excludePaths.contents
-  and setExperimental () = Common.Cli.experimental := true
-  and setLiveNames s =
-    let names = s |> String.split_on_char ',' in
-    Common.Cli.liveNames := names @ Common.Cli.liveNames.contents
-  and setLivePaths s =
-    let paths = s |> String.split_on_char ',' in
-    Common.Cli.livePaths := paths @ Common.Cli.livePaths.contents
   and setNoalloc () =
     RunConfig.noalloc ();
     analysisKindSet := true
-  and setSuppress s =
-    let names = s |> String.split_on_char ',' in
-    runConfig.suppress <- names @ runConfig.suppress
   and setTermination cmtRoot =
     RunConfig.termination ();
     cmtRootRef := cmtRoot;
     analysisKindSet := true
-  and setUnsuppress s =
-    let names = s |> String.split_on_char ',' in
-    runConfig.unsuppress <- names @ runConfig.unsuppress
-  and setWrite () = Common.Cli.write := true
   and speclist =
     [
       ("-all", Arg.Unit (fun () -> setAll None), "Run all the analyses.");
       ( "-all-cmt",
-        Arg.String (fun s -> setAll (Some s)),
+        String (fun s -> setAll (Some s)),
         "root_path Run all the analyses for all the .cmt files under the root \
          path" );
-      ("-ci", Arg.Unit (fun () -> Cli.ci := true), "Internal flag for use in CI");
-      ( "-config",
-        Arg.Unit setConfig,
-        "Read the analysis mode from bsconfig.json" );
-      ("-dce", Arg.Unit (fun () -> setDCE None), "Eperimental DCE");
-      ("-debug", Arg.Unit setDebug, "Print debug information");
+      ("-ci", Unit (fun () -> Cli.ci := true), "Internal flag for use in CI");
+      ("-config", Unit setConfig, "Read the analysis mode from bsconfig.json");
+      ("-dce", Unit (fun () -> setDCE None), "Eperimental DCE");
+      ("-debug", Unit (fun () -> Cli.debug := true), "Print debug information");
       ( "-dce-cmt",
-        Arg.String (fun s -> setDCE (Some s)),
+        String (fun s -> setDCE (Some s)),
         "root_path Experimental DCE for all the .cmt files under the root path"
       );
       ( "-exception",
-        Arg.Unit (fun () -> setException None),
+        Unit (fun () -> setException None),
         "Experimental exception analysis" );
       ( "-exception-cmt",
-        Arg.String (fun s -> setException (Some s)),
+        String (fun s -> setException (Some s)),
         "root_path Experimental exception analysis for all the .cmt files \
          under the root path" );
       ( "-exclude-paths",
-        Arg.String (fun s -> setExcludePaths s),
+        String
+          (fun s ->
+            let paths = s |> String.split_on_char ',' in
+            Common.Cli.excludePaths := paths @ Common.Cli.excludePaths.contents),
         "comma-separated-path-prefixes Exclude from analysis files whose path \
          has a prefix in the list" );
       ( "-experimental",
-        Arg.Unit setExperimental,
+        Set Common.Cli.experimental,
         "Turn on experimental analyses (this option is currently unused)" );
       ( "-externals",
-        Arg.Unit (fun () -> DeadCommon.Config.analyzeExternals := true),
+        Set DeadCommon.Config.analyzeExternals,
         "Report on externals in dead code analysis" );
+      ("-json", Set Common.Cli.json, "Print reports in json format");
       ( "-live-names",
-        Arg.String (fun s -> setLiveNames s),
+        String
+          (fun s ->
+            let names = s |> String.split_on_char ',' in
+            Common.Cli.liveNames := names @ Common.Cli.liveNames.contents),
         "comma-separated-names Consider all values with the given names as live"
       );
       ( "-live-paths",
-        Arg.String (fun s -> setLivePaths s),
+        String
+          (fun s ->
+            let paths = s |> String.split_on_char ',' in
+            Common.Cli.livePaths := paths @ Common.Cli.livePaths.contents),
         "comma-separated-path-prefixes Consider all values whose path has a \
          prefix in the list as live" );
-      ("-noalloc", Arg.Unit setNoalloc, "");
+      ("-noalloc", Unit setNoalloc, "");
       ( "-suppress",
-        Arg.String setSuppress,
+        String
+          (fun s ->
+            let names = s |> String.split_on_char ',' in
+            runConfig.suppress <- names @ runConfig.suppress),
         "comma-separated-path-prefixes Don't report on files whose path has a \
          prefix in the list" );
       ( "-termination",
-        Arg.Unit (fun () -> setTermination None),
+        Unit (fun () -> setTermination None),
         "Experimental termination analysis" );
       ( "-termination-cmt",
-        Arg.String (fun s -> setTermination (Some s)),
+        String (fun s -> setTermination (Some s)),
         "root_path Experimental termination analysis for all the .cmt files \
          under the root path" );
       ( "-unsuppress",
-        Arg.String setUnsuppress,
+        String
+          (fun s ->
+            let names = s |> String.split_on_char ',' in
+            runConfig.unsuppress <- names @ runConfig.unsuppress),
         "comma-separated-path-prefixes Report on files whose path has a prefix \
          in the list, overriding -suppress (no-op if -suppress is not \
          specified)" );
-      ("-version", Arg.Unit versionAndExit, "Show version information and exit");
-      ("--version", Arg.Unit versionAndExit, "Show version information and exit");
+      ("-version", Unit versionAndExit, "Show version information and exit");
+      ("--version", Unit versionAndExit, "Show version information and exit");
       ( "-write",
-        Arg.Unit setWrite,
+        Set Common.Cli.write,
         "Write @dead annotations directly in the source files" );
     ]
   in

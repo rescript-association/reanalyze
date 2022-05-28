@@ -24,6 +24,8 @@ module Cli = struct
 
   let experimental = ref false
 
+  let json = ref false
+
   let write = ref false
 
   (* names to be considered live values *)
