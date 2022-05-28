@@ -136,14 +136,22 @@ module Stats = struct
           ^ ")"))
 end
 
-let logKind body ~count ~color ~(loc : CL.Location.t) ~name =
+type kind = Warning | Error
+
+let logKind body ~count ~kind ~(loc : CL.Location.t) ~name =
   if Suppress.filter loc.loc_start then (
     if count then Stats.count name;
-    Format.fprintf Format.std_formatter "@[<v 2>@,%a@,%a@,%a@]@." color name
-      Loc.print loc body ())
+    if !Common.Cli.json then
+      Format.fprintf Format.std_formatter "\"kind\": \"%s\"@."
+        (match kind with Warning -> "warning" | Error -> "error")
+    else
+      let color =
+        match kind with Warning -> Color.info | Error -> Color.error
+      in
+      Format.fprintf Format.std_formatter "@[<v 2>@,%a@,%a@,%a@]@." color name
+        Loc.print loc body ())
 
-let info ?(count = true) ~loc ~name body =
-  body |> logKind ~color:Color.info ~count ~loc ~name
+let warning ?(count = true) ~loc ~name body =
+  body |> logKind ~kind:Warning ~count ~loc ~name
 
-let error ~loc ~name body =
-  body |> logKind ~color:Color.error ~count:true ~loc ~name
+let error ~loc ~name body = body |> logKind ~kind:Error ~count:true ~loc ~name

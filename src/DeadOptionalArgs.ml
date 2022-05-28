@@ -88,7 +88,7 @@ let check decl =
          && not (ProcessDeadAnnotations.isAnnotatedGenTypeOrLive decl.pos) ->
     optionalArgs
     |> OptionalArgs.iterUnused (fun s ->
-           Log_.info ~loc:(decl |> declGetLoc) ~name:"Warning Unused Argument"
+           Log_.warning ~loc:(decl |> declGetLoc) ~name:"Warning Unused Argument"
              (fun ppf () ->
                Format.fprintf ppf
                  "optional argument @{<info>%s@} of function @{<info>%s@} is \
@@ -97,7 +97,7 @@ let check decl =
                  (decl.path |> Path.withoutHead)));
     optionalArgs
     |> OptionalArgs.iterAlwaysUsed (fun s nCalls ->
-           Log_.info ~loc:(decl |> declGetLoc)
+           Log_.warning ~loc:(decl |> declGetLoc)
              ~name:"Warning Redundant Optional Argument" (fun ppf () ->
                Format.fprintf ppf
                  "optional argument @{<info>%s@} of function @{<info>%s@} is \
