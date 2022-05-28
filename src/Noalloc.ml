@@ -6,7 +6,7 @@ let processCallee ~env ~funDef ~loc callee =
     | Some (FunDef funDefCallee) ->
       funDef |> Il.FunDef.emit ~instr:(Il.Call funDefCallee.id)
     | _ ->
-      Log_.info ~count:false ~loc ~name:"Noalloc" (fun ppf () ->
+      Log_.warning ~count:false ~loc ~name:"Noalloc" (fun ppf () ->
           Format.fprintf ppf "Callee not recognized: %s" id);
       assert false)
   | _ -> (
@@ -15,7 +15,7 @@ let processCallee ~env ~funDef ~loc callee =
     | "Pervasives.+." | "Stdlib.+." -> funDef |> Il.FunDef.emit ~instr:Il.F64Add
     | "Pervasives.*." | "Stdlib.*." -> funDef |> Il.FunDef.emit ~instr:Il.F64Mul
     | name ->
-      Log_.info ~count:false ~loc ~name:"Noalloc" (fun ppf () ->
+      Log_.warning ~count:false ~loc ~name:"Noalloc" (fun ppf () ->
           Format.fprintf ppf "Callee not recognized: %s" name);
       assert false)
 
@@ -32,7 +32,7 @@ let rec processTyp ~(funDef : Il.funDef) ~loc (typ : CL.Types.type_expr) =
     funDef.nextOffset <- offset + 1;
     Il.Local offset
   | _ ->
-    Log_.info ~count:false ~loc ~name:"Noalloc" (fun ppf () ->
+    Log_.warning ~count:false ~loc ~name:"Noalloc" (fun ppf () ->
         Format.fprintf ppf "Type not supported");
     assert false
 
@@ -45,11 +45,11 @@ let rec sizeOfTyp ~loc (typ : CL.Types.type_expr) =
     | "int" -> 4
     | "string" -> 4
     | name ->
-      Log_.info ~count:false ~loc ~name:"Noalloc" (fun ppf () ->
+      Log_.warning ~count:false ~loc ~name:"Noalloc" (fun ppf () ->
           Format.fprintf ppf "Size of type %s not supported" name);
       assert false)
   | _ ->
-    Log_.info ~count:false ~loc ~name:"Noalloc" (fun ppf () ->
+    Log_.warning ~count:false ~loc ~name:"Noalloc" (fun ppf () ->
         Format.fprintf ppf "Size of type not supported");
     assert false
 
@@ -84,7 +84,7 @@ let rec processFunDefPat ~funDef ~env ~mem (pat : CL.Typedtree.pattern) =
     in
     (newEnv, Il.Tuple scopes)
   | _ ->
-    Log_.info ~count:false ~loc:pat.pat_loc ~name:"Noalloc" (fun ppf () ->
+    Log_.warning ~count:false ~loc:pat.pat_loc ~name:"Noalloc" (fun ppf () ->
         Format.fprintf ppf "Argument pattern not supported");
     assert false
 
@@ -121,7 +121,7 @@ let translateConst ~loc ~mem (const : CL.Asttypes.constant) =
     in
     Il.I32 (index |> Int32.of_int)
   | _ ->
-    Log_.info ~count:false ~loc ~name:"Noalloc" (fun ppf () ->
+    Log_.warning ~count:false ~loc ~name:"Noalloc" (fun ppf () ->
         Format.fprintf ppf "Constant not supported");
     assert false
 
@@ -163,7 +163,7 @@ and processExpr ~funDef ~env ~mem (expr : CL.Typedtree.expression) =
       in
       emitInit init
     | _ ->
-      Log_.info ~count:false ~loc:expr.exp_loc ~name:"Noalloc" (fun ppf () ->
+      Log_.warning ~count:false ~loc:expr.exp_loc ~name:"Noalloc" (fun ppf () ->
           Format.fprintf ppf "Id not found: %s" id);
       assert false)
   | Texp_apply
@@ -178,7 +178,7 @@ and processExpr ~funDef ~env ~mem (expr : CL.Typedtree.expression) =
                let declKind = (declKinds.(i) [@doesNotRaise]) in
                let argKind = arg.exp_type |> Il.Kind.fromType in
                if argKind <> declKind then
-                 Log_.info ~count:true ~loc:arg.exp_loc ~name:"Noalloc"
+                 Log_.warning ~count:true ~loc:arg.exp_loc ~name:"Noalloc"
                    (fun ppf () ->
                      Format.fprintf ppf
                        "Function call to @{<info>%s@}: parameter %d has kind \
@@ -190,7 +190,7 @@ and processExpr ~funDef ~env ~mem (expr : CL.Typedtree.expression) =
              | _ -> assert false);
              arg |> processExpr ~funDef ~env ~mem
            | _ ->
-             Log_.info ~count:false ~loc:expr.exp_loc ~name:"Noalloc"
+             Log_.warning ~count:false ~loc:expr.exp_loc ~name:"Noalloc"
                (fun ppf () -> Format.fprintf ppf "Argument not supported"));
     callee |> processCallee ~env ~funDef ~loc:callee_loc
   | Texp_function _ ->
@@ -198,7 +198,7 @@ and processExpr ~funDef ~env ~mem (expr : CL.Typedtree.expression) =
       expr |> processFunDef ~funDef ~env ~mem ~params:[]
     in
     if params = [] then (
-      Log_.info ~count:false ~loc:expr.exp_loc ~name:"Noalloc" (fun ppf () ->
+      Log_.warning ~count:false ~loc:expr.exp_loc ~name:"Noalloc" (fun ppf () ->
           Format.fprintf ppf "Cannot decode function parameters");
       assert false);
     body |> processExpr ~funDef ~env ~mem
@@ -241,7 +241,7 @@ and processExpr ~funDef ~env ~mem (expr : CL.Typedtree.expression) =
     e |> processExpr ~funDef ~env ~mem;
     funDef |> Il.FunDef.emit ~instr:(Il.I32Load index)
   | _ ->
-    Log_.info ~count:false ~loc:expr.exp_loc ~name:"Noalloc" (fun ppf () ->
+    Log_.warning ~count:false ~loc:expr.exp_loc ~name:"Noalloc" (fun ppf () ->
         Format.fprintf ppf "Expression not supported");
     assert false
 
@@ -255,12 +255,12 @@ let rec processGlobal ~env ~id ~mem (expr : CL.Typedtree.expression) =
     match env |> Il.Env.find ~id:id1 with
     | Some (GlobalDef globalDef) -> globalDef.init
     | _ ->
-      Log_.info ~count:false ~loc:expr.exp_loc ~name:"Noalloc" (fun ppf () ->
+      Log_.warning ~count:false ~loc:expr.exp_loc ~name:"Noalloc" (fun ppf () ->
           Format.fprintf ppf "processGlobal Id not found: %s" id);
       assert false)
   | Texp_tuple es -> Tuple (es |> List.map (processGlobal ~env ~id ~mem))
   | _ ->
-    Log_.info ~count:false ~loc:expr.exp_loc ~name:"Noalloc" (fun ppf () ->
+    Log_.warning ~count:false ~loc:expr.exp_loc ~name:"Noalloc" (fun ppf () ->
         Format.fprintf ppf "processGlobal not supported yet");
     assert false
 

@@ -142,7 +142,7 @@ module Event = struct
            | {kind = Call {callee}} :: _ -> callee |> Common.Path.toString
            | _ -> "expression"
          in
-         Log_.info ~loc ~name:"Exception Analysis" (fun ppf () ->
+         Log_.warning ~loc ~name:"Exception Analysis" (fun ppf () ->
              Format.fprintf ppf
                "@{<info>%s@} does not raise and is annotated with redundant \
                 @doesNotRaise"
@@ -186,7 +186,7 @@ module Checks = struct
     let missingAnnotations = Exceptions.diff raiseSet exceptions in
     let redundantAnnotations = Exceptions.diff exceptions raiseSet in
     if not (Exceptions.isEmpty missingAnnotations) then
-      Log_.info ~loc ~name:"Exception Analysis" (fun ppf () ->
+      Log_.warning ~loc ~name:"Exception Analysis" (fun ppf () ->
           Format.fprintf ppf
             "@{<info>%s@} might raise %a and is not annotated with @raises(%a)"
             name
@@ -195,7 +195,7 @@ module Checks = struct
             (Exceptions.pp ~exnTable:None)
             missingAnnotations);
     if not (Exceptions.isEmpty redundantAnnotations) then
-      Log_.info ~loc ~name:"Exception Analysis" (fun ppf () ->
+      Log_.warning ~loc ~name:"Exception Analysis" (fun ppf () ->
           let raisesDescription ppf () =
             if raiseSet |> Exceptions.isEmpty then
               Format.fprintf ppf "raises nothing"
@@ -274,7 +274,7 @@ let traverseAst () =
       in
       let calleeName = callee |> Common.Path.toString in
       if calleeName |> isRaise then
-        Log_.info ~loc ~name:"Exception Analysis" (fun ppf () ->
+        Log_.warning ~loc ~name:"Exception Analysis" (fun ppf () ->
             Format.fprintf ppf
               "@{<info>%s@} can be analyzed only if called direclty" calleeName);
       currentEvents :=

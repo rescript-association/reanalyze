@@ -253,7 +253,7 @@ let iterFilesFromRootsToLeaves iterFun =
                     {CL.Location.none with loc_start = pos; loc_end = pos}
                   in
                   if Config.warnOnCircularDependencies then
-                    Log_.info ~loc ~name:"Warning Dead Analysis Cycle"
+                    Log_.warning ~loc ~name:"Warning Dead Analysis Cycle"
                       (fun ppf () ->
                         Format.fprintf ppf
                           "Results for %s could be inaccurate because of \
@@ -474,7 +474,7 @@ let addValueDeclaration ?(isToplevel = true) ~(loc : CL.Location.t) ~moduleLoc
        ~loc ~moduleLoc ~path
 
 let emitWarning ~decl ~message ~name =
-  Log_.info ~loc:(decl |> declGetLoc) ~name (fun ppf () ->
+  Log_.warning ~loc:(decl |> declGetLoc) ~name (fun ppf () ->
       Format.fprintf ppf "@{<info>%s@} %s"
         (decl.path |> Path.withoutHead)
         message)
@@ -586,11 +586,15 @@ module WriteDeadAnnotations = struct
       match !currentFileLines.(indexInLines) with
       | line ->
         line.declarations <- decl :: line.declarations;
-        Format.fprintf ppf "  <-- line %d@.  %s@." decl.pos.pos_lnum
-          (line |> lineToString)
+        if !Cli.json then Format.fprintf ppf "\"line\": %d@." decl.pos.pos_lnum
+        else
+          Format.fprintf ppf "  <-- line %d@.  %s@." decl.pos.pos_lnum
+            (line |> lineToString)
       | exception Invalid_argument _ ->
-        Format.fprintf ppf "  <-- Can't find line %d@." decl.pos.pos_lnum)
-    else Format.fprintf ppf "  <-- can't find file@."
+        if !Cli.json then ()
+        else Format.fprintf ppf "  <-- Can't find line %d@." decl.pos.pos_lnum)
+    else if !Cli.json then ()
+    else Format.fprintf ppf "  <-- Can't find file@."
 
   let write () = writeFile !currentFile !currentFileLines
 end
@@ -681,7 +685,7 @@ module Decl = struct
 
   let report ~ppf decl =
     let insideReportedValue = decl |> isInsideReportedValue in
-    if decl.report then (
+    if decl.report then
       let name, message =
         match decl.declKind with
         | Exception ->
@@ -720,17 +724,19 @@ module Decl = struct
         | name :: _ when name |> Name.isUnderscore -> Config.reportUnderscore
         | _ -> true
       in
-      let shouldWriteAnnotation =
-        shouldEmitWarning
-        && (not (isToplevelValueWithSideEffects decl))
-        && Suppress.filter decl.pos
-      in
       if shouldEmitWarning then (
+        if !Cli.json then Format.fprintf ppf "{\n";
         decl.path
         |> Path.toModuleName ~isType:(decl.declKind |> DeclKind.isType)
         |> DeadModules.checkModuleDead ~fileName:decl.pos.pos_fname;
-        emitWarning ~decl ~message ~name);
-      if shouldWriteAnnotation then decl |> WriteDeadAnnotations.onDeadDecl ~ppf)
+        emitWarning ~decl ~message ~name;
+        let shouldWriteAnnotation =
+          (not (isToplevelValueWithSideEffects decl))
+          && Suppress.filter decl.pos
+        in
+        if shouldWriteAnnotation then
+          decl |> WriteDeadAnnotations.onDeadDecl ~ppf;
+        if !Cli.json then Format.fprintf ppf "}\n")
 end
 
 let declIsDead ~refs decl =

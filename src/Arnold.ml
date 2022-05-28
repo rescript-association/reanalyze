@@ -111,14 +111,14 @@ module Stats = struct
     incr nCacheChecks;
     if hit then incr nCacheHits;
     if !Common.Cli.debug then
-      Log_.info ~count:false ~loc ~name:"Termination Analysis" (fun ppf () ->
+      Log_.warning ~count:false ~loc ~name:"Termination Analysis" (fun ppf () ->
           Format.fprintf ppf "Cache %s for @{<info>%s@}"
             (match hit with true -> "hit" | false -> "miss")
             (FunctionCall.toString functionCall))
 
   let logResult ~functionCall ~loc ~resString =
     if !Common.Cli.debug then
-      Log_.info ~count:false ~loc ~name:"Termination Analysis" (fun ppf () ->
+      Log_.warning ~count:false ~loc ~name:"Termination Analysis" (fun ppf () ->
           Format.fprintf ppf "@{<info>%s@} returns %s"
             (FunctionCall.toString functionCall)
             resString)
@@ -554,7 +554,7 @@ module ExtendFunctionTable = struct
             then (
               functionTable |> FunctionTable.addFunction ~functionName;
               if !Common.Cli.debug then
-                Log_.info ~count:false ~loc ~name:"Termination Analysis"
+                Log_.warning ~count:false ~loc ~name:"Termination Analysis"
                   (fun ppf () ->
                     Format.fprintf ppf
                       "Extend Function Table with @{<info>%s@} (%a) as it \
@@ -572,7 +572,7 @@ module ExtendFunctionTable = struct
                  functionTable
                  |> FunctionTable.addLabelToKind ~functionName ~label;
                  if !Common.Cli.debug then
-                   Log_.info ~count:false ~loc ~name:"Termination Analysis"
+                   Log_.warning ~count:false ~loc ~name:"Termination Analysis"
                      (fun ppf () ->
                        Format.fprintf ppf
                          "@{<info>%s@} is parametric ~@{<info>%s@}=@{<info>%s@}"
@@ -633,7 +633,7 @@ module CheckExpressionWellFormed = struct
                        functionTable
                        |> FunctionTable.addLabelToKind ~functionName ~label;
                        if !Common.Cli.debug then
-                         Log_.info ~count:false ~loc:body.exp_loc
+                         Log_.warning ~count:false ~loc:body.exp_loc
                            ~name:"Termination Analysis" (fun ppf () ->
                              Format.fprintf ppf
                                "Extend Function Table with @{<info>%s@} as \
@@ -798,7 +798,7 @@ module Compile = struct
         newFunctionName;
       newFunctionDefinition.body <- Some (vb_expr |> expression ~ctx:newCtx);
       if !Common.Cli.debug then
-        Log_.info ~count:false ~loc:pat_loc ~name:"Termination Analysis"
+        Log_.warning ~count:false ~loc:pat_loc ~name:"Termination Analysis"
           (fun ppf () ->
             Format.fprintf ppf "Adding recursive definition @{<info>%s@}"
               newFunctionName);
