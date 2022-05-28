@@ -473,11 +473,13 @@ let addValueDeclaration ?(isToplevel = true) ~(loc : CL.Location.t) ~moduleLoc
        ~declKind:(Value {isToplevel; optionalArgs; sideEffects})
        ~loc ~moduleLoc ~path
 
-let emitWarning ~decl ~message ~name =
-  Log_.warning ~loc:(decl |> declGetLoc) ~name (fun ppf () ->
+let emitWarning ?(onDeadDecl = fun () -> ()) ~decl ~message name =
+  Log_.warning ~loc:(decl |> declGetLoc) ~notFinished:true ~name (fun ppf () ->
       Format.fprintf ppf "@{<info>%s@} %s"
         (decl.path |> Path.withoutHead)
-        message)
+        message);
+  onDeadDecl ();
+  if !Cli.json then Format.fprintf Format.std_formatter "}\n"
 
 module WriteDeadAnnotations = struct
   type line = {mutable declarations : decl list; original : string}
@@ -586,7 +588,8 @@ module WriteDeadAnnotations = struct
       match !currentFileLines.(indexInLines) with
       | line ->
         line.declarations <- decl :: line.declarations;
-        if !Cli.json then Format.fprintf ppf "\"line\": %d@." decl.pos.pos_lnum
+        if !Cli.json then
+          Format.fprintf ppf "  \"line\": %d@." decl.pos.pos_lnum
         else
           Format.fprintf ppf "  <-- line %d@.  %s@." decl.pos.pos_lnum
             (line |> lineToString)
@@ -725,18 +728,18 @@ module Decl = struct
         | _ -> true
       in
       if shouldEmitWarning then (
-        if !Cli.json then Format.fprintf ppf "{\n";
-        decl.path
-        |> Path.toModuleName ~isType:(decl.declKind |> DeclKind.isType)
-        |> DeadModules.checkModuleDead ~fileName:decl.pos.pos_fname;
-        emitWarning ~decl ~message ~name;
         let shouldWriteAnnotation =
           (not (isToplevelValueWithSideEffects decl))
           && Suppress.filter decl.pos
         in
-        if shouldWriteAnnotation then
-          decl |> WriteDeadAnnotations.onDeadDecl ~ppf;
-        if !Cli.json then Format.fprintf ppf "}\n")
+        decl.path
+        |> Path.toModuleName ~isType:(decl.declKind |> DeclKind.isType)
+        |> DeadModules.checkModuleDead ~fileName:decl.pos.pos_fname;
+        emitWarning ~decl ~message
+          ~onDeadDecl:(fun () ->
+            if shouldWriteAnnotation then
+              decl |> WriteDeadAnnotations.onDeadDecl ~ppf)
+          name)
 end
 
 let declIsDead ~refs decl =
@@ -818,7 +821,7 @@ let rec resolveRecursiveRefs ~checkOptionalArg ~deadDeclarations ~level
         checkOptionalArg decl;
         if decl.pos |> ProcessDeadAnnotations.isAnnotatedDead then
           emitWarning ~decl ~message:" is annotated @dead but is live"
-            ~name:"Warning Incorrect Annotation"
+            "Warning Incorrect Annotation"
         else
           decl.path
           |> DeadModules.markLive
