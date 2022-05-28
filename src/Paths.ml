@@ -81,11 +81,13 @@ module Config = struct
       | None -> ()
       | Some json -> (
         match Json.get "reanalyze" json with
-        | None -> ()
         | Some conf ->
           readSuppress conf;
           readUnsuppress conf;
-          readAnalysis conf))
+          readAnalysis conf
+        | None ->
+          (* if no "analysis" specified, default to dce *)
+          RunConfig.dce ()))
 end
 
 (**

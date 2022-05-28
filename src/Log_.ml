@@ -64,12 +64,6 @@ module Color = struct
 end
 
 module Loc = struct
-  let print_filename ppf file =
-    match file with
-    (* modified *)
-    | "_none_" | "" -> Format.fprintf ppf "(No file name)"
-    | real_file -> Format.fprintf ppf "%s" (CL.Location.show_filename real_file)
-
   let print_loc ppf (loc : CL.Location.t) =
     (* Change the range so it's on a single line.
        In this way, the line number is clickable in vscode. *)

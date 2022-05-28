@@ -105,12 +105,7 @@ let cli () =
     exit 0
     [@@raises exit]
   in
-  let rec printUsageAndExit () =
-    Printf.eprintf "Error: No analysis set\n\n";
-    Arg.usage speclist usage;
-    exit 0
-    [@@raises exit]
-  and setAll cmtRoot =
+  let rec setAll cmtRoot =
     RunConfig.all ();
     cmtRootRef := cmtRoot;
     analysisKindSet := true
@@ -218,7 +213,7 @@ let cli () =
   in
   let ppf = Format.std_formatter in
   Arg.parse speclist print_endline usage;
-  if !analysisKindSet = false then printUsageAndExit ();
+  if !analysisKindSet = false then setConfig ();
   let cmtRoot = !cmtRootRef in
   runAnalysis ~cmtRoot ~ppf
   [@@raises exit]
