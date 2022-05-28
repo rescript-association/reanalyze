@@ -140,16 +140,20 @@ type kind = Warning | Error
 
 let logKind body ~count ~kind ~(loc : CL.Location.t) ~name =
   if Suppress.filter loc.loc_start then (
+    let open Format in
     if count then Stats.count name;
-    if !Common.Cli.json then
-      Format.fprintf Format.std_formatter "\"kind\": \"%s\"@."
-        (match kind with Warning -> "warning" | Error -> "error")
+    if !Common.Cli.json then (
+      fprintf std_formatter "\"name\": %s@." name;
+      fprintf std_formatter "\"kind\": \"%s\"@."
+        (match kind with Warning -> "warning" | Error -> "error");
+      let message = asprintf "%a" body () in
+      fprintf std_formatter "\"message\": \"%s\"@." (Json.escape message))
     else
       let color =
         match kind with Warning -> Color.info | Error -> Color.error
       in
-      Format.fprintf Format.std_formatter "@[<v 2>@,%a@,%a@,%a@]@." color name
-        Loc.print loc body ())
+      fprintf std_formatter "@[<v 2>@,%a@,%a@,%a@]@." color name Loc.print loc
+        body ())
 
 let warning ?(count = true) ~loc ~name body =
   body |> logKind ~kind:Warning ~count ~loc ~name
