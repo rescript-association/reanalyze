@@ -288,7 +288,7 @@ let escape text =
   let buf = Buffer.create ln in
   let rec loop i =
     if i < ln then (
-      (match text.[i] with
+      (match text.[i] [@doesNotRaise "bound checked above"] with
       | '\012' -> Buffer.add_string buf "\\f"
       | '\\' -> Buffer.add_string buf "\\\\"
       | '"' -> Buffer.add_string buf "\\\""
