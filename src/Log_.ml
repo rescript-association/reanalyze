@@ -114,7 +114,7 @@ module Stats = struct
   let clear () = Hashtbl.clear counters
 
   let report () =
-    if !active then (
+    if !active then
       let issues, nIssues =
         Hashtbl.fold
           (fun name cnt (issues, nIssues) ->
@@ -124,32 +124,39 @@ module Stats = struct
       let sortedIssues =
         issues |> List.sort (fun (n1, _) (n2, _) -> String.compare n1 n2)
       in
-      if sortedIssues <> [] then item "@.";
-      item "Analysis reported %d issues%s@." nIssues
-        (match sortedIssues with
-        | [] -> ""
-        | _ :: _ ->
-          " ("
-          ^ (sortedIssues
-            |> List.map (fun (name, cnt) -> name ^ ":" ^ string_of_int !cnt)
-            |> String.concat ", ")
-          ^ ")"))
+
+      if !Common.Cli.json then Format.fprintf Format.std_formatter "@.]@."
+      else (
+        if sortedIssues <> [] then item "@.";
+        item "Analysis reported %d issues%s@." nIssues
+          (match sortedIssues with
+          | [] -> ""
+          | _ :: _ ->
+            " ("
+            ^ (sortedIssues
+              |> List.map (fun (name, cnt) -> name ^ ":" ^ string_of_int !cnt)
+              |> String.concat ", ")
+            ^ ")"))
 end
 
 type kind = Warning | Error
 
+let first = ref true
+
 let logKind body ~count ~kind ~(loc : CL.Location.t) ~name ~notFinished =
   if Suppress.filter loc.loc_start then (
     let open Format in
-    if !Common.Cli.json then fprintf std_formatter "{\n";
+    if !Common.Cli.json then
+      fprintf std_formatter "%s{\n" (if !first then "[\n" else ",\n");
+    first := false;
     if count then Stats.count name;
     if !Common.Cli.json then (
-      fprintf std_formatter "  \"name\": %s@." name;
-      fprintf std_formatter "  \"kind\": \"%s\"@."
+      fprintf std_formatter "  \"name\": \"%s\",@." name;
+      fprintf std_formatter "  \"kind\": \"%s\",@."
         (match kind with Warning -> "warning" | Error -> "error");
       let message = asprintf "%a" body () in
-      fprintf std_formatter "  \"message\": \"%s\"@." (Json.escape message);
-      if notFinished = false then fprintf std_formatter "}\n")
+      fprintf std_formatter "  \"message\": \"%s\"" (Json.escape message);
+      if notFinished = false then fprintf std_formatter "@.}")
     else
       let color =
         match kind with Warning -> Color.info | Error -> Color.error
