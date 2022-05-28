@@ -143,7 +143,7 @@ type kind = Warning | Error
 
 let first = ref true
 
-let logKind body ~count ~kind ~(loc : CL.Location.t) ~name ~notFinished =
+let logKind ~count ~kind ~(loc : CL.Location.t) ~name ~notFinished body =
   if Suppress.filter loc.loc_start then (
     let open Format in
     if !Common.Cli.json then
@@ -167,5 +167,5 @@ let logKind body ~count ~kind ~(loc : CL.Location.t) ~name ~notFinished =
 let warning ?(count = true) ?(notFinished = false) ~loc ~name body =
   body |> logKind ~kind:Warning ~count ~loc ~name ~notFinished
 
-let error ?(notFinished = false) ~loc ~name body =
-  body |> logKind ~kind:Error ~count:true ~loc ~name ~notFinished
+let error ~loc ~name body =
+  body |> logKind ~kind:Error ~count:true ~loc ~name ~notFinished:false
