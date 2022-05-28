@@ -3,7 +3,7 @@
 The exception analysis is designed to keep track statically of the exceptions that might be raised at runtime. It works by issuing warnings and recognizing annotations. Warnings are issued whenever an exception is raised and not immediately caught. Annotations are used to push warnings from he local point where the exception is raised, to the outside context: callers of the current function.
 Nested functions need to be annotated separately.
 
-Instructions on how to run the exception analysis using the `-exception` and `-exception-cmt` command-line arguments are contained in the general [README.md](README.md).
+Instructions on how to run the exception analysis using the `-exception` and `-exception-cmt` command-line arguments, or how to add `"analysis": ["exception"]` in `bsconfig.json` are contained in the general [README.md](README.md).
 
 Here's an example, where the analysis reports a warning any time an exception is raised, and not caught:
 
@@ -17,13 +17,13 @@ reports:
 
   Exception Analysis
   File "A.res", line 1, characters 4-10
-  raises might raise Not_found (A.res:1:19) and is not annotated with @raises Not_found
+  raises might raise Not_found (A.res:1:19) and is not annotated with @raises(Not_found)
 ```
 
 No warning is reporteed when a `@raises` annotation is added:
 
 ```rescript
-@raises Not_found
+@raises(Not_found)
 let raises = () => raise(Not_found)
 ```
 
@@ -34,7 +34,7 @@ When a function raises multiple exceptions, a tuple annotation is used:
 exception A
 exception B
 
-@raises((A, B))
+@raises([A, B])
 let twoExceptions = (x, y) => {
   if (x) {
     raise(A)
@@ -64,7 +64,7 @@ let stringMake3 = @doesNotRaise String.make(12, ' ')
 - The libraries currently modeled are limited to `Array`, `Buffer`, `Bytes`, `Char`, `Filename`, `Hashtbl`, `List`, `Pervasives`, `Str`, `String` from the standard library, and `bs-json`, and `Json` from `Js`. Models are currently vendored in the analysis, and are easy to add (see [`src/ExnLib.res`](src/ExnLib.res))
 - Generic exceptions are not understood by the analysis. For example `exn` is not recognized below (only concrete exceptions are):
 
-```reason
+```rescript
 try (foo()) { | exn => raise(exn) }
 ```
 
