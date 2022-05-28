@@ -84,6 +84,8 @@ let processCmtFiles ~cmtRoot =
 
 let runAnalysis ~cmtRoot ~ppf =
   Log_.Color.setup ();
+  if !Common.Cli.json then Format.fprintf Format.std_formatter "[\n";
+
   processCmtFiles ~cmtRoot;
   if runConfig.dce then (
     DeadException.forceDelayedItems ();
@@ -94,7 +96,8 @@ let runAnalysis ~cmtRoot ~ppf =
   if runConfig.noalloc then Noalloc.reportResults ~ppf;
   if runConfig.termination then Arnold.reportResults ~ppf;
   Log_.Stats.report ();
-  Log_.Stats.clear ()
+  Log_.Stats.clear ();
+  if !Common.Cli.json then Format.fprintf Format.std_formatter "]\n"
 
 let cli () =
   let analysisKindSet = ref false in

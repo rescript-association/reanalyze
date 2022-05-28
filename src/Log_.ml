@@ -125,8 +125,7 @@ module Stats = struct
         issues |> List.sort (fun (n1, _) (n2, _) -> String.compare n1 n2)
       in
 
-      if !Common.Cli.json then Format.fprintf Format.std_formatter "@.]@."
-      else (
+      if not !Common.Cli.json then (
         if sortedIssues <> [] then item "@.";
         item "Analysis reported %d issues%s@." nIssues
           (match sortedIssues with
@@ -147,15 +146,23 @@ let logKind ~count ~kind ~(loc : CL.Location.t) ~name ~notFinished body =
   if Suppress.filter loc.loc_start then (
     let open Format in
     if !Common.Cli.json then
-      fprintf std_formatter "%s{\n" (if !first then "[\n" else ",\n");
+      fprintf std_formatter "%s{\n" (if !first then "\n" else ",\n");
     first := false;
     if count then Stats.count name;
     if !Common.Cli.json then (
+      let kind = match kind with Warning -> "warning" | Error -> "error" in
+      let file = Json.escape loc.loc_start.pos_fname in
+      let startLine = loc.loc_start.pos_lnum - 1 in
+      let startCharacter = loc.loc_start.pos_cnum - loc.loc_start.pos_bol in
+      let endLine = loc.loc_end.pos_lnum - 1 in
+      let endCharacter = loc.loc_end.pos_cnum - loc.loc_start.pos_bol in
+      let message = Json.escape (asprintf "%a" body ()) in
       fprintf std_formatter "  \"name\": \"%s\",@." name;
-      fprintf std_formatter "  \"kind\": \"%s\",@."
-        (match kind with Warning -> "warning" | Error -> "error");
-      let message = asprintf "%a" body () in
-      fprintf std_formatter "  \"message\": \"%s\"" (Json.escape message);
+      fprintf std_formatter "  \"kind\": \"%s\",@." kind;
+      fprintf std_formatter "  \"file\": \"%s\",@." file;
+      fprintf std_formatter "  \"range\": [%d,%d,%d,%d],@." startLine
+        startCharacter endLine endCharacter;
+      fprintf std_formatter "  \"message\": \"%s\"" message;
       if notFinished = false then fprintf std_formatter "@.}")
     else
       let color =

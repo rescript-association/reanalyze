@@ -589,7 +589,13 @@ module WriteDeadAnnotations = struct
       | line ->
         line.declarations <- decl :: line.declarations;
         if !Cli.json then
-          Format.fprintf ppf ",@.  \"line\": %d@." decl.pos.pos_lnum
+          let posAnnotation = decl |> getPosAnnotation in
+          Format.fprintf ppf
+            ",@.  \"annotate\": { \"line\": %d, \"character\": %d, \"text\": \
+             \"%s\"}@."
+            (posAnnotation.pos_lnum -1)
+            (posAnnotation.pos_cnum - posAnnotation.pos_bol)
+            "@dead "
         else
           Format.fprintf ppf "  <-- line %d@.  %s@." decl.pos.pos_lnum
             (line |> lineToString)
