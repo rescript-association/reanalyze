@@ -38,7 +38,7 @@ module Parser = struct
       Printf.sprintf "Error \"%s\" at %d:%d -> %s\n" message line col last
     in
     failwith string
-    [@@raises [Failure, Invalid_argument]]
+    [@@raises [(Failure, Invalid_argument)]]
 
   let rec skipToNewline text pos =
     if pos >= String.length text then pos
@@ -282,3 +282,22 @@ let get key t =
   match t with
   | Object items -> ( try Some (List.assoc key items) with Not_found -> None)
   | _ -> None
+
+let escape text =
+  let ln = String.length text in
+  let buf = Buffer.create ln in
+  let rec loop i =
+    if i < ln then (
+      (match text.[i] with
+      | '\012' -> Buffer.add_string buf "\\f"
+      | '\\' -> Buffer.add_string buf "\\\\"
+      | '"' -> Buffer.add_string buf "\\\""
+      | '\n' -> Buffer.add_string buf "\\n"
+      | '\b' -> Buffer.add_string buf "\\b"
+      | '\r' -> Buffer.add_string buf "\\r"
+      | '\t' -> Buffer.add_string buf "\\t"
+      | c -> Buffer.add_char buf c);
+      loop (i + 1))
+  in
+  loop 0;
+  Buffer.contents buf
