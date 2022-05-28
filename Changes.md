@@ -1,5 +1,9 @@
 # master
 
+# 2.21.1
+- Run `-config` by default
+- Run `dce` when `"reanalyze"` is not present in `bsconfig.json`.
+
 # 2.21.0
 - Add support for `[@warning "-unused-value-declaration"]`.
 - Don't report on dead values inside a function annotated `@dead`.
