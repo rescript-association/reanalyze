@@ -486,7 +486,7 @@ let addValueDeclaration ?(isToplevel = true) ~(loc : CL.Location.t) ~moduleLoc
 
 let emitWarning ?(onDeadDecl = fun () -> ()) ~decl ~message name =
   let loc = decl |> declGetLoc in
-  Log_.warning ~loc ~notFinished:true ~name (fun ppf () ->
+  Log_.warning ~loc ~notClosed:true ~name (fun ppf () ->
       Format.fprintf ppf "@{<info>%s@} %s"
         (decl.path |> Path.withoutHead)
         message);
@@ -604,13 +604,15 @@ module WriteDeadAnnotations = struct
           let posAnnotation = decl |> getPosAnnotation in
           let offset = decl.posAdjustment |> offsetOfPosAdjustment in
           EmitJson.emitAnnotate
-            ~line:(posAnnotation.pos_lnum - 1)
-            ~character:(posAnnotation.pos_cnum - posAnnotation.pos_bol + offset)
+            ~pos:
+              ( posAnnotation.pos_lnum - 1,
+                posAnnotation.pos_cnum - posAnnotation.pos_bol + offset )
             ~text:
               (if decl.posAdjustment = FirstVariant then
                (* avoid syntax error *)
                "| @dead "
               else "@dead ")
+            ~action:"Suppress dead code warning"
         else
           Format.fprintf ppf "  <-- line %d@.  %s@." decl.pos.pos_lnum
             (line |> lineToString)
