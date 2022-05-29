@@ -142,7 +142,7 @@ type kind = Warning | Error
 
 let first = ref true
 
-let logKind ~count ~kind ~(loc : CL.Location.t) ~name ~notFinished body =
+let logKind ~count ~kind ~(loc : CL.Location.t) ~name ~notClosed body =
   if Suppress.filter loc.loc_start then (
     let open Format in
     first := false;
@@ -159,7 +159,7 @@ let logKind ~count ~kind ~(loc : CL.Location.t) ~name ~notFinished body =
         ~file
         ~range:(startLine, startCharacter, endLine, endCharacter)
         ~message;
-      if notFinished = false then EmitJson.emitClose ())
+      if notClosed = false then EmitJson.emitClose ())
     else
       let color =
         match kind with Warning -> Color.info | Error -> Color.error
@@ -167,8 +167,8 @@ let logKind ~count ~kind ~(loc : CL.Location.t) ~name ~notFinished body =
       fprintf std_formatter "@[<v 2>@,%a@,%a@,%a@]@." color name Loc.print loc
         body ())
 
-let warning ?(count = true) ?(notFinished = false) ~loc ~name body =
-  body |> logKind ~kind:Warning ~count ~loc ~name ~notFinished
+let warning ?(count = true) ?(notClosed = false) ~loc ~name body =
+  body |> logKind ~kind:Warning ~count ~loc ~name ~notClosed
 
 let error ~loc ~name body =
-  body |> logKind ~kind:Error ~count:true ~loc ~name ~notFinished:false
+  body |> logKind ~kind:Error ~count:true ~loc ~name ~notClosed:false

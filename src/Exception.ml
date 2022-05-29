@@ -169,6 +169,7 @@ module Checks = struct
   type check = {
     events : Event.t list;
     loc : CL.Location.t;
+    locFull : CL.Location.t;
     moduleName : string;
     name : string;
     exceptions : Exceptions.t;
@@ -178,22 +179,30 @@ module Checks = struct
 
   let checks = (ref [] : t ref)
 
-  let add ~events ~exceptions ~loc ~moduleName ~name =
-    checks := {events; exceptions; loc; moduleName; name} :: !checks
+  let add ~events ~exceptions ~loc ?(locFull = loc) ~moduleName name =
+    checks := {events; exceptions; loc; locFull; moduleName; name} :: !checks
 
-  let doCheck {events; exceptions; loc; moduleName; name} =
+  let doCheck {events; exceptions; loc; locFull; moduleName; name} =
     let raiseSet, exnTable = events |> Event.combine ~moduleName in
     let missingAnnotations = Exceptions.diff raiseSet exceptions in
     let redundantAnnotations = Exceptions.diff exceptions raiseSet in
-    if not (Exceptions.isEmpty missingAnnotations) then
-      Log_.warning ~loc ~name:"Exception Analysis" (fun ppf () ->
+    if not (Exceptions.isEmpty missingAnnotations) then (
+      let raisesTxt =
+        Format.asprintf "%a" (Exceptions.pp ~exnTable:(Some exnTable)) raiseSet
+      in
+      let missingTxt =
+        Format.asprintf "%a" (Exceptions.pp ~exnTable:None) missingAnnotations
+      in
+      Log_.warning ~loc ~name:"Exception Analysis" ~notClosed:true
+        (fun ppf () ->
           Format.fprintf ppf
-            "@{<info>%s@} might raise %a and is not annotated with @raises(%a)"
-            name
-            (Exceptions.pp ~exnTable:(Some exnTable))
-            raiseSet
-            (Exceptions.pp ~exnTable:None)
-            missingAnnotations);
+            "@{<info>%s@} might raise %s and is not annotated with @raises(%s)"
+            name raisesTxt missingTxt);
+      if !Common.Cli.json then (
+        EmitJson.emitAnnotate ~action:"Add @raises annotation"
+          ~pos:(EmitJson.locToPos locFull)
+          ~text:(Format.asprintf "@raises(%s)\\n" missingTxt);
+        EmitJson.emitClose ()));
     if not (Exceptions.isEmpty redundantAnnotations) then
       Log_.warning ~loc ~name:"Exception Analysis" (fun ppf () ->
           let raisesDescription ppf () =
@@ -389,7 +398,7 @@ let traverseAst () =
     self.expr self expr |> ignore;
     Checks.add ~events:!currentEvents
       ~exceptions:(getExceptionsFromAnnotations attributes)
-      ~loc:expr.exp_loc ~moduleName ~name;
+      ~loc:expr.exp_loc ~moduleName name;
     currentId := oldId;
     currentEvents := oldEvents
   in
@@ -445,7 +454,7 @@ let traverseAst () =
         | _ -> Exceptions.empty
       in
       Checks.add ~events:!currentEvents ~exceptions ~loc:vb.vb_pat.pat_loc
-        ~moduleName ~name;
+        ~locFull:vb.vb_loc ~moduleName name;
       currentId := oldId;
       currentEvents := oldEvents;
       res
