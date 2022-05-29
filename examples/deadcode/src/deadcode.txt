@@ -2722,7 +2722,7 @@ File References
     | @dead("annotatedVariant.R2") R2(r2, r3)
 
   Warning Dead Type
-  File "AutoAnnotate.res", line 15, characters 2-10
+  File "AutoAnnotate.res", line 15, characters 4-10
   annotatedVariant.R4 is a variant case which is never constructed
   <-- line 15
     | @dead("annotatedVariant.R4") R4(r4)
@@ -3104,7 +3104,7 @@ File References
     @dead("Ext_buffer.+x") let x = 42
 
   Warning Dead Type
-  File "DeadTypeTest.res", line 3, characters 2-5
+  File "DeadTypeTest.res", line 3, characters 4-5
   t.B is a variant case which is never constructed
   <-- line 3
     | @dead("t.B") B
@@ -3116,13 +3116,13 @@ File References
   @dead("+a") let a = A
 
   Warning Dead Type
-  File "DeadTypeTest.res", line 10, characters 2-13
+  File "DeadTypeTest.res", line 10, characters 4-13
   deadType.InNeither is a variant case which is never constructed
   <-- line 10
     | @dead("deadType.InNeither") InNeither
 
   Warning Dead Type
-  File "DeadTypeTest.resi", line 3, characters 2-5
+  File "DeadTypeTest.resi", line 3, characters 4-5
   t.B is a variant case which is never constructed
   <-- line 3
     | @dead("t.B") B
@@ -3134,7 +3134,7 @@ File References
   @dead("+a") let a: t
 
   Warning Dead Type
-  File "DeadTypeTest.resi", line 10, characters 2-13
+  File "DeadTypeTest.resi", line 10, characters 4-13
   deadType.InNeither is a variant case which is never constructed
   <-- line 10
     | @dead("deadType.InNeither") InNeither
@@ -3164,7 +3164,7 @@ File References
   @dead("+valueDead") let valueDead: int
 
   Warning Dead Type
-  File "Docstrings.res", line 61, characters 2-5
+  File "Docstrings.res", line 61, characters 4-5
   t.B is a variant case which is never constructed
   <-- line 61
     | @dead("t.B") B
@@ -4000,7 +4000,7 @@ File References
     | @dead("variant.I") I(int)
 
   Warning Dead Type
-  File "ImportJsValue.res", line 68, characters 2-13
+  File "ImportJsValue.res", line 68, characters 4-13
   variant.S is a variant case which is never constructed
   <-- line 68
     | @dead("variant.S") S(string)
@@ -4144,7 +4144,7 @@ File References
       | @dead("Universe.variant.A") A
 
   Warning Dead Type
-  File "NestedModules.res", line 47, characters 4-15
+  File "NestedModules.res", line 47, characters 6-15
   Universe.variant.B is a variant case which is never constructed
   <-- line 47
       | @dead("Universe.variant.B") B(string)
@@ -4184,7 +4184,7 @@ File References
   type variant = | @dead("variant.A") A | B(int)|C
 
   Warning Dead Type
-  File "Newsyntax.res", line 10, characters 17-25
+  File "Newsyntax.res", line 10, characters 19-25
   variant.B is a variant case which is never constructed
   <-- line 10
   type variant = | @dead("variant.A") A | @dead("variant.B") B(int)|C
@@ -4388,7 +4388,7 @@ File References
     | @dead("typeWithVars.A") A('x, 'y)
 
   Warning Dead Type
-  File "Types.res", line 13, characters 2-9
+  File "Types.res", line 13, characters 4-9
   typeWithVars.B is a variant case which is never constructed
   <-- line 13
     | @dead("typeWithVars.B") B('z)
@@ -4406,7 +4406,7 @@ File References
     | @dead("opaqueVariant.A") A
 
   Warning Dead Type
-  File "Types.res", line 57, characters 2-5
+  File "Types.res", line 57, characters 4-5
   opaqueVariant.B is a variant case which is never constructed
   <-- line 57
     | @dead("opaqueVariant.B") B
@@ -4476,7 +4476,7 @@ File References
     | @dead("result1.Ok") Ok('a)
 
   Warning Dead Type
-  File "Variants.res", line 103, characters 2-13
+  File "Variants.res", line 103, characters 4-13
   result1.Error is a variant case which is never constructed
   <-- line 103
     | @dead("result1.Error") Error('b)
@@ -4488,13 +4488,13 @@ File References
     | @dead("simpleVariant.A") A
 
   Warning Dead Type
-  File "VariantsWithPayload.res", line 50, characters 2-5
+  File "VariantsWithPayload.res", line 50, characters 4-5
   simpleVariant.B is a variant case which is never constructed
   <-- line 50
     | @dead("simpleVariant.B") B
 
   Warning Dead Type
-  File "VariantsWithPayload.res", line 51, characters 2-5
+  File "VariantsWithPayload.res", line 51, characters 4-5
   simpleVariant.C is a variant case which is never constructed
   <-- line 51
     | @dead("simpleVariant.C") C
@@ -4506,25 +4506,25 @@ File References
     | @dead("variantWithPayloads.A") @genType.as("ARenamed") A
 
   Warning Dead Type
-  File "VariantsWithPayload.res", line 59, characters 2-10
+  File "VariantsWithPayload.res", line 59, characters 4-10
   variantWithPayloads.B is a variant case which is never constructed
   <-- line 59
     | @dead("variantWithPayloads.B") B(int)
 
   Warning Dead Type
-  File "VariantsWithPayload.res", line 60, characters 2-15
+  File "VariantsWithPayload.res", line 60, characters 4-15
   variantWithPayloads.C is a variant case which is never constructed
   <-- line 60
     | @dead("variantWithPayloads.C") C(int, int)
 
   Warning Dead Type
-  File "VariantsWithPayload.res", line 61, characters 2-17
+  File "VariantsWithPayload.res", line 61, characters 4-17
   variantWithPayloads.D is a variant case which is never constructed
   <-- line 61
     | @dead("variantWithPayloads.D") D((int, int))
 
   Warning Dead Type
-  File "VariantsWithPayload.res", line 62, characters 2-23
+  File "VariantsWithPayload.res", line 62, characters 4-23
   variantWithPayloads.E is a variant case which is never constructed
   <-- line 62
     | @dead("variantWithPayloads.E") E(int, string, int)
