@@ -603,15 +603,14 @@ module WriteDeadAnnotations = struct
         if !Cli.json then
           let posAnnotation = decl |> getPosAnnotation in
           let offset = decl.posAdjustment |> offsetOfPosAdjustment in
-          Format.fprintf ppf
-            ",@.  \"annotate\": { \"line\": %d, \"character\": %d, \"text\": \
-             \"%s\"}@."
-            (posAnnotation.pos_lnum - 1)
-            (posAnnotation.pos_cnum - posAnnotation.pos_bol + offset)
-            (if decl.posAdjustment = FirstVariant then
-             (* avoid syntax error *)
-             "| @dead "
-            else "@dead ")
+          EmitJson.emitAnnotate ppf
+            ~line:(posAnnotation.pos_lnum - 1)
+            ~character:(posAnnotation.pos_cnum - posAnnotation.pos_bol + offset)
+            ~text:
+              (if decl.posAdjustment = FirstVariant then
+               (* avoid syntax error *)
+               "| @dead "
+              else "@dead ")
         else
           Format.fprintf ppf "  <-- line %d@.  %s@." decl.pos.pos_lnum
             (line |> lineToString)
