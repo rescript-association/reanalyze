@@ -84,7 +84,7 @@ let processCmtFiles ~cmtRoot =
 
 let runAnalysis ~cmtRoot ~ppf =
   Log_.Color.setup ();
-  if !Common.Cli.json then Format.fprintf Format.std_formatter "[\n";
+  if !Common.Cli.json then EmitJson.start ();
 
   processCmtFiles ~cmtRoot;
   if runConfig.dce then (
@@ -97,7 +97,7 @@ let runAnalysis ~cmtRoot ~ppf =
   if runConfig.termination then Arnold.reportResults ~ppf;
   Log_.Stats.report ();
   Log_.Stats.clear ();
-  if !Common.Cli.json then Format.fprintf Format.std_formatter "]\n"
+  if !Common.Cli.json then EmitJson.finish ()
 
 let cli () =
   let analysisKindSet = ref false in
