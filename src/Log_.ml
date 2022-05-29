@@ -145,21 +145,21 @@ let first = ref true
 let logKind ~count ~kind ~(loc : CL.Location.t) ~name ~notFinished body =
   if Suppress.filter loc.loc_start then (
     let open Format in
-    let isFirst = !first in
     first := false;
     if count then Stats.count name;
-    if !Common.Cli.json then
-      let kind = match kind with Warning -> "warning" | Error -> "error" in
+    if !Common.Cli.json then (
       let file = Json.escape loc.loc_start.pos_fname in
       let startLine = loc.loc_start.pos_lnum - 1 in
       let startCharacter = loc.loc_start.pos_cnum - loc.loc_start.pos_bol in
       let endLine = loc.loc_end.pos_lnum - 1 in
       let endCharacter = loc.loc_end.pos_cnum - loc.loc_start.pos_bol in
       let message = Json.escape (asprintf "%a" body ()) in
-      EmitJson.emitItem ~isFirst ~isClosing:(notFinished = false) ~name ~kind
+      EmitJson.emitItem ~name
+        ~kind:(match kind with Warning -> "warning" | Error -> "error")
         ~file
         ~range:(startLine, startCharacter, endLine, endCharacter)
-        ~message
+        ~message;
+      if notFinished = false then EmitJson.emitClose ())
     else
       let color =
         match kind with Warning -> Color.info | Error -> Color.error
