@@ -145,6 +145,7 @@ let first = ref true
 let logKind ~count ~kind ~(loc : CL.Location.t) ~name ~notFinished body =
   if Suppress.filter loc.loc_start then (
     let open Format in
+    let isFirst = !first in
     first := false;
     if count then Stats.count name;
     if !Common.Cli.json then
@@ -155,8 +156,8 @@ let logKind ~count ~kind ~(loc : CL.Location.t) ~name ~notFinished body =
       let endLine = loc.loc_end.pos_lnum - 1 in
       let endCharacter = loc.loc_end.pos_cnum - loc.loc_start.pos_bol in
       let message = Json.escape (asprintf "%a" body ()) in
-      EmitJson.emitItem Format.std_formatter ~isFirst:!first
-        ~isClosing:(notFinished = false) ~name ~kind ~file
+      EmitJson.emitItem ~isFirst ~isClosing:(notFinished = false) ~name ~kind
+        ~file
         ~range:(startLine, startCharacter, endLine, endCharacter)
         ~message
     else

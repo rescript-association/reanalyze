@@ -491,7 +491,7 @@ let emitWarning ?(onDeadDecl = fun () -> ()) ~decl ~message name =
         (decl.path |> Path.withoutHead)
         message);
   onDeadDecl ();
-  if !Cli.json then Format.fprintf Format.std_formatter "}\n"
+  if !Cli.json then EmitJson.emitClose ()
 
 module WriteDeadAnnotations = struct
   type line = {mutable declarations : decl list; original : string}
@@ -603,7 +603,7 @@ module WriteDeadAnnotations = struct
         if !Cli.json then
           let posAnnotation = decl |> getPosAnnotation in
           let offset = decl.posAdjustment |> offsetOfPosAdjustment in
-          EmitJson.emitAnnotate ppf
+          EmitJson.emitAnnotate
             ~line:(posAnnotation.pos_lnum - 1)
             ~character:(posAnnotation.pos_cnum - posAnnotation.pos_bol + offset)
             ~text:

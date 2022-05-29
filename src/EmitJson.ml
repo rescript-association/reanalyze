@@ -1,5 +1,6 @@
-let emitItem ~isFirst ~isClosing ~name ~kind ~file ~range ~message ppf =
+let emitItem ~isFirst ~isClosing ~name ~kind ~file ~range ~message =
   let open Format in
+  let ppf = std_formatter in
   let startLine, startCharacter, endLine, endCharacter = range in
   fprintf ppf "%s{\n" (if isFirst then "\n" else ",\n");
   fprintf ppf "  \"name\": \"%s\",@." name;
@@ -10,7 +11,9 @@ let emitItem ~isFirst ~isClosing ~name ~kind ~file ~range ~message ppf =
   fprintf ppf "  \"message\": \"%s\"" message;
   if isClosing then fprintf ppf "@.}"
 
-let emitAnnotate ~line ~character ~text ppf =
-  Format.fprintf ppf
+let emitClose () = Format.fprintf Format.std_formatter "}\n"
+
+let emitAnnotate ~line ~character ~text =
+  Format.fprintf Format.std_formatter
     ",@.  \"annotate\": { \"line\": %d, \"character\": %d, \"text\": \"%s\"}@."
     line character text
