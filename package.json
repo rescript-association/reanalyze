@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "dune build",
-    "build406": "cp src/dune src/dune.saved && cp src/dune.406 src/dune && npm run build && mv src/dune.saved src/dune",
+    "build406": "cp src/dune src/dune.saved && cp src/dune.406 src/dune && npm run build && mv src/dune.saved src/dune || mv src/dune.saved src/dune",
     "clean": "dune clean -p reanalyze",
     "test": "node ./scripts/run_integration_tests.js",
     "install:examples": "(cd examples/deadcode && npm install) & (cd examples/termination && npm install)",
