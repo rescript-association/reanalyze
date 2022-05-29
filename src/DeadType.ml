@@ -90,10 +90,10 @@ let addDeclaration ~(typeId : CL.Ident.t)
     (typeId |> CL.Ident.name |> Name.create)
     :: (currentModulePath.path @ [!Common.currentModuleName])
   in
-  let processTypeLabel ?(offset = Nothing) typeLabelName ~declKind
+  let processTypeLabel ?(posAdjustment = Nothing) typeLabelName ~declKind
       ~(loc : CL.Location.t) =
     addDeclaration_ ~declKind ~path:pathToType ~loc
-      ~moduleLoc:currentModulePath.loc ~offset typeLabelName;
+      ~moduleLoc:currentModulePath.loc ~posAdjustment typeLabelName;
     addTypeDependenciesAcrossFiles ~pathToType ~loc ~typeLabelName;
     addTypeDependenciesInnerModule ~pathToType ~loc ~typeLabelName;
     TypeLabels.add (typeLabelName :: pathToType) loc
@@ -108,13 +108,13 @@ let addDeclaration ~(typeId : CL.Ident.t)
   | Type_variant _ ->
     List.iteri
       (fun i {CL.Types.cd_id; cd_loc} ->
-        let offset =
+        let posAdjustment =
           (* In Res the variant loc can include the | and spaces after it *)
           if !Cli.json && Log_.posLanguage cd_loc.loc_start = Res then
             if i = 0 then FirstVariant else OtherVariant
           else Nothing
         in
         CL.Ident.name cd_id |> Name.create
-        |> processTypeLabel ~declKind:VariantCase ~loc:cd_loc ~offset)
+        |> processTypeLabel ~declKind:VariantCase ~loc:cd_loc ~posAdjustment)
       (Compat.getTypeVariant typeKind)
   | _ -> ()

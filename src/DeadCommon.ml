@@ -129,12 +129,12 @@ module DeclKind = struct
     | Value _ -> "Value"
 end
 
-type offset = FirstVariant | OtherVariant | Nothing
+type posAdjustment = FirstVariant | OtherVariant | Nothing
 
 type decl = {
   declKind : DeclKind.t;
   moduleLoc : CL.Location.t;
-  offset : offset;
+  posAdjustment : posAdjustment;
   path : Path.t;
   pos : Lexing.position;
   posEnd : Lexing.position;
@@ -142,6 +142,10 @@ type decl = {
   mutable resolved : bool;
   mutable report : bool;
 }
+
+let offsetOfPosAdjustment = function
+  | FirstVariant | Nothing -> 0
+  | OtherVariant -> 2
 
 type decls = decl PosHash.t
 (** all exported declarations *)
@@ -168,13 +172,11 @@ end
 
 let declGetLoc decl =
   let loc_start =
-    match decl.offset with
-    | Nothing | FirstVariant -> decl.posStart
-    | OtherVariant ->
-      let cnumWithOffset = decl.posStart.pos_cnum + 2 in
-      if cnumWithOffset < decl.posEnd.pos_cnum then
-        {decl.posStart with pos_cnum = cnumWithOffset}
-      else decl.posStart
+    let offset = offsetOfPosAdjustment decl.posAdjustment in
+    let cnumWithOffset = decl.posStart.pos_cnum + offset in
+    if cnumWithOffset < decl.posEnd.pos_cnum then
+      {decl.posStart with pos_cnum = cnumWithOffset}
+    else decl.posStart
   in
   {CL.Location.loc_start; loc_end = decl.posEnd; loc_ghost = false}
 
@@ -439,7 +441,7 @@ let getPosAnnotation decl =
   | false -> decl.posStart
 
 let addDeclaration_ ?posEnd ?posStart ~declKind ~path ~(loc : CL.Location.t)
-    ?(offset = Nothing) ~moduleLoc (name : Name.t) =
+    ?(posAdjustment = Nothing) ~moduleLoc (name : Name.t) =
   let pos = loc.loc_start in
   let posStart =
     match posStart with Some posStart -> posStart | None -> pos
@@ -464,7 +466,7 @@ let addDeclaration_ ?posEnd ?posStart ~declKind ~path ~(loc : CL.Location.t)
       {
         declKind;
         moduleLoc;
-        offset;
+        posAdjustment;
         path = name :: path;
         pos;
         posEnd;
@@ -600,13 +602,13 @@ module WriteDeadAnnotations = struct
         line.declarations <- decl :: line.declarations;
         if !Cli.json then
           let posAnnotation = decl |> getPosAnnotation in
-          let offset = if decl.offset = OtherVariant then 2 else 0 in
+          let offset = decl.posAdjustment |> offsetOfPosAdjustment in
           Format.fprintf ppf
             ",@.  \"annotate\": { \"line\": %d, \"character\": %d, \"text\": \
              \"%s\"}@."
             (posAnnotation.pos_lnum - 1)
             (posAnnotation.pos_cnum - posAnnotation.pos_bol + offset)
-            (if decl.offset = FirstVariant then
+            (if decl.posAdjustment = FirstVariant then
              (* avoid syntax error *)
              "| @dead "
             else "@dead ")
