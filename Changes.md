@@ -6,6 +6,7 @@
 
 - Run `-config` by default
 - Run `dce` when `"reanalyze"` is not present in `bsconfig.json`.
+- Work around issue with location of variant cases in type declarations.
 
 # 2.21.0
 
