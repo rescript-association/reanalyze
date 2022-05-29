@@ -7,7 +7,9 @@ module TypeLabels = struct
   (* map from type path (for record/variant label) to its location *)
 
   let table = (Hashtbl.create 256 : (Path.t, CL.Location.t) Hashtbl.t)
+
   let add path loc = Hashtbl.replace table path loc
+
   let find path = Hashtbl.find_opt table path
 end
 
@@ -19,7 +21,9 @@ let addTypeReference ~posFrom ~posTo =
 
 module TypeDependencies = struct
   let delayedItems = ref []
+
   let add loc1 loc2 = delayedItems := (loc1, loc2) :: !delayedItems
+
   let clear () = delayedItems := []
 
   let processTypeDependency
@@ -86,9 +90,10 @@ let addDeclaration ~(typeId : CL.Ident.t)
     (typeId |> CL.Ident.name |> Name.create)
     :: (currentModulePath.path @ [!Common.currentModuleName])
   in
-  let processTypeLabel typeLabelName ~declKind ~(loc : CL.Location.t) =
+  let processTypeLabel ?(offset = Nothing) typeLabelName ~declKind
+      ~(loc : CL.Location.t) =
     addDeclaration_ ~declKind ~path:pathToType ~loc
-      ~moduleLoc:currentModulePath.loc typeLabelName;
+      ~moduleLoc:currentModulePath.loc ~offset typeLabelName;
     addTypeDependenciesAcrossFiles ~pathToType ~loc ~typeLabelName;
     addTypeDependenciesInnerModule ~pathToType ~loc ~typeLabelName;
     TypeLabels.add (typeLabelName :: pathToType) loc
@@ -101,9 +106,15 @@ let addDeclaration ~(typeId : CL.Ident.t)
         |> processTypeLabel ~declKind:RecordLabel ~loc:ld_loc)
       l
   | Type_variant _ ->
-    List.iter
-      (fun {CL.Types.cd_id; cd_loc} ->
+    List.iteri
+      (fun i {CL.Types.cd_id; cd_loc} ->
+        let offset =
+          (* In Res the variant loc can include the | and spaces after it *)
+          if !Cli.json && Log_.posLanguage cd_loc.loc_start = Res then
+            if i = 0 then FirstVariant else OtherVariant
+          else Nothing
+        in
         CL.Ident.name cd_id |> Name.create
-        |> processTypeLabel ~declKind:VariantCase ~loc:cd_loc)
+        |> processTypeLabel ~declKind:VariantCase ~loc:cd_loc ~offset)
       (Compat.getTypeVariant typeKind)
   | _ -> ()

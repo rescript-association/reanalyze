@@ -129,9 +129,12 @@ module DeclKind = struct
     | Value _ -> "Value"
 end
 
+type offset = FirstVariant | OtherVariant | Nothing
+
 type decl = {
   declKind : DeclKind.t;
   moduleLoc : CL.Location.t;
+  offset : offset;
   path : Path.t;
   pos : Lexing.position;
   posEnd : Lexing.position;
@@ -164,11 +167,16 @@ module TypeReferences = struct
 end
 
 let declGetLoc decl =
-  {
-    CL.Location.loc_start = decl.posStart;
-    loc_end = decl.posEnd;
-    loc_ghost = false;
-  }
+  let loc_start =
+    match decl.offset with
+    | Nothing | FirstVariant -> decl.posStart
+    | OtherVariant ->
+      let cnumWithOffset = decl.posStart.pos_cnum + 2 in
+      if cnumWithOffset < decl.posEnd.pos_cnum then
+        {decl.posStart with pos_cnum = cnumWithOffset}
+      else decl.posStart
+  in
+  {CL.Location.loc_start; loc_end = decl.posEnd; loc_ghost = false}
 
 let addValueReference ~addFileReference ~(locFrom : CL.Location.t)
     ~(locTo : CL.Location.t) =
@@ -431,7 +439,7 @@ let getPosAnnotation decl =
   | false -> decl.posStart
 
 let addDeclaration_ ?posEnd ?posStart ~declKind ~path ~(loc : CL.Location.t)
-    ~moduleLoc (name : Name.t) =
+    ?(offset = Nothing) ~moduleLoc (name : Name.t) =
   let pos = loc.loc_start in
   let posStart =
     match posStart with Some posStart -> posStart | None -> pos
@@ -456,6 +464,7 @@ let addDeclaration_ ?posEnd ?posStart ~declKind ~path ~(loc : CL.Location.t)
       {
         declKind;
         moduleLoc;
+        offset;
         path = name :: path;
         pos;
         posEnd;
@@ -474,7 +483,8 @@ let addValueDeclaration ?(isToplevel = true) ~(loc : CL.Location.t) ~moduleLoc
        ~loc ~moduleLoc ~path
 
 let emitWarning ?(onDeadDecl = fun () -> ()) ~decl ~message name =
-  Log_.warning ~loc:(decl |> declGetLoc) ~notFinished:true ~name (fun ppf () ->
+  let loc = decl |> declGetLoc in
+  Log_.warning ~loc ~notFinished:true ~name (fun ppf () ->
       Format.fprintf ppf "@{<info>%s@} %s"
         (decl.path |> Path.withoutHead)
         message);
@@ -590,12 +600,16 @@ module WriteDeadAnnotations = struct
         line.declarations <- decl :: line.declarations;
         if !Cli.json then
           let posAnnotation = decl |> getPosAnnotation in
+          let offset = if decl.offset = OtherVariant then 2 else 0 in
           Format.fprintf ppf
             ",@.  \"annotate\": { \"line\": %d, \"character\": %d, \"text\": \
              \"%s\"}@."
-            (posAnnotation.pos_lnum -1)
-            (posAnnotation.pos_cnum - posAnnotation.pos_bol)
-            "@dead "
+            (posAnnotation.pos_lnum - 1)
+            (posAnnotation.pos_cnum - posAnnotation.pos_bol + offset)
+            (if decl.offset = FirstVariant then
+             (* avoid syntax error *)
+             "| @dead "
+            else "@dead ")
         else
           Format.fprintf ppf "  <-- line %d@.  %s@." decl.pos.pos_lnum
             (line |> lineToString)
