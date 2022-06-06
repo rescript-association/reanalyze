@@ -135,7 +135,11 @@ module Stats = struct
             ^ (sortedIssues
               |> List.map (fun (name, cnt) -> name ^ ":" ^ string_of_int !cnt)
               |> String.concat ", ")
-            ^ ")"))
+            ^ ")"));
+
+      nIssues
+    else
+      0
 end
 
 type kind = Warning | Error
