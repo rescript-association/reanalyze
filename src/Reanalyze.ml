@@ -95,9 +95,10 @@ let runAnalysis ~cmtRoot ~ppf =
   if runConfig.exception_ then Exception.reportResults ~ppf;
   if runConfig.noalloc then Noalloc.reportResults ~ppf;
   if runConfig.termination then Arnold.reportResults ~ppf;
-  Log_.Stats.report ();
+  let nIssues = Log_.Stats.report () in
   Log_.Stats.clear ();
-  if !Common.Cli.json then EmitJson.finish ()
+  if !Common.Cli.json then EmitJson.finish ();
+  if nIssues > 0 then exit 1
 
 let cli () =
   let analysisKindSet = ref false in
