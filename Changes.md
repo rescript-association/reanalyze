@@ -1,4 +1,6 @@
 # master
+
+# 2.23.0
 - Add command line option `-set-exit-code` to return an exit code (1) when at least one issue is reported.
 
 # 2.22.0
