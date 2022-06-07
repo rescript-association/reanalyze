@@ -98,7 +98,7 @@ let runAnalysis ~cmtRoot ~ppf =
   let nIssues = Log_.Stats.report () in
   Log_.Stats.clear ();
   if !Common.Cli.json then EmitJson.finish ();
-  if nIssues > 0 then exit 1
+  if nIssues > 0 && !Common.Cli.exitCode then exit 1
 
 let cli () =
   let analysisKindSet = ref false in
@@ -182,6 +182,9 @@ let cli () =
         "comma-separated-path-prefixes Consider all values whose path has a \
          prefix in the list as live" );
       ("-noalloc", Unit setNoalloc, "");
+      ( "-set-exit-code",
+        Set Common.Cli.exitCode,
+        "Exit with code 1 in case an issue is detected" );
       ( "-suppress",
         String
           (fun s ->
