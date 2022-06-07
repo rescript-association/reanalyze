@@ -28,6 +28,8 @@ module Cli = struct
 
   let write = ref false
 
+  let exitCode = ref false
+
   (* names to be considered live values *)
   let liveNames = ref ([] : string list)
 
