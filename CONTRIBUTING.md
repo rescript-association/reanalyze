@@ -79,7 +79,6 @@ In case you get an `ENEEDAUTH` error, use `npm adduser` and authenticate with yo
 
 ```
 docker build -t opam-publish --pull .
-docker run --rm -it -v `pwd`:/data opam-publish bash
-cd /data/
+docker run --rm -it -v ~/.ssh:/home/opam/.ssh -v `pwd`:/data opam-publish bash
 opam publish
 ```
