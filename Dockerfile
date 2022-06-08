@@ -1,12 +1,10 @@
-FROM node:10.11.0-jessie as base
-WORKDIR /reanalyze
+FROM ocaml/opam:debian-11-ocaml-4.14
 
-COPY package.json package-lock.json bsconfig.json /reanalyze/
+USER root
+RUN apt-get update \
+  && apt-get install -y pkg-config libgmp-dev libssl-dev \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN npm install
-
-CMD /bin/bash
-
-
-
-
+USER opam
+RUN opam update
+RUN opam install opam-publish

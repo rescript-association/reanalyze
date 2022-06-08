@@ -74,3 +74,12 @@ npm publish reanalyze-npm.tar.gz --tag beta
 
 Consult the [npm publish](https://docs.npmjs.com/cli/publish) documentation for more options.
 In case you get an `ENEEDAUTH` error, use `npm adduser` and authenticate with your npm account first.
+
+## Releasing ot opam (Maintainers only)
+
+```
+docker build -t opam-publish --pull .
+docker run --rm -it -v `pwd`:/data opam-publish bash
+cd /data/
+opam publish
+```
