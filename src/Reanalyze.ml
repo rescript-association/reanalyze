@@ -153,6 +153,9 @@ let cli () =
         String (fun s -> setException (Some s)),
         "root_path Experimental exception analysis for all the .cmt files \
          under the root path" );
+      ( "-native-build-target",
+        String (fun s -> Common.Cli.nativeBuildTarget := s),
+        "A path for the build target (defaults to _build/default/)" );
       ( "-exclude-paths",
         String
           (fun s ->
