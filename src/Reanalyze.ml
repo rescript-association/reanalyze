@@ -155,7 +155,8 @@ let cli () =
          under the root path" );
       ( "-native-build-target",
         String (fun s -> Common.Cli.nativeBuildTarget := s),
-        "A path for the build target (defaults to _build/default/)" );
+        "A path for the build target, defaults to ''. Can be useful for native \
+         projects that use dune to set this to '_build/default'" );
       ( "-exclude-paths",
         String
           (fun s ->
