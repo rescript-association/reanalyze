@@ -34,7 +34,7 @@ module Cli = struct
   let excludePaths = ref ([] : string list)
 
   (* path of build-generated files for native projects *)
-  let nativeBuildTarget = ref ""
+  let nativeBuildTarget = ref (None : string option)
 end
 
 module StringSet = Set.Make (String)

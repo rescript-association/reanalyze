@@ -154,7 +154,7 @@ let cli () =
         "root_path Experimental exception analysis for all the .cmt files \
          under the root path" );
       ( "-native-build-target",
-        String (fun s -> Common.Cli.nativeBuildTarget := s),
+        String (fun s -> Common.Cli.nativeBuildTarget := Some s),
         "A path for the build target, defaults to ''. Can be useful for native \
          projects that use dune to set this to '_build/default'" );
       ( "-exclude-paths",
