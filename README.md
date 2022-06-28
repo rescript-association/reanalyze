@@ -136,6 +136,15 @@ This automatically annotates `@live` all the items in the `src/test` and `tmp` f
 -live-paths src/test,tmp
 ```
 
+### CLI -native-build-target
+
+If a native project uses code generation, e.g., via `ocamlyacc`, the build target path needs to be specified to ensure correct analysis.
+
+For example, you might want to set `_build/default` for projects that use the default dune build target:
+```sh
+-native-build-target _build/default
+```
+
 ## Configuration via `bsconfig.json`
 
 The `-config` option can be used to read the configuration from `bsconfig.json`: to
