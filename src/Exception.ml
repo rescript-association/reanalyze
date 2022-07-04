@@ -251,9 +251,11 @@ let traverseAst () =
   in
   let isRaise s =
     s = "Pervasives.raise"
-    || s = "Pervasives.raise_notracee"
+    || s = "Pervasives.raise_notrace"
     || s = "Stdlib.raise"
-    || s = "Stdlib.raise_notracee"
+    || s = "Stdlib.raise_notrace"
+    || s = "Stdlib.Pervasives.raise"
+    || s = "Stdlib.Pervasives.raise_notrace"
   in
   let raiseArgs args =
     match args with
@@ -285,7 +287,7 @@ let traverseAst () =
       if calleeName |> isRaise then
         Log_.warning ~loc ~name:"Exception Analysis" (fun ppf () ->
             Format.fprintf ppf
-              "@{<info>%s@} can be analyzed only if called direclty" calleeName);
+              "@{<info>%s@} can be analyzed only if called directly" calleeName);
       currentEvents :=
         {
           Event.exceptions = Exceptions.empty;
