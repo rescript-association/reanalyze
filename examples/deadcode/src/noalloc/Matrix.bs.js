@@ -103,6 +103,5 @@ export {
   restMatrix ,
   scale2 ,
   restMatrix2 ,
-  
 }
 /* No side effect */
