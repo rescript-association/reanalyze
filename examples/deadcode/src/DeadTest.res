@@ -160,8 +160,6 @@ let theSideEffectIsLogging = Js.log(123)
 
 let stringLengthNoSideEffects = String.length("sdkdl")
 
-Trace.infok("", "", ({pf}) => pf("%s", ""))
-
 module GloobLive = {
   let globallyLive1 = 1
   let globallyLive2 = 2
