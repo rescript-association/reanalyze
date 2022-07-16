@@ -171,6 +171,8 @@ console.log(DeadTest);
 
 console.log(123);
 
+var stringLengthNoSideEffects = "sdkdl".length;
+
 var GloobLive = {
   globallyLive1: 1,
   globallyLive2: 2,
@@ -202,8 +204,6 @@ var makeSwitch = $ExportWithRename$OR$DynamicallyLoadedComponent$RequireCond.mak
 var make$2 = DeadTest;
 
 var theSideEffectIsLogging;
-
-var stringLengthNoSideEffects = 5;
 
 export {
   $ExportWithRename$OR$DynamicallyLoadedComponent$RequireCond ,
@@ -243,6 +243,5 @@ export {
   stringLengthNoSideEffects ,
   GloobLive ,
   WithInclude ,
-  
 }
 /* $ExportWithRename$OR$DynamicallyLoadedComponent$RequireCond Not a pure module */
