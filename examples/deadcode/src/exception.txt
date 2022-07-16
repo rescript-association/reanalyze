@@ -45,7 +45,7 @@
 
   Exception Analysis
   File "Exn.res", line 75, characters 4-24
-  parse_json_from_file might raise [Error (Exn.res:80:4), Sys_error (Exn.res:79:4 Exn.res:82:4)] and is not annotated with @raises([Error, Sys_error])
+  parse_json_from_file might raise Error (Exn.res:80:4) and is not annotated with @raises(Error)
 
   Exception Analysis
   File "Exn.res", line 87, characters 4-11

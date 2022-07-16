@@ -1,7 +1,15 @@
+(** Prepend nativeBuildTarget to fname when provided (-native-build-target) *)
+let nativeFilePath fname =
+  match !Common.Cli.nativeBuildTarget with
+  | None -> fname
+  | Some nativeBuildTarget -> Filename.concat nativeBuildTarget fname
+
 let rec interface items =
   match items with
   | {CL.Typedtree.sig_loc} :: rest -> (
-    match not (Sys.file_exists sig_loc.loc_start.pos_fname) with
+    match
+      not (Sys.file_exists (nativeFilePath sig_loc.loc_start.pos_fname))
+    with
     | true -> interface rest
     | false -> Some sig_loc.loc_start.pos_fname)
   | [] -> None
@@ -9,7 +17,9 @@ let rec interface items =
 let rec implementation items =
   match items with
   | {CL.Typedtree.str_loc} :: rest -> (
-    match not (Sys.file_exists str_loc.loc_start.pos_fname) with
+    match
+      not (Sys.file_exists (nativeFilePath str_loc.loc_start.pos_fname))
+    with
     | true -> implementation rest
     | false -> Some str_loc.loc_start.pos_fname)
   | [] -> None

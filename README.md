@@ -136,6 +136,17 @@ This automatically annotates `@live` all the items in the `src/test` and `tmp` f
 -live-paths src/test,tmp
 ```
 
+### CLI -native-build-target
+
+If a native project uses code generation and emit the generated files only in the build directory, reanalyze may not be able to locate them.
+This is due to the paths being not relative to the project root directory.
+An example of it can be caused by using tools like `ocamlyacc`.
+
+For example, you might want to set `_build/default` for projects that use the default dune build target:
+```sh
+-native-build-target _build/default
+```
+
 ## Configuration via `bsconfig.json`
 
 The `-config` option can be used to read the configuration from `bsconfig.json`: to

@@ -110,6 +110,5 @@ export {
   globalTuple ,
   extractFromGlobalTuple ,
   recordCreation ,
-  
 }
 /* No side effect */

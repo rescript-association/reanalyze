@@ -16,6 +16,5 @@ export {
   findNextMoves ,
   makeMove ,
   chess ,
-  
 }
 /* computeScore Not a pure module */
