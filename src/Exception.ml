@@ -262,6 +262,14 @@ let traverseAst () =
       true
     | _ -> false
   in
+  let isApply : CL.Types.value_description -> bool = function
+    | {val_kind = Val_prim {prim_name = "%apply"}} -> true
+    | _ -> false
+  in
+  let isRevapply : CL.Types.value_description -> bool = function
+    | {val_kind = Val_prim {prim_name = "%revapply"}} -> true
+    | _ -> false
+  in
   let raiseArgs args =
     match args with
     | [(_, Some {CL.Typedtree.exp_desc = Texp_construct ({txt}, _, _)})] ->
@@ -301,20 +309,18 @@ let traverseAst () =
         }
         :: !currentEvents
     | Texp_apply
-        ( {exp_desc = Texp_ident (atat, _, _)},
+        ( {exp_desc = Texp_ident (_, _, atat)},
           [(_lbl1, Some {exp_desc = Texp_ident (_, _, val_desc)}); arg] )
       when (* raise @@ Exn(...) *)
-           atat |> CL.Path.name = "Pervasives.@@"
-           && val_desc |> isRaise ->
+           atat |> isApply && val_desc |> isRaise ->
       let exceptions = [arg] |> raiseArgs in
       currentEvents := {Event.exceptions; loc; kind = Raises} :: !currentEvents;
       arg |> snd |> iterExprOpt self
     | Texp_apply
-        ( {exp_desc = Texp_ident (atat, _, _)},
+        ( {exp_desc = Texp_ident (_, _, atat)},
           [arg; (_lbl1, Some {exp_desc = Texp_ident (_, _, val_desc)})] )
       when (*  Exn(...) |> raise *)
-           atat |> CL.Path.name = "Pervasives.|>"
-           && val_desc |> isRaise ->
+           atat |> isRevapply && val_desc |> isRaise ->
       let exceptions = [arg] |> raiseArgs in
       currentEvents := {Event.exceptions; loc; kind = Raises} :: !currentEvents;
       arg |> snd |> iterExprOpt self
