@@ -249,13 +249,18 @@ let traverseAst () =
            case.c_guard |> iterExprOpt self;
            case.c_rhs |> iterExpr self)
   in
-  let isRaise s =
-    s = "Pervasives.raise"
-    || s = "Pervasives.raise_notrace"
-    || s = "Stdlib.raise"
-    || s = "Stdlib.raise_notrace"
-    || s = "Stdlib.Pervasives.raise"
-    || s = "Stdlib.Pervasives.raise_notrace"
+  let isRaise : CL.Types.value_description -> bool = function
+    | {
+        val_kind =
+          Val_prim
+            {
+              prim_name =
+                ( "%raise" | "%reraise" | "%raise_notrace"
+                | "%raise_with_backtrace" );
+            };
+      } ->
+      true
+    | _ -> false
   in
   let raiseArgs args =
     match args with
@@ -279,12 +284,12 @@ let traverseAst () =
     let oldEvents = !currentEvents in
     if isDoesNoRaise then currentEvents := [];
     (match expr.exp_desc with
-    | Texp_ident (callee_, _, _) ->
+    | Texp_ident (callee_, _, val_desc) ->
       let callee =
         callee_ |> Common.Path.fromPathT |> ModulePath.resolveAlias
       in
       let calleeName = callee |> Common.Path.toString in
-      if calleeName |> isRaise then
+      if val_desc |> isRaise then
         Log_.warning ~loc ~name:"Exception Analysis" (fun ppf () ->
             Format.fprintf ppf
               "@{<info>%s@} can be analyzed only if called directly" calleeName);
@@ -297,25 +302,24 @@ let traverseAst () =
         :: !currentEvents
     | Texp_apply
         ( {exp_desc = Texp_ident (atat, _, _)},
-          [(_lbl1, Some {exp_desc = Texp_ident (callee, _, _)}); arg] )
+          [(_lbl1, Some {exp_desc = Texp_ident (_, _, val_desc)}); arg] )
       when (* raise @@ Exn(...) *)
            atat |> CL.Path.name = "Pervasives.@@"
-           && callee |> CL.Path.name |> isRaise ->
+           && val_desc |> isRaise ->
       let exceptions = [arg] |> raiseArgs in
       currentEvents := {Event.exceptions; loc; kind = Raises} :: !currentEvents;
       arg |> snd |> iterExprOpt self
     | Texp_apply
         ( {exp_desc = Texp_ident (atat, _, _)},
-          [arg; (_lbl1, Some {exp_desc = Texp_ident (callee, _, _)})] )
+          [arg; (_lbl1, Some {exp_desc = Texp_ident (_, _, val_desc)})] )
       when (*  Exn(...) |> raise *)
            atat |> CL.Path.name = "Pervasives.|>"
-           && callee |> CL.Path.name |> isRaise ->
+           && val_desc |> isRaise ->
       let exceptions = [arg] |> raiseArgs in
       currentEvents := {Event.exceptions; loc; kind = Raises} :: !currentEvents;
       arg |> snd |> iterExprOpt self
-    | Texp_apply (({exp_desc = Texp_ident (callee, _, _)} as e), args) ->
-      let calleeName = CL.Path.name callee in
-      if calleeName |> isRaise then
+    | Texp_apply (({exp_desc = Texp_ident (_, _, val_desc)} as e), args) ->
+      if val_desc |> isRaise then
         let exceptions = args |> raiseArgs in
         currentEvents :=
           {Event.exceptions; loc; kind = Raises} :: !currentEvents
