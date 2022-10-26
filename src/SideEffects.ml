@@ -77,7 +77,11 @@ and exprOptNoSideEffects eo =
 
 and fieldNoSideEffects ((_ld, rld) : _ * CL.Typedtree.record_label_definition) =
   match rld with
+#if OCAML_VERSION >= (5, 0, 0)
+  | Kept (_typeExpr, _mutable_flag) -> true
+#else
   | Kept _typeExpr -> true
+#endif
   | Overridden (_lid, e) -> e |> exprNoSideEffects
 
 and caseNoSideEffects : type k. k Compat.typedtreeCase -> _ =
