@@ -878,7 +878,11 @@ module Compile = struct
                 )
               ->
                 match recordLabelDefinition with
+#if OCAML_VERSION >= (5, 0, 0)
+                | Kept (_typeExpr, _mutable_flag) -> None
+#else
                 | Kept _typeExpr -> None
+#endif
                 | Overridden (_loc, e) -> Some e))
       |> List.map (expressionOpt ~ctx)
       |> Command.unorderedSequence
