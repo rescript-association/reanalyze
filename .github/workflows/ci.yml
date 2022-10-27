@@ -28,8 +28,7 @@ jobs:
             artifact-folder: linux
           - os: windows-latest
             ocaml-compiler: 4.14.x
-            prebuild: cp src/dune.406 src/dune
-            build: opam exec -- dune build
+            build: opam exec -- npm run build406
             artifact-folder: win32
           - os: ubuntu-latest
             target: ocaml.4.08
@@ -70,10 +69,6 @@ jobs:
     - run: npm ci
 
     - run: opam install dune cppo
-
-    - name: Pre-build
-      if: matrix.os == 'windows-latest'
-      run: ${{matrix.prebuild}}
 
     - name: Build
       run: ${{matrix.build}}
