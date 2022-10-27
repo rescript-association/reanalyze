@@ -38,6 +38,10 @@ jobs:
             target: ocaml.4.14
             ocaml-compiler: 4.14.x
             build: opam exec -- dune build
+          - os: ubuntu-latest
+            target: ocaml.5.0
+            ocaml-compiler: ocaml-base-compiler.5.0.0~beta1
+            build: opam exec -- dune build
 
     runs-on: ${{matrix.os}}
 
