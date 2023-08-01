@@ -17,10 +17,15 @@ function convertFirstClassModuleWithTypeEquations(x) {
   return x;
 }
 
+function convertFirstClassModuleWithTypeEquationsUsingAlias(x) {
+  return x;
+}
+
 export {
   convert ,
   convertInterface ,
   convertRecord ,
   convertFirstClassModuleWithTypeEquations ,
+  convertFirstClassModuleWithTypeEquationsUsingAlias ,
 }
 /* No side effect */

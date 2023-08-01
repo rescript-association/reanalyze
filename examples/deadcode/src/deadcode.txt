@@ -1479,10 +1479,12 @@
   addValueDeclaration +convertInterface TestFirstClassModules.res:5:4 path:+TestFirstClassModules
   addValueDeclaration +convertRecord TestFirstClassModules.res:8:4 path:+TestFirstClassModules
   addValueDeclaration +convertFirstClassModuleWithTypeEquations TestFirstClassModules.res:27:4 path:+TestFirstClassModules
+  addValueDeclaration +convertFirstClassModuleWithTypeEquationsUsingAlias TestFirstClassModules.res:33:4 path:+TestFirstClassModules
   addValueReference TestFirstClassModules.res:2:4 --> TestFirstClassModules.res:2:15
   addValueReference TestFirstClassModules.res:5:4 --> TestFirstClassModules.res:5:24
   addValueReference TestFirstClassModules.res:8:4 --> TestFirstClassModules.res:8:21
   addValueReference TestFirstClassModules.res:27:4 --> TestFirstClassModules.res:29:2
+  addValueReference TestFirstClassModules.res:33:4 --> TestFirstClassModules.res:35:2
   Scanning TestImmutableArray.cmt Source:TestImmutableArray.res
   addValueDeclaration +testImmutableArrayGet TestImmutableArray.res:2:4 path:+TestImmutableArray
   addValueDeclaration +testBeltArrayGet TestImmutableArray.res:12:4 path:+TestImmutableArray
@@ -2254,6 +2256,7 @@ File References
   Live Value +TestEmitInnerModules.Outer.Medium.Inner.+y: 0 references () [0]
   Live Value +TestEmitInnerModules.Inner.+y: 0 references () [0]
   Live Value +TestEmitInnerModules.Inner.+x: 0 references () [0]
+  Live Value +TestFirstClassModules.+convertFirstClassModuleWithTypeEquationsUsingAlias: 0 references () [0]
   Live Value +TestFirstClassModules.+convertFirstClassModuleWithTypeEquations: 0 references () [0]
   Live Value +TestFirstClassModules.+convertRecord: 0 references () [0]
   Live Value +TestFirstClassModules.+convertInterface: 0 references () [0]

@@ -39,12 +39,13 @@ let collectValueBinding super self (vb : CL.Typedtree.value_binding) =
       in
       let currentModulePath = ModulePath.getCurrent () in
       let path = currentModulePath.path @ [!Common.currentModuleName] in
-      let isFirstClassModule =
-        match Compat.get_desc vb.vb_expr.exp_type with
+      let rec isFirstClassModule (type_expr: CL.Types.type_expr) : bool =
+        match Compat.get_desc type_expr with
         | Tpackage _ -> true
+        | Tconstr (p, ts, _) -> List.exists isFirstClassModule ts || String.starts_with ~prefix:(CL.Path.name p) "moduleAlias"
         | _ -> false
       in
-      (if (not exists) && not isFirstClassModule then
+      (if (not exists) && not (isFirstClassModule vb.vb_expr.exp_type) then
        (* This is never toplevel currently *)
        let isToplevel = oldLastBinding = CL.Location.none in
        let sideEffects = SideEffects.checkExpr vb.vb_expr in

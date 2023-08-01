@@ -29,3 +29,8 @@ let convertFirstClassModuleWithTypeEquations = (
   x: module(MT with type Inner.inner = i and type outer = o),
 ) => x
 
+@genType
+let convertFirstClassModuleWithTypeEquationsUsingAlias = (
+  type o i,
+  x: firstClassModuleWithTypeEquations<i, o>,
+) => x
