@@ -34,8 +34,9 @@ const packageJson = JSON.stringify(
       "postinstall.js",
       "vendor-linux/",
       "vendor-darwin/",
-      "vendor-win32/"
-    ]
+      "vendor-darwinarm64/",
+      "vendor-win32/",
+    ],
   },
   null,
   2
