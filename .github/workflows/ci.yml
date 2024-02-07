@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   test:
@@ -50,55 +50,55 @@ jobs:
     runs-on: ${{matrix.os}}
 
     steps:
-    # needed for Windows testing
-    - name: Set git to use LF
-      run: |
-        git config --global core.autocrlf false
-        git config --global core.eol lf
+      # needed for Windows testing
+      - name: Set git to use LF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
 
-    - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.4
 
-    - name: Cache OCaml's opam
-      uses: actions/cache@v2.1.5
-      with:
-        path: ~/.opam
-        key: ${{matrix.os}}-reanalyze-v2
+      - name: Cache OCaml's opam
+        uses: actions/cache@v2.1.5
+        with:
+          path: ~/.opam
+          key: ${{matrix.os}}-reanalyze-v2
 
-    - name: Use OCaml
-      uses: ocaml/setup-ocaml@v2
-      with:
-        ocaml-compiler: ${{matrix.ocaml-compiler}}
+      - name: Use OCaml
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{matrix.ocaml-compiler}}
 
-    - name: Use Node.js
-      uses: actions/setup-node@v2.1.5
-      with:
-        node-version: 14.4.0
+      - name: Use Node.js
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 14.4.0
 
-    - run: npm ci
+      - run: npm ci
 
-    - run: opam install dune cppo
+      - run: opam install dune cppo
 
-    - name: Build
-      run: ${{matrix.build}}
+      - name: Build
+        run: ${{matrix.build}}
 
-    - name: Test
-      if: matrix.target == 'rescript'
-      run: ${{matrix.test}}
+      - name: Test
+        if: matrix.target == 'rescript'
+        run: ${{matrix.test}}
 
-    # Also avoids artifacts upload permission loss:
-    # https://github.com/actions/upload-artifact/tree/ee69f02b3dfdecd58bb31b4d133da38ba6fe3700#permission-loss
-    - name: Compress files
-      if: matrix.target == 'rescript'
-      run: |
-        mkdir ${{matrix.artifact-folder}}
-        cp _build/default/src/Reanalyze.exe reanalyze.exe
-        tar -cvf binary.tar reanalyze.exe
+      # Also avoids artifacts upload permission loss:
+      # https://github.com/actions/upload-artifact/tree/ee69f02b3dfdecd58bb31b4d133da38ba6fe3700#permission-loss
+      - name: Compress files
+        if: matrix.target == 'rescript'
+        run: |
+          mkdir ${{matrix.artifact-folder}}
+          cp _build/default/src/Reanalyze.exe reanalyze.exe
+          tar -cvf binary.tar reanalyze.exe
 
-    - uses: actions/upload-artifact@v2
-      if: matrix.target == 'rescript'
-      with:
-        name: ${{matrix.os}}
-        path: binary.tar
+      - uses: actions/upload-artifact@v2
+        if: matrix.target == 'rescript'
+        with:
+          name: ${{matrix.os}}
+          path: binary.tar
 
   npm_pack:
     needs: test
@@ -113,7 +113,7 @@ jobs:
           tar xf macos-latest/binary.tar -C dist/vendor-darwin
           tar xf ubuntu-latest/binary.tar -C dist/vendor-linux
           tar xf windows-latest/binary.tar -C dist/vendor-win32
-          
+
           # Add the correct package.json / README / etc to dist
           node scripts/prepare_release.js
 
