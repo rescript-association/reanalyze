@@ -56,10 +56,10 @@ jobs:
           git config --global core.autocrlf false
           git config --global core.eol lf
 
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v4
 
       - name: Cache OCaml's opam
-        uses: actions/cache@v2.1.5
+        uses: actions/cache@v4
         with:
           path: ~/.opam
           key: ${{matrix.os}}-reanalyze-v2
@@ -70,7 +70,7 @@ jobs:
           ocaml-compiler: ${{matrix.ocaml-compiler}}
 
       - name: Use Node.js
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v4
         with:
           node-version: 14.4.0
 
@@ -94,7 +94,7 @@ jobs:
           cp _build/default/src/Reanalyze.exe reanalyze.exe
           tar -cvf binary.tar reanalyze.exe
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         if: matrix.target == 'rescript'
         with:
           name: ${{matrix.os}}
@@ -104,9 +104,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v4
       - name: download binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
       - name: Pack reanalyze
         run: |
           # Put the built artifacts in the appropriate package folder
@@ -123,7 +123,7 @@ jobs:
           cd ..
           mv dist/reanalyze-*.tgz reanalyze-npm.tgz
       - name: upload reanalyze-npm.tgz
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: reanalyze-npm.tgz
           path: reanalyze-npm.tgz
