@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  test:
+  build:
     strategy:
       fail-fast: false
       matrix:
@@ -101,7 +101,7 @@ jobs:
           path: binary.tar
 
   npm_pack:
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
