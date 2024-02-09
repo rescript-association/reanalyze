@@ -1,7 +1,10 @@
-# master
+# 2.24.0
+
 - Add `-native-build-target` option to explicitly specify a build target path for native OCaml projects.
+- Support OCaml 5.1.
 
 # 2.23.0
+
 - Add command line option `-set-exit-code` to return an exit code (1) when at least one issue is reported.
 
 # 2.22.0
