@@ -478,7 +478,11 @@ let traverseAst () =
            && Compat.unboxPatCstrTxt vb.vb_pat.pat_desc
               = CL.Longident.Lident "()" ->
       processBinding "()"
+    #if OCAML_VERSION < (5, 2, 0)
     | Tpat_var (id, {loc = {loc_ghost}})
+    #else
+    | Tpat_var (id, {loc = {loc_ghost}}, _)
+    #endif
       when (isFunction || isToplevel) && (not loc_ghost)
            && not vb.vb_loc.loc_ghost ->
       processBinding (id |> CL.Ident.name)

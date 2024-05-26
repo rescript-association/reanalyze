@@ -21,9 +21,15 @@ let collectValueBinding super self (vb : CL.Typedtree.value_binding) =
   checkAnyValueBindingWithNoSideEffects vb;
   let loc =
     match vb.vb_pat.pat_desc with
+    #if OCAML_VERSION < (5, 2, 0)
     | Tpat_var (id, {loc = {loc_start; loc_ghost} as loc})
     | Tpat_alias
         ({pat_desc = Tpat_any}, id, {loc = {loc_start; loc_ghost} as loc})
+    #else
+    | Tpat_var (id, {loc = {loc_start; loc_ghost} as loc}, _)
+    | Tpat_alias
+        ({pat_desc = Tpat_any}, id, {loc = {loc_start; loc_ghost} as loc}, _)
+    #endif
       when (not loc_ghost) && not vb.vb_loc.loc_ghost ->
       let name = CL.Ident.name id |> Name.create ~isInterface:false in
       let optionalArgs =
@@ -143,7 +149,11 @@ let rec collectExpr super self (e : CL.Typedtree.expression) =
       Nonrecursive,
         [
           {
+            #if OCAML_VERSION < (5, 2, 0)
             vb_pat = {pat_desc = Tpat_var (idArg, _)};
+            #else
+            vb_pat = {pat_desc = Tpat_var (idArg, _, _)};
+            #endif
             vb_expr =
               {
                 exp_desc =
@@ -157,6 +167,7 @@ let rec collectExpr super self (e : CL.Typedtree.expression) =
         ],
         {
           exp_desc =
+            #if OCAML_VERSION < (5, 2, 0)
             Texp_function
               {
                 cases =
@@ -172,6 +183,23 @@ let rec collectExpr super self (e : CL.Typedtree.expression) =
                     };
                   ];
               };
+            #else
+              Texp_function(_,
+              Tfunction_cases {
+                cases =
+                  [
+                    {
+                      c_lhs = {pat_desc = Tpat_var (etaArg, _, _)};
+                      c_rhs =
+                        {
+                          exp_desc =
+                            Texp_apply
+                              ({exp_desc = Texp_ident (idArg2, _, _)}, args);
+                        };
+                    };
+                  ];
+              });
+            #endif
         } )
     when CL.Ident.name idArg = "arg"
          && CL.Ident.name etaArg = "eta"

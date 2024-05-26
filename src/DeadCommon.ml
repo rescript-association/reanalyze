@@ -336,8 +336,13 @@ module ProcessDeadAnnotations = struct
         ({vb_attributes; vb_pat} as value_binding : CL.Typedtree.value_binding)
         =
       (match vb_pat.pat_desc with
+      #if OCAML_VERSION < (5, 2, 0)
       | Tpat_var (id, {loc = {loc_start = pos}})
       | Tpat_alias ({pat_desc = Tpat_any}, id, {loc = {loc_start = pos}}) ->
+      #else
+      | Tpat_var (id, {loc = {loc_start = pos}}, _)
+      | Tpat_alias ({pat_desc = Tpat_any}, id, {loc = {loc_start = pos}}, _) ->
+      #endif
         if !currentlyDisableWarnings then pos |> annotateLive;
         vb_attributes
         |> processAttributes ~doGenType ~name:(id |> CL.Ident.name) ~pos

@@ -55,7 +55,7 @@ module Color = struct
     Format.pp_set_mark_tags Format.std_formatter true;
     Compat.pp_set_formatter_tag_functions Format.std_formatter color_functions;
     if not (get_color_enabled ()) then
-    #if OCAML_VERSION < (5, 02, 0)
+    #if OCAML_VERSION < (5, 2, 0)
       CL.Misc.Color.setup (Some Never);
     #else
       Misc.Style.setup (Some Never);
