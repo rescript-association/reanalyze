@@ -515,7 +515,7 @@ module ExtendFunctionTable = struct
               ( Nonrecursive,
                 [
                   {
-                    vb_pat = {pat_desc = Tpat_var (_, _)};
+                    vb_pat = {pat_desc = Tpat_var _};
                     vb_expr = {exp_desc = Texp_ident (path, {loc}, _)};
                     vb_loc = {loc_ghost = true};
                   };
@@ -779,7 +779,13 @@ module Compile = struct
     | Texp_apply (expr, args) -> expr |> expression ~ctx |> evalArgs ~args ~ctx
     | Texp_let
         ( Recursive,
-          [{vb_pat = {pat_desc = Tpat_var (id, _); pat_loc}; vb_expr}],
+          [{vb_pat = {pat_desc =
+          #if OCAML_VERSION < (5, 2, 0)
+            Tpat_var (id, _);
+          #else
+            Tpat_var (id, _, _);
+          #endif
+            pat_loc}; vb_expr}],
           inExpr ) ->
       let oldFunctionName = Ident.name id in
       let newFunctionName = currentFunctionName ^ "$" ^ oldFunctionName in
@@ -836,7 +842,12 @@ module Compile = struct
         let open Command in
         c +++ ConstrOption Rnone
       | _ -> c)
-    | Texp_function {cases} -> cases |> List.map (case ~ctx) |> Command.nondet
+    #if OCAML_VERSION < (5, 2, 0)
+    | Texp_function {cases} ->
+    #else
+    | Texp_function (_, Tfunction_cases {cases; _}) ->
+    #endif
+       cases |> List.map (case ~ctx) |> Command.nondet
     | Texp_match _ when not (expr.exp_desc |> Compat.texpMatchHasExceptions)
       -> (
       (* No exceptions *)
@@ -1226,7 +1237,11 @@ let traverseAst ~valueBindingsTable =
     valueBindings
     |> List.iter (fun (vb : CL.Typedtree.value_binding) ->
            match vb.vb_pat.pat_desc with
+           #if OCAML_VERSION < (5, 2, 0)
            | Tpat_var (id, {loc = {loc_start = pos}}) ->
+           #else
+           | Tpat_var (id, {loc = {loc_start = pos}}, _) ->
+           #endif
              let callees = lazy (FindFunctionsCalled.findCallees vb.vb_expr) in
              Hashtbl.replace valueBindingsTable (CL.Ident.name id)
                (pos, vb.vb_expr, callees)
@@ -1248,7 +1263,11 @@ let traverseAst ~valueBindingsTable =
                        (StringSet.of_list newProgressFunctions)
                        progressFunctions,
                      match valueBinding.vb_pat.pat_desc with
+                     #if OCAML_VERSION < (5, 2, 0)
                      | Tpat_var (id, _) ->
+                     #else
+                     | Tpat_var (id, _, _) ->
+                     #endif
                        (CL.Ident.name id, valueBinding.vb_expr.exp_loc)
                        :: functionsToAnalyze
                      | _ -> functionsToAnalyze )))
@@ -1265,7 +1284,12 @@ let traverseAst ~valueBindingsTable =
         List.fold_left
           (fun defs (valueBinding : CL.Typedtree.value_binding) ->
             match valueBinding.vb_pat.pat_desc with
-            | Tpat_var (id, _) -> CL.Ident.name id :: defs
+            #if OCAML_VERSION < (5, 2, 0)
+            | Tpat_var (id, _) ->
+            #else
+            | Tpat_var (id, _, _) ->
+            #endif
+               CL.Ident.name id :: defs
             | _ -> defs)
           [] valueBindings
         |> List.rev

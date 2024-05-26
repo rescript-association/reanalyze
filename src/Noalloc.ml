@@ -64,7 +64,13 @@ let rec emitLocalSetBackwards ~(funDef : Il.funDef) ~(scope : Il.scope) =
 
 let rec processFunDefPat ~funDef ~env ~mem (pat : CL.Typedtree.pattern) =
   match pat.pat_desc with
-  | Tpat_var (id, _) | Tpat_alias ({pat_desc = Tpat_any}, id, _) ->
+  #if OCAML_VERSION < (5, 2, 0)
+  | Tpat_var (id, _)
+  | Tpat_alias ({pat_desc = Tpat_any}, id, _) ->
+  #else
+  | Tpat_var (id, _, _)
+  | Tpat_alias ({pat_desc = Tpat_any}, id, _, _) ->
+  #endif
     let scope = pat.pat_type |> processTyp ~funDef ~loc:pat.pat_loc in
     let newEnv =
       env |> Il.Env.add ~id:(id |> CL.Ident.name) ~def:(LocalScope scope)
@@ -91,6 +97,7 @@ let rec processFunDefPat ~funDef ~env ~mem (pat : CL.Typedtree.pattern) =
 let rec processFunDef ~funDef ~env ~mem ~params (expr : CL.Typedtree.expression)
     =
   match expr.exp_desc with
+  #if OCAML_VERSION < (5, 2, 0)
   | Texp_function
       {
         arg_label = Nolabel;
@@ -98,6 +105,14 @@ let rec processFunDef ~funDef ~env ~mem ~params (expr : CL.Typedtree.expression)
         cases = [{c_lhs; c_guard = None; c_rhs}];
         partial = Total;
       } ->
+  #else
+  | Texp_function(_,
+      Tfunction_cases {
+        param;
+        cases = [{c_lhs; c_guard = None; c_rhs}];
+        partial = Total;
+      }) ->
+  #endif
     let newEnv, typ = c_lhs |> processFunDefPat ~funDef ~env ~mem in
     c_rhs
     |> processFunDef ~funDef ~env:newEnv ~mem ~params:((param, typ) :: params)
@@ -132,7 +147,11 @@ let processConst ~funDef ~loc ~mem (const_ : CL.Asttypes.constant) =
 let rec processLocalBinding ~env ~(pat : CL.Typedtree.pattern)
     ~(scope : Il.scope) =
   match (pat.pat_desc, scope) with
+  #if OCAML_VERSION < (5, 2, 0)
   | Tpat_var (id, _), _ ->
+  #else
+  | Tpat_var (id, _, _), _ ->
+  #endif
     env |> Il.Env.add ~id:(id |> CL.Ident.name) ~def:(LocalScope scope)
   | Tpat_tuple pats, Tuple scopes ->
     let patsAndScopes = (List.combine pats scopes [@doesNotRaise]) in
@@ -283,7 +302,11 @@ let processValueBinding ~id ~(expr : CL.Typedtree.expression) =
 
 let collectValueBinding super self (vb : CL.Typedtree.value_binding) =
   (match vb.vb_pat.pat_desc with
+  #if OCAML_VERSION < (5, 2, 0)
   | Tpat_var (id, _)
+  #else
+  | Tpat_var (id, _, _)
+  #endif
     when vb.vb_attributes |> Annotation.hasAttribute (( = ) "noalloc") ->
     processValueBinding ~id ~expr:vb.CL.Typedtree.vb_expr
   | _ -> ());
