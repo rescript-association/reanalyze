@@ -1,3 +1,7 @@
+# 2.25.0
+
+- Support OCaml 5.2.
+
 # 2.24.0
 
 - Add `-native-build-target` option to explicitly specify a build target path for native OCaml projects.
