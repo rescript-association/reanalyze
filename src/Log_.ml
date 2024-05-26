@@ -54,7 +54,12 @@ module Color = struct
   let setup () =
     Format.pp_set_mark_tags Format.std_formatter true;
     Compat.pp_set_formatter_tag_functions Format.std_formatter color_functions;
-    if not (get_color_enabled ()) then CL.Misc.Color.setup (Some Never);
+    if not (get_color_enabled ()) then
+    #if OCAML_VERSION < (5, 02, 0)
+      CL.Misc.Color.setup (Some Never);
+    #else
+      Misc.Style.setup (Some Never);
+    #endif
     (* Print a dummy thing once in the beginning, as otherwise flushing does not work. *)
     CL.Location.print_loc Format.str_formatter CL.Location.none
 
