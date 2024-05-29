@@ -848,6 +848,10 @@ module Compile = struct
     | Texp_function (_, Tfunction_cases {cases; _}) ->
     #endif
        cases |> List.map (case ~ctx) |> Command.nondet
+    #if OCAML_VERSION < (5, 2, 0)
+    #else
+    | Texp_function (_, Tfunction_body e) -> e |> expression ~ctx
+    #endif
     | Texp_match _ when not (expr.exp_desc |> Compat.texpMatchHasExceptions)
       -> (
       (* No exceptions *)
