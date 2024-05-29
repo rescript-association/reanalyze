@@ -1,3 +1,7 @@
+# 2.25.1
+
+- Fix fatal error for OCaml 5.2.
+
 # 2.25.0
 
 - Support OCaml 5.2.
