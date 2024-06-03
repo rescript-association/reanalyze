@@ -1,7 +1,12 @@
 open Common
 module StringMap = Map.Make (String)
 
-let bsconfig = "bsconfig.json"
+let bsconfigs = ["bsconfig.json"; "rescript.json"]
+
+let rec string_of_bsconfigs = function
+  | [] -> ""
+  | [x] -> x
+  | x :: xs -> x ^ " | " ^ string_of_bsconfigs xs
 
 let readFile filename =
   try
@@ -13,13 +18,17 @@ let readFile filename =
   with _ -> None
 
 let rec findProjectRoot ~dir =
-  let bsconfigFile = Filename.concat dir bsconfig in
-  if Sys.file_exists bsconfigFile then dir
+  let bsconfigFile =
+    bsconfigs |> List.map (fun config -> Filename.concat dir config)
+  in
+  if bsconfigFile |> List.exists (fun file -> Sys.file_exists file) then dir
   else
     let parent = dir |> Filename.dirname in
     if parent = dir then (
       prerr_endline
-        ("Error: cannot find project root containing " ^ bsconfig ^ ".");
+        ("Error: cannot find project root containing ("
+        ^ string_of_bsconfigs bsconfigs
+        ^ ").");
       assert false)
     else findProjectRoot ~dir:parent
 
@@ -73,21 +82,26 @@ module Config = struct
   (* Read the config from bsconfig.json and apply it to runConfig and suppress and unsuppress *)
   let processBsconfig () =
     Lazy.force setReScriptProjectRoot;
-    let bsconfigFile = Filename.concat runConfig.projectRoot bsconfig in
-    match readFile bsconfigFile with
-    | None -> ()
-    | Some text -> (
-      match Json.parse text with
-      | None -> ()
-      | Some json -> (
-        match Json.get "reanalyze" json with
-        | Some conf ->
-          readSuppress conf;
-          readUnsuppress conf;
-          readAnalysis conf
-        | None ->
-          (* if no "analysis" specified, default to dce *)
-          RunConfig.dce ()))
+    let rec process = function
+      | [] -> ()
+      | bsconfig :: rest -> (
+        let bsconfigFile = Filename.concat runConfig.projectRoot bsconfig in
+        match readFile bsconfigFile with
+        | None -> process rest
+        | Some text -> (
+          match Json.parse text with
+          | None -> ()
+          | Some json -> (
+            match Json.get "reanalyze" json with
+            | Some conf ->
+              readSuppress conf;
+              readUnsuppress conf;
+              readAnalysis conf
+            | None ->
+              (* if no "analysis" specified, default to dce *)
+              RunConfig.dce ())))
+    in
+    process bsconfigs
 end
 
 (**
